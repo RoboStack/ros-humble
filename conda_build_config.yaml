@@ -1,0 +1,66 @@
+c_compiler:
+  - vs2019                     # [win]
+cxx_compiler:
+  - vs2019                     # [win]
+
+console_bridge:
+  - 1.0
+gazebo:
+  - '11'
+numpy:
+  - 1.19
+ogre:
+  - 1.12.*
+pcl:
+  - 1.12.0
+libpqxx:
+  - 6
+
+# Workaround for https://github.com/RoboStack/ros-galactic/pull/86#issuecomment-1079811424
+setuptools:  # [win]
+  - 61.0.0  # [win]
+
+python:
+  # part of a zip_keys: python, python_impl, numpy
+  # - 3.6.* *_cpython    # [not (osx and arm64)]
+  # - 3.7.* *_cpython    # [not (osx and arm64)]
+  # - 3.8.* *_cpython
+  - 3.9.* *_cpython
+python_impl:
+  # part of a zip_keys: python, python_impl, numpy
+  # - cpython   # [not (osx and arm64)]
+  # - cpython   # [not (osx and arm64)]
+  - cpython
+
+# Project overrides
+macos_min_version:             # [osx and x86_64]
+  - 10.14                      # [osx and x86_64]
+macos_machine:                 # [osx]
+  - x86_64-apple-darwin13.4.0  # [osx and x86_64]
+  - arm64-apple-darwin20.0.0   # [osx and arm64]
+MACOSX_DEPLOYMENT_TARGET:      # [osx]
+  - 11.0                       # [osx and arm64]
+  - 10.14                      # [osx and x86_64]
+CONDA_BUILD_SYSROOT:
+  - /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk  # [osx and arm64]
+
+
+# fix build metadata, needed for mapviz and moveit-core
+replacements:
+  all_replacements:
+    - tag: 'pkg-config build metadata'
+      glob_patterns:
+        - '*.pc'
+      regex_re: '(?:-L|-I)?\"?([^;\s]+\/sysroot\/)'
+      replacement_re: '$(CONDA_BUILD_SYSROOT_S)'
+      regex_rg: '([^;\s"]+/sysroot/)'
+    - tag: 'CMake build metadata'
+      glob_patterns:
+        - '*.cmake'
+      regex_re: '([^;\s"]+/sysroot)'
+      replacement_re: '$ENV{CONDA_BUILD_SYSROOT}'
+    - tag: 'CMake build metadata OSX'
+      glob_patterns:
+        - '*.cmake'
+      regex_re: '([^;\s"]+/MacOSX\d*\.?\d*\.sdk)'
+      replacement_re: '$ENV{CONDA_BUILD_SYSROOT}'
