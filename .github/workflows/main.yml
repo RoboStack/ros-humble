@@ -37,7 +37,7 @@ jobs:
             git push "${remote_repo}" HEAD:buildbranch_linux --follow-tags --force
         fi
       env:
-        INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 
     # Generate recipes for osx
     # - name: Reset repo
