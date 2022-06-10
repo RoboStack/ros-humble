@@ -33,6 +33,8 @@ skip_existing:
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
+  - ros_workspace
+  - ros_environment
   - ament_cmake
   # - ros_base
 
