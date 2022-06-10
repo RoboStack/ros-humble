@@ -1,0 +1,14 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a390aed..fa4f293 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -200,7 +200,8 @@ endif()
+ if (WIN32)
+     set(CMAKE_DEBUG_POSTFIX "d")
+     list(APPEND BT_SOURCE src/shared_library_WIN.cpp )
+-    add_library(${BEHAVIOR_TREE_LIBRARY} STATIC ${BT_SOURCE} )
++    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++    add_library(${BEHAVIOR_TREE_LIBRARY} SHARED ${BT_SOURCE} )
+ endif()
+ 
+ if( ZMQ_FOUND )

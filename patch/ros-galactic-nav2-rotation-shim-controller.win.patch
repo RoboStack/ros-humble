@@ -1,0 +1,13 @@
+diff --git a/nav2_rotation_shim_controller/CMakeLists.txt b/nav2_rotation_shim_controller/CMakeLists.txt
+index 2e141d5f44..44db4213a3 100644
+--- a/nav2_rotation_shim_controller/CMakeLists.txt
++++ b/nav2_rotation_shim_controller/CMakeLists.txt
+@@ -13,6 +13,8 @@ find_package(pluginlib REQUIRED)
+ find_package(tf2 REQUIRED)
+ find_package(angles REQUIRED)
+ 
++add_definitions(-DNOMINMAX)
++
+ nav2_package()
+ set(CMAKE_CXX_STANDARD 17)
+ 

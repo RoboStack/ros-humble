@@ -1,0 +1,131 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9d0379d..53302d6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -14,6 +14,8 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
+   add_compile_options(-Wall -Wextra)
+ endif()
+ 
++set(CMAKE_XCODE_ATTRIBUTE_OTHER_CODE_SIGN_FLAGS "-o linker-signed")
++
+ find_package(ament_cmake REQUIRED)
+ find_package(ament_cmake_python REQUIRED)
+ find_package(rcl REQUIRED)
+@@ -25,27 +27,9 @@ find_package(rcutils REQUIRED)
+ find_package(rmw REQUIRED)
+ find_package(rmw_implementation_cmake REQUIRED)
+ 
+-# Find python before pybind11
+-find_package(python_cmake_module REQUIRED)
+-find_package(PythonExtra REQUIRED)
+-
+-set(_PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}")
+-if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+-  # Set the python debug interpreter.
+-  # pybind11 will setup the build for debug now.
+-  set(PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE_DEBUG}")
+-endif()
+-
+-find_package(pybind11_vendor REQUIRED)
++find_package(Python COMPONENTS Interpreter Development)
+ find_package(pybind11 REQUIRED)
+ 
+-if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+-  # pybind11 logic for setting up a debug build when both a debug and release
+-  # python interpreter are present in the system seems to be pretty much broken.
+-  # This works around the issue.
+-  set(PYTHON_LIBRARIES "${PYTHON_DEBUG_LIBRARIES}")
+-endif()
+-
+ function(clean_windows_flags target)
+   # Hack to avoid pybind11 issue.
+   #
+@@ -109,11 +93,13 @@ endif()
+ 
+ # Set the build location and install location for a CPython extension
+ function(configure_build_install_location _library_name)
+-  # Install into test_rclpy folder in build space for unit tests to import
+-  set_target_properties(${_library_name} PROPERTIES
+-    # Use generator expression to avoid prepending a build type specific directory on Windows
+-    LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_CURRENT_BINARY_DIR}/test_rclpy>
+-    RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_CURRENT_BINARY_DIR}/test_rclpy>)
++  if(NOT $ENV{CONDA_BUILD_CROSS_COMPILATION} STREQUAL "1")
++    # Install into test_rclpy folder in build space for unit tests to import
++    set_target_properties(${_library_name} PROPERTIES
++      # Use generator expression to avoid prepending a build type specific directory on Windows
++      LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_CURRENT_BINARY_DIR}/test_rclpy>
++      RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_CURRENT_BINARY_DIR}/test_rclpy>)
++  endif()
+ 
+   # Install library for actual use
+   install(TARGETS ${_library_name}
+@@ -128,10 +114,15 @@ add_library(rclpy_common SHARED
+ )
+ target_link_libraries(rclpy_common PUBLIC
+   pybind11::pybind11
+-  ${PYTHON_LIBRARIES}
+   rcl::rcl
+   rmw::rmw
+ )
++if(NOT APPLE)
++  target_link_libraries(rclpy_common PUBLIC ${Python_LIBRARIES})
++else()
++  set_target_properties(rclpy_common PROPERTIES
++                        LINK_FLAGS "-undefined dynamic_lookup")
++endif()
+ target_include_directories(rclpy_common PUBLIC
+   src/rclpy_common/include
+ )
+@@ -147,7 +138,7 @@ install(TARGETS rclpy_common
+ )
+ 
+ # Split from main extension and converted to pybind11
+-pybind11_add_module(_rclpy_pybind11 SHARED
++add_library(_rclpy_pybind11 MODULE
+   src/rclpy/_rclpy_action.cpp
+   src/rclpy/_rclpy_handle.cpp
+   src/rclpy/_rclpy_logging.cpp
+@@ -177,6 +168,10 @@ pybind11_add_module(_rclpy_pybind11 SHARED
+   src/rclpy/utils.cpp
+   src/rclpy/wait_set.cpp
+ )
++set_target_properties(_rclpy_pybind11 PROPERTIES PREFIX "")
++if(WIN32)
++  set_target_properties(_rclpy_pybind11 PROPERTIES SUFFIX ".pyd")
++endif()
+ target_include_directories(_rclpy_pybind11 PRIVATE
+   src/rclpy/
+ )
+@@ -187,18 +182,24 @@ target_link_libraries(_rclpy_pybind11 PRIVATE
+   rclpy_common
+   rcpputils::rcpputils
+   rcutils::rcutils
++  pybind11::module
+ )
+ configure_build_install_location(_rclpy_pybind11)
+ clean_windows_flags(_rclpy_pybind11)
+ 
+ # Signal handling library
+-pybind11_add_module(_rclpy_signal_handler SHARED
++add_library(_rclpy_signal_handler MODULE
+   src/rclpy/_rclpy_signal_handler.c
+ )
++set_target_properties(_rclpy_signal_handler PROPERTIES PREFIX "")
++if(WIN32)
++  set_target_properties(_rclpy_signal_handler PROPERTIES SUFFIX ".pyd")
++endif()
+ target_link_libraries(_rclpy_signal_handler PRIVATE
+   rclpy_common
+   rcl::rcl
+   rcutils::rcutils
++  pybind11::module
+ )
+ configure_build_install_location(_rclpy_signal_handler)
+ clean_windows_flags(_rclpy_signal_handler)
+@@ -300,6 +301,5 @@ if(BUILD_TESTING)
+     endforeach()
+   endif()
+ endif()
+-set(PYTHON_EXECUTABLE "${_PYTHON_EXECUTABLE}")
+ 
+ ament_package()

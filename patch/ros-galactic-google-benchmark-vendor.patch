@@ -1,0 +1,33 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ec8f6e0..3c8b38f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -68,7 +68,8 @@ macro(build_benchmark)
+     PATCH_COMMAND
+       ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/thread_safety_attributes.patch &&
+       ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/soversion.patch &&
+-      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/shrink-tz-offset-size.patch
++      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/shrink-tz-offset-size.patch &&
++      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/link_rt.patch
+   )
+ 
+   # The external project will install to the build folder, but we'll install that on make install.
+diff --git a/link_rt.patch b/link_rt.patch
+new file mode 100644
+index 0000000..01494c5
+--- /dev/null
++++ b/link_rt.patch
+@@ -0,0 +1,13 @@
++diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
++index 35d559e..abe867d 100644
++--- a/src/CMakeLists.txt
+++++ b/src/CMakeLists.txt
++@@ -32,7 +32,7 @@ target_include_directories(benchmark PUBLIC
++ target_link_libraries(benchmark  ${BENCHMARK_CXX_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
++ find_library(LIBRT rt)
++ if(LIBRT)
++-  target_link_libraries(benchmark ${LIBRT})
+++  target_link_libraries(benchmark rt)
++ endif()
++ 
++ if(CMAKE_BUILD_TYPE)

@@ -1,0 +1,13 @@
+diff --git a/nav2_recoveries/CMakeLists.txt b/nav2_recoveries/CMakeLists.txt
+index 8af7c5b2f..fb83ff2a5 100644
+--- a/nav2_recoveries/CMakeLists.txt
++++ b/nav2_recoveries/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(nav2_recoveries)
+ 
++add_definitions(-DNOMINMAX)
++
+ find_package(ament_cmake REQUIRED)
+ find_package(nav2_common REQUIRED)
+ find_package(rclcpp REQUIRED)

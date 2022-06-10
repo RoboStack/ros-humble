@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9b79b46..084754e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -68,6 +68,7 @@ endmacro()
+ 
+ # Currently, always build.
+ # This could be improved with logic to use installed platform packages.
+-build_pybind11()
++# build_pybind11()
++find_package(pybind11 REQUIRED)
+ 
+ ament_package()

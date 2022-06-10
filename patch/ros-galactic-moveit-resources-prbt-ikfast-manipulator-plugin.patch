@@ -1,0 +1,63 @@
+diff --git a/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/CMakeLists.txt b/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/CMakeLists.txt
+index ee7e2d0bd5..a84887f89a 100644
+--- a/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/CMakeLists.txt
++++ b/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/CMakeLists.txt
+@@ -4,10 +4,12 @@ project(moveit_resources_prbt_ikfast_manipulator_plugin)
+ set(CMAKE_CXX_STANDARD 17)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+ 
+-add_compile_options(-Wall)
+-add_compile_options(-Wextra)
+-add_compile_options(-Wno-unused-parameter)
+-add_compile_options(-Wno-unused-variable)
++if(NOT WIN32)
++  add_compile_options(-Wall)
++  add_compile_options(-Wextra)
++  add_compile_options(-Wno-unused-parameter)
++  add_compile_options(-Wno-unused-variable)
++endif()
+ 
+ # enable aligned new in gcc7+
+ if(CMAKE_COMPILER_IS_GNUCXX)
+@@ -29,8 +31,11 @@ include_directories(include)
+ 
+ add_library(prbt_manipulator_moveit_ikfast_plugin SHARED
+   src/prbt_manipulator_ikfast_moveit_plugin.cpp)
+-# suppress warnings about unused variables in OpenRave's solver code
+-target_compile_options(prbt_manipulator_moveit_ikfast_plugin PRIVATE -Wno-unused-variable)
++
++if(NOT WIN32)
++  # suppress warnings about unused variables in OpenRave's solver code
++  target_compile_options(prbt_manipulator_moveit_ikfast_plugin PRIVATE -Wno-unused-variable)
++endif()
+ ament_target_dependencies(prbt_manipulator_moveit_ikfast_plugin
+   moveit_core
+   pluginlib
+diff --git a/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/src/prbt_manipulator_ikfast_solver.cpp b/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/src/prbt_manipulator_ikfast_solver.cpp
+index c1359ad572..7a238a9df7 100644
+--- a/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/src/prbt_manipulator_ikfast_solver.cpp
++++ b/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/src/prbt_manipulator_ikfast_solver.cpp
+@@ -25,10 +25,6 @@
+ #include "ikfast.h" // found inside share/openrave-X.Y/python/ikfast.h
+ using namespace ikfast;
+ 
+-// check if the included ikfast version matches what this file was compiled with
+-#define IKFAST_COMPILE_ASSERT(x) extern int __dummy[(int)x]
+-IKFAST_COMPILE_ASSERT(IKFAST_VERSION==0x1000004a);
+-
+ #include <cmath>
+ #include <vector>
+ #include <limits>
+diff --git a/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/src/prbt_manipulator_ikfast_moveit_plugin.cpp b/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/src/prbt_manipulator_ikfast_moveit_plugin.cpp
+index 7479184c92..48da20018c 100644
+--- a/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/src/prbt_manipulator_ikfast_moveit_plugin.cpp
++++ b/moveit_planners/test_configs/prbt_ikfast_manipulator_plugin/src/prbt_manipulator_ikfast_moveit_plugin.cpp
+@@ -805,7 +805,7 @@ bool IKFastKinematicsPlugin::getPositionFK(const std::vector<std::string>& link_
+     return false;
+   }
+ 
+-  IkReal angles[num_joints_];
++  IkReal* angles = new IkReal[num_joints_];
+   for (unsigned char i = 0; i < num_joints_; i++)
+     angles[i] = joint_angles[i];
+ 

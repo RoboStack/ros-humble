@@ -1,0 +1,32 @@
+diff --git a/bondcpp/CMakeLists.txt b/bondcpp/CMakeLists.txt
+index f84c947..c4d2b15 100644
+--- a/bondcpp/CMakeLists.txt
++++ b/bondcpp/CMakeLists.txt
+@@ -16,25 +16,19 @@ find_package(rclcpp_lifecycle REQUIRED)
+ find_package(smclib REQUIRED)
+ find_package(Threads REQUIRED)
+ 
+-find_package(PkgConfig REQUIRED)
+-pkg_check_modules(UUID REQUIRED uuid)
+-# we have to find the absolute path to uuid as target_link_directories is not available before cmake 3.13
+-find_library(uuid_ABS_PATH ${UUID_LIBRARIES} PATHS ${UUID_LIBRARY_DIRS})
+-
+ add_library(${PROJECT_NAME}
+   SHARED
+   src/bond.cpp
+   src/BondSM_sm.cpp)
+ target_include_directories(${PROJECT_NAME} PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  $<INSTALL_INTERFACE:include>
+-  ${UUID_INCLUDE_DIRS})
++  $<INSTALL_INTERFACE:include>)
+ ament_target_dependencies(${PROJECT_NAME}
+   bond
+   rclcpp
+   rclcpp_lifecycle
+   smclib)
+-target_link_libraries(${PROJECT_NAME} ${uuid_ABS_PATH})
++target_link_libraries(${PROJECT_NAME})
+ 
+ install(
+   TARGETS ${PROJECT_NAME}

@@ -1,0 +1,39 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6da37d4c..e2eab3ad 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -22,7 +22,9 @@ find_package(pluginlib REQUIRED)
+ find_package(eigen3_cmake_module REQUIRED)
+ find_package(Eigen3 REQUIRED)
+ find_package(ompl REQUIRED)
+-find_package(OpenMP REQUIRED)
++if(NOT APPLE)
++  find_package(OpenMP REQUIRED)
++endif()
+ 
+ if(NOT CMAKE_CXX_STANDARD)
+   set(CMAKE_CXX_STANDARD 17)
+@@ -47,6 +49,10 @@ if(OPENMP_FOUND)
+     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
++else()
++  if(APPLE)
++    set(${OpenMP_LIBRARIES} "-fopenmp")
++  endif()
+ endif()
+ 
+ set(library_name nav2_smac_planner)
+@@ -78,7 +84,11 @@ add_library(${library_name} SHARED
+   src/node_2d.cpp
+ )
+ 
+-target_link_libraries(${library_name} ${OMPL_LIBRARIES} ${OpenMP_LIBRARIES}  OpenMP::OpenMP_CXX)
++if(NOT APPLE)
++  target_link_libraries(${library_name} ${OMPL_LIBRARIES} ${OpenMP_LIBRARIES}  OpenMP::OpenMP_CXX)
++else()
++  target_link_libraries(${library_name} ${OMPL_LIBRARIES} ${OpenMP_LIBRARIES})
++endif()
+ target_include_directories(${library_name} PUBLIC ${Eigen3_INCLUDE_DIRS})
+ 
+ ament_target_dependencies(${library_name}

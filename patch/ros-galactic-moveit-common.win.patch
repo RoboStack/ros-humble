@@ -1,0 +1,13 @@
+diff --git a/cmake/moveit_package.cmake b/cmake/moveit_package.cmake
+index 1fed492e2d..7d14b5b477 100644
+--- a/cmake/moveit_package.cmake
++++ b/cmake/moveit_package.cmake
+@@ -33,7 +33,7 @@ macro(moveit_package)
+   ament_package_xml()
+ 
+   # Enable backward_ros on every moveit package
+-  find_package(backward_ros QUIET)
++  # find_package(backward_ros QUIET)
+ 
+   if(NOT "${CMAKE_CXX_STANDARD}")
+     set(CMAKE_CXX_STANDARD 17)

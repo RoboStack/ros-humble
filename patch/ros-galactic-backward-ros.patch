@@ -1,0 +1,20 @@
+diff --git a/cmake/BackwardConfigAment.cmake b/cmake/BackwardConfigAment.cmake
+index 273a51a..aefb857 100644
+--- a/cmake/BackwardConfigAment.cmake
++++ b/cmake/BackwardConfigAment.cmake
+@@ -24,5 +24,14 @@ foreach(lib ${backward_ros_forced_LIBRARIES})
+         set(backward_ros_full_path_LIBRARIES "${backward_ros_full_path_LIBRARIES} ${lib}")
+     endif()
+ endforeach()
+-SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--no-as-needed ${backward_ros_full_path_LIBRARIES} -Wl,--as-needed ${CMAKE_EXE_LINKER_FLAGS}")
++
++set(no_as_needed)
++set(as_needed)
++
++if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++    set(no_as_needed "-Wl,--no-as-needed")
++    set(as_needed "-Wl,--as-needed")
++endif()
++
++SET(CMAKE_EXE_LINKER_FLAGS "${no_as_needed} ${backward_ros_full_path_LIBRARIES} ${as_needed} ${CMAKE_EXE_LINKER_FLAGS}")
+ 

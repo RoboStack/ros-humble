@@ -1,0 +1,12 @@
+diff --git a/nav2_common/cmake/nav2_package.cmake b/nav2_common/cmake/nav2_package.cmake
+index b00d30c17b..439f5b523a 100644
+--- a/nav2_common/cmake/nav2_package.cmake
++++ b/nav2_common/cmake/nav2_package.cmake
+@@ -45,6 +45,7 @@ macro(nav2_package)
+ 
+   # Defaults for Microsoft C++ compiler
+   if(MSVC)
++    add_definitions(-DNOMINMAX)
+     # https://blog.kitware.com/create-dlls-on-windows-without-declspec-using-new-cmake-export-all-feature/
+     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 

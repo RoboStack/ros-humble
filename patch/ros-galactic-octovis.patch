@@ -1,0 +1,12 @@
+diff --git a/CMakeModules/FindQGLViewer.cmake b/CMakeModules/FindQGLViewer.cmake
+index 982d294c..b51d8b2d 100644
+--- a/CMakeModules/FindQGLViewer.cmake
++++ b/CMakeModules/FindQGLViewer.cmake
+@@ -14,6 +14,7 @@ SET( QGLViewer_FOUND 0 CACHE BOOL "Do we have QGLViewer?" )
+ FIND_PATH( QGLVIEWER_BASE_DIR qglviewer.h
+   ${CMAKE_SOURCE_DIR}/src/extern/QGLViewer
+   ${CMAKE_SOURCE_DIR}/octovis/src/extern/QGLViewer
++  PATH_SUFFIXES QGLViewer
+ )
+ 
+ FIND_PATH( QGLViewer_INCLUDE_DIR qglviewer.h

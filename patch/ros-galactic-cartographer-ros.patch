@@ -1,0 +1,46 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ae3c115..4b361d5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -48,7 +48,14 @@ find_package(tf2_eigen REQUIRED)
+ find_package(tf2_msgs REQUIRED)
+ find_package(visualization_msgs REQUIRED)
+ 
+-find_package(LuaGoogle REQUIRED)
++# find_package(LuaGoogle REQUIRED)
++if(WIN32)
++  find_library(LUA_LIBRARY NAMES lua)
++  set(LUA_LIBRARIES "${LUA_LIBRARY}")
++else()
++  set(LUA_LIBRARY ${CMAKE_INSTALL_PREFIX}/lib/liblua${CMAKE_SHARED_LIBRARY_SUFFIX})
++endif()
++find_package(Lua REQUIRED)
+ find_package(PCL REQUIRED COMPONENTS common)
+ find_package(Eigen3 REQUIRED)
+ find_package(urdfdom_headers REQUIRED)
+@@ -59,6 +66,14 @@ if(DEFINED urdfdom_headers_VERSION)
+   endif()
+ endif()
+ 
++find_package(gflags REQUIRED)
++find_package(glog REQUIRED)
++find_package(Protobuf REQUIRED)
++
++find_package(PkgConfig)
++pkg_search_module(cairo cairo REQUIRED)
++
++
+ include_directories(
+   include
+   "."
+@@ -105,7 +120,9 @@ ament_target_dependencies(${PROJECT_NAME} PUBLIC
+ )
+ add_subdirectory("cartographer_ros")
+ 
+-target_link_libraries(${PROJECT_NAME} PUBLIC cartographer)
++target_link_directories(${PROJECT_NAME} PUBLIC ${cairo_LIBRARY_DIRS})
++target_link_libraries(${PROJECT_NAME} PUBLIC cartographer ${gflags_LIBRARIES} ${glog_LIBRARIES} ${cairo_LINK_LIBRARIES} ${Protobuf_LIBRARIES})
++target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ${cartographer_INCLUDE_DIRS})
+ 
+ # Lua
+ target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ${LUA_INCLUDE_DIR})

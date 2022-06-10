@@ -1,0 +1,13 @@
+diff --git a/src/map_io.cpp b/src/map_io.cpp
+index b26b09be38..251985f487 100644
+--- a/src/map_io.cpp
++++ b/src/map_io.cpp
+@@ -86,7 +86,7 @@ char * dirname(char * path)
+     /* This assignment is ill-designed but the XPG specs require to
+        return a string containing "." in any case no directory part is
+        found and so a static and constant string is required.  */
+-    path = reinterpret_cast<char *>(dot);
++    path = (char *)dot;
+   }
+ 
+   return path;

@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9c87714f..7076cb84 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -15,6 +15,8 @@ find_package(tf2 REQUIRED)
+ nav2_package()
+ set(CMAKE_CXX_STANDARD 17)
+ 
++add_definitions(-DNOMINMAX)
++
+ include_directories(
+   include
+ )

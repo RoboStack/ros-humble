@@ -1,0 +1,60 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 99c9e2d..e581f48 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,7 +4,7 @@ project(ros_workspace NONE)
+ find_package(ament_cmake_core REQUIRED)
+ 
+ # Collect current python 3 version
+-execute_process(COMMAND python3 -c "from distutils import sysconfig; print(sysconfig.get_python_version())" OUTPUT_VARIABLE PYTHON_MAJOR_MINOR OUTPUT_STRIP_TRAILING_WHITESPACE)
++execute_process(COMMAND python -c "from distutils import sysconfig; print(sysconfig.get_python_version())" OUTPUT_VARIABLE PYTHON_MAJOR_MINOR OUTPUT_STRIP_TRAILING_WHITESPACE)
+ 
+ # Locate ament_package template files.
+ if(WIN32)
+@@ -15,6 +15,16 @@ else()
+   set(SHELL_EXT "sh")
+ endif()
+ set(AMENT_PACKAGE_DIR "${CMAKE_INSTALL_PREFIX}/${PYTHON_INSTALL_DIR}/ament_package")
++if(NOT EXISTS "${AMENT_PACKAGE_DIR}" OR "$ENV{CONDA_BUILD_CROSS_COMPILATION}" EQUAL "1")
++  execute_process(
++    COMMAND python -c "import site; print(site.getsitepackages()[-1])"
++    OUTPUT_VARIABLE _PYTHON_SYSPREFIX
++    OUTPUT_STRIP_TRAILING_WHITESPACE
++  )
++  message(WARNING "Could not find '${AMENT_PACKAGE_DIR}', now try '${_PYTHON_SYSPREFIX}/ament_package' instead.")
++  set(AMENT_PACKAGE_DIR "${_PYTHON_SYSPREFIX}/ament_package")
++endif()
++
+ if(NOT EXISTS "${AMENT_PACKAGE_DIR}")
+   # Check for an .egg-link file and use the listed directory if it exists
+   get_filename_component(AMENT_PACKAGE_EGG_LINK "${AMENT_PACKAGE_DIR}" DIRECTORY)
+@@ -39,28 +39,7 @@ set(
+   "prepend-non-duplicate;PYTHONPATH;${PYTHON_INSTALL_DIR}")
+ 
+ # Set environment hooks for default environment.
+-if(WIN32)
+-  ament_environment_hooks("${BINARY_PATH_HOOK}" "${PYTHONPATH_HOOK}")
+-else()
+-  set(LIBRARY_PATH_HOOK "${AMENT_PACKAGE_TEMPLATE_DIR}/environment_hook/library_path.${SHELL_EXT}")
+-  # enable C language so that a trycompile can determine what the
+-  # anticipated libdir will be.
+-  enable_language(C)
+-  include(GNUInstallDirs)
+-  if(NOT ${CMAKE_INSTALL_LIBDIR} STREQUAL "lib")
+-    # register multiarch information for .dsv generation
+-    if(APPLE)
+-      set(LIBRARY_PATH_ENV_VAR "DYLD_LIBRARY_PATH")
+-    else()
+-      set(LIBRARY_PATH_ENV_VAR "LD_LIBRARY_PATH")
+-    endif()
+-    set(
+-      AMENT_CMAKE_ENVIRONMENT_HOOKS_DESC_multiarch_library_paths
+-      "prepend-non-duplicate;${LIBRARY_PATH_ENV_VAR};${CMAKE_INSTALL_LIBDIR}")
+-    set(MULTIARCH_LIBRARY_PATH_HOOK "env-hooks/multiarch_library_paths.sh.in")
+-  endif()
+-  ament_environment_hooks("${BINARY_PATH_HOOK}" "${LIBRARY_PATH_HOOK}" "${PYTHONPATH_HOOK}" ${MULTIARCH_LIBRARY_PATH_HOOK})
+-endif()
++ament_environment_hooks("${BINARY_PATH_HOOK}" "${PYTHONPATH_HOOK}")
+ 
+ # skip using ament_index/resource_index/parent_prefix_path
+ # if for Debian packages it is known that there are no underlays

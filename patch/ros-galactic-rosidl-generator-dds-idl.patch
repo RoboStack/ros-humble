@@ -1,0 +1,13 @@
+diff --git a/rosidl_generator_dds_idl/rosidl_generator_dds_idl-extras.cmake.in b/rosidl_generator_dds_idl/rosidl_generator_dds_idl-extras.cmake.in
+index 4db2e71..15d04f4 100644
+--- a/rosidl_generator_dds_idl/rosidl_generator_dds_idl-extras.cmake.in
++++ b/rosidl_generator_dds_idl/rosidl_generator_dds_idl-extras.cmake.in
+@@ -9,7 +9,7 @@ normalize_path(rosidl_generator_dds_idl_BIN
+   "${rosidl_generator_dds_idl_BIN}")
+ 
+ set(rosidl_generator_dds_idl_GENERATOR_FILES
+-  "${rosidl_generator_dds_idl_DIR}/../../../@PYTHON_INSTALL_DIR@/rosidl_generator_dds_idl/__init__.py")
++  "@PYTHON_INSTALL_DIR@/rosidl_generator_dds_idl/__init__.py")
+ normalize_path(rosidl_generator_dds_idl_GENERATOR_FILES
+   "${rosidl_generator_dds_idl_GENERATOR_FILES}")
+ 

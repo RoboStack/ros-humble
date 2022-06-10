@@ -1,0 +1,846 @@
+diff --git a/3rdparty/nanogui/CMakeLists.txt b/3rdparty/nanogui/CMakeLists.txt
+index 5918d38..a48713e 100644
+--- a/3rdparty/nanogui/CMakeLists.txt
++++ b/3rdparty/nanogui/CMakeLists.txt
+@@ -62,13 +62,16 @@ macro(CHECK_CXX_COMPILER_AND_LINKER_FLAGS _RESULT _CXX_FLAGS _LINKER_FLAGS)
+ endmacro()
+ 
+ # GLFW: Build from sources in Windows, use system version in UNIX:
+-find_package(PkgConfig QUIET)
++# find_package(PkgConfig QUIET)
+ 
+-if (PKG_CONFIG_FOUND)
+-  pkg_search_module(GLFW glfw3)
+-endif()
++# if (PKG_CONFIG_FOUND)
++#   pkg_search_module(GLFW glfw3)
++# endif()
++
++find_package(glfw3)
++set(GLFW_LIBRARIES glfw)
+ 
+-if (GLFW_FOUND)
++if (glfw3_FOUND)
+     message(STATUS "GLFW: System library found.")
+     #include_directories(${GLFW_INCLUDE_DIRS})
+     #target_link_libraries(simple ${GLFW_LIBRARIES})
+@@ -377,7 +380,8 @@ elseif (APPLE)
+     find_library(iokit_library IOKit)
+     target_link_libraries(${PROJECT_NAME} PRIVATE ${cocoa_library} ${opengl_library} ${corevideo_library} ${iokit_library})
+ elseif(CMAKE_SYSTEM MATCHES "Linux" OR CMAKE_SYSTEM_NAME MATCHES "BSD")
+-    target_link_libraries(${PROJECT_NAME} PRIVATE GL Xxf86vm Xrandr X11 pthread) # Xinerama Xcursor Xi
++    find_package(X11)
++    target_link_libraries(${PROJECT_NAME} PRIVATE GL pthread ${X11_LIBRARIES}) # Xinerama Xcursor Xi
+     if (NOT CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
+         target_link_libraries(${PROJECT_NAME} PRIVATE rt)
+     endif()
+@@ -414,7 +418,7 @@ endif()
+ set_target_properties(${PROJECT_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS 0)
+ 
+ # Includes: GLFW
+-if (GLFW_FOUND)
++if (glfw3_FOUND)
+     target_include_directories(${PROJECT_NAME} PUBLIC ${GLFW_INCLUDE_DIRS})
+     target_link_libraries(${PROJECT_NAME} PUBLIC ${GLFW_LIBRARIES})
+ else()
+@@ -500,7 +504,7 @@ if (NANOGUI_INSTALL AND EXISTS "${MRPT_SOURCE_DIR}/parse-files/mrpt-xxx-config.c
+ 	)
+ 	# 2/3: config file with manual list of dependencies:
+ 	set(MRPT_MODULE_NAME nanogui)
+-  if (NOT GLFW_FOUND) # for windows builds, mainly
++  if (NOT glfw3_FOUND) # for windows builds, mainly
+     set(ALL_DEPS_LIST glfw)
+   endif()
+ 	configure_file(
+@@ -574,7 +578,7 @@ if (NANOGUI_INSTALL AND EXISTS "${MRPT_SOURCE_DIR}/parse-files/mrpt-xxx-config.c
+         )
+ 
+     # GLFW3 if not present in the system:
+-    if (NOT GLFW_FOUND)
++    if (NOT glfw3_FOUND)
+         #
+         install(DIRECTORY
+             ext/glfw/include/GLFW
+diff --git a/apps/benchmarking-image-features/src/mainwindow.h b/apps/benchmarking-image-features/src/mainwindow.h
+index 898de8f..7e27ae7 100644
+--- a/apps/benchmarking-image-features/src/mainwindow.h
++++ b/apps/benchmarking-image-features/src/mainwindow.h
+@@ -215,7 +215,7 @@ class MainWindow : public QMainWindow
+ 	//! monocular single dataset
+ 	int tracking_image_counter;  //!< counter for moving forward in the dataset
+ 
+-	Tracker tracker_obj;  //<! tracker oject which calls the tracking method to
++	MRPTTracker tracker_obj;  //<! tracker oject which calls the tracking method to
+ 	// perform tracking
+ 
+ 	/// tracker parameter variables
+diff --git a/apps/benchmarking-image-features/src/tracker.cpp b/apps/benchmarking-image-features/src/tracker.cpp
+index 9870e88..b8944e0 100644
+--- a/apps/benchmarking-image-features/src/tracker.cpp
++++ b/apps/benchmarking-image-features/src/tracker.cpp
+@@ -23,7 +23,7 @@ using namespace mrpt::img;
+ /************************************************************************************************
+  *					    Tracker Constructor *
+  ************************************************************************************************/
+-Tracker::Tracker()
++MRPTTracker::MRPTTracker()
+ {
+ 	hasResolution = false;
+ 	step_num = 0;
+@@ -42,7 +42,7 @@ Tracker::Tracker()
+ /************************************************************************************************
+  *					    Track Them All tracker *
+  ************************************************************************************************/
+-cv::Mat Tracker::trackThemAll(
++cv::Mat MRPTTracker::trackThemAll(
+ 	vector<string> files_fullpath_tracking, int tracking_image_counter,
+ 	int remove_lost_feats, int add_new_feats, int max_feats, int patch_size,
+ 	int window_width, int window_height)
+diff --git a/apps/benchmarking-image-features/src/tracker.h b/apps/benchmarking-image-features/src/tracker.h
+index 36fe1bb..4ffb876 100644
+--- a/apps/benchmarking-image-features/src/tracker.h
++++ b/apps/benchmarking-image-features/src/tracker.h
+@@ -51,10 +51,10 @@ using namespace mrpt::vision;
+ using namespace mrpt::math;
+ using namespace mrpt::img;
+ using namespace mrpt;
+-using namespace cv;
++//using namespace cv;
+ using namespace std;
+ 
+-class Tracker
++class MRPTTracker
+ {
+    public:
+ 	bool hasResolution;
+@@ -81,7 +81,7 @@ class Tracker
+ 	/**
+ 	 * Tracker constructor to initialize the varibales for the tracker
+ 	 */
+-	Tracker();
++	MRPTTracker();
+ 
+ 	/**
+ 	 * trackThemAll this function tracks the features based on the parameters
+diff --git a/cmakemodules/FindCSparse.cmake b/cmakemodules/FindCSparse.cmake
+new file mode 100644
+index 0000000..5e21ffc
+--- /dev/null
++++ b/cmakemodules/FindCSparse.cmake
+@@ -0,0 +1,28 @@
++# Look for csparse; note the difference in the directory specifications!
++find_path(CSPARSE_INCLUDE_DIR NAMES cs.h
++  PATHS
++  /usr/include/suitesparse
++  /usr/include
++  /opt/local/include
++  /usr/local/include
++  /sw/include
++  /usr/include/ufsparse
++  /opt/local/include/ufsparse
++  /usr/local/include/ufsparse
++  /sw/include/ufsparse
++  PATH_SUFFIXES
++  suitesparse
++  )
++
++find_library(CSPARSE_LIBRARY NAMES cxsparse libcxsparse
++  PATHS
++  /usr/lib
++  /usr/local/lib
++  /opt/local/lib
++  /sw/lib
++  )
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(CSparse DEFAULT_MSG
++  CSPARSE_INCLUDE_DIR CSPARSE_LIBRARY)
++
+diff --git a/cmakemodules/FindFTDI.cmake b/cmakemodules/FindFTDI.cmake
+new file mode 100644
+index 0000000..c442527
+--- /dev/null
++++ b/cmakemodules/FindFTDI.cmake
+@@ -0,0 +1,38 @@
++# SPDX-FileCopyrightText: 2012-2021 Istituto Italiano di Tecnologia (IIT)
++# SPDX-FileCopyrightText: 2010 Ze Ji
++# SPDX-License-Identifier: BSD-3-Clause
++
++#[=======================================================================[.rst:
++FindFTDI
++--------
++
++Try to find ftdi.
++Once done this will define::
++
++ FTDI_FOUND - system has ftdi
++ FTDI_INCLUDE_DIR - ~ the ftdi include directory
++ FTDI_LIBRARY - Link these to use ftdi
++#]=======================================================================]
++
++include(FindPackageHandleStandardArgs)
++
++find_path(FTDI_INCLUDE_DIR
++          NAMES ftdi.h libftdi1/ftdi.h
++          PATHS /usr/local/include
++                /usr/include
++                /usr/include/libftdi
++                /usr/local/include/libftdi)
++
++find_library(FTDI_LIBRARY
++             NAMES ftdi ftdi1
++             PATHS /usr/lib
++                   /usr/local/lib)
++
++find_package_handle_standard_args(FTDI DEFAULT_MSG FTDI_LIBRARY)
++
++# Set package properties if FeatureSummary was included
++if(COMMAND set_package_properties)
++    set_package_properties(FTDI PROPERTIES DESCRIPTION "libFTDI - FTDI USB driver with bitbang mode")
++    set_package_properties(FTDI PROPERTIES URL "http://www.intra2net.com/en/developer/libftdi/")
++endif()
++
+diff --git a/cmakemodules/FindJsonCpp.cmake b/cmakemodules/FindJsonCpp.cmake
+new file mode 100644
+index 0000000..7520442
+--- /dev/null
++++ b/cmakemodules/FindJsonCpp.cmake
+@@ -0,0 +1,33 @@
++find_path(JsonCpp_INCLUDE_DIR "json/json.h"
++  PATH_SUFFIXES "jsoncpp"
++  DOC "jsoncpp include directory")
++mark_as_advanced(JsonCpp_INCLUDE_DIR)
++
++find_library(JsonCpp_LIBRARY
++  NAMES jsoncpp
++  DOC "jsoncpp library")
++mark_as_advanced(JsonCpp_LIBRARY)
++
++if (JsonCpp_INCLUDE_DIR AND EXISTS "${JsonCpp_INCLUDE_DIR}/json/version.h")
++  file(STRINGS "${JsonCpp_INCLUDE_DIR}/json/version.h" _JsonCpp_version_lines
++    REGEX "JSONCPP_VERSION_[A-Z]+")
++  string(REGEX REPLACE ".*# *define +JSONCPP_VERSION_MAJOR +([0-9]+).*" "\\1" _JsonCpp_version_major "${_JsonCpp_version_lines}")
++  string(REGEX REPLACE ".*# *define +JSONCPP_VERSION_MINOR +([0-9]+).*" "\\1" _JsonCpp_version_minor "${_JsonCpp_version_lines}")
++  string(REGEX REPLACE ".*# *define +JSONCPP_VERSION_PATCH +([0-9]+).*" "\\1" _JsonCpp_version_patch "${_JsonCpp_version_lines}")
++  set(JsonCpp_VERSION "${_JsonCpp_version_major}.${_JsonCpp_version_minor}.${_JsonCpp_version_patch}")
++  unset(_JsonCpp_version_major)
++  unset(_JsonCpp_version_minor)
++  unset(_JsonCpp_version_patch)
++  unset(_JsonCpp_version_lines)
++endif ()
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(JsonCpp
++  REQUIRED_VARS JsonCpp_LIBRARY JsonCpp_INCLUDE_DIR
++  VERSION_VAR JsonCpp_VERSION)
++
++if (JsonCpp_FOUND)
++  set(JsonCpp_INCLUDE_DIRS "${JsonCpp_INCLUDE_DIR}")
++  set(JsonCpp_LIBRARIES "${JsonCpp_LIBRARY}")
++endif ()
++
+diff --git a/cmakemodules/Findlibusb-1.0.cmake b/cmakemodules/Findlibusb-1.0.cmake
+index 6c8e5e7..92993ac 100644
+--- a/cmakemodules/Findlibusb-1.0.cmake
++++ b/cmakemodules/Findlibusb-1.0.cmake
+@@ -81,11 +81,11 @@ else (LIBUSB_1_LIBRARIES AND LIBUSB_1_INCLUDE_DIRS)
+   endif (LIBUSB_1_INCLUDE_DIRS AND LIBUSB_1_LIBRARIES)
+ 
+   if (LIBUSB_1_FOUND)
+-    if ($ENV{VERBOSE})
++    # if ($ENV{VERBOSE})
+       message(STATUS "Found libusb-1.0:")
+ 	  message(STATUS " - Includes: ${LIBUSB_1_INCLUDE_DIRS}")
+ 	  message(STATUS " - Libraries: ${LIBUSB_1_LIBRARIES}")
+-    endif ($ENV{VERBOSE})
++    # endif ($ENV{VERBOSE})
+   else (LIBUSB_1_FOUND)
+     if (libusb_1_FIND_REQUIRED)
+       message(FATAL_ERROR "Could not find libusb")
+@@ -95,4 +95,4 @@ else (LIBUSB_1_LIBRARIES AND LIBUSB_1_INCLUDE_DIRS)
+   # show the LIBUSB_1_INCLUDE_DIRS and LIBUSB_1_LIBRARIES variables only in the advanced view
+   mark_as_advanced(LIBUSB_1_INCLUDE_DIRS LIBUSB_1_LIBRARIES)
+ 
+-endif (LIBUSB_1_LIBRARIES AND LIBUSB_1_INCLUDE_DIRS)
+\ No newline at end of file
++endif (LIBUSB_1_LIBRARIES AND LIBUSB_1_INCLUDE_DIRS)
+diff --git a/cmakemodules/Findudev.cmake b/cmakemodules/Findudev.cmake
+new file mode 100644
+index 0000000..f91e893
+--- /dev/null
++++ b/cmakemodules/Findudev.cmake
+@@ -0,0 +1,77 @@
++# - try to find the udev library
++#
++# Cache Variables: (probably not for direct use in your scripts)
++#  UDEV_INCLUDE_DIR
++#  UDEV_SOURCE_DIR
++#  UDEV_LIBRARY
++#
++# Non-cache variables you might use in your CMakeLists.txt:
++#  UDEV_FOUND
++#  UDEV_INCLUDE_DIRS
++#  UDEV_LIBRARIES
++#
++# Requires these CMake modules:
++#  FindPackageHandleStandardArgs (known included with CMake >=2.6.2)
++#
++# Original Author:
++# Copyright 2014 Kevin M. Godby <kevin@godby.org>
++# SPDX-License-Identifier: BSL-1.0
++#
++# Distributed under the Boost Software License, Version 1.0.
++# (See accompanying file LICENSE_1_0.txt or copy at
++# http://www.boost.org/LICENSE_1_0.txt)
++
++set(UDEV_ROOT_DIR
++    "${UDEV_ROOT_DIR}"
++	CACHE
++	PATH
++    "Directory to search for udev")
++
++find_package(PkgConfig QUIET)
++if(PKG_CONFIG_FOUND)
++	pkg_check_modules(PC_LIBUDEV libudev)
++endif()
++
++find_library(UDEV_LIBRARY
++	NAMES
++	udev
++	PATHS
++	${PC_LIBUDEV_LIBRARY_DIRS}
++	${PC_LIBUDEV_LIBDIR}
++	HINTS
++	"${UDEV_ROOT_DIR}"
++	PATH_SUFFIXES
++	lib
++	)
++
++get_filename_component(_libdir "${UDEV_LIBRARY}" PATH)
++
++find_path(UDEV_INCLUDE_DIR
++	NAMES
++	libudev.h
++	PATHS
++	${PC_LIBUDEV_INCLUDE_DIRS}
++	${PC_LIBUDEV_INCLUDEDIR}
++	HINTS
++	"${_libdir}"
++	"${_libdir}/.."
++	"${UDEV_ROOT_DIR}"
++	PATH_SUFFIXES
++	include
++	)
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(udev
++	DEFAULT_MSG
++	UDEV_LIBRARY
++	UDEV_INCLUDE_DIR
++	)
++
++if(UDEV_FOUND)
++	list(APPEND UDEV_LIBRARIES ${UDEV_LIBRARY})
++	list(APPEND UDEV_INCLUDE_DIRS ${UDEV_INCLUDE_DIR})
++	mark_as_advanced(UDEV_ROOT_DIR)
++endif()
++
++mark_as_advanced(UDEV_INCLUDE_DIR
++	UDEV_LIBRARY)
+diff --git a/cmakemodules/script_assimp.cmake b/cmakemodules/script_assimp.cmake
+index 00df742..b1e3a46 100644
+--- a/cmakemodules/script_assimp.cmake
++++ b/cmakemodules/script_assimp.cmake
+@@ -1,8 +1,8 @@
+ # Check for system libassimp:
+ #  http://assimp.sourceforge.net/
+ # ===================================================
+-set(CMAKE_MRPT_HAS_ASSIMP 0)
+-set(CMAKE_MRPT_HAS_ASSIMP_SYSTEM 0)
++set(CMAKE_MRPT_HAS_ASSIMP 1)
++set(CMAKE_MRPT_HAS_ASSIMP_SYSTEM 1)
+ 
+ option(DISABLE_ASSIMP "Force not using ASSIMP library" "OFF")
+ mark_as_advanced(DISABLE_ASSIMP)
+@@ -10,100 +10,15 @@ if(DISABLE_ASSIMP)
+ 	return()
+ endif()
+ 
+-set(ASSIMP_FOUND_VIA_CMAKE 0)
++find_package(assimp REQUIRED)
++set(ASSIMP_FOUND_VIA_CMAKE 1)
+ 
+ set(EMBEDDED_ASSIMP_DIR "${MRPT_BINARY_DIR}/3rdparty/assimp")
+ 
+-# 1st) Try to locate the pkg via pkg-config:
+-find_package(PkgConfig QUIET)
+-if(PKG_CONFIG_FOUND)
+-	PKG_CHECK_MODULES(ASSIMP QUIET assimp)
+-	if (ASSIMP_FOUND)
+-		if ($ENV{VERBOSE})
+-			message(STATUS "Assimp: Found via pkg-config")
+-			message(STATUS " ASSIMP_LIBRARIES=${ASSIMP_LIBRARIES}")
+-			message(STATUS " ASSIMP_INCLUDE_DIRS=${ASSIMP_INCLUDE_DIRS}")
+-		endif ($ENV{VERBOSE})
+-
+-		set(CMAKE_MRPT_HAS_ASSIMP 1)
+-		set(CMAKE_MRPT_HAS_ASSIMP_SYSTEM 1)
+-
+-		set(ASSIMP_CXX_FLAGS ${ASSIMP_CFLAGS})
+-	endif (ASSIMP_FOUND)
+-endif(PKG_CONFIG_FOUND)
+-
+-if (NOT ASSIMP_FOUND)
+-	set(BUILD_ASSIMP ON CACHE BOOL "Build an embedded version of Assimp (3D models importer)")
+-	if (BUILD_ASSIMP)
+-
+-		# Use embedded version:
+-		# --------------------------
+-		# Include embedded version headers:
+-		include(ExternalProject)
+-		# download from GH
+-		ExternalProject_Add(EP_assimp
+-		  URL               "https://github.com/assimp/assimp/archive/v4.1.0.tar.gz"
+-		  URL_MD5           "83b53a10c38d964bd1e69da0606e2727"
+-		  SOURCE_DIR        "${MRPT_BINARY_DIR}/3rdparty/assimp/"
+-		  CMAKE_ARGS 
+-			-DASSIMP_BUILD_ASSIMP_TOOLS=OFF
+-			-DASSIMP_BUILD_SAMPLES=OFF
+-			-DASSIMP_BUILD_STATIC_LIB=ON
+-			-DASSIMP_BUILD_TESTS=OFF
+-			-DASSIMP_LIBRARY_SUFFIX=-mrpt
+-			-DCMAKE_LIBRARY_OUTPUT_PATH=${MRPT_BINARY_DIR}/lib
+-			-DLIBRARY_OUTPUT_PATH=${MRPT_BINARY_DIR}/lib
+-			-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=${MRPT_BINARY_DIR}/bin
+-			-DRUNTIME_OUTPUT_DIRECTORY=${MRPT_BINARY_DIR}/bin
+-			-DCMAKE_DEBUG_POSTFIX=${CMAKE_DEBUG_POSTFIX}
+-			-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+-		  INSTALL_COMMAND   ""
+-		  TEST_COMMAND      ""
+-		)
+-
+-		# 2nd attempt: via cmake
+-		set(ASSIMP_DIR "${EMBEDDED_ASSIMP_DIR}" CACHE PATH "Path to ASSIMP CMake config file" FORCE)
+-		find_package(ASSIMP QUIET)
+-
+-		set(ASSIMP_FOUND_VIA_CMAKE 1)
+-
+-		set(CMAKE_MRPT_HAS_ASSIMP 1)
+-		set(CMAKE_MRPT_HAS_ASSIMP_SYSTEM 0)
+-	endif (BUILD_ASSIMP)
+-endif()
+-
+ if (ASSIMP_FOUND_VIA_CMAKE)
+ 	# override wrong target libs in -config.cmake file:
+-	set(ASSIMP_LIBRARIES "")
+-
+-	if(MSVC12)
+-		set(ASSIMP_MSVC_VERSION "vc120")
+-	elseif(MSVC14)
+-		set(ASSIMP_MSVC_VERSION "vc140")
+-	endif(MSVC12)
+-
+-	if(MSVC12 OR MSVC14)
+-		set(ASSIMP_CUSTOM_LIB_NAME "assimp-mrpt-${ASSIMP_MSVC_VERSION}-mt")
+-	else()
+-		set(ASSIMP_CUSTOM_LIB_NAME "assimp")
+-		set(ASSIMP_LIBRARY_DIRS "${MRPT_BINARY_DIR}/lib")
+-	endif()
+-
+-	list(APPEND ASSIMP_LIBRARIES optimized "${ASSIMP_CUSTOM_LIB_NAME}" debug "${ASSIMP_CUSTOM_LIB_NAME}${CMAKE_DEBUG_POSTFIX}")
+-
+-	# override wrong include dirs:
+-	set(ASSIMP_INCLUDE_DIRS
+-		"${MRPT_BINARY_DIR}/3rdparty/assimp/include/"
+-		"${MRPT_BINARY_DIR}/EP_assimp-prefix/src/EP_assimp-build/include/"
+-	)
+-
+-	# Install assimp DLLs (for binary packages)
+-	if(WIN32)
+-		file(GLOB_RECURSE EXTRA_DLLS "${MRPT_BINARY_DIR}/bin/Release/assimp-*.dll" "${MRPT_BINARY_DIR}/bin/Debug/assimp-*.dll")
+-		foreach(F ${EXTRA_DLLS})
+-			install(FILES "${F}" DESTINATION bin)
+-		endforeach(F)
+-	endif()
++	set(ASSIMP_LIBRARIES assimp::assimp)
++        set(ASSIMP_INCLUDE_DIRS ${assimp_INCLUDE_DIRS})
+ endif (ASSIMP_FOUND_VIA_CMAKE)
+ 
+ # ASSIMP_ROOT_DIR - the root directory where the installation can be found
+diff --git a/cmakemodules/script_ftdi.cmake b/cmakemodules/script_ftdi.cmake
+index e089245..87b23dc 100644
+--- a/cmakemodules/script_ftdi.cmake
++++ b/cmakemodules/script_ftdi.cmake
+@@ -4,7 +4,7 @@
+ set(CMAKE_MRPT_HAS_FTDI 0)
+ 
+ # This option will be available only on Linux, hence it's declared here:
+-option(DISABLE_FTDI "Do not use the USB driver for FTDI chips" 0)
++option(DISABLE_FTDI "Do not use the USB driver for FTDI chips" 1)
+ mark_as_advanced(DISABLE_FTDI)
+ 
+ if (DISABLE_FTDI)
+@@ -13,14 +13,15 @@ endif()
+ 
+ if(UNIX)
+ 	# 1st: try to find LIBFTDI1 (1.2+)
+-	find_package(LibFTDI1 QUIET)
+-	if (LibFTDI1_FOUND)
++	find_package(FTDI REQUIRED)
++	if (FTDI_FOUND)
++                message(WARNING "USE FTDI1")
+ 		set(CMAKE_MRPT_HAS_FTDI 1)
+ 		set(CMAKE_MRPT_HAS_FTDI_SYSTEM 1)
+ 
+-		set(FTDI_INCLUDE_DIRS ${LIBFTDI_INCLUDE_DIRS})
+-		set(FTDI_LINK_DIRS ${LIBFTDI_LIBRARY_DIRS})
+-		set(FTDI_LIBS ${LIBFTDI_LIBRARIES})
++		set(FTDI_INCLUDE_DIRS ${FTDI_INCLUDE_DIR})
++		# set(FTDI_LINK_DIRS ${LIBFTDI_LIBRARY_DIRS})
++		set(FTDI_LIBS ${FTDI_LIBRARY})
+ 	else()
+ 		# 2nd: Find old libftdi
+ 		find_file(FTDI_CONFIG_FILE libftdi-config)
+@@ -45,15 +46,15 @@ if(UNIX)
+ 
+ 			pkgconfig_parse(${CMAKE_FTDI_LIBS} "FTDI")
+ 		endif(FTDI_CONFIG_FILE)
+-	endif (LibFTDI1_FOUND)
++	endif (FTDI_FOUND)
+ 
+ 	if(CMAKE_MRPT_HAS_FTDI)
+-		if($ENV{VERBOSE})
++# 		if($ENV{VERBOSE})
+ 			message(STATUS "libftdi configuration:")
+ 			message(STATUS "  FTDI_INCLUDE_DIRS: ${FTDI_INCLUDE_DIRS}")
+ 			message(STATUS "  FTDI_LINK_DIRS: ${FTDI_LINK_DIRS}")
+ 			message(STATUS "  FTDI_LIBS: ${FTDI_LIBS}")
+-		endif($ENV{VERBOSE})
++# 		endif($ENV{VERBOSE})
+ 
+ 		add_library(imp_ftdi INTERFACE IMPORTED)
+ 		set_target_properties(imp_ftdi
+diff --git a/cmakemodules/script_openni2.cmake b/cmakemodules/script_openni2.cmake
+index a0fe762..619d865 100644
+--- a/cmakemodules/script_openni2.cmake
++++ b/cmakemodules/script_openni2.cmake
+@@ -4,7 +4,7 @@
+ # =========================================================
+ set(CMAKE_MRPT_HAS_OPENNI2 0)
+ 
+-option(DISABLE_OPENNI2 "Disable the OpenNI2 library, even if automatically found" "OFF")
++option(DISABLE_OPENNI2 "Disable the OpenNI2 library, even if automatically found" "ON")
+ mark_as_advanced(DISABLE_OPENNI2)
+ 
+ if (DISABLE_OPENNI2) # Allow the user to force not using this lib
+diff --git a/cmakemodules/script_suitesparse.cmake b/cmakemodules/script_suitesparse.cmake
+index d3453d3..b6957ad 100644
+--- a/cmakemodules/script_suitesparse.cmake
++++ b/cmakemodules/script_suitesparse.cmake
+@@ -29,9 +29,9 @@ else()
+ endif()
+ 
+ if(SuiteSparse_FOUND)
+-	if($ENV{VERBOSE})
++# 	if($ENV{VERBOSE})
+ 		message(STATUS "SuiteSparse_LIBS: ${SuiteSparse_LIBRARIES}")
+-	endif()
++# 	endif()
+ 
+ 	set(CMAKE_MRPT_HAS_SUITESPARSE 1)
+ 	set(CMAKE_MRPT_HAS_SUITESPARSE_SYSTEM 1)
+diff --git a/cmakemodules/script_wxwidgets.cmake b/cmakemodules/script_wxwidgets.cmake
+index 9cbd648..87ede40 100644
+--- a/cmakemodules/script_wxwidgets.cmake
++++ b/cmakemodules/script_wxwidgets.cmake
+@@ -9,7 +9,7 @@ set(wxWidgets_MRPT_COMPONENTS_TO_SEARCH "base;core;gl;adv;aui;html" CACHE STRING
+ set(CMAKE_MRPT_HAS_WXWIDGETS 0)
+ set(wxWidgets_LIBRARIES "")
+ 
+-set(DISABLE_WXWIDGETS OFF CACHE BOOL "Forces compilation WITHOUT wxWidgets")
++set(DISABLE_WXWIDGETS ON CACHE BOOL "Forces compilation WITHOUT wxWidgets")
+ mark_as_advanced(DISABLE_WXWIDGETS)
+ if(DISABLE_WXWIDGETS)
+ 	return()
+diff --git a/cmakemodules/script_xsens.cmake b/cmakemodules/script_xsens.cmake
+index 1ca7406..0cefb60 100644
+--- a/cmakemodules/script_xsens.cmake
++++ b/cmakemodules/script_xsens.cmake
+@@ -24,7 +24,7 @@ else(WIN32)
+ 		endif (PKG_LIBUDEV_FOUND)
+ 	endif (PKG_CONFIG_FOUND)
+ endif(WIN32)
+-set(BUILD_XSENS "${DEFAULT_BUILD_MT4}" CACHE BOOL "Build xSens 4th generation libraries (interface 4th generation xSens MT* devices)")
++set(BUILD_XSENS OFF CACHE BOOL "Build xSens 4th generation libraries (interface 4th generation xSens MT* devices)")
+ 
+ # Check user doesn't enable it without prerequisites:
+ if ("${DEFAULT_BUILD_MT4}" STREQUAL "OFF" AND BUILD_XSENS)
+@@ -46,7 +46,7 @@ if (BUILD_XSENS)
+ 		# In Linux: libusb-1.0
+ 		if(PKG_LIBUSB10_FOUND)
+ 			# Perfect, we have libusb-1.0
+-			set(XSENS4_LIBS ${XSENS4_LIBS} ${PKG_LIBUDEV_LIBRARIES})
++			set(XSENS4_LIBS ${XSENS4_LIBS} ${PKG_LIBUDEV_LIBRARIES} ${PKG_LIBUSB10_LIBRARIES})
+ 		else(PKG_LIBUSB10_FOUND)
+ 			message(SEND_ERROR "BUILD_XSENS requires libusb-1.0. Install it or disable BUILD_XSENS")
+ 		endif(PKG_LIBUSB10_FOUND)
+diff --git a/libs/comms/CMakeLists.txt b/libs/comms/CMakeLists.txt
+index 8e24def..a2b6bbf 100644
+--- a/libs/comms/CMakeLists.txt
++++ b/libs/comms/CMakeLists.txt
+@@ -18,5 +18,10 @@ endif()
+ target_link_libraries(comms PRIVATE Threads::Threads)
+ 
+ if(CMAKE_MRPT_HAS_FTDI_SYSTEM)
+-    target_link_libraries(comms PRIVATE imp_ftdi)
++    # find_package(PkgConfig)
++    # pkg_check_modules(udev REQUIRED libudev)
++    # pkg_check_modules(ftdi REQUIRED libftdi1)
++    # pkg_check_modules(libusb REQUIRED libusb-1.0)
++    target_link_libraries(comms PUBLIC ${FTDI_LIBS} ${UDEV_LIBRARIES})
++    target_include_directories(comms PRIVATE ${FTDI_INCLUDE_DIRS} ${UDEV_INCLUDE_DIRS})
+ endif()
+diff --git a/libs/comms/src/CInterfaceFTDI_LIN.cpp b/libs/comms/src/CInterfaceFTDI_LIN.cpp
+index 035a27a..246a27e 100644
+--- a/libs/comms/src/CInterfaceFTDI_LIN.cpp
++++ b/libs/comms/src/CInterfaceFTDI_LIN.cpp
+@@ -15,12 +15,12 @@
+ #if defined(MRPT_OS_LINUX) || defined(MRPT_OS_APPLE)
+ 
+ #if MRPT_HAS_FTDI
+-#include <ftdi.h>
+-#if MRPT_FTDI_VERSION >= 0x120
++#include <libftdi1/ftdi.h>
++//#if MRPT_FTDI_VERSION >= 0x120
+ #include <libusb-1.0/libusb.h>
+-#else
+-#include <usb.h>
+-#endif
++//#else
++//#include <usb.h>
++//#endif
+ #endif
+ 
+ #include <mrpt/comms/CInterfaceFTDI.h>
+diff --git a/libs/core/CMakeLists.txt b/libs/core/CMakeLists.txt
+index 47c6feb..a2ef97f 100644
+--- a/libs/core/CMakeLists.txt
++++ b/libs/core/CMakeLists.txt
+@@ -16,6 +16,10 @@ if(BUILD_mrpt-core)
+ 
+ 	target_link_libraries(core PRIVATE Threads::Threads) # for WorkerThreads
+ 
++	if(UNIX AND NOT APPLE)
++		target_link_libraries(core PRIVATE rt)
++	endif()
++
+ 	# Enforce C++17 in all dependent projects:
+ 	mrpt_lib_target_requires_cpp17(core)
+ 
+diff --git a/libs/gui/CMakeLists.txt b/libs/gui/CMakeLists.txt
+index e551b17..e2faf65 100644
+--- a/libs/gui/CMakeLists.txt
++++ b/libs/gui/CMakeLists.txt
+@@ -65,4 +65,7 @@ if(BUILD_mrpt-gui)
+ 		target_link_libraries(gui PUBLIC mrpt::nanogui)
+ 	endif()
+ 
++        find_package(X11)
++        target_link_libraries(gui PRIVATE ${X11_LIBRARIES})
++
+ endif()
+diff --git a/libs/hwdrivers/CMakeLists.txt b/libs/hwdrivers/CMakeLists.txt
+index c45fc79..7e85308 100644
+--- a/libs/hwdrivers/CMakeLists.txt
++++ b/libs/hwdrivers/CMakeLists.txt
+@@ -2,6 +2,8 @@
+ #  See "DeclareMRPTLib.cmake" for explanations
+ # -------------------------------------------------
+ 
++find_package(libusb-1.0 REQUIRED)
++
+ # Build Intersense devices?
+ if(CMAKE_MRPT_HAS_INTERSENSE)
+    list(APPEND hwdrivers_EXTRA_SRCS
+@@ -78,7 +80,7 @@ endif()
+ 
+ # XSens libs:
+ if(TARGET mrpt_xsens)
+-	target_link_libraries(hwdrivers PRIVATE mrpt_xsens)
++	target_link_libraries(hwdrivers PUBLIC mrpt_xsens)
+ endif()
+ 
+ if(CMAKE_MRPT_HAS_OPENCV)
+@@ -104,6 +106,10 @@ if(UNIX)
+     target_link_libraries(hwdrivers PRIVATE dl)
+ endif()
+ 
++if(UNIX AND NOT APPLE)
++    target_link_libraries(hwdrivers PRIVATE rt)
++endif()
++
+ if(CMAKE_MRPT_HAS_OPENNI2)
+ 	target_link_libraries(hwdrivers PRIVATE ${MRPT_OPENNI2_LIBRARIES})
+ endif()
+@@ -142,9 +148,12 @@ if(CMAKE_MRPT_HAS_FREENECT)
+ 	endif()
+ endif()
+ 
+-if(NOT "${LIBUSB10_LIBS}" STREQUAL "")
+-	target_link_libraries(hwdrivers PRIVATE ${LIBUSB10_LIBS})
+-endif()
++# if(NOT "${LIBUSB10_LIBS}" STREQUAL "")
++
++find_package(udev REQUIRED)
++target_link_libraries(hwdrivers PUBLIC ${LIBUSB_1_LIBRARIES} ${UDEV_LIBRARIES})
++# endif()
++
+ 
+ # build with link on Phidget21 lib
+ if(CMAKE_MRPT_HAS_PHIDGET)
+diff --git a/libs/img/CMakeLists.txt b/libs/img/CMakeLists.txt
+index 919b683..c4882b1 100644
+--- a/libs/img/CMakeLists.txt
++++ b/libs/img/CMakeLists.txt
+@@ -21,13 +21,13 @@ if(BUILD_mrpt-img)
+ 	endif()
+ 
+ 	if(CMAKE_MRPT_HAS_OPENCV)
+-		target_link_libraries(img PRIVATE imp_opencv)
++		target_link_libraries(img PUBLIC imp_opencv)
+ 	endif()
+ 	if(CMAKE_MRPT_HAS_JPEG)
+ 		if(NOT CMAKE_MRPT_HAS_JPEG_SYSTEM)
+ 			add_dependencies(img JPEG)
+ 		endif()
+-		target_link_libraries(img PRIVATE ${JPEG_LIBRARIES})
++		target_link_libraries(img PUBLIC ${JPEG_LIBRARIES})
+ 	endif()
+ 
+ endif()
+diff --git a/libs/math/CMakeLists.txt b/libs/math/CMakeLists.txt
+index 5c9cfbb..69670b5 100644
+--- a/libs/math/CMakeLists.txt
++++ b/libs/math/CMakeLists.txt
+@@ -82,12 +82,13 @@ if(BUILD_mrpt-math)
+ 		target_compile_options(math PRIVATE /Ob2)
+ 	endif()
+ 
+-	if (NOT "${SuiteSparse_LIBRARIES}" STREQUAL "")
+-		target_link_libraries(math PRIVATE ${SuiteSparse_LIBRARIES})
+-	endif ()
+-	if (NOT "${SuiteSparse_LIBRARIES}" STREQUAL "")
+-		target_include_directories(math PUBLIC ${SuiteSparse_INCLUDE_DIRS})
+-	endif ()
++        find_package(CSparse REQUIRED)
++	# if (NOT "${SuiteSparse_LIBRARIES}" STREQUAL "")
++		target_link_libraries(math PUBLIC ${SuiteSparse_LIBRARIES} ${CSPARSE_LIBRARY})
++	# endif ()
++	# if (NOT "${SuiteSparse_LIBRARIES}" STREQUAL "")
++		target_include_directories(math PUBLIC ${SuiteSparse_INCLUDE_DIRS} ${CSPARSE_INCLUDE_DIR})
++	# endif ()
+ 
+ 	# Minimize debug info for this module:
+ 	mrpt_reduced_debug_symbols(math)
+diff --git a/libs/serialization/CMakeLists.txt b/libs/serialization/CMakeLists.txt
+index 9b711d4..79850fe 100644
+--- a/libs/serialization/CMakeLists.txt
++++ b/libs/serialization/CMakeLists.txt
+@@ -1,16 +1,8 @@
+ # Extra dependencies required by unit tests in this module:
+ # Include jsoncpp only if present (optional)
+-if (CMAKE_MRPT_HAS_JSONCPP)
+-	if(TARGET "jsoncpp_lib")
+-		set(tst_json_dep "jsoncpp_lib")
+-	else()
+-		set(tst_json_dep "jsoncpp_lib_static")
+-	endif()
+-else()
+-	set(tst_json_dep "")
+-endif()
++find_package(JsonCpp REQUIRED)
+ # define those deps:
+-set_property(GLOBAL PROPERTY mrpt_serialization_UNIT_TEST_EXTRA_DEPS mrpt-io mrpt-poses ${tst_json_dep})
++set_property(GLOBAL PROPERTY mrpt_serialization_UNIT_TEST_EXTRA_DEPS mrpt-io mrpt-poses ${JsonCpp_LIBRARIES})
+ 
+ #---------------------------------------------
+ # Macro declared in "DeclareMRPTLib.cmake":
+@@ -23,5 +15,5 @@ define_mrpt_lib(
+ 	)
+ 
+ if(BUILD_mrpt-serialization)
+-	target_link_libraries(serialization PRIVATE ${tst_json_dep})
++	target_link_libraries(serialization PUBLIC ${JsonCpp_LIBRARIES})
+ endif( )
+diff --git a/libs/serialization/include/mrpt/serialization/CSchemeArchive.h b/libs/serialization/include/mrpt/serialization/CSchemeArchive.h
+index 744c14c..03ecf55 100644
+--- a/libs/serialization/include/mrpt/serialization/CSchemeArchive.h
++++ b/libs/serialization/include/mrpt/serialization/CSchemeArchive.h
+@@ -70,12 +70,6 @@ class CSchemeArchive : public mrpt::serialization::CSchemeArchiveBase_impl
+ 		m_val = val;
+ 		return *m_parent;
+ 	}
+-	mrpt::serialization::CSchemeArchiveBase& operator=(
+-		const std::nullptr_t val) override
+-	{
+-		m_val = val;
+-		return *m_parent;
+-	}
+ 	mrpt::serialization::CSchemeArchiveBase& operator=(
+ 		const std::string val) override
+ 	{
+diff --git a/libs/serialization/include/mrpt/serialization/CSchemeArchiveBase.h b/libs/serialization/include/mrpt/serialization/CSchemeArchiveBase.h
+index dfaaf22..5ee7bc2 100644
+--- a/libs/serialization/include/mrpt/serialization/CSchemeArchiveBase.h
++++ b/libs/serialization/include/mrpt/serialization/CSchemeArchiveBase.h
+@@ -32,7 +32,6 @@ class CSchemeArchiveBase_impl
+ 	virtual CSchemeArchiveBase& operator=(const uint64_t) = 0;
+ 	virtual CSchemeArchiveBase& operator=(const float) = 0;
+ 	virtual CSchemeArchiveBase& operator=(const double) = 0;
+-	virtual CSchemeArchiveBase& operator=(const std::nullptr_t) = 0;
+ 	virtual CSchemeArchiveBase& operator=(const std::string) = 0;
+ 	virtual CSchemeArchiveBase& operator=(bool) = 0;
+ 
+diff --git a/libs/system/CMakeLists.txt b/libs/system/CMakeLists.txt
+index 37c858c..cb29260 100644
+--- a/libs/system/CMakeLists.txt
++++ b/libs/system/CMakeLists.txt
+@@ -18,12 +18,15 @@ target_link_libraries(system PRIVATE Threads::Threads)
+ if(BUILD_mrpt-system)
+ 	if(WIN32)
+ 		target_link_libraries(system PRIVATE Dbghelp) # For mrpt::system::getCallStackBackTrace()
+-	else()
+-		target_link_libraries(system PRIVATE ${CMAKE_DL_LIBS}) # For mrpt::system::getCallStackBackTrace()
++	# else()
++	# 	target_link_libraries(system PRIVATE ${CMAKE_DL_LIBS}) # For mrpt::system::getCallStackBackTrace()
+ 	endif()
+ 	
+ 	# -ldl required by the plugin load mechanism loadPluginModule()
+ 	if(UNIX)
+ 		target_link_libraries(system PRIVATE dl)
+ 	endif()
++	if(UNIX AND NOT APPLE)
++		target_link_libraries(system PRIVATE rt)
++	endif()
+ endif()
+diff --git a/python/CMakeLists.txt b/python/CMakeLists.txt
+index e7dd05b..75f5afb 100644
+--- a/python/CMakeLists.txt
++++ b/python/CMakeLists.txt
+@@ -11,6 +11,7 @@ include_directories(include)
+ include_directories(
+   ${Boost_INCLUDE_DIRS}
+   ${PYTHON_INCLUDE_DIRS}
++  ${OpenCV_INCLUDE_DIRS}
+ )
+ # Find Numpy include directory
+ execute_process(
+@@ -60,7 +61,7 @@ add_definitions(-DROS_EXTENSIONS)
+ 
+ target_link_libraries(pymrpt
+   ${Boost_LIBRARIES}
+-  ${Opencv_LIBRARIES}
++  ${OpenCV_LIBRARIES}
+   Python3::Python
+ )
+ 

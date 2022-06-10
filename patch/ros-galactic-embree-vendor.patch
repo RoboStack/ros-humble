@@ -1,0 +1,22 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7032216..a2d180f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -24,6 +24,8 @@ macro(build_embree)
+   set(cmake_configure_args
+     -Wno-dev
+     -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_install
++    -DEMBREE_TUTORIALS=OFF
++    -DEMBREE_STATIC_LIB=ON
+     -DEMBREE_ISPC_SUPPORT=OFF)
+ 
+   include(ExternalProject)
+@@ -63,7 +65,7 @@ macro(build_tbb)
+   )
+ endmacro(build_tbb)
+ 
+-build_tbb()
++# build_tbb()
+ build_embree()
+ 
+ ament_export_include_directories(include)

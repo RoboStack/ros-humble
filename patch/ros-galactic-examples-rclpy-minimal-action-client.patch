@@ -1,0 +1,13 @@
+diff --git a/setup.py b/setup.py
+index 48b893bd..84b7ee25 100644
+--- a/setup.py
++++ b/setup.py
+@@ -29,7 +29,7 @@
+     tests_require=['pytest'],
+     entry_points={
+         'console_scripts': [
+-            'client = ' + package_name + '.client:main',
++            'client_actions = ' + package_name + '.client:main',
+             'client_cancel = ' + package_name + '.client_cancel:main',
+             'client_not_composable = ' + package_name + '.client_not_composable:main',
+             'client_asyncio = ' + package_name + '.client_asyncio:main',

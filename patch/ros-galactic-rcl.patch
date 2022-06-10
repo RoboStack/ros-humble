@@ -1,0 +1,34 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d0faad0a..576f826b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -18,14 +18,10 @@ include(cmake/get_default_rcl_logging_implementation.cmake)
+ get_default_rcl_logging_implementation(RCL_LOGGING_IMPL)
+ 
+ # Default to C11
+-if(NOT CMAKE_C_STANDARD)
+-  set(CMAKE_C_STANDARD 11)
+-endif()
++set(CMAKE_C_STANDARD 11)
+ 
+ # Default to C++14
+-if(NOT CMAKE_CXX_STANDARD)
+-  set(CMAKE_CXX_STANDARD 14)
+-endif()
++set(CMAKE_CXX_STANDARD 14)
+ 
+ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   add_compile_options(-Wall -Wextra -Wpedantic)
+diff --git a/src/rcl/context.c b/src/rcl/context.c
+index 5414cc5e..b082aa01 100644
+--- a/src/rcl/context.c
++++ b/src/rcl/context.c
+@@ -35,7 +35,7 @@ rcl_get_zero_initialized_context(void)
+   // this is not constexpr so it cannot be in the struct initialization
+   context.global_arguments = rcl_get_zero_initialized_arguments();
+   // ensure assumption about static storage
+-  static_assert(
++  _Static_assert(
+     sizeof(context.instance_id_storage) >= sizeof(atomic_uint_least64_t),
+     "expected rcl_context_t's instance id storage to be >= size of atomic_uint_least64_t");
+   // initialize atomic

@@ -1,0 +1,33 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8e2d4e7..85d2244 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,6 +13,7 @@ endif()
+ find_package(ament_cmake REQUIRED)
+ find_package(ignition-math6 REQUIRED)
+ find_package(rclcpp REQUIRED)
++find_package(std_msgs REQUIRED)
+ 
+ # Citadel
+ if("$ENV{IGNITION_VERSION}" STREQUAL "citadel")
+@@ -60,6 +61,7 @@ add_executable(create src/create.cpp)
+ ament_target_dependencies(create
+   rclcpp
+   ignition-math6
++  std_msgs
+ )
+ target_link_libraries(create
+   gflags
+diff --git a/package.xml b/package.xml
+index 0d22162..f99dbeb 100644
+--- a/package.xml
++++ b/package.xml
+@@ -16,7 +16,7 @@
+   <depend>libgflags-dev</depend>
+   <depend>rclcpp</depend>
+   <depend>ignition-math6</depend>
+-
++  <depend>std_msgs</depend>
+   <!-- Fortress -->
+   <depend condition="$IGNITION_VERSION == fortress">ignition-gazebo6</depend>
+   <!-- Edifice (default) -->

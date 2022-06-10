@@ -1,0 +1,18 @@
+diff --git a/ompl_interface/CMakeLists.txt b/ompl_interface/CMakeLists.txt
+index ff71c07c..0d0aef71 100644
+--- a/ompl_interface/CMakeLists.txt
++++ b/ompl_interface/CMakeLists.txt
+@@ -24,7 +24,12 @@ add_library(${MOVEIT_LIB_NAME} SHARED
+ )
+ set_target_properties(${MOVEIT_LIB_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
+ 
+-find_package(OpenMP REQUIRED)
++if(APPLE)
++  find_package(OpenMP)
++  set(OpenMP_CXX_FLAGS "-fopenmp")
++else()
++  find_package(OpenMP REQUIRED)
++endif()
+ 
+ # Used to link in ODE, an OMPL dependency, on macOS
+ if(APPLE)

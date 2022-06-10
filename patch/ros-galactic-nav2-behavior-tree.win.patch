@@ -1,0 +1,165 @@
+diff --git a/nav2_behavior_tree/CMakeLists.txt b/nav2_behavior_tree/CMakeLists.txt
+index 9de075152..ade316733 100644
+--- a/nav2_behavior_tree/CMakeLists.txt
++++ b/nav2_behavior_tree/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(nav2_behavior_tree CXX)
+ 
++add_definitions(-DNOMINMAX)
++
+ find_package(ament_cmake REQUIRED)
+ find_package(nav2_common REQUIRED)
+ find_package(rclcpp REQUIRED)
+diff --git a/nav2_behavior_tree/include/nav2_behavior_tree/bt_action_server.hpp b/nav2_behavior_tree/include/nav2_behavior_tree/bt_action_server.hpp
+index ec9779444..e423afcb4 100644
+--- a/nav2_behavior_tree/include/nav2_behavior_tree/bt_action_server.hpp
++++ b/nav2_behavior_tree/include/nav2_behavior_tree/bt_action_server.hpp
+@@ -231,11 +231,6 @@ class BtActionServer
+   // Default timeout value while waiting for response from a server
+   std::chrono::milliseconds default_server_timeout_;
+ 
+-  // Parameters for Groot monitoring
+-  bool enable_groot_monitoring_;
+-  int groot_zmq_publisher_port_;
+-  int groot_zmq_server_port_;
+-
+   // User-provided callbacks
+   OnGoalReceivedCallback on_goal_received_callback_;
+   OnLoopCallback on_loop_callback_;
+diff --git a/nav2_behavior_tree/include/nav2_behavior_tree/bt_action_server_impl.hpp b/nav2_behavior_tree/include/nav2_behavior_tree/bt_action_server_impl.hpp
+index 64f4ffa81..bb10a8830 100644
+--- a/nav2_behavior_tree/include/nav2_behavior_tree/bt_action_server_impl.hpp
++++ b/nav2_behavior_tree/include/nav2_behavior_tree/bt_action_server_impl.hpp
+@@ -59,15 +59,6 @@ BtActionServer<ActionT>::BtActionServer(
+   if (!node->has_parameter("default_server_timeout")) {
+     node->declare_parameter("default_server_timeout", 20);
+   }
+-  if (!node->has_parameter("enable_groot_monitoring")) {
+-    node->declare_parameter("enable_groot_monitoring", true);
+-  }
+-  if (!node->has_parameter("groot_zmq_publisher_port")) {
+-    node->declare_parameter("groot_zmq_publisher_port", 1666);
+-  }
+-  if (!node->has_parameter("groot_zmq_server_port")) {
+-    node->declare_parameter("groot_zmq_server_port", 1667);
+-  }
+ }
+ 
+ template<class ActionT>
+@@ -102,11 +93,6 @@ bool BtActionServer<ActionT>::on_configure()
+     node->get_node_waitables_interface(),
+     action_name_, std::bind(&BtActionServer<ActionT>::executeCallback, this));
+ 
+-  // Get parameter for monitoring with Groot via ZMQ Publisher
+-  node->get_parameter("enable_groot_monitoring", enable_groot_monitoring_);
+-  node->get_parameter("groot_zmq_publisher_port", groot_zmq_publisher_port_);
+-  node->get_parameter("groot_zmq_server_port", groot_zmq_server_port_);
+-
+   // Get parameters for BT timeouts
+   int timeout;
+   node->get_parameter("bt_loop_duration", timeout);
+@@ -156,7 +142,6 @@ bool BtActionServer<ActionT>::on_cleanup()
+   current_bt_xml_filename_.clear();
+   blackboard_.reset();
+   bt_->haltAllActions(tree_.rootNode());
+-  bt_->resetGrootMonitor();
+   bt_.reset();
+   return true;
+ }
+@@ -173,9 +158,6 @@ bool BtActionServer<ActionT>::loadBehaviorTree(const std::string & bt_xml_filena
+     return true;
+   }
+ 
+-  // if a new tree is created, than the ZMQ Publisher must be destroyed
+-  bt_->resetGrootMonitor();
+-
+   // Read the input BT XML from the specified file into a string
+   std::ifstream xml_file(filename);
+ 
+@@ -194,16 +176,6 @@ bool BtActionServer<ActionT>::loadBehaviorTree(const std::string & bt_xml_filena
+ 
+   current_bt_xml_filename_ = filename;
+ 
+-  // Enable monitoring with Groot
+-  if (enable_groot_monitoring_) {
+-    // optionally add max_msg_per_second = 25 (default) here
+-    try {
+-      bt_->addGrootMonitoring(&tree_, groot_zmq_publisher_port_, groot_zmq_server_port_);
+-    } catch (const std::logic_error & e) {
+-      RCLCPP_ERROR(logger_, "ZMQ already enabled, Error: %s", e.what());
+-    }
+-  }
+-
+   return true;
+ }
+ diff --git a/nav2_behavior_tree/src/behavior_tree_engine.cpp b/nav2_behavior_tree/src/behavior_tree_engine.cpp
+index e689cae927..ed55b08534 100644
+--- a/nav2_behavior_tree/src/behavior_tree_engine.cpp
++++ b/nav2_behavior_tree/src/behavior_tree_engine.cpp
+@@ -83,27 +83,6 @@ BehaviorTreeEngine::createTreeFromFile(
+   return factory_.createTreeFromFile(file_path, blackboard);
+ }
+ 
+-void
+-BehaviorTreeEngine::addGrootMonitoring(
+-  BT::Tree * tree,
+-  uint16_t publisher_port,
+-  uint16_t server_port,
+-  uint16_t max_msg_per_second)
+-{
+-  // This logger publish status changes using ZeroMQ. Used by Groot
+-  groot_monitor_ = std::make_unique<BT::PublisherZMQ>(
+-    *tree, max_msg_per_second, publisher_port,
+-    server_port);
+-}
+-
+-void
+-BehaviorTreeEngine::resetGrootMonitor()
+-{
+-  if (groot_monitor_) {
+-    groot_monitor_.reset();
+-  }
+-}
+-
+ // In order to re-run a Behavior Tree, we must be able to reset all nodes to the initial state
+ void
+ BehaviorTreeEngine::haltAllActions(BT::TreeNode * root_node)
+diff --git a/nav2_behavior_tree/include/nav2_behavior_tree/behavior_tree_engine.hpp b/nav2_behavior_tree/include/nav2_behavior_tree/behavior_tree_engine.hpp
+index f5aab180c..6f0c9bfb9 100644
+--- a/nav2_behavior_tree/include/nav2_behavior_tree/behavior_tree_engine.hpp
++++ b/nav2_behavior_tree/include/nav2_behavior_tree/behavior_tree_engine.hpp
+@@ -83,24 +83,6 @@ class BehaviorTreeEngine
+     const std::string & file_path,
+     BT::Blackboard::Ptr blackboard);
+ 
+-  /**
+-   * @brief Add groot monitor to publish BT status changes
+-   * @param tree BT to monitor
+-   * @param publisher_port ZMQ publisher port for the Groot monitor
+-   * @param server_port ZMQ server port for the Groot monitor
+-   * @param max_msg_per_second Maximum number of messages that can be sent per second
+-   */
+-  void addGrootMonitoring(
+-    BT::Tree * tree,
+-    uint16_t publisher_port,
+-    uint16_t server_port,
+-    uint16_t max_msg_per_second = 25);
+-
+-  /**
+-   * @brief Reset groot monitor
+-   */
+-  void resetGrootMonitor();
+-
+   /**
+    * @brief Function to explicitly reset all BT nodes to initial state
+    * @param root_node Pointer to BT root node
+@@ -110,8 +92,6 @@ class BehaviorTreeEngine
+ protected:
+   // The factory that will be used to dynamically construct the behavior tree
+   BT::BehaviorTreeFactory factory_;
+-
+-  static inline std::unique_ptr<BT::PublisherZMQ> groot_monitor_;
+ };
+ 
+ }  // namespace nav2_behavior_tree

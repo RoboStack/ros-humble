@@ -1,0 +1,14 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e4cf591..3934ec7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -59,7 +59,8 @@ macro(build_mimick)
+ 
+   include(ExternalProject)
+   set(mimick_version "f171450b5ebaa3d2538c762a059dfc6ab7a01039")
+-  externalproject_add(mimick-${mimick_version}
++  externalproject_add(mimick
++    PREFIX mck
+     GIT_REPOSITORY https://github.com/ros2/Mimick.git
+     GIT_TAG ${mimick_version}
+     GIT_CONFIG advice.detachedHead=false

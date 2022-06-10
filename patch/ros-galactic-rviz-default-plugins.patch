@@ -1,0 +1,40 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d6b1e67f..19e21299 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -219,12 +219,12 @@ add_library(rviz_default_plugins SHARED
+ target_include_directories(rviz_default_plugins PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+-  ${Qt5Widgets_INCLUDE_DIRS}
+ )
+ 
+ target_link_libraries(rviz_default_plugins PUBLIC
+   rviz_ogre_vendor::OgreMain
+   rviz_ogre_vendor::OgreOverlay
++  Qt5::Widgets
+ )
+ 
+ # Causes the visibility macros to use dllexport rather than dllimport,
+diff --git a/include/rviz_default_plugins/displays/interactive_markers/interactive_marker.hpp b/include/rviz_default_plugins/displays/interactive_markers/interactive_marker.hpp
+index 0dc32a42fd0..4a8f2b9f970 100644
+--- a/include/rviz_default_plugins/displays/interactive_markers/interactive_marker.hpp
++++ b/include/rviz_default_plugins/displays/interactive_markers/interactive_marker.hpp
+@@ -54,6 +54,8 @@
+ 
+ #include "rviz_default_plugins/displays/interactive_markers/interactive_marker_control.hpp"
+ 
++#include "rviz_default_plugins/visibility_control.hpp"
++
+ namespace Ogre
+ {
+ class SceneNode;
+@@ -72,7 +74,7 @@ namespace displays
+ {
+ class InteractiveMarkerDisplay;
+ 
+-class InteractiveMarker : public QObject
++class RVIZ_DEFAULT_PLUGINS_PUBLIC InteractiveMarker : public QObject
+ {
+   Q_OBJECT
+ 

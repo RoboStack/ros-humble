@@ -1,0 +1,26 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6c7abf3..3737f94 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -15,8 +15,8 @@ ament_auto_find_build_dependencies()
+ 
+ ## pkg-config libraries
+ find_package(PkgConfig REQUIRED)
+-pkg_check_modules(avcodec libavcodec REQUIRED)
+-pkg_check_modules(swscale libswscale REQUIRED)
++pkg_search_module(avcodec libavcodec REQUIRED)
++pkg_search_module(swscale libswscale REQUIRED)
+ 
+ include_directories(include
+   ${avcodec_INCLUDE_DIRS}
+@@ -35,8 +35,8 @@ ament_auto_add_library(${PROJECT_NAME}_node SHARED
+ 
+ target_link_libraries(${PROJECT_NAME}_node
+   ${PROJECT_NAME}
+-  ${avcodec_LIBRARIES}
+-  ${swscale_LIBRARIES}
++  ${avcodec_LINK_LIBRARIES}
++  ${swscale_LINK_LIBRARIES}
+   # TODO(lucasw) should this have been in libavcodec?
+   #avutil
+ )

@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 247381b..4474a03 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -31,7 +31,7 @@ ament_target_dependencies(spacenav
+   "rclcpp"
+   "sensor_msgs")
+ 
+-target_link_libraries(spacenav spnav)
++target_link_libraries(spacenav ${SPNAV_LIBRARIES})
+ 
+ # Install targets
+ install(TARGETS spacenav

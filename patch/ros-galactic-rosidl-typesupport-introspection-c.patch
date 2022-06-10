@@ -1,0 +1,13 @@
+diff --git a/rosidl_typesupport_introspection_c/rosidl_typesupport_introspection_c-extras.cmake.in b/rosidl_typesupport_introspection_c/rosidl_typesupport_introspection_c-extras.cmake.in
+index 004a1e62..ee3c19ab 100644
+--- a/rosidl_typesupport_introspection_c/rosidl_typesupport_introspection_c-extras.cmake.in
++++ b/rosidl_typesupport_introspection_c/rosidl_typesupport_introspection_c-extras.cmake.in
+@@ -21,7 +21,7 @@ normalize_path(rosidl_typesupport_introspection_c_BIN
+   "${rosidl_typesupport_introspection_c_BIN}")
+ 
+ set(rosidl_typesupport_introspection_c_GENERATOR_FILES
+-  "${rosidl_typesupport_introspection_c_DIR}/../../../@PYTHON_INSTALL_DIR@/rosidl_typesupport_introspection_c/__init__.py")
++  "@PYTHON_INSTALL_DIR@/rosidl_typesupport_introspection_c/__init__.py")
+ normalize_path(rosidl_typesupport_introspection_c_GENERATOR_FILES
+   "${rosidl_typesupport_introspection_c_GENERATOR_FILES}")
+ 

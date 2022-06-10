@@ -1,0 +1,44 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a0e8c892..a05ef366 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -121,6 +121,7 @@ ament_target_dependencies(rviz_rendering
+ )
+ ament_export_dependencies(
+   rviz_ogre_vendor
++  rviz_assimp_vendor
+   eigen3_cmake_module
+   Eigen3
+   resource_retriever
+diff --git a/src/rviz_rendering/material_manager.cpp b/src/rviz_rendering/material_manager.cpp
+index 3866ae00..11eede92 100644
+--- a/src/rviz_rendering/material_manager.cpp
++++ b/src/rviz_rendering/material_manager.cpp
+@@ -122,9 +122,9 @@ void MaterialManager::enableAlphaBlending(
+ 
+ void MaterialManager::createDefaultMaterials()
+ {
+-  auto material = Ogre::MaterialManager::getSingleton().create(
++  auto retrieve_result = Ogre::MaterialManager::getSingleton().createOrRetrieve(
+     "BaseWhiteNoLighting", "rviz_rendering");
+-  material->setLightingEnabled(false);
++  std::dynamic_pointer_cast<Ogre::Material>(retrieve_result.first)->setLightingEnabled(false);
+ }
+ 
+ }  // namespace rviz_rendering
+diff --git a/src/rviz_rendering/render_system.cpp b/src/rviz_rendering/render_system.cpp
+index 1765e804..eb426dd8 100644
+--- a/src/rviz_rendering/render_system.cpp
++++ b/src/rviz_rendering/render_system.cpp
+@@ -301,9 +301,9 @@ RenderSystem::setPluginDirectory()
+   std::string prefix_path;
+   ament_index_cpp::get_resource("packages", "rviz_ogre_vendor", content, &prefix_path);
+ #ifdef _WIN32
+-  set_ogre_plugin_directory(prefix_path + "\\opt\\rviz_ogre_vendor\\bin\\");
++  set_ogre_plugin_directory(prefix_path + "\\bin\\");
+ #else
+-  set_ogre_plugin_directory(prefix_path + "/opt/rviz_ogre_vendor/lib/OGRE/");
++  set_ogre_plugin_directory(prefix_path + "/lib/OGRE/");
+ #endif
+ }
+ 

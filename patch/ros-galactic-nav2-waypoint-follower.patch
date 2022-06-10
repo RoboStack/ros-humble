@@ -1,0 +1,68 @@
+diff --git a/nav2_waypoint_follower/CMakeLists.txt b/nav2_waypoint_follower/CMakeLists.txt
+index a3b46942b..b0930e1aa 100644
+--- a/nav2_waypoint_follower/CMakeLists.txt
++++ b/nav2_waypoint_follower/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(nav2_waypoint_follower)
+ 
++add_definitions(-DNOMINMAX)
++
+ # Try for OpenCV 4.X, but settle for whatever is installed
+ find_package(OpenCV 4 QUIET)
+ if(NOT OpenCV_FOUND)
+@@ -25,7 +25,11 @@ find_package(pluginlib REQUIRED)
+ 
+ nav2_package()
+ 
+-link_libraries(stdc++fs)
++if(UNIX AND NOT APPLE)
++  link_libraries(stdc++fs)
++else()
++
++endif()
+ 
+ include_directories(
+   include
+diff --git a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+index fc4aee5c5e..4198919fe2 100644
+--- a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
++++ b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+@@ -20,6 +20,7 @@
+  * to ignore deprecated declarations
+  */
+ #define _LIBCPP_NO_EXPERIMENTAL_DEPRECATION_WARNING_FILESYSTEM
++#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+ 
+ 
+ #include <experimental/filesystem>
+@@ -27,13 +28,14 @@
+ #include <string>
+ #include <exception>
+ 
++#include <opencv2/core.hpp>
++#include <opencv2/opencv.hpp>
++
+ #include "rclcpp/rclcpp.hpp"
+ #include "rclcpp_components/register_node_macro.hpp"
+ 
+ #include "sensor_msgs/msg/image.hpp"
+ #include "nav2_core/waypoint_task_executor.hpp"
+-#include "opencv4/opencv2/core.hpp"
+-#include "opencv4/opencv2/opencv.hpp"
+ #include "cv_bridge/cv_bridge.h"
+ #include "image_transport/image_transport.hpp"
+ 
+diff --git a/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp b/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
+index 7d1f4a9b1b..902ea5ff5f 100644
+--- a/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
++++ b/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
+@@ -118,7 +118,7 @@ bool PhotoAtWaypoint::processAtWaypoint(
+     std::lock_guard<std::mutex> guard(global_mutex_);
+     cv::Mat curr_frame_mat;
+     deepCopyMsg2Mat(curr_frame_msg_, curr_frame_mat);
+-    cv::imwrite(full_path_image_path.c_str(), curr_frame_mat);
++    cv::imwrite(full_path_image_path.string().c_str(), curr_frame_mat);
+     RCLCPP_INFO(
+       logger_,
+       "Photo has been taken sucessfully at waypoint %i", curr_waypoint_index);

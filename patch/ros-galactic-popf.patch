@@ -1,0 +1,173 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a2ed58a..d4236d3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,6 +16,9 @@ find_package(CoinUtils)
+ find_package(Cbc)
+ find_package(Cgl)
+ 
++find_package(BISON REQUIRED)
++find_package(FLEX REQUIRED)
++
+ set(val_SOURCE_DIR src/VALfiles)
+ set(popf_SOURCE_DIR src/popf)
+ set(parsePDDL_SOURCE_DIR ${val_SOURCE_DIR}/parsing)
+@@ -29,22 +32,11 @@ include_directories(
+   ${CBC_INCLUDES}/coin  
+   ${CPLEX_INCLUDES} 
+   ${CONCERT_INCLUDES}
++  ${FLEX_INCLUDE_DIRS}
+ )
+ 
+ ## ParsePDDL
+ 
+-find_program(BISON_EXECUTABLE bison)
+-
+-if(NOT EXISTS ${BISON_EXECUTABLE})
+-	message("Could not find bison executable.")
+-endif(NOT EXISTS ${BISON_EXECUTABLE})
+-
+-FIND_PROGRAM(FLEX_EXECUTABLE flex)
+-
+-if(NOT EXISTS ${FLEX_EXECUTABLE})
+-        message("Could not find flex executable.")
+-endif(NOT EXISTS ${FLEX_EXECUTABLE})
+-
+ add_custom_command(
+        OUTPUT
+         ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.cc
+@@ -66,7 +58,7 @@ add_custom_command(
+        DEPENDS
+         ${CMAKE_CURRENT_SOURCE_DIR}/${parsePDDL_SOURCE_DIR}/pddl+.yacc ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.cc
+        COMMAND
+-        ${CMAKE_CURRENT_SOURCE_DIR}/${parsePDDL_SOURCE_DIR}/fixyywrap ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${parsePDDL_SOURCE_DIR}/
++        ${CMAKE_CURRENT_SOURCE_DIR}/${parsePDDL_SOURCE_DIR}/fixyywrap ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${parsePDDL_SOURCE_DIR}/ ${FLEX_INCLUDE_DIRS}
+ )
+ 
+ set(libParsePDDL_SRCS
+@@ -91,6 +83,8 @@ set(libInst_SRCS
+       ${val_SOURCE_DIR}/TypeStripWC.cpp
+ )
+ 
++target_link_libraries(ParsePDDL ${FLEX_LIBRARIES})
++
+ add_library(Inst SHARED ${libInst_SRCS})
+ target_link_libraries(Inst ParsePDDL)
+ 
+@@ -129,6 +123,7 @@ add_executable(parser ${parser_SRCS})
+ 
+ target_link_libraries(parser
+         ParsePDDL
++        ${FLEX_LIBRARIES}
+ )
+ 
+ install(TARGETS validate parser ParsePDDL
+@@ -184,4 +179,4 @@ install(FILES src/popf/Popf.hpp
+ ament_export_include_directories(include)
+ ament_export_libraries(popfCommon ParsePDDL Inst ${CBC_LIBRARY} ${CGL_LIBRARIES} ${OSICLP_LIBRARIES} ${OSI_LIBRARIES} ${CLP_LIBRARIES}  ${COINUTILS_LIBRARIES})
+ ament_export_dependencies(${dependencies})
+-ament_package()
+\ No newline at end of file
++ament_package()
+diff --git a/src/VALfiles/parse.cpp b/src/VALfiles/parse.cpp
+index b51c585..5880ffe 100644
+--- a/src/VALfiles/parse.cpp
++++ b/src/VALfiles/parse.cpp
+@@ -44,6 +44,8 @@
+ #include "ptree.h"
+ #include "FlexLexer.h"
+ 
++//extern int yyFlexLexer::yywrap();
++//extern "C" int yywrap();
+ extern int yyparse();
+ extern int yydebug;
+ 
+diff --git a/src/VALfiles/parsing/CMakeLists.txt b/src/VALfiles/parsing/CMakeLists.txt
+index dd7dc8e..0627f81 100644
+--- a/src/VALfiles/parsing/CMakeLists.txt
++++ b/src/VALfiles/parsing/CMakeLists.txt
+@@ -2,18 +2,10 @@ cmake_minimum_required(VERSION 2.4)
+ 
+ project(ParsePDDL)
+ 
+-find_program(BISON_EXECUTABLE bison)
++find_package(FLEX REQUIRED)
++find_package(BISON REQUIRED)
+ 
+-if(NOT EXISTS ${BISON_EXECUTABLE})
+-	message("Could not find bison executable.")
+-endif(NOT EXISTS ${BISON_EXECUTABLE})
+-
+-
+-FIND_PROGRAM(FLEX_EXECUTABLE flex HINTS /usr/local/opt/flex/bin/)
+-
+-if(NOT EXISTS ${FLEX_EXECUTABLE})
+-        message("Could not find flex executable.")
+-endif(NOT EXISTS ${FLEX_EXECUTABLE})
++include_directories(${FLEX_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+ 
+ add_custom_command(
+        OUTPUT
+@@ -36,11 +28,9 @@ add_custom_command(
+        DEPENDS
+         ${CMAKE_CURRENT_SOURCE_DIR}/pddl+.yacc ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.cc
+        COMMAND
+-        ${CMAKE_CURRENT_SOURCE_DIR}/fixyywrap ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}
++        ${CMAKE_CURRENT_SOURCE_DIR}/fixyywrap ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${FLEX_INCLUDE_DIRS}
+ )
+ 
+-include_directories(/usr/local/opt/flex/include ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+-
+ set(libParsePDDL_SRCS
+       pddl+.cpp ptree.cpp DebugWriteController.cpp
+ )
+diff --git a/src/VALfiles/parsing/fixyywrap b/src/VALfiles/parsing/fixyywrap
+index 11aef39..be36596 100755
+--- a/src/VALfiles/parsing/fixyywrap
++++ b/src/VALfiles/parsing/fixyywrap
+@@ -1,13 +1,14 @@
+-#!/usr/bin/perl -w
++#!/usr/bin/env perl
+ 
+ $bindir = shift @ARGV;
+ $srcdir = shift @ARGV;
++$includepath = shift @ARGV;
+ 
+ # MacOS' sed requires '' as a parameter to -i
+-system("sed -i '' 's/yyerror(char/yyerror(const char/' $bindir/pddl+.cpp");
++system("sed 's/yyerror(char/yyerror(const char/' $bindir/pddl+.cpp");
+ 
+ # add Homebrew's flex include path
+-open IN, "g++ -E -I/usr/local/opt/flex/include $srcdir/fixyywrap.cpp |";
++open IN, "g++ -E -I$includepath $srcdir/fixyywrap.cpp |";
+ open OUT, "> $bindir/fixyywrap.h";
+ 
+ while (<IN>) {
+diff --git a/src/VALfiles/parsing/pddl+.lex b/src/VALfiles/parsing/pddl+.lex
+index 598c8e5..dba389c 100644
+--- a/src/VALfiles/parsing/pddl+.lex
++++ b/src/VALfiles/parsing/pddl+.lex
+@@ -8,7 +8,8 @@
+   using std::cerr;
+   using std::istream;
+   using namespace VAL;
+-extern "C" int yywrap();
++//extern int yyFlexLexer::yywrap();
++//extern "C" int yywrap();
+ 
+ %}
+ %option case-insensitive
+diff --git a/src/VALfiles/test/lex.yy.cc b/src/VALfiles/test/lex.yy.cc
+index 974fc92..cc5dfcc 100644
+--- a/src/VALfiles/test/lex.yy.cc
++++ b/src/VALfiles/test/lex.yy.cc
+@@ -1041,7 +1041,8 @@ static yyconst flex_int16_t yy_chk[1781] =
+   using std::cerr;
+   using std::istream;
+   using namespace VAL;
+-extern "C" int yywrap();
++//extern "C" int yywrap();
++//extern int yyFlexLexer::yywrap();
+ 
+ #line 1047 "lex.yy.cc"
+ 

@@ -1,0 +1,13 @@
+diff --git a/src/memory_tools/CMakeLists.txt b/src/memory_tools/CMakeLists.txt
+index 7cfbba3..3451c95 100644
+--- a/src/memory_tools/CMakeLists.txt
++++ b/src/memory_tools/CMakeLists.txt
+@@ -34,7 +34,7 @@ if(UNIX AND NOT APPLE)
+   # On Linux like systems, add dl and use the normal library and LD_PRELOAD.
+ 
+   if(DL_LIBRARY)
+-    target_link_libraries(memory_tools PUBLIC ${DL_LIBRARY})
++    target_link_libraries(memory_tools PUBLIC dl)
+   endif()
+ endif()
+ 

@@ -1,0 +1,31 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 23f11ab..846d08a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -14,7 +14,7 @@ find_package(ament_cmake_ros REQUIRED)
+ 
+ find_package(pluginlib REQUIRED)
+ find_package(rcutils REQUIRED)
+-find_package(sdformat9 REQUIRED)
++find_package(sdformat11 REQUIRED)
+ find_package(urdfdom_headers REQUIRED)
+ find_package(urdf_parser_plugin REQUIRED)
+ find_package(tinyxml2_vendor REQUIRED)
+@@ -25,7 +25,7 @@ add_library(sdformat_urdf SHARED
+   src/sdformat_urdf.cpp
+ )
+ target_link_libraries(sdformat_urdf PUBLIC
+-    sdformat9::sdformat9
++    sdformat11::sdformat11
+ )
+ target_link_libraries(sdformat_urdf PRIVATE
+   rcutils::rcutils
+@@ -50,7 +50,7 @@ target_link_libraries(sdformat_urdf_plugin PRIVATE
+ )
+ 
+ ament_export_dependencies(urdfdom_headers)
+-ament_export_dependencies(sdformat9)
++ament_export_dependencies(sdformat11)
+ 
+ install(TARGETS sdformat_urdf EXPORT sdformat_urdf-export
+   ARCHIVE DESTINATION lib

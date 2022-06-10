@@ -1,0 +1,125 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index df8d628..7d79b7c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2,25 +2,12 @@ cmake_minimum_required(VERSION 3.5)
+ project(fmilibrary_vendor)
+ 
+ find_package(ament_cmake REQUIRED)
++list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
++find_package(FMILibrary REQUIRED)
+ 
+-include(ExternalProject)
+-set(fmilibrary_version 2.2.3)
+-externalproject_add(FMILibraryProject-${fmilibrary_version}
+-  GIT_REPOSITORY https://github.com/modelon-community/fmi-library.git
+-  GIT_TAG ${fmilibrary_version}
+-  GIT_CONFIG advice.detachedHead=false
+-  # Suppress git update due to https://gitlab.kitware.com/cmake/cmake/-/issues/16419
+-  UPDATE_COMMAND ""
+-  TIMEOUT 60
+-)
+-externalproject_get_property(FMILibraryProject-${fmilibrary_version} INSTALL_DIR)
+-set(FMILibraryProject_INCLUDE_DIR "${INSTALL_DIR}/src/install/include")
+-set(FMILibraryProject_LIB_DIR "${INSTALL_DIR}/src/install/lib")
++install(DIRECTORY cmake DESTINATION share/${PROJECT_NAME})
+ 
+-install(DIRECTORY ${FMILibraryProject_INCLUDE_DIR}/ DESTINATION include)
+-install(FILES ${FMILibraryProject_LIB_DIR}/libfmilib.a DESTINATION lib)
+-install(FILES ${FMILibraryProject_LIB_DIR}/libfmilib_shared.so DESTINATION lib)
++ament_package(
++  CONFIG_EXTRAS "fmilibrary_vendor-extras.cmake"	
++)
+ 
+-ament_export_include_directories(include)
+-ament_export_libraries(libfmilib.a libfmilib_shared.so)
+-ament_package()
+diff --git a/cmake/Modules/FindFMILibrary.cmake b/cmake/Modules/FindFMILibrary.cmake
+new file mode 100644
+index 0000000..acafc81
+--- /dev/null
++++ b/cmake/Modules/FindFMILibrary.cmake
+@@ -0,0 +1,73 @@
++#.rst:
++# FindFMILibrary
++# -----------
++#
++# Find the FMI Library.
++#
++# IMPORTED Targets
++# ^^^^^^^^^^^^^^^^
++#
++# This module defines the following :prop_tgt:`IMPORTED` targets if
++# FMILibrary has been found::
++#
++#   FMILibrary::FMILibrary
++#
++# Result Variables
++# ^^^^^^^^^^^^^^^^
++#
++# This module defines the following variables::
++#
++#   FMILibrary_FOUND           - System has FMILibrary
++#   FMILibrary_INCLUDE_DIRS         - Include directories for FMILibrary
++#   FMILibrary_LIBRARIES            - imported targets to link against FMILibrary
++#
++# Readed enviromental variables
++# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++#
++# This module reads hints about search locations from variables::
++#
++#   FMILibrary_ROOT                 - Directory containing the include and lib directories
++
++#=============================================================================
++# Copyright 2017 Silvio Traversaro
++#
++# Distributed under the OSI-approved BSD License (the "License");
++# see accompanying file Copyright.txt for details.
++#
++# This software is distributed WITHOUT ANY WARRANTY; without even the
++# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
++# See the License for more information.
++
++
++find_path(FMILibrary_INCLUDE_DIR fmilib.h
++          HINTS $ENV{FMILibrary_ROOT}/include)
++
++find_library(FMILibrary_LIBRARY
++             NAMES fmilib_shared libfmilib_shared
++             HINTS $ENV{FMILibrary_ROOT}/lib)
++
++mark_as_advanced(FMILibrary_INCLUDE_DIR
++                 FMILibrary_LIBRARY)
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(FMILibrary
++                                  FOUND_VAR FMILibrary_FOUND
++                                  REQUIRED_VARS FMILibrary_LIBRARY FMILibrary_INCLUDE_DIR)
++
++if(FMILibrary_FOUND)
++    if(NOT TARGET FMILibrary::FMILibrary)
++      add_library(FMILibrary::FMILibrary UNKNOWN IMPORTED)
++      set_target_properties(FMILibrary::FMILibrary PROPERTIES
++                            INTERFACE_INCLUDE_DIRECTORIES "${FMILibrary_INCLUDE_DIR}"
++                            IMPORTED_LOCATION "${FMILibrary_LIBRARY}")
++    endif()
++
++    set(FMILibrary_LIBRARIES FMILibrary::FMILibrary)
++    set(FMILibrary_INCLUDE_DIRS "${FMILibrary_INCLUDE_DIR}")
++
++    # Set package properties if FeatureSummary was included
++    if(COMMAND set_package_properties)
++        set_package_properties(FMILibrary PROPERTIES DESCRIPTION "FMILibrary"
++                                                     URL "http://www.jmodelica.org/FMILibrary")
++    endif()
++endif()
+diff --git a/fmilibrary_vendor-extras.cmake b/fmilibrary_vendor-extras.cmake
+new file mode 100644
+index 0000000..5f076e3
+--- /dev/null
++++ b/fmilibrary_vendor-extras.cmake
+@@ -0,0 +1,4 @@
++list(INSERT CMAKE_MODULE_PATH 0 "${fmilibrary_vendor_DIR}/Modules")
++
++find_package(FMILibrary REQUIRED)
++set(fmilibrary_vendor_LIBRARIES FMILibrary::FMILibrary)

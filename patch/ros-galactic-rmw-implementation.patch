@@ -1,0 +1,18 @@
+diff --git a/rmw_implementation-extras.cmake.in b/rmw_implementation-extras.cmake.in
+index 7f89a49..3b9b1c5 100644
+--- a/rmw_implementation-extras.cmake.in
++++ b/rmw_implementation-extras.cmake.in
+@@ -54,5 +54,13 @@ else()
+   # since this code is already part of a find_package call of that package
+ endif()
+ 
++IF(APPLE)
++    set(CMAKE_THREAD_LIBS_INIT "-lpthread")
++    set(CMAKE_HAVE_THREADS_LIBRARY 1)
++    set(CMAKE_USE_WIN32_THREADS_INIT 0)
++    set(CMAKE_USE_PTHREADS_INIT 1)
++    set(THREADS_PREFER_PTHREAD_FLAG ON)
++ENDIF()
++
+ find_package(Threads REQUIRED)
+ list(APPEND rmw_implementation_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}")

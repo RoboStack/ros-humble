@@ -1,0 +1,214 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e8a1cef..95efce6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -28,28 +28,21 @@ if(NOT CMAKE_CXX_STANDARD)
+   set(CMAKE_CXX_STANDARD 14)
+ endif()
+ 
+-if(${ROS_VERSION} EQUAL 1)
+-  cmake_minimum_required(VERSION 2.8.3)
++cmake_minimum_required(VERSION 3.5)
+ 
+-  # find dependencies
+-  find_package(catkin REQUIRED)
+-elseif(${ROS_VERSION} EQUAL 2)
+-  cmake_minimum_required(VERSION 3.5)
+-
+-  if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+-    add_compile_options(-Wall -Wextra -Wpedantic)
+-  endif()
+-
+-  # find dependencies
+-  find_package(ament_cmake REQUIRED)
++if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
++add_compile_options(-Wall -Wextra -Wpedantic)
+ endif()
+ 
++# find dependencies
++find_package(ament_cmake REQUIRED)
++
+ include(ExternalProject)
+ 
+ set(PATCH_FILE ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.patch)
+-if(ROS_VERSION EQUAL 2)
+-  set(PATCH_FILE ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.gpu.patch)
+-endif()
++# if(ROS_VERSION EQUAL 2)
++#   set(PATCH_FILE ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.gpu.patch)
++# endif()
+ 
+ ExternalProject_Add(tvm-build
+   GIT_REPOSITORY https://github.com/apache/incubator-tvm
+@@ -66,8 +59,8 @@ ExternalProject_Add(tvm-build
+ ExternalProject_Add_Step(tvm-build dmlc-build
+   DEPENDEES patch
+   WORKING_DIRECTORY <SOURCE_DIR>/3rdparty/dmlc-core
+-  COMMAND ${CMAKE_COMMAND} --configure -DCMAKE_POSITION_INDEPENDENT_CODE=ON .
+-  COMMAND ${CMAKE_MAKE_PROGRAM}
++  COMMAND ${CMAKE_COMMAND} -DCMAKE_POSITION_INDEPENDENT_CODE=ON .
++  COMMAND make VERBOSE=1
+   BYPRODUCTS libdmlc.a
+ )
+ 
+@@ -85,89 +78,40 @@ add_library(dmlc STATIC IMPORTED
+   IMPORTED_LOCATION ${SOURCE_DIR}/3rdparty/dmlc-core
+ )
+ 
+-if(${ROS_VERSION} EQUAL 1)
+-  catkin_package(
+-    INCLUDE_DIRS include
+-    LIBRARIES
+-      tvm
+-      tvm_runtime
+-      dmlc
+-    EXPORTED_TARGETS tvm-build
+-  )
+-
+-  add_custom_command(TARGET tvm-build POST_BUILD
+-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/tvm
+-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/include/tvm/runtime/ ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/tvm/runtime
+-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CATKIN_DEVEL_PREFIX}/lib
+-    COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DIR}/libtvm.so ${CATKIN_DEVEL_PREFIX}/lib
+-    COMMAND ${CMAKE_COMMAND} -E copy ${SOURCE_DIR}/libtvm_runtime.so ${CATKIN_DEVEL_PREFIX}/lib
+-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/dlpack
+-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/dlpack/dlpack.h
+-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/dlpack/dlpackcpp.h
+-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc/ ${CMAKE_CURRENT_SOURCE_DIR}/include/tvm_vendor/dmlc
+-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a ${CATKIN_DEVEL_PREFIX}/lib/libdmlc.a
+-  )
+-
+-  install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime
+-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/tvm
+-  )
+-
+-  install(
+-    FILES
+-      ${SOURCE_DIR}/libtvm.so
+-      ${SOURCE_DIR}/libtvm_runtime.so
+-    DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+-  )
+-
+-  install(
+-    FILES
+-      ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h
+-      ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h
+-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}/dlpack
+-  )
+-
+-  install(DIRECTORY ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc
+-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+-  )
+-  
+-  install(FILES ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a
+-    DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+-  )
+-elseif(${ROS_VERSION} EQUAL 2)
+-  ament_export_include_directories(include include/tvm_vendor)
+-  ament_export_libraries(tvm tvm_runtime)
+-
+-  install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
+-    DESTINATION include/${PROJECT_NAME}/tvm/runtime
+-  )
+-
+-  install(
+-    FILES
+-      ${SOURCE_DIR}/libtvm.so
+-      ${SOURCE_DIR}/libtvm_runtime.so
+-    DESTINATION lib
+-  )
+-
+-  install(
+-    FILES
+-      ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h
+-      ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h
+-    DESTINATION include/${PROJECT_NAME}/dlpack
+-  )
+-
+-  install(DIRECTORY ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc
+-    DESTINATION include/${PROJECT_NAME}
+-  )
+-
+-  install(FILES ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a
+-    DESTINATION lib
+-  )
+-
+-  install(
+-    FILES
+-      cmake/tvm_runtimeConfig.cmake
+-      cmake/tvmConfig.cmake
+-    DESTINATION share/${PROJECT_NAME}/cmake)
+-
+-  ament_package()
+-endif()
++
++ament_export_include_directories(include include/tvm_vendor)
++ament_export_libraries(tvm tvm_runtime)
++
++install(DIRECTORY ${SOURCE_DIR}/include/tvm/runtime/
++DESTINATION include/${PROJECT_NAME}/tvm/runtime
++)
++
++install(
++FILES
++  ${SOURCE_DIR}/libtvm.so
++  ${SOURCE_DIR}/libtvm_runtime.so
++DESTINATION lib
++)
++
++install(
++FILES
++  ${SOURCE_DIR}/3rdparty/dlpack/include/dlpack/dlpack.h
++  ${SOURCE_DIR}/3rdparty/dlpack/contrib/dlpack/dlpackcpp.h
++DESTINATION include/${PROJECT_NAME}/dlpack
++)
++
++install(DIRECTORY ${SOURCE_DIR}/3rdparty/dmlc-core/include/dmlc
++DESTINATION include/${PROJECT_NAME}
++)
++
++install(FILES ${SOURCE_DIR}/3rdparty/dmlc-core/libdmlc.a
++DESTINATION lib
++)
++
++install(
++FILES
++  cmake/tvm_runtimeConfig.cmake
++  cmake/tvmConfig.cmake
++DESTINATION share/${PROJECT_NAME}/cmake)
++
++ament_package()
+diff --git a/config.cmake.patch b/config.cmake.patch
+index 64d8cf9..83d5f29 100644
+--- a/config.cmake.patch
++++ b/config.cmake.patch
+@@ -11,4 +11,28 @@ index 9754385fa..530c4bee1 100644
+  
+  # Whether to use MKL
+  # Possible values:
+-
++diff --git a/cmake/modules/contrib/BLAS.cmake b/cmake/modules/contrib/BLAS.cmake
++index 06c875588..05a65e208 100644
++--- a/cmake/modules/contrib/BLAS.cmake
+++++ b/cmake/modules/contrib/BLAS.cmake
++@@ -19,6 +19,20 @@ if(USE_BLAS STREQUAL "openblas")
++   find_library(BLAS_LIBRARY openblas)
++   list(APPEND TVM_RUNTIME_LINKER_LIBS ${BLAS_LIBRARY})
++   list(APPEND RUNTIME_SRCS src/runtime/contrib/cblas/cblas.cc)
+++
+++  find_path(CBLAS_INCLUDE_DIRS
+++    NAMES cblas.h
+++    HINTS ${CBLAS_HINTS}
+++    PATH_SUFFIXES
+++      include inc include/x86_64 include/x64
+++      openblas/include include/blis blis/include blis/include/blis
+++      Accelerate.framework/Versions/Current/Frameworks/vecLib.framework/Versions/Current/Headers
+++    PATHS ${CBLAS_PATHS}
+++    DOC "Netlib BLAS include header cblas.h"
+++  )
+++
+++  include_directories(${CBLAS_INCLUDE_DIRS})
+++
++   message(STATUS "Using BLAS library " ${BLAS_LIBRARY})
++ elseif(USE_BLAS STREQUAL "atlas" OR USE_BLAS STREQUAL "blas")
++   find_library(BLAS_LIBRARY cblas)

@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index aa99d8d..8327d4e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ cmake_minimum_required(VERSION 3.0.2)
+ project(mrt_cmake_modules)
+ 
+-if($ENV{ROS_VERSION} EQUAL 1)
++if(2 EQUAL 1)
+     find_package(catkin REQUIRED)
+     catkin_package(CFG_EXTRAS mrt_cmake_modules-extras.cmake)
+ else()

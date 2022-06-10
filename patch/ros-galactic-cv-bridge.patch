@@ -1,0 +1,87 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 642d32f..f0d26ac 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -12,30 +12,12 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   add_compile_options(-Wall -Wextra)
+ endif()
+ 
+-if(NOT ANDROID)
+-  find_package(PythonLibs)
+-  if(PYTHONLIBS_VERSION_STRING VERSION_LESS 3)
+-    find_package(Boost REQUIRED python)
+-  else()
+-    find_package(Boost QUIET)
+-    if(Boost_VERSION LESS 106500)
+-      find_package(Boost REQUIRED python)
+-    else()
+-      # This is a bit of a hack to suppress a warning
+-      #   No header defined for python3; skipping header check
+-      # Which should only affect Boost versions < 1.67
+-      # Resolution for newer versions:
+-      #  https://gitlab.kitware.com/cmake/cmake/issues/16391
+-      if (Boost_VERSION LESS 106700)
+-        set(_Boost_PYTHON3_HEADERS "boost/python.hpp")
+-      endif()
+-      find_package(Boost COMPONENTS python3 REQUIRED)
+-    endif()
+-  endif()
+-else()
+-  find_package(Boost REQUIRED)
++if(WIN32)
++add_definitions(/DBOOST_PYTHON_STATIC_LIB)
+ endif()
+ 
++find_package(Boost REQUIRED python)
++
+ find_package(sensor_msgs REQUIRED)
+ 
+ find_package(OpenCV 4 QUIET
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 9e2cf45..9581fd4 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -10,9 +10,14 @@ ament_target_dependencies(${PROJECT_NAME}
+   "OpenCV"
+   "sensor_msgs"
+ )
++link_directories(${Boost_LIBRARY_DIRS})
+ target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${OpenCV_LIBRARIES})
+ 
+-install(TARGETS ${PROJECT_NAME} DESTINATION lib)
++install(TARGETS ${PROJECT_NAME}
++  ARCHIVE DESTINATION lib
++  LIBRARY DESTINATION lib
++  RUNTIME DESTINATION bin
++)
+ 
+ install(FILES
+   ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/${PROJECT_NAME}_export.h
+@@ -38,7 +43,7 @@ if(NOT PYTHON_NUMPY_INCLUDE_DIR)
+   endif()
+ endif()
+ 
+-include_directories(${PYTHON_INCLUDE_PATH} ${PYTHON_NUMPY_INCLUDE_DIR})
++include_directories(${PYTHON_INCLUDE_PATH} ${PYTHON_NUMPY_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
+ 
+ if(PYTHON_VERSION_MAJOR VERSION_EQUAL 3)
+   add_definitions(-DPYTHON3)
+@@ -56,6 +61,7 @@ endif()
+ target_link_libraries(${PROJECT_NAME}_boost
+   ${PYTHON_LIBRARIES}
+   ${PROJECT_NAME}
++  ${Boost_LIBRARIES}
+ )
+ 
+ set_target_properties(${PROJECT_NAME}_boost PROPERTIES
+@@ -66,6 +72,10 @@ if(APPLE)
+   set_target_properties(${PROJECT_NAME}_boost PROPERTIES
+                         SUFFIX ".so")
+ endif()
++if(MSVC)
++  set_target_properties(${PROJECT_NAME}_boost PROPERTIES
++                        SUFFIX ".pyd")
++endif()
+ 
+ install(TARGETS ${PROJECT_NAME}_boost DESTINATION ${PYTHON_INSTALL_DIR}/${PROJECT_NAME}/boost/)
+ endif()

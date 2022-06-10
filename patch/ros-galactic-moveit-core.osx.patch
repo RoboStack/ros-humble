@@ -1,0 +1,164 @@
+diff --git a/background_processing/include/moveit/background_processing/background_processing.h b/background_processing/include/moveit/background_processing/background_processing.h
+index 3ecb98b5..5a7c5f48 100644
+--- a/background_processing/include/moveit/background_processing/background_processing.h
++++ b/background_processing/include/moveit/background_processing/background_processing.h
+@@ -38,7 +38,7 @@
+ 
+ #include <deque>
+ #include <string>
+-#include <boost/thread.hpp>
++#include <thread>
+ #include <boost/function.hpp>
+ #include <boost/noncopyable.hpp>
+ #include <memory>
+@@ -96,11 +96,11 @@ public:
+   void clearJobUpdateEvent();
+ 
+ private:
+-  std::unique_ptr<boost::thread> processing_thread_;
++  std::unique_ptr<std::thread> processing_thread_;
+   bool run_processing_thread_;
+ 
+-  mutable boost::mutex action_lock_;
+-  boost::condition_variable new_action_condition_;
++  mutable std::mutex action_lock_;
++  std::condition_variable new_action_condition_;
+   std::deque<JobCallback> actions_;
+   std::deque<std::string> action_names_;
+ 
+diff --git a/background_processing/src/background_processing.cpp b/background_processing/src/background_processing.cpp
+index 7e7b2447..348caf53 100644
+--- a/background_processing/src/background_processing.cpp
++++ b/background_processing/src/background_processing.cpp
+@@ -49,7 +49,7 @@ BackgroundProcessing::BackgroundProcessing()
+   // spin a thread that will process user events
+   run_processing_thread_ = true;
+   processing_ = false;
+-  processing_thread_ = std::make_unique<boost::thread>(boost::bind(&BackgroundProcessing::processingThread, this));
++  processing_thread_ = std::make_unique<std::thread>(std::bind(&BackgroundProcessing::processingThread, this));
+ }
+ 
+ BackgroundProcessing::~BackgroundProcessing()
+@@ -61,7 +61,7 @@ BackgroundProcessing::~BackgroundProcessing()
+ 
+ void BackgroundProcessing::processingThread()
+ {
+-  boost::unique_lock<boost::mutex> ulock(action_lock_);
++  std::unique_lock<std::mutex> ulock(action_lock_);
+ 
+   while (run_processing_thread_)
+   {
+@@ -99,7 +99,7 @@ void BackgroundProcessing::processingThread()
+ void BackgroundProcessing::addJob(const boost::function<void()>& job, const std::string& name)
+ {
+   {
+-    boost::mutex::scoped_lock _(action_lock_);
++    std::scoped_lock _(action_lock_);
+     actions_.push_back(job);
+     action_names_.push_back(name);
+     new_action_condition_.notify_all();
+@@ -113,7 +113,7 @@ void BackgroundProcessing::clear()
+   bool update = false;
+   std::deque<std::string> removed;
+   {
+-    boost::mutex::scoped_lock _(action_lock_);
++    std::scoped_lock _(action_lock_);
+     update = !actions_.empty();
+     actions_.clear();
+     action_names_.swap(removed);
+@@ -125,13 +125,13 @@ void BackgroundProcessing::clear()
+ 
+ std::size_t BackgroundProcessing::getJobCount() const
+ {
+-  boost::mutex::scoped_lock _(action_lock_);
++  std::scoped_lock _(action_lock_);
+   return actions_.size() + (processing_ ? 1 : 0);
+ }
+ 
+ void BackgroundProcessing::setJobUpdateEvent(const JobUpdateCallback& event)
+ {
+-  boost::mutex::scoped_lock _(action_lock_);
++  std::scoped_lock _(action_lock_);
+   queue_change_event_ = event;
+ }
+ 
+diff --git a/profiler/include/moveit/profiler/profiler.h b/profiler/include/moveit/profiler/profiler.h
+index 3ea38f58..10e72e10 100644
+--- a/profiler/include/moveit/profiler/profiler.h
++++ b/profiler/include/moveit/profiler/profiler.h
+@@ -56,7 +56,7 @@
+ #include <map>
+ #include <string>
+ #include <iostream>
+-#include <boost/thread.hpp>
++#include <thread>
+ #include <boost/noncopyable.hpp>
+ #include <boost/date_time/posix_time/posix_time.hpp>
+ 
+@@ -304,8 +304,8 @@ private:
+ 
+   void printThreadInfo(std::ostream& out, const PerThread& data);
+ 
+-  boost::mutex lock_;
+-  std::map<boost::thread::id, PerThread> data_;
++  std::mutex lock_;
++  std::map<std::thread::id, PerThread> data_;
+   TimeInfo tinfo_;
+   bool running_;
+   bool printOnDestroy_;
+diff --git a/profiler/src/profiler.cpp b/profiler/src/profiler.cpp
+index 69a0bf39..00a53ba4 100644
+--- a/profiler/src/profiler.cpp
++++ b/profiler/src/profiler.cpp
+@@ -88,14 +88,14 @@ void Profiler::clear()
+ void Profiler::event(const std::string& name, const unsigned int times)
+ {
+   lock_.lock();
+-  data_[boost::this_thread::get_id()].events[name] += times;
++  data_[std::this_thread::get_id()].events[name] += times;
+   lock_.unlock();
+ }
+ 
+ void Profiler::average(const std::string& name, const double value)
+ {
+   lock_.lock();
+-  AvgInfo& a = data_[boost::this_thread::get_id()].avg[name];
++  AvgInfo& a = data_[std::this_thread::get_id()].avg[name];
+   a.total += value;
+   a.totalSqr += value * value;
+   a.parts++;
+@@ -105,14 +105,14 @@ void Profiler::average(const std::string& name, const double value)
+ void Profiler::begin(const std::string& name)
+ {
+   lock_.lock();
+-  data_[boost::this_thread::get_id()].time[name].set();
++  data_[std::this_thread::get_id()].time[name].set();
+   lock_.unlock();
+ }
+ 
+ void Profiler::end(const std::string& name)
+ {
+   lock_.lock();
+-  data_[boost::this_thread::get_id()].time[name].update();
++  data_[std::this_thread::get_id()].time[name].update();
+   lock_.unlock();
+ }
+ 
+@@ -136,7 +136,7 @@ void Profiler::status(std::ostream& out, bool merge)
+   if (merge)
+   {
+     PerThread combined;
+-    for (std::map<boost::thread::id, PerThread>::const_iterator it = data_.begin(); it != data_.end(); ++it)
++    for (std::map<std::thread::id, PerThread>::const_iterator it = data_.begin(); it != data_.end(); ++it)
+     {
+       for (const std::pair<const std::string, unsigned long int>& event : it->second.events)
+         combined.events[event.first] += event.second;
+@@ -160,7 +160,7 @@ void Profiler::status(std::ostream& out, bool merge)
+     printThreadInfo(out, combined);
+   }
+   else
+-    for (std::map<boost::thread::id, PerThread>::const_iterator it = data_.begin(); it != data_.end(); ++it)
++    for (std::map<std::thread::id, PerThread>::const_iterator it = data_.begin(); it != data_.end(); ++it)
+     {
+       out << "Thread " << it->first << ":\n";
+       printThreadInfo(out, it->second);
