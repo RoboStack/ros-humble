@@ -1,29 +1,29 @@
-diff --git a/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake b/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake
-index 4af35d6..8db124a 100644
---- a/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake
-+++ b/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake
+diff --git a/cmake/rosidl_generator_py_generate_interfaces.cmake b/cmake/rosidl_generator_py_generate_interfaces.cmake
+index a6d8263..9d01240 100644
+--- a/cmake/rosidl_generator_py_generate_interfaces.cmake
++++ b/cmake/rosidl_generator_py_generate_interfaces.cmake
 @@ -17,7 +17,7 @@ find_package(rosidl_runtime_c REQUIRED)
  find_package(rosidl_typesupport_c REQUIRED)
  find_package(rosidl_typesupport_interface REQUIRED)
  
--find_package(PythonInterp 3.5 REQUIRED)
+-find_package(PythonInterp 3.6 REQUIRED)
 +find_package(Python3 REQUIRED COMPONENTS Interpreter NumPy)
  
  find_package(python_cmake_module REQUIRED)
  find_package(PythonExtra MODULE REQUIRED)
-@@ -126,10 +126,8 @@ endif()
+@@ -126,10 +126,7 @@ endif()
  
  set(_target_suffix "__py")
  
-+set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
- set(_PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE})
+-set(_PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE})
 -if(WIN32 AND "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 -  set(PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE_DEBUG})
 -endif()
++set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
  
  # move custom command into a subdirectory to avoid multiple invocations on Windows
  set(_subdir "${CMAKE_CURRENT_BINARY_DIR}/${rosidl_generate_interfaces_TARGET}${_target_suffix}")
-@@ -169,10 +169,17 @@ add_dependencies(
+@@ -172,10 +169,16 @@ add_dependencies(
    ${rosidl_generate_interfaces_TARGET}__rosidl_typesupport_c
  )
  
@@ -31,7 +31,6 @@ index 4af35d6..8db124a 100644
 -  ${_target_name_lib}
 -  ${PythonExtra_LIBRARIES}
 -)
-+
 +if(NOT APPLE)
 +  target_link_libraries(
 +    ${_target_name_lib}
@@ -43,9 +42,9 @@ index 4af35d6..8db124a 100644
 +endif()
 +
  target_include_directories(${_target_name_lib}
-   PUBLIC
+   PRIVATE
    ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c
-@@ -180,31 +178,9 @@ target_include_directories(${_target_name_lib}
+@@ -183,31 +186,8 @@ target_include_directories(${_target_name_lib}
    ${PythonExtra_INCLUDE_DIRS}
  )
  
@@ -53,7 +52,7 @@ index 4af35d6..8db124a 100644
 -find_file(_numpy_h numpy/numpyconfig.h
 -  PATHS ${PythonExtra_INCLUDE_DIRS}
 -)
- 
+-
 -if(APPLE OR WIN32 OR NOT _numpy_h)
 -  # add include directory for numpy headers
 -  set(_python_code
@@ -77,29 +76,30 @@ index 4af35d6..8db124a 100644
 +message(STATUS "Using numpy include directory: ${Python3_NumPy_INCLUDE_DIRS}")
 +target_include_directories(${_target_name_lib} PUBLIC "${Python3_NumPy_INCLUDE_DIRS}")
  
- rosidl_target_interfaces(${_target_name_lib}
-   ${rosidl_generate_interfaces_TARGET} rosidl_typesupport_c)
-@@ -255,9 +261,15 @@ foreach(_typesupport_impl ${_typesupport_impls})
+ rosidl_get_typesupport_target(c_typesupport_target "${rosidl_generate_interfaces_TARGET}" "rosidl_typesupport_c")
+ target_link_libraries(${_target_name_lib} ${c_typesupport_target})
+@@ -246,10 +226,16 @@ foreach(_typesupport_impl ${_typesupport_impls})
    target_link_libraries(
      ${_target_name}
      ${_target_name_lib}
 -    ${PythonExtra_LIBRARIES}
      ${rosidl_generate_interfaces_TARGET}__${_typesupport_impl}
    )
-+  
+ 
 +  if(NOT APPLE)
 +    target_link_libraries(${_target_name} ${PythonExtra_LIBRARIES})
 +  else()
 +    set_target_properties(${_target_name} PROPERTIES
 +                          LINK_FLAGS "-undefined dynamic_lookup")
 +  endif()
- 
++
    target_include_directories(${_target_name}
      PUBLIC
-diff --git a/rosidl_generator_py/rosidl_generator_py-extras.cmake.in b/rosidl_generator_py/rosidl_generator_py-extras.cmake.in
+     ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c
+diff --git a/rosidl_generator_py-extras.cmake.in b/rosidl_generator_py-extras.cmake.in
 index 80bed29..ba70acc 100644
---- a/rosidl_generator_py/rosidl_generator_py-extras.cmake.in
-+++ b/rosidl_generator_py/rosidl_generator_py-extras.cmake.in
+--- a/rosidl_generator_py-extras.cmake.in
++++ b/rosidl_generator_py-extras.cmake.in
 @@ -2,6 +2,6 @@
  include("${CMAKE_CURRENT_LIST_DIR}/register_py.cmake")
  rosidl_generator_py_extras(
