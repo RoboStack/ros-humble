@@ -1,0 +1,53 @@
+ros_distro: humble
+
+# mapping for package keys
+conda_index:
+  - robostack.yaml
+  - packages-ignore.yaml
+
+build_number: 0
+
+mutex_package: ros2-distro-mutex 0.1 humble
+
+skip_all_deps: false
+
+# If full rebuild, the build number of the existing package has
+# to match the selected build number for skipping
+full_rebuild: true
+
+# build_in_own_azure_stage:
+  # - ros-galactic-rviz-rendering
+
+# packages_skip_by_deps:
+  # - rttest
+
+packages_remove_from_deps:
+  - tlsf
+  - tlsf_cpp
+  - pendulum_control
+  - rttest
+
+skip_existing:
+  - https://conda.anaconda.org/robostack-humble/
+
+packages_select_by_deps:
+  - ros_workspace
+  - ros_environment
+  - ros_base
+  # - desktop
+  # - moveit
+  # - navigation2
+  # - joint-state-broadcaster
+  # - joint-state-publisher
+  # - joint-trajectory-controller
+  # - xacro
+  # - rosbridge_suite
+  # - rosbridge-msgs
+  # - rosbridge-library
+  # - robot-localization
+  # - velodyne
+  # - sbg_driver
+  # - vision-opencv
+  # - ackermann-msgs
+  
+patch_dir: patch
