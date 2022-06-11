@@ -50,7 +50,7 @@ jobs:
         vinca --multiple --platform osx-64
     - name: Generate azure pipelines for macOS
       run: |
-        vinca-azure --platform osx-64 --trigger-branch buildbranch_osx -d ./recipes --additional-recipes
+        vinca-gha --platform osx-64 --trigger-branch buildbranch_osx -d ./recipes --additional-recipes
     - name: Commit files
       run: |
         if [[ -f "osx.yml" ]]; then
@@ -101,7 +101,7 @@ jobs:
         vinca --multiple --platform win-64
     - name: Generate azure pipelines for Windows
       run: |
-        vinca-azure --platform win-64 --trigger-branch buildbranch_win -d ./recipes --additional-recipes
+        vinca-gha --platform win-64 --trigger-branch buildbranch_win -d ./recipes --additional-recipes
     - name: Commit files for Windows
       run: |
         if [[ -f "win.yml" ]]; then
