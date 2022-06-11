@@ -54,6 +54,7 @@ jobs:
     - name: Commit files
       run: |
         if [[ -f "osx.yml" ]]; then
+            mv osx.yml .github/workflows/
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add .
@@ -104,6 +105,7 @@ jobs:
     - name: Commit files for Windows
       run: |
         if [[ -f "win.yml" ]]; then
+            mv win.yml .github/workflows/
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add .
