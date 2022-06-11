@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f573c54..4db288b 100644
+index 334d6ff..3ecad9d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3,13 +3,9 @@ cmake_minimum_required(VERSION 3.5)
+@@ -3,13 +3,9 @@ cmake_minimum_required(VERSION 3.12)
  project(rcutils)
  
  # Default to C11
@@ -18,7 +18,7 @@ index f573c54..4db288b 100644
  
  include(CheckLibraryExists)
  
-@@ -131,6 +127,10 @@ endif()
+@@ -132,6 +128,10 @@ endif()
  
  target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
  
@@ -29,21 +29,21 @@ index f573c54..4db288b 100644
  # Needed if pthread is used for thread local storage.
  if(IOS AND IOS_SDK_VERSION LESS 10.0)
    ament_export_libraries(pthread)
-@@ -595,6 +595,9 @@ endif()
- ament_export_dependencies(ament_cmake)
- ament_export_include_directories(include)
+@@ -587,6 +587,9 @@ endif()
+ # Export old-style CMake variables
+ ament_export_include_directories("include/${PROJECT_NAME}")
  ament_export_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
 +if (UNIX AND NOT APPLE)
 +  ament_export_libraries(${PROJECT_NAME} rt)
 +endif()
- ament_export_targets(${PROJECT_NAME})
- ament_package()
  
+ # Export modern CMake targets
+ ament_export_targets(${PROJECT_NAME})
 diff --git a/include/rcutils/error_handling.h b/include/rcutils/error_handling.h
-index 0469070..6a05f25 100644
+index 23e84fa..d0906b5 100644
 --- a/include/rcutils/error_handling.h
 +++ b/include/rcutils/error_handling.h
-@@ -122,7 +122,7 @@ typedef struct rcutils_error_state_t
+@@ -122,7 +122,7 @@ typedef struct rcutils_error_state_s
  
  // make sure our math is right...
  #if __STDC_VERSION__ >= 201112L
@@ -66,7 +66,7 @@ index a060537..03e8e2e 100644
      "expected error state's max message length to be less than or equal to error string max");
    if (
 diff --git a/src/error_handling_helpers.h b/src/error_handling_helpers.h
-index 70acb4e..67ebfc0 100644
+index 4914c4f..15901e2 100644
 --- a/src/error_handling_helpers.h
 +++ b/src/error_handling_helpers.h
 @@ -145,7 +145,7 @@ __rcutils_format_error_string(
