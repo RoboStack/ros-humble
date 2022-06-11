@@ -1,18 +1,8 @@
-From 26c8cca76dd47afcbf670275f0891870f83b978b Mon Sep 17 00:00:00 2001
-From: Alberto Soragna <alberto.soragna@gmail.com>
-Date: Wed, 15 Sep 2021 11:03:07 +0200
-Subject: [PATCH 1/6] check if libyaml is already present before building it
-
-Signed-off-by: Alberto Soragna <alberto.soragna@gmail.com>
----
- CMakeLists.txt | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 54dae7b..22b0a80 100644
+index 05f5ff1..41adbdf 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -14,8 +14,16 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+@@ -14,7 +14,16 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
    add_compile_options(-Wall -Wextra -Wconversion -Wno-sign-conversion -Wpedantic -Wnon-virtual-dtor -Woverloaded-virtual)
  endif()
  
@@ -21,188 +11,47 @@ index 54dae7b..22b0a80 100644
 +  OFF)
 +
  find_package(ament_cmake REQUIRED)
- 
++list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
++
 +if(NOT FORCE_BUILD_VENDOR_PKG)
 +  find_package(yaml QUIET)
 +endif()
-+
+ 
  macro(build_libyaml)
    set(extra_cmake_args)
- 
-@@ -84,7 +92,18 @@ macro(build_libyaml)
+@@ -92,10 +101,22 @@ macro(build_libyaml)
    set(yaml_LIBRARIES yaml)
  endmacro()
  
 -build_libyaml()
+-set(extra_test_dependencies libyaml-0.2.5)
 +# Skip building yaml if the expected version is already present in the system
-+if (yaml_FOUND)
++if(yaml_FOUND)
 +  if("${yaml_VERSION}" VERSION_EQUAL 0.2.5)
 +    set(_SKIP_YAML_BUILD 1)
 +  else()
-+    message(WARNING "A wrong version of libyaml is already present in the system: ${yaml_VERSION}")
++    message(WARNING
++      "A wrong version of libyaml is already present in the system: ${yaml_VERSION}."
++      "It will be ignored and the 0.2.5 version will be built.")
++  endif()
 +endif()
 +
 +if(NOT _SKIP_YAML_BUILD)
 +  build_libyaml()
-+endif()
-+
- set(extra_test_dependencies libyaml-0.2.5)
- 
- ament_export_libraries(yaml)
-
-From ce893c9e7327fc0540ae68a1aa03a5b938bfb70e Mon Sep 17 00:00:00 2001
-From: Alberto Soragna <alberto.soragna@gmail.com>
-Date: Wed, 15 Sep 2021 15:00:36 +0200
-Subject: [PATCH 2/6] add missing endif() and more descriptive warning message
-
-Signed-off-by: Alberto Soragna <alberto.soragna@gmail.com>
----
- CMakeLists.txt | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 22b0a80..29c50b0 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -97,7 +97,10 @@ if (yaml_FOUND)
-   if("${yaml_VERSION}" VERSION_EQUAL 0.2.5)
-     set(_SKIP_YAML_BUILD 1)
-   else()
--    message(WARNING "A wrong version of libyaml is already present in the system: ${yaml_VERSION}")
-+    message(WARNING
-+      "A wrong version of libyaml is already present in the system: ${yaml_VERSION}."
-+      "It will be ignored and the expected version will be built.")
-+  endif()
- endif()
- 
- if(NOT _SKIP_YAML_BUILD)
-
-From 785446e3819e64e14bdfe6044b5f9178ac84815a Mon Sep 17 00:00:00 2001
-From: Alberto Soragna <alberto.soragna@gmail.com>
-Date: Wed, 15 Sep 2021 15:07:46 +0200
-Subject: [PATCH 3/6] move external project dependency within if-else
-
-Signed-off-by: Alberto Soragna <alberto.soragna@gmail.com>
----
- CMakeLists.txt | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 29c50b0..780676f 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -105,10 +105,9 @@ endif()
- 
- if(NOT _SKIP_YAML_BUILD)
-   build_libyaml()
 +  set(extra_test_dependencies libyaml-0.2.5)
- endif()
- 
--set(extra_test_dependencies libyaml-0.2.5)
--
- ament_export_libraries(yaml)
- ament_export_dependencies(yaml)
- 
-
-From b268a29629bd9a419bea54f639586fbd2722fb98 Mon Sep 17 00:00:00 2001
-From: Alberto Soragna <alberto.soragna@gmail.com>
-Date: Wed, 15 Sep 2021 15:10:44 +0200
-Subject: [PATCH 4/6] fix lint_cmake error
-
-Signed-off-by: Alberto Soragna <alberto.soragna@gmail.com>
----
- CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 780676f..14906a7 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -93,7 +93,7 @@ macro(build_libyaml)
- endmacro()
- 
- # Skip building yaml if the expected version is already present in the system
--if (yaml_FOUND)
-+if(yaml_FOUND)
-   if("${yaml_VERSION}" VERSION_EQUAL 0.2.5)
-     set(_SKIP_YAML_BUILD 1)
-   else()
-
-From cf3e38c47e391e39b6e515c67ab2ec7cb91febf4 Mon Sep 17 00:00:00 2001
-From: Alberto Soragna <alberto.soragna@gmail.com>
-Date: Wed, 15 Sep 2021 18:06:44 +0200
-Subject: [PATCH 5/6] include expected version in warning message
-
-Signed-off-by: Alberto Soragna <alberto.soragna@gmail.com>
----
- CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 14906a7..1fe119a 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -99,7 +99,7 @@ if(yaml_FOUND)
-   else()
-     message(WARNING
-       "A wrong version of libyaml is already present in the system: ${yaml_VERSION}."
--      "It will be ignored and the expected version will be built.")
-+      "It will be ignored and the 0.2.5 version will be built.")
-   endif()
- endif()
- 
-
-From 480209039a4fb1498beb9b43010bd91e3ed399df Mon Sep 17 00:00:00 2001
-From: Silvio Traversaro <silvio@traversaro.it>
-Date: Sun, 6 Feb 2022 13:00:23 +0100
-Subject: [PATCH 6/6] Use pkg-config to find if yaml is installed in the system
-
-Signed-off-by: Silvio Traversaro <silvio@traversaro.it>
----
- CMakeLists.txt               |  4 +++-
- README.md                    |  1 +
- cmake/Modules/Findyaml.cmake | 38 ++++++++++++++++++++++++++++++++++++
- libyaml_vendor-extras.cmake  |  2 ++
- package.xml                  |  3 +++
- 5 files changed, 47 insertions(+), 1 deletion(-)
- create mode 100644 cmake/Modules/Findyaml.cmake
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1fe119a..22ed745 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -19,6 +19,7 @@ option(FORCE_BUILD_VENDOR_PKG
-   OFF)
- 
- find_package(ament_cmake REQUIRED)
-+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
- 
- if(NOT FORCE_BUILD_VENDOR_PKG)
-   find_package(yaml QUIET)
-@@ -108,7 +109,6 @@ if(NOT _SKIP_YAML_BUILD)
-   set(extra_test_dependencies libyaml-0.2.5)
- endif()
++endif()
  
 -ament_export_libraries(yaml)
  ament_export_dependencies(yaml)
  
  if(BUILD_TESTING)
-@@ -155,4 +155,6 @@ if(BUILD_TESTING)
+@@ -142,4 +163,6 @@ if(BUILD_TESTING)
    endif()
  endif()
  
 +install(DIRECTORY cmake DESTINATION share/${PROJECT_NAME})
 +
  ament_package(CONFIG_EXTRAS libyaml_vendor-extras.cmake)
-diff --git a/README.md b/README.md
-index f8dc9e8..b084f50 100644
---- a/README.md
-+++ b/README.md
-@@ -6,3 +6,4 @@ CMake wrapper downloading and building libyaml
- Quality declaration for this package: [libyaml_vendor QD](QUALITY_DECLARATION.md).
- 
- Quality declaration of external dependency [libyaml](./libyaml_q_declaration.md).
-+
 diff --git a/cmake/Modules/Findyaml.cmake b/cmake/Modules/Findyaml.cmake
 new file mode 100644
 index 0000000..34f9b5b
@@ -259,13 +108,13 @@ index 45e1c9c..d2e52c4 100644
 +
  list(APPEND libyaml_vendor_TARGETS yaml)
 diff --git a/package.xml b/package.xml
-index c2b89c3..e367468 100644
+index 9140b63..061cd55 100644
 --- a/package.xml
 +++ b/package.xml
-@@ -14,6 +14,9 @@
-   <author>Mikael Arguedas</author>
+@@ -19,6 +19,9 @@
  
    <buildtool_depend>ament_cmake</buildtool_depend>
+   <buildtool_depend>git</buildtool_depend>
 +  <buildtool_depend>pkg-config</buildtool_depend>
 +
 +  <buildtool_export_depend>pkg-config</buildtool_export_depend>
