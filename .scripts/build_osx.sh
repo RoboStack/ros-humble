@@ -19,7 +19,7 @@ conda config --set remote_max_retries 5
 
 echo -e "\n\nInstalling conda-forge-ci-setup=3 and conda-build."
 mamba install -n base --quiet --yes conda-forge-ci-setup=3 conda-build pip boa=0.9 quetz-client \
-			  -c conda-forge/label/boa_dev -c conda-forge
+			  -c conda-forge
 
 set -e
 
@@ -51,7 +51,7 @@ conda config --set auto_update_conda false
 conda config --set add_pip_as_python_dependency false
 
 conda config --add channels conda-forge
-conda config --add channels robostack-experimental
+conda config --add channels robostack-humble
 conda config --add channels $CONDA_BLD_PATH
 # conda config --set channel_priority strict
 
