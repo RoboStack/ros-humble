@@ -17,27 +17,27 @@ jobs:
       run: |
         pip install git+https://github.com/RoboStack/vinca.git
 
-    # - name: Generate recipes for Linux
-    #   run: |
-    #     git clean -fdx
-    #     cp vinca_linux_64.yaml vinca.yaml
-    #     vinca --multiple --platform linux-64
-    # - name: Generate azure pipelines for Linux
-    #   run: |
-    #     vinca-gha --platform linux-64 --trigger-branch buildbranch_linux -d ./recipes --additional-recipes
-    # - name: Commit files
-    #   run: |
-    #     if [[ -f "linux.yml" ]]; then
-    #         mv linux.yml .github/workflows/
-    #         git config --local user.email "action@github.com"
-    #         git config --local user.name "GitHub Action"
-    #         git add .
-    #         git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
-    #         remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-    #         git push "${remote_repo}" HEAD:buildbranch_linux --follow-tags --force
-    #     fi
-    #   env:
-    #     INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
+    - name: Generate recipes for Linux
+      run: |
+        git clean -fdx
+        cp vinca_linux_64.yaml vinca.yaml
+        vinca --multiple --platform linux-64
+    - name: Generate azure pipelines for Linux
+      run: |
+        vinca-gha --platform linux-64 --trigger-branch buildbranch_linux -d ./recipes --additional-recipes
+    - name: Commit files
+      run: |
+        if [[ -f "linux.yml" ]]; then
+            mv linux.yml .github/workflows/
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add .
+            git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
+            remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push "${remote_repo}" HEAD:buildbranch_linux --follow-tags --force
+        fi
+      env:
+        INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 
     # # Generate recipes for osx
     # - name: Reset repo
@@ -90,31 +90,31 @@ jobs:
     # #   env:
     # #     INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # Generate recipes for Windows
-    - name: Reset repo
-      run: |
-        git reset --hard origin/main
-    - name: Generate recipes for Windows
-      run: |
-        git clean -fdx
-        cp vinca_win.yaml vinca.yaml
-        vinca --multiple --platform win-64
-    - name: Generate azure pipelines for Windows
-      run: |
-        vinca-gha --platform win-64 --trigger-branch buildbranch_win -d ./recipes --additional-recipes
-    - name: Commit files for Windows
-      run: |
-        if [[ -f "win.yml" ]]; then
-            mv win.yml .github/workflows/
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add .
-            git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
-            remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git push "${remote_repo}" HEAD:buildbranch_win --follow-tags --force
-        fi
-      env:
-        INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
+    # # Generate recipes for Windows
+    # - name: Reset repo
+    #   run: |
+    #     git reset --hard origin/main
+    # - name: Generate recipes for Windows
+    #   run: |
+    #     git clean -fdx
+    #     cp vinca_win.yaml vinca.yaml
+    #     vinca --multiple --platform win-64
+    # - name: Generate azure pipelines for Windows
+    #   run: |
+    #     vinca-gha --platform win-64 --trigger-branch buildbranch_win -d ./recipes --additional-recipes
+    # - name: Commit files for Windows
+    #   run: |
+    #     if [[ -f "win.yml" ]]; then
+    #         mv win.yml .github/workflows/
+    #         git config --local user.email "action@github.com"
+    #         git config --local user.name "GitHub Action"
+    #         git add .
+    #         git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
+    #         remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+    #         git push "${remote_repo}" HEAD:buildbranch_win --follow-tags --force
+    #     fi
+    #   env:
+    #     INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 
     # # # Generate recipes for Linux ARM64
     # # - name: Reset repo
