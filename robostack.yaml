@@ -453,6 +453,8 @@ muparser:
   robostack: [muparser]
 netpbm:
   robostack: [netpbm]
+nlohmann-json-dev:
+  robostack: [nlohmann_json]
 nlopt:
   robostack: [nlopt]
 ocl-icd-opencl-dev:
