@@ -40,7 +40,7 @@ packages_select_by_deps:
 
   # - rosbridge_suite
   # - rviz2
-  # - desktop
+  - desktop
   # - behaviortree_cpp_v3
   # - navigation2
   # - moveit
