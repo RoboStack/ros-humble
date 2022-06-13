@@ -37,13 +37,13 @@ packages_select_by_deps:
   - ros_environment
   - ament_cmake
   - ros_base
+  - desktop
+  - navigation2
+  - moveit
 
   # - rosbridge_suite
   # - rviz2
-  - desktop
   # - behaviortree_cpp_v3
-  # - navigation2
-  # - moveit
   # - ros_workspace
   # - control_toolbox
   # - robot_localization

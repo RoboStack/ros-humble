@@ -38,5 +38,6 @@ packages_select_by_deps:
   - ros_workspace
   - ros_environment
   - ros_base
+  - desktop
 
 patch_dir: patch
