@@ -38,6 +38,7 @@ packages_select_by_deps:
   - ros_workspace
   - ros_environment
   - ros_base
-  - desktop
+  # - desktop
+  - cv_bridge
 
 patch_dir: patch
