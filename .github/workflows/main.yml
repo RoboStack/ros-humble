@@ -76,10 +76,11 @@ jobs:
         vinca --multiple --platform osx-arm64
     - name: Generate azure pipelines for macOS (arm64)
       run: |
-        vinca-azure --platform osx-arm64 --trigger-branch buildbranch_osx_arm64 -d ./recipes --additional-recipes
+        vinca-gha --platform osx-arm64 --trigger-branch buildbranch_osx_arm64 -d ./recipes --additional-recipes
     - name: Commit files
       run: |
         if [[ -f "osx_arm64.yml" ]]; then
+            mv osx_arm64.yml .github/workflows/
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add .
