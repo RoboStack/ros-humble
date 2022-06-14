@@ -65,30 +65,30 @@ jobs:
     #   env:
     #     INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 
-    # # # Generate recipes for osx-arm64
-    # # - name: Reset repo
-    # #   run: |
-    # #     git reset --hard origin/main
-    # # - name: Generate recipes for macOS (arm64)
-    # #   run: |
-    # #     git clean -fdx
-    # #     cp vinca_osx_arm64.yaml vinca.yaml
-    # #     vinca --multiple --platform osx-arm64
-    # # - name: Generate azure pipelines for macOS (arm64)
-    # #   run: |
-    # #     vinca-azure --platform osx-arm64 --trigger-branch buildbranch_osx_arm64 -d ./recipes --additional-recipes
-    # # - name: Commit files
-    # #   run: |
-    # #     if [[ -f "osx_arm64.yml" ]]; then
-    # #         git config --local user.email "action@github.com"
-    # #         git config --local user.name "GitHub Action"
-    # #         git add .
-    # #         git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
-    # #         remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-    # #         git push "${remote_repo}" HEAD:buildbranch_osx_arm64 --follow-tags --force
-    # #     fi
-    # #   env:
-    # #     INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # Generate recipes for osx-arm64
+    - name: Reset repo
+      run: |
+        git reset --hard origin/main
+    - name: Generate recipes for macOS (arm64)
+      run: |
+        git clean -fdx
+        cp vinca_osx_arm64.yaml vinca.yaml
+        vinca --multiple --platform osx-arm64
+    - name: Generate azure pipelines for macOS (arm64)
+      run: |
+        vinca-azure --platform osx-arm64 --trigger-branch buildbranch_osx_arm64 -d ./recipes --additional-recipes
+    - name: Commit files
+      run: |
+        if [[ -f "osx_arm64.yml" ]]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add .
+            git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
+            remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push "${remote_repo}" HEAD:buildbranch_osx_arm64 --follow-tags --force
+        fi
+      env:
+        INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # # Generate recipes for Windows
     # - name: Reset repo
