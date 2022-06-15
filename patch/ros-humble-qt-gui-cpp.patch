@@ -9,7 +9,7 @@ index dc27bd8..733c24d 100644
 -    set(LIBQT_GUI_CPP_SIP_SUFFIX .so)
 +    # Okay-ish hack for now
 +    if(${SIP_VERSION} VERSION_GREATER_EQUAL "5.0.0")
-+      set(LIBQT_GUI_CPP_SIP_SUFFIX ".cpython-${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR}-darwin.so")
++      set(LIBQT_GUI_CPP_SIP_SUFFIX ".cpython-${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}-darwin.so")
 +    else()
 +      set(LIBQT_GUI_CPP_SIP_SUFFIX .so)
 +    endif()
