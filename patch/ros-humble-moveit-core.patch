@@ -1,11 +1,21 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ceb8b5286..5f75bbebe 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -15,13 +15,6 @@ include(ConfigExtras.cmake)
+From 009c875ffb082f3e92482b6a7559263022ea73d0 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Fri, 17 Jun 2022 16:31:49 +0200
+Subject: [PATCH] Update CMakeLists.txt
+
+---
+ moveit_core/CMakeLists.txt | 31 +++++++++++++++++++++++--------
+ 1 file changed, 23 insertions(+), 8 deletions(-)
+
+diff --git a/moveit_core/CMakeLists.txt b/moveit_core/CMakeLists.txt
+index 9f000181c7..e9375945b1 100644
+--- a/moveit_core/CMakeLists.txt
++++ b/moveit_core/CMakeLists.txt
+@@ -11,14 +11,29 @@ find_package(eigen3_cmake_module REQUIRED)
+ find_package(Eigen3 REQUIRED)
  
  find_package(PkgConfig REQUIRED)
- pkg_check_modules(LIBFCL REQUIRED "fcl>=0.5.0")
+-pkg_check_modules(LIBFCL REQUIRED "fcl>=0.5.0")
 -# replace LIBFCL_LIBRARIES with full paths to the libraries
 -set(LIBFCL_LIBRARIES_FULL "")
 -foreach(LIBFCL_LIBRARY ${LIBFCL_LIBRARIES})
@@ -13,6 +23,29 @@ index ceb8b5286..5f75bbebe 100644
 -  list(APPEND LIBFCL_LIBRARIES_FULL ${${LIBFCL_LIBRARY}_LIB})
 -endforeach()
 -set(LIBFCL_LIBRARIES "${LIBFCL_LIBRARIES_FULL}")
++find_package(fcl QUIET)
++if (fcl_FOUND)
++  # convert cmake target to variables for catkin_package DEPENDS
++  if(TARGET ${FCL_LIBRARIES})
++    get_target_property(LIBFCL_LOCATION ${FCL_LIBRARIES} LOCATION)
++    get_target_property(LIBFCL_INTERFACE_LINK_LIBRARIES ${FCL_LIBRARIES} INTERFACE_LINK_LIBRARIES)
++    get_target_property(LIBFCL_INCLUDE_DIRS ${FCL_LIBRARIES} INTERFACE_INCLUDE_DIRECTORIES)
++    set(LIBFCL_LIBRARIES ${LIBFCL_LOCATION} ${LIBFCL_INTERFACE_LINK_LIBRARIES})
++  else()
++    set(LIBFCL_LIBRARIES ${FCL_LIBRARIES})
++    set(LIBFCL_INCLUDE_DIRS ${FCL_INCLUDE_DIRS})
++  endif()
++else()
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(LIBFCL_PC REQUIRED fcl)
++  set(LIBFCL_INCLUDE_DIRS ${LIBFCL_PC_INCLUDE_DIRS})
++  # find *absolute* paths to LIBFCL_LIBRARIES
++  set(LIBFCL_LIBRARIES)
++  foreach(_lib ${LIBFCL_PC_LIBRARIES})
++    find_library(_lib_${_lib} ${_lib} HINTS ${LIBFCL_PC_LIBRARY_DIRS})
++    list(APPEND LIBFCL_LIBRARIES ${_lib_${_lib}})
++  endforeach()
++endif()
  
  find_package(Bullet 2.87 REQUIRED)
  find_package(angles REQUIRED)
