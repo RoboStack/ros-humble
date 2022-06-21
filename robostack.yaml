@@ -122,6 +122,8 @@ gtk3:
     xorg-libxinerama, xorg-xineramaproto, epoxy, REQUIRE_GL]
 ignition-common4:
   robostack: [libignition-common4]
+ignition-cmake2:
+  robostack: [libignition-cmake2]
 ignition-gazebo3:
   robostack: [libignition-gazebo5]
 ignition-gazebo5:
