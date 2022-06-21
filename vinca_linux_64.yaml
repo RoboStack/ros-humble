@@ -37,9 +37,9 @@ packages_select_by_deps:
   # - ros_environment
   # - ament_cmake
   # - ros_base
-  # - desktop
+  - desktop
   # - navigation2
-  - moveit
+  # - moveit
 
   # - rosbridge_suite
   # - rviz2
