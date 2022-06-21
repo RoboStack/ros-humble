@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b686167..b8d6763 100644
+index b686167..80a6ae8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -30,8 +30,8 @@ endif()
@@ -13,7 +13,7 @@ index b686167..b8d6763 100644
  
  # These need to be in this order to find header files
  find_package(eigen3_cmake_module REQUIRED)
-@@ -90,10 +90,11 @@ ament_target_dependencies(${PROJECT_NAME}
+@@ -90,10 +90,12 @@ ament_target_dependencies(${PROJECT_NAME}
  )
  ament_target_dependencies(${PROJECT_NAME} SYSTEM
    # We don't export these dependencies because their cmake is broken
@@ -21,7 +21,8 @@ index b686167..b8d6763 100644
    QHULL
  )
  
-+target_link_libraries(${PROJECT_NAME} assimp::assimp)
++get_property(ASSIMP_LIBS TARGET assimp::assimp PROPERTY IMPORTED_IMPLIB_RELEASE)
++target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBS})
 +
  if(BUILD_TESTING)
    find_package(ament_cmake_gtest REQUIRED)
