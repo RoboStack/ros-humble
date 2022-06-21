@@ -154,6 +154,8 @@ lcov:
   robostack: [lcov]
 leveldb:
   robostack: [leveldb]
+libabsl-dev:
+  robostack: [abseil-cpp]
 libblas-dev:
   robostack: [libblas, libcblas]
 libboost-chrono-dev:
