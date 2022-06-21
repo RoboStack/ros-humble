@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9f000181..32b53f1d 100644
+index 9f000181..742ae3e9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -16,8 +16,12 @@ pkg_check_modules(LIBFCL REQUIRED "fcl>=0.5.0")
@@ -7,7 +7,7 @@ index 9f000181..32b53f1d 100644
  foreach(LIBFCL_LIBRARY ${LIBFCL_LIBRARIES})
    find_library(${LIBFCL_LIBRARY}_LIB ${LIBFCL_LIBRARY} ${LIBFCL_LIBRARY_DIRS})
 -  list(APPEND LIBFCL_LIBRARIES_FULL ${${LIBFCL_LIBRARY}_LIB})
-+  if (NOT "${LIBFCL_LIBRARY}_LIB" MATCHES _build_env)
++  if (NOT "${${LIBFCL_LIBRARY}_LIB}" MATCHES "_build_env")
 +    list(APPEND LIBFCL_LIBRARIES_FULL ${${LIBFCL_LIBRARY}_LIB})
 +  endif()
  endforeach()
