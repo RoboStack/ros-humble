@@ -40,8 +40,8 @@ packages_select_by_deps:
   - ros_environment
   - ros_base
   - desktop
-  - navigation2
-  # - moveit
+  # - navigation2
+  - moveit
   # - desktop
   # - cv_bridge
 
