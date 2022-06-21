@@ -40,6 +40,8 @@ packages_select_by_deps:
   # - desktop
   # - navigation2
   - moveit
+  - moveit_servo
+
 
   # - rosbridge_suite
   # - rviz2

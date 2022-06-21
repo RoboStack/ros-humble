@@ -36,6 +36,8 @@ packages_select_by_deps:
   - ros_base
   - desktop
   - moveit
+  - moveit_servo
+
   # - navigation2
   # - joint-state-broadcaster
   # - joint-state-publisher
