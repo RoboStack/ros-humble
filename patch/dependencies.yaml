@@ -1,5 +1,5 @@
 cartographer_ros:
-  add_host: ["cartographer 1.*"]
+  add_host: ["cartographer 2.*"]
 ackermann_msgs:
   add_host: ["numpy"]
   add_run: ["numpy"]
