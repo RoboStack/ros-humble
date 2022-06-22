@@ -41,11 +41,11 @@ packages_select_by_deps:
   # - navigation2
   - moveit
   - moveit_resources
-  - moveit_visual_tools
+  # - moveit_visual_tools
   - graph_msgs
   - nav2_bringup
   - moveit_servo
-  - webots
+  - webots_ros2
   - ur
 
   # - turtlebot3
