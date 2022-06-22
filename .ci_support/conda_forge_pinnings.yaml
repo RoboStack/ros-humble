@@ -323,17 +323,13 @@ pin_run_as_build:
 
 # blas
 libblas:
-  - 3.8 *netlib  # [not (osx and arm64)]
-  - 3.9 *netlib  # [osx and arm64]
+  - 3.9 *netlib
 libcblas:
-  - 3.8 *netlib  # [not (osx and arm64)]
-  - 3.9 *netlib  # [osx and arm64]
+  - 3.9 *netlib
 liblapack:
-  - 3.8 *netlib  # [not (osx and arm64)]
-  - 3.9 *netlib  # [osx and arm64]
+  - 3.9 *netlib
 liblapacke:
-  - 3.8 *netlib  # [not (osx and arm64)]
-  - 3.9 *netlib  # [osx and arm64]
+  - 3.9 *netlib
 blas_impl:
   - openblas
   - mkl          # [x86 or x86_64]
@@ -554,7 +550,7 @@ libpcap:
 libpng:
   - 1.6
 libprotobuf:
-  - '3.19'
+  - '3.20'
 librdkafka:
   - '1.7'
 librsvg:
