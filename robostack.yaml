@@ -32,6 +32,8 @@ bullet:
   robostack: [bullet]
 bzip2:
   robostack: [bzip2]
+cartographer:
+  robostack: [cartographer]
 ca-certificates:
   robostack: [ca-certificates]
 cmake:
@@ -128,12 +130,16 @@ ignition-gazebo3:
   robostack: [libignition-gazebo5]
 ignition-gazebo5:
   robostack: [libignition-gazebo5]
+ignition-gazebo6:
+  robostack: [libignition-gazebo6]
 ignition-gui5:
   robostack: [libignition-gui5]
 ignition-math6:
   robostack: [libignition-math6]
 ignition-msgs5:
   robostack: [libignition-msgs5]
+ignition-msgs8:
+  robostack: [libignition-msgs8]
 ignition-msgs7:
   robostack: [libignition-msgs7]
 ignition-rendering5:
@@ -142,6 +148,8 @@ ignition-transport8:
   robostack: [libignition-transport8]
 ignition-transport10:
   robostack: [libignition-transport10]
+ignition-transport11:
+  robostack: [libignition-transport11]
 java:
   robostack: [openjdk]
 jupyter-notebook:
@@ -308,6 +316,8 @@ libomp-dev:
 libopenblas-dev:
   robostack: [libblas]
 libopencv-dev:
+  robostack: [py-opencv, libopencv, REQUIRE_OPENGL]
+libopencv-imgproc-dev:
   robostack: [py-opencv, libopencv, REQUIRE_OPENGL]
 libopenni-dev:
   robostack: []

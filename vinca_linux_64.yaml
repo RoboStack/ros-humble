@@ -46,7 +46,8 @@ packages_select_by_deps:
   - nav2_bringup
   - moveit_servo
   - webots_ros2
-  - ur
+  - turtlebot3
+  # - ur
 
   # - turtlebot3
 
