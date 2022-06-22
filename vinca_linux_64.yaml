@@ -44,8 +44,11 @@ packages_select_by_deps:
   - moveit_visual_tools
   - graph_msgs
   - nav2_bringup
-  - turtlebot3
   - moveit_servo
+  - webots
+  - ur
+
+  # - turtlebot3
 
 
   # - rosbridge_suite
