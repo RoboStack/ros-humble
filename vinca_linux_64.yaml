@@ -19,6 +19,7 @@ packages_skip_by_deps:
   # - nav2-rotation-shim-controller
   # - rviz
   # - diagnostic_updater
+  - cartographer
 
 packages_remove_from_deps:
   - cartographer
