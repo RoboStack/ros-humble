@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 27231ef..0b0246f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,6 +5,8 @@ if(NOT CMAKE_CXX_STANDARD)
+   set(CMAKE_CXX_STANDARD 14)
+ endif()
+ 
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++
+ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   add_compile_options(-Wall -Wextra -Wpedantic)
+ endif()
