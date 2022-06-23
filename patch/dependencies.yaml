@@ -67,7 +67,7 @@ image_view:
 nao_lola:
   add_host: ["boost"]
 ros_ign_gazebo:
-  add_host: ["ros-humble-std-msgs", "ros-humble-rclcpp"]
+  add_host: ["ros-humble-std-msgs", "ros-humble-rclcpp", "REQUIRE_OPENGL"]
 ros_ign_gazebo_demos:
   add_host: ["REQUIRE_OPENGL"]
 rosbag2_bag_v2_plugins:
