@@ -29,21 +29,20 @@ packages_remove_from_deps:
   - pendulum_control
   - warehouse_ros_mongo
   - pilz-industrial-motion-planner
-  - cv_bridge
 
 skip_existing:
   - https://conda.anaconda.org/robostack-humble/
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
-  - ros_workspace
-  - ros_environment
-  - ros_base
-  - desktop
-  - navigation2
-  - moveit
+  # - ros_workspace
+  # - ros_environment
+  # - ros_base
+  # - desktop
+  # - navigation2
+  # - moveit
   # - desktop_full
   # - desktop
-  # - cv_bridge
+  - cv_bridge
 
 patch_dir: patch

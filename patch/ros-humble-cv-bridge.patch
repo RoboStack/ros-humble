@@ -13,3 +13,17 @@ index b7e8d53..f81660e 100644
    endif()
  endif()
  
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index a28fec3..f43eadf 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -27,6 +27,9 @@ install(FILES
+ 
+ if(NOT ANDROID)
+   Python3_add_library(${PROJECT_NAME}_boost MODULE module.cpp module_opencv3.cpp)
++  if (MSVC)
++    target_compile_definitions(${PROJECT_NAME}_boost PRIVATE -DBOOST_PYTHON_STATIC_LIB)
++  endif()
+   target_link_libraries(${PROJECT_NAME}_boost PRIVATE
+     ${PROJECT_NAME}
+     ${boost_python_target}
