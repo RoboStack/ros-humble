@@ -42,7 +42,7 @@ packages_select_by_deps:
   - desktop
   - navigation2
   - moveit
-  - desktop_full
+  # - desktop_full
   # - desktop
   # - cv_bridge
 

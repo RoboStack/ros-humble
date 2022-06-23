@@ -41,7 +41,8 @@ packages_select_by_deps:
   - navigation2
   - moveit
   - moveit_servo
-  - desktop_full
+  # - desktop_full
+  - perception
 
 
   # - rosbridge_suite
