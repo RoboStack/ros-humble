@@ -39,6 +39,7 @@ packages_select_by_deps:
   - desktop
   - moveit
   - moveit_servo
+  - desktop_full
 
   # - navigation2
   # - joint-state-broadcaster
