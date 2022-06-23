@@ -23,3 +23,36 @@ index 1beca59..213770e 100644
    src/ros_log_sink.cpp
    src/ros_map.cpp
    src/ros_map_writing_points_processor.cpp
+diff --git a/include/cartographer_ros/ros_log_sink.h b/include/cartographer_ros/ros_log_sink.h
+index e603727..e835669 100644
+--- a/include/cartographer_ros/ros_log_sink.h
++++ b/include/cartographer_ros/ros_log_sink.h
+@@ -32,7 +32,7 @@ class ScopedRosLogSink : public ::google::LogSink {
+   ~ScopedRosLogSink() override;
+ 
+   void send(::google::LogSeverity severity, const char* filename,
+-            const char* base_filename, int line, const struct std::tm* tm_time,
++            const char* base_filename, int line, const LogMessageTime &logmsgtime,
+             const char* message, size_t message_len) override;
+ 
+   void WaitTillSent() override;
+diff --git a/src/ros_log_sink.cpp b/src/ros_log_sink.cpp
+index d9b8ee2..5437408 100644
+--- a/src/ros_log_sink.cpp
++++ b/src/ros_log_sink.cpp
+@@ -40,13 +40,13 @@ ScopedRosLogSink::~ScopedRosLogSink() { RemoveLogSink(this); }
+ void ScopedRosLogSink::send(const ::google::LogSeverity severity,
+                             const char* const filename,
+                             const char* const base_filename, const int line,
+-                            const struct std::tm* const tm_time,
++                            const LogMessageTime &logmsgtime,
+                             const char* const message,
+                             const size_t message_len) {
+   (void) base_filename; // TODO: remove unused arg ?
+ 
+   const std::string message_string = ::google::LogSink::ToString(
+-      severity, GetBasename(filename), line, tm_time, message, message_len);
++      severity, GetBasename(filename), line, logmsgtime, message, message_len);
+   switch (severity) {
+     case ::google::GLOG_INFO:
+       RCLCPP_INFO_STREAM(logger_, message_string);
