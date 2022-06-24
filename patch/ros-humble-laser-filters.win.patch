@@ -1,0 +1,26 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3bb5bfd..b9f334b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(laser_filters)
+ 
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS 1)
++
+ ##############################################################################
+ # Find dependencies
+ ##############################################################################
+diff --git a/include/laser_filters/box_filter.h b/include/laser_filters/box_filter.h
+index e1b889f..7fbab20 100644
+--- a/include/laser_filters/box_filter.h
++++ b/include/laser_filters/box_filter.h
+@@ -89,7 +89,7 @@ class LaserScanBoxFilter : public filters::FilterBase<sensor_msgs::msg::LaserSca
+ 
+       bool invert = false;
+       getParam("invert", invert);
+-      remove_box_points_ = not invert;
++      remove_box_points_ = !invert;
+ 
+       if (!box_frame_set)
+       {
