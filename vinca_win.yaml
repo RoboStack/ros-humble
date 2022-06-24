@@ -53,7 +53,7 @@ packages_select_by_deps:
   # - nav2_rotation_shim_controller
   # - ros_ign_interfaces
   # - image_proc
-  # - perception
-  - simulation
+  - perception
+  # - simulation
 
 patch_dir: patch
