@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cb41c81..88460ba 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(image_publisher)
+ 
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++
+ # Default to C++14
+ if(NOT CMAKE_CXX_STANDARD)
+   set(CMAKE_CXX_STANDARD 14)

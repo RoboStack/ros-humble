@@ -53,10 +53,11 @@ packages_select_by_deps:
   # - nav2_rotation_shim_controller
   # - ros_ign_interfaces
   # - image_proc
-  - image_geometry
-  - theora_image_transport
-  - compressed_image_transport
-  # - perception
+  # - image_geometry
+  # - theora_image_transport
+  # - compressed_image_transport
+  - perception_pcl
+  - image_publisher
   # - simulation
 
 patch_dir: patch
