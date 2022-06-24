@@ -41,21 +41,9 @@ packages_select_by_deps:
   - desktop
   - navigation2
   - moveit
-  - desktop_full
+  # - desktop_full
   - desktop
   - cv_bridge
-
-  # - compressed_depth_image_transport
-  # - pcl_ros
-  # - filters
-  # - image_view
-  # - image_rotate
-  # - nav2_rotation_shim_controller
-  # - ros_ign_interfaces
-  # - image_proc
-  # - image_geometry
-  # - theora_image_transport
-  # - compressed_image_transport
-
+  - perception
 
 patch_dir: patch
