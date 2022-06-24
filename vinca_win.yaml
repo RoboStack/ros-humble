@@ -41,7 +41,7 @@ packages_select_by_deps:
   - desktop
   - navigation2
   - moveit
-  # - desktop_full
+  - desktop_full
   - desktop
   - cv_bridge
 
@@ -56,8 +56,6 @@ packages_select_by_deps:
   # - image_geometry
   # - theora_image_transport
   # - compressed_image_transport
-  - perception_pcl
-  - image_publisher
-  # - simulation
+
 
 patch_dir: patch
