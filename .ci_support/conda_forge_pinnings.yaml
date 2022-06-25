@@ -336,7 +336,7 @@ blas_impl:
   - blis         # [x86 or x86_64]
 
 abseil_cpp:
-  - '20210324.2'
+  - '20211102.0'
 alsa_lib:
   - 1.2.3
 antic:
@@ -350,7 +350,7 @@ arrow_cpp:
   - 5.0.0
   - 4.0.1
 assimp:
-  - 5.2
+  - 5.2.3
 aws_c_auth:
   - 0.6.10
 aws_c_cal:
@@ -628,9 +628,8 @@ ntl:
 # we build for the oldest version possible of numpy for forward compatibility
 numpy:
   # part of a zip_keys: python, python_impl, numpy
-  - 1.18   # [not (osx and arm64)]
-  - 1.18   # [not (osx and arm64)]
-  - 1.19   # [osx and arm64]
+  - 1.19   # [not (osx and arm64)]
+  - 1.19
   - 1.19
 occt:
   - '7.5'
@@ -687,7 +686,9 @@ python_impl:
   - cpython
   - cpython
 qt:
-  - 5.12
+  - 5.15
+qt_main:
+  - 5.15
 qtkeychain:
   - '0.12'
 re2:
