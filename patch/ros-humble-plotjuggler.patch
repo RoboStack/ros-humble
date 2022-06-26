@@ -1,18 +1,12 @@
 diff --git a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
-index 6b650f1b..4d940448 100644
+index 6b650f1b..1f85254c 100644
 --- a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
 +++ b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
-@@ -4,6 +4,7 @@ project(QtADS LANGUAGES CXX)
- 
- include_directories(include/Qads)
- 
-+find_package(XCB REQUIRED)
- find_package(Qt5 5.5 COMPONENTS Core Gui Widgets REQUIRED)
- if (UNIX AND NOT APPLE)
-         find_package(Qt5 5.5 COMPONENTS X11Extras REQUIRED)
-@@ -67,7 +68,8 @@ target_link_libraries(qt_advanced_docking PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets
+@@ -66,8 +66,10 @@ target_compile_definitions(qt_advanced_docking PUBLIC ADS_STATIC)
+ target_link_libraries(qt_advanced_docking PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets)
  
  if(UNIX AND NOT APPLE)
++    find_package(XCB REQUIRED)
      target_link_libraries(qt_advanced_docking PUBLIC Qt5::X11Extras)
 -        target_link_libraries(qt_advanced_docking PRIVATE xcb)
 +    target_link_libraries(qt_advanced_docking PRIVATE ${XCB_LIBRARIES})
@@ -77,29 +71,3 @@ index 00000000..a2e2757a
 +endforeach()
 +
 +list(REMOVE_DUPLICATES XCB_INCLUDE_DIRS)
-
-diff --git a/plotjuggler_plugins/DataStreamZMQ/CMakeLists.txt b/plotjuggler_plugins/DataStreamZMQ/CMakeLists.txt
-index 68a3c5cc..2e808351 100644
---- a/plotjuggler_plugins/DataStreamZMQ/CMakeLists.txt
-+++ b/plotjuggler_plugins/DataStreamZMQ/CMakeLists.txt
-@@ -1,6 +1,8 @@
- 
- include_directories(../)
- 
-+find_package(cppzmq)
-+
- add_definitions(${QT_DEFINITIONS})
- add_definitions(-DQT_PLUGIN)
- 
-@@ -13,8 +15,10 @@ add_library(DataStreamZMQ SHARED ${SRC} ${UI_SRC}  )
- target_link_libraries(DataStreamZMQ
-     ${Qt5Widgets_LIBRARIES}
-     plotjuggler_base
--    zmq
-+    ${cppzmq_LIBRARY}
-     )
-+    
-+target_include_directories(DataStreamZMQ PUBLIC ${cppzmq_INCLUDE_DIR})
- 
- install(TARGETS DataStreamZMQ DESTINATION ${PJ_PLUGIN_INSTALL_DIRECTORY}  )
- 
