@@ -51,8 +51,14 @@ packages_select_by_deps:
   - desktop_full
   - plotjuggler
   # - plotjuggler_ros
-  - apriltag
-  # - ur
+  # - apriltag
+  - turtlebot3_fake_node
+  - turtlebot3_gazebo
+  - turtlebot3_simulations
+  - ur
+  - ublox
+  - robot_localization
+  - topic_tools
 
   # - turtlebot3
 
@@ -61,8 +67,6 @@ packages_select_by_deps:
   # - rviz2
   # - behaviortree_cpp_v3
   # - ros_workspace
-  # - control_toolbox
-  # - robot_localization
   # - ros1_bridge
   # - velodyne
 
