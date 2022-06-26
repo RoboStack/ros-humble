@@ -60,7 +60,12 @@ packages_select_by_deps:
   - ublox
   - robot_localization
   - topic_tools
-
+  - stubborn_buddies
+  - teleop_tools
+  - udp_driver
+  - urdf_tutorial
+  - wiimote
+  - depthai
   # - turtlebot3
 
 
