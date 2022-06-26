@@ -51,14 +51,15 @@ packages_select_by_deps:
   - desktop_full
   - plotjuggler
   # - plotjuggler_ros
-  # - apriltag
-  - turtlebot3_fake_node
-  - turtlebot3_gazebo
-  - turtlebot3_simulations
-  - ur
-  - ublox
-  - robot_localization
-  - topic_tools
+  - apriltag
+
+  # - turtlebot3_fake_node
+  # - turtlebot3_gazebo
+  # - turtlebot3_simulations
+  # - ur
+  # - ublox
+  # - robot_localization
+  # - topic_tools
 
   # - turtlebot3
 
