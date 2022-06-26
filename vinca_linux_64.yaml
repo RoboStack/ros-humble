@@ -64,7 +64,7 @@ packages_select_by_deps:
   - teleop_tools
   - udp_driver
   - urdf_tutorial
-  - wiimote
+  # - wiimote
   # - depthai
   # - turtlebot3
 
