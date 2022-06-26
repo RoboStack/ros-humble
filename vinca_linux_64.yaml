@@ -54,8 +54,8 @@ packages_select_by_deps:
   - apriltag
 
   - turtlebot3_fake_node
-  - turtlebot3_gazebo
-  - turtlebot3_simulations
+  # - turtlebot3_gazebo
+  # - turtlebot3_simulations
   - ur
   - ublox
   - robot_localization
