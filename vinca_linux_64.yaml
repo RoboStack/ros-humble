@@ -49,6 +49,7 @@ packages_select_by_deps:
   - webots_ros2
   - turtlebot3
   - desktop_full
+  - plotjuggler
   # - ur
 
   # - turtlebot3
