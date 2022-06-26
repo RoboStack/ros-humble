@@ -50,8 +50,8 @@ packages_select_by_deps:
   - turtlebot3
   - desktop_full
   - plotjuggler
-  - plotjuggler_ros
-  # - apriltag
+  # - plotjuggler_ros
+  - apriltag
   # - ur
 
   # - turtlebot3
