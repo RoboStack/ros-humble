@@ -38,7 +38,7 @@ packages_select_by_deps:
   - ament_cmake
   - ros_base
   - desktop
-  - desktop_full
+  # - desktop_full
   - navigation2
   # - moveit
   # - moveit_servo
