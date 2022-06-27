@@ -109,7 +109,7 @@ packages_select_by_deps:
   # - color_names
   # - cudnn_cmake_module
 
-  - rmf_demos
+  # - rmf_demos
   # - rmf_demos_maps
   # - rmf_demos_tasks
 
@@ -126,6 +126,8 @@ packages_select_by_deps:
   # - rqt_runtime_monitor
   # - rqt_robot_steering
   # - rtabmap
+
+  - robot_controllers
 
   # Not yet working
   # - velodyne_simulator
