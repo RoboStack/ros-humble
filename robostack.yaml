@@ -507,6 +507,8 @@ protobuf-dev:
   robostack: [libprotobuf, protobuf]
 pugixml-dev:
   robostack: [pugixml]
+pybind11-dev:
+  robostack: [pybind11]
 pycodestyle:
   robostack: [pycodestyle]
 pydocstyle:

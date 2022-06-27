@@ -70,7 +70,8 @@ packages_select_by_deps:
   - velodyne_description
   - visp
   - zenoh_bridge_dds
-  - zmqpp_vendor
+
+  # - zmqpp_vendor
 
   # - fogros2
   # - foxglove_msgs
