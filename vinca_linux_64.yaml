@@ -75,11 +75,8 @@ packages_select_by_deps:
 
   # - gscam
 
-  # - turtlebot3_gazebo
-  # - turtlebot3_simulations
   # - v4l2_camera
   # - usb_cam
-  # - velodyne_simulator
 
   # - zbar_ros
   # - vitis_common
@@ -100,9 +97,13 @@ packages_select_by_deps:
   # - rosbag2_storage_mcap
   # - rosbag2_performance_benchmarking
 
-  - rosbridge_suite
+  # - rosbridge_suite
+
+  - turtlebot3_gazebo
+  - turtlebot3_simulations
 
   # Not yet working
+  # - velodyne_simulator
   # - wiimote
   # - depthai
   # - turtlebot3
