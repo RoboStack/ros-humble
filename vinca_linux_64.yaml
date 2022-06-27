@@ -107,7 +107,6 @@ packages_select_by_deps:
   - cascade_lifecycle_msgs
   - chomp_motion_planner
   - color_names
-  - control_box_rst
   - cudnn_cmake_module
 
   # - rmf_demos
@@ -130,6 +129,7 @@ packages_select_by_deps:
 
   # Not yet working
   # - velodyne_simulator
+  # - control_box_rst
   # - wiimote
   # - depthai
   # - turtlebot3
