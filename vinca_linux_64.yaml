@@ -147,9 +147,13 @@ packages_select_by_deps:
   - serial_driver
   - simple_launch
   - slider_publisher
-  - smacc2
   - soccer_interfaces
   - topic_statistics_demo
+
+
+  # needs babeltools and lttng-python on conda-forge
+  # - smacc2
+
 
   # Not yet working
   # - velodyne_simulator

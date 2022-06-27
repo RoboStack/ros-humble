@@ -1,3 +1,8 @@
+# TODO
+# python3-babeltrace:
+#   robostack: [babeltrace]
+# python3-lttng:
+#   robostack: [lttng-python]
 acl:
   robostack:
     linux: [libacl]
@@ -277,6 +282,8 @@ libhdf5-dev:
   robostack: [hdf5]
 libi2c-dev:
   robostack: [libi2c]
+liblttng-ust-dev:
+  robostack: [lttng-ust]
 libjpeg:
   robostack: [libjpeg-turbo]
 libjsoncpp:
@@ -846,6 +853,8 @@ screen:
   robostack: [screen]
 sdformat:
   robostack: [libsdformat11]
+sdformat12:
+  robostack: [libsdformat12]
 sdl:
   robostack: [sdl]
 sdl-image:
