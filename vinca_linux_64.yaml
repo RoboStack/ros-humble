@@ -75,9 +75,9 @@ packages_select_by_deps:
   # - gps_umd
   # - gpsd_client
 
-  # - gscam
-  # - v4l2_camera
-  # - usb_cam
+  - gscam
+  - v4l2_camera
+  - usb_cam
 
   - velodyne_simulator
 

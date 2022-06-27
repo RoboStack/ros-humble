@@ -9,6 +9,10 @@ iceoryx_utils:
   add_host: ["pkg-config"]
 cartographer:
   add_host: ["pkg-config"]
+usb_cam:
+  add_host: ["pkg-config"]
+gazebo_ros:
+  add_host: ["pkg-config"]
 libyaml_vendor:
   add_host: ["yaml-cpp", "yaml"]
   add_run: ["yaml-cpp", "yaml"]
