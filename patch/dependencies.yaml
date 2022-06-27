@@ -137,3 +137,6 @@ ur_moveit_config:
   add_run: ["ros-humble-rclpy"]
 gscam:
   add_host: ["pkg-config", "glib"]
+dolly_ignition:
+  add_host: ["REQUIRE_OPENGL"]
+
