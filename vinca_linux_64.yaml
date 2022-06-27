@@ -96,9 +96,11 @@ packages_select_by_deps:
   # - ros2nodl
   # - ros2trace
 
-  - rosapi
-  - rosbag2_storage_mcap
-  - rosbag2_performance_benchmarking
+  # - rosapi
+  # - rosbag2_storage_mcap
+  # - rosbag2_performance_benchmarking
+
+  - rosbridge_suite
 
   # Not yet working
   # - wiimote
