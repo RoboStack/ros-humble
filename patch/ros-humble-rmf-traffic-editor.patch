@@ -1,0 +1,24 @@
+diff --git a/building_map/transform.py b/building_map/transform.py
+index a3980ab..a9286c6 100644
+--- a/building_map/transform.py
++++ b/building_map/transform.py
+@@ -29,7 +29,7 @@ class Transform:
+     def transform_point(self, p):
+         vec = np.array([[p[0]], [p[1]]])
+         transformed = (self.rot_mat @ vec) * self.scale + self.t_vec
+-        return (np.asscalar(transformed[0]), np.asscalar(transformed[1]))
++        return (transformed.item(0), transformed.item(1))
+ 
+     def set_from_fiducials(self, fiducial_pairs, ref_scale):
+         print(f'Transform.set_from_fiducials()')
+@@ -93,8 +93,8 @@ class Transform:
+             f1x = f_pair[1].x / mean_rel_scale
+             f1y = f_pair[1].y / mean_rel_scale
+             rot_f_pair1 = rot_mat @ np.array([[f1x], [f1y]])
+-            rot_f1x = np.asscalar(rot_f_pair1[0])
+-            rot_f1y = np.asscalar(rot_f_pair1[1])
++            rot_f1x = rot_f_pair1.item(0)
++            rot_f1y = rot_f_pair1.item(1)
+ 
+             mean_translation[0] += rot_f1x - f_pair[0].x
+             mean_translation[1] += rot_f1y - f_pair[0].y
