@@ -102,14 +102,14 @@ packages_select_by_deps:
   # - turtlebot3_gazebo
   # - turtlebot3_simulations
 
-  - can_msgs
-  - cartographer_rviz
-  - cascade_lifecycle_msgs
-  - chomp_motion_planner
-  - color_names
-  - cudnn_cmake_module
+  # - can_msgs
+  # - cartographer_rviz
+  # - cascade_lifecycle_msgs
+  # - chomp_motion_planner
+  # - color_names
+  # - cudnn_cmake_module
 
-  # - rmf_demos
+  - rmf_demos
   # - rmf_demos_maps
   # - rmf_demos_tasks
 
