@@ -63,6 +63,15 @@ packages_select_by_deps:
   - udp_driver
   - urdf_tutorial
 
+  - test_bond
+  - apex_test_tools
+  - tvm_vendor
+  - ublox_dgnss
+  - velodyne_description
+  - visp
+  - zenoh_bridge_dds
+  - zmqpp_vendor
+
   # - fogros2
   # - foxglove_msgs
   # - four_wheel_steering_msgs
