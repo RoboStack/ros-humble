@@ -102,7 +102,9 @@ packages_select_by_deps:
   # - turtlebot3_gazebo
   # - turtlebot3_simulations
 
-  - rmf_demos
+  # - rmf_demos
+  - rmf_traffic
+  - rmf_demos_tasks
 
   # - rqt
   # - rqt_image_overlay
