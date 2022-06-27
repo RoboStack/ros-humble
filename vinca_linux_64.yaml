@@ -127,7 +127,17 @@ packages_select_by_deps:
   # - rqt_robot_steering
   # - rtabmap
 
-  - robot_controllers
+  # - robot_controllers
+
+  - ros2_control
+  - ros2_controllers
+  - ros2_ouster
+  - ros2_socketcan
+  - ros2trace_analysis
+  - rplidar_ros
+  - rot_conv
+  - rt_manipulators
+  - rt_manipulators_examples
 
   # Not yet working
   # - velodyne_simulator
