@@ -64,15 +64,22 @@ packages_select_by_deps:
   - teleop_tools
   - udp_driver
   - urdf_tutorial
-  - fogros2
-  - foxglove_msgs
-  - four_wheel_steering_msgs
-  - geographic_info
-  - geodesy
-  - geometry_tutorials
-  - gps_tools
-  - gps_umd
-  - gpsd_client
+
+  # - fogros2
+  # - foxglove_msgs
+  # - four_wheel_steering_msgs
+  # - geographic_info
+  # - geodesy
+  # - geometry_tutorials
+  # - gps_tools
+  # - gps_umd
+  # - gpsd_client
+
+  - gscam
+  - v4l2_camera
+  - usb_cam
+
+  # Not yet working
   # - wiimote
   # - depthai
   # - turtlebot3
