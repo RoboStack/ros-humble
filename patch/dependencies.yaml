@@ -130,4 +130,4 @@ ur_moveit_config:
   add_host: ["ros-humble-rclpy"]
   add_run: ["ros-humble-rclpy"]
 gscam:
-  add_host: ["pkg-config"]
+  add_host: ["pkg-config", "glib"]
