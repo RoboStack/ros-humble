@@ -651,6 +651,8 @@ python3-empy:
   robostack: [empy]
 python3-flake8:
   robostack: [flake8]
+python3-fiona:
+  robostack: [fiona]
 python3-future:
   robostack: [future]
 python3-github:
@@ -756,6 +758,8 @@ python3-requests:
   robostack: [requests]
 python3-requests-oauthlib:
   robostack: [requests-oauthlib]
+python3-rtree:
+  robostack: [rtree]
 python3-rosdep:
   robostack: [rosdep]
 python3-rosdep-modules:
@@ -854,6 +858,8 @@ subversion:
   robostack: [subversion]
 suitesparse:
   robostack: [suitesparse]
+sqlite3:
+  robostack: [sqlite 3.*]
 swig:
   robostack: [swig]
 sysstat:
