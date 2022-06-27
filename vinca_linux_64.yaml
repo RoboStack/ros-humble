@@ -65,11 +65,14 @@ packages_select_by_deps:
 
   - test_bond
   - apex_test_tools
-  - tvm_vendor
   - ublox_dgnss
   - velodyne_description
   - visp
-  - zenoh_bridge_dds
+
+  - apex_containers
+  - apex_test_tools
+  - bno055
+  - aws_robomaker_small_warehouse_world
 
   # - zmqpp_vendor
 
@@ -192,6 +195,8 @@ packages_select_by_deps:
 
 
   # Not yet working
+  # - tvm_vendor
+  # - zenoh_bridge_dds
   # - velodyne_simulator
   # - control_box_rst
   # - wiimote
