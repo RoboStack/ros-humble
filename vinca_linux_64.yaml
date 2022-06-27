@@ -89,12 +89,16 @@ packages_select_by_deps:
   # - ublox_ubx_interfaces
   # - twist_mux
 
-  - ros2acceleration
-  - ros2controlcli
-  - ros2launch_security
-  - ros2launch_security_examples
-  - ros2nodl
-  - ros2trace
+  # - ros2acceleration
+  # - ros2controlcli
+  # - ros2launch_security
+  # - ros2launch_security_examples
+  # - ros2nodl
+  # - ros2trace
+
+  - rosapi
+  - rosbag2_storage_mcap
+  - rosbag2_performance_benchmarking
 
   # Not yet working
   # - wiimote
