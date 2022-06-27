@@ -140,15 +140,22 @@ packages_select_by_deps:
   - rt_manipulators
   - rt_manipulators_examples
 
-  - rviz_imu_plugin
-  - sdformat_test_files
-  - sdformat_urdf
-  - self_test
-  - serial_driver
-  - simple_launch
-  - slider_publisher
-  - soccer_interfaces
-  - topic_statistics_demo
+  # - rviz_imu_plugin
+  # - sdformat_test_files
+  # - sdformat_urdf
+  # - self_test
+  # - serial_driver
+  # - simple_launch
+  # - slider_publisher
+  # - soccer_interfaces
+  # - topic_statistics_demo
+
+  - ros_ign
+  - spacenav
+  - system_modes
+  - tf_transformations
+  - turtle_tf2_cpp
+  - turtle_tf2_py
 
 
   # needs babeltools and lttng-python on conda-forge
