@@ -130,15 +130,31 @@ packages_select_by_deps:
 
   # - robot_controllers
 
-  - ros2_control
-  - ros2_controllers
-  - ros2_ouster
-  - ros2_socketcan
-  - ros2trace_analysis
-  - rplidar_ros
-  - rot_conv
-  - rt_manipulators
-  - rt_manipulators_examples
+  # - ros2_control
+  # - ros2_controllers
+  # - ros2_ouster
+  # - ros2_socketcan
+  # - ros2trace_analysis
+  # - rplidar_ros
+  # - rot_conv
+  # - rt_manipulators
+  # - rt_manipulators_examples
+
+  - acado_vendor
+  - ament_clang_tidy
+  - ament_cmake_clang_tidy
+  - ament_cmake_mypy
+  - ament_cmake_nose
+  - ament_cmake_pclint
+  - ament_cmake_pycodestyle
+  - ament_cmake_pyflakes
+  - ament_download
+  - ament_pclint
+  - ament_pyflakes
+  - automotive_autonomy_msgs
+  - automotive_navigation_msgs
+  - automotive_platform_msgs
+  - autoware_auto_msgs
 
   # - rviz_imu_plugin
   # - sdformat_test_files

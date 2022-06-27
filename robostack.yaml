@@ -41,6 +41,8 @@ cartographer:
   robostack: [cartographer]
 ca-certificates:
   robostack: [ca-certificates]
+clang-tidy:
+  robostack: [clang-tools]
 cmake:
   robostack: [cmake]
 coinor-libcbc-dev:
