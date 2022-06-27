@@ -1,0 +1,17 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6339c06..96f3a2b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.5)
+ project(dolly_ignition)
+ 
+ # Skip if Ignition not present
+-find_package(ignition-gazebo5 QUIET)
+-if(NOT ignition-gazebo5_FOUND)
+-  message(WARNING "Ignition Gazebo 5 not found, proceeding without that simulator.")
++find_package(ignition-gazebo6 QUIET)
++if(NOT ignition-gazebo6_FOUND)
++  message(WARNING "Ignition Gazebo 6 not found, proceeding without that simulator.")
+   return()
+ endif()
+ 
