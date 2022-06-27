@@ -393,6 +393,8 @@ libtool:
   robostack: [libtool]
 libturbojpeg:
   robostack: [libjpeg-turbo]
+libtins-dev:
+  robostack: [libtins]
 libudev-dev:
   robostack: [libusb]
 liburdfdom-dev:
@@ -651,6 +653,10 @@ python3-empy:
   robostack: [empy]
 python3-flake8:
   robostack: [flake8]
+python3-flask:
+  robostack: [flask]
+python3-flask-cors:
+  robostack: [flask-cors]
 python3-fiona:
   robostack: [fiona]
 python3-future:

@@ -110,6 +110,7 @@ packages_select_by_deps:
   # - cudnn_cmake_module
 
   # - rmf_demos
+  # - rmf_traffic_msgs
   # - rmf_demos_maps
   # - rmf_demos_tasks
 
