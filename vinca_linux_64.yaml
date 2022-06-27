@@ -156,7 +156,8 @@ packages_select_by_deps:
   # - automotive_platform_msgs
   # - autoware_auto_msgs
 
-  - dolly
+  # - dolly
+  - avt_vimba_camera
 
   # - rviz_imu_plugin
   # - sdformat_test_files
