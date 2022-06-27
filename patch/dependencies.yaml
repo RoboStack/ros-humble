@@ -17,6 +17,8 @@ gazebo_plugins:
   add_host: ["pkg-config"]
 velodyne_gazebo_plugins:
   add_host: ["pkg-config"]
+turtlebot3_gazebo:
+  add_host: ["pkg-config"]
 libyaml_vendor:
   add_host: ["yaml-cpp", "yaml"]
   add_run: ["yaml-cpp", "yaml"]

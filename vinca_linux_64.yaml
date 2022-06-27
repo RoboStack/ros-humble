@@ -99,17 +99,17 @@ packages_select_by_deps:
 
   # - rosbridge_suite
 
-  # - turtlebot3_gazebo
-  # - turtlebot3_simulations
+  - turtlebot3_gazebo
+  - turtlebot3_simulations
 
-  - rqt
-  - rqt_image_overlay
-  - rqt_moveit
-  - rqt_robot_monitor
-  - rqt_robot_dashboard
-  - rqt_runtime_monitor
-  - rqt_robot_steering
-  - rtabmap
+  # - rqt
+  # - rqt_image_overlay
+  # - rqt_moveit
+  # - rqt_robot_monitor
+  # - rqt_robot_dashboard
+  # - rqt_runtime_monitor
+  # - rqt_robot_steering
+  # - rtabmap
 
   # Not yet working
   # - velodyne_simulator
