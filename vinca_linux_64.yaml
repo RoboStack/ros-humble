@@ -99,8 +99,10 @@ packages_select_by_deps:
 
   # - rosbridge_suite
 
-  - turtlebot3_gazebo
-  - turtlebot3_simulations
+  # - turtlebot3_gazebo
+  # - turtlebot3_simulations
+
+  - rmf_demos
 
   # - rqt
   # - rqt_image_overlay
