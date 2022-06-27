@@ -75,19 +75,19 @@ packages_select_by_deps:
 
   # - gscam
 
-  # - turtlebot3_gazebo
-  # - turtlebot3_simulations
-  # - v4l2_camera
-  # - usb_cam
-  # - velodyne_simulator
+  - turtlebot3_gazebo
+  - turtlebot3_simulations
+  - v4l2_camera
+  - usb_cam
+  - velodyne_simulator
 
-  - zbar_ros
-  - vitis_common
-  - urg_node
-  - ur_bringup
-  - ublox_dgnss_node
-  - ublox_ubx_interfaces
-  - twist_mux
+  # - zbar_ros
+  # - vitis_common
+  # - urg_node
+  # - ur_bringup
+  # - ublox_dgnss_node
+  # - ublox_ubx_interfaces
+  # - twist_mux
 
   # Not yet working
   # - wiimote
