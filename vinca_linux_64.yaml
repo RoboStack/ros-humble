@@ -103,13 +103,13 @@ packages_select_by_deps:
   # - turtlebot3_simulations
 
   # - rmf_demos
-  # - rmf_demos_maps
+  - rmf_demos_maps
   # - rmf_demos_tasks
 
-  - adaptive_component
-  - async_web_server_cpp
-  - boost_geometry_util
-  - bond_core
+  # - adaptive_component
+  # - async_web_server_cpp
+  # - boost_geometry_util
+  # - bond_core
   # - rqt
   # - rqt_image_overlay
   # - rqt_moveit
