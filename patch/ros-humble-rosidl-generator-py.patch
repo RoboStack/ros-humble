@@ -1,51 +1,36 @@
 diff --git a/cmake/rosidl_generator_py_generate_interfaces.cmake b/cmake/rosidl_generator_py_generate_interfaces.cmake
-index a6d8263..9d01240 100644
+index a6d8263..ecae76b 100644
 --- a/cmake/rosidl_generator_py_generate_interfaces.cmake
 +++ b/cmake/rosidl_generator_py_generate_interfaces.cmake
-@@ -17,7 +17,7 @@ find_package(rosidl_runtime_c REQUIRED)
- find_package(rosidl_typesupport_c REQUIRED)
- find_package(rosidl_typesupport_interface REQUIRED)
- 
--find_package(PythonInterp 3.6 REQUIRED)
-+find_package(Python3 REQUIRED COMPONENTS Interpreter NumPy)
+@@ -21,6 +21,7 @@ find_package(PythonInterp 3.6 REQUIRED)
  
  find_package(python_cmake_module REQUIRED)
  find_package(PythonExtra MODULE REQUIRED)
-@@ -126,10 +126,7 @@ endif()
++find_package(Python3 REQUIRED COMPONENTS Development NumPy)
  
- set(_target_suffix "__py")
- 
--set(_PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE})
--if(WIN32 AND "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
--  set(PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE_DEBUG})
--endif()
-+set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
- 
- # move custom command into a subdirectory to avoid multiple invocations on Windows
- set(_subdir "${CMAKE_CURRENT_BINARY_DIR}/${rosidl_generate_interfaces_TARGET}${_target_suffix}")
-@@ -172,10 +169,16 @@ add_dependencies(
+ # Get a list of typesupport implementations from valid rmw implementations.
+ rosidl_generator_py_get_typesupports(_typesupport_impls)
+@@ -165,52 +166,23 @@ set(rosidl_generator_py_suffix "__rosidl_generator_py")
+ set(_target_name_lib "${rosidl_generate_interfaces_TARGET}${rosidl_generator_py_suffix}")
+ add_library(${_target_name_lib} SHARED ${_generated_c_files})
+ target_link_libraries(${_target_name_lib}
++  PRIVATE
+   ${rosidl_generate_interfaces_TARGET}__rosidl_generator_c)
+ add_dependencies(
+   ${_target_name_lib}
+   ${rosidl_generate_interfaces_TARGET}${_target_suffix}
    ${rosidl_generate_interfaces_TARGET}__rosidl_typesupport_c
  )
- 
+-
 -target_link_libraries(
 -  ${_target_name_lib}
 -  ${PythonExtra_LIBRARIES}
 -)
-+if(NOT APPLE)
-+  target_link_libraries(
-+    ${_target_name_lib}
-+    ${PythonExtra_LIBRARIES}
-+  )
-+else()
-+  set_target_properties(${_target_name_lib} PROPERTIES
-+                        LINK_FLAGS "-undefined dynamic_lookup")
-+endif()
-+
  target_include_directories(${_target_name_lib}
    PRIVATE
    ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c
-@@ -183,31 +186,8 @@ target_include_directories(${_target_name_lib}
-   ${PythonExtra_INCLUDE_DIRS}
+   ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_py
+-  ${PythonExtra_INCLUDE_DIRS}
  )
  
 -# Check if numpy is in the include path
@@ -73,29 +58,72 @@ index a6d8263..9d01240 100644
 -  message(STATUS "Using numpy include directory: ${_output}")
 -  target_include_directories(${_target_name_lib} PUBLIC "${_output}")
 -endif()
-+message(STATUS "Using numpy include directory: ${Python3_NumPy_INCLUDE_DIRS}")
-+target_include_directories(${_target_name_lib} PUBLIC "${Python3_NumPy_INCLUDE_DIRS}")
++target_link_libraries(${_target_name_lib} PRIVATE Python3::NumPy Python3::Module)
  
  rosidl_get_typesupport_target(c_typesupport_target "${rosidl_generate_interfaces_TARGET}" "rosidl_typesupport_c")
- target_link_libraries(${_target_name_lib} ${c_typesupport_target})
-@@ -246,10 +226,16 @@ foreach(_typesupport_impl ${_typesupport_impls})
+-target_link_libraries(${_target_name_lib} ${c_typesupport_target})
++target_link_libraries(${_target_name_lib} PRIVATE ${c_typesupport_target})
+ 
+ foreach(_typesupport_impl ${_typesupport_impls})
+   find_package(${_typesupport_impl} REQUIRED)
+@@ -245,27 +217,28 @@ foreach(_typesupport_impl ${_typesupport_impls})
+   endif()
    target_link_libraries(
      ${_target_name}
++    PRIVATE
      ${_target_name_lib}
 -    ${PythonExtra_LIBRARIES}
      ${rosidl_generate_interfaces_TARGET}__${_typesupport_impl}
++    Python3::Module
    )
  
-+  if(NOT APPLE)
-+    target_link_libraries(${_target_name} ${PythonExtra_LIBRARIES})
-+  else()
-+    set_target_properties(${_target_name} PROPERTIES
-+                          LINK_FLAGS "-undefined dynamic_lookup")
-+  endif()
-+
    target_include_directories(${_target_name}
      PUBLIC
      ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c
+     ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_py
+-    ${PythonExtra_INCLUDE_DIRS}
+   )
+ 
+-  target_link_libraries(${_target_name} ${c_typesupport_target})
++  target_link_libraries(${_target_name} PRIVATE ${c_typesupport_target})
+ 
+   ament_target_dependencies(${_target_name}
++    PUBLIC
+     "rosidl_runtime_c"
+     "rosidl_typesupport_c"
+     "rosidl_typesupport_interface"
+   )
+   foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
+-    ament_target_dependencies(${_target_name}
++    ament_target_dependencies(${_target_name} PUBLIC
+       ${_pkg_name}
+     )
+   endforeach()
+@@ -273,7 +246,7 @@ foreach(_typesupport_impl ${_typesupport_impls})
+   add_dependencies(${_target_name}
+     ${rosidl_generate_interfaces_TARGET}__${_typesupport_impl}
+   )
+-  ament_target_dependencies(${_target_name}
++  ament_target_dependencies(${_target_name} PUBLIC
+     "rosidl_runtime_c"
+     "rosidl_generator_py"
+   )
+@@ -288,7 +261,7 @@ set(PYTHON_EXECUTABLE ${_PYTHON_EXECUTABLE})
+ 
+ # Depend on rosidl_generator_py generated targets from our dependencies
+ foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
+-  target_link_libraries(${_target_name_lib} ${${_pkg_name}_TARGETS${rosidl_generator_py_suffix}})
++  target_link_libraries(${_target_name_lib} PRIVATE ${${_pkg_name}_TARGETS${rosidl_generator_py_suffix}})
+ endforeach()
+ 
+ set_lib_properties("")
+@@ -352,4 +325,4 @@ if(BUILD_TESTING AND rosidl_generate_interfaces_ADD_LINTER_TESTS)
+       MAX_LINE_LENGTH 0
+       "${_output_path}")
+   endif()
+-endif()
++endif()
+\ No newline at end of file
 diff --git a/rosidl_generator_py-extras.cmake.in b/rosidl_generator_py-extras.cmake.in
 index 80bed29..ba70acc 100644
 --- a/rosidl_generator_py-extras.cmake.in

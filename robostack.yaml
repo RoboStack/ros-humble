@@ -3,6 +3,8 @@
 #   robostack: [babeltrace]
 # python3-lttng:
 #   robostack: [lttng-python]
+# libv4l-dev:
+#   robostack: [xxx]
 acl:
   robostack:
     linux: [libacl]

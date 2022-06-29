@@ -35,12 +35,13 @@ skip_existing:
 packages_select_by_deps:
   - ros_workspace
   - ros_environment
-  - ros_base
-  - desktop
-  - moveit
-  - moveit_servo
-  - desktop_full
-  - navigation2
+  - rclpy
+  # - ros_base
+  # - desktop
+  # - moveit
+  # - moveit_servo
+  # - desktop_full
+  # - navigation2
 
   # - navigation2
   # - joint-state-broadcaster
