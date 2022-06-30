@@ -1,17 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a9966c0..d255430 100644
+index a9966c0..30cb145 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -23,6 +23,8 @@ if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-   set(Python3_EXECUTABLE "${PYTHON_EXECUTABLE_DEBUG}")
- endif()
- 
-+set(CMAKE_XCODE_ATTRIBUTE_OTHER_CODE_SIGN_FLAGS "-o linker-signed")
-+
- find_package(ament_cmake REQUIRED)
- find_package(ament_cmake_python REQUIRED)
- find_package(lifecycle_msgs REQUIRED)
-@@ -57,11 +59,13 @@ endif()
+@@ -57,11 +57,13 @@ endif()
  
  # Set the build location and install location for a CPython extension
  function(configure_build_install_location _library_name)
@@ -30,12 +21,12 @@ index a9966c0..d255430 100644
  
    # Install library for actual use
    install(TARGETS ${_library_name}
-@@ -70,7 +74,7 @@ function(configure_build_install_location _library_name)
+@@ -70,7 +72,7 @@ function(configure_build_install_location _library_name)
  endfunction()
  
  # Split from main extension and converted to pybind11
 -pybind11_add_module(_rclpy_pybind11 SHARED
-+pybind11_add_module(_rclpy_pybind11 MODULE
++pybind11_add_module(_rclpy_pybind11 MODULE NO_EXTRAS
    src/rclpy/_rclpy_logging.cpp
    src/rclpy/_rclpy_pybind11.cpp
    src/rclpy/action_client.cpp
