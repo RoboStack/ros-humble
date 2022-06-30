@@ -5,6 +5,8 @@ ackermann_msgs:
   add_run: ["numpy"]
 velodyne_pointcloud:
   add_host: ["pkg-config"]
+aws_robomaker_small_warehouse_world:
+  add_host: ["pkg-config"]
 iceoryx_utils:
   add_host: ["pkg-config"]
 cartographer:
