@@ -37,8 +37,9 @@ packages_select_by_deps:
   - demo_nodes_py
   - demo_nodes_cpp
   - desktop
-  # - desktop
   - moveit
+  - moveit_servo
+  - moveit_resources
   - navigation2
   # - joint-state-broadcaster
   # - joint-state-publisher
