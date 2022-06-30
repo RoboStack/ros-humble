@@ -26,6 +26,8 @@ packages_remove_from_deps:
   - tlsf_cpp
   - pendulum_control
   - rttest
+  # Not available for macOS and Windows!
+  - gripper_controllers
 
 skip_existing:
   - https://conda.anaconda.org/robostack-humble/
@@ -39,7 +41,10 @@ packages_select_by_deps:
   - desktop
   - moveit
   - moveit_servo
-  - moveit_resources
+  - rviz_visual_tools
+  - graph_msgs
+  - desktop_full
+  # - moveit_resources
   - navigation2
   # - joint-state-broadcaster
   # - joint-state-publisher
