@@ -36,7 +36,7 @@ packages_select_by_deps:
   - ros_base
   - demo_nodes_py
   - demo_nodes_cpp
-  - qt_gui_cpp
+  - desktop
   # - desktop
   # - moveit
   # - navigation2
