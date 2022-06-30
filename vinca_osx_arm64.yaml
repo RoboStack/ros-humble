@@ -38,8 +38,8 @@ packages_select_by_deps:
   - demo_nodes_cpp
   - desktop
   # - desktop
-  # - moveit
-  # - navigation2
+  - moveit
+  - navigation2
   # - joint-state-broadcaster
   # - joint-state-publisher
   # - joint-trajectory-controller
