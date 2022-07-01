@@ -41,7 +41,7 @@ packages_select_by_deps:
   - desktop
   - moveit
   - moveit_servo
-  - rviz_visual_tools
+  # - rviz_visual_tools
   - graph_msgs
   - desktop_full
   # - moveit_resources
