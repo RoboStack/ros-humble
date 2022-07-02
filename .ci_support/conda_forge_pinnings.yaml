@@ -9,38 +9,38 @@ c_compiler:
   - clang                      # [osx]
   - vs2017                     # [win]
 c_compiler_version:            # [unix]
-  - 11                         # [osx]
-  - 9                          # [linux]
+  - 10                         # [linux]
+  - 13                         # [osx]
   - 7                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
-  - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
-  - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
+  - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
+  - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
 cxx_compiler:
   - gxx                        # [linux]
   - clangxx                    # [osx]
   - vs2017                     # [win]
 cxx_compiler_version:          # [unix]
-  - 11                         # [osx]
-  - 9                          # [linux]
+  - 10                         # [linux]
+  - 13                         # [osx]
   - 7                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
-  - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
-  - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
+  - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
+  - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
 llvm_openmp:                   # [osx]
-  - 11                         # [osx]
+  - 13                         # [osx]
 fortran_compiler:              # [unix or win64]
   - gfortran                   # [linux64 or (osx and x86_64)]
   - gfortran                   # [aarch64 or ppc64le or armv7l or s390x]
   - flang                      # [win64]
 fortran_compiler_version:      # [unix or win64]
+  - 10                         # [linux]
   - 11                         # [osx and arm64]
   - 9                          # [osx and x86_64]
-  - 9                          # [linux]
   - 5                          # [win64]
   - 7                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
   - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
-  - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
-  - 9                          # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
+  - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
+  - 10                         # [os.environ.get("CF_CUDA_ENABLED", "False") == "True" and linux64]
 m2w64_c_compiler:              # [win]
   - m2w64-toolchain            # [win]
 m2w64_cxx_compiler:            # [win]
@@ -50,14 +50,18 @@ m2w64_fortran_compiler:        # [win]
 CMAKE_GENERATOR:               # [win]
   - NMake Makefiles            # [win]
 
-cuda_compiler:                 # [linux64 or win]
-  - nvcc                       # [linux64 or win]
+cuda_compiler:                 # [linux or win]
+  - nvcc                       # [linux or win]
 cuda_compiler_version:
   - None
   - 10.2                       # [(linux64 or win) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
   - 11.0                       # [(linux64 or win) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
   - 11.1                       # [(linux64 or win) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
   - 11.2                       # [(linux64 or win) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+cuda_compiler_version_min:
+  - None                       # [osx]
+  - 10.2                       # [linux64 or win]
+  - 11.2                       # [linux and (ppc64le or aarch64)]
 cudnn:
   - undefined
   - 7                          # [(linux64 or win) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
@@ -125,15 +129,15 @@ channel_targets:
   - conda-forge main
 
 cdt_name:  # [linux]
-  - cos6   # [linux64 and os.environ.get("DEFAULT_LINUX_VERSION", "cos7") == "cos6"]
-  - cos7   # [linux64 and os.environ.get("DEFAULT_LINUX_VERSION", "cos7") == "cos7"]
+  - cos6   # [linux64 and os.environ.get("DEFAULT_LINUX_VERSION", "cos6") == "cos6"]
+  - cos7   # [linux64 and os.environ.get("DEFAULT_LINUX_VERSION", "cos6") == "cos7"]
   - cos7   # [linux and aarch64]
   - cos7   # [linux and ppc64le]
   - cos7   # [linux and armv7l]
   - cos7   # [linux and s390x]
 
-  - cos6   # [linux64 and os.environ.get("CF_CUDA_ENABLED", "False") == "True" and os.environ.get("DEFAULT_LINUX_VERSION", "cos7") == "cos6"]
-  - cos7   # [linux64 and os.environ.get("CF_CUDA_ENABLED", "False") == "True" and os.environ.get("DEFAULT_LINUX_VERSION", "cos7") == "cos7"]
+  - cos6   # [linux64 and os.environ.get("CF_CUDA_ENABLED", "False") == "True" and os.environ.get("DEFAULT_LINUX_VERSION", "cos6") == "cos6"]
+  - cos7   # [linux64 and os.environ.get("CF_CUDA_ENABLED", "False") == "True" and os.environ.get("DEFAULT_LINUX_VERSION", "cos6") == "cos7"]
   - cos7   # [linux64 and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
   - cos7   # [linux64 and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
   - cos7   # [linux64 and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
@@ -165,6 +169,10 @@ zip_keys:
     - python
     - numpy
     - python_impl
+  -
+    - abseil_cpp
+    - grpc_cpp
+
 
 # aarch64 specifics because conda-build sets many things to centos 6
 # this can probably be removed when conda-build gets updated defaults
@@ -204,8 +212,6 @@ pin_run_as_build:
     max_pin: x
   gdal:
     max_pin: x.x
-  geotiff:
-    max_pin: x.x.x
   glew:
     max_pin: x.x
   glpk:
@@ -260,8 +266,6 @@ pin_run_as_build:
     max_pin: x.x
   libuuid:
     max_pin: x
-  lz4-c:
-    max_pin: x.x.x
   lzo:
     max_pin: x
   metis:
@@ -335,44 +339,52 @@ blas_impl:
   - mkl          # [x86 or x86_64]
   - blis         # [x86 or x86_64]
 
+# hmaarrfk (2022/05/06) -- keep in sync with grpc_cpp
+# Due to the fact that cetain large packages (tensorflow)
+# require specific versions of abseil to be used, it is
+# useful if we build out two versions with the abseil dependency
 abseil_cpp:
+  - '20210324.2'
   - '20211102.0'
 alsa_lib:
-  - 1.2.3
+  - 1.2.6
 antic:
   - 0.2
 arb:
-  - '2.21'
+  - '2.22'
 arpack:
   - 3.7
 arrow_cpp:
+  - 7.0.0
   - 6.0.1
   - 5.0.0
   - 4.0.1
 assimp:
-  - 5.2.3
+  - 5.2.4
+attr:
+  - 2.5
 aws_c_auth:
-  - 0.6.10
+  - 0.6.13
 aws_c_cal:
-  - 0.5.12
+  - 0.5.17
 aws_c_common:
-  - 0.6.19
+  - 0.7.2
 aws_c_event_stream:
   - 0.2.7
 aws_c_http:
-  - 0.6.10
+  - 0.6.17
 aws_c_io:
-  - 0.10.17
+  - 0.11.2
 aws_c_mqtt:
   - 0.7.10
 aws_c_s3:
-  - 0.1.31
+  - 0.1.41
 aws_c_sdkutils:
-  - 0.1.1
+  - 0.1.2
 aws_checksums:
   - 0.1.12
 aws_crt_cpp:
-  - 0.17.14
+  - 0.17.30
 aws_sdk_cpp:
   - 1.9.160
 boost:
@@ -384,11 +396,11 @@ bzip2:
 cairo:
   - 1.16
 capnproto:
-  - 0.9.1
+  - 0.10.0
 ccr:
   - 1.3
 cfitsio:
-  - 3.470
+  - 4.0.0
 coin_or_cbc:
   - 2.10
 coincbc:
@@ -414,7 +426,8 @@ exiv2:
 expat:
   - 2
 ffmpeg:
-  - '4.3'
+  - '4.3'  # [win]
+  - '4.4'  # [unix]
 fftw:
   - 3
 flann:
@@ -432,21 +445,23 @@ gf2x:
 gdk_pixbuf:
   - 2
 gnuradio_core:
-  - 3.9.5
+  - 3.10.3
+gnutls:
+  - 3.7
 gsl:
   - 2.7
 gsoap:
-  - 2.8.117
+  - 2.8.119
 gstreamer:
-  - 1.18
+  - '1.20'
 gst_plugins_base:
-  - 1.18
+  - '1.20'
 gdal:
-  - '3.4'
+  - '3.5'
 geos:
   - 3.10.2
 geotiff:
-  - '1.7'
+  - 1.7.1
 gfal2:
   - '2.20'
 gflags:
@@ -464,23 +479,30 @@ glpk:
 gmp:
   - 6
 google_cloud_cpp:
-  - '1.35'
+  - "1.40"
 google_cloud_cpp_common:
   - 0.25.0
 googleapis_cpp:
   - '0.10'
 graphviz:
-  - 2.47
-grpc_cpp:
-  - '1.42'
-harfbuzz:
   - '3'
+# 2022/02/16 -- hmaarrfk -- Keep in sync with abseil_cpp
+# However, grpc_cpp 1.46 now requires the newer version, so for the
+# abseil version 20210324 we need to ensure to build with the lastest
+# version of grpc that still supports it.
+grpc_cpp:
+  - '1.45'
+  - '1.46'
+harfbuzz:
+  - '4'
 hdf4:
-  - 4.2
+  - 4.2.15
 hdf5:
   - 1.12.1
 icu:
-  - 69
+  - '70'
+imath:
+  - '3.1'
 ipopt:
   - 3.14
 isl:
@@ -492,7 +514,7 @@ jpeg:
 libjpeg_turbo:
   - 2
 json_c:
-  - 0.15
+  - '0.16'
 jsoncpp:
   - 1.9.5
 kealib:
@@ -501,6 +523,8 @@ krb5:
   - '1.19'
 libarchive:
   - 3.5
+libavif:
+  - 0.10.1
 libblitz:
   - 1.0.2
 libcint:
@@ -511,6 +535,8 @@ libcrc32c:
   - 1.1
 libdap4:
   - 3.20.6
+libdeflate:
+  - '1.12'
 libeantic:
   - 1
 libevent:
@@ -518,19 +544,23 @@ libevent:
 libexactreal:
   - 2
 libffi:
-  - '3.4'
+  - '3.3'
 libflatsurf:
   - 3
 libflint:
   - '2.8'
 libgdal:
-  - '3.4'
+  - '3.5'
 libgit2:
-  - '1.3'
+  - '1.4'
 libhugetlbfs:
   - 2
+libhwy:
+  - '0.17'
 libiconv:
   - 1.16
+libidn2:
+  - 2
 libintervalxt:
   - 3
 libkml:
@@ -538,7 +568,7 @@ libkml:
 libiio:
   - 0
 libmatio:
-  - 1.5
+  - 1.5.21
 libmicrohttpd:
   - 0.9
 libnetcdf:
@@ -550,7 +580,7 @@ libpcap:
 libpng:
   - 1.6
 libprotobuf:
-  - '3.20'
+  - '3.19'
 librdkafka:
   - '1.7'
 librsvg:
@@ -564,19 +594,23 @@ libssh2:
 libsvm:
   - 3.21
 libthrift:
-  - 0.15.0
+  - 0.16.0
 libtiff:
   - 4
 libunwind:
   - '1.6'
 libv8:
   - 8.9.83
+libvips:
+  - 8
 libwebp:
   - 1
 libwebp_base:
   - 1
 libxml2:
   - 2.9
+libxsmm:
+  - 1
 libuuid:
   - 2
 libzip:
@@ -584,19 +618,19 @@ libzip:
 log4cxx:
   - 0.11.0
 lz4_c:
-  - 1.9.3
+  - '1.9.3'
 lzo:
   - 2
 metis:
   - 5.1
 mimalloc:
-  - 1.6.3
+  - 2.0.6
 mkl:
-  - '2021'
+  - 2022
 mkl_devel:
-  - '2021'
+  - 2022
 mpich:
-  - 3
+  - 4
 mpfr:
   - 4
 mumps_mpi:
@@ -612,7 +646,7 @@ netcdf_cxx4:
 netcdf_fortran:
   - 4.5
 nettle:
-  - '3.7'
+  - '3.8'
 nodejs:
   - '17'
   - '16'
@@ -628,15 +662,15 @@ ntl:
 # we build for the oldest version possible of numpy for forward compatibility
 numpy:
   # part of a zip_keys: python, python_impl, numpy
-  - 1.19   # [not (osx and arm64)]
-  - 1.19
+  # - 1.19   # [not (osx and arm64)]
+  # - 1.19
   - 1.19
 occt:
   - '7.5'
 openblas:
   - 0.3.*
 openexr:
-  - 2.5
+  - '3.1'
 openjpeg:
   - '2.4'
 openmpi:
@@ -646,7 +680,7 @@ openssl:
 openturns:
   - '1.18'
 orc:
-  - 1.7.2
+  - 1.7.5
 pango:
   - '1.48'
 pari:
@@ -654,13 +688,17 @@ pari:
 perl:
   - 5.32.1
 petsc:
-  - 3.15
+  - '3.16'
 petsc4py:
-  - 3.15
+  - '3.16'
 slepc:
-  - 3.15
+  - '3.16'
 slepc4py:
-  - 3.15
+  - '3.16'
+svt_av1:
+  - '1.1.0'
+p11_kit:
+  - '0.24'
 pcre:
   - '8'
 pcre2:
@@ -670,21 +708,25 @@ pixman:
 poco:
   - 1.11.1
 poppler:
-  - '21.11'
+  - '22.04'
 proj:
-  - 8.2.1
+  - 9.0.0
+pulseaudio:
+  - 14.0
 pybind11_abi:
   - 4
 python:
   # part of a zip_keys: python, python_impl, numpy
-  - 3.7.* *_cpython    # [not (osx and arm64)]
-  - 3.8.* *_cpython
+  # - 3.7.* *_cpython    # [not (osx and arm64)]
+  # - 3.8.* *_cpython
   - 3.9.* *_cpython
 python_impl:
   # part of a zip_keys: python, python_impl, numpy
-  - cpython   # [not (osx and arm64)]
+  # - cpython   # [not (osx and arm64)]
+  # - cpython
   - cpython
-  - cpython
+pytorch:
+  - '1.11'
 qt:
   - 5.15
 qt_main:
@@ -692,15 +734,15 @@ qt_main:
 qtkeychain:
   - '0.12'
 re2:
-  - 2021.11.01
+  - 2022.04.01
 readline:
   - "8"
 rocksdb:
   - "6.10"
 root_base:
-  - 6.24.6
+  - 6.26.4
 ruby:
-  - 2.5
+  # - 2.5
   - 2.6
 r_base:
   - 4.0
@@ -710,9 +752,9 @@ scotch:
 ptscotch:
   - 6.0.9
 s2n:
-  - 1.3.4
+  - 1.3.15
 singular:
-  - 4.2.0.p3
+  - 4.2.1.p3
 snappy:
   - 1
 soapysdr:
@@ -720,27 +762,31 @@ soapysdr:
 sox:
   - 14.4.2
 spdlog:
-  - 1.9
+  - '1.10'
 sqlite:
   - 3
+starlink_ast:
+  - '9.2.7'
 suitesparse:
   - 5
 superlu_dist:
   - 7.1.1
 tbb:
-  - 2021
+  - '2021'
 tbb_devel:
-  - 2021
+  - '2021'
 thrift_cpp:
-  - 0.15.0
+  - 0.16.0
 tinyxml2:
   - 9
 tk:
   - 8.6                # [not ppc64le]
 tiledb:
-  - '2.6'
+  - '2.9'
+ucx:
+  - 1.12.1
 uhd:
-  - 4.1.0
+  - 4.2.0
 vc:                    # [win]
   - 14                 # [win]
 vlfeat:
@@ -749,8 +795,14 @@ volk:
   - '2.5'
 vtk:
   - 9.1.0
+wcslib:
+  - '7.7'
+wxwidgets:
+  - '3.1'
 x264:
   - '1!161.*'
+x265:
+  - '3.5'
 xerces_c:
   - 3.2
 xrootd:
