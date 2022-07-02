@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 0
+build_number: 1
 
 mutex_package: ros2-distro-mutex 0.1 humble
 
@@ -41,7 +41,7 @@ packages_select_by_deps:
   - desktop
   - navigation2
   - moveit
-  # - desktop_full
+  - desktop_full
   - desktop
   - cv_bridge
   - perception
