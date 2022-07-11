@@ -1,0 +1,64 @@
+package:
+  name: ros-humble-tf2
+  version: 0.25.0
+source:
+  git_url: https://github.com/ros2-gbp/geometry2-release.git
+  git_rev: release/humble/tf2/0.25.0-2
+  folder: ros-humble-tf2/src/work
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 1
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - sel(unix): make
+    - sel(osx): tapi
+    - cmake
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+  host:
+    - console_bridge
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-copyright
+    - ros-humble-ament-cmake-cppcheck
+    - ros-humble-ament-cmake-cpplint
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-cmake-lint-cmake
+    - ros-humble-ament-cmake-uncrustify
+    - ros-humble-ament-cmake-xmllint
+    - ros-humble-builtin-interfaces
+    - ros-humble-console-bridge-vendor
+    - ros-humble-geometry-msgs
+    - ros-humble-rcutils
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-rosidl-runtime-cpp
+    - ros2-distro-mutex 0.1 humble
+  run:
+    - console_bridge
+    - python
+    - ros-humble-builtin-interfaces
+    - ros-humble-console-bridge-vendor
+    - ros-humble-geometry-msgs
+    - ros-humble-rcutils
+    - ros-humble-ros-workspace
+    - ros-humble-rosidl-runtime-cpp
+    - ros2-distro-mutex 0.1 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
