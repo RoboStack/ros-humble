@@ -1,0 +1,29 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b7e8d53..f81660e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -28,8 +28,8 @@ else()
+     find_package(Boost REQUIRED COMPONENTS python3)
+     set(boost_python_target "Boost::python3")
+   else()
+-    find_package(Boost REQUIRED COMPONENTS python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR})
+-    set(boost_python_target "Boost::python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
++    find_package(Boost REQUIRED COMPONENTS python)
++    set(boost_python_target "Boost::python")
+   endif()
+ endif()
+ 
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index a28fec3..f43eadf 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -27,6 +27,9 @@ install(FILES
+ 
+ if(NOT ANDROID)
+   Python3_add_library(${PROJECT_NAME}_boost MODULE module.cpp module_opencv3.cpp)
++  if (MSVC)
++    target_compile_definitions(${PROJECT_NAME}_boost PRIVATE -DBOOST_PYTHON_STATIC_LIB)
++  endif()
+   target_link_libraries(${PROJECT_NAME}_boost PRIVATE
+     ${PROJECT_NAME}
+     ${boost_python_target}

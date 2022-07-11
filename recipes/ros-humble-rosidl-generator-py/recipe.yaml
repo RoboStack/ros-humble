@@ -1,0 +1,80 @@
+package:
+  name: ros-humble-rosidl-generator-py
+  version: 0.14.2
+source:
+  git_url: https://github.com/ros2-gbp/rosidl_python-release.git
+  git_rev: release/humble/rosidl_generator_py/0.14.2-2
+  folder: ros-humble-rosidl-generator-py/src/work
+  patches:
+    - patch/ros-humble-rosidl-generator-py.patch
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 1
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - sel(unix): make
+    - sel(osx): tapi
+    - cmake
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+    - sel(build_platform != target_platform): numpy
+  host:
+    - numpy
+    - pytest
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-pytest
+    - ros-humble-ament-index-python
+    - ros-humble-ament-lint-auto
+    - ros-humble-ament-lint-common
+    - ros-humble-python-cmake-module
+    - ros-humble-rmw
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-rosidl-cmake
+    - ros-humble-rosidl-generator-c
+    - ros-humble-rosidl-generator-cpp
+    - ros-humble-rosidl-parser
+    - ros-humble-rosidl-runtime-c
+    - ros-humble-rosidl-typesupport-c
+    - ros-humble-rosidl-typesupport-fastrtps-c
+    - ros-humble-rosidl-typesupport-interface
+    - ros-humble-rosidl-typesupport-introspection-c
+    - ros-humble-rpyutils
+    - ros-humble-test-interface-files
+    - ros2-distro-mutex 0.1 humble
+  run:
+    - numpy
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-index-python
+    - ros-humble-python-cmake-module
+    - ros-humble-rmw
+    - ros-humble-ros-workspace
+    - ros-humble-rosidl-cli
+    - ros-humble-rosidl-cmake
+    - ros-humble-rosidl-generator-c
+    - ros-humble-rosidl-parser
+    - ros-humble-rosidl-runtime-c
+    - ros-humble-rosidl-typesupport-c
+    - ros-humble-rosidl-typesupport-interface
+    - ros-humble-rpyutils
+    - ros2-distro-mutex 0.1 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

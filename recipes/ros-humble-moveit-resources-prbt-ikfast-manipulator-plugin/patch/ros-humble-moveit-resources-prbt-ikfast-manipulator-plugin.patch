@@ -1,0 +1,36 @@
+diff --git a/src/prbt_manipulator_ikfast_moveit_plugin.cpp b/src/prbt_manipulator_ikfast_moveit_plugin.cpp
+index 7479184c..4151126f 100644
+--- a/src/prbt_manipulator_ikfast_moveit_plugin.cpp
++++ b/src/prbt_manipulator_ikfast_moveit_plugin.cpp
+@@ -805,13 +805,15 @@ bool IKFastKinematicsPlugin::getPositionFK(const std::vector<std::string>& link_
+     return false;
+   }
+ 
+-  IkReal angles[num_joints_];
++  IkReal* angles = new IkReal[num_joints_];
+   for (unsigned char i = 0; i < num_joints_; i++)
+     angles[i] = joint_angles[i];
+ 
+   // IKFast56/61
+   ComputeFk(angles, eetrans, eerot);
+ 
++  delete[] angles;
++
+   for (int i = 0; i < 3; ++i)
+     p_out.p.data[i] = eetrans[i];
+ 
+diff --git a/src/prbt_manipulator_ikfast_solver.cpp b/src/prbt_manipulator_ikfast_solver.cpp
+index c1359ad5..7a238a9d 100644
+--- a/src/prbt_manipulator_ikfast_solver.cpp
++++ b/src/prbt_manipulator_ikfast_solver.cpp
+@@ -25,10 +25,6 @@
+ #include "ikfast.h" // found inside share/openrave-X.Y/python/ikfast.h
+ using namespace ikfast;
+ 
+-// check if the included ikfast version matches what this file was compiled with
+-#define IKFAST_COMPILE_ASSERT(x) extern int __dummy[(int)x]
+-IKFAST_COMPILE_ASSERT(IKFAST_VERSION==0x1000004a);
+-
+ #include <cmath>
+ #include <vector>
+ #include <limits>

@@ -1,0 +1,32 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a9966c0..30cb145 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -57,11 +57,13 @@ endif()
+ 
+ # Set the build location and install location for a CPython extension
+ function(configure_build_install_location _library_name)
+-  # Install into test_rclpy folder in build space for unit tests to import
+-  set_target_properties(${_library_name} PROPERTIES
+-    # Use generator expression to avoid prepending a build type specific directory on Windows
+-    LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_CURRENT_BINARY_DIR}/test_rclpy>
+-    RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_CURRENT_BINARY_DIR}/test_rclpy>)
++  if(NOT $ENV{CONDA_BUILD_CROSS_COMPILATION} STREQUAL "1")
++    # Install into test_rclpy folder in build space for unit tests to import
++    set_target_properties(${_library_name} PROPERTIES
++      # Use generator expression to avoid prepending a build type specific directory on Windows
++      LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_CURRENT_BINARY_DIR}/test_rclpy>
++      RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_CURRENT_BINARY_DIR}/test_rclpy>)
++  endif()
+ 
+   # Install library for actual use
+   install(TARGETS ${_library_name}
+@@ -70,7 +72,7 @@ function(configure_build_install_location _library_name)
+ endfunction()
+ 
+ # Split from main extension and converted to pybind11
+-pybind11_add_module(_rclpy_pybind11 SHARED
++pybind11_add_module(_rclpy_pybind11 MODULE NO_EXTRAS
+   src/rclpy/_rclpy_logging.cpp
+   src/rclpy/_rclpy_pybind11.cpp
+   src/rclpy/action_client.cpp
