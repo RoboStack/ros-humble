@@ -1,0 +1,13 @@
+diff --git a/nav2_costmap_2d/CMakeLists.txt b/nav2_costmap_2d/CMakeLists.txt
+index 84f86617a..e94cfaec0 100644
+--- a/nav2_costmap_2d/CMakeLists.txt
++++ b/nav2_costmap_2d/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(nav2_costmap_2d)
+ 
++add_definitions(-DNOMINMAX)
++
+ find_package(ament_cmake REQUIRED)
+ find_package(geometry_msgs REQUIRED)
+ find_package(laser_geometry REQUIRED)

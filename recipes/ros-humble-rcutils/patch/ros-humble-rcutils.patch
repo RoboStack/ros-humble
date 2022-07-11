@@ -1,0 +1,80 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 334d6ff..3ecad9d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,13 +3,9 @@ cmake_minimum_required(VERSION 3.12)
+ project(rcutils)
+ 
+ # Default to C11
+-if(NOT CMAKE_C_STANDARD)
+-  set(CMAKE_C_STANDARD 11)
+-endif()
++set(CMAKE_C_STANDARD 11)
+ # Default to C++14
+-if(NOT CMAKE_CXX_STANDARD)
+-  set(CMAKE_CXX_STANDARD 14)
+-endif()
++set(CMAKE_CXX_STANDARD 14)
+ 
+ include(CheckLibraryExists)
+ 
+@@ -132,6 +128,10 @@ endif()
+ 
+ target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
+ 
++if (UNIX AND NOT APPLE)
++  target_link_libraries(${PROJECT_NAME} rt)
++endif()
++
+ # Needed if pthread is used for thread local storage.
+ if(IOS AND IOS_SDK_VERSION LESS 10.0)
+   ament_export_libraries(pthread)
+@@ -587,6 +587,9 @@ endif()
+ # Export old-style CMake variables
+ ament_export_include_directories("include/${PROJECT_NAME}")
+ ament_export_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
++if (UNIX AND NOT APPLE)
++  ament_export_libraries(${PROJECT_NAME} rt)
++endif()
+ 
+ # Export modern CMake targets
+ ament_export_targets(${PROJECT_NAME})
+diff --git a/include/rcutils/error_handling.h b/include/rcutils/error_handling.h
+index 23e84fa..d0906b5 100644
+--- a/include/rcutils/error_handling.h
++++ b/include/rcutils/error_handling.h
+@@ -122,7 +122,7 @@ typedef struct rcutils_error_state_s
+ 
+ // make sure our math is right...
+ #if __STDC_VERSION__ >= 201112L
+-static_assert(
++_Static_assert(
+   sizeof(rcutils_error_string_t) == (
+     RCUTILS_ERROR_STATE_MESSAGE_MAX_LENGTH +
+     RCUTILS_ERROR_STATE_FILE_MAX_LENGTH +
+diff --git a/src/error_handling.c b/src/error_handling.c
+index a060537..03e8e2e 100644
+--- a/src/error_handling.c
++++ b/src/error_handling.c
+@@ -200,7 +200,7 @@ rcutils_set_error_state(
+   // Only warn of overwritting if the new error is different from the old ones.
+   size_t characters_to_compare = strnlen(error_string, RCUTILS_ERROR_MESSAGE_MAX_LENGTH);
+   // assumption is that message length is <= max error string length
+-  static_assert(
++  _Static_assert(
+     sizeof(gtls_rcutils_error_state.message) <= sizeof(gtls_rcutils_error_string.str),
+     "expected error state's max message length to be less than or equal to error string max");
+   if (
+diff --git a/src/error_handling_helpers.h b/src/error_handling_helpers.h
+index 4914c4f..15901e2 100644
+--- a/src/error_handling_helpers.h
++++ b/src/error_handling_helpers.h
+@@ -145,7 +145,7 @@ __rcutils_format_error_string(
+   static const char format_1[] = ", at ";
+   static const char format_2[] = ":";
+   char line_number_buffer[21];
+-  static_assert(
++  _Static_assert(
+     sizeof(error_string->str) == (
+       sizeof(error_state->message) +
+       sizeof(format_1) - 1 /* minus the null-term */ +

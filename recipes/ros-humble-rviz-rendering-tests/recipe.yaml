@@ -1,0 +1,59 @@
+package:
+  name: ros-humble-rviz-rendering-tests
+  version: 11.2.2
+source:
+  git_url: https://github.com/ros2-gbp/rviz-release.git
+  git_rev: release/humble/rviz_rendering_tests/11.2.2-1
+  folder: ros-humble-rviz-rendering-tests/src/work
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 1
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - sel(unix): make
+    - sel(osx): tapi
+    - cmake
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+  host:
+    - python
+    - qt-main
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-cppcheck
+    - ros-humble-ament-cmake-cpplint
+    - ros-humble-ament-cmake-gmock
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-cmake-lint-cmake
+    - ros-humble-ament-cmake-uncrustify
+    - ros-humble-ament-cmake-xmllint
+    - ros-humble-ament-index-cpp
+    - ros-humble-ament-lint-auto
+    - ros-humble-resource-retriever
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-rviz-rendering
+    - ros2-distro-mutex 0.1 humble
+  run:
+    - python
+    - ros-humble-resource-retriever
+    - ros-humble-ros-workspace
+    - ros-humble-rviz-rendering
+    - ros2-distro-mutex 0.1 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

@@ -1,0 +1,126 @@
+package:
+  name: ros-humble-moveit-core
+  version: 2.5.1
+source:
+  git_url: https://github.com/moveit/moveit2-release.git
+  git_rev: release/humble/moveit_core/2.5.1-1
+  folder: ros-humble-moveit-core/src/work
+  patches:
+    - patch/ros-humble-moveit-core.patch
+    - patch/ros-humble-moveit-core.win.patch
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 1
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - sel(unix): make
+    - sel(osx): tapi
+    - cmake
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+    - sel(build_platform != target_platform): pybind11
+    - sel(build_platform != target_platform): pkg-config
+  host:
+    - assimp
+    - boost
+    - bullet
+    - eigen
+    - fcl
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-index-cpp
+    - ros-humble-ament-lint-auto
+    - ros-humble-ament-lint-common
+    - ros-humble-angles
+    - ros-humble-common-interfaces
+    - ros-humble-eigen-stl-containers
+    - ros-humble-eigen3-cmake-module
+    - ros-humble-geometric-shapes
+    - ros-humble-geometry-msgs
+    - ros-humble-kdl-parser
+    - ros-humble-moveit-common
+    - ros-humble-moveit-msgs
+    - ros-humble-moveit-resources-panda-moveit-config
+    - ros-humble-moveit-resources-pr2-description
+    - ros-humble-octomap
+    - ros-humble-octomap-msgs
+    - ros-humble-orocos-kdl-vendor
+    - ros-humble-pluginlib
+    - ros-humble-pybind11-vendor
+    - ros-humble-random-numbers
+    - ros-humble-rclcpp
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-ruckig
+    - ros-humble-sensor-msgs
+    - ros-humble-shape-msgs
+    - ros-humble-srdfdom
+    - ros-humble-std-msgs
+    - ros-humble-tf2
+    - ros-humble-tf2-eigen
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-kdl
+    - ros-humble-trajectory-msgs
+    - ros-humble-urdf
+    - ros-humble-urdfdom
+    - ros-humble-urdfdom-headers
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.1 humble
+    - pybind11
+    - sel(build_platform == target_platform): pkg-config
+  run:
+    - assimp
+    - boost
+    - bullet
+    - eigen
+    - fcl
+    - python
+    - ros-humble-angles
+    - ros-humble-common-interfaces
+    - ros-humble-eigen-stl-containers
+    - ros-humble-eigen3-cmake-module
+    - ros-humble-geometric-shapes
+    - ros-humble-geometry-msgs
+    - ros-humble-kdl-parser
+    - ros-humble-moveit-common
+    - ros-humble-moveit-msgs
+    - ros-humble-octomap
+    - ros-humble-octomap-msgs
+    - ros-humble-pluginlib
+    - ros-humble-pybind11-vendor
+    - ros-humble-random-numbers
+    - ros-humble-rclcpp
+    - ros-humble-ros-workspace
+    - ros-humble-ruckig
+    - ros-humble-sensor-msgs
+    - ros-humble-shape-msgs
+    - ros-humble-srdfdom
+    - ros-humble-std-msgs
+    - ros-humble-tf2
+    - ros-humble-tf2-eigen
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-trajectory-msgs
+    - ros-humble-urdf
+    - ros-humble-urdfdom
+    - ros-humble-urdfdom-headers
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.1 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

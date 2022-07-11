@@ -1,0 +1,58 @@
+package:
+  name: ros-humble-camera-info-manager
+  version: 3.1.4
+source:
+  git_url: https://github.com/ros2-gbp/image_common-release.git
+  git_rev: release/humble/camera_info_manager/3.1.4-2
+  folder: ros-humble-camera-info-manager/src/work
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 1
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - sel(unix): make
+    - sel(osx): tapi
+    - cmake
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+  host:
+    - python
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-cmake-ros
+    - ros-humble-ament-index-cpp
+    - ros-humble-ament-lint-auto
+    - ros-humble-ament-lint-common
+    - ros-humble-camera-calibration-parsers
+    - ros-humble-rclcpp
+    - ros-humble-rcpputils
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-sensor-msgs
+    - ros2-distro-mutex 0.1 humble
+  run:
+    - python
+    - ros-humble-ament-index-cpp
+    - ros-humble-camera-calibration-parsers
+    - ros-humble-rclcpp
+    - ros-humble-rcpputils
+    - ros-humble-ros-workspace
+    - ros-humble-sensor-msgs
+    - ros2-distro-mutex 0.1 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

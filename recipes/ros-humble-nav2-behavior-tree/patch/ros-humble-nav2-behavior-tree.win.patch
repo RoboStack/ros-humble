@@ -1,0 +1,13 @@
+diff --git a/nav2_behavior_tree/CMakeLists.txt b/nav2_behavior_tree/CMakeLists.txt
+index 9de075152..ade316733 100644
+--- a/nav2_behavior_tree/CMakeLists.txt
++++ b/nav2_behavior_tree/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(nav2_behavior_tree CXX)
+ 
++add_definitions(-DNOMINMAX)
++
+ find_package(ament_cmake REQUIRED)
+ find_package(nav2_common REQUIRED)
+ find_package(rclcpp REQUIRED)
