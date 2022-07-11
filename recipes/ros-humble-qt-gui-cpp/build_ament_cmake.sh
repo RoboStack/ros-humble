@@ -58,4 +58,8 @@ cmake \
     $SRC_DIR/$PKG_NAME/src/work
 
 cmake --build . --config Release --target install || echo "fail"
+echo "sip contents:"
+cd $SRC_DIR/build/sip && ls -al
+echo "sip/qt_gui_cpp_sip contents:"
+cd $SRC_DIR/build/sip/qt_gui_cpp_sip && ls -al
 cd $SRC_DIR/build/sip && $PREFIX/bin/qmake -recursive libqt_gui_cpp_sip.pro
