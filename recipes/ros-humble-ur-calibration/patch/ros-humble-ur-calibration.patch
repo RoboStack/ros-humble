@@ -1,0 +1,16 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0b17e4d..5ab58e1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -34,10 +34,9 @@ target_include_directories(calibration
+   PUBLIC
+     include
+     ${EIGEN3_INCLUDE_DIRS}
+-    ${YAML_CPP_INCLUDE_DIRS}
+ )
+ target_link_libraries(calibration
+-  ${YAML_CPP_LIBRARIES}
++  yaml-cpp
+ )
+ ament_target_dependencies(calibration
+   rclcpp

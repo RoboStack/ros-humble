@@ -1,0 +1,92 @@
+package:
+  name: ros-humble-ur-robot-driver
+  version: 2.2.1
+source:
+  git_url: https://github.com/ros2-gbp/Universal_Robots_ROS2_Driver-release.git
+  git_rev: release/humble/ur_robot_driver/2.2.1-1
+  folder: ros-humble-ur-robot-driver/src/work
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 1
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - sel(unix): make
+    - sel(osx): tapi
+    - cmake
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+  host:
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-python
+    - ros-humble-controller-manager
+    - ros-humble-controller-manager-msgs
+    - ros-humble-geometry-msgs
+    - ros-humble-hardware-interface
+    - ros-humble-launch-testing-ament-cmake
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-rclcpp-lifecycle
+    - ros-humble-rclpy
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-std-msgs
+    - ros-humble-std-srvs
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-ur-client-library
+    - ros-humble-ur-controllers
+    - ros-humble-ur-dashboard-msgs
+    - ros-humble-ur-description
+    - ros-humble-ur-msgs
+    - ros2-distro-mutex 0.1 humble
+  run:
+    - python
+    - ros-humble-controller-manager
+    - ros-humble-controller-manager-msgs
+    - ros-humble-force-torque-sensor-broadcaster
+    - ros-humble-geometry-msgs
+    - ros-humble-hardware-interface
+    - ros-humble-joint-state-broadcaster
+    - ros-humble-joint-state-publisher
+    - ros-humble-joint-trajectory-controller
+    - ros-humble-launch
+    - ros-humble-launch-ros
+    - ros-humble-pluginlib
+    - ros-humble-position-controllers
+    - ros-humble-rclcpp
+    - ros-humble-rclcpp-lifecycle
+    - ros-humble-rclpy
+    - ros-humble-robot-state-publisher
+    - ros-humble-ros-workspace
+    - ros-humble-ros2-controllers-test-nodes
+    - ros-humble-rviz2
+    - ros-humble-std-msgs
+    - ros-humble-std-srvs
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-ur-client-library
+    - ros-humble-ur-controllers
+    - ros-humble-ur-dashboard-msgs
+    - ros-humble-ur-description
+    - ros-humble-ur-msgs
+    - ros-humble-urdf
+    - ros-humble-velocity-controllers
+    - ros-humble-xacro
+    - ros2-distro-mutex 0.1 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

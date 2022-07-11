@@ -1,0 +1,18 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9f000181..742ae3e9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,8 +16,12 @@ pkg_check_modules(LIBFCL REQUIRED "fcl>=0.5.0")
+ set(LIBFCL_LIBRARIES_FULL "")
+ foreach(LIBFCL_LIBRARY ${LIBFCL_LIBRARIES})
+   find_library(${LIBFCL_LIBRARY}_LIB ${LIBFCL_LIBRARY} ${LIBFCL_LIBRARY_DIRS})
+-  list(APPEND LIBFCL_LIBRARIES_FULL ${${LIBFCL_LIBRARY}_LIB})
++  if (NOT "${${LIBFCL_LIBRARY}_LIB}" MATCHES "_build_env")
++    list(APPEND LIBFCL_LIBRARIES_FULL ${${LIBFCL_LIBRARY}_LIB})
++  endif()
+ endforeach()
++message("LIBFCL LIBRARIES: ${LIBFCL_LIBRARIES}")
++message("LIBFCL LIBRARIES FULL: ${LIBFCL_LIBRARIES_FULL}")
+ set(LIBFCL_LIBRARIES "${LIBFCL_LIBRARIES_FULL}")
+ 
+ find_package(Bullet 2.87 REQUIRED)
