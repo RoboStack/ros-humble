@@ -57,4 +57,5 @@ cmake \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=$OSX_DEPLOYMENT_TARGET \
     $SRC_DIR/$PKG_NAME/src/work
 
-cmake --build . --config Release --target install
+cmake --build . --config Release --target install || echo "fail"
+cd $SRC_DIR/build/sip/qt_gui_cpp_sip/ && make
