@@ -38,12 +38,11 @@ packages_select_by_deps:
   - ros_workspace
   - ros_environment
   - ros_base
-  - desktop
-  - navigation2
-  - moveit
-  - desktop_full
-  - desktop
-  - cv_bridge
-  - perception
+  # - navigation2
+  # - moveit
+  # - desktop_full
+  # - desktop
+  # - cv_bridge
+  # - perception
 
 patch_dir: patch
