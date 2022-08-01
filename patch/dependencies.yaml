@@ -143,4 +143,6 @@ gscam:
   add_host: ["pkg-config", "glib"]
 dolly_ignition:
   add_host: ["REQUIRE_OPENGL"]
-
+google_benchmark_vendor:
+  add_host: ["benchmark"]
+  add_run: ["benchmark"]
