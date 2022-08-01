@@ -11,13 +11,18 @@ index 99c9e2d..29171a4 100644
  
  # Locate ament_package template files.
  if(WIN32)
-@@ -15,6 +15,11 @@ else()
+@@ -15,6 +15,16 @@ else()
    set(SHELL_EXT "sh")
  endif()
  set(AMENT_PACKAGE_DIR "${CMAKE_INSTALL_PREFIX}/${PYTHON_INSTALL_DIR}/ament_package")
-+if(NOT EXISTS "${AMENT_PACKAGE_DIR}" AND NOT "$ENV{PYTHONPATH}" EQUAL "")
-+  message(WARNING "Could not find '${AMENT_PACKAGE_DIR}', now try '$ENV{PYTHONPATH}/ament_package' instead.")
-+  set(AMENT_PACKAGE_DIR "$ENV{PYTHONPATH}/ament_package")
++if(NOT EXISTS "${AMENT_PACKAGE_DIR}" OR "$ENV{CONDA_BUILD_CROSS_COMPILATION}" EQUAL "1")
++  execute_process(
++    COMMAND python -c "import site; print(site.getsitepackages()[-1])"
++    OUTPUT_VARIABLE _PYTHON_SYSPREFIX
++    OUTPUT_STRIP_TRAILING_WHITESPACE
++  )
++  message(WARNING "Could not find '${AMENT_PACKAGE_DIR}', now try '${_PYTHON_SYSPREFIX}/ament_package' instead.")
++  set(AMENT_PACKAGE_DIR "${_PYTHON_SYSPREFIX}/ament_package")
 +endif()
 +
  if(NOT EXISTS "${AMENT_PACKAGE_DIR}")
