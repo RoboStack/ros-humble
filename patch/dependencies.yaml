@@ -146,3 +146,5 @@ dolly_ignition:
 google_benchmark_vendor:
   add_host: ["benchmark"]
   add_run: ["benchmark"]
+rqt_image_view:
+  add_host: ["REQUIRE_OPENGL"]
