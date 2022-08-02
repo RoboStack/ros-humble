@@ -156,3 +156,5 @@ plotjuggler_ros:
   add_host: ["REQUIRE_OPENGL"]
 moveit_setup_framework:
   add_host: ["REQUIRE_OPENGL"]
+moveit_setup_core_plugins:
+  add_host: ["REQUIRE_OPENGL"]
