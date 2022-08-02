@@ -1,0 +1,40 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b9f386ab7..533b06705 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -11,8 +11,9 @@ find_package(ament_index_cpp REQUIRED)
+ find_package(moveit_core REQUIRED)
+ find_package(moveit_ros_planning REQUIRED)
+ find_package(moveit_ros_visualization REQUIRED)
+-find_package(Qt5Core REQUIRED)
+-find_package(Qt5Widgets REQUIRED)
++# find_package(Qt5Core REQUIRED)
++# find_package(Qt5Widgets REQUIRED)
++find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+ find_package(pluginlib REQUIRED)
+ find_package(rclcpp REQUIRED)
+ find_package(rviz_common REQUIRED)
+@@ -52,8 +53,9 @@ ament_target_dependencies(${PROJECT_NAME}
+   moveit_ros_planning
+   moveit_ros_visualization
+   pluginlib
+-  Qt5Core
+-  Qt5Widgets
++  # Qt5Core
++  # Qt5Widgets
++  Qt5
+   rclcpp
+   rviz_common
+   rviz_rendering
+@@ -84,8 +86,9 @@ install(TARGETS ${PROJECT_NAME}
+ )
+ ament_export_include_directories(include)
+ ament_export_dependencies(rclcpp)
+-ament_export_dependencies(Qt5Core)
+-ament_export_dependencies(Qt5Widgets)
++# ament_export_dependencies(Qt5Core)
++# ament_export_dependencies(Qt5Widgets)
++ament_export_dependencies(Qt5)
+ ament_export_dependencies(moveit_common)
+ ament_export_dependencies(moveit_core)
+ ament_export_dependencies(moveit_ros_planning)
