@@ -152,3 +152,5 @@ rviz_visual_testing_framework:
   add_host: ["REQUIRE_OPENGL"]
 rviz2:
   add_host: ["REQUIRE_OPENGL"]
+plotjuggler_ros:
+  add_host: ["REQUIRE_OPENGL"]
