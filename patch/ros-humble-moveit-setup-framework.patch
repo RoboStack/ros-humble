@@ -34,7 +34,7 @@ index b9f386ab7..533b06705 100644
 -ament_export_dependencies(Qt5Widgets)
 +# ament_export_dependencies(Qt5Core)
 +# ament_export_dependencies(Qt5Widgets)
-+ament_export_dependencies(Qt5)
++# ament_export_dependencies(Qt5)
  ament_export_dependencies(moveit_common)
  ament_export_dependencies(moveit_core)
  ament_export_dependencies(moveit_ros_planning)
