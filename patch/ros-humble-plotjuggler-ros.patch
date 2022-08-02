@@ -1,0 +1,370 @@
+diff --git a/plugins/DataLoadROS2/dataload_ros2.cpp b/plugins/DataLoadROS2/dataload_ros2.cpp
+index 64a9601..586fcb3 100644
+--- a/plugins/DataLoadROS2/dataload_ros2.cpp
++++ b/plugins/DataLoadROS2/dataload_ros2.cpp
+@@ -20,6 +20,7 @@
+ #include <rosbag2_cpp/typesupport_helpers.hpp>
+ #include <rosbag2_cpp/storage_options.hpp>
+ #include <rosbag2_cpp/types/introspection_message.hpp>
++#include <rosbag2_storage/storage_options.hpp>
+ #include <unordered_map>
+ #include <rclcpp/rclcpp.hpp>
+ #include <rmw/rmw.h>
+@@ -50,7 +51,7 @@ bool DataLoadROS2::readDataFromFile(PJ::FileLoadInfo* info,
+     bagDir = finfo.dir().path();
+   }
+ 
+-  rosbag2_cpp::StorageOptions storageOptions;
++  rosbag2_storage::StorageOptions storageOptions;
+   storageOptions.uri = bagDir.toStdString();
+   storageOptions.storage_id = "sqlite3";
+   rosbag2_cpp::ConverterOptions converterOptions;
+@@ -150,7 +151,7 @@ bool DataLoadROS2::readDataFromFile(PJ::FileLoadInfo* info,
+ 
+   if (_bag_reader)
+   {
+-    _bag_reader->reset();
++    _bag_reader->close();
+   }
+   _bag_reader = temp_bag_reader;
+   //---------------------------------------
+diff --git a/plugins/DataStreamROS2/datastream_ros2.cpp b/plugins/DataStreamROS2/datastream_ros2.cpp
+index 68a0c02..bc736fc 100644
+--- a/plugins/DataStreamROS2/datastream_ros2.cpp
++++ b/plugins/DataStreamROS2/datastream_ros2.cpp
+@@ -6,8 +6,8 @@
+ #include <QMessageBox>
+ #include <QApplication>
+ #include <QProgressDialog>
+-#include "ros2_parsers/generic_subscription.hpp"
+-#include "rosbag2_helper.hpp"
++#include "rclcpp/generic_subscription.hpp"
++#include "rosbag2_transport/qos.hpp"
+ 
+ DataStreamROS2::DataStreamROS2() :
+     DataStreamer(),
+@@ -21,7 +21,7 @@ DataStreamROS2::DataStreamROS2() :
+   _context = std::make_shared<rclcpp::Context>();
+   _context->init(0, nullptr);
+ 
+-  auto exec_args = rclcpp::executor::ExecutorArgs();
++  auto exec_args = rclcpp::ExecutorOptions();
+   exec_args.context = _context;
+   _executor = std::make_unique<rclcpp::executors::MultiThreadedExecutor>(exec_args, 2);
+ 
+@@ -190,13 +190,13 @@ void DataStreamROS2::subscribeToTopic(const std::string& topic_name, const std::
+   auto bound_callback = [=](std::shared_ptr<rclcpp::SerializedMessage> msg) { messageCallback(topic_name, msg); };
+ 
+   auto publisher_info = _node->get_publishers_info_by_topic(topic_name);
+-  auto detected_qos = PJ::adapt_request_to_offers(topic_name, publisher_info);
++  auto detected_qos = rosbag2_transport::Rosbag2QoS::adapt_request_to_offers(topic_name, publisher_info);
+ 
+   // double subscription, latching or not
+-  auto subscription = std::make_shared<rosbag2_transport::GenericSubscription>(
+-      _node->get_node_base_interface().get(),
+-      *_parser->typeSupport(topic_name),
+-      topic_name, detected_qos, bound_callback);
++  auto subscription = _node->create_generic_subscription(topic_name,
++                                                         topic_type,
++                                                         detected_qos,
++                                                         bound_callback);
+   _subscriptions[topic_name] = subscription;
+   _node->get_node_topics_interface()->add_subscription(subscription, nullptr);
+ 
+diff --git a/plugins/DataStreamROS2/datastream_ros2.h b/plugins/DataStreamROS2/datastream_ros2.h
+index c4f7127..5543f8e 100644
+--- a/plugins/DataStreamROS2/datastream_ros2.h
++++ b/plugins/DataStreamROS2/datastream_ros2.h
+@@ -8,7 +8,7 @@
+ 
+ #include "dialog_select_ros_topics.h"
+ #include "ros2_parsers/ros2_parser.h"
+-#include "ros2_parsers/generic_subscription.hpp"
++#include "rclcpp/generic_subscription.hpp"
+ 
+ class DataStreamROS2 : public PJ::DataStreamer
+ {
+@@ -63,7 +63,7 @@ class DataStreamROS2 : public PJ::DataStreamer
+ 
+   void loadDefaultSettings();
+ 
+-  std::unordered_map<std::string, rosbag2_transport::GenericSubscription::Ptr> _subscriptions;
++  std::unordered_map<std::string, rclcpp::GenericSubscription::SharedPtr> _subscriptions;
+ 
+   void subscribeToTopic(const std::string& topic_name, const std::string& topic_type);
+   void waitOneSecond();
+diff --git a/plugins/DataStreamROS2/rosbag2_helper.hpp b/plugins/DataStreamROS2/rosbag2_helper.hpp
+deleted file mode 100644
+index f042dc6..0000000
+--- a/plugins/DataStreamROS2/rosbag2_helper.hpp
++++ /dev/null
+@@ -1,84 +0,0 @@
+-#ifndef ROSBAG2_HELPER_HPP
+-#define ROSBAG2_HELPER_HPP
+-
+-#include <string>
+-#include <vector>
+-#include <rclcpp/rclcpp.hpp>
+-
+-namespace Rosbag2QoS
+-{
+-
+-inline rclcpp::QoS adapt_request_to_offers(
+-    const std::string & topic_name, const std::vector<rclcpp::TopicEndpointInfo> & endpoints)
+-{
+-  rclcpp::QoS request_qos = rclcpp::SystemDefaultsQoS();
+-  request_qos.best_effort().durability_volatile();
+-
+-  if (endpoints.empty()) {
+-    return request_qos;
+-  }
+-  size_t num_endpoints = endpoints.size();
+-  size_t reliability_reliable_endpoints_count = 0;
+-  size_t durability_transient_local_endpoints_count = 0;
+-  for (const auto & endpoint : endpoints) {
+-    const auto & profile = endpoint.qos_profile().get_rmw_qos_profile();
+-    if (profile.reliability == RMW_QOS_POLICY_RELIABILITY_RELIABLE) {
+-      reliability_reliable_endpoints_count++;
+-    }
+-    if (profile.durability == RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL) {
+-      durability_transient_local_endpoints_count++;
+-    }
+-  }
+-
+-  // We set policies in order as defined in rmw_qos_profile_t
+-  // Policy: history, depth
+-  // History does not affect compatibility
+-
+-  // Policy: reliability
+-  if (reliability_reliable_endpoints_count == num_endpoints) {
+-    request_qos.reliable();
+-  } else {
+-    if (reliability_reliable_endpoints_count > 0) {
+-      ROSBAG2_TRANSPORT_LOG_WARN_STREAM( topic_name <<
+-          ": some, but not all, publishers on topic "
+-          "are offering RMW_QOS_POLICY_RELIABILITY_RELIABLE. "
+-          "Falling back to RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT "
+-          "as it will connect to all publishers. "
+-          "Some messages from Reliable publishers could be dropped.");
+-    }
+-    request_qos.best_effort();
+-  }
+-
+-  // Policy: durability
+-  // If all publishers offer transient_local, we can request it and receive latched messages
+-  if (durability_transient_local_endpoints_count == num_endpoints) {
+-    request_qos.transient_local();
+-  } else {
+-    if (durability_transient_local_endpoints_count > 0) {
+-      ROSBAG2_TRANSPORT_LOG_WARN_STREAM(topic_name <<
+-          ": some, but not all, publishers on topic "
+-          "are offering RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL. "
+-          "Falling back to RMW_QOS_POLICY_DURABILITY_VOLATILE "
+-          "as it will connect to all publishers. "
+-          "Previously-published latched messages will not be retrieved.");
+-    }
+-    request_qos.durability_volatile();
+-  }
+-  // Policy: deadline
+-  // Deadline does not affect delivery of messages,
+-  // and we do not record Deadline"Missed events.
+-  // We can always use unspecified deadline, which will be compatible with all publishers.
+-
+-  // Policy: lifespan
+-  // Lifespan does not affect compatibiliy
+-
+-  // Policy: liveliness, liveliness_lease_duration
+-  // Liveliness does not affect delivery of messages,
+-  // and we do not record LivelinessChanged events.
+-  // We can always use unspecified liveliness, which will be compatible with all publishers.
+-  return request_qos;
+-}
+-
+-}
+-
+-#endif // ROSBAG2_HELPER_HPP
+diff --git a/plugins/TopicPublisherROS2/publisher_ros2.cpp b/plugins/TopicPublisherROS2/publisher_ros2.cpp
+index d96f672..f523611 100644
+--- a/plugins/TopicPublisherROS2/publisher_ros2.cpp
++++ b/plugins/TopicPublisherROS2/publisher_ros2.cpp
+@@ -25,7 +25,7 @@ TopicPublisherROS2::TopicPublisherROS2() :  _node(nullptr), _enabled(false)
+   _context = std::make_shared<rclcpp::Context>();
+   _context->init(0, nullptr);
+ 
+-  auto exec_args = rclcpp::executor::ExecutorArgs();
++  auto exec_args = rclcpp::ExecutorOptions();
+   exec_args.context = _context;
+   _executor = std::make_unique<rclcpp::executors::MultiThreadedExecutor>(exec_args, 2);
+ 
+diff --git a/plugins/ros2_parsers/generic_subscription.hpp b/plugins/ros2_parsers/generic_subscription.hpp
+deleted file mode 100644
+index ee5d448..0000000
+--- a/plugins/ros2_parsers/generic_subscription.hpp
++++ /dev/null
+@@ -1,166 +0,0 @@
+-// Copyright 2018, Bosch Software Innovations GmbH.
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//     http://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
+-
+-#ifndef ROSBAG2_TRANSPORT__GENERIC_SUBSCRIPTION_HPP_
+-#define ROSBAG2_TRANSPORT__GENERIC_SUBSCRIPTION_HPP_
+-
+-#include <memory>
+-#include <string>
+-
+-#include "rclcpp/any_subscription_callback.hpp"
+-#include "rclcpp/macros.hpp"
+-#include "rclcpp/subscription.hpp"
+-#include "rclcpp/any_subscription_callback.hpp"
+-#include "rclcpp/subscription.hpp"
+-#include "rosbag2_transport/logging.hpp"
+-
+-namespace rosbag2_transport
+-{
+-
+-/**
+- * This class is an implementation of an rclcpp::Subscription for serialized messages whose topic
+- * is not known at compile time (hence templating does not work).
+- *
+- * It does not support intra-process handling
+- */
+-class GenericSubscription : public rclcpp::SubscriptionBase
+-{
+-  public:
+-    RCLCPP_SMART_PTR_DEFINITIONS(GenericSubscription)
+-
+-    using Ptr = std::shared_ptr<GenericSubscription>;
+-
+-    /**
+-   * Constructor. In order to properly subscribe to a topic, this subscription needs to be added to
+-   * the node_topic_interface of the node passed into this constructor.
+-   *
+-   * \param node_base NodeBaseInterface pointer used in parts of the setup.
+-   * \param ts Type support handle
+-   * \param topic_name Topic name
+-   * \param transient  if true, subscribe with transient_local
+-   * \param callback Callback for new messages of serialized form
+-   */
+-    GenericSubscription(
+-      rclcpp::node_interfaces::NodeBaseInterface * node_base,
+-      const rosidl_message_type_support_t & ts,
+-      const std::string & topic_name,
+-      const rclcpp::QoS& qos,
+-      std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback);
+-
+-    // Same as create_serialized_message() as the subscription is to serialized_messages only
+-    std::shared_ptr<void> create_message() override;
+-
+-    std::shared_ptr<rclcpp::SerializedMessage> create_serialized_message() override;
+-
+-    void handle_message( std::shared_ptr<void> & message, const rclcpp::MessageInfo & message_info) override;
+-
+-    void handle_loaned_message(
+-      void * loaned_message, const rclcpp::MessageInfo & message_info) override;
+-
+-    // Same as return_serialized_message() as the subscription is to serialized_messages only
+-    void return_message(std::shared_ptr<void> & message) override;
+-
+-    void return_serialized_message(std::shared_ptr<rclcpp::SerializedMessage> & message) override;
+-
+-  private:
+-    RCLCPP_DISABLE_COPY(GenericSubscription)
+-
+-    std::shared_ptr<rclcpp::SerializedMessage> borrow_serialized_message(size_t capacity);
+-    rcutils_allocator_t default_allocator_;
+-    std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback_;
+-};
+-
+-//---------- implementation -----------
+-
+-inline rcl_subscription_options_t PermissiveOptions()
+-{
+-  rcl_subscription_options_t options = rcl_subscription_get_default_options();
+-  options.qos.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
+-  options.qos.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
+-  options.qos.liveliness = RMW_QOS_POLICY_LIVELINESS_AUTOMATIC;
+-  return options;
+-}
+-
+-inline rcl_subscription_options_t LatchingOptions()
+-{
+-  rcl_subscription_options_t options = rcl_subscription_get_default_options();
+-  options.qos.reliability = RMW_QOS_POLICY_RELIABILITY_RELIABLE;
+-  options.qos.durability = RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL;
+-  options.qos.liveliness = RMW_QOS_POLICY_LIVELINESS_AUTOMATIC;
+-  return options;
+-}
+-
+-inline rcl_subscription_options_t GetSubscriptionOptions(const rclcpp::QoS& qos)
+-{
+-  rcl_subscription_options_t options = rcl_subscription_get_default_options();
+-  options.qos = qos.get_rmw_qos_profile();
+-  return options;
+-}
+-
+-inline
+-GenericSubscription::GenericSubscription(
+-  rclcpp::node_interfaces::NodeBaseInterface * node_base,
+-  const rosidl_message_type_support_t & ts,
+-  const std::string & topic_name,
+-  const rclcpp::QoS& qos,
+-  std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback)
+-: SubscriptionBase(
+-    node_base,
+-    ts,
+-    topic_name,
+-    GetSubscriptionOptions( qos ),
+-    true),
+-  default_allocator_(rcutils_get_default_allocator()),
+-  callback_(callback)
+-{}
+-
+-inline std::shared_ptr<void> GenericSubscription::create_message()
+-{
+-    return create_serialized_message();
+-}
+-
+-inline std::shared_ptr<rclcpp::SerializedMessage> GenericSubscription::create_serialized_message()
+-{
+-    return borrow_serialized_message(0);
+-}
+-
+-inline void GenericSubscription::handle_message(
+-  std::shared_ptr<void> & message, const rclcpp::MessageInfo & message_info)
+-{
+-    (void) message_info;
+-    auto typed_message = std::static_pointer_cast<rclcpp::SerializedMessage>(message);
+-    callback_(typed_message);
+-}
+-
+-inline void GenericSubscription::return_message(std::shared_ptr<void> & message)
+-{
+-    auto typed_message = std::static_pointer_cast<rclcpp::SerializedMessage>(message);
+-    return_serialized_message(typed_message);
+-}
+-
+-inline void GenericSubscription::return_serialized_message(
+-  std::shared_ptr<rclcpp::SerializedMessage> & message)
+-{
+-    message.reset();
+-}
+-
+-inline std::shared_ptr<rclcpp::SerializedMessage>
+-GenericSubscription::borrow_serialized_message(size_t capacity)
+-{
+-    return std::make_shared<rclcpp::SerializedMessage>(capacity);
+-}
+-
+-}  // namespace rosbag2_transport
+-
+-#endif  // ROSBAG2_TRANSPORT__GENERIC_SUBSCRIPTION_HPP_
