@@ -164,3 +164,7 @@ moveit_setup_app_plugins:
   add_host: ["REQUIRE_OPENGL"]
 moveit_setup_srdf_plugins:
   add_host: ["REQUIRE_OPENGL"]
+moveit_setup_assistant:
+  add_host: ["REQUIRE_OPENGL"]
+moveit:
+  add_host: ["REQUIRE_OPENGL"]
