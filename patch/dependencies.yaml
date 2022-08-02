@@ -154,3 +154,5 @@ rviz2:
   add_host: ["REQUIRE_OPENGL"]
 plotjuggler_ros:
   add_host: ["REQUIRE_OPENGL"]
+moveit_setup_framework:
+  add_host: ["REQUIRE_OPENGL"]
