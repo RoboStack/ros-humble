@@ -148,3 +148,5 @@ google_benchmark_vendor:
   add_run: ["benchmark"]
 rqt_image_view:
   add_host: ["REQUIRE_OPENGL"]
+rviz_visual_testing_framework:
+  add_host: ["REQUIRE_OPENGL"]
