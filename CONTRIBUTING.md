@@ -31,24 +31,23 @@ conda install -n base conda-build mamba
 
 2. Create a new conda environment and add the conda-forge and robostack channels:
 ```
-conda create -n ros_galactic python=3.9
-conda activate ros_galactic
+conda create -n ros_humble python=3.9
+conda activate ros_humble
 conda config --append channels defaults
 conda config --add channels conda-forge
-conda config --add channels robostack-experimental
-conda config --set channel_priority strict
+conda config --add channels robostack-humble
 ```
 3. Install some dependencies: 
 ``` 
 mamba install anaconda-client catkin_pkg ruamel_yaml rosdistro empy networkx requests ruamel ruamel.yaml boa
 ```
 4. Install vinca: `pip install git+https://github.com/RoboStack/vinca.git@master --no-deps`
-5. Clone this repo: `git clone https://github.com/RoboStack/ros-galactic.git`
-6. `cd ros-galactic`
+5. Clone this repo: `git clone https://github.com/RoboStack/ros-humble.git`
+6. `cd ros-humble`
 7. `cp vinca_linux_64.yaml vinca.yaml` (replace with your platform as necessary)
 8. Modify `vinca.yaml` as you please, e.g. add new packages to be built.
 9. Run vinca to generate the recipe by executing `vinca --multiple`
-10. Copy the generated recipe to the current folder: `cp recipes/ros-galactic-XXX.yaml recipe.yaml` - note that at least one package needs to be (re)build for this folder to show up. See more info below.
+10. Copy the generated recipe to the current folder: `cp recipes/ros-humble-XXX.yaml recipe.yaml` - note that at least one package needs to be (re)build for this folder to show up. See more info below.
 11. Build the recipe using boa: `boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml`
 
 # How does it work?
@@ -59,5 +58,5 @@ mamba install anaconda-client catkin_pkg ruamel_yaml rosdistro empy networkx req
   - If you set `skip_all_deps` to `True`, you will only build packages listed under `packages_select_by_deps` but none of their dependencies.
   - The `packages_remove_from_deps` list allows you to never build packages, even if they are listed as dependencies of other packages. We use it for e.g. the stage simulator which is not available in conda-forge, but is listed as one of the dependencies of the ros-simulator metapackage.
   - If you want to manually rebuild a package that already exists, you need to comment out the channels listed under `skip_existing`. You probably want to set `skip_all_deps: true`, otherwise all dependencies will be rebuilt in this case.
-- If the package does not build successfully out of the box, you might need to patch it. To do so, create a new file `ros-galactic-$PACKAGENAME.patch` in the `patch` directory (replace `$PACKAGENAME$` with the name of the package, and replace any underscores with hyphens). You can also use platform specifiers to only apply the patch on a specific platform, e.g. `ros-galactic-$PACKAGENAME.win.patch`.
+- If the package does not build successfully out of the box, you might need to patch it. To do so, create a new file `ros-humble-$PACKAGENAME.patch` in the `patch` directory (replace `$PACKAGENAME$` with the name of the package, and replace any underscores with hyphens). You can also use platform specifiers to only apply the patch on a specific platform, e.g. `ros-humble-$PACKAGENAME.win.patch`.
 - The `robostack.yaml` and `packages-ignore.yaml` files are the equivalent of the [rosdep.yaml](http://wiki.ros.org/rosdep/rosdep.yaml) and translate ROS dependencies into conda package names (or in the case of the dependencies listed in `packages-ignore.yaml` the dependencies are ignored by specifying an empty list).
