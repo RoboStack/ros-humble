@@ -49,8 +49,8 @@ packages_select_by_deps:
   - webots_ros2
   - turtlebot3
   - desktop_full
-  - plotjuggler
-  - plotjuggler_ros
+  # - plotjuggler
+  # - plotjuggler_ros
   - apriltag
 
   - turtlebot3_fake_node
