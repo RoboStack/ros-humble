@@ -7,7 +7,7 @@ Note:  ROS humble is experimental. [ROS noetic](https://github.com/RoboStack/ros
 [![GitHub Repo stars](https://img.shields.io/github/stars/robostack/ros-humble?style=flat-square)](https://github.com/RoboStack/ros-humble/)
 [![QUT Centre for Robotics](https://img.shields.io/badge/collection-QUT%20Robotics-%23043d71?style=flat-square)](https://qcr.github.io/)
 
-[![Platforms](https://img.shields.io/github/workflow/status/RoboStack/ros-humble/build_linux/buildbranch_linux_aarch64?style=flat-square)](https://github.com/RoboStack/ros-humble)
+[![Platforms](https://img.shields.io/badge/platforms-linux%20%7C%20win%20%7C%20macos%20%7C%20macos_arm64%20%7C%20linux_aarch64-green.svg?style=flat-square)](https://github.com/RoboStack/ros-humble)
 [![Azure DevOps builds (branch)](https://img.shields.io/github/workflow/status/RoboStack/ros-humble/build_linux/buildbranch_linux?label=build%20linux&style=flat-square)](https://github.com/RoboStack/ros-humble/actions/workflows/linux.yml)
 [![Azure DevOps builds (branch)](https://img.shields.io/github/workflow/status/RoboStack/ros-humble/build_win/buildbranch_win?label=build%20win&style=flat-square)](https://github.com/RoboStack/ros-humble/actions/workflows/win.yml)
 [![Azure DevOps builds (branch)](https://img.shields.io/github/workflow/status/RoboStack/ros-humble/build_osx/buildbranch_osx?label=build%20osx&style=flat-square)](https://github.com/RoboStack/ros-humble/actions/workflows/osx.yml)
