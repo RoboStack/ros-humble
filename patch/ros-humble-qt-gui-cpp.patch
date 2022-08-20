@@ -13,7 +13,7 @@ index 89b1e80..9b8d57f 100644
    Python3::Python
    qt_gui_cpp
 +  OpenGL::GL
-+  ${OPENGL_LIBRARIES}
++  
  )
  
  # sip needs libraries to have resolved paths and cannot link to cmake targets
