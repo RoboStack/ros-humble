@@ -1,0 +1,19 @@
+diff --git a/src/realtime.cpp b/src/realtime.cpp
+index 7c770448..33bfe2f1 100644
+--- a/src/realtime.cpp
++++ b/src/realtime.cpp
+@@ -34,10 +34,14 @@ bool has_realtime_kernel()
+ 
+ bool configure_sched_fifo(int priority)
+ {
++#if __linux__
+   struct sched_param schedp;
+   memset(&schedp, 0, sizeof(schedp));
+   schedp.sched_priority = priority;
+   return !sched_setscheduler(0, SCHED_FIFO, &schedp);
++#else
++  return false;
++#endif
+ }
+ 
+ }  // namespace controller_manager
