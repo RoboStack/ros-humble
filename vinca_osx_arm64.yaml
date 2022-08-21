@@ -39,13 +39,10 @@ packages_select_by_deps:
   - demo_nodes_py
   - demo_nodes_cpp
   - desktop
-  # - moveit
-  # - moveit_servo
-  # - rviz_visual_tools
-  # - graph_msgs
-  # - desktop_full
-  # - moveit_resources
-  # - navigation2
+  - moveit
+  - graph_msgs
+  - desktop_full
+  - navigation2
 
 
   # - joint-state-broadcaster
