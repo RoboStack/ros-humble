@@ -125,7 +125,7 @@ jobs:
       run: |
         git clean -fdx
         cp vinca_linux_aarch64.yaml vinca.yaml
-        vinca --multiple --platform linux-aarch64
+        vinca --multiple --platform linux-aarch64 --batch_size 2
     - name: Generate azure pipelines for Linux ARM64
       run: |
         vinca-gha --platform linux-aarch64 --trigger-branch buildbranch_linux_aarch64 -d ./recipes --additional-recipes
