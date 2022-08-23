@@ -1,0 +1,164 @@
+on:
+  pull_request:
+    paths:
+      - '*.yaml'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-2019]
+        platform: [linux-64, osx-64, win-64, linux-aarch64, osx-arm64]
+        exclude:
+          - os: ubuntu-latest
+            platform: win-64
+          - os: ubuntu-latest
+            platform: osx-64
+          - os: ubuntu-latest
+            platform: osx-arm64
+          - os: macos-latest
+            platform: linux-64
+          - os: macos-latest
+            platform: linux-aarch64
+          - os: macos-latest
+            platform: win-64
+          - os: windows-2019
+            platform: linux-64
+          - os: windows-2019
+            platform: linux-aarch64
+          - os: windows-2019
+            platform: osx-64
+          - os: windows-2019
+            platform: osx-arm64
+    steps:
+    - uses: actions/checkout@main
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        mamba-version: "*"
+        channels: robostack-humble,conda-forge
+        channel-priority: false
+        auto-activate-base: true
+        activate-environment: ""
+
+    - shell: bash
+      if: contains(matrix.os, 'linux-aarch64')
+      run: |
+        echo "::group::Configure binfmt_misc"
+        docker run --rm --privileged multiarch/qemu-user-static:register --reset --credential yes
+        export FEEDSTOCK_NAME="$(basename $GITHUB_REPOSITORY)"
+        export GIT_BRANCH="$(basename $GITHUB_REF)"
+        echo "::endgroup::"
+
+    - shell: bash -l {0}
+      run: |
+        conda config --show channels | grep defaults && conda config --remove channels defaults
+        conda info
+        conda config --show
+        mamba install -y pip rospkg networkx "catkin_pkg>=0.4.16" "ruamel.yaml>=0.16.6" "rosdistro>=0.8.0" "empy>=3.3.4"
+        mamba install -y boa=0.9
+    - name: install vinca and boa master
+      shell: bash -l {0}
+      run: |
+        # use no-deps for now, otherwise problems with ruamel.
+        pip install git+https://github.com/RoboStack/vinca.git --no-deps
+    # For some reason, the Strawberry perl's pkg-config is found
+    # instead of the conda's one, so let's delete the /c/Strawberry directory
+    - name: Debug pkg-config problem
+      if: contains(matrix.os, 'windows')
+      shell: bash -l {0}
+      run: |
+        rm -rf /c/Strawberry
+    - name: Check what files have changed
+      id: filecheck
+      shell: bash -l {0}
+      run: |
+        git fetch origin main
+        # continue on error
+        set +e
+        git diff --exit-code --name-only origin/main -- vinca_linux_64.yaml > /dev/null
+        echo "::set-output name=LINUX_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_linux_aarch64.yaml > /dev/null
+        echo "::set-output name=LINUX_AARCH_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_osx.yaml > /dev/null
+        echo "::set-output name=OSX_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_osx_arm64.yaml > /dev/null
+        echo "::set-output name=OSX_ARM_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_win.yaml > /dev/null
+        echo "::set-output name=WIN_YAML_CHANGED::${?}"
+    - name: Generate recipes for Linux
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.LINUX_YAML_CHANGED == 1 && matrix.os == 'ubuntu-latest' && matrix.platform == 'linux-64'
+      run: |
+        git clean -fdx
+        cp vinca_linux_64.yaml vinca.yaml
+        vinca --platform linux-64
+        ls
+        cat recipe.yaml
+    - name: Generate recipes for Linux-ARM64
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.LINUX_AARCH_YAML_CHANGED == 1 && matrix.os == 'ubuntu-latest' && matrix.platform == 'linux-aarch64'
+      run: |
+        git clean -fdx
+        cp vinca_linux_aarch64.yaml vinca.yaml
+        vinca --platform linux-aarch64
+        ls
+        cat recipe.yaml
+    - name: Generate recipes for macOS
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.OSX_YAML_CHANGED == 1 && matrix.os == 'macos-latest' && matrix.platform == 'osx-64'
+      run: |
+        git clean -fdx
+        cp vinca_osx.yaml vinca.yaml
+        vinca --platform osx-64
+        ls
+        cat recipe.yaml
+    - name: Generate recipes for macOS-ARM64
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.OSX_ARM_YAML_CHANGED == 1 && matrix.os == 'macos-latest' && matrix.platform == 'osx-arm64'
+      run: |
+        git clean -fdx
+        cp vinca_osx_arm64.yaml vinca.yaml
+        vinca --platform osx-arm64
+        ls
+        cat recipe.yaml
+    - name: Generate recipes for Windows
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.WIN_YAML_CHANGED == 1 && matrix.os == 'windows-2019' && matrix.platform == 'win-64'
+      run: |
+        git clean -fdx
+        cp vinca_win.yaml vinca.yaml
+        vinca --platform win-64
+        ls
+        cat recipe.yaml
+    - name: Build recipes for Linux
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.LINUX_YAML_CHANGED == 1 && matrix.os == 'ubuntu-latest' && matrix.platform == 'linux-64'
+      run: |
+        boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+        boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+    - name: Build recipes for Linux-ARM64
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.LINUX_AARCH_YAML_CHANGED == 1 && matrix.os == 'ubuntu-latest' && matrix.platform == 'linux-aarch64'
+      run: |
+        boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml --target-platform=linux-aarch64
+        boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml --target-platform=linux-aarch64
+    - name: Build recipes for macOS
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.OSX_YAML_CHANGED == 1 && matrix.os == 'macos-latest' && matrix.platform == 'osx-64'
+      run: |
+        boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+        boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+    - name: Build recipes for macOS-ARM64
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.OSX_YAML_CHANGED == 1 && matrix.os == 'macos-latest' && matrix.platform == 'osx-arm64'
+      run: |
+        boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml --target-platform=osx-arm64
+        boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml --target-platform=osx-arm64
+    - name: Build recipes for Windows
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.WIN_YAML_CHANGED == 1 && matrix.os == 'windows-2019' && matrix.platform == 'win-64'
+      run: |
+        boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+        boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
