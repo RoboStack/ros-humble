@@ -41,14 +41,12 @@ packages_select_by_deps:
   - moveit_servo
   - desktop_full
   - navigation2
+  - rosbridge_suite
 
   # - joint-state-broadcaster
   # - joint-state-publisher
   # - joint-trajectory-controller
   # - xacro
-  # - rosbridge_suite
-  # - rosbridge-msgs
-  # - rosbridge-library
   # - robot-localization
   # - velodyne
   # - sbg_driver
