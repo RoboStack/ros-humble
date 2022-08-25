@@ -1,33 +1,38 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d5e34a0..ffbc6d7 100644
+index d5e34a0..5eb4fae 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -66,7 +66,8 @@ macro(build_benchmark)
-       -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_install
-       ${extra_cmake_args}
-     PATCH_COMMAND
--      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/thread_safety_attributes.patch
-+      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/thread_safety_attributes.patch &&
-+      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/link_rt.patch
-   )
+@@ -1,13 +1,7 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(google_benchmark_vendor CXX)
  
-   # The external project will install to the build folder, but we'll install that on make install.
-diff --git a/link_rt.patch b/link_rt.patch
-new file mode 100644
-index 0000000..01494c5
---- /dev/null
-+++ b/link_rt.patch
-@@ -0,0 +1,13 @@
-+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-+index 35d559e..abe867d 100644
-+--- a/src/CMakeLists.txt
-++++ b/src/CMakeLists.txt
-+@@ -32,7 +32,7 @@ target_include_directories(benchmark PUBLIC
-+ target_link_libraries(benchmark  ${BENCHMARK_CXX_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
-+ find_library(LIBRT rt)
-+ if(LIBRT)
-+-  target_link_libraries(benchmark ${LIBRT})
-++  target_link_libraries(benchmark rt)
-+ endif()
-+ 
-+ if(CMAKE_BUILD_TYPE)
+-option(FORCE_BUILD_VENDOR_PKG
+-  "Build google benchmark from source, even if system-installed package is available"
+-  OFF)
+-
+-if(NOT FORCE_BUILD_VENDOR_PKG)
+-  find_package(benchmark QUIET)
+-endif()
++find_package(benchmark REQUIRED)
+ 
+ macro(build_benchmark)
+   set(extra_cmake_args)
+@@ -79,18 +73,6 @@ macro(build_benchmark)
+   )
+ endmacro()
+ 
+-if(NOT benchmark_FOUND OR "${benchmark_VERSION}" VERSION_LESS 1.6.1)
+-  build_benchmark()
+-elseif(benchmark_FOUND)
+-  # Ubuntu Focal and Jammy have a packaging bug where libbenchmark_main has no symbols,
+-  # causing linker failures. I'm pretty sure it shouldn't be a static library.
+-  # Details: https://bugs.launchpad.net/ubuntu/+source/benchmark/+bug/1887872
+-  get_target_property(_benchmark_main_type benchmark::benchmark_main TYPE)
+-  if(NOT "${_benchmark_main_type}" STREQUAL "SHARED_LIBRARY")
+-    build_benchmark()
+-  endif()
+-endif()
+-
+ install(
+   FILES package.xml
+   DESTINATION share/${PROJECT_NAME}
