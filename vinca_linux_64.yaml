@@ -42,15 +42,12 @@ packages_select_by_deps:
   - navigation2
   - moveit
   - moveit_resources
-  # - moveit_visual_tools
   - graph_msgs
   - nav2_bringup
   - moveit_servo
   - webots_ros2
   - turtlebot3
   - desktop_full
-  # - plotjuggler
-  # - plotjuggler_ros
   - apriltag
 
   - turtlebot3_fake_node
@@ -82,6 +79,9 @@ packages_select_by_deps:
   - turtle_tf2_cpp
   - turtle_tf2_py
 
+  # - plotjuggler
+  # - plotjuggler_ros
+  # - moveit_visual_tools
 
   # - zmqpp_vendor
 
