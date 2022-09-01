@@ -78,6 +78,15 @@ packages_select_by_deps:
   - tf_transformations
   - turtle_tf2_cpp
   - turtle_tf2_py
+  - ros2controlcli
+  - robot_controllers
+
+  - ros2_control
+  - ros2_controllers
+  - control-box-rst
+  - control-toolbox
+  - control_box_rst
+  - joint-trajectory-controller
 
   # - plotjuggler
   # - plotjuggler_ros
@@ -109,7 +118,6 @@ packages_select_by_deps:
   # - twist_mux
 
   # - ros2acceleration
-  # - ros2controlcli
   # - ros2launch_security
   # - ros2launch_security_examples
   # - ros2nodl
@@ -150,10 +158,6 @@ packages_select_by_deps:
   # - rqt_robot_steering
   # - rtabmap
 
-  # - robot_controllers
-
-  # - ros2_control
-  # - ros2_controllers
   # - ros2_ouster
   # - ros2_socketcan
   # - ros2trace_analysis
@@ -197,7 +201,6 @@ packages_select_by_deps:
   # - tvm_vendor
   # - zenoh_bridge_dds
   # - velodyne_simulator
-  # - control_box_rst
   # - wiimote
   # - depthai
   # - turtlebot3
@@ -243,7 +246,6 @@ packages_select_by_deps:
   # - rosbridge-library
   # - joint-state-broadcaster
   # - joint-state-publisher
-  # - joint-trajectory-controller
   # - xacro
   # - ros2launch-security
   # - picknik-ament-copyright
@@ -331,8 +333,6 @@ packages_select_by_deps:
   # - color-names
   # - compressed-depth-image-transport
   # - compressed-image-transport
-  # - control-box-rst
-  # - control-toolbox
   # - depth-image-proc
   # - diagnostic-aggregator
   # - diagnostic-updater
