@@ -169,3 +169,5 @@ moveit_setup_assistant:
   add_host: ["REQUIRE_OPENGL"]
 moveit:
   add_host: ["REQUIRE_OPENGL"]
+force_torque_sensor_broadcaster:
+  add_host: ["typeguard"]
