@@ -673,6 +673,8 @@ python3-importlib-metadata:
   robostack: [importlib-metadata]
 python3-importlib-resources:
   robostack: [importlib_resources]
+python3-jinja2:
+  robostack: [jinja2]
 python3-kitchen:
   robostack: [kitchen]
 python3-lark-parser:
@@ -789,6 +791,8 @@ python3-tornado:
   robostack: [tornado]
 python3-twisted:
   robostack: [twisted]
+python3-typeguard:
+  robostack: [typeguard]
 python3-usb:
   robostack: [pyusb]
 python3-venv:

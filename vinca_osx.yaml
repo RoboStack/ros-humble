@@ -42,6 +42,7 @@ packages_select_by_deps:
   - desktop_full
   - navigation2
   - rosbridge_suite
+  - vision_msgs
 
   # - joint-state-broadcaster
   # - joint-state-publisher
