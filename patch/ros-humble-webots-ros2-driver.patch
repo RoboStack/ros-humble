@@ -1,8 +1,8 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1bc42479..048c7276 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -33,11 +33,7 @@ find_package(vision_msgs REQUIRED)
+diff --git a/webots_ros2_driver/CMakeLists.txt b/webots_ros2_driver/CMakeLists.txt
+index 6cff856a..0101ddc9 100644
+--- a/webots_ros2_driver/CMakeLists.txt
++++ b/webots_ros2_driver/CMakeLists.txt
+@@ -36,11 +36,9 @@ find_package(vision_msgs REQUIRED)
  find_package(webots_ros2_msgs REQUIRED)
  find_package(tinyxml2_vendor REQUIRED)
  find_package(TinyXML2 REQUIRED)
@@ -11,7 +11,25 @@ index 1bc42479..048c7276 100644
 -else()
 -  find_package(PythonLibs 3.10 EXACT REQUIRED)
 -endif()
++find_package(Python COMPONENTS Interpreter Development)
++find_package(PythonInterp REQUIRED)
 +find_package(PythonLibs REQUIRED)
  
  if (UNIX AND NOT APPLE)
    set(WEBOTS_LIB_BASE webots/lib/linux-gnu)
+@@ -100,13 +98,8 @@ else()
+   )
+ endif()
+ 
+-if($ENV{ROS_DISTRO} MATCHES "foxy" OR $ENV{ROS_DISTRO} MATCHES "galactic")
+-  ament_python_install_package(${PROJECT_NAME}_webots
+-    PACKAGE_DIR ${WEBOTS_LIB_BASE}/python38)
+-else()
+-  ament_python_install_package(${PROJECT_NAME}_webots
+-    PACKAGE_DIR ${WEBOTS_LIB_BASE}/python310)
+-endif()
++ament_python_install_package(${PROJECT_NAME}_webots
++    PACKAGE_DIR ${WEBOTS_LIB_BASE}/python${Python_VERSION_MAJOR}${Python_VERSION_MINOR})
+ 
+ ament_python_install_package(${PROJECT_NAME}
+   PACKAGE_DIR ${PROJECT_NAME})
