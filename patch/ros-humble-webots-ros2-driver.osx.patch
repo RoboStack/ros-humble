@@ -1,0 +1,17 @@
+diff --git a/.gitmodules b/.gitmodules
+index c50472c..9355950 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -3,4 +3,4 @@
+        url = https://github.com/cyberbotics/urdf2webots.git
+ [submodule "webots_ros2_driver/webots"]
+        path = webots_ros2_driver/webots
+-       url = https://github.com/cyberbotics/webots-libcontroller.git
++       url = https://github.com/Tobias-Fischer/webots-libcontroller.git
+diff --git a/webots_ros2_driver/webots b/webots_ros2_driver/webots
+index dad1045..d7ba45d 160000
+--- a/webots_ros2_driver/webots
++++ b/webots_ros2_driver/webots
+@@ -1 +1 @@
+-Subproject commit dad1045ae664b1910a50058fc2fdb757f550813a
++Subproject commit d7ba45d68e458c2d838952b3d8997c7fea4d65e4
