@@ -171,3 +171,11 @@ moveit:
   add_host: ["REQUIRE_OPENGL"]
 force_torque_sensor_broadcaster:
   add_host: ["typeguard", "jinja2"]
+ros_workspace:
+  add_build: ["setuptools 61.0.0"]
+ros_environment:
+  add_build: ["setuptools 61.0.0"]
+ament_package:
+  add_build: ["setuptools 61.0.0"]
+ament_cmake_core:
+  add_build: ["setuptools 61.0.0"]
