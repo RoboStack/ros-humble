@@ -589,7 +589,7 @@ python-rospkg:
 python-rospkg-modules:
   robostack: [rospkg]
 python-setuptools:
-  robostack: [setuptools 61.0.0]
+  robostack: [setuptools]
 python-sip:
   robostack: [sip]
 python-six:
@@ -773,7 +773,7 @@ python3-scipy:
 python3-serial:
   robostack: [pyserial]
 python3-setuptools:
-  robostack: [setuptools 61.0.0]
+  robostack: [setuptools]
 python3-simplejson:
   robostack: [simplejson]
 python3-six:
@@ -801,7 +801,7 @@ python3-typeguard:
 python3-usb:
   robostack: [pyusb]
 python3-venv:
-  robostack: [virtualenv, pip, pip-tools, setuptools 61.0.0]
+  robostack: [virtualenv, pip, pip-tools, setuptools]
 python3-websocket:
   robostack: [websocket-client]
 python3-yaml:
