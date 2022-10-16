@@ -1,8 +1,6 @@
 
 assimp:
   - 5.2.4
-console_bridge:
-  - 1.0
 hdf5:
   - 1.12.2
 icu:
