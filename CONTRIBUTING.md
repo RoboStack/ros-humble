@@ -17,38 +17,24 @@ We follow the [NumFOCUS code of conduct](https://numfocus.org/code-of-conduct).
 # Adding new packages via pull requests
 You can open a pull request that will get build automatically in our CI.
 
-An example can be found [here](https://github.com/RoboStack/ros-galactic/pull/44). Simply add the required packages to the `vinca_*.yaml` files, where the * indicates the desired platform (linux_64, osx, win or linux_aarch64). Ideally, try to add packages to all of these platforms.
+An example can be found [here](https://github.com/RoboStack/ros-noetic/pull/44). Simply add the required packages to the `vinca_*.yaml` files, where the * indicates the desired platform (linux_64, osx, win or linux_aarch64). Ideally, try to add packages to all of these platforms.
 
-Sometimes, it may be required to patch the packages. An example of how to do so can be found in [this PR](https://github.com/RoboStack/ros-galactic/pull/32).
+Sometimes, it may be required to patch the packages. An example of how to do so can be found in [this PR](https://github.com/RoboStack/ros-noetic/pull/32).
 
 
 # Testing changes locally
 
-1. Install conda build tools in base environemnt:
-```
-conda install -n base conda-build mamba
-```
-
-2. Create a new conda environment and add the conda-forge and robostack channels:
-```
-conda create -n ros_humble python=3.9
-conda activate ros_humble
-conda config --append channels defaults
-conda config --add channels conda-forge
-conda config --add channels robostack-humble
-```
-3. Install some dependencies: 
-``` 
-mamba install anaconda-client catkin_pkg ruamel_yaml rosdistro empy networkx requests ruamel ruamel.yaml boa
-```
-4. Install vinca: `pip install git+https://github.com/RoboStack/vinca.git@master --no-deps`
-5. Clone this repo: `git clone https://github.com/RoboStack/ros-humble.git`
-6. `cd ros-humble`
-7. `cp vinca_linux_64.yaml vinca.yaml` (replace with your platform as necessary)
-8. Modify `vinca.yaml` as you please, e.g. add new packages to be built.
-9. Run vinca to generate the recipe by executing `vinca --multiple`
-10. Copy the generated recipe to the current folder: `cp recipes/ros-humble-XXX.yaml recipe.yaml` - note that at least one package needs to be (re)build for this folder to show up. See more info below.
-11. Build the recipe using boa: `boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml`
+1. Clone this repo: `git clone https://github.com/RoboStack/ros-humble.git`
+2. `cd ros-humble`
+3. `conda env create -f env/robostackenv.yaml `
+4. Make a symbolic link between your platform's yaml and `vinca.yaml`. Examples
+* `ln -s vinca_linux_64.yaml vinca.yaml` 
+* `ln -s vinca_osx.yaml vinca.yaml`
+* `mklink vinca.yaml vinca_win.yaml`
+5. Modify your platform's yaml as you please, e.g. add new packages to be built.
+6. Run vinca to generate the recipe by executing `vinca --multiple`
+7. Move to the `recipes` folder to find the recipes that need to be (re)build: `cd recipes`. Note that at least one package needs to be (re)build for folder to show up.
+8. Build the recipes from within the `recipes` folder using boa: `boa build . -m ../.ci_support/conda_forge_pinnings.yaml -m ../conda_build_config.yaml`
 
 # How does it work?
 - The `vinca.yaml` file specifies which packages should be built. 

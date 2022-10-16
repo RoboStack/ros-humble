@@ -33,16 +33,13 @@ jobs:
           - os: windows-2019
             platform: osx-arm64
     steps:
-    - uses: actions/checkout@main
-    - uses: conda-incubator/setup-miniconda@v2
+    - uses: actions/checkout@master
+    - name: install mamba
+      uses: mamba-org/provision-with-micromamba@main
       with:
-        mamba-version: "*"
-        channels: robostack-humble,conda-forge
-        channel-priority: false
-        auto-activate-base: true
-        activate-environment: ""
+        environment-file: .github/testpr_environment.yml
 
-    - shell: bash
+    - shell: bash -l {0}
       if: contains(matrix.os, 'linux-aarch64')
       run: |
         echo "::group::Configure binfmt_misc"
