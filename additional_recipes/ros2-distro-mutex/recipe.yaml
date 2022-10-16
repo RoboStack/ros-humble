@@ -1,13 +1,13 @@
 package:
   name: ros2-distro-mutex
-  version: 0.1.0
+  version: 0.2.0
 
 build:
   number: 0
   string: humble
   run_exports:
     # NOTE MANUALLY EDIT THIS!!!!
-    - ros2-distro-mutex 0.1 humble
+    - ros2-distro-mutex 0.2 humble
 
 requirements:
   # NOTE:
