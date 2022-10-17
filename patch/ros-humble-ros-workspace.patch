@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 99c9e2d..942be69 100644
+index 99c9e2d..ff702be 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3,18 +3,17 @@ project(ros_workspace NONE)
+@@ -3,18 +3,25 @@ project(ros_workspace NONE)
  
  find_package(ament_cmake_core REQUIRED)
  
@@ -21,10 +21,18 @@ index 99c9e2d..942be69 100644
  endif()
 -set(AMENT_PACKAGE_DIR "${CMAKE_INSTALL_PREFIX}/${PYTHON_INSTALL_DIR}/ament_package")
 +set(AMENT_PACKAGE_DIR "${Python_SITELIB}/ament_package")
++
++if(NOT EXISTS "${AMENT_PACKAGE_DIR}" AND "$ENV{CONDA_BUILD_CROSS_COMPILATION}" EQUAL "1")
++  message(WARNING "Could not find '${AMENT_PACKAGE_DIR}'. Replace '$ENV{PREFIX}' with '$ENV{BUILD_PREFIX}'.")
++  string(REPLACE "$ENV{PREFIX}" "$ENV{BUILD_PREFIX}" AMENT_PACKAGE_DIR_REP ${AMENT_PACKAGE_DIR})
++  set(AMENT_PACKAGE_DIR "${AMENT_PACKAGE_DIR_REP}")
++  message(WARNING "Now try '${AMENT_PACKAGE_DIR}'.")
++endif()
++
  if(NOT EXISTS "${AMENT_PACKAGE_DIR}")
    # Check for an .egg-link file and use the listed directory if it exists
    get_filename_component(AMENT_PACKAGE_EGG_LINK "${AMENT_PACKAGE_DIR}" DIRECTORY)
-@@ -39,28 +44,7 @@ set(
+@@ -39,28 +46,7 @@ set(
    "prepend-non-duplicate;PYTHONPATH;${PYTHON_INSTALL_DIR}")
  
  # Set environment hooks for default environment.
