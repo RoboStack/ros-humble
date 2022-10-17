@@ -43,6 +43,8 @@ cartographer:
   robostack: [cartographer]
 ca-certificates:
   robostack: [ca-certificates]
+clang-format:
+  robostack: [clang-format]
 clang-tidy:
   robostack: [clang-tools]
 cmake:
@@ -197,6 +199,10 @@ libboost-python:
   robostack: [boost]
 libboost-python-dev:
   robostack: [boost]
+libboost-random:
+  robostack: [boost-cpp]
+libboost-random-dev:
+  robostack: [boost-cpp]
 libboost-regex-dev:
   robostack: [boost-cpp]
 libboost-serialization:
@@ -744,6 +750,8 @@ python3-pytest-cov:
   robostack: [pytest-cov]
 python3-pytest-mock:
   robostack: [pytest-mock]
+python3-pytest-timeout:
+  robostack: [pytest-timeout]
 python3-qt5-bindings:
   robostack: [pyqt]
 python3-qt5-bindings-gl:
