@@ -1,3 +1,5 @@
+ros_ign_interfaces:
+  add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
   add_host: ["cartographer 2.*"]
 ackermann_msgs:
