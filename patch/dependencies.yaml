@@ -181,3 +181,5 @@ ament_package:
   add_build: ["setuptools 61.0.0"]
 ament_cmake_core:
   add_build: ["setuptools 61.0.0"]
+ros_gz_sim:
+  add_host: ["REQUIRE_OPENGL"]
