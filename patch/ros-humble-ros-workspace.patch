@@ -7,7 +7,7 @@ index 99c9e2d..29171a4 100644
  
  # Collect current python 3 version
 -execute_process(COMMAND python3 -c "from distutils import sysconfig; print(sysconfig.get_python_version())" OUTPUT_VARIABLE PYTHON_MAJOR_MINOR OUTPUT_STRIP_TRAILING_WHITESPACE)
-+execute_process(COMMAND python -c "from distutils import sysconfig; print(sysconfig.get_python_version())" OUTPUT_VARIABLE PYTHON_MAJOR_MINOR OUTPUT_STRIP_TRAILING_WHITESPACE)
++execute_process(COMMAND ${Python_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_version())" OUTPUT_VARIABLE PYTHON_MAJOR_MINOR OUTPUT_STRIP_TRAILING_WHITESPACE)
  
  # Locate ament_package template files.
  if(WIN32)
@@ -15,7 +15,7 @@ index 99c9e2d..29171a4 100644
    set(SHELL_EXT "sh")
  endif()
  set(AMENT_PACKAGE_DIR "${CMAKE_INSTALL_PREFIX}/${PYTHON_INSTALL_DIR}/ament_package")
-+if(NOT EXISTS "${AMENT_PACKAGE_DIR}" OR "$ENV{CONDA_BUILD_CROSS_COMPILATION}" EQUAL "1")
++if(NOT EXISTS "${AMENT_PACKAGE_DIR}")  #  OR "$ENV{CONDA_BUILD_CROSS_COMPILATION}" EQUAL "1"
 +  execute_process(
 +    COMMAND python -c "import site; print(site.getsitepackages()[-1])"
 +    OUTPUT_VARIABLE _PYTHON_SYSPREFIX
