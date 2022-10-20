@@ -109,7 +109,7 @@ backward_ros:
   add_host: [{sel(linux or (osx and x86_64)): binutils}, {sel(linux): elfutils}]
 nav2_smac_planner:
   add_build: [{"sel(osx)": "llvm-openmp"}]
-  add_host: [{"sel(osx)": "llvm-openmp"}, "ompl"]
+  add_host: [{"sel(osx)": "llvm-openmp"}, "ompl", "libode"]
 ompl:
   add_host: ["ompl"]
 pybind11_vendor:
