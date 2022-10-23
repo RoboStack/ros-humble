@@ -41,8 +41,8 @@ jobs:
         environment-file: .github/testpr_environment.yml
 
     - uses: actions/cache@v3
-      path: ~/micromamba-root/envs/testpr_env/conda-bld
       with:
+        path: ~/micromamba-root/envs/testpr_env/conda-bld
         key: ${{ github.job }}-${{ matrix.os }}-${{ matrix.platform }}
 
     - shell: bash -l {0}
