@@ -43,7 +43,7 @@ packages_select_by_deps:
   - navigation2
   - rosbridge_suite
   - vision_msgs
-  - webots-ros2
+  - ackermann_msgs
 
   # - joint-state-broadcaster
   # - joint-state-publisher

@@ -40,7 +40,8 @@ jobs:
       with:
         environment-file: .github/testpr_environment.yml
 
-    - uses: actions/cache@v3
+    - name: always-upload-cache
+      uses: pat-s/always-upload-cache@v3.0.1
       with:
         path: ~/micromamba-root/envs/testpr_env/conda-bld
         key: ${{ github.job }}-${{ matrix.os }}-${{ matrix.platform }}
@@ -165,3 +166,7 @@ jobs:
       run: |
         boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
         boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+    - name: List packages to be cached
+      shell: bash -l {0}
+      run: |
+        find $MAMBA_ROOT_PREFIX/conda-bld/
