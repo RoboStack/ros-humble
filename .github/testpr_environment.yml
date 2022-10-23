@@ -1,9 +1,9 @@
-name: base
+name: testpr_env
 channels:
   - robostack-humble
   - conda-forge
 dependencies:
-  - python 3.9.*
+  - python 3.10.*
   - pip
   - boa
   - rospkg

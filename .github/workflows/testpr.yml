@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-2019]
-        platform: [linux-64, osx-64, win-64, linux-aarch64, osx-arm64]
+        platform: [linux-64, linux-aarch64, osx-64, win-64, osx-arm64]
         exclude:
           - os: ubuntu-latest
             platform: win-64
@@ -33,16 +33,19 @@ jobs:
           - os: windows-2019
             platform: osx-arm64
     steps:
-    - uses: actions/checkout@main
-    - uses: conda-incubator/setup-miniconda@v2
-      with:
-        mamba-version: "*"
-        channels: robostack-humble,conda-forge
-        channel-priority: false
-        auto-activate-base: true
-        activate-environment: ""
+    - uses: actions/checkout@master
 
-    - shell: bash
+    - name: install mamba
+      uses: mamba-org/provision-with-micromamba@main
+      with:
+        environment-file: .github/testpr_environment.yml
+
+    - uses: actions/cache@v3
+      path: ~/micromamba-root/envs/testpr_env/conda-bld
+      with:
+        key: ${{ github.job }}-${{ matrix.os }}-${{ matrix.platform }}
+
+    - shell: bash -l {0}
       if: contains(matrix.os, 'linux-aarch64')
       run: |
         echo "::group::Configure binfmt_misc"
