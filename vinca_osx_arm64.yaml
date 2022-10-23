@@ -45,6 +45,8 @@ packages_select_by_deps:
   - navigation2
   - rosbridge_suite
   - vision_msgs
+  - webots-ros2
+
 
 
   # - joint-state-broadcaster
