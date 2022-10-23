@@ -85,7 +85,7 @@ packages_select_by_deps:
   - ros2_controllers
   - control-toolbox
   - joint-trajectory-controller
-
+  - ackermann_msgs
   # - control-box-rst
 
   # - plotjuggler

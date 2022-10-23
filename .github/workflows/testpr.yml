@@ -62,6 +62,8 @@ jobs:
         conda config --show
         mamba install -y pip rospkg networkx "catkin_pkg>=0.4.16" "ruamel.yaml>=0.16.6" "rosdistro>=0.8.0" "empy>=3.3.4"
         mamba install -y boa=0.9
+        mkdir -p ~/micromamba-root/envs/testpr_env/conda-bld
+
     - name: install vinca and boa master
       shell: bash -l {0}
       run: |
