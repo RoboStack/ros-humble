@@ -171,4 +171,4 @@ jobs:
     - name: List packages to be cached
       shell: bash -l {0}
       run: |
-        find $MAMBA_ROOT_PREFIX/conda-bld/
+        find ~/micromamba-root/envs/testpr_env/conda-bld
