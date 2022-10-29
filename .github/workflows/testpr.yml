@@ -45,7 +45,7 @@ jobs:
         environment-file: .github/testpr_environment.yml
 
     - name: always-upload-cache
-      uses: pat-s/always-upload-cache@v3.0.1
+      uses: Robostack/always-upload-cache@main
       with:
         path: ~/micromamba-root/envs/testpr_env/conda-bld
         key: ${{ github.job }}-${{ matrix.os }}-${{ matrix.platform }}
