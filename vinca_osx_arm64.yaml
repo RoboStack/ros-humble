@@ -45,6 +45,8 @@ packages_select_by_deps:
   - navigation2
   - rosbridge_suite
   - vision_msgs
+  - ackermann_msgs
+
 
 
   # - joint-state-broadcaster
