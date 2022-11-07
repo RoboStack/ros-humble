@@ -18,10 +18,14 @@ full_rebuild: true
 # build_in_own_azure_stage:
   # - ros-galactic-rviz-rendering
 
-# packages_skip_by_deps:
+packages_skip_by_deps:
   # - rttest
+  - cartographer
+  - octomap
 
 packages_remove_from_deps:
+  - cartographer
+  - octomap
   - tlsf
   - tlsf_cpp
   - pendulum_control

@@ -16,6 +16,8 @@ skip_all_deps: false
 full_rebuild: true
 
 packages_skip_by_deps:
+  - cartographer
+  - octomap
   - iceoryx_utils
   - iceoryx_binding_c
   - iceoryx_posh
@@ -23,6 +25,8 @@ packages_skip_by_deps:
   - rttest
 
 packages_remove_from_deps:
+  - cartographer
+  - octomap
   - rmw_cyclonedds_cpp
   - tlsf
   - tlsf_cpp

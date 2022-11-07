@@ -20,9 +20,11 @@ packages_skip_by_deps:
   # - rviz
   # - diagnostic_updater
   - cartographer
+  - octomap
 
 packages_remove_from_deps:
   - cartographer
+  - octomap
   - warehouse_ros_mongo
   # - stage-ros
   # - python_qt_binding
