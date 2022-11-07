@@ -1,0 +1,20 @@
+package:
+  name: ros-humble-octomap
+  version: "1.9.8"
+
+build:
+  number: 2
+
+requirements:
+  run:
+    - octomap 1.9.*
+
+
+about:
+  home: https://github.com/conda-forge/octomap-feedstock
+  license: BSD-3-Clause
+  summary: |
+    An Efficient Probabilistic 3D Mapping Framework Based on Octrees
+extra:
+  recipe-maintainers:
+    - ros-forge
