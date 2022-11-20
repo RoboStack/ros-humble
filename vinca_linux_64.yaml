@@ -211,7 +211,7 @@ packages_select_by_deps:
   # - behaviortree_cpp_v3
   # - ros_workspace
   # - ros1_bridge
-  # - velodyne
+  - velodyne
 
   # Used to work, now needs fixes
   # - rtabmap
