@@ -1,0 +1,68 @@
+package:
+  name: ros-humble-nav2-collision-monitor
+  version: 1.1.3
+source:
+  git_url: https://github.com/SteveMacenski/navigation2-release.git
+  git_rev: release/humble/nav2_collision_monitor/1.1.3-1
+  folder: ros-humble-nav2-collision-monitor/src/work
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 1
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - sel(unix): make
+    - sel(osx): tapi
+    - cmake 3.23
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+  host:
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-lint-auto
+    - ros-humble-ament-lint-common
+    - ros-humble-geometry-msgs
+    - ros-humble-nav2-common
+    - ros-humble-nav2-costmap-2d
+    - ros-humble-nav2-util
+    - ros-humble-rclcpp
+    - ros-humble-rclcpp-components
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-sensor-msgs
+    - ros-humble-tf2
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-ros
+    - ros2-distro-mutex 0.1 humble
+  run:
+    - python
+    - ros-humble-geometry-msgs
+    - ros-humble-nav2-common
+    - ros-humble-nav2-costmap-2d
+    - ros-humble-nav2-util
+    - ros-humble-rclcpp
+    - ros-humble-rclcpp-components
+    - ros-humble-ros-workspace
+    - ros-humble-sensor-msgs
+    - ros-humble-tf2
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-ros
+    - ros2-distro-mutex 0.1 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

@@ -1,0 +1,364 @@
+ros_distro: humble
+
+# mapping for package keys
+conda_index:
+  - robostack.yaml
+  - packages-ignore.yaml
+
+build_number: 1
+
+mutex_package: ros2-distro-mutex 0.1 humble
+
+skip_all_deps: false
+
+# If full rebuild, the build number of the existing package has
+# to match the selected build number for skipping
+full_rebuild: true
+
+packages_skip_by_deps:
+  # - nav2-rotation-shim-controller
+  # - rviz
+  # - diagnostic_updater
+
+packages_remove_from_deps:
+  - cartographer
+  - warehouse_ros_mongo
+  # - stage-ros
+  # - python_qt_binding
+  # - joint_state_publisher_gui
+  # - stage
+
+skip_existing:
+  - https://conda.anaconda.org/robostack-humble/
+
+packages_select_by_deps:
+  # only subset of packages to reduce maintainer load
+  - ros_workspace
+  - ros_environment
+  - ament_cmake
+  - ros_base
+  - desktop
+  - desktop_full
+  - navigation2
+  - moveit
+  - moveit_servo
+  - rosbag2_storage_mcap
+
+  # - rosbridge_suite
+  # - rviz2
+  # - behaviortree_cpp_v3
+  # - ros_workspace
+  # - control_toolbox
+  # - robot_localization
+  # - ros1_bridge
+  # - velodyne
+
+  # Used to work, now needs fixes
+  # - rtabmap
+  # - webots-ros2
+  # - webots-ros2-abb
+  # - webots-ros2-core
+  # - webots-ros2-demos
+  # - webots-ros2-epuck
+  # - webots-ros2-examples
+  # - webots-ros2-importer
+  # - webots-ros2-msgs
+  # - webots-ros2-tesla
+  # - webots-ros2-tiago
+  # - webots-ros2-turtlebot
+  # - webots-ros2-tutorials
+  # - webots-ros2-universal-robot
+  # - webots-ros2-ur-e-description
+  # - webots_ros2
+
+  # needs a rebuild of ros-noetic first
+  # - ros1-rosbag-storage-vendor
+
+  # build locally but not on CI; for now uploaded from local
+  # - popf
+  # - ros-ign-bridge
+  # - ros-ign-image
+
+  # working
+  # - sbg_driver
+  # - ruckig
+  # - rosbridge-msgs
+  # - rosbridge-library
+  # - joint-state-broadcaster
+  # - joint-state-publisher
+  # - joint-trajectory-controller
+  # - xacro
+  # - ros2launch-security
+  # - picknik-ament-copyright
+  # - nodl-to-policy
+  # - geometry-tutorials
+  # - sdformat-urdf
+  # - cartographer-ros
+  # - plansys2-bt-actions
+  # - plansys2-terminal
+  # - nav2-system-tests
+  # - lanelet2
+  # - plansys2-bringup
+  # - octovis
+  # - gps-umd
+  # - usb-cam
+  # - tvm-vendor
+  # - ros2-socketcan
+  # - mrpt2
+  # - ublox-dgnss
+  # - fmi-adapter-examples
+  # - spacenav
+  # - ros-ign
+  # - menge-vendor
+  # - openvslam
+  # - ackermann-msgs
+  # - four-wheel-steering-msgs
+  # - ign-rviz
+  # - ign-rviz-common
+  # - ign-rviz-plugins
+  # - image-pipeline
+  # - image-view
+  # - libphidget22
+  # - nao-lola
+  # - phidgets-accelerometer
+  # - phidgets-analog-inputs
+  # - phidgets-api
+  # - phidgets-digital-inputs
+  # - phidgets-digital-outputs
+  # - phidgets-drivers
+  # - phidgets-gyroscope
+  # - phidgets-high-speed-encoder
+  # - phidgets-ik
+  # - phidgets-magnetometer
+  # - phidgets-motors
+  # - phidgets-spatial
+  # - phidgets-temperature
+  # - robot-localization
+  # - ros-ign-bridge
+  # - ros-ign-gazebo
+  # - ros-ign-image
+  # - ros-ign-interfaces
+  # - soccer-marker-generation
+  # - vision-msgs
+  # - plotjuggler-ros
+  # - plotjuggler
+  # - acado-vendor
+  # - ament-clang-format
+  # - ament-clang-tidy
+  # - ament-cmake-catch2
+  # - ament-cmake-clang-format
+  # - ament-cmake-clang-tidy
+  # - ament-cmake-mypy
+  # - ament-cmake-nose
+  # - ament-cmake-pclint
+  # - ament-cmake-pycodestyle
+  # - ament-cmake-pyflakes
+  # - ament-nodl
+  # - ament-pclint
+  # - ament-pycodestyle
+  # - ament-pyflakes
+  # - apex-containers
+  # - apex-test-tools
+  # - apriltag
+  # - async-web-server-cpp
+  # - autoware-auto-msgs
+  # - backward-ros
+  # - bno055
+  # - bond-core
+  # - camera-calibration
+  # - camera-calibration-parsers
+  # - camera-info-manager
+  # - can-msgs
+  # - cartographer-ros-msgs
+  # - cascade-lifecycle-msgs
+  # - color-names
+  # - compressed-depth-image-transport
+  # - compressed-image-transport
+  # - control-box-rst
+  # - control-toolbox
+  # - depth-image-proc
+  # - diagnostic-aggregator
+  # - diagnostic-updater
+  # - domain-bridge
+  # - dynamic-edt-3d
+  # - dynamixel-sdk
+  # - dynamixel-sdk-custom-interfaces
+  # - dynamixel-sdk-examples
+  # - examples-rclcpp-cbg-executor
+  # - examples-rclpy-guard-conditions
+  # - examples-rclpy-pointcloud-publisher
+  # - examples-tf2-py
+  # - filters
+  # - gazebo-dev
+  # - gazebo-msgs
+  # - gazebo-plugins
+  # - gazebo-ros
+  # - gazebo-ros-pkgs
+  # - geodesy
+  # - geographic-info
+  # - geographic-msgs
+  # - gps-msgs
+  # - gps-tools
+  # - grbl-msgs
+  # - grbl-ros
+  # - gurumdds-cmake-module
+  # - hls-lfcd-lds-driver
+  # - ifm3d-core
+  # - image-common
+  # - image-proc
+  # - image-publisher
+  # - image-rotate
+  # - joy-linux
+  # - joy-teleop
+  # - key-teleop
+  # - laser-proc
+  # - launch-system-modes
+  # - lgsvl-msgs
+  # - libmavconn
+  # - librealsense2
+  # - marti-can-msgs
+  # - marti-common-msgs
+  # - marti-dbw-msgs
+  # - marti-nav-msgs
+  # - marti-perception-msgs
+  # - marti-sensor-msgs
+  # - marti-status-msgs
+  # - marti-visualization-msgs
+  # - mavlink
+  # - mavros
+  # - mavros-msgs
+  # - mouse-teleop
+  # - moveit-resources
+  # - moveit-ros-perception
+  # - moveit-runtime
+  # - moveit-servo
+  # - nao-button-sim
+  # - nao-command-msgs
+  # - nao-sensor-msgs
+  # - nav2-bringup
+  # - nav2-gazebo-spawner
+  # - nmea-msgs
+  # - nodl-python
+  # - ntpd-driver
+  # - osqp-vendor
+  # - ouster-msgs
+  # - pcl-ros
+  # - perception-pcl
+  # - phidgets-msgs
+  # - plansys2-core
+  # - plansys2-lifecycle-manager
+  # - plansys2-msgs
+  # - plansys2-pddl-parser
+  # - plotjuggler-msgs
+  # - point-cloud-msg-wrapper
+  # - qpoases-vendor
+  # - qt-gui-app
+  # - qt-gui-core
+  # - quaternion-operation
+  # - radar-msgs
+  # - rc-common-msgs
+  # - rcdiscover
+  # - rc-genicam-api
+  # - rclc
+  # - rclc-examples
+  # - rclc-lifecycle
+  # - rclc-parameter
+  # - rclcpp-cascade-lifecycle
+  # - rcl-logging-log4cxx
+  # - rcl-logging-noop
+  # - rc-reason-clients
+  # - rc-reason-msgs
+  # - rcss3d-agent
+  # - realsense2-camera
+  # - realsense2-camera-msgs
+  # - realsense2-description
+  # - realtime-tools
+  # - rmf-battery
+  # - rmf-building-map-msgs
+  # - rmf-building-map-tools
+  # - rmf-charger-msgs
+  # - rmf-cmake-uncrustify
+  # - rmf-dispenser-msgs
+  # - rmf-door-msgs
+  # - rmf-fleet-msgs
+  # - rmf-ingestor-msgs
+  # - rmf-lift-msgs
+  # - rmf-task-msgs
+  # - rmf-traffic
+  # - rmf-traffic-editor
+  # - rmf-traffic-editor-assets
+  # - rmf-traffic-editor-test-maps
+  # - rmf-traffic-msgs
+  # - rmf-utils
+  # - rmf-visualization-msgs
+  # - rmf-workcell-msgs
+  # - rmw-gurumdds-cpp
+  # - rmw-gurumdds-shared-cpp
+  # - ros2nodl
+  # - ros2-ouster
+  # - ros2trace
+  # - ros2trace-analysis
+  # - rosbag2-performance-benchmarking
+  # - rosidl-generator-dds-idl
+  # - rplidar-ros
+  # - rqt
+  # - rqt-moveit
+  # - rqt-robot-dashboard
+  # - rqt-robot-monitor
+  # - rqt-robot-steering
+  # - run-move-group
+  # # - run-moveit-cpp
+  # - sdformat-test-files
+  # - self-test
+  # - sensor-msgs-py
+  # - serial-driver
+  # - slam-toolbox
+  # - soccer-vision-msgs
+  # - stereo-image-proc
+  # - stubborn-buddies
+  # - stubborn-buddies-msgs
+  # - system-modes
+  # - system-modes-examples
+  # - system-modes-msgs
+  # - teleop-tools
+  # - teleop-tools-msgs
+  # - test-apex-test-tools
+  # - test-bond
+  # - test-launch-system-modes
+  # - tf-transformations
+  # - topic-statistics-demo
+  # - tracetools-analysis
+  # - tracetools-launch
+  # - tracetools-read
+  # - tracetools-test
+  # - tracetools-trace
+  # - turtlebot3-fake-node
+  # - turtlebot3-gazebo
+  # - turtlebot3-msgs
+  # - turtlebot3-simulations
+  # - ublox
+  # - ublox-gps
+  # - ublox-msgs
+  # - ublox-serialization
+  # - ublox-ubx-interfaces
+  # - ublox-ubx-msgs
+  # - udp-driver
+  # - udp-msgs
+  # - urg-c
+  # - urg-node
+  # - urg-node-msgs
+  # - v4l2-camera
+  # - vision-opencv
+  # - wiimote-msgs
+
+  # Don't work yet
+  # - run_moveit_cpp
+  # - wiimote
+  # - rc-dynamics-api
+  # - rosbag2-bag-v2-plugins
+
+  # this needs libdwarf and libiberty
+  # I think we need to build libdwarf first ...
+  # - osrf_testing_tools_cpp
+
+patch_dir: patch

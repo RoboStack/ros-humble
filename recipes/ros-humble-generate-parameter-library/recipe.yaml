@@ -1,0 +1,63 @@
+package:
+  name: ros-humble-generate-parameter-library
+  version: 0.3.0
+source:
+  git_url: https://github.com/PickNikRobotics/generate_parameter_library-release.git
+  git_rev: release/humble/generate_parameter_library/0.3.0-1
+  folder: ros-humble-generate-parameter-library/src/work
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 1
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - sel(unix): make
+    - sel(osx): tapi
+    - cmake 3.23
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+  host:
+    - fmt
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-lint-auto
+    - ros-humble-ament-lint-common
+    - ros-humble-generate-parameter-library-py
+    - ros-humble-parameter-traits
+    - ros-humble-rclcpp
+    - ros-humble-rclcpp-lifecycle
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-rsl
+    - ros-humble-tcb-span
+    - ros-humble-tl-expected
+    - ros2-distro-mutex 0.1 humble
+  run:
+    - fmt
+    - python
+    - ros-humble-generate-parameter-library-py
+    - ros-humble-parameter-traits
+    - ros-humble-rclcpp
+    - ros-humble-rclcpp-lifecycle
+    - ros-humble-ros-workspace
+    - ros-humble-rsl
+    - ros-humble-tcb-span
+    - ros-humble-tl-expected
+    - ros2-distro-mutex 0.1 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

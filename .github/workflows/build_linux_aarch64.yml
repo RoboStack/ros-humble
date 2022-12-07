@@ -1,0 +1,348 @@
+jobs:
+  stage_0_job_0:
+    name: tl-expected nav2-collision-monitor
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-tl-expected ros-humble-nav2-collision-monitor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-tl-expected ros-humble-nav2-collision-monitor
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_0_job_1:
+    name: ros-gz-bridge moveit-ros-visualization
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-ros-gz-bridge ros-humble-moveit-ros-visualization
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-gz-bridge ros-humble-moveit-ros-visualization
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_0_job_2:
+    name: ros-gz-sim ament-cmake-clang-format
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-ros-gz-sim ros-humble-ament-cmake-clang-format
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-gz-sim ros-humble-ament-cmake-clang-format
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_0_job_3:
+    name: rosbag2-storage-mcap-testdata mcap-vendor
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-rosbag2-storage-mcap-testdata ros-humble-mcap-vendor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosbag2-storage-mcap-testdata ros-humble-mcap-vendor
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_1_job_4:
+    name: rsl ros-gz-image
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    - stage_0_job_1
+    - stage_0_job_2
+    - stage_0_job_3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-rsl ros-humble-ros-gz-image
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rsl ros-humble-ros-gz-image
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_1_job_5:
+    name: moveit-setup-framework ros-ign-bridge
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    - stage_0_job_1
+    - stage_0_job_2
+    - stage_0_job_3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-moveit-setup-framework ros-humble-ros-ign-bridge
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-framework ros-humble-ros-ign-bridge
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_1_job_6:
+    name: moveit-ros rosbag2-storage-mcap
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    - stage_0_job_1
+    - stage_0_job_2
+    - stage_0_job_3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-moveit-ros ros-humble-rosbag2-storage-mcap
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros ros-humble-rosbag2-storage-mcap
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_2_job_7:
+    name: generate-parameter-library ros-gz-sim-demos
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_4
+    - stage_1_job_5
+    - stage_1_job_6
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-generate-parameter-library ros-humble-ros-gz-sim-demos
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-generate-parameter-library ros-humble-ros-gz-sim-demos
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_2_job_8:
+    name: moveit-setup-core-plugins moveit-setup-controllers
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_4
+    - stage_1_job_5
+    - stage_1_job_6
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-moveit-setup-core-plugins ros-humble-moveit-setup-controllers
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-core-plugins ros-humble-moveit-setup-controllers
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_2_job_9:
+    name: moveit-setup-app-plugins moveit-setup-srdf-plugins
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_4
+    - stage_1_job_5
+    - stage_1_job_6
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-moveit-setup-app-plugins ros-humble-moveit-setup-srdf-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-app-plugins ros-humble-moveit-setup-srdf-plugins
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_2_job_10:
+    name: ros-ign-image
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_4
+    - stage_1_job_5
+    - stage_1_job_6
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-ros-ign-image
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-ign-image
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_3_job_11:
+    name: ros-ign-gazebo-demos moveit-setup-assistant
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_7
+    - stage_2_job_8
+    - stage_2_job_9
+    - stage_2_job_10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-ros-ign-gazebo-demos ros-humble-moveit-setup-assistant
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-ign-gazebo-demos ros-humble-moveit-setup-assistant
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_3_job_12:
+    name: simulation
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_7
+    - stage_2_job_8
+    - stage_2_job_9
+    - stage_2_job_10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-simulation
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-simulation
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_4_job_13:
+    name: moveit desktop-full
+    runs-on:
+    - self-hosted
+    - linux
+    - ARM64
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_11
+    - stage_3_job_12
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build ros-humble-moveit ros-humble-desktop-full
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit ros-humble-desktop-full
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+name: build_linux
+on:
+  push:
+    branches:
+    - buildbranch_linux_aarch64
