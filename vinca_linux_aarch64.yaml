@@ -42,6 +42,7 @@ packages_select_by_deps:
   - navigation2
   - moveit
   - moveit_servo
+  - rosbag2_storage_mcap
 
   # - rosbridge_suite
   # - rviz2
