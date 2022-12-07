@@ -1,6 +1,7 @@
 name: testpr_env
 channels:
   - robostack-humble
+  - robostack-staging
   - conda-forge
 dependencies:
   - python 3.10.*
