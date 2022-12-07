@@ -45,6 +45,7 @@ packages_select_by_deps:
   - navigation2
   - rosbridge_suite
   - vision_msgs
+  - rosbag2_storage_mcap
 
 
   # - joint-state-broadcaster
