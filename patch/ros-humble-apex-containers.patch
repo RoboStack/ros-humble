@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ebab722..452127f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -27,8 +27,6 @@ set(apex_containers_sources
+ set_source_files_properties(${apex_containers_sources} PROPERTIES language "CXX")
+ add_library(${PROJECT_NAME} SHARED ${apex_containers_sources})
+ target_compile_options(${PROJECT_NAME} PRIVATE
+-  -Wall
+-  -Werror
+   -Wextra
+   -pedantic
+   -Wcast-align
