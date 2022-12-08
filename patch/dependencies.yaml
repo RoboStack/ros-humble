@@ -1,3 +1,5 @@
+ros_ign_interfaces:
+  add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
   add_host: ["cartographer 2.*"]
 ackermann_msgs:
@@ -107,7 +109,9 @@ backward_ros:
   add_host: [{sel(linux or (osx and x86_64)): binutils}, {sel(linux): elfutils}]
 nav2_smac_planner:
   add_build: [{"sel(osx)": "llvm-openmp"}]
-  add_host: [{"sel(osx)": "llvm-openmp"}]
+  add_host: [{"sel(osx)": "llvm-openmp"}, "ompl", "libode"]
+ompl:
+  add_host: ["ompl"]
 pybind11_vendor:
   add_host: ["pybind11"]
   add_run: ["pybind11"]
@@ -171,3 +175,15 @@ moveit:
   add_host: ["REQUIRE_OPENGL"]
 force_torque_sensor_broadcaster:
   add_host: ["typeguard", "jinja2"]
+ros_workspace:
+  add_build: ["setuptools 61.0.0"]
+ros_environment:
+  add_build: ["setuptools 61.0.0"]
+ament_package:
+  add_build: ["setuptools 61.0.0"]
+ament_cmake_core:
+  add_build: ["setuptools 61.0.0"]
+ros_gz_sim:
+  add_host: ["REQUIRE_OPENGL"]
+geometric_shapes:
+  add_host: ["octomap"]

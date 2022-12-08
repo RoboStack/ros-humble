@@ -47,11 +47,11 @@ To get started with conda (or mamba) as package managers, you need to have a bas
 conda install mamba -c conda-forge
 
 # now create a new environment
-mamba create -n ros_humble ros-humble-desktop python=3.9 spdlog=1.9.2 foonathan-memory=0.7.2 -c robostack-humble -c conda-forge --no-channel-priority --override-channels
+mamba create -n ros_humble ros-humble-desktop python=3.10 -c robostack-humble -c conda-forge --no-channel-priority --override-channels
 conda activate ros_humble
 
 # optionally, install some compiler packages if you want to e.g. build packages in a colcon_ws:
-mamba install compilers cmake=3.23 pkg-config make ninja colcon-common-extensions
+mamba install compilers cmake pkg-config make ninja colcon-common-extensions
 
 # on Windows, install Visual Studio 2017 or 2019 with C++ support 
 # see https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=msvc-160

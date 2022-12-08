@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 1
+build_number: 2
 
-mutex_package: ros2-distro-mutex 0.1 humble
+mutex_package: ros2-distro-mutex 0.2 humble
 
 skip_all_deps: false
 
@@ -19,10 +19,13 @@ packages_skip_by_deps:
   # - nav2-rotation-shim-controller
   # - rviz
   # - diagnostic_updater
+  - cartographer
+  - octomap
 
 packages_remove_from_deps:
   - cartographer
   - warehouse_ros_mongo
+  - octomap
   # - stage-ros
   # - python_qt_binding
   # - joint_state_publisher_gui
@@ -30,6 +33,7 @@ packages_remove_from_deps:
 
 skip_existing:
   - https://conda.anaconda.org/robostack-humble/
+  - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load

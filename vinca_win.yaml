@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 1
+build_number: 2
 
-mutex_package: ros2-distro-mutex 0.1 humble
+mutex_package: ros2-distro-mutex 0.2 humble
 
 skip_all_deps: false
 
@@ -16,6 +16,8 @@ skip_all_deps: false
 full_rebuild: true
 
 packages_skip_by_deps:
+  - cartographer
+  - octomap
   - iceoryx_utils
   - iceoryx_binding_c
   - iceoryx_posh
@@ -23,6 +25,8 @@ packages_skip_by_deps:
   - rttest
 
 packages_remove_from_deps:
+  - cartographer
+  - octomap
   - rmw_cyclonedds_cpp
   - tlsf
   - tlsf_cpp
@@ -32,6 +36,7 @@ packages_remove_from_deps:
 
 skip_existing:
   - https://conda.anaconda.org/robostack-humble/
+  - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load

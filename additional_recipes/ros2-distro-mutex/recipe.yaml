@@ -1,13 +1,13 @@
 package:
   name: ros2-distro-mutex
-  version: 0.1.0
+  version: 0.2.0
 
 build:
   number: 0
   string: humble
   run_exports:
     # NOTE MANUALLY EDIT THIS!!!!
-    - ros2-distro-mutex 0.1 humble
+    - ros2-distro-mutex 0.2 humble
 
 requirements:
   # NOTE:
@@ -30,14 +30,12 @@ requirements:
   # if the upstream package does not have run_exports
   # please change it in the conda_build_config.yaml!
   run_constrained:
-    - boost-cpp 1.74
-    - log4cxx 0.11
+    - boost-cpp 1.78
     - pcl 1.12
-    - libopencv 4.5.5
-    - poco 1.11
     - gazebo 11
     - ogre 1.12
     - libpqxx 6
+    - setuptools 61.0.0
 
 about:
   home: https://github.com/robostack/ros-humble
