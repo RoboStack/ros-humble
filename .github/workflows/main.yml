@@ -32,6 +32,7 @@ jobs:
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add .
+            git add -f recipes
             git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
             remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push "${remote_repo}" HEAD:buildbranch_linux --follow-tags --force
@@ -58,6 +59,7 @@ jobs:
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add .
+            git add -f recipes
             git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
             remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push "${remote_repo}" HEAD:buildbranch_osx --follow-tags --force
@@ -84,6 +86,7 @@ jobs:
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add .
+            git add -f recipes
             git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
             remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push "${remote_repo}" HEAD:buildbranch_osx_arm64 --follow-tags --force
@@ -110,6 +113,7 @@ jobs:
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add .
+            git add -f recipes
             git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
             remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push "${remote_repo}" HEAD:buildbranch_win --follow-tags --force
@@ -136,6 +140,7 @@ jobs:
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add .
+            git add -f recipes
             git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
             remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push "${remote_repo}" HEAD:buildbranch_linux_aarch64 --follow-tags --force
