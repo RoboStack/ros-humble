@@ -1,10 +1,7 @@
 jobs:
   stage_0_job_0:
     name: tl-expected nav2-collision-monitor
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs: []
@@ -23,10 +20,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_0_job_1:
     name: ros-gz-bridge moveit-ros-visualization
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs: []
@@ -45,10 +39,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_0_job_2:
     name: ros-gz-sim ament-cmake-clang-format
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs: []
@@ -67,10 +58,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_0_job_3:
     name: rosbag2-storage-mcap-testdata mcap-vendor
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs: []
@@ -89,10 +77,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_1_job_4:
     name: rsl ros-gz-image
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -115,10 +100,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_1_job_5:
     name: moveit-setup-framework ros-ign-bridge
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -141,10 +123,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_1_job_6:
     name: moveit-ros rosbag2-storage-mcap
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -167,10 +146,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_2_job_7:
     name: generate-parameter-library ros-gz-sim-demos
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -192,10 +168,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_2_job_8:
     name: moveit-setup-core-plugins moveit-setup-controllers
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -217,10 +190,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_2_job_9:
     name: moveit-setup-app-plugins moveit-setup-srdf-plugins
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -242,10 +212,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_2_job_10:
     name: ros-ign-image
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -267,10 +234,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_3_job_11:
     name: ros-ign-gazebo-demos moveit-setup-assistant
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -293,10 +257,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_3_job_12:
     name: simulation
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
@@ -319,10 +280,7 @@ jobs:
         .scripts/run_docker_build.sh
   stage_4_job_13:
     name: moveit desktop-full
-    runs-on:
-    - self-hosted
-    - linux
-    - ARM64
+    runs-on: "cirun-linux-aarch64--${{ github.run_id }}"
     strategy:
       fail-fast: false
     needs:
