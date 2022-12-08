@@ -185,3 +185,5 @@ ament_cmake_core:
   add_build: ["setuptools 61.0.0"]
 ros_gz_sim:
   add_host: ["REQUIRE_OPENGL"]
+geometric_shapes:
+  add_host: ["octomap"]
