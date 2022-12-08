@@ -1,0 +1,34 @@
+diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
+index 3028c486..5fbc8b90 100644
+--- a/examples/CMakeLists.txt
++++ b/examples/CMakeLists.txt
+@@ -13,24 +13,24 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+ add_executable(driver_example
+   full_driver.cpp)
+ target_compile_options(driver_example PUBLIC ${CXX17_FLAG})
+-target_link_libraries(driver_example ur_client_library::urcl)
++target_link_libraries(driver_example ur_client_library::urcl rt)
+ 
+ add_executable(primary_pipeline_example
+   primary_pipeline.cpp)
+ target_compile_options(primary_pipeline_example PUBLIC ${CXX17_FLAG})
+-target_link_libraries(primary_pipeline_example ur_client_library::urcl)
++target_link_libraries(primary_pipeline_example ur_client_library::urcl rt)
+ 
+ add_executable(primary_pipeline_calibration_example
+   primary_pipeline_calibration.cpp)
+ target_compile_options(primary_pipeline_calibration_example PUBLIC ${CXX17_FLAG})
+-target_link_libraries(primary_pipeline_calibration_example ur_client_library::urcl)
++target_link_libraries(primary_pipeline_calibration_example ur_client_library::urcl rt)
+ 
+ add_executable(rtde_client_example
+   rtde_client.cpp)
+ target_compile_options(rtde_client_example PUBLIC ${CXX17_FLAG})
+-target_link_libraries(rtde_client_example ur_client_library::urcl)
++target_link_libraries(rtde_client_example ur_client_library::urcl rt)
+ 
+ add_executable(dashboard_example
+   dashboard_example.cpp)
+ target_compile_options(dashboard_example PUBLIC ${CXX17_FLAG})
+-target_link_libraries(dashboard_example ur_client_library::urcl)
++target_link_libraries(dashboard_example ur_client_library::urcl rt)
