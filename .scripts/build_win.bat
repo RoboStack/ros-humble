@@ -42,7 +42,7 @@ reg add HKLM\SYSTEM\CurrentControlSet\Control\FileSystem /v LongPathsEnabled /t 
 :: conda remove --force m2-git
 
 :: C:\Miniconda\python.exe -m pip install git+https://github.com/mamba-org/boa.git@main
-call mamba install boa=0.9
+call mamba install boa
 if errorlevel 1 exit 1
 
 for %%X in (%CURRENT_RECIPES%) do (
