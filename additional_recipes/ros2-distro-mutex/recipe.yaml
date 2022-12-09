@@ -6,8 +6,7 @@ build:
   number: 0
   string: humble
   run_exports:
-    # NOTE MANUALLY EDIT THIS!!!!
-    - ros2-distro-mutex 0.2 humble
+    - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
 
 requirements:
   # NOTE:
