@@ -2,9 +2,6 @@ ros_ign_interfaces:
   add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
   add_host: ["cartographer 2.*"]
-ackermann_msgs:
-  add_host: ["numpy"]
-  add_run: ["numpy"]
 libyaml_vendor:
   add_host: ["yaml-cpp", "yaml"]
   add_run: ["yaml-cpp", "yaml"]
@@ -86,7 +83,7 @@ ros1_rosbag_storage_vendor:
 popf:
   add_host: ["perl"]
 rtabmap:
-  add_host: ["REQUIRE_OPENGL", "ceres-solver", "libdc1394", "numpy", "libusb", "vtk"]
+  add_host: ["REQUIRE_OPENGL", "ceres-solver", "libdc1394", "libusb", "vtk"]
 backward_ros:
   add_host: [{sel(linux or (osx and x86_64)): binutils}, {sel(linux): elfutils}]
 nav2_smac_planner:
@@ -97,21 +94,6 @@ ompl:
 pybind11_vendor:
   add_host: ["pybind11"]
   add_run: ["pybind11"]
-action_tutorials_interfaces:
-  add_host: ["numpy"]
-  add_run: ["numpy"]
-map_msgs:
-  add_host: ["numpy"]
-  add_run: ["numpy"]
-example_interfaces:
-  add_host: ["numpy"]
-  add_run: ["numpy"]
-pendulum_msgs:
-  add_host: ["numpy"]
-  add_run: ["numpy"]
-dwb_msgs:
-  add_host: ["numpy"]
-  add_run: ["numpy"]
 python_qt_binding:
   add_host: ["pyqt-builder"]
   add_run: ["pyqt-builder"]
@@ -155,14 +137,6 @@ moveit:
   add_host: ["REQUIRE_OPENGL"]
 force_torque_sensor_broadcaster:
   add_host: ["typeguard", "jinja2"]
-ros_workspace:
-  add_build: ["setuptools 61.0.0"]
-ros_environment:
-  add_build: ["setuptools 61.0.0"]
-ament_package:
-  add_build: ["setuptools 61.0.0"]
-ament_cmake_core:
-  add_build: ["setuptools 61.0.0"]
 ros_gz_sim:
   add_host: ["REQUIRE_OPENGL"]
 geometric_shapes:
