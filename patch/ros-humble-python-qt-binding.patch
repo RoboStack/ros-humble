@@ -44,7 +44,7 @@ index 0000000..2ab2b55
 +exceptions = true
 +
 diff --git a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
-index c589899..c91e723 100644
+index c589899..03c7aee 100644
 --- a/cmake/sip_helper.cmake
 +++ b/cmake/sip_helper.cmake
 @@ -15,7 +15,7 @@ execute_process(
@@ -72,7 +72,7 @@ index c589899..c91e723 100644
  #
  # Run the SIP generator and compile the generated code into a library.
  #
-@@ -77,32 +86,89 @@ function(build_sip_binding PROJECT_NAME SIP_FILE)
+@@ -77,32 +86,97 @@ function(build_sip_binding PROJECT_NAME SIP_FILE)
      set(LIBRARY_DIRS ${${PROJECT_NAME}_LIBRARY_DIRS})
      set(LDFLAGS_OTHER ${${PROJECT_NAME}_LDFLAGS_OTHER})
  
@@ -115,7 +115,15 @@ index c589899..c91e723 100644
 +          STRING(REGEX REPLACE "^lib" "" _x_NAME_NOPREFIX ${_x_NAME})
 +
 +          string(FIND "${_x_NAME_NOPREFIX}" "$<TARGET_FILE" out)
++          string(FIND "${_x_NAME_NOPREFIX}" "::" out2)
 +          if("${out}" EQUAL 0)
++            STRING(REGEX REPLACE "\\$<TARGET_FILE:" "" _x_NAME_NOPREFIX ${_x_NAME_NOPREFIX})
++            STRING(REGEX REPLACE ">" "" _x_NAME_NOPREFIX ${_x_NAME_NOPREFIX})
++            if(NOT "${out2}" EQUAL -1)
++              message(STATUS "IGNORE: ${_x_NAME_NOPREFIX}")
++            else()
++              set(SIP_LIBARIES "${SIP_LIBARIES},\"${_x_NAME_NOPREFIX}\"")
++            endif()
 +          else()
 +            set(SIP_LIBARIES "${SIP_LIBARIES},\"${_x_NAME_NOPREFIX}\"")
 +            set(SIP_LIBRARY_DIRS "${SIP_LIBRARY_DIRS},\"${_x_DIR}\"")
