@@ -143,3 +143,5 @@ ros_gz_sim:
   add_host: ["REQUIRE_OPENGL"]
 geometric_shapes:
   add_host: ["octomap"]
+ros_image_to_qimage:
+  add_host: ["REQUIRE_OPENGL"]
