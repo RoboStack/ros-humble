@@ -44,10 +44,8 @@ packages_select_by_deps:
   - desktop
   - navigation2
   - moveit
-  - moveit_resources
   - graph_msgs
   - nav2_bringup
-  - moveit_servo
   - webots_ros2
   - turtlebot3
   - desktop_full
@@ -89,12 +87,48 @@ packages_select_by_deps:
   - control-toolbox
   - joint-trajectory-controller
 
+  - gazebo-dev
+  - gazebo-plugins
+  - gazebo-ros
+  - gazebo-ros-pkgs
+
+  - turtlebot3_gazebo
+  - turtlebot3_simulations
+
+  - rqt
+  - rqt_image_overlay
+  - rqt-moveit
+  - rqt-robot-dashboard
+  - rqt-robot-monitor
+  - rqt-robot-steering
+
+  - joint-state-broadcaster
+  - joint-state-publisher
+  - xacro
+
+  - image-pipeline
+  - image-view
+  - moveit
+  - moveit-resources
+  - moveit-ros-perception
+  - moveit-runtime
+  - moveit-servo
+  - moveit_visual_tools
+  - moveit_servo
+
+  - bond-core
+  - camera-calibration
+  - camera-calibration-parsers
+  - camera-info-manager
+  - slam-toolbox
+
+  # - rosbridge_suite
+
   # - control-box-rst
 
   # - plotjuggler
   # - plotjuggler_ros
-  # - moveit_visual_tools
-
+  
   # - zmqpp_vendor
 
   # - fogros2
@@ -132,9 +166,6 @@ packages_select_by_deps:
 
   # - rosbridge_suite
 
-  # - turtlebot3_gazebo
-  # - turtlebot3_simulations
-
   # - can_msgs
   # - cartographer_rviz
   # - cascade_lifecycle_msgs
@@ -150,15 +181,7 @@ packages_select_by_deps:
   # - adaptive_component
   # - async_web_server_cpp
   # - boost_geometry_util
-  # - bond_core
 
-  # - rqt
-  # - rqt_image_overlay
-  # - rqt_moveit
-  # - rqt_robot_monitor
-  # - rqt_robot_dashboard
-  # - rqt_runtime_monitor
-  # - rqt_robot_steering
   # - rtabmap
 
   # - ros2_ouster
@@ -170,16 +193,6 @@ packages_select_by_deps:
   # - rt_manipulators_examples
 
   # - acado_vendor
-  # - ament_clang_tidy
-  # - ament_cmake_clang_tidy
-  # - ament_cmake_mypy
-  # - ament_cmake_nose
-  # - ament_cmake_pclint
-  # - ament_cmake_pycodestyle
-  # - ament_cmake_pyflakes
-  # - ament_download
-  # - ament_pclint
-  # - ament_pyflakes
   # - automotive_autonomy_msgs
   # - automotive_navigation_msgs
   # - automotive_platform_msgs
@@ -208,9 +221,6 @@ packages_select_by_deps:
   # - depthai
   # - turtlebot3
 
-
-  # - rosbridge_suite
-  # - rviz2
   # - behaviortree_cpp_v3
   # - ros_workspace
   # - ros1_bridge
@@ -247,9 +257,6 @@ packages_select_by_deps:
   # - ruckig
   # - rosbridge-msgs
   # - rosbridge-library
-  # - joint-state-broadcaster
-  # - joint-state-publisher
-  # - xacro
   # - ros2launch-security
   # - picknik-ament-copyright
   # - nodl-to-policy
@@ -278,8 +285,6 @@ packages_select_by_deps:
   # - ign-rviz
   # - ign-rviz-common
   # - ign-rviz-plugins
-  # - image-pipeline
-  # - image-view
   # - libphidget22
   # - nao-lola
   # - phidgets-accelerometer
@@ -295,7 +300,6 @@ packages_select_by_deps:
   # - phidgets-motors
   # - phidgets-spatial
   # - phidgets-temperature
-  # - robot-localization
   # - ros-ign-bridge
   # - ros-ign-gazebo
   # - ros-ign-image
@@ -306,15 +310,18 @@ packages_select_by_deps:
   # - plotjuggler
   # - acado-vendor
   # - ament-clang-format
-  # - ament-clang-tidy
+  # - ament_clang_tidy
   # - ament-cmake-catch2
+  # - ament_cmake_clang_tidy
   # - ament-cmake-clang-format
-  # - ament-cmake-clang-tidy
-  # - ament-cmake-mypy
-  # - ament-cmake-nose
-  # - ament-cmake-pclint
-  # - ament-cmake-pycodestyle
-  # - ament-cmake-pyflakes
+  # - ament_cmake_mypy
+  # - ament_cmake_nose
+  # - ament_cmake_pclint
+  # - ament_cmake_pycodestyle
+  # - ament_cmake_pyflakes
+  # - ament_download
+  # - ament_pclint
+  # - ament_pyflakes
   # - ament-nodl
   # - ament-pclint
   # - ament-pycodestyle
@@ -326,10 +333,6 @@ packages_select_by_deps:
   # - autoware-auto-msgs
   # - backward-ros
   # - bno055
-  # - bond-core
-  # - camera-calibration
-  # - camera-calibration-parsers
-  # - camera-info-manager
   # - can-msgs
   # - cartographer-ros-msgs
   # - cascade-lifecycle-msgs
@@ -349,11 +352,6 @@ packages_select_by_deps:
   # - examples-rclpy-pointcloud-publisher
   # - examples-tf2-py
   # - filters
-  # - gazebo-dev
-  # - gazebo-msgs
-  # - gazebo-plugins
-  # - gazebo-ros
-  # - gazebo-ros-pkgs
   # - geodesy
   # - geographic-info
   # - geographic-msgs
@@ -388,10 +386,6 @@ packages_select_by_deps:
   # - mavros
   # - mavros-msgs
   # - mouse-teleop
-  # - moveit-resources
-  # - moveit-ros-perception
-  # - moveit-runtime
-  # - moveit-servo
   # - nao-button-sim
   # - nao-command-msgs
   # - nao-sensor-msgs
@@ -461,18 +455,12 @@ packages_select_by_deps:
   # - rosbag2-performance-benchmarking
   # - rosidl-generator-dds-idl
   # - rplidar-ros
-  # - rqt
-  # - rqt-moveit
-  # - rqt-robot-dashboard
-  # - rqt-robot-monitor
-  # - rqt-robot-steering
   # - run-move-group
   # # - run-moveit-cpp
   # - sdformat-test-files
   # - self-test
   # - sensor-msgs-py
   # - serial-driver
-  # - slam-toolbox
   # - soccer-vision-msgs
   # - stereo-image-proc
   # - stubborn-buddies
@@ -492,10 +480,6 @@ packages_select_by_deps:
   # - tracetools-read
   # - tracetools-test
   # - tracetools-trace
-  # - turtlebot3-fake-node
-  # - turtlebot3-gazebo
-  # - turtlebot3-msgs
-  # - turtlebot3-simulations
   # - ublox
   # - ublox-gps
   # - ublox-msgs
