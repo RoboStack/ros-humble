@@ -1,8 +1,16 @@
 diff --git a/src/qt_gui_cpp_sip/CMakeLists.txt b/src/qt_gui_cpp_sip/CMakeLists.txt
-index 89b1e80..10ae3b8 100644
+index 89b1e80c..3baa8e8e 100644
 --- a/src/qt_gui_cpp_sip/CMakeLists.txt
 +++ b/src/qt_gui_cpp_sip/CMakeLists.txt
-@@ -35,16 +35,19 @@ ament_get_recursive_properties(deps_include_dirs deps_libraries ${pluginlib_TARG
+@@ -28,23 +28,26 @@ set(qt_gui_cpp_sip_DEPENDENT_FILES
+ 
+ # maintain context for different named target
+ set(qt_gui_cpp_sip_INCLUDE_DIRS ${qt_gui_cpp_INCLUDE_DIRS} "${CMAKE_CURRENT_SOURCE_DIR}/../../include")
+-set(qt_gui_cpp_sip_LIBRARY_DIRS ${qt_gui_cpp_LIBRARY_DIRS} lib)
++set(qt_gui_cpp_sip_LIBRARY_DIRS ${CMAKE_BINARY_DIR})
+ set(qt_gui_cpp_sip_LDFLAGS_OTHER ${qt_gui_cpp_LDFLAGS_OTHER})
+ 
+ ament_get_recursive_properties(deps_include_dirs deps_libraries ${pluginlib_TARGETS})
  list(APPEND deps_include_dirs ${TinyXML2_INCLUDE_DIRS})
  list(APPEND deps_libraries ${TinyXML2_LIBRARIES})
  
