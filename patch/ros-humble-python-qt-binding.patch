@@ -107,7 +107,7 @@ index c589899..03c7aee 100644
 +
 +        # SIP expects the libraries WITHOUT the file extension.
 +        set(SIP_LIBARIES "")
-+        set(SIP_LIBRARY_DIRS "")
++        set(SIP_LIBRARY_DIRS "lib")
 +        foreach(_x ${LIBRARIES} ${PYTHON_LIBRARIES})
 +          get_filename_component(_x_NAME "${_x}" NAME_WLE)
 +          get_filename_component(_x_DIR "${_x}" DIRECTORY)
@@ -135,7 +135,7 @@ index c589899..03c7aee 100644
 +        #   set(SIP_LIBRARY_DIRS "${SIP_LIBRARY_DIRS},\"${_x}\"")
 +        # endforeach()
 +        string(REGEX REPLACE "^," "" SIP_LIBRARY_DIRS ${SIP_LIBRARY_DIRS})
-+
++        message(WARNING "test lib dir: ${SIP_LIBRARY_DIRS})
 +        # TODO:
 +        #   I don't know what to do about LDFLAGS_OTHER
 +        #   what's the equivalent construct in sip5?
