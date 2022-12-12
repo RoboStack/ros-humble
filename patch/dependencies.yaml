@@ -145,3 +145,5 @@ geometric_shapes:
   add_host: ["octomap"]
 ros_image_to_qimage:
   add_host: ["REQUIRE_OPENGL"]
+rqt_image_overlay:
+  add_host: ["REQUIRE_OPENGL"]
