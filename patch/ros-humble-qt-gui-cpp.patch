@@ -15,7 +15,7 @@ index 89b1e80c..3baa8e8e 100644
  list(APPEND deps_libraries ${TinyXML2_LIBRARIES})
  
 -find_package(Python3 REQUIRED COMPONENTS Development)
-+find_package(Python REQUIRED COMPONENTS Development)
++find_package(Python REQUIRED COMPONENTS Interpreter Development)
 +find_package(OpenGL REQUIRED)
  
  set(_qt_gui_cpp_sip_LIBRARIES
