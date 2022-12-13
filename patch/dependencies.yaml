@@ -40,8 +40,6 @@ rviz_rendering:
 behaviortree_cpp_v3:
   add_host: ["boost-cpp", "cppzmq"]
   add_run: ["boost-cpp"]
-nav2_util:
-  add_host: ["boost-cpp"]
 plotjuggler:
   add_host: ["libxcb", "elfutils", "ros-humble-ros-workspace"]
 # rviz_ogre_vendor:
@@ -89,6 +87,10 @@ backward_ros:
 nav2_smac_planner:
   add_build: [{"sel(osx)": "llvm-openmp"}]
   add_host: [{"sel(osx)": "llvm-openmp"}, "ompl", "libode"]
+nav2_util:
+  add_host: ["boost-cpp"]
+nav2_constrained_smoother:
+  add_host: [{"sel(win)": "openblas"}]
 ompl:
   add_host: ["ompl"]
 pybind11_vendor:
