@@ -65,6 +65,7 @@ packages_select_by_deps:
   - apex_test_tools
   - ublox_dgnss
   - velodyne_description
+  - velodyne
   - visp
 
   - apex_containers
@@ -224,7 +225,6 @@ packages_select_by_deps:
   # - behaviortree_cpp_v3
   # - ros_workspace
   # - ros1_bridge
-  # - velodyne
 
   # Used to work, now needs fixes
   # - rtabmap
