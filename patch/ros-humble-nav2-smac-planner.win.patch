@@ -10,3 +10,24 @@ index c21e856da8..eb5cd2ed4c 100644
  else()
    add_compile_options(-O3 -Wextra -Wdeprecated -fPIC)
  endif()
+diff --git a/nav2_smac_planner/include/nav2_smac_planner/a_star.hpp b/nav2_smac_planner/include/nav2_smac_planner/a_star.hpp
+index 4b4fe55111..2af454bb53 100644
+--- a/nav2_smac_planner/include/nav2_smac_planner/a_star.hpp
++++ b/nav2_smac_planner/include/nav2_smac_planner/a_star.hpp
+@@ -26,7 +26,6 @@
+ 
+ #include "nav2_costmap_2d/costmap_2d.hpp"
+ 
+-#include "nav2_smac_planner/thirdparty/robin_hood.h"
+ #include "nav2_smac_planner/analytic_expansion.hpp"
+ #include "nav2_smac_planner/node_2d.hpp"
+ #include "nav2_smac_planner/node_hybrid.hpp"
+@@ -47,7 +46,7 @@ class AStarAlgorithm
+ {
+ public:
+   typedef NodeT * NodePtr;
+-  typedef robin_hood::unordered_node_map<unsigned int, NodeT> Graph;
++  typedef std::unordered_map<unsigned int, NodeT> Graph;
+   typedef std::vector<NodePtr> NodeVector;
+   typedef std::pair<float, NodeBasic<NodeT>> NodeElement;
+   typedef typename NodeT::Coordinates Coordinates;
