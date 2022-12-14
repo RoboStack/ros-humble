@@ -1,3 +1,16 @@
+diff --git a/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/GreedyKCenters.h b/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/GreedyKCenters.h
+index b1120c3864..a5a710e030 100644
+--- a/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/GreedyKCenters.h
++++ b/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/GreedyKCenters.h
+@@ -89,7 +89,7 @@ class GreedyKCenters
+     centers.clear();
+     centers.reserve(k);
+     if (((long unsigned int)dists.rows()) < data.size() || ((long unsigned int)dists.cols()) < k)
+-      dists.resize(std::max(2 * ((long unsigned int)dists.rows()) + 1, data.size()), k);
++      dists.resize(std::max(2 * ((long unsigned int)dists.rows()) + 1, (long unsigned int)data.size()), k);
+     // first center is picked randomly
+     centers.push_back(std::uniform_int_distribution<size_t>{ 0, data.size() - 1 }(generator_));
+     for (unsigned i = 1; i < k; ++i)
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 88472a2818..dcbb3ad9ea 100644
 --- a/CMakeLists.txt
