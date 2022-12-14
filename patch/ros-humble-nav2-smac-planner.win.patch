@@ -2,12 +2,13 @@ diff --git a/nav2_smac_planner/CMakeLists.txt b/nav2_smac_planner/CMakeLists.txt
 index 79a77ce082..c0f90e5fe7 100644
 --- a/nav2_smac_planner/CMakeLists.txt
 +++ b/nav2_smac_planner/CMakeLists.txt
-@@ -24,6 +24,8 @@ find_package(Eigen3 REQUIRED)
+@@ -24,6 +24,9 @@ find_package(Eigen3 REQUIRED)
  find_package(angles REQUIRED)
  find_package(ompl REQUIRED)
  find_package(OpenMP REQUIRED)
 +find_package(ode REQUIRED)
-+string(REPLACE "ode_double" " ODE::ODE " OMPL_LIBRARIES ${OMPL_LIBRARIES})
++list(REMOVE_ITEM OMPL_LIBRARIES "ode_double")
++list(APPEND OMPL_LIBRARIES "ODE::ODE")
  
  if(NOT CMAKE_CXX_STANDARD)
    set(CMAKE_CXX_STANDARD 17)
@@ -19,33 +20,6 @@ index 79a77ce082..c0f90e5fe7 100644
  else()
    add_compile_options(-O3 -Wextra -Wdeprecated -fPIC)
  endif()
-@@ -85,7 +87,7 @@ add_library(${library_name} SHARED
-   src/node_basic.cpp
- )
- 
--target_link_libraries(${library_name} ${OMPL_LIBRARIES} ${OpenMP_LIBRARIES}  OpenMP::OpenMP_CXX)
-+target_link_libraries(${library_name} ${OMPL_LIBRARIES} ${OpenMP_LIBRARIES} ${ODE_LIBRARIES} OpenMP::OpenMP_CXX)
- target_include_directories(${library_name} PUBLIC ${Eigen3_INCLUDE_DIRS})
- 
- ament_target_dependencies(${library_name}
-@@ -106,7 +108,7 @@ add_library(${library_name}_2d SHARED
-   src/node_basic.cpp
- )
- 
--target_link_libraries(${library_name}_2d ${OMPL_LIBRARIES})
-+target_link_libraries(${library_name}_2d ${OMPL_LIBRARIES} ${ODE_LIBRARIES})
- target_include_directories(${library_name}_2d PUBLIC ${Eigen3_INCLUDE_DIRS})
- 
- ament_target_dependencies(${library_name}_2d
-@@ -127,7 +129,7 @@ add_library(${library_name}_lattice SHARED
-   src/node_basic.cpp
- )
- 
--target_link_libraries(${library_name}_lattice ${OMPL_LIBRARIES})
-+target_link_libraries(${library_name}_lattice ${OMPL_LIBRARIES} ${ODE_LIBRARIES})
- target_include_directories(${library_name}_lattice PUBLIC ${Eigen3_INCLUDE_DIRS})
- 
- ament_target_dependencies(${library_name}_lattice
 diff --git a/nav2_smac_planner/include/nav2_smac_planner/a_star.hpp b/nav2_smac_planner/include/nav2_smac_planner/a_star.hpp
 index 4b4fe55111..2af454bb53 100644
 --- a/nav2_smac_planner/include/nav2_smac_planner/a_star.hpp
