@@ -2,11 +2,12 @@ diff --git a/nav2_smac_planner/CMakeLists.txt b/nav2_smac_planner/CMakeLists.txt
 index 79a77ce082..c0f90e5fe7 100644
 --- a/nav2_smac_planner/CMakeLists.txt
 +++ b/nav2_smac_planner/CMakeLists.txt
-@@ -24,6 +24,7 @@ find_package(Eigen3 REQUIRED)
+@@ -24,6 +24,8 @@ find_package(Eigen3 REQUIRED)
  find_package(angles REQUIRED)
  find_package(ompl REQUIRED)
  find_package(OpenMP REQUIRED)
 +find_package(ode REQUIRED)
++string(REPLACE "ode_double" "ODE::ODE" OMPL_LIBRARIES ${OMPL_LIBRARIES})
  
  if(NOT CMAKE_CXX_STANDARD)
    set(CMAKE_CXX_STANDARD 17)
