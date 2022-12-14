@@ -1,7 +1,7 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 88472a2818..dcbb3ad9ea 100644
---- a/moveit_kinematics/CMakeLists.txt
-+++ b/moveit_kinematics/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
 @@ -1,6 +1,8 @@
  cmake_minimum_required(VERSION 3.22)
  project(moveit_kinematics)
