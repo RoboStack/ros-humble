@@ -1,3 +1,16 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 88472a2818..dcbb3ad9ea 100644
+--- a/moveit_kinematics/CMakeLists.txt
++++ b/moveit_kinematics/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.22)
+ project(moveit_kinematics)
+ 
++add_definitions(-DNOMINMAX)
++
+ # Common cmake code applied to all moveit packages
+ find_package(moveit_common REQUIRED)
+ moveit_package()
 diff --git a/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/NearestNeighborsGNAT.h b/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/NearestNeighborsGNAT.h
 index 49a02b9d6b..e8142e5711 100644
 --- a/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/NearestNeighborsGNAT.h
