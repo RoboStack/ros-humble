@@ -28,7 +28,6 @@ mkdir -p $CONDA_BLD_PATH
 conda index $CONDA_BLD_PATH
 
 conda config --set remote_max_retries 5
-# conda config --append channels defaults
 conda config --add channels conda-forge
 conda config --add channels robostack-humble
 conda config --add channels robostack-staging
@@ -38,10 +37,6 @@ conda config --remove channels defaults
 
 mamba update conda --yes --quiet -c conda-forge
 mamba install --yes --quiet pip conda-build anaconda-client mamba boa
-
-# install boa from master
-# baaaad
-# pip install git+https://github.com/mamba-org/boa.git@master
 
 # setup_conda_rc "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
 # export PATH="$HOME/miniconda/bin:$PATH"
