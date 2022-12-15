@@ -1,0 +1,25 @@
+diff --git a/rviz_common/include/rviz_common/visualization_manager.hpp b/rviz_common/include/rviz_common/visualization_manager.hpp
+index b06436ce3..fa61b3a0e 100644
+--- a/rviz_common/include/rviz_common/visualization_manager.hpp
++++ b/rviz_common/include/rviz_common/visualization_manager.hpp
+@@ -87,7 +87,7 @@ class VisualizationManagerPrivate;
+  * The "protected" members should probably all be "private", as
+  * VisualizationManager is not intended to be subclassed.
+  */
+-class VisualizationManager : public DisplayContext
++class RVIZ_COMMON_PUBLIC VisualizationManager : public DisplayContext
+ {
+   Q_OBJECT
+ diff --git a/rviz_common/include/rviz_common/visualization_frame.hpp b/rviz_common/include/rviz_common/visualization_frame.hpp
+index 620f2179d..81539066c 100644
+--- a/rviz_common/include/rviz_common/visualization_frame.hpp
++++ b/rviz_common/include/rviz_common/visualization_frame.hpp
+@@ -80,7 +80,7 @@ class WidgetGeometryChangeDetector;
+  * At the top is a toolbar with Tools like "Move Camera", "Select", etc.
+  * There is also a menu bar with file/open, etc.
+  */
+-class VisualizationFrame : public QMainWindow, public WindowManagerInterface
++class RVIZ_COMMON_PUBLIC VisualizationFrame : public QMainWindow, public WindowManagerInterface
+ {
+   Q_OBJECT
+ 
