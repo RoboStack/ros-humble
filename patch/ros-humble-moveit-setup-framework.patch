@@ -1,16 +1,7 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b9f386ab7..533b06705 100644
+index 36e80da028..8a458bc389 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -5,6 +5,8 @@ project(moveit_setup_framework)
- find_package(moveit_common REQUIRED)
- moveit_package()
- 
-+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-+
- find_package(ament_cmake REQUIRED)
- find_package(ament_cmake_ros REQUIRED)
- find_package(ament_index_cpp REQUIRED)
 @@ -11,8 +11,9 @@ find_package(ament_index_cpp REQUIRED)
  find_package(moveit_core REQUIRED)
  find_package(moveit_ros_planning REQUIRED)
@@ -23,7 +14,18 @@ index b9f386ab7..533b06705 100644
  find_package(pluginlib REQUIRED)
  find_package(rclcpp REQUIRED)
  find_package(rviz_common REQUIRED)
-@@ -52,8 +53,9 @@ ament_target_dependencies(${PROJECT_NAME}
+@@ -42,6 +43,10 @@ add_library(${PROJECT_NAME}
+     src/xml_syntax_highlighter.cpp
+     ${MOC_FILES}
+ )
++include(GenerateExportHeader)
++generate_export_header(${PROJECT_NAME})
++target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
++
+ target_include_directories(${PROJECT_NAME} PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+@@ -52,8 +57,9 @@ ament_target_dependencies(${PROJECT_NAME}
    moveit_ros_planning
    moveit_ros_visualization
    pluginlib
@@ -35,18 +37,63 @@ index b9f386ab7..533b06705 100644
    rclcpp
    rviz_common
    rviz_rendering
-@@ -84,8 +86,9 @@ install(TARGETS ${PROJECT_NAME}
+@@ -82,10 +88,12 @@ install(TARGETS ${PROJECT_NAME}
+         RUNTIME DESTINATION bin
+         INCLUDES DESTINATION include
  )
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_export.h DESTINATION include)
++
  ament_export_include_directories(include)
  ament_export_dependencies(rclcpp)
 -ament_export_dependencies(Qt5Core)
 -ament_export_dependencies(Qt5Widgets)
 +# ament_export_dependencies(Qt5Core)
 +# ament_export_dependencies(Qt5Widgets)
-+# ament_export_dependencies(Qt5)
  ament_export_dependencies(moveit_common)
  ament_export_dependencies(moveit_core)
  ament_export_dependencies(moveit_ros_planning)
+diff --git a/include/moveit_setup_framework/qt/setup_step_widget.hpp b/include/moveit_setup_framework/qt/setup_step_widget.hpp
+index f32e7b5ad3..c6f472682d 100644
+--- a/include/moveit_setup_framework/qt/setup_step_widget.hpp
++++ b/include/moveit_setup_framework/qt/setup_step_widget.hpp
+@@ -40,12 +40,14 @@
+ #include <moveit_setup_framework/qt/rviz_panel.hpp>
+ #include <QWidget>
+ 
++#include <moveit_setup_framework_export.h>
++
+ namespace moveit_setup
+ {
+ /**
+  * @brief The GUI code for one SetupStep
+  */
+-class SetupStepWidget : public QWidget
++class MOVEIT_SETUP_FRAMEWORK_EXPORT SetupStepWidget : public QWidget
+ {
+   Q_OBJECT
+ public:
+diff --git a/include/moveit_setup_framework/templates.hpp b/include/moveit_setup_framework/templates.hpp
+index fb90a75703..695f7a9cfb 100644
+--- a/include/moveit_setup_framework/templates.hpp
++++ b/include/moveit_setup_framework/templates.hpp
+@@ -38,6 +38,8 @@
+ #include <moveit_setup_framework/generated_file.hpp>
+ #include <string>
+ 
++#include <moveit_setup_framework_export.h>
++
+ namespace moveit_setup
+ {
+ /**
+@@ -69,7 +71,7 @@ class TemplatedGeneratedFile : public GeneratedFile
+ 
+   bool write() override;
+ 
+-  static std::vector<TemplateVariable> variables_;
++  static MOVEIT_SETUP_FRAMEWORK_EXPORT std::vector<TemplateVariable> variables_;
+ };
+ 
+ }  // namespace moveit_setup
 diff --git a/src/urdf_config.cpp b/src/urdf_config.cpp
 index 290c9e8a2a..accfae25af 100644
 --- a/src/urdf_config.cpp
