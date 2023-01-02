@@ -47,6 +47,7 @@ packages_select_by_deps:
   - moveit
   - moveit_servo
   - rosbag2_storage_mcap
+  - cartographer-ros
 
   # - rosbridge_suite
   # - rviz2
