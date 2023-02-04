@@ -40,15 +40,16 @@ skip_existing:
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
-  - ros_workspace
-  - ros_environment
-  - ros_base
-  - navigation2
-  - moveit
-  - desktop_full
-  - desktop
-  - cv_bridge
-  - perception
+  - ament_package
+  # - ros_workspace
+  # - ros_environment
+  # - ros_base
+  # - navigation2
+  # - moveit
+  # - desktop_full
+  # - desktop
+  # - cv_bridge
+  # - perception
 
 
 patch_dir: patch
