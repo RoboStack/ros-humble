@@ -3,7 +3,7 @@ package:
   version: 0.2.0
 
 build:
-  number: 0
+  number: 1
   string: humble
   run_exports:
     - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
@@ -32,7 +32,6 @@ requirements:
     - boost-cpp 1.78
     - pcl 1.12
     - gazebo 11
-    - ogre 1.12
     - libpqxx 6
     - setuptools 61.0.0
 
