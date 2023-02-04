@@ -57,9 +57,10 @@ packages_select_by_deps:
   - joint-trajectory-controller
   - xacro
   - robot-localization
-  - velodyne
-  - sbg_driver
   - vision-opencv
-  - ackermann-msgs
+
+  # - velodyne
+  # - sbg_driver
+  # - ackermann-msgs
   
 patch_dir: patch
