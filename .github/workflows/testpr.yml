@@ -64,13 +64,13 @@ jobs:
     - name: Debug pkg-config problem
       if: contains(matrix.os, 'windows')
       shell: bash -l {0}
+      env:
+        PATH: $PATH
       run: |
         rm -rf /c/Strawberry
     - name: Patch PATH in Windows runner
       if: contains(matrix.os, 'windows')
       shell: cmd
-      env:
-        PATH: $PATH
       run: |
         set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
         set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
@@ -104,7 +104,6 @@ jobs:
         set "PATH=%PATH:C:\mysql\bin\;=%"
         set "PATH=%PATH:C:\Program Files\R\R-4.2.2\bin\x64;=%"
         set "PATH=%PATH:C:\SeleniumWebDrivers\GeckoDriver;=%"
-        reg add HKLM\SYSTEM\CurrentControlSet\Control\FileSystem /v LongPathsEnabled /t REG_DWORD /d 1 /f
         echo "DEBUG1 PATH is %PATH%"
     - name: Debug PATH in Windows runner
       if: contains(matrix.os, 'windows')
