@@ -64,52 +64,9 @@ jobs:
     - name: Debug pkg-config problem
       if: contains(matrix.os, 'windows')
       shell: bash -l {0}
-      env:
-        PATH: $PATH
       run: |
         rm -rf /c/Strawberry
-    - name: Patch PATH in Windows runner
-      if: contains(matrix.os, 'windows')
-      shell: cmd
-      run: |
-        set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
-        set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
-        set "PATH=%PATH:C:\Rust\.cargo\bin;=%"
-        set "PATH=%PATH:C:\Users\runneradmin\.cargo\bin;=%"
-        set "PATH=%PATH:C:\Program Files (x86)\Microsoft BizTalk Server\;=%"
-        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.7\bin;=%"
-        set "PATH=%PATH:C:\Program Files\TortoiseSVN\bin;=%"
-        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;=%"
-        set "PATH=%PATH:C:\Program Files\Git\usr\bin;=%"
-        set "PATH=%PATH:C:\Program Files\Git\cmd;=%"
-        set "PATH=%PATH:C:\Program Files\Git\mingw64\bin;=%"
-        set "PATH=%PATH:C:\Program Files (x86)\Subversion\bin;=%"
-        set "PATH=%PATH:C:\Program Files\CMake\bin;=%"
-        set "PATH=%PATH:C:\Program Files\OpenSSL\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\c\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\perl\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\perl\site\bin;=%"
-        set "PATH=%PATH:c:\tools\php;=%"
-        set "PATH=%PATH:ostedtoolcache=%"
-        set "PATH=%PATH:C:\Users\runneradmin\.dotnet\tools;=%"
-        set "PATH=%PATH:C:\Program Files\LLVM\bin;=%"
-        set "PATH=%PATH:C:\Program Files\Amazon\AWSCLIV2\;=%"
-        set "PATH=%PATH:C:\SeleniumWebDrivers\EdgeDriver\;=%"
-        set "PATH=%PATH:C:\SeleniumWebDrivers\ChromeDriver\;=%"
-        set "PATH=%PATH:C:\Program Files\nodejs\;=%"
-        set "PATH=%PATH:C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;=%"
-        set "PATH=%PATH:C:\Program Files\TortoiseSVN\bin;=%"
-        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;=%"
-        set "PATH=%PATH:C:\Program Files\dotnet;=%"
-        set "PATH=%PATH:C:\mysql\bin\;=%"
-        set "PATH=%PATH:C:\Program Files\R\R-4.2.2\bin\x64;=%"
-        set "PATH=%PATH:C:\SeleniumWebDrivers\GeckoDriver;=%"
-        echo "DEBUG1 PATH is %PATH%"
-    - name: Debug PATH in Windows runner
-      if: contains(matrix.os, 'windows')
-      shell: cmd
-      run: |
-        echo "DEBUG2 PATH is %PATH%"
+
     - name: Check what files have changed
       id: filecheck
       shell: bash -l {0}
@@ -172,7 +129,6 @@ jobs:
         vinca --platform win-64
         ls
         cat recipe.yaml
-        echo "boa is at `which boa`"
     - name: Build recipes for Linux
       shell: bash -l {0}
       if: steps.filecheck.outputs.LINUX_YAML_CHANGED == 1 && matrix.os == 'ubuntu-latest' && matrix.platform == 'linux-64'
