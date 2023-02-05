@@ -119,6 +119,23 @@ jobs:
       shell: cmd
       run: |
         echo "DEBUG2 PATH is %PATH%"
+    - name: Debug PATH in Windows runner powershell
+      if: contains(matrix.os, 'windows')
+      run: |
+        $oldPath = [Environment]::GetEnvironmentVariable("PATH", "User")
+        $newPath = $oldPath -split ';' | Where-Object { $_ -notlike "*hostedtoolcache*" } | Join-Object ';'
+        [Environment]::SetEnvironmentVariable("PATH", $newPath, "User")
+        echo "DEBUG2 PATH is %PATH%"    
+        Write-Output "DEBUG3 PATH is $env:PATH"
+    - name: Debug PATH in Windows runner powershell 2
+      if: contains(matrix.os, 'windows')
+      shell: cmd
+      run: |
+        echo "DEBUG4 PATH is %PATH%"
+    - name: Debug PATH in Windows runner powershell 3
+      if: contains(matrix.os, 'windows')
+      run: |
+        Write-Output "DEBUG5 PATH is $env:PATH"
     - name: Check what files have changed
       id: filecheck
       shell: bash -l {0}
