@@ -68,21 +68,24 @@ jobs:
         rm -rf /c/Strawberry
     - name: Patch PATH in Windows runner
       if: contains(matrix.os, 'windows')
+      shell: cmd
       run: |
-        set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
-        set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
-        set "PATH=%PATH:C:\Rust\.cargo\bin;=%"
-        set "PATH=%PATH:C:\Program Files\Git\usr\bin;=%"
-        set "PATH=%PATH:C:\Program Files\Git\cmd;=%"
-        set "PATH=%PATH:C:\Program Files\Git\mingw64\bin;=%"
-        set "PATH=%PATH:C:\Program Files (x86)\Subversion\bin;=%"
-        set "PATH=%PATH:C:\Program Files\CMake\bin;=%"
-        set "PATH=%PATH:C:\Program Files\OpenSSL\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\c\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\perl\bin;=%"
-        set "PATH=%PATH:C:\Strawberry\perl\site\bin;=%"
-        set "PATH=%PATH:c:\tools\php;=%"
-        set "PATH=%PATH:ostedtoolcache=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\ProgramData\Chocolatey\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Program Files (x86)\sbt\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Rust\.cargo\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Program Files\Git\usr\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Program Files\Git\cmd;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Program Files\Git\mingw64\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Program Files (x86)\Subversion\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Program Files\CMake\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Program Files\OpenSSL\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Strawberry\c\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Strawberry\perl\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:C:\Strawberry\perl\site\bin;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:c:\tools\php;=%"
+        set "GITHUB_PATH=%GITHUB_PATH:ostedtoolcache=%"
+        echo "DEBUG PATH is %PATH%"
+        echo "DEBUG GITHUB_PATH is %GITHUB_PATH%"
     - name: Check what files have changed
       id: filecheck
       shell: bash -l {0}
@@ -145,7 +148,8 @@ jobs:
         vinca --platform win-64
         ls
         cat recipe.yaml
-        echo "DEBUG PATH is %PATH%"
+        echo "DEBUG: PATH is $PATH"
+        echo "DEBUG: GITHUB_PATH is $GITHUB_PATH"
     - name: Build recipes for Linux
       shell: bash -l {0}
       if: steps.filecheck.outputs.LINUX_YAML_CHANGED == 1 && matrix.os == 'ubuntu-latest' && matrix.platform == 'linux-64'
