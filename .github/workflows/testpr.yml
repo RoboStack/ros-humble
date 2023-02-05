@@ -70,48 +70,38 @@ jobs:
       if: contains(matrix.os, 'windows')
       shell: cmd
       run: |
-        setx PATH "%PATH:C:\ProgramData\Chocolatey\bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\sbt\bin;=%"
-        setx PATH "%PATH:C:\Rust\.cargo\bin;=%"
-        setx PATH "%PATH:C:\Users\runneradmin\.cargo\bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\Microsoft BizTalk Server\;=%"
-        setx PATH "%PATH:C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.7\bin;=%"
-        setx PATH "%PATH:C:\Program Files\TortoiseSVN\bin;=%"
-        setx PATH "%PATH:C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;=%"
-        setx PATH "%PATH:C:\Program Files\Git\usr\bin;=%"
-        setx PATH "%PATH:C:\Program Files\Git\cmd;=%"
-        setx PATH "%PATH:C:\Program Files\Git\mingw64\bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\Subversion\bin;=%"
-        setx PATH "%PATH:C:\Program Files\CMake\bin;=%"
-        setx PATH "%PATH:C:\Program Files\OpenSSL\bin;=%"
-        setx PATH "%PATH:C:\Strawberry\c\bin;=%"
-        setx PATH "%PATH:C:\Strawberry\perl\bin;=%"
-        setx PATH "%PATH:C:\Strawberry\perl\site\bin;=%"
-        setx PATH "%PATH:c:\tools\php;=%"
-        setx PATH "%PATH:ostedtoolcache=%"
-        setx PATH "%PATH:C:\Users\runneradmin\.dotnet\tools;=%"
-        setx PATH "%PATH:C:\Program Files\LLVM\bin;=%"
-        setx PATH "%PATH:C:\Program Files\Amazon\AWSCLIV2\;=%"
-        setx PATH "%PATH:C:\SeleniumWebDrivers\EdgeDriver\;=%"
-        setx PATH "%PATH:C:\SeleniumWebDrivers\ChromeDriver\;=%"
-        setx PATH "%PATH:C:\Program Files\nodejs\;=%"
-        setx PATH "%PATH:C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;=%"
-        setx PATH "%PATH:C:\Program Files\TortoiseSVN\bin;=%"
-        setx PATH "%PATH:C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;=%"
-        setx PATH "%PATH:C:\Program Files\dotnet;=%"
-        setx PATH "%PATH:C:\mysql\bin\;=%"
-        setx PATH "%PATH:C:\Program Files\R\R-4.2.2\bin\x64;=%"
-        setx PATH "%PATH:C:\SeleniumWebDrivers\GeckoDriver;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
-        setx PATH "%PATH:C:\Program Files (x86)\pipx_bin;=%"
+        set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
+        set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
+        set "PATH=%PATH:C:\Rust\.cargo\bin;=%"
+        set "PATH=%PATH:C:\Users\runneradmin\.cargo\bin;=%"
+        set "PATH=%PATH:C:\Program Files (x86)\Microsoft BizTalk Server\;=%"
+        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.7\bin;=%"
+        set "PATH=%PATH:C:\Program Files\TortoiseSVN\bin;=%"
+        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;=%"
+        set "PATH=%PATH:C:\Program Files\Git\usr\bin;=%"
+        set "PATH=%PATH:C:\Program Files\Git\cmd;=%"
+        set "PATH=%PATH:C:\Program Files\Git\mingw64\bin;=%"
+        set "PATH=%PATH:C:\Program Files (x86)\Subversion\bin;=%"
+        set "PATH=%PATH:C:\Program Files\CMake\bin;=%"
+        set "PATH=%PATH:C:\Program Files\OpenSSL\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\c\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\perl\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\perl\site\bin;=%"
+        set "PATH=%PATH:c:\tools\php;=%"
+        set "PATH=%PATH:ostedtoolcache=%"
+        set "PATH=%PATH:C:\Users\runneradmin\.dotnet\tools;=%"
+        set "PATH=%PATH:C:\Program Files\LLVM\bin;=%"
+        set "PATH=%PATH:C:\Program Files\Amazon\AWSCLIV2\;=%"
+        set "PATH=%PATH:C:\SeleniumWebDrivers\EdgeDriver\;=%"
+        set "PATH=%PATH:C:\SeleniumWebDrivers\ChromeDriver\;=%"
+        set "PATH=%PATH:C:\Program Files\nodejs\;=%"
+        set "PATH=%PATH:C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;=%"
+        set "PATH=%PATH:C:\Program Files\TortoiseSVN\bin;=%"
+        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;=%"
+        set "PATH=%PATH:C:\Program Files\dotnet;=%"
+        set "PATH=%PATH:C:\mysql\bin\;=%"
+        set "PATH=%PATH:C:\Program Files\R\R-4.2.2\bin\x64;=%"
+        set "PATH=%PATH:C:\SeleniumWebDrivers\GeckoDriver;=%"
         reg add HKLM\SYSTEM\CurrentControlSet\Control\FileSystem /v LongPathsEnabled /t REG_DWORD /d 1 /f
         echo "DEBUG1 PATH is %PATH%"
     - name: Debug PATH in Windows runner
@@ -119,23 +109,6 @@ jobs:
       shell: cmd
       run: |
         echo "DEBUG2 PATH is %PATH%"
-    - name: Debug PATH in Windows runner powershell
-      if: contains(matrix.os, 'windows')
-      run: |
-        $oldPath = [Environment]::GetEnvironmentVariable("PATH", "User")
-        $newPath = $oldPath -split ';' | Where-Object { $_ -notlike "*hostedtoolcache*" } | Join-Object ';'
-        [Environment]::SetEnvironmentVariable("PATH", $newPath, "User")
-        echo "DEBUG2 PATH is %PATH%"    
-        Write-Output "DEBUG3 PATH is $env:PATH"
-    - name: Debug PATH in Windows runner powershell 2
-      if: contains(matrix.os, 'windows')
-      shell: cmd
-      run: |
-        echo "DEBUG4 PATH is %PATH%"
-    - name: Debug PATH in Windows runner powershell 3
-      if: contains(matrix.os, 'windows')
-      run: |
-        Write-Output "DEBUG5 PATH is $env:PATH"
     - name: Check what files have changed
       id: filecheck
       shell: bash -l {0}
