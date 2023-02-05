@@ -66,6 +66,7 @@ jobs:
       shell: bash -l {0}
       run: |
         rm -rf /c/Strawberry
+
     - name: Check what files have changed
       id: filecheck
       shell: bash -l {0}

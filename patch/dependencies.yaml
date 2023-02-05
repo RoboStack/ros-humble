@@ -29,7 +29,7 @@ libcurl_vendor:
 intra_process_demo:
   add_host: ["REQUIRE_OPENGL"]
 rviz_ogre_vendor:
-  add_host: ["ogre"]
+  add_host: ["zlib", "freeimage", "freetype", "assimp", "zziplib", "pugixml"]
   add_run: ["assimp"]
 pcl_conversions:
   add_host: ["REQUIRE_OPENGL"]
@@ -42,9 +42,6 @@ behaviortree_cpp_v3:
   add_run: ["boost-cpp"]
 plotjuggler:
   add_host: ["libxcb", "elfutils", "ros-humble-ros-workspace"]
-# rviz_ogre_vendor:
-#   add_host: ["ogre"]
-#   add_run: ["ogre"]
 embree_vendor:
   add_host: ["REQUIRE_OPENGL", "libpng", "libjpeg-turbo", "openimageio", "tbb", "tbb-devel", "embree"]
 ign_rviz_common:

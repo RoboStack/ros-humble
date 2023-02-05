@@ -1,6 +1,6 @@
 package:
   name: ros2-distro-mutex
-  version: 0.2.0
+  version: 0.3.0
 
 build:
   number: 0
@@ -32,7 +32,6 @@ requirements:
     - boost-cpp 1.78
     - pcl 1.12
     - gazebo 11
-    - ogre 1.12
     - libpqxx 6
     - setuptools 61.0.0
 
