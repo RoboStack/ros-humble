@@ -197,8 +197,40 @@ jobs:
         boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml --target-platform=osx-arm64
         boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml --target-platform=osx-arm64
     - name: Build recipes for Windows
-      shell: bash -l {0}
+      shell: cmd
       if: steps.filecheck.outputs.WIN_YAML_CHANGED == 1 && matrix.os == 'windows-2019' && matrix.platform == 'win-64'
       run: |
-        boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
-        boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+        set "PATH=%PATH:C:\ProgramData\Chocolatey\bin;=%"
+        set "PATH=%PATH:C:\Program Files (x86)\sbt\bin;=%"
+        set "PATH=%PATH:C:\Rust\.cargo\bin;=%"
+        set "PATH=%PATH:C:\Users\runneradmin\.cargo\bin;=%"
+        set "PATH=%PATH:C:\Program Files (x86)\Microsoft BizTalk Server\;=%"
+        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.7\bin;=%"
+        set "PATH=%PATH:C:\Program Files\TortoiseSVN\bin;=%"
+        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;=%"
+        set "PATH=%PATH:C:\Program Files\Git\usr\bin;=%"
+        set "PATH=%PATH:C:\Program Files\Git\cmd;=%"
+        set "PATH=%PATH:C:\Program Files\Git\mingw64\bin;=%"
+        set "PATH=%PATH:C:\Program Files (x86)\Subversion\bin;=%"
+        set "PATH=%PATH:C:\Program Files\CMake\bin;=%"
+        set "PATH=%PATH:C:\Program Files\OpenSSL\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\c\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\perl\bin;=%"
+        set "PATH=%PATH:C:\Strawberry\perl\site\bin;=%"
+        set "PATH=%PATH:c:\tools\php;=%"
+        set "PATH=%PATH:ostedtoolcache=%"
+        set "PATH=%PATH:C:\Users\runneradmin\.dotnet\tools;=%"
+        set "PATH=%PATH:C:\Program Files\LLVM\bin;=%"
+        set "PATH=%PATH:C:\Program Files\Amazon\AWSCLIV2\;=%"
+        set "PATH=%PATH:C:\SeleniumWebDrivers\EdgeDriver\;=%"
+        set "PATH=%PATH:C:\SeleniumWebDrivers\ChromeDriver\;=%"
+        set "PATH=%PATH:C:\Program Files\nodejs\;=%"
+        set "PATH=%PATH:C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;=%"
+        set "PATH=%PATH:C:\Program Files\TortoiseSVN\bin;=%"
+        set "PATH=%PATH:C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;=%"
+        set "PATH=%PATH:C:\Program Files\dotnet;=%"
+        set "PATH=%PATH:C:\mysql\bin\;=%"
+        set "PATH=%PATH:C:\Program Files\R\R-4.2.2\bin\x64;=%"
+        set "PATH=%PATH:C:\SeleniumWebDrivers\GeckoDriver;=%"
+        c:\Users\runneradmin\micromamba-root\envs\testpr_env\Scripts\boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+        c:\Users\runneradmin\micromamba-root\envs\testpr_env\Scripts\boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
