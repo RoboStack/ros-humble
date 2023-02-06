@@ -43,10 +43,10 @@ packages_select_by_deps:
   - ros_workspace
   - ros_environment
   - ros_base
-  - navigation2
+  # - navigation2
   # - moveit
   # - desktop_full
-  - desktop
+  # - desktop
   - cv_bridge
   - perception
 
