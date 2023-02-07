@@ -1,0 +1,21 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e6f56ba..9e1cf50 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,16 +17,6 @@ endif()
+ 
+ add_subdirectory(src)
+ 
+-include(CTest)
+-if(BUILD_TESTING)
+-  include(cmake/osrf_testing_tools_cpp_require_googletest.cmake)
+-  # ensures target gtest_main exists
+-  osrf_testing_tools_cpp_require_googletest(VERSION_GTE 1.10
+-    VENDOR_DIR "${CMAKE_SOURCE_DIR}/vendor")
+-
+-  add_subdirectory(test)
+-endif()
+-
+ configure_file(osrf_testing_tools_cppConfig.cmake.in
+   "${PROJECT_BINARY_DIR}/osrf_testing_tools_cppConfig.cmake" @ONLY)
+ configure_file(osrf_testing_tools_cppConfigVersion.cmake.in

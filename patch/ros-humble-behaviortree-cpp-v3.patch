@@ -11,3 +11,21 @@ index 95b2663..350e7ad 100644
  option(BUILD_TOOLS "Build commandline tools" ON)
  option(BUILD_SHARED_LIBS "Build shared libraries" ON)
  option(BUILD_MANUAL_SELECTOR "Build manual selector node" ON)
+@@ -55,6 +55,7 @@ endif()
+ 
+ #---- Find other packages ----
+ find_package(Threads)
++find_package(ZeroMQ REQUIRED)
+ find_package(ZMQ)
+ 
+ if( ZMQ_FOUND )
+@@ -204,7 +205,7 @@ if(ZMQ_FOUND)
+     target_link_libraries(${BEHAVIOR_TREE_LIBRARY} PRIVATE
+         ${ZMQ_LIBRARIES} )
+     target_include_directories(${BEHAVIOR_TREE_LIBRARY} PRIVATE
+-        ${ZMQ_INCLUDE_DIRS} )
++        ${ZMQ_INCLUDE_DIRS} ${ZeroMQ_INCLUDE_DIR} )
+     target_compile_definitions(${BEHAVIOR_TREE_LIBRARY} PRIVATE ZMQ_FOUND)
+ endif()
+ 
+
