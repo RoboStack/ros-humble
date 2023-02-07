@@ -58,7 +58,6 @@ packages_select_by_deps:
   - xacro
   - robot-localization
   - vision-opencv
-
   # - velodyne
   # - sbg_driver
   # - ackermann-msgs
