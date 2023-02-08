@@ -1,34 +1,3 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 95b2663..350e7ad 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -19,7 +19,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
- 
- #---- project configuration ----
- option(BUILD_EXAMPLES   "Build tutorials and examples" ON)
--option(BUILD_UNIT_TESTS "Build the unit tests" ON)
-+option(BUILD_UNIT_TESTS "Build the unit tests" OFF)
- option(BUILD_TOOLS "Build commandline tools" ON)
- option(BUILD_SHARED_LIBS "Build shared libraries" ON)
- option(BUILD_MANUAL_SELECTOR "Build manual selector node" ON)
-@@ -55,6 +55,7 @@ endif()
- 
- #---- Find other packages ----
- find_package(Threads)
-+find_package(ZeroMQ REQUIRED)
- find_package(ZMQ)
- 
- if( ZMQ_FOUND )
-@@ -204,7 +205,7 @@ if(ZMQ_FOUND)
-     target_link_libraries(${BEHAVIOR_TREE_LIBRARY} PRIVATE
-         ${ZMQ_LIBRARIES} )
-     target_include_directories(${BEHAVIOR_TREE_LIBRARY} PRIVATE
--        ${ZMQ_INCLUDE_DIRS} )
-+        ${ZMQ_INCLUDE_DIRS} ${ZeroMQ_INCLUDE_DIR} )
-     target_compile_definitions(${BEHAVIOR_TREE_LIBRARY} PRIVATE ZMQ_FOUND)
- endif()
- 
-
 diff --git a/3rdparty/cppzmq/zmq.hpp b/3rdparty/cppzmq/zmq.hpp
 deleted file mode 100644
 index d59eb55..0000000
@@ -2723,3 +2692,59 @@ index d59eb55..0000000
 -
 -#endif // __ZMQ_HPP_INCLUDED__
 -
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 95b2663..389203f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -19,7 +19,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+ 
+ #---- project configuration ----
+ option(BUILD_EXAMPLES   "Build tutorials and examples" ON)
+-option(BUILD_UNIT_TESTS "Build the unit tests" ON)
++option(BUILD_UNIT_TESTS "Build the unit tests" OFF)
+ option(BUILD_TOOLS "Build commandline tools" ON)
+ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+ option(BUILD_MANUAL_SELECTOR "Build manual selector node" ON)
+@@ -55,6 +55,7 @@ endif()
+ 
+ #---- Find other packages ----
+ find_package(Threads)
++find_package(ZeroMQ REQUIRED)
+ find_package(ZMQ)
+ 
+ if( ZMQ_FOUND )
+@@ -204,7 +205,7 @@ if(ZMQ_FOUND)
+     target_link_libraries(${BEHAVIOR_TREE_LIBRARY} PRIVATE
+         ${ZMQ_LIBRARIES} )
+     target_include_directories(${BEHAVIOR_TREE_LIBRARY} PRIVATE
+-        ${ZMQ_INCLUDE_DIRS} )
++        ${ZMQ_INCLUDE_DIRS} ${ZeroMQ_INCLUDE_DIR} )
+     target_compile_definitions(${BEHAVIOR_TREE_LIBRARY} PRIVATE ZMQ_FOUND)
+ endif()
+ 
+diff --git a/src/loggers/bt_zmq_publisher.cpp b/src/loggers/bt_zmq_publisher.cpp
+index b2215a8..a850bf4 100644
+--- a/src/loggers/bt_zmq_publisher.cpp
++++ b/src/loggers/bt_zmq_publisher.cpp
+@@ -1,7 +1,7 @@
+ #include <future>
+ #include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
+ #include "behaviortree_cpp_v3/flatbuffers/bt_flatbuffer_helper.h"
+-#include "cppzmq/zmq.hpp"
++#include <zmq.hpp>
+ 
+ namespace BT
+ {
+diff --git a/tools/bt_recorder.cpp b/tools/bt_recorder.cpp
+index e501528..2f7dad0 100644
+--- a/tools/bt_recorder.cpp
++++ b/tools/bt_recorder.cpp
+@@ -3,7 +3,7 @@
+ #include <fstream>
+ #include <signal.h>
+ #include <fstream>
+-#include "cppzmq/zmq.hpp"
++#include <zmq.hpp>
+ #include "behaviortree_cpp_v3/flatbuffers/BT_logger_generated.h"
+ 
+ // http://zguide.zeromq.org/cpp:interrupt
