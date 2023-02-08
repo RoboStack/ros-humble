@@ -45,7 +45,7 @@ packages_select_by_deps:
   - ros_base
   - navigation2
   - moveit
-  - desktop_full
+  # - desktop_full
   - desktop
   - cv_bridge
   - perception
