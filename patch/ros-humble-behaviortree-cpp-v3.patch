@@ -2693,7 +2693,7 @@ index d59eb55..0000000
 -#endif // __ZMQ_HPP_INCLUDED__
 -
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 95b2663..389203f 100644
+index 95b2663..225c6f0 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -19,7 +19,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -2705,20 +2705,24 @@ index 95b2663..389203f 100644
  option(BUILD_TOOLS "Build commandline tools" ON)
  option(BUILD_SHARED_LIBS "Build shared libraries" ON)
  option(BUILD_MANUAL_SELECTOR "Build manual selector node" ON)
-@@ -55,6 +55,7 @@ endif()
+@@ -55,6 +55,8 @@ endif()
  
  #---- Find other packages ----
  find_package(Threads)
 +find_package(ZeroMQ REQUIRED)
++find_package(cppzmq REQUIRED)
  find_package(ZMQ)
  
  if( ZMQ_FOUND )
-@@ -204,7 +205,7 @@ if(ZMQ_FOUND)
+@@ -202,9 +204,9 @@ target_include_directories(${BEHAVIOR_TREE_LIBRARY}
+ 
+ if(ZMQ_FOUND)
      target_link_libraries(${BEHAVIOR_TREE_LIBRARY} PRIVATE
-         ${ZMQ_LIBRARIES} )
+-        ${ZMQ_LIBRARIES} )
++        ${ZMQ_LIBRARIES} ${ZeroMQ_LIBRARY} ${cppzmq_LIBRARY} )
      target_include_directories(${BEHAVIOR_TREE_LIBRARY} PRIVATE
 -        ${ZMQ_INCLUDE_DIRS} )
-+        ${ZMQ_INCLUDE_DIRS} ${ZeroMQ_INCLUDE_DIR} )
++        ${ZMQ_INCLUDE_DIRS} ${ZeroMQ_INCLUDE_DIR} ${cppzmq_INCLUDE_DIR} )
      target_compile_definitions(${BEHAVIOR_TREE_LIBRARY} PRIVATE ZMQ_FOUND)
  endif()
  
