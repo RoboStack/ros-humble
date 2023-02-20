@@ -57,6 +57,7 @@ mamba install compilers cmake pkg-config make ninja colcon-common-extensions
 # see https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=msvc-160
 
 # only on linux, if you are having issues finding GL/OpenGL, also do:
+# (if you are on linux/arm64, change x86_64 with aarch64)
 mamba install mesa-libgl-devel-cos7-x86_64 mesa-dri-drivers-cos7-x86_64 libselinux-cos7-x86_64 libxdamage-cos7-x86_64 libxxf86vm-cos7-x86_64 libxext-cos7-x86_64 xorg-libxfixes
 
 # on Windows, install the Visual Studio command prompt via Conda:
