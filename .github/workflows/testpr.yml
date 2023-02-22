@@ -3,6 +3,9 @@ on:
     paths:
       - '*.yaml'
 
+env:
+  ROS_VERSION: 2
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
