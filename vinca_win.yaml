@@ -49,6 +49,7 @@ packages_select_by_deps:
   - desktop
   - cv_bridge
   - perception
+  - ros-foxglove-bridge
 
 patch_dir: patch
 

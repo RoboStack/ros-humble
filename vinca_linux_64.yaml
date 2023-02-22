@@ -123,6 +123,7 @@ packages_select_by_deps:
   - camera-info-manager
   - slam-toolbox
 
+  - ros-foxglove-bridge
   # - rosbridge_suite
 
   # - control-box-rst
