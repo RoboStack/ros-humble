@@ -48,7 +48,7 @@ packages_select_by_deps:
   - moveit_servo
   - rosbag2_storage_mcap
   - cartographer-ros
-  - ros-foxglove-bridge
+  - foxglove_bridge
   # - rosbridge_suite
   # - rviz2
   # - behaviortree_cpp_v3

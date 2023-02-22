@@ -49,7 +49,7 @@ packages_select_by_deps:
   - rosbridge_suite
   - vision_msgs
   - rosbag2_storage_mcap
-  - ros-foxglove-bridge
+  - foxglove_bridge
 
   - joint-state-broadcaster
   - joint-state-publisher
