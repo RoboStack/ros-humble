@@ -1,3 +1,5 @@
+foxglove_bridge:
+  add_host: ["ament_cmake"]
 ros_ign_interfaces:
   add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
