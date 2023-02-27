@@ -48,6 +48,14 @@ packages_select_by_deps:
   - moveit_servo
   - rosbag2_storage_mcap
   - cartographer-ros
+
+  - gazebo_msgs
+  - gazebo_dev
+  - gazebo_ros
+  - gazebo_plugins
+  - gazebo_ros_control
+  - gazebo_ros_pkgs
+
   # - rosbridge_suite
   # - rviz2
   # - behaviortree_cpp_v3
@@ -193,11 +201,6 @@ packages_select_by_deps:
   # - examples-rclpy-pointcloud-publisher
   # - examples-tf2-py
   # - filters
-  # - gazebo-dev
-  # - gazebo-msgs
-  # - gazebo-plugins
-  # - gazebo-ros
-  # - gazebo-ros-pkgs
   # - geodesy
   # - geographic-info
   # - geographic-msgs
