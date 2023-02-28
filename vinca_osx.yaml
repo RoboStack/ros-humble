@@ -61,4 +61,11 @@ packages_select_by_deps:
   # - vision-opencv
   - ackermann-msgs
   
+  - gazebo_msgs
+  - gazebo_dev
+  - gazebo_ros
+  - gazebo_plugins
+  - gazebo_ros_control
+  - gazebo_ros_pkgs
+  
 patch_dir: patch
