@@ -35,7 +35,6 @@ packages_remove_from_deps:
   - pilz-industrial-motion-planner
 
 skip_existing:
-  - https://conda.anaconda.org/robostack-humble/
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
