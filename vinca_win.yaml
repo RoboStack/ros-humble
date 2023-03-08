@@ -49,7 +49,8 @@ packages_select_by_deps:
   - desktop
   - cv_bridge
   - perception
-  
+  - turtlebot3
+
   - gazebo_msgs
   - gazebo_dev
   - gazebo_ros
@@ -57,5 +58,6 @@ packages_select_by_deps:
   - gazebo_ros_control
   - gazebo_ros_pkgs
 
-patch_dir: patch
+  - turtlebot3_gazebo
 
+patch_dir: patch
