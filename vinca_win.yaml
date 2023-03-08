@@ -55,5 +55,7 @@ packages_select_by_deps:
   - gazebo_plugins
   - gazebo_ros_control
   - gazebo_ros_pkgs
+  
+  - turtlebot3_simulations
 
 patch_dir: patch
