@@ -16,7 +16,7 @@ skip_all_deps: false
 full_rebuild: true
 
 # build_in_own_azure_stage:
-  # - ros-galactic-rviz-rendering
+# - ros-galactic-rviz-rendering
 
 packages_skip_by_deps:
   # - rttest
@@ -34,7 +34,6 @@ packages_remove_from_deps:
   - gripper_controllers
 
 skip_existing:
-  - https://conda.anaconda.org/robostack-humble/
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
@@ -51,6 +50,7 @@ packages_select_by_deps:
   - rosbridge_suite
   - vision_msgs
   - rosbag2_storage_mcap
+  - turtlebot3
 
   - joint-state-broadcaster
   - joint-state-publisher
@@ -61,12 +61,14 @@ packages_select_by_deps:
   # - velodyne
   # - sbg_driver
   # - ackermann-msgs
-  
+
   - gazebo_msgs
   - gazebo_dev
   - gazebo_ros
   - gazebo_plugins
   - gazebo_ros_control
   - gazebo_ros_pkgs
-  
+
+  - turtlebot3_gazebo
+
 patch_dir: patch
