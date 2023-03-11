@@ -50,6 +50,7 @@ packages_select_by_deps:
   - rosbridge_suite
   - vision_msgs
   - rosbag2_storage_mcap
+  - foxglove_bridge
   - turtlebot3
 
   - joint-state-broadcaster

@@ -2,6 +2,9 @@ permissions:
   actions: write
   contents: write
 
+env:
+  ROS_VERSION: 2
+
 jobs:
   build:
     runs-on: ubuntu-latest

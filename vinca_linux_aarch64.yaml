@@ -47,6 +47,7 @@ packages_select_by_deps:
   - moveit_servo
   - rosbag2_storage_mcap
   - cartographer-ros
+  - foxglove_bridge
 
   - gazebo_msgs
   - gazebo_dev
