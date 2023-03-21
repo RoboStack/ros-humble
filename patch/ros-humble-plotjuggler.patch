@@ -1,3 +1,20 @@
+diff --git a/3rdparty/QCodeEditor/CMakeLists.txt b/3rdparty/QCodeEditor/CMakeLists.txt
+index f90737345..34fd58c44 100644
+--- a/3rdparty/QCodeEditor/CMakeLists.txt
++++ b/3rdparty/QCodeEditor/CMakeLists.txt
+@@ -1,7 +1,9 @@
+-cmake_minimum_required(VERSION 3.6)
++cmake_minimum_required(VERSION 3.20)
+ project(QCodeEditor)
+ 
+-set(CMAKE_CXX_STANDARD 11)
++set(CMAKE_CXX_STANDARD 17)
++
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+ 
+ set(RESOURCES_FILE
+     resources/qcodeeditor_resources.qrc
+
 diff --git a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
 index 6b650f1b..1f85254c 100644
 --- a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
