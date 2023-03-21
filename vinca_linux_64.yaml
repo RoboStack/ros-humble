@@ -308,8 +308,8 @@ packages_select_by_deps:
   # - ros-ign-interfaces
   # - soccer-marker-generation
   # - vision-msgs
-  # - plotjuggler-ros
-  # - plotjuggler
+  - plotjuggler-ros
+  - plotjuggler
   # - acado-vendor
   # - ament-clang-format
   # - ament_clang_tidy
