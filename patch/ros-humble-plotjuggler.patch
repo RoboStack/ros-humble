@@ -8,7 +8,7 @@ index f90737345..34fd58c44 100644
  project(QCodeEditor)
  
 -set(CMAKE_CXX_STANDARD 11)
-+set(CMAKE_CXX_STANDARD 17)
++set(CMAKE_CXX_STANDARD 11)
 +
 +
  
