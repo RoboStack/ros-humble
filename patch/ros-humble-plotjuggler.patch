@@ -10,11 +10,21 @@ index f90737345..34fd58c44 100644
 -set(CMAKE_CXX_STANDARD 11)
 +set(CMAKE_CXX_STANDARD 17)
 +
-+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
++
  
  set(RESOURCES_FILE
      resources/qcodeeditor_resources.qrc
-
+@@ -70,9 +70,7 @@ set(CMAKE_AUTOMOC On)
+ set(CMAKE_AUTORCC ON)
+ 
+ # Find includes in corresponding build directories
+-find_package(Qt5Core    CONFIG REQUIRED)
+-find_package(Qt5Widgets CONFIG REQUIRED)
+-find_package(Qt5Gui     CONFIG REQUIRED)
++find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+ 
+ add_library(QCodeEditor STATIC
+     ${RESOURCES_FILE}
 diff --git a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
 index 6b650f1b..1f85254c 100644
 --- a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
