@@ -1,3 +1,45 @@
+diff --git a/3rdparty/QCodeEditor/CMakeLists.txt b/3rdparty/QCodeEditor/CMakeLists.txt
+index f90737345..34fd58c44 100644
+--- a/3rdparty/QCodeEditor/CMakeLists.txt
++++ b/3rdparty/QCodeEditor/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.6)
++cmake_minimum_required(VERSION 3.20)
+ project(QCodeEditor)
+ 
+ set(CMAKE_CXX_STANDARD 11)
+@@ -70,9 +70,7 @@ set(CMAKE_AUTOMOC On)
+ set(CMAKE_AUTORCC ON)
+ 
+ # Find includes in corresponding build directories
+-find_package(Qt5Core    CONFIG REQUIRED)
+-find_package(Qt5Widgets CONFIG REQUIRED)
+-find_package(Qt5Gui     CONFIG REQUIRED)
++find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+ 
+ add_library(QCodeEditor STATIC
+     ${RESOURCES_FILE}
+@@ -84,20 +82,6 @@ target_include_directories(QCodeEditor PUBLIC
+     include
+ )
+ 
+-if(CMAKE_COMPILER_IS_GNUCXX)
+-    target_compile_options(QCodeEditor
+-		PRIVATE
+-		-ansi
+-		-pedantic
+-		-Wall
+-		-Wextra
+-		-Weffc++
+-		-Woverloaded-virtual
+-		-Winit-self
+-		-Wunreachable-code
+-	)
+-endif(CMAKE_COMPILER_IS_GNUCXX)
+-
+ target_link_libraries(QCodeEditor
+     Qt5::Core
+     Qt5::Widgets
 diff --git a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
 index 6b650f1b..1f85254c 100644
 --- a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
