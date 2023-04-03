@@ -43,7 +43,7 @@ behaviortree_cpp_v3:
   add_host: ["boost-cpp", "cppzmq"]
   add_run: ["boost-cpp"]
 plotjuggler:
-  add_host: ["libxcb", "elfutils", "ros-humble-ros-workspace"]
+  add_host: ["libxcb", {sel(linux): elfutils}, "ros-humble-ros-workspace"]
 embree_vendor:
   add_host: ["REQUIRE_OPENGL", "libpng", "libjpeg-turbo", "openimageio", "tbb", "tbb-devel", "embree"]
 ign_rviz_common:
