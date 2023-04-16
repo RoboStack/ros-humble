@@ -25,16 +25,16 @@ index f9073734..9e297357 100644
  
 -if(CMAKE_COMPILER_IS_GNUCXX)
 -    target_compile_options(QCodeEditor
--               PRIVATE
--               -ansi
--               -pedantic
--               -Wall
--               -Wextra
--               -Weffc++
--               -Woverloaded-virtual
--               -Winit-self
--               -Wunreachable-code
--       )
+-		PRIVATE
+-		-ansi
+-		-pedantic
+-		-Wall
+-		-Wextra
+-		-Weffc++
+-		-Woverloaded-virtual
+-		-Winit-self
+-		-Wunreachable-code
+-	)
 -endif(CMAKE_COMPILER_IS_GNUCXX)
 -
  target_link_libraries(QCodeEditor
