@@ -40,6 +40,15 @@ index f90737345..34fd58c44 100644
  target_link_libraries(QCodeEditor
      Qt5::Core
      Qt5::Widgets
+@@ -191,7 +191,7 @@ if (BASE_AS_SHARED)
+         ${PLOTJUGGLER_BASE_SRC}
+         ${PLOTJUGGLER_BASE_MOCS}
+         )
+-    target_link_libraries(plotjuggler_base PRIVATE lua_objects plotjuggler_qwt_objects)
++    target_link_libraries(plotjuggler_base PRIVATE lua_static plotjuggler_qwt_objects ${QT_LINK_LIBRARIES})
+ else()
+     add_library(plotjuggler_base STATIC
+         ${PLOTJUGGLER_BASE_SRC}
 diff --git a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
 index 6b650f1b..1f85254c 100644
 --- a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
