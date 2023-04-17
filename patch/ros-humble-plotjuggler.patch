@@ -94,10 +94,22 @@ index eb08333c..715f93a2 100644
 +     RUNTIME DESTINATION bin
 +     INCLUDES DESTINATION include )
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 08b81610..3a0452b6 100644
+index 08b81610..28e7e3b6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -171,16 +171,12 @@ add_library( plotjuggler_base
+@@ -108,11 +108,9 @@ find_package(Qt5 REQUIRED COMPONENTS
+ set( QT_LINK_LIBRARIES
+     Qt5::Core
+     Qt5::Widgets
+-    Qt5::PrintSupport
+     Qt5::Xml
+     Qt5::Concurrent
+     Qt5::Svg
+-    Qt5::OpenGL
+     Qt5::WebSockets
+     )
+ 
+@@ -171,16 +169,12 @@ add_library( plotjuggler_base
       plotjuggler_base/src/reactive_function.cpp
       )
  
@@ -115,11 +127,14 @@ index 08b81610..3a0452b6 100644
  #########################  INSTALL  ####################################
  
  if(COMPILING_WITH_CATKIN)
-@@ -199,6 +195,7 @@ elseif(COMPILING_WITH_AMENT)
+@@ -197,8 +191,9 @@ elseif(COMPILING_WITH_AMENT)
+     set(PJ_PLUGIN_INSTALL_DIRECTORY lib/${PROJECT_NAME} )
+ 
      ament_export_targets(
-         ${PROJECT_NAME}Targets
+-        ${PROJECT_NAME}Targets
          export_plotjuggler_qwt
 +        export_lua_static
++        ${PROJECT_NAME}Targets
          HAS_LIBRARY_TARGET)
      ament_package()
  
