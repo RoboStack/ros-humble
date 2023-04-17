@@ -70,5 +70,7 @@ packages_select_by_deps:
   - gazebo_ros_pkgs
 
   - turtlebot3_gazebo
+  - plotjuggler-ros
+  - plotjuggler
 
 patch_dir: patch
