@@ -51,7 +51,7 @@ mamba create -n ros_humble ros-humble-desktop python=3.10 -c robostack-staging -
 conda activate ros_humble
 
 # optionally, install some compiler packages if you want to e.g. build packages in a colcon_ws:
-mamba install compilers cmake pkg-config make ninja colcon-common-extensions
+mamba install compilers cmake pkg-config make ninja colcon-common-extensions  -c conda-forge
 
 # on Windows, install Visual Studio 2017 or 2019 with C++ support 
 # see https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=msvc-160
