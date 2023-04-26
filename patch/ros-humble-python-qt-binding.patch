@@ -43,8 +43,20 @@ index 0000000..2ab2b55
 +qmake-QT = ["widgets"]
 +exceptions = true
 +
+diff --git a/cmake/sip_configure.py b/cmake/sip_configure.py
+index 708b04c..5620533 100644
+--- a/cmake/sip_configure.py
++++ b/cmake/sip_configure.py
+@@ -179,6 +179,7 @@ makefile._target = '"%s"' % os.path.join(output_dir, makefile._target)
+ # Force c++14
+ if sys.platform == 'win32':
+     makefile.extra_cxxflags.append('/std:c++14')
++    makefile.extra_cxxflags.append('/DROS_BUILD_SHARED_LIBS=1')
+     # The __cplusplus flag is not properly set on Windows for backwards
+     # compatibilty. This flag sets it correctly
+     makefile.CXXFLAGS.append('/Zc:__cplusplus')
 diff --git a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
-index c589899..03c7aee 100644
+index c589899..b80698b 100644
 --- a/cmake/sip_helper.cmake
 +++ b/cmake/sip_helper.cmake
 @@ -15,7 +15,7 @@ execute_process(
@@ -65,14 +77,14 @@ index c589899..03c7aee 100644
 +    COMMAND ${SIP_EXECUTABLE} -V
 +    OUTPUT_VARIABLE SIP_VERSION
 +    ERROR_QUIET)
-+  string(STRIP ${SIP_VERSION} SIP_VERSION)
-+  message(STATUS "SIP binding generator version: ${SIP_VERSION}")
++  # string(STRIP ${SIP_VERSION} SIP_VERSION)
++  # message(STATUS "SIP binding generator version: ${SIP_VERSION}")
 +endif()
 +
  #
  # Run the SIP generator and compile the generated code into a library.
  #
-@@ -77,32 +86,97 @@ function(build_sip_binding PROJECT_NAME SIP_FILE)
+@@ -77,32 +86,104 @@ function(build_sip_binding PROJECT_NAME SIP_FILE)
      set(LIBRARY_DIRS ${${PROJECT_NAME}_LIBRARY_DIRS})
      set(LDFLAGS_OTHER ${${PROJECT_NAME}_LDFLAGS_OTHER})
  
@@ -87,10 +99,10 @@ index c589899..03c7aee 100644
 +    if(${SIP_VERSION} VERSION_GREATER_EQUAL "5.0.0")
 +        # Since v5, SIP implements the backend per PEP 517, PEP 518
 +        # Here we synthesize `pyproject.toml` and run `pip install`
-+
-+        find_program(QMAKE_EXECUTABLE NAMES qmake REQUIRED)
  
 -    if(NOT EXISTS "${sip_LIBRARY_DIR}")
++        find_program(QMAKE_EXECUTABLE NAMES qmake REQUIRED)
++
 +        file(REMOVE_RECURSE ${SIP_BUILD_DIR})
          file(MAKE_DIRECTORY ${sip_LIBRARY_DIR})
 -    endif()
@@ -108,7 +120,14 @@ index c589899..03c7aee 100644
 +        # SIP expects the libraries WITHOUT the file extension.
 +        set(SIP_LIBARIES "")
 +        set(SIP_LIBRARY_DIRS "")
-+        foreach(_x ${LIBRARIES} ${PYTHON_LIBRARIES})
++
++        if(APPLE)
++          set(LIBRARIES_TO_LOOP ${LIBRARIES})
++        else()
++          set(LIBRARIES_TO_LOOP ${LIBRARIES} ${PYTHON_LIBRARIES})
++        endif()
++
++        foreach(_x ${LIBRARIES_TO_LOOP})
 +          get_filename_component(_x_NAME "${_x}" NAME_WLE)
 +          get_filename_component(_x_DIR "${_x}" DIRECTORY)
 +          get_filename_component(_x "${_x_DIR}/${_x_NAME}" ABSOLUTE)
@@ -146,7 +165,7 @@ index c589899..03c7aee 100644
 +        )
 +        add_custom_command(
 +            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
-+            COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose
++            COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
 +            DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
 +            WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
 +            COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
@@ -191,3 +210,19 @@ index c589899..03c7aee 100644
  
      add_custom_target(lib${PROJECT_NAME} ALL
          DEPENDS ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
+diff --git a/src/python_qt_binding/__init__.py b/src/python_qt_binding/__init__.py
+index 1e209de..6b55f35 100644
+--- a/src/python_qt_binding/__init__.py
++++ b/src/python_qt_binding/__init__.py
+@@ -66,3 +66,11 @@ for module_name, module in QT_BINDING_MODULES.items():
+     del module
+ 
+ del sys
++
++import os
++from PyQt5.QtGui import QIcon
++current_theme_path = QIcon.themeSearchPaths()
++conda_path = os.environ['CONDA_PREFIX']
++QIcon.setThemeSearchPaths(current_theme_path + [os.path.join(conda_path, 'share/icons/')])
++QIcon.setThemeName('Adwaita')
++del os
