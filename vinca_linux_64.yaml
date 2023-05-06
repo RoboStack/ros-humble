@@ -124,6 +124,8 @@ packages_select_by_deps:
 
   - foxglove_bridge
   - ament-cmake-nose
+  - geographic_info
+  - geodesy
 
 # - rosbridge_suite
 
@@ -137,8 +139,6 @@ packages_select_by_deps:
   # - fogros2
   # - foxglove_msgs
   # - four_wheel_steering_msgs
-  # - geographic_info
-  # - geodesy
   # - geometry_tutorials
   # - gps_tools
   # - gps_umd
