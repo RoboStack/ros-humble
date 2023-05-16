@@ -56,14 +56,19 @@ packages_select_by_deps:
   - gazebo_ros_control
   - gazebo_ros_pkgs
 
+  - ackermann-msgs
+  - velodyne
+  - geodesy
+  - geographic_info
+  - tf-transformations
+  - robot_localization
+
   # - rosbridge_suite
   # - rviz2
   # - behaviortree_cpp_v3
   # - ros_workspace
   # - control_toolbox
-  # - robot_localization
   # - ros1_bridge
-  # - velodyne
 
   # Used to work, now needs fixes
   # - rtabmap
@@ -123,7 +128,6 @@ packages_select_by_deps:
   # - ros-ign
   # - menge-vendor
   # - openvslam
-  # - ackermann-msgs
   # - four-wheel-steering-msgs
   # - ign-rviz
   # - ign-rviz-common
@@ -201,9 +205,7 @@ packages_select_by_deps:
   # - examples-rclpy-pointcloud-publisher
   # - examples-tf2-py
   # - filters
-  # - geodesy
   # - geographic-info
-  # - geographic-msgs
   # - gps-msgs
   # - gps-tools
   # - grbl-msgs
@@ -332,7 +334,6 @@ packages_select_by_deps:
   # - test-apex-test-tools
   # - test-bond
   # - test-launch-system-modes
-  # - tf-transformations
   # - topic-statistics-demo
   # - tracetools-analysis
   # - tracetools-launch
