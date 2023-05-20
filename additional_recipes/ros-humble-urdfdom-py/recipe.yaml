@@ -1,0 +1,19 @@
+package:
+  name: ros-humble-urdfdom-py
+  version: "1.2.0"
+
+build:
+  number: 2
+
+requirements:
+  run:
+    - urdfdom-py 1.2.0
+
+about:
+  home: https://github.com/ros/urdf_parser_py
+  license: BSD-3-Clause
+  summary: |
+    Standalone URDF parser for Python.
+extra:
+  recipe-maintainers:
+    - ros-forge
