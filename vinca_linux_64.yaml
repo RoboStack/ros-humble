@@ -49,6 +49,7 @@ packages_select_by_deps:
   - turtlebot3
   - desktop_full
   - apriltag
+  - ros_gz
 
   - turtlebot3_fake_node
   - ur

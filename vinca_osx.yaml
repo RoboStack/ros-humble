@@ -51,6 +51,7 @@ packages_select_by_deps:
   - rosbag2_storage_mcap
   - foxglove_bridge
   - turtlebot3
+  - ros_gz
 
   - joint-state-broadcaster
   - joint-state-publisher
