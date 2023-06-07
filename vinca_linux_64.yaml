@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 3
+build_number: 4
 
 mutex_package: ros2-distro-mutex 0.3 humble
 
@@ -13,7 +13,7 @@ skip_all_deps: false
 
 # If full rebuild, the build number of the existing package has
 # to match the selected build number for skipping
-full_rebuild: true
+full_rebuild: false
 
 packages_skip_by_deps:
   # - nav2-rotation-shim-controller
@@ -122,6 +122,7 @@ packages_select_by_deps:
   # - camera-calibration-parsers
   # - camera-info-manager
   - slam-toolbox
+  # - rtabmap
 
   # - foxglove_bridge
   # - ament-cmake-nose
@@ -186,8 +187,6 @@ packages_select_by_deps:
   # - async_web_server_cpp
   # - boost_geometry_util
 
-  # - rtabmap
-
   # - ros2_ouster
   # - ros2_socketcan
   # - ros2trace_analysis
@@ -230,7 +229,6 @@ packages_select_by_deps:
   # - ros1_bridge
 
   # Used to work, now needs fixes
-  # - rtabmap
   # - webots-ros2
   # - webots-ros2-abb
   # - webots-ros2-core
