@@ -122,12 +122,16 @@ packages_select_by_deps:
   # - camera-calibration-parsers
   # - camera-info-manager
   - slam-toolbox
-  # - rtabmap
 
   # - foxglove_bridge
   # - ament-cmake-nose
   # - geographic_info
   # - geodesy
+
+
+  # ----- end of package support -----
+
+  # - rtabmap
 
   # - rosbridge_suite
 
