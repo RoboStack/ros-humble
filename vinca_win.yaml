@@ -48,6 +48,7 @@ packages_select_by_deps:
   - desktop
   - cv_bridge
   - perception
+  - ros_gz
 
   - gazebo_msgs
   - gazebo_dev
