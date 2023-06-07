@@ -48,6 +48,7 @@ packages_select_by_deps:
   - rosbag2_storage_mcap
   - cartographer-ros
   - foxglove_bridge
+  - ros_gz
 
   - gazebo_msgs
   - gazebo_dev
