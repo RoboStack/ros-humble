@@ -127,7 +127,9 @@ packages_select_by_deps:
   - geographic_info
   - geodesy
 
-# - rosbridge_suite
+  - rosbridge_suite
+
+  # ----- end of package support -----
 
   # - control-box-rst
 
