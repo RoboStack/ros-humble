@@ -58,4 +58,6 @@ packages_select_by_deps:
   
   - turtlebot3_simulations
 
+  - rosbridge_suite
+
 patch_dir: patch

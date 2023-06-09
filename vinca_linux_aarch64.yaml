@@ -63,7 +63,8 @@ packages_select_by_deps:
   - tf-transformations
   - robot_localization
 
-  # - rosbridge_suite
+  - rosbridge_suite
+
   # - rviz2
   # - behaviortree_cpp_v3
   # - ros_workspace
