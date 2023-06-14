@@ -22,7 +22,6 @@ packages_skip_by_deps:
   # - rttest
   - cartographer
   - octomap
-  - nav2-mppi-controller
 
 packages_remove_from_deps:
   - cartographer

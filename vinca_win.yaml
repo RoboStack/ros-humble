@@ -23,7 +23,6 @@ packages_skip_by_deps:
   - iceoryx_posh
   - cyclonedds
   - rttest
-  - nav2-mppi-controller
 
 packages_remove_from_deps:
   - cartographer
