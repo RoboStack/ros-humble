@@ -1,0 +1,94 @@
+package:
+  name: ros-humble-nav2-mppi-controller
+  version: 1.1.7
+source:
+  git_url: https://github.com/SteveMacenski/navigation2-release.git
+  git_rev: release/humble/nav2_mppi_controller/1.1.7-3
+  folder: ros-humble-nav2-mppi-controller/src/work
+  patches:
+    - patch/ros-humble-nav2-mppi-controller.osx.patch
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 3
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - ninja
+    - setuptools
+    - sel(unix): make
+    - sel(unix): coreutils
+    - sel(osx): tapi
+    - sel(build_platform != target_platform): pkg-config
+    - cmake
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+    - sel(build_platform != target_platform): numpy
+  host:
+    - benchmark
+    - llvm-openmp
+    - numpy
+    - pip
+    - sel(build_platform == target_platform): pkg-config
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-cmake-ros
+    - ros-humble-ament-lint-auto
+    - ros-humble-ament-lint-common
+    - ros-humble-geometry-msgs
+    - ros-humble-nav2-common
+    - ros-humble-nav2-core
+    - ros-humble-nav2-costmap-2d
+    - ros-humble-nav2-msgs
+    - ros-humble-nav2-util
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-std-msgs
+    - ros-humble-tf2
+    - ros-humble-tf2-eigen
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-ros
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.3 humble
+    - xsimd
+    - xtensor 0.24
+  run:
+    - benchmark
+    - llvm-openmp
+    - python
+    - ros-humble-geometry-msgs
+    - ros-humble-nav2-common
+    - ros-humble-nav2-core
+    - ros-humble-nav2-costmap-2d
+    - ros-humble-nav2-msgs
+    - ros-humble-nav2-util
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-ros-workspace
+    - ros-humble-std-msgs
+    - ros-humble-tf2
+    - ros-humble-tf2-eigen
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-ros
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.3 humble
+    - xsimd
+    - xtensor
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
