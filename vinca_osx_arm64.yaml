@@ -47,7 +47,6 @@ packages_select_by_deps:
   - graph_msgs
   - desktop_full
   # - navigation2
-  - rosbridge_suite
   - vision_msgs
   - rosbag2_storage_mcap
   - foxglove_bridge
@@ -74,5 +73,7 @@ packages_select_by_deps:
 
   - plotjuggler-ros
   - plotjuggler
+
+  - rosbridge_suite
 
 patch_dir: patch
