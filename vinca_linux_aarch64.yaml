@@ -42,7 +42,7 @@ packages_select_by_deps:
   - ros_base
   - desktop
   - desktop_full
-  - navigation2
+  # - navigation2
   - moveit
   - moveit_servo
   - rosbag2_storage_mcap

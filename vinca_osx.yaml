@@ -45,7 +45,7 @@ packages_select_by_deps:
   - moveit
   - moveit_servo
   - desktop_full
-  - navigation2
+  # - navigation2
   - rosbridge_suite
   - vision_msgs
   - rosbag2_storage_mcap
@@ -72,7 +72,5 @@ packages_select_by_deps:
   - turtlebot3_gazebo
   - plotjuggler-ros
   - plotjuggler
-
-  - rosbridge_suite
 
 patch_dir: patch
