@@ -42,7 +42,7 @@ packages_select_by_deps:
   - ros_workspace
   - ros_environment
   - ros_base
-  - navigation2
+  # - navigation2
   - moveit
   - desktop_full
   - desktop
@@ -58,5 +58,7 @@ packages_select_by_deps:
   - gazebo_ros_pkgs
   
   - turtlebot3_simulations
+
+  - rosbridge_suite
 
 patch_dir: patch

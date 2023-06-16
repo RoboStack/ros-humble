@@ -890,6 +890,10 @@ libwebsocketpp-dev:
   robostack: [websocketpp]
 wget:
   robostack: [wget]
+xsimd:
+  robostack: [xsimd]
+xtensor:
+  robostack: [xtensor]
 wx-common:
   robostack: [wxpython]
 wxpython:
