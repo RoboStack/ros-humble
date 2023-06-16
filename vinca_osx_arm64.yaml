@@ -74,5 +74,4 @@ packages_select_by_deps:
 
   - plotjuggler-ros
   - plotjuggler
-
 patch_dir: patch
