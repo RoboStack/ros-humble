@@ -893,7 +893,7 @@ wget:
 xsimd:
   robostack: [xsimd]
 xtensor:
-  robostack: [xtensor]
+  robostack: [xtensor 0.24]
 wx-common:
   robostack: [wxpython]
 wxpython:

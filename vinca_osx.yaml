@@ -55,6 +55,7 @@ packages_select_by_deps:
   - joint-state-broadcaster
   - joint-state-publisher
   - joint-trajectory-controller
+  - joint-limits
   - xacro
   - robot-localization
   # - velodyne
