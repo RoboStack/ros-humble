@@ -72,5 +72,4 @@ packages_select_by_deps:
   - turtlebot3_gazebo
   - plotjuggler-ros
   - plotjuggler
-
 patch_dir: patch
