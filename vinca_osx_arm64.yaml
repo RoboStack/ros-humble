@@ -75,6 +75,4 @@ packages_select_by_deps:
   - plotjuggler-ros
   - plotjuggler
 
-  - rosbridge_suite
-
 patch_dir: patch
