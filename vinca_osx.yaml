@@ -75,4 +75,3 @@ packages_select_by_deps:
   - plotjuggler
 
 patch_dir: patch
-
