@@ -1,0 +1,77 @@
+ros_distro: humble
+
+# mapping for package keys
+conda_index:
+  - robostack.yaml
+  - packages-ignore.yaml
+
+build_number: 3
+
+mutex_package: ros2-distro-mutex 0.3 humble
+
+skip_all_deps: false
+
+# If full rebuild, the build number of the existing package has
+# to match the selected build number for skipping
+full_rebuild: true
+
+# build_in_own_azure_stage:
+# - ros-galactic-rviz-rendering
+
+packages_skip_by_deps:
+  # - rttest
+  - cartographer
+  - octomap
+
+packages_remove_from_deps:
+  - cartographer
+  - octomap
+  - tlsf
+  - tlsf_cpp
+  - pendulum_control
+  - rttest
+  # Not available for macOS and Windows!
+  - gripper_controllers
+
+skip_existing:
+  # - https://conda.anaconda.org/robostack-humble/
+  - https://conda.anaconda.org/robostack-staging/
+
+packages_select_by_deps:
+  - ros_workspace
+  - ros_environment
+  - ros_base
+  - desktop
+  - moveit
+  - moveit_servo
+  - desktop_full
+  - navigation2
+  - rosbridge_suite
+  - vision_msgs
+  - rosbag2_storage_mcap
+  - foxglove_bridge
+  - turtlebot3
+
+  - joint-state-broadcaster
+  - joint-state-publisher
+  - joint-trajectory-controller
+  - joint-limits
+  - xacro
+  - robot-localization
+  # - velodyne
+  # - sbg_driver
+  # - vision-opencv
+  - ackermann-msgs
+
+  - gazebo_msgs
+  - gazebo_dev
+  - gazebo_ros
+  - gazebo_plugins
+  - gazebo_ros_control
+  - gazebo_ros_pkgs
+
+  - turtlebot3_gazebo
+  - plotjuggler-ros
+  - plotjuggler
+
+patch_dir: patch
