@@ -52,6 +52,11 @@ packages_select_by_deps:
   - foxglove_bridge
   - turtlebot3
 
+  - steering-controllers-library
+  - ackermann-steering-controller
+  - admittance-controller  
+  - forward-command-controller
+
   - joint-state-broadcaster
   - joint-state-publisher
   - joint-trajectory-controller
