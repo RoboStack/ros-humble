@@ -48,7 +48,8 @@ packages_select_by_deps:
   - desktop_full
   - navigation2
   - rosbridge_suite
-  - vision_msgs
+  - vision-msgs-rviz-plugins
+  # - vision_msgs
   - rosbag2_storage_mcap
   - foxglove_bridge
   - turtlebot3
