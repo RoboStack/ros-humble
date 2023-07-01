@@ -1,4 +1,4 @@
-vision_msgs_rviz_rviz_plugins:
+vision_msgs_rviz_plugins:
   add_host: ["REQUIRE_OPENGL"]
 foxglove_bridge:
   add_host: ["ros-humble-ament-cmake"]
