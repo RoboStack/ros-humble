@@ -57,9 +57,12 @@ packages_select_by_deps:
   #- ackermann-steering-controller
   #- admittance-controller
   #- forward-command-controller
-  - bicycle_steering_controller
-  - diff_drive_controller
-  - effort_controllers
+  #- bicycle_steering_controller
+  #- diff_drive_controller
+  #- effort_controllers
+  - force_torque_sensor_broadcaster
+  - imu_sensor_broadcaster
+  - position_controllers
   # - joint-state-broadcaster
   # - joint-state-publisher
   # - joint-trajectory-controller
