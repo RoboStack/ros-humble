@@ -156,7 +156,7 @@ packages_select_by_deps:
   # - ros-ign-image
   # - ros-ign-interfaces
   # - soccer-marker-generation
-  # - vision-msgs
+  - vision-msgs
   # - plotjuggler-ros
   # - plotjuggler
   # - acado-vendor
