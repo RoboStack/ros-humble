@@ -322,7 +322,7 @@ packages_select_by_deps:
   # - self-test
   # - sensor-msgs-py
   # - serial-driver
-  # - slam-toolbox
+  - slam-toolbox
   # - soccer-vision-msgs
   # - stereo-image-proc
   # - stubborn-buddies

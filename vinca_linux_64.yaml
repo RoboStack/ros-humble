@@ -121,13 +121,13 @@ packages_select_by_deps:
   # - camera-calibration
   # - camera-calibration-parsers
   # - camera-info-manager
-  # - slam-toolbox
+  - slam-toolbox
 
   # - foxglove_bridge
   # - ament-cmake-nose
   # - geographic_info
   # - geodesy
-  
+
   - rosbridge_suite
 
 
@@ -138,7 +138,7 @@ packages_select_by_deps:
 
   # - plotjuggler
   # - plotjuggler_ros
-  
+
   # - zmqpp_vendor
 
   # - fogros2
