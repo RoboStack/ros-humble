@@ -150,3 +150,6 @@ ros_image_to_qimage:
   add_host: ["REQUIRE_OPENGL"]
 rqt_image_overlay:
   add_host: ["REQUIRE_OPENGL"]
+slam_toolbox:
+  add_build: [{sel(build_platform != target_platform): qt-main}]
+  add_host: ["REQUIRE_OPENGL"]
