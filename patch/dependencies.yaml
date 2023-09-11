@@ -83,7 +83,6 @@ rtabmap:
   add_host: ["REQUIRE_OPENGL", "ceres-solver", "libdc1394", "libusb", "vtk"]
 backward_ros:
   add_host: [{sel(linux or (osx and x86_64)): binutils}, {sel(linux): elfutils}]
-  add_run: ["backward-cpp"]
 nav2_smac_planner:
   add_build: [{"sel(osx)": "llvm-openmp"}]
   add_host: [{"sel(osx)": "llvm-openmp"}, "ompl", "libode"]
@@ -154,5 +153,3 @@ rqt_image_overlay:
 slam_toolbox:
   add_build: [{sel(build_platform != target_platform): qt-main}]
   add_host: ["REQUIRE_OPENGL"]
-controller_manager:
-  add_host: ["backward-cpp"]
