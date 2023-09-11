@@ -62,4 +62,7 @@ packages_select_by_deps:
 
   - rosbridge_suite
 
+  # package request
+  - ros2_control
+
 patch_dir: patch

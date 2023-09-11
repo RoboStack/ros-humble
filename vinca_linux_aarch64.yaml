@@ -67,6 +67,9 @@ packages_select_by_deps:
   - vision-msgs
   - slam-toolbox
 
+  # package request
+  - ros2_control
+
   # - rviz2
   # - behaviortree_cpp_v3
   # - ros_workspace

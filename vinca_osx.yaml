@@ -63,6 +63,10 @@ packages_select_by_deps:
   - force_torque_sensor_broadcaster
   - imu_sensor_broadcaster
   - position_controllers
+
+  # package request
+  - ros2_control
+
   # - joint-state-broadcaster
   # - joint-state-publisher
   # - joint-trajectory-controller
