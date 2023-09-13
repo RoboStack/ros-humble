@@ -1,3 +1,15 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8927192..cb461f6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -29,6 +29,7 @@ include(cmake/BackwardConfig.cmake)
+ 
+ set(CMAKE_CXX_STANDARD_REQUIRED True)
+ set(CMAKE_CXX_STANDARD 11)
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 
+ ###############################################################################
+ # COMPILER FLAGS
 diff --git a/cmake/BackwardConfigAment.cmake b/cmake/BackwardConfigAment.cmake
 index 273a51a..d981cbb 100644
 --- a/cmake/BackwardConfigAment.cmake
