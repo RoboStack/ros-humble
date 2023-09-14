@@ -14,7 +14,7 @@ ogre:
   - 1.12.*
 qt:
   - 5.15
-qt-main:
+qt_main:
   - 5.15
   
 cdt_name:  # [linux]

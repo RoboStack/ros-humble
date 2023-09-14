@@ -1,5 +1,3 @@
-vision_msgs_rviz_plugins:
-  add_host: ["REQUIRE_OPENGL"]
 foxglove_bridge:
   add_host: ["ros-humble-ament-cmake"]
 ros_ign_interfaces:
@@ -151,4 +149,7 @@ geometric_shapes:
 ros_image_to_qimage:
   add_host: ["REQUIRE_OPENGL"]
 rqt_image_overlay:
+  add_host: ["REQUIRE_OPENGL"]
+slam_toolbox:
+  add_build: [{sel(build_platform != target_platform): qt-main}]
   add_host: ["REQUIRE_OPENGL"]

@@ -64,6 +64,11 @@ packages_select_by_deps:
   - robot_localization
 
   - rosbridge_suite
+  - vision-msgs
+  - slam-toolbox
+
+  - ros2_control
+  - vision-msgs-rviz-plugins
 
   # - rviz2
   # - behaviortree_cpp_v3
@@ -156,7 +161,6 @@ packages_select_by_deps:
   # - ros-ign-image
   # - ros-ign-interfaces
   # - soccer-marker-generation
-  - vision-msgs-rviz-plugins
   # - plotjuggler-ros
   # - plotjuggler
   # - acado-vendor
@@ -322,7 +326,6 @@ packages_select_by_deps:
   # - self-test
   # - sensor-msgs-py
   # - serial-driver
-  # - slam-toolbox
   # - soccer-vision-msgs
   # - stereo-image-proc
   # - stubborn-buddies

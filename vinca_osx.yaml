@@ -47,7 +47,6 @@ packages_select_by_deps:
   # - desktop_full
   # - navigation2
   # - rosbridge_suite
-  - vision-msgs-rviz-plugins
   # - vision_msgs
   # - rosbag2_storage_mcap
   # - foxglove_bridge
@@ -58,9 +57,16 @@ packages_select_by_deps:
   #- ackermann-steering-controller
   #- admittance-controller
   #- forward-command-controller
-  - bicycle_steering_controller
-  - diff_drive_controller
-  - effort_controllers
+  #- bicycle_steering_controller
+  #- diff_drive_controller
+  #- effort_controllers
+  - force_torque_sensor_broadcaster
+  - imu_sensor_broadcaster
+  - position_controllers
+
+  # package request
+  - ros2_control
+
   # - joint-state-broadcaster
   # - joint-state-publisher
   # - joint-trajectory-controller

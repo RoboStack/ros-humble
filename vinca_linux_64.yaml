@@ -127,7 +127,7 @@ packages_select_by_deps:
   # - ament-cmake-nose
   # - geographic_info
   # - geodesy
-  
+
   - rosbridge_suite
 
 
@@ -138,7 +138,7 @@ packages_select_by_deps:
 
   # - plotjuggler
   # - plotjuggler_ros
-  
+
   # - zmqpp_vendor
 
   # - fogros2
@@ -309,7 +309,6 @@ packages_select_by_deps:
   # - ros-ign-image
   # - ros-ign-interfaces
   # - soccer-marker-generation
-  - vision-msgs-rviz-plugins
   # - vision-msgs
   # - acado-vendor
   # - ament-clang-format
