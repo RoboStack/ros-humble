@@ -17,11 +17,11 @@ index d5e34a0..5eb4fae 100644
  
  macro(build_benchmark)
    set(extra_cmake_args)
-@@ -79,18 +73,6 @@ macro(build_benchmark)
+@@ -80,18 +73,6 @@ macro(build_benchmark)
    )
  endmacro()
  
--if(NOT benchmark_FOUND OR "${benchmark_VERSION}" VERSION_LESS 1.6.1)
+-if(NOT benchmark_FOUND OR "${benchmark_VERSION}" VERSION_LESS 1.5.3)
 -  build_benchmark()
 -elseif(benchmark_FOUND)
 -  # Ubuntu Focal and Jammy have a packaging bug where libbenchmark_main has no symbols,
