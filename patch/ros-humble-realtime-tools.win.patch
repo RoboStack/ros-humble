@@ -1,0 +1,40 @@
+diff --git a/src/thread_priority.cpp b/src/thread_priority.cpp
+index 72749e3..778c06a 100644
+--- a/src/thread_priority.cpp
++++ b/src/thread_priority.cpp
+@@ -37,20 +37,12 @@ namespace realtime_tools
+ {
+ bool has_realtime_kernel()
+ {
+-  std::ifstream realtime_file("/sys/kernel/realtime", std::ios::in);
+-  bool has_realtime = false;
+-  if (realtime_file.is_open()) {
+-    realtime_file >> has_realtime;
+-  }
+-  return has_realtime;
++  return false;
+ }
+ 
+ bool configure_sched_fifo(int priority)
+ {
+-  struct sched_param schedp;
+-  memset(&schedp, 0, sizeof(schedp));
+-  schedp.sched_priority = priority;
+-  return !sched_setscheduler(0, SCHED_FIFO, &schedp);
++  return false;
+ }
+ 
+ }  // namespace realtime_tools
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4743d98..68fc981 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,6 +5,8 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
+   add_compile_options(-Wall -Wextra)
+ endif()
+ 
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++
+ set(THIS_PACKAGE_INCLUDE_DEPENDS
+   rclcpp
+   rclcpp_action
