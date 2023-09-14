@@ -1,0 +1,13 @@
+diff --git a/controller_manager/include/controller_manager/controller_manager.hpp b/controller_manager/include/controller_manager/controller_manager.hpp
+index 2850b2be8..5789f0d68 100644
+--- a/controller_manager/include/controller_manager/controller_manager.hpp
++++ b/controller_manager/include/controller_manager/controller_manager.hpp
+@@ -58,7 +58,7 @@ namespace controller_manager
+ {
+ using ControllersListIterator = std::vector<controller_manager::ControllerSpec>::const_iterator;
+ 
+-rclcpp::NodeOptions get_cm_node_options();
++CONTROLLER_MANAGER_PUBLIC rclcpp::NodeOptions get_cm_node_options();
+ 
+ class ControllerManager : public rclcpp::Node
+ {
