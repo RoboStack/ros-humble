@@ -50,7 +50,12 @@ jobs:
         export FEEDSTOCK_NAME="$(basename $GITHUB_REPOSITORY)"
         export GIT_BRANCH="$(basename $GITHUB_REF)"
         echo "::endgroup::"
-        sudo apt-get install -y libgl1-mesa-dev
+
+    - name: Install libgl1-mesa-dev (only for linux-aarch64)
+      if: matrix.platform == 'linux-aarch64'
+      shell: bash -l {0}
+      run: |
+        sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev
 
     - shell: bash -l {0}
       run: |
