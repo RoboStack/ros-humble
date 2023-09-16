@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d199135..b98cd55 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -75,6 +75,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
+   rviz_ogre_vendor::OgreMain
+   rviz_ogre_vendor::OgreOverlay
+   rviz_common::rviz_common
++  rviz_default_plugins::rviz_default_plugins
+ )
+ 
+ 
