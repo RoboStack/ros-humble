@@ -43,13 +43,19 @@ jobs:
         environment-file: .github/testpr_environment.yml
 
     - shell: bash -l {0}
-      if: contains(matrix.os, 'linux-aarch64')
+      if: matrix.platform == 'linux-aarch64'
       run: |
         echo "::group::Configure binfmt_misc"
         docker run --rm --privileged multiarch/qemu-user-static:register --reset --credential yes
         export FEEDSTOCK_NAME="$(basename $GITHUB_REPOSITORY)"
         export GIT_BRANCH="$(basename $GITHUB_REF)"
         echo "::endgroup::"
+
+    - name: Install libgl1-mesa-dev (only for linux-aarch64)
+      if: matrix.platform == 'linux-aarch64'
+      shell: bash -l {0}
+      run: |
+        sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxi-dev libxmu-dev
 
     - shell: bash -l {0}
       run: |

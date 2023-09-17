@@ -153,3 +153,6 @@ rqt_image_overlay:
 slam_toolbox:
   add_build: [{sel(build_platform != target_platform): qt-main}]
   add_host: ["REQUIRE_OPENGL"]
+vision_msgs_rviz_plugins:
+  add_build: [{sel(build_platform != target_platform): qt-main}]
+  add_host: ["REQUIRE_OPENGL"]
