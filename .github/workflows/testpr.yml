@@ -43,7 +43,7 @@ jobs:
         environment-file: .github/testpr_environment.yml
 
     - shell: bash -l {0}
-      if: contains(matrix.os, 'linux-aarch64')
+      if: matrix.platform == 'linux-aarch64'
       run: |
         echo "::group::Configure binfmt_misc"
         docker run --rm --privileged multiarch/qemu-user-static:register --reset --credential yes
