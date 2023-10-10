@@ -45,7 +45,6 @@ packages_select_by_deps:
   - ros_base
   - desktop
   - desktop_full
-  # - navigation2
   - moveit
   - moveit_servo
   - rosbag2_storage_mcap
@@ -73,6 +72,7 @@ packages_select_by_deps:
   - ros2_control
   - vision-msgs-rviz-plugins
 
+  # - navigation2
   # - rviz2
   # - behaviortree_cpp_v3
   # - ros_workspace
