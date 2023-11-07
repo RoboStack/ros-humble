@@ -1,0 +1,25 @@
+From 827163b79dc338ce23886559c24ca81b03c8468e Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Tue, 7 Nov 2023 10:01:39 +0100
+Subject: [PATCH] Create sdformat_urdf_plugin as SHARED instead of MODULE for
+ macOS compatibility
+
+---
+ sdformat_urdf/CMakeLists.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5c82e21..e1026c2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -69,7 +69,9 @@ target_include_directories(sdformat_urdf
+ )
+ 
+ # Add sdformat_urdf_plugin module library
+-add_library(sdformat_urdf_plugin MODULE
++# not actually a MODULE as workaround for 
++# https://github.com/ros/pluginlib/issues/200
++add_library(sdformat_urdf_plugin SHARED
+   src/sdformat_urdf_plugin.cpp
+ )
+ target_link_libraries(sdformat_urdf_plugin PRIVATE
