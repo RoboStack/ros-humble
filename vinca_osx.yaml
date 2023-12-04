@@ -41,7 +41,7 @@ packages_select_by_deps:
   # - ros_workspace
   # - ros_environment
   # - ros_base
-  # - desktop
+  - desktop
   # - moveit
   # - moveit_servo
   # - desktop_full
@@ -51,6 +51,7 @@ packages_select_by_deps:
   # - rosbag2_storage_mcap
   # - foxglove_bridge
   # - turtlebot3
+  - ament_cmake_catch2
 
   #- control_msgs
   #- steering-controllers-library

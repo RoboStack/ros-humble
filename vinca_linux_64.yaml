@@ -41,7 +41,7 @@ packages_select_by_deps:
   # - ros_environment
   # - ament_cmake
   # - ros_base
-  # - desktop
+  - desktop
   # - navigation2
   # - moveit
   # - graph_msgs
@@ -50,6 +50,7 @@ packages_select_by_deps:
   # - turtlebot3
   # - desktop_full
   # - apriltag
+  - ament_cmake_catch2
 
   # - turtlebot3_fake_node
   # - ur

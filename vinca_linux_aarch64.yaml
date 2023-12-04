@@ -36,41 +36,42 @@ skip_existing:
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
-  - ros2-controllers
-  - diff-drive-controller
-  - libcamera
-  - ros_workspace
-  - ros_environment
-  - ament_cmake
-  - ros_base
+  # - ros2-controllers
+  # - diff-drive-controller
+  # - libcamera
+  # - ros_workspace
+  # - ros_environment
+  # - ament_cmake
+  # - ros_base
   - desktop
-  - desktop_full
-  - moveit
-  - moveit_servo
-  - rosbag2_storage_mcap
-  - cartographer-ros
-  - foxglove_bridge
+  # - desktop_full
+  # - moveit
+  # - moveit_servo
+  # - rosbag2_storage_mcap
+  # - cartographer-ros
+  # - foxglove_bridge
+  - ament_cmake_catch2
 
-  - gazebo_msgs
-  - gazebo_dev
-  - gazebo_ros
-  - gazebo_plugins
-  - gazebo_ros_control
-  - gazebo_ros_pkgs
+  # - gazebo_msgs
+  # - gazebo_dev
+  # - gazebo_ros
+  # - gazebo_plugins
+  # - gazebo_ros_control
+  # - gazebo_ros_pkgs
 
-  - ackermann-msgs
-  - velodyne
-  - geodesy
-  - geographic_info
-  - tf-transformations
-  - robot_localization
+  # - ackermann-msgs
+  # - velodyne
+  # - geodesy
+  # - geographic_info
+  # - tf-transformations
+  # - robot_localization
 
-  - rosbridge_suite
-  - vision-msgs
-  - slam-toolbox
+  # - rosbridge_suite
+  # - vision-msgs
+  # - slam-toolbox
 
-  - ros2_control
-  - vision-msgs-rviz-plugins
+  # - ros2_control
+  # - vision-msgs-rviz-plugins
 
   # - navigation2
   # - rviz2
