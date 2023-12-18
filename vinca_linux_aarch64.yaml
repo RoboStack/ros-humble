@@ -232,7 +232,7 @@ packages_select_by_deps:
   # - launch-system-modes
   # - lgsvl-msgs
   # - libmavconn
-  # - librealsense2
+  - librealsense2
   # - marti-can-msgs
   # - marti-common-msgs
   # - marti-dbw-msgs
@@ -286,9 +286,9 @@ packages_select_by_deps:
   # - rc-reason-clients
   # - rc-reason-msgs
   # - rcss3d-agent
-  # - realsense2-camera
-  # - realsense2-camera-msgs
-  # - realsense2-description
+  - realsense2-camera
+  - realsense2-camera-msgs
+  - realsense2-description
   # - realtime-tools
   # - rmf-battery
   # - rmf-building-map-msgs
