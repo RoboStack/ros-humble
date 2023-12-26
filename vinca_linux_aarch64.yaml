@@ -183,7 +183,8 @@ packages_select_by_deps:
   # - ament-pyflakes
   # - apex-containers
   # - apex-test-tools
-  # - apriltag
+  - apriltag
+  - apriltag_ros
   # - async-web-server-cpp
   # - autoware-auto-msgs
   # - backward-ros
