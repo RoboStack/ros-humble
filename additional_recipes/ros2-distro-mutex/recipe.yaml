@@ -1,12 +1,13 @@
 package:
   name: ros2-distro-mutex
-  version: 0.3.0
+  version: 0.5.0
 
 build:
   number: 0
   string: humble
   run_exports:
-    - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
+    weak:
+      - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
 
 requirements:
   # NOTE:
@@ -29,11 +30,11 @@ requirements:
   # if the upstream package does not have run_exports
   # please change it in the conda_build_config.yaml!
   run_constrained:
-    - boost-cpp 1.78
-    - pcl 1.12
+    - boost-cpp 1.82
+    - libboost-devel 1.82
+    - pcl 1.13.1
     - gazebo 11
     - libpqxx 6
-    - setuptools 61.0.0
 
 about:
   home: https://github.com/robostack/ros-humble
@@ -45,3 +46,4 @@ about:
 extra:
   recipe-maintainers:
     - ros-forge
+

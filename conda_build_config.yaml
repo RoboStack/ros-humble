@@ -1,27 +1,19 @@
-assimp:
-  - 5.2.5
-hdf5:
-  - 1.12.2
 gazebo:
   - '11'
 libpqxx:
   - 6
 numpy:
-  - 1.21
-pcl:
-  - 1.12.1
+  - 1.23
 ogre:
   - 1.12.*
-qt:
-  - 5.15
-qt_main:
-  - 5.15
+setuptools:
+  - 69
   
 cdt_name:  # [linux]
   - cos7   # [linux]
 
 python:
-  - 3.10.* *_cpython
+  - 3.11.* *_cpython
 python_impl:
   - cpython
 

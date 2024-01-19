@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 3
+build_number: 4
 
-mutex_package: ros2-distro-mutex 0.3 humble
+mutex_package: ros2-distro-mutex 0.5 humble
 
 skip_all_deps: false
 
@@ -55,7 +55,7 @@ packages_select_by_deps:
   - gazebo_dev
   - gazebo_ros
   - gazebo_plugins
-  - gazebo_ros_control
+  - gazebo_ros2_control
   - gazebo_ros_pkgs
 
   - ackermann-msgs
@@ -72,10 +72,14 @@ packages_select_by_deps:
   - ros2_control
   - vision-msgs-rviz-plugins
 
-  # - navigation2
-  # - rviz2
-  # - behaviortree_cpp_v3
-  # - ros_workspace
+  - navigation2
+  - rviz2
+  - behaviortree_cpp_v3
+  - ament_cmake_catch2
+
+  - apriltag
+  - apriltag_ros
+
   # - control_toolbox
   # - ros1_bridge
 
