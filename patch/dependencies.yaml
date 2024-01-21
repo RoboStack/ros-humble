@@ -3,7 +3,7 @@ foxglove_bridge:
 ros_ign_interfaces:
   add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
-  add_host: ["cartographer 2.*"]
+  add_host: ["cartographer 2.*", "libboost-devel"]
 libyaml_vendor:
   add_host: ["yaml-cpp", "yaml"]
   add_run: ["yaml-cpp", "yaml"]
@@ -156,3 +156,5 @@ slam_toolbox:
 vision_msgs_rviz_plugins:
   add_build: [{sel(build_platform != target_platform): qt-main}]
   add_host: ["REQUIRE_OPENGL"]
+velodyne_pointcloud:
+  add_host: ["libboost-devel"]

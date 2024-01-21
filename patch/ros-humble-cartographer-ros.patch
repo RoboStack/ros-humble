@@ -1,8 +1,17 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1beca59..213770e 100644
+index 1beca59..3b63beb 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -59,20 +59,13 @@ include_directories(
+@@ -49,6 +49,8 @@ find_package(tf2_ros REQUIRED)
+ find_package(urdf REQUIRED)
+ find_package(urdfdom_headers REQUIRED)
+ find_package(visualization_msgs REQUIRED)
++find_package(Protobuf REQUIRED CONFIG)
++
+ 
+ include_directories(
+   include
+@@ -59,20 +61,13 @@ include_directories(
  # Library
  add_library(${PROJECT_NAME}
    src/assets_writer.cpp
@@ -23,6 +32,85 @@ index 1beca59..213770e 100644
    src/ros_log_sink.cpp
    src/ros_map.cpp
    src/ros_map_writing_points_processor.cpp
+diff --git a/include/cartographer_ros/map_builder_bridge.h b/include/cartographer_ros/map_builder_bridge.h
+index b2c00b7..9c1befd 100644
+--- a/include/cartographer_ros/map_builder_bridge.h
++++ b/include/cartographer_ros/map_builder_bridge.h
+@@ -95,7 +95,7 @@ class MapBuilderBridge {
+   GetTrajectoryStates();
+   cartographer_ros_msgs::msg::SubmapList GetSubmapList(rclcpp::Time node_time);
+   std::unordered_map<int, LocalTrajectoryData> GetLocalTrajectoryData()
+-      LOCKS_EXCLUDED(mutex_);
++      ABSL_LOCKS_EXCLUDED(mutex_);
+   visualization_msgs::msg::MarkerArray GetTrajectoryNodeList(rclcpp::Time node_time);
+   visualization_msgs::msg::MarkerArray GetLandmarkPosesList(rclcpp::Time node_time);
+   visualization_msgs::msg::MarkerArray GetConstraintList(rclcpp::Time node_time);
+@@ -107,13 +107,13 @@ class MapBuilderBridge {
+                          const ::cartographer::common::Time time,
+                          const ::cartographer::transform::Rigid3d local_pose,
+                          ::cartographer::sensor::RangeData range_data_in_local)
+-      LOCKS_EXCLUDED(mutex_);
++      ABSL_LOCKS_EXCLUDED(mutex_);
+ 
+   absl::Mutex mutex_;
+   const NodeOptions node_options_;
+   std::unordered_map<int,
+                      std::shared_ptr<const LocalTrajectoryData::LocalSlamData>>
+-      local_slam_data_ GUARDED_BY(mutex_);
++      local_slam_data_ ABSL_GUARDED_BY(mutex_);
+   std::unique_ptr<cartographer::mapping::MapBuilderInterface> map_builder_;
+   tf2_ros::Buffer* const tf_buffer_;
+ 
+diff --git a/include/cartographer_ros/metrics/internal/gauge.h b/include/cartographer_ros/metrics/internal/gauge.h
+index f311ab1..26d0caf 100644
+--- a/include/cartographer_ros/metrics/internal/gauge.h
++++ b/include/cartographer_ros/metrics/internal/gauge.h
+@@ -71,7 +71,7 @@ class Gauge : public ::cartographer::metrics::Gauge {
+ 
+   absl::Mutex mutex_;
+   const std::map<std::string, std::string> labels_;
+-  double value_ GUARDED_BY(mutex_);
++  double value_ ABSL_GUARDED_BY(mutex_);
+ };
+ 
+ }  // namespace metrics
+diff --git a/include/cartographer_ros/metrics/internal/histogram.h b/include/cartographer_ros/metrics/internal/histogram.h
+index b5d8404..e47f99b 100644
+--- a/include/cartographer_ros/metrics/internal/histogram.h
++++ b/include/cartographer_ros/metrics/internal/histogram.h
+@@ -50,8 +50,8 @@ class Histogram : public ::cartographer::metrics::Histogram {
+   absl::Mutex mutex_;
+   const std::map<std::string, std::string> labels_;
+   const BucketBoundaries bucket_boundaries_;
+-  std::vector<double> bucket_counts_ GUARDED_BY(mutex_);
+-  double sum_ GUARDED_BY(mutex_);
++  std::vector<double> bucket_counts_ ABSL_GUARDED_BY(mutex_);
++  double sum_ ABSL_GUARDED_BY(mutex_);
+ };
+ 
+ }  // namespace metrics
+diff --git a/include/cartographer_ros/node.h b/include/cartographer_ros/node.h
+index f3527ca..f9fb9fb 100644
+--- a/include/cartographer_ros/node.h
++++ b/include/cartographer_ros/node.h
+@@ -168,7 +168,7 @@ class Node {
+   bool ValidateTrajectoryOptions(const TrajectoryOptions& options);
+   bool ValidateTopicNames(const TrajectoryOptions& options);
+   cartographer_ros_msgs::msg::StatusResponse FinishTrajectoryUnderLock(
+-      int trajectory_id) EXCLUSIVE_LOCKS_REQUIRED(mutex_);
++      int trajectory_id) ABSL_EXCLUSIVE_LOCKS_REQUIRED(mutex_);
+   void MaybeWarnAboutTopicMismatch();
+ 
+   // Helper function for service handlers that need to check trajectory states.
+@@ -183,7 +183,7 @@ class Node {
+ 
+   absl::Mutex mutex_;
+   std::unique_ptr<cartographer_ros::metrics::FamilyFactory> metrics_registry_;
+-  std::shared_ptr<MapBuilderBridge> map_builder_bridge_ GUARDED_BY(mutex_);
++  std::shared_ptr<MapBuilderBridge> map_builder_bridge_ ABSL_GUARDED_BY(mutex_);
+ 
+   rclcpp::Node::SharedPtr node_;
+   ::rclcpp::Publisher<::cartographer_ros_msgs::msg::SubmapList>::SharedPtr submap_list_publisher_;
 diff --git a/include/cartographer_ros/ros_log_sink.h b/include/cartographer_ros/ros_log_sink.h
 index e603727..651305a 100644
 --- a/include/cartographer_ros/ros_log_sink.h
@@ -36,6 +124,25 @@ index e603727..651305a 100644
              const char* message, size_t message_len) override;
  
    void WaitTillSent() override;
+diff --git a/src/occupancy_grid_node_main.cpp b/src/occupancy_grid_node_main.cpp
+index 324426b..443dac2 100644
+--- a/src/occupancy_grid_node_main.cpp
++++ b/src/occupancy_grid_node_main.cpp
+@@ -73,10 +73,10 @@ class Node : public rclcpp::Node
+   absl::Mutex mutex_;
+   rclcpp::CallbackGroup::SharedPtr callback_group_;
+   rclcpp::executors::SingleThreadedExecutor::SharedPtr callback_group_executor_;
+-  ::rclcpp::Client<cartographer_ros_msgs::srv::SubmapQuery>::SharedPtr client_ GUARDED_BY(mutex_);
+-  ::rclcpp::Subscription<cartographer_ros_msgs::msg::SubmapList>::SharedPtr submap_list_subscriber_ GUARDED_BY(mutex_);
+-  ::rclcpp::Publisher<::nav_msgs::msg::OccupancyGrid>::SharedPtr occupancy_grid_publisher_ GUARDED_BY(mutex_);
+-  std::map<SubmapId, SubmapSlice> submap_slices_ GUARDED_BY(mutex_);
++  ::rclcpp::Client<cartographer_ros_msgs::srv::SubmapQuery>::SharedPtr client_ ABSL_GUARDED_BY(mutex_);
++  ::rclcpp::Subscription<cartographer_ros_msgs::msg::SubmapList>::SharedPtr submap_list_subscriber_ ABSL_GUARDED_BY(mutex_);
++  ::rclcpp::Publisher<::nav_msgs::msg::OccupancyGrid>::SharedPtr occupancy_grid_publisher_ ABSL_GUARDED_BY(mutex_);
++  std::map<SubmapId, SubmapSlice> submap_slices_ ABSL_GUARDED_BY(mutex_);
+   rclcpp::TimerBase::SharedPtr occupancy_grid_publisher_timer_;
+   std::string last_frame_id_;
+   rclcpp::Time last_timestamp_;
 diff --git a/src/ros_log_sink.cpp b/src/ros_log_sink.cpp
 index d9b8ee2..2c688ea 100644
 --- a/src/ros_log_sink.cpp

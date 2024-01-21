@@ -494,7 +494,7 @@ libgit2:
 libgoogle_cloud:
   - '2.12'
 libgrpc:
-  - '1.58'
+  - '1.59'
 libhugetlbfs:
   - 2
 libhwy:
@@ -532,7 +532,7 @@ libpcap:
 libpng:
   - 1.6
 libprotobuf:
-  - 4.24.3
+  - 4.24.4
 libpq:
   - '16'
 libraw:
@@ -698,7 +698,7 @@ postgresql:
 postgresql_plpython:
   - '16'
 proj:
-  - 9.3.0
+  - 9.3.1
 pulseaudio:
   - '16.1'
 pulseaudio_client:
@@ -781,7 +781,7 @@ soapysdr:
 sox:
   - 14.4.2
 spdlog:
-  - '1.11'
+  - '1.12'
 # keep sqlite in sync with libsqlite
 sqlite:
   - 3
@@ -802,7 +802,7 @@ tensorflow:
 thrift_cpp:
   - 0.18.1
 tinyxml2:
-  - 9
+  - 10
 tk:
   - 8.6                # [not ppc64le]
 tiledb:
@@ -812,7 +812,7 @@ ucx:
 uhd:
   - 4.6.0
 urdfdom:
-  - 3.1
+  - 4
 vc:                    # [win]
   - 14                 # [win]
 vlfeat:
