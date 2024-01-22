@@ -399,7 +399,10 @@ libturbojpeg:
 libtins-dev:
   robostack: [libtins]
 libudev-dev:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 liburdfdom-dev:
   robostack: [urdfdom]
 liburdfdom-headers-dev:
@@ -407,13 +410,25 @@ liburdfdom-headers-dev:
 liburdfdom-tools:
   robostack: [urdfdom]
 libusb-1.0:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 libusb-1.0-dev:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 libusb-dev:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 libuvc-dev:
-  robostack: [libuvc, libusb]
+  robostack:
+    linux: [libusb, libudev, libuvc]
+    osx: [libusb, libuvc]
+    win64: [libusb, libuvc]
 libvtk:
   robostack: [vtk]
 libvtk-qt:
@@ -878,7 +893,10 @@ tinyxml:
 tinyxml2:
   robostack: [tinyxml2]
 udev:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 uncrustify:
   robostack: [uncrustify]
 unzip:
