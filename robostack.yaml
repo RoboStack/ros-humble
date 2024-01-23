@@ -372,6 +372,8 @@ libqt5-opengl-dev:
   robostack: [qt-main, REQUIRE_OPENGL]
 libqt5-svg:
   robostack: [qt-main, REQUIRE_OPENGL]
+libqt5-svg-dev:
+  robostack: [qt-main, REQUIRE_OPENGL]
 libqt5-websockets-dev:
   robostack: [qt-main, REQUIRE_OPENGL]
 libqt5-widgets:
