@@ -7,21 +7,17 @@ gazebo:
 libpqxx:
   - 6
 numpy:
-  - 1.21
+  - 1.23
 pcl:
   - 1.12.1
 ogre:
   - 1.12.*
-qt:
-  - 5.15
-qt_main:
-  - 5.15
   
 cdt_name:  # [linux]
   - cos7   # [linux]
 
 python:
-  - 3.10.* *_cpython
+  - 3.8.* *_cpython
 python_impl:
   - cpython
 

@@ -1,0 +1,17 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6d47b08..78ca514 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,9 +9,9 @@ find_package(rclcpp REQUIRED)
+ find_package(tcb_span REQUIRED)
+ find_package(tl_expected REQUIRED)
+ 
+-if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
+-    add_compile_options(-Werror -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wold-style-cast)
+-endif()
++# if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
++#     add_compile_options(-Werror -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wold-style-cast)
++# endif()
+ 
+ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+ 
