@@ -1,3 +1,5 @@
+ament_package:
+  add_host: ['importlib_resources']
 foxglove_bridge:
   add_host: ["ros-humble-ament-cmake"]
 ros_ign_interfaces:
