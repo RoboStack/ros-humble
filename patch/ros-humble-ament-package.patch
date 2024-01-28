@@ -24,7 +24,13 @@ diff --git a/ament_package/templates.py b/ament_package/templates.py
 index 8fda08d..497f0c8 100644
 --- a/ament_package/templates.py
 +++ b/ament_package/templates.py
-@@ -22,10 +22,15 @@ except ModuleNotFoundError:
+@@ -18,13 +18,19 @@ 
+ try:
+     import importlib.resources as importlib_resources
++    assert importlib_resources.files, "importlib reousrces too old to support files, please install importlib_resources"
+-except ModuleNotFoundError:
++except (ModuleNotFoundError, AttributeError):
+     import importlib_resources
  
  IS_WINDOWS = os.name == 'nt'
  
