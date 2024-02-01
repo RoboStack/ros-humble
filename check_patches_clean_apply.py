@@ -7,7 +7,7 @@ import yaml
 import shutil
 import os
 
-SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+SCRIPT_DIR = './'
 
 shutil.move(SCRIPT_DIR + '/recipe.yaml', SCRIPT_DIR + '/recipe.yaml.bak')
 

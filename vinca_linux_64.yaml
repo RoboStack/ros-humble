@@ -43,7 +43,6 @@ packages_select_by_deps:
   - ros_base
   - desktop
   - navigation2
-  - moveit
   - graph_msgs
   - nav2_bringup
   - webots_ros2
@@ -98,7 +97,6 @@ packages_select_by_deps:
 
   - rqt
   - rqt_image_overlay
-  - rqt-moveit
   - rqt-robot-dashboard
   - rqt-robot-monitor
   - rqt-robot-steering
@@ -109,13 +107,6 @@ packages_select_by_deps:
 
   - image-pipeline
   - image-view
-  - moveit
-  - moveit-resources
-  - moveit-ros-perception
-  - moveit-runtime
-  - moveit-servo
-  - moveit_visual_tools
-  - moveit_servo
 
   - bond-core
   - camera-calibration
@@ -133,6 +124,16 @@ packages_select_by_deps:
 
   - apriltag
   - apriltag_ros
+
+  # - moveit
+  # - moveit-resources
+  # - moveit-ros-perception
+  # - moveit-runtime
+  # - moveit-servo
+  # - moveit_visual_tools
+  # - moveit_servo
+  # - rqt-moveit
+
 
 
   # ----- end of package support -----

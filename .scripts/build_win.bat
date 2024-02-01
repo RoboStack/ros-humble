@@ -29,7 +29,7 @@ set "FEEDSTOCK_ROOT=%cd%"
 mkdir %CONDA_BLD_PATH%
 call conda index %CONDA_BLD_PATH%
 
-call conda config --remove channels defaults
+rem call conda config --remove channels defaults
 call conda config --add channels conda-forge
 call conda config --add channels robostack-staging
 call conda config --add channels %CONDA_BLD_PATH%
@@ -39,9 +39,6 @@ call conda config --add channels %CONDA_BLD_PATH%
 reg add HKLM\SYSTEM\CurrentControlSet\Control\FileSystem /v LongPathsEnabled /t REG_DWORD /d 1 /f
 
 :: conda remove --force m2-git
-
-call mamba install boa
-if errorlevel 1 exit 1
 
 for %%X in (%CURRENT_RECIPES%) do (
     echo "BUILDING RECIPE %%X"

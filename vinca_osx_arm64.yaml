@@ -44,7 +44,6 @@ packages_select_by_deps:
   - demo_nodes_py
   - demo_nodes_cpp
   - desktop
-  - moveit
   - graph_msgs
   - desktop_full
   - navigation2
@@ -67,7 +66,6 @@ packages_select_by_deps:
   - gazebo_plugins
   - gazebo_ros2_control
   - gazebo_ros_pkgs
-
   - turtlebot3_gazebo
 
   - plotjuggler-ros
@@ -80,8 +78,11 @@ packages_select_by_deps:
   - apriltag
   - apriltag_ros
 
-  # - velodyne
-  # - sbg_driver
-  # - ackermann-msgs
+  - velodyne
+  - sbg_driver
+  - ackermann-msgs
+
+  # - moveit
+
 
 patch_dir: patch

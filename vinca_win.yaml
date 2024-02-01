@@ -47,7 +47,6 @@ packages_select_by_deps:
   - ros_environment
   - ros_base
   - navigation2
-  - moveit
   - desktop_full
   - desktop
   - cv_bridge
@@ -61,5 +60,7 @@ packages_select_by_deps:
   - turtlebot3_simulations
   - rosbridge_suite
   - ament_cmake_catch2
+
+  # - moveit
 
 patch_dir: patch

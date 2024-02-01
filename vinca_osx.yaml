@@ -42,8 +42,6 @@ packages_select_by_deps:
   - ros_environment
   - ros_base
   - desktop
-  - moveit
-  - moveit_servo
   - desktop_full
   - navigation2
   - rosbridge_suite
@@ -92,5 +90,8 @@ packages_select_by_deps:
 
   - apriltag
   - apriltag_ros
+
+  # - moveit
+  # - moveit_servo
 
 patch_dir: patch
