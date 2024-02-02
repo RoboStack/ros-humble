@@ -37,6 +37,8 @@ skip_existing:
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
 
+  - qt-qui-cpp # needs to be compiled locally
+
   - ros_workspace
   - ros_environment
   - ament_cmake
