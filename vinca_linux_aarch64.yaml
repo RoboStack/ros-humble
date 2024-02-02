@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 3
+build_number: 4
 
-mutex_package: ros2-distro-mutex 0.3 humble
+mutex_package: ros2-distro-mutex 0.5 humble
 
 skip_all_deps: false
 
@@ -33,6 +33,7 @@ packages_remove_from_deps:
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
+  # - /home/ubuntu/micromamba/envs/devenv/conda-bld/
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
@@ -45,8 +46,6 @@ packages_select_by_deps:
   - ros_base
   - desktop
   - desktop_full
-  - moveit
-  - moveit_servo
   - rosbag2_storage_mcap
   - cartographer-ros
   - foxglove_bridge
@@ -55,7 +54,7 @@ packages_select_by_deps:
   - gazebo_dev
   - gazebo_ros
   - gazebo_plugins
-  - gazebo_ros_control
+  - gazebo_ros2_control
   - gazebo_ros_pkgs
 
   - ackermann-msgs
@@ -72,10 +71,17 @@ packages_select_by_deps:
   - ros2_control
   - vision-msgs-rviz-plugins
 
-  # - navigation2
-  # - rviz2
-  # - behaviortree_cpp_v3
-  # - ros_workspace
+  - navigation2
+  - rviz2
+  - behaviortree_cpp_v3
+  - ament_cmake_catch2
+
+  - apriltag
+  - apriltag_ros
+
+  # - moveit
+  # - moveit_servo
+
   # - control_toolbox
   # - ros1_bridge
 

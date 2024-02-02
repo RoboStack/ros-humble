@@ -5,15 +5,15 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 4
+build_number: 5
 
-mutex_package: ros2-distro-mutex 0.3 humble
+mutex_package: ros2-distro-mutex 0.5 humble
 
 skip_all_deps: false
 
 # If full rebuild, the build number of the existing package has
 # to match the selected build number for skipping
-full_rebuild: false
+full_rebuild: true
 
 packages_skip_by_deps:
   # - nav2-rotation-shim-controller
@@ -37,78 +37,94 @@ skip_existing:
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
 
-  # - ros_workspace
-  # - ros_environment
-  # - ament_cmake
-  # - ros_base
-  # - desktop
-  # - navigation2
-  # - moveit
-  # - graph_msgs
-  # - nav2_bringup
-  # - webots_ros2
-  # - turtlebot3
-  # - desktop_full
-  # - apriltag
+  - ros_workspace
+  - ros_environment
+  - ament_cmake
+  - ros_base
+  - desktop
+  - navigation2
+  - graph_msgs
+  - nav2_bringup
+  - webots_ros2
+  - turtlebot3
+  - desktop_full
+  - apriltag
 
-  # - turtlebot3_fake_node
-  # - ur
-  # - ublox
-  # - robot_localization
-  # - topic_tools
-  # - stubborn_buddies
-  # - teleop_tools
-  # - udp_driver
-  # - urdf_tutorial
+  - turtlebot3_fake_node
+  - ur
+  - ublox
+  - robot_localization
+  - topic_tools
+  - stubborn_buddies
+  - teleop_tools
+  - udp_driver
+  - urdf_tutorial
 
-  # - test_bond
-  # - apex_test_tools
-  # - ublox_dgnss
-  # - velodyne_description
-  # - velodyne
-  # - visp
+  - test_bond
+  - apex_test_tools
+  - ublox_dgnss
+  - velodyne_description
+  - velodyne
+  - visp
 
-  # - apex_containers
-  # - apex_test_tools
-  # - bno055
-  # - aws_robomaker_small_warehouse_world
-  # - avt_vimba_camera
+  - apex_containers
+  - apex_test_tools
+  - bno055
+  - aws_robomaker_small_warehouse_world
+  - avt_vimba_camera
 
-  # - ros_ign
-  # - spacenav
-  # - system_modes
-  # - tf_transformations
-  # - turtle_tf2_cpp
-  # - turtle_tf2_py
-  # - ros2controlcli
-  # - robot_controllers
+  - ros_ign
+  - spacenav
+  - system_modes
+  - tf_transformations
+  - turtle_tf2_cpp
+  - turtle_tf2_py
+  - ros2controlcli
+  - robot_controllers
 
-  # - ros2_control
-  # - ros2_controllers
-  # - control-toolbox
-  # - joint-trajectory-controller
+  - ros2_control
+  - ros2_controllers
+  - control-toolbox
+  - joint-trajectory-controller
 
-  # - gazebo-dev
-  # - gazebo-plugins
-  # - gazebo-ros
-  # - gazebo-ros-pkgs
+  - gazebo-dev
+  - gazebo-plugins
+  - gazebo-ros
+  - gazebo-ros-pkgs
 
-  # - turtlebot3_gazebo
-  # - turtlebot3_simulations
+  - turtlebot3_gazebo
+  - turtlebot3_simulations
 
-  # - rqt
-  # - rqt_image_overlay
-  # - rqt-moveit
-  # - rqt-robot-dashboard
-  # - rqt-robot-monitor
-  # - rqt-robot-steering
+  - rqt
+  - rqt_image_overlay
+  - rqt-robot-dashboard
+  - rqt-robot-monitor
+  - rqt-robot-steering
 
-  # - joint-state-broadcaster
-  # - joint-state-publisher
-  # - xacro
+  - joint-state-broadcaster
+  - joint-state-publisher
+  - xacro
 
-  # - image-pipeline
-  # - image-view
+  - image-pipeline
+  - image-view
+
+  - bond-core
+  - camera-calibration
+  - camera-calibration-parsers
+  - camera-info-manager
+  - slam-toolbox
+
+  - foxglove_bridge
+  - ament-cmake-nose
+  - geographic_info
+  - geodesy
+
+  - rosbridge_suite
+  - ament_cmake_catch2
+
+  - apriltag
+  - apriltag_ros
+
   # - moveit
   # - moveit-resources
   # - moveit-ros-perception
@@ -116,19 +132,8 @@ packages_select_by_deps:
   # - moveit-servo
   # - moveit_visual_tools
   # - moveit_servo
+  # - rqt-moveit
 
-  # - bond-core
-  # - camera-calibration
-  # - camera-calibration-parsers
-  # - camera-info-manager
-  # - slam-toolbox
-
-  # - foxglove_bridge
-  # - ament-cmake-nose
-  # - geographic_info
-  # - geodesy
-
-  - rosbridge_suite
 
 
   # ----- end of package support -----
@@ -374,7 +379,7 @@ packages_select_by_deps:
   # - launch-system-modes
   # - lgsvl-msgs
   # - libmavconn
-  # - librealsense2
+  - librealsense2
   # - marti-can-msgs
   # - marti-common-msgs
   # - marti-dbw-msgs
@@ -424,9 +429,9 @@ packages_select_by_deps:
   # - rc-reason-clients
   # - rc-reason-msgs
   # - rcss3d-agent
-  # - realsense2-camera
-  # - realsense2-camera-msgs
-  # - realsense2-description
+  - realsense2-camera
+  - realsense2-camera-msgs
+  - realsense2-description
   # - realtime-tools
   # - rmf-battery
   # - rmf-building-map-msgs

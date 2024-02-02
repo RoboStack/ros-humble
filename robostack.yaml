@@ -75,11 +75,18 @@ curl:
 cython:
   robostack: [cython]
 doxygen:
-  robostack: [doxygen]
+  robostack: [doxygen, graphviz]
+draco:
+  robostack: [draco]
 eigen:
   robostack: [eigen]
 emacs:
   robostack: [emacs]
+festival:
+  robostack:
+    linux: [festival, festvox-kallpc16k]
+    osx: []
+    win64: []
 ffmpeg:
   robostack: [ffmpeg]
 flac:
@@ -174,7 +181,7 @@ lcov:
 leveldb:
   robostack: [leveldb]
 libabsl-dev:
-  robostack: [abseil-cpp]
+  robostack: [libabseil]
 libblas-dev:
   robostack: [libblas, libcblas]
 libboost-chrono-dev:
@@ -234,6 +241,10 @@ libconsole-bridge-dev:
   robostack: [console_bridge]
 libcunit-dev:
   robostack: [cunit]
+libcurl:
+  robostack: [libcurl]
+libcurl-dev:
+  robostack: [libcurl]
 libdc1394-dev:
   robostack: [libdc1394]
 libfcl-dev:
@@ -363,12 +374,18 @@ libqglviewer-dev-qt5:
 libqhull:
   robostack: [qhull]
 libqt5-core:
-  robostack: [qt-main]
+  robostack: [qt-main, REQUIRE_OPENGL]
 libqt5-gui:
   robostack: [qt-main, REQUIRE_OPENGL]
 libqt5-opengl:
   robostack: [qt-main, REQUIRE_OPENGL]
 libqt5-opengl-dev:
+  robostack: [qt-main, REQUIRE_OPENGL]
+libqt5-svg:
+  robostack: [qt-main, REQUIRE_OPENGL]
+libqt5-svg-dev:
+  robostack: [qt-main, REQUIRE_OPENGL]
+libqt5-websockets-dev:
   robostack: [qt-main, REQUIRE_OPENGL]
 libqt5-widgets:
   robostack: [qt-main, REQUIRE_OPENGL]
@@ -395,7 +412,10 @@ libturbojpeg:
 libtins-dev:
   robostack: [libtins]
 libudev-dev:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 liburdfdom-dev:
   robostack: [urdfdom]
 liburdfdom-headers-dev:
@@ -403,13 +423,25 @@ liburdfdom-headers-dev:
 liburdfdom-tools:
   robostack: [urdfdom]
 libusb-1.0:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 libusb-1.0-dev:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 libusb-dev:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 libuvc-dev:
-  robostack: [libuvc, libusb]
+  robostack:
+    linux: [libusb, libudev, libuvc]
+    osx: [libusb, libuvc]
+    win64: [libusb, libuvc]
 libvtk:
   robostack: [vtk]
 libvtk-qt:
@@ -585,7 +617,7 @@ python-pygraphviz:
 python-pyusb-pip:
   robostack: [pyusb]
 python-qt5-bindings:
-  robostack: [pyqt]
+  robostack: [pyqt, pyqt-builder]
 python-rosdep:
   robostack: [rosdep]
 python-rosdep-modules:
@@ -664,6 +696,10 @@ python3-fiona:
   robostack: [fiona]
 python3-future:
   robostack: [future]
+python3-gi:
+  robostack: [pygobject]
+python3-git:
+  robostack: [gitpython]
 python3-github:
   robostack: [pygithub]
 python3-github3:
@@ -744,6 +780,8 @@ python3-pymongo:
   robostack: [pymongo]
 python3-pyproj:
   robostack: [pyproj]
+python3-pysnmp:
+  robostack: [pysnmp]
 python3-pytest:
   robostack: [pytest]
 python3-pytest-cov:
@@ -753,9 +791,9 @@ python3-pytest-mock:
 python3-pytest-timeout:
   robostack: [pytest-timeout]
 python3-qt5-bindings:
-  robostack: [pyqt]
+  robostack: [pyqt, pyqt-builder]
 python3-qt5-bindings-gl:
-  robostack: [pyqt]
+  robostack: [pyqt, pyqt-builder]
 python3-qt5-bindings-webkit:
   robostack: [pyqtwebengine]
 python3-requests:
@@ -776,6 +814,8 @@ python3-rospkg-modules:
   robostack: [rospkg]
 python3-ruamel.yaml:
   robostack: [ruamel.yaml]
+python3-ruff:
+  robostack: [ruff]
 python3-scipy:
   robostack: [scipy]
 python3-serial:
@@ -806,6 +846,8 @@ python3-twisted:
   robostack: [twisted]
 python3-typeguard:
   robostack: [typeguard]
+python3-unidiff:
+  robostack: [unidiff]
 python3-usb:
   robostack: [pyusb]
 python3-venv:
@@ -817,11 +859,11 @@ python3-yaml:
 python3-zmq:
   robostack: [pyzmq]
 qt5-image-formats-plugins:
-  robostack: [qt-main]
+  robostack: [qt-main, REQUIRE_OPENGL]
 qt5-qmake:
-  robostack: [qt-main]
+  robostack: [qt-main, REQUIRE_OPENGL]
 qtbase5-dev:
-  robostack: [qt-main]
+  robostack: [qt-main, REQUIRE_OPENGL]
 roboticstoolbox-python:
   robostack: [roboticstoolbox-python]
 rsync:
@@ -874,7 +916,10 @@ tinyxml:
 tinyxml2:
   robostack: [tinyxml2]
 udev:
-  robostack: [libusb]
+  robostack:
+    linux: [libusb, libudev]
+    osx: [libusb]
+    win64: [libusb]
 uncrustify:
   robostack: [uncrustify]
 unzip:

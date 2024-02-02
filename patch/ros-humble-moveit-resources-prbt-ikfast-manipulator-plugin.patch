@@ -19,18 +19,3 @@ index 7479184c..4151126f 100644
    for (int i = 0; i < 3; ++i)
      p_out.p.data[i] = eetrans[i];
  
-diff --git a/src/prbt_manipulator_ikfast_solver.cpp b/src/prbt_manipulator_ikfast_solver.cpp
-index c1359ad5..7a238a9d 100644
---- a/src/prbt_manipulator_ikfast_solver.cpp
-+++ b/src/prbt_manipulator_ikfast_solver.cpp
-@@ -25,10 +25,6 @@
- #include "ikfast.h" // found inside share/openrave-X.Y/python/ikfast.h
- using namespace ikfast;
- 
--// check if the included ikfast version matches what this file was compiled with
--#define IKFAST_COMPILE_ASSERT(x) extern int __dummy[(int)x]
--IKFAST_COMPILE_ASSERT(IKFAST_VERSION==0x1000004a);
--
- #include <cmath>
- #include <vector>
- #include <limits>

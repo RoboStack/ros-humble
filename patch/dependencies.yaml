@@ -1,9 +1,11 @@
+ament_package:
+  add_host: ['importlib_resources']
 foxglove_bridge:
   add_host: ["ros-humble-ament-cmake"]
 ros_ign_interfaces:
   add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
-  add_host: ["cartographer 2.*"]
+  add_host: ["cartographer 2.*", "libboost-devel"]
 libyaml_vendor:
   add_host: ["yaml-cpp", "yaml"]
   add_run: ["yaml-cpp", "yaml"]
@@ -34,9 +36,9 @@ rviz_ogre_vendor:
   add_host: ["zlib", "freeimage", "freetype", "assimp", "zziplib", "pugixml"]
   add_run: ["assimp"]
 pcl_conversions:
-  add_host: ["REQUIRE_OPENGL"]
+  add_host: ["REQUIRE_OPENGL", "libboost-devel"]
 pcl_ros:
-  add_host: ["REQUIRE_OPENGL"]
+  add_host: ["REQUIRE_OPENGL", "libboost-devel"]
 rviz_rendering:
   add_host: ["glew"]
 behaviortree_cpp_v3:
@@ -156,3 +158,5 @@ slam_toolbox:
 vision_msgs_rviz_plugins:
   add_build: [{sel(build_platform != target_platform): qt-main}]
   add_host: ["REQUIRE_OPENGL"]
+velodyne_pointcloud:
+  add_host: ["libboost-devel"]

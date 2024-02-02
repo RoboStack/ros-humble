@@ -203,21 +203,22 @@ index 122f2f29..c837ae29 100644
      TIMEOUT 1200
      LOG_CONFIGURE ${should_log}
      LOG_BUILD ${should_log}
-@@ -185,20 +188,25 @@ macro(build_ogre)
+@@ -185,21 +185,26 @@ macro(build_ogre)
        -DOGRE_BUILD_COMPONENT_JAVA:BOOL=FALSE
        -DOGRE_BUILD_COMPONENT_CSHARP:BOOL=FALSE
        -DOGRE_BUILD_COMPONENT_BITES:BOOL=FALSE
-+      -DOGRE_BUILD_PLUGIN_EXRCODEC:BOOL=FALSE
++      -DOGRE_BUILD_PLUGIN_EXRCODEC=FALSE
 +      -DOGRE_ENABLE_PRECOMPILED_HEADERS=0
        ${extra_cmake_args}
        -Wno-dev
      PATCH_COMMAND
        ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/pragma-patch.diff &&
--      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/fix-arm64.diff
+-      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/fix-arm64.diff &&
 +      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0001-enable-pkg-config-for-Windows.patch &&
 +      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0002-osx-no-framework.patch &&
 +      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0003-clang11-fix.patch &&
-+      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0004-fix-arm64.patch
++      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0004-fix-arm64.patch &&
+       ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/relocatable.patch
      COMMAND
 -      ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/FindFreetype.cmake ${CMAKE_CURRENT_BINARY_DIR}/ogre-v1.12.1-prefix/src/ogre-v1.12.1/CMake/Packages/FindFreetype.cmake
 +      ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/FindFreetype.cmake ${CMAKE_CURRENT_BINARY_DIR}/ogre-v1.12.13-prefix/src/ogre-v1.12.13/CMake/Packages/FindFreetype.cmake

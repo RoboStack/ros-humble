@@ -1,5 +1,5 @@
 diff --git a/3rdparty/QCodeEditor/CMakeLists.txt b/3rdparty/QCodeEditor/CMakeLists.txt
-index f9073734..9e297357 100644
+index 84282fe1f..c37ae8f49 100644
 --- a/3rdparty/QCodeEditor/CMakeLists.txt
 +++ b/3rdparty/QCodeEditor/CMakeLists.txt
 @@ -1,4 +1,4 @@
@@ -8,10 +8,11 @@ index f9073734..9e297357 100644
  project(QCodeEditor)
  
  set(CMAKE_CXX_STANDARD 11)
-@@ -70,9 +70,7 @@ set(CMAKE_AUTOMOC On)
+@@ -69,10 +69,7 @@ set(CMAKE_AUTOMOC On)
+ # Create code from resource files
  set(CMAKE_AUTORCC ON)
  
- # Find includes in corresponding build directories
+-# Find includes in corresponding build directories
 -find_package(Qt5Core    CONFIG REQUIRED)
 -find_package(Qt5Widgets CONFIG REQUIRED)
 -find_package(Qt5Gui     CONFIG REQUIRED)
@@ -19,7 +20,7 @@ index f9073734..9e297357 100644
  
  add_library(QCodeEditor STATIC
      ${RESOURCES_FILE}
-@@ -84,20 +82,6 @@ target_include_directories(QCodeEditor PUBLIC
+@@ -84,21 +81,6 @@ target_include_directories(QCodeEditor PUBLIC
      include
  )
  
@@ -33,6 +34,7 @@ index f9073734..9e297357 100644
 -		-Weffc++
 -		-Woverloaded-virtual
 -		-Winit-self
+-		-std=c++11
 -		-Wunreachable-code
 -	)
 -endif(CMAKE_COMPILER_IS_GNUCXX)
@@ -41,14 +43,12 @@ index f9073734..9e297357 100644
      Qt5::Core
      Qt5::Widgets
 diff --git a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
-index 6b650f1b..1f85254c 100644
+index 6b650f1b6..82c58edb4 100644
 --- a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
 +++ b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
-@@ -66,8 +66,10 @@ target_compile_definitions(qt_advanced_docking PUBLIC ADS_STATIC)
- target_link_libraries(qt_advanced_docking PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets)
+@@ -67,7 +67,8 @@ target_link_libraries(qt_advanced_docking PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets
  
  if(UNIX AND NOT APPLE)
-+    find_package(XCB REQUIRED)
      target_link_libraries(qt_advanced_docking PUBLIC Qt5::X11Extras)
 -        target_link_libraries(qt_advanced_docking PRIVATE xcb)
 +    target_link_libraries(qt_advanced_docking PRIVATE ${XCB_LIBRARIES})
@@ -57,7 +57,7 @@ index 6b650f1b..1f85254c 100644
  
  set_target_properties(qt_advanced_docking PROPERTIES
 diff --git a/3rdparty/lua-5.4.3/CMakeLists.txt b/3rdparty/lua-5.4.3/CMakeLists.txt
-index eb08333c..715f93a2 100644
+index 6f682a3e6..676feecb1 100644
 --- a/3rdparty/lua-5.4.3/CMakeLists.txt
 +++ b/3rdparty/lua-5.4.3/CMakeLists.txt
 @@ -1,3 +1,5 @@
@@ -66,22 +66,25 @@ index eb08333c..715f93a2 100644
  set(LUA_LIB_SRCS 
      ${CMAKE_CURRENT_SOURCE_DIR}/src/lapi.c 
      ${CMAKE_CURRENT_SOURCE_DIR}/src/lcode.c 
-@@ -32,12 +34,12 @@ set(LUA_LIB_SRCS
+@@ -32,7 +34,7 @@ set(LUA_LIB_SRCS
      ${CMAKE_CURRENT_SOURCE_DIR}/src/loadlib.c 
      ${CMAKE_CURRENT_SOURCE_DIR}/src/linit.c
-     ${CMAKE_CURRENT_SOURCE_DIR}/src/lua.c)
+     )
 -set(LUA_LIB_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 +# set(LUA_LIB_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/src)
  
  add_compile_options(-fPIC)
  
- add_library(lua_static STATIC ${LUA_LIB_SRCS})
+@@ -40,7 +42,7 @@ add_library(lua_static STATIC
+     ${LUA_LIB_SRCS}
+     ${CMAKE_CURRENT_SOURCE_DIR}/src/lua.c
+ )
 -target_include_directories(lua_static PUBLIC ${LUA_LIB_INCLUDE})
 +# target_include_directories(lua_static PUBLIC ${LUA_LIB_INCLUDE})
  
- if ( NOT WIN32 )
-     set(LUA_DEFINITIONS LUA_USE_POSIX)
-@@ -48,3 +50,11 @@ if(EMSCRIPTEN)
+ add_library(lua_objects OBJECT ${LUA_LIB_SRCS})
+ 
+@@ -53,3 +55,11 @@ if(EMSCRIPTEN)
  endif()
  target_compile_definitions(lua_static PUBLIC ${LUA_DEFINITIONS})
  
@@ -94,10 +97,10 @@ index eb08333c..715f93a2 100644
 +     RUNTIME DESTINATION bin
 +     INCLUDES DESTINATION include )
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 08b81610..28e7e3b6 100644
+index 0c12d11a..37e5db3c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -108,11 +108,9 @@ find_package(Qt5 REQUIRED COMPONENTS
+@@ -123,11 +123,9 @@ find_package(Qt5 REQUIRED COMPONENTS
  set( QT_LINK_LIBRARIES
      Qt5::Core
      Qt5::Widgets
@@ -109,25 +112,30 @@ index 08b81610..28e7e3b6 100644
      Qt5::WebSockets
      )
  
-@@ -171,16 +169,12 @@ add_library( plotjuggler_base
-      plotjuggler_base/src/reactive_function.cpp
-      )
+@@ -193,7 +191,7 @@ if (BASE_AS_SHARED)
+         ${PLOTJUGGLER_BASE_SRC}
+         ${PLOTJUGGLER_BASE_MOCS}
+         )
+-    target_link_libraries(plotjuggler_base PRIVATE lua_objects plotjuggler_qwt_objects)
++    target_link_libraries(plotjuggler_base PRIVATE ${QT_LINK_LIBRARIES} lua_objects plotjuggler_qwt_objects)
+ else()
+     add_library(plotjuggler_base STATIC
+         ${PLOTJUGGLER_BASE_SRC}
+@@ -201,13 +199,6 @@ else()
+         )
+ endif()
  
 -# target_link_libraries(plotjuggler_base plotjuggler_qwt)
-+target_link_libraries(plotjuggler_base ${QT_LINK_LIBRARIES} plotjuggler_qwt lua_static)
- target_include_directories(plotjuggler_base INTERFACE
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-   $<INSTALL_INTERFACE:include>
- )
- 
+-
 -target_include_directories(plotjuggler_base INTERFACE
 -  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 -  $<INSTALL_INTERFACE:include>
 -)
+-
  #########################  INSTALL  ####################################
  
  if(COMPILING_WITH_CATKIN)
-@@ -197,8 +191,9 @@ elseif(COMPILING_WITH_AMENT)
+@@ -224,8 +215,9 @@ elseif(COMPILING_WITH_AMENT)
      set(PJ_PLUGIN_INSTALL_DIRECTORY lib/${PROJECT_NAME} )
  
      ament_export_targets(
@@ -195,3 +203,25 @@ index 00000000..a2e2757a
 +endforeach()
 +
 +list(REMOVE_DUPLICATES XCB_INCLUDE_DIRS)
+diff --git a/plotjuggler_plugins/ParserProtobuf/CMakeLists.txt b/plotjuggler_plugins/ParserProtobuf/CMakeLists.txt
+index 084c93cb..d484adf6 100644
+--- a/plotjuggler_plugins/ParserProtobuf/CMakeLists.txt
++++ b/plotjuggler_plugins/ParserProtobuf/CMakeLists.txt
+@@ -4,7 +4,7 @@ include_directories( ../ )
+ add_definitions(${QT_DEFINITIONS})
+ add_definitions(-DQT_PLUGIN)
+ 
+-find_package(Protobuf QUIET)
++find_package(Protobuf QUIET CONFIG)
+ 
+ if( Protobuf_FOUND)
+     message(STATUS "[Protobuf] found")
+@@ -24,7 +24,7 @@ if( Protobuf_FOUND)
+     target_link_libraries(ProtobufParser
+         ${Qt5Widgets_LIBRARIES}
+         ${Qt5Xml_LIBRARIES}
+-        ${Protobuf_LIBRARIES}
++        protobuf::libprotobuf
+         plotjuggler_base
+         plotjuggler_qwt)
+ 

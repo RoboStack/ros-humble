@@ -56,7 +56,7 @@ index 708b04c..5620533 100644
      # compatibilty. This flag sets it correctly
      makefile.CXXFLAGS.append('/Zc:__cplusplus')
 diff --git a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
-index c589899..b80698b 100644
+index 41aec4b..fa70b25 100644
 --- a/cmake/sip_helper.cmake
 +++ b/cmake/sip_helper.cmake
 @@ -15,7 +15,7 @@ execute_process(
@@ -84,7 +84,7 @@ index c589899..b80698b 100644
  #
  # Run the SIP generator and compile the generated code into a library.
  #
-@@ -77,32 +86,104 @@ function(build_sip_binding PROJECT_NAME SIP_FILE)
+@@ -77,34 +86,104 @@ function(build_sip_binding PROJECT_NAME SIP_FILE)
      set(LIBRARY_DIRS ${${PROJECT_NAME}_LIBRARY_DIRS})
      set(LDFLAGS_OTHER ${${PROJECT_NAME}_LDFLAGS_OTHER})
  
@@ -171,7 +171,9 @@ index c589899..b80698b 100644
 +            COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
 +        )
      else()
--      set(MAKE_EXECUTABLE "\$(MAKE)")
+-      find_program(MAKE_PROGRAM NAMES make)
+-      message(STATUS "Found required make: ${MAKE_PROGRAM}")
+-      set(MAKE_EXECUTABLE ${MAKE_PROGRAM})
 -    endif()
 +        add_custom_command(
 +            OUTPUT ${SIP_BUILD_DIR}/Makefile

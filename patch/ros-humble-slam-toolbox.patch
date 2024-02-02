@@ -1,0 +1,88 @@
+diff --git a/solvers/ceres_solver.cpp b/solvers/ceres_solver.cpp
+index 43e7d98..cd0e706 100644
+--- a/solvers/ceres_solver.cpp
++++ b/solvers/ceres_solver.cpp
+@@ -338,9 +338,9 @@ void CeresSolver::AddConstraint(karto::Edge<karto::LocalizedRangeScan> * pEdge)
+     cost_function, loss_function_,
+     &node1it->second(0), &node1it->second(1), &node1it->second(2),
+     &node2it->second(0), &node2it->second(1), &node2it->second(2));
+-  problem_->SetParameterization(&node1it->second(2),
++  problem_->SetManifold(&node1it->second(2),
+     angle_local_parameterization_);
+-  problem_->SetParameterization(&node2it->second(2),
++  problem_->SetManifold(&node2it->second(2),
+     angle_local_parameterization_);
+ 
+   blocks_->insert(std::pair<std::size_t, ceres::ResidualBlockId>(
+diff --git a/solvers/ceres_solver.hpp b/solvers/ceres_solver.hpp
+index 162b559..023b7c9 100644
+--- a/solvers/ceres_solver.hpp
++++ b/solvers/ceres_solver.hpp
+@@ -7,7 +7,7 @@
+ #define SOLVERS__CERES_SOLVER_HPP_
+ 
+ #include <math.h>
+-#include <ceres/local_parameterization.h>
++#include <ceres/manifold.h>
+ #include <ceres/ceres.h>
+ #include <vector>
+ #include <unordered_map>
+@@ -65,7 +65,7 @@ private:
+   ceres::Problem::Options options_problem_;
+   ceres::LossFunction * loss_function_;
+   ceres::Problem * problem_;
+-  ceres::LocalParameterization * angle_local_parameterization_;
++  ceres::Manifold * angle_local_parameterization_;
+   bool was_constant_set_, debug_logging_;
+ 
+   // graph
+diff --git a/solvers/ceres_utils.h b/solvers/ceres_utils.h
+index 42c2fad..e414c73 100644
+--- a/solvers/ceres_utils.h
++++ b/solvers/ceres_utils.h
+@@ -7,7 +7,7 @@
+ #define SOLVERS__CERES_UTILS_H_
+ 
+ #include <ceres/ceres.h>
+-#include <ceres/local_parameterization.h>
++#include <ceres/manifold.h>
+ #include <cmath>
+ #include <utility>
+ 
+@@ -38,6 +38,24 @@ inline T NormalizeAngle(const T & angle_radians)
+ class AngleLocalParameterization
+ {
+ public:
++  template <typename T>
++  bool Plus(const T* x_radians,
++            const T* delta_radians,
++            T* x_plus_delta_radians) const {
++    *x_plus_delta_radians = NormalizeAngle(*x_radians + *delta_radians);
++    return true;
++  }
++
++  template <typename T>
++  bool Minus(const T* y_radians,
++             const T* x_radians,
++             T* y_minus_x_radians) const {
++    *y_minus_x_radians =
++        NormalizeAngle(*y_radians) - NormalizeAngle(*x_radians);
++
++    return true;
++  }
++
+   template<typename T>
+   bool operator()(
+     const T * theta_radians, const T * delta_theta_radians,
+@@ -47,9 +65,9 @@ public:
+     return true;
+   }
+ 
+-  static ceres::LocalParameterization * Create()
++  static ceres::Manifold * Create()
+   {
+-    return new ceres::AutoDiffLocalParameterization<AngleLocalParameterization, 1, 1>;
++    return new ceres::AutoDiffManifold<AngleLocalParameterization, 1, 1>;
+   }
+ };
+ 

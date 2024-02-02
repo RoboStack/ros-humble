@@ -1,7 +1,7 @@
-diff --git a/nav2_waypoint_follower/CMakeLists.txt b/nav2_waypoint_follower/CMakeLists.txt
-index a3b46942b..b0930e1aa 100644
---- a/nav2_waypoint_follower/CMakeLists.txt
-+++ b/nav2_waypoint_follower/CMakeLists.txt
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a3b46942b..e228086fa 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
 @@ -1,6 +1,8 @@
  cmake_minimum_required(VERSION 3.5)
  project(nav2_waypoint_follower)
@@ -11,7 +11,7 @@ index a3b46942b..b0930e1aa 100644
  # Try for OpenCV 4.X, but settle for whatever is installed
  find_package(OpenCV 4 QUIET)
  if(NOT OpenCV_FOUND)
-@@ -25,7 +25,11 @@ find_package(pluginlib REQUIRED)
+@@ -25,7 +27,11 @@ find_package(pluginlib REQUIRED)
  
  nav2_package()
  
@@ -24,19 +24,20 @@ index a3b46942b..b0930e1aa 100644
  
  include_directories(
    include
-diff --git a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
-index fc4aee5c5e..4198919fe2 100644
---- a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
-+++ b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
-@@ -20,6 +20,7 @@
+diff --git a/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+index fc4aee5c5..a4fc67b82 100644
+--- a/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
++++ b/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+@@ -20,20 +20,22 @@
   * to ignore deprecated declarations
   */
  #define _LIBCPP_NO_EXPERIMENTAL_DEPRECATION_WARNING_FILESYSTEM
 +#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
  
  
- #include <experimental/filesystem>
-@@ -27,13 +28,14 @@
+-#include <experimental/filesystem>
++#include <filesystem>
+ #include <mutex>
  #include <string>
  #include <exception>
  
@@ -53,11 +54,48 @@ index fc4aee5c5e..4198919fe2 100644
  #include "cv_bridge/cv_bridge.h"
  #include "image_transport/image_transport.hpp"
  
-diff --git a/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp b/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
-index 7d1f4a9b1b..902ea5ff5f 100644
---- a/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
-+++ b/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
-@@ -118,7 +118,7 @@ bool PhotoAtWaypoint::processAtWaypoint(
+@@ -97,7 +99,7 @@ protected:
+   // to ensure safety when accessing global var curr_frame_
+   std::mutex global_mutex_;
+   // the taken photos will be saved under this directory
+-  std::experimental::filesystem::path save_dir_;
++  std::filesystem::path save_dir_;
+   // .png ? .jpg ? or some other well known format
+   std::string image_format_;
+   // the topic to subscribe in order capture a frame
+diff --git a/plugins/photo_at_waypoint.cpp b/plugins/photo_at_waypoint.cpp
+index 8a6cb74b9..4e2858f65 100644
+--- a/plugins/photo_at_waypoint.cpp
++++ b/plugins/photo_at_waypoint.cpp
+@@ -61,14 +61,14 @@ void PhotoAtWaypoint::initialize(
+   // get inputted save directory and make sure it exists, if not log and create  it
+   save_dir_ = save_dir_as_string;
+   try {
+-    if (!std::experimental::filesystem::exists(save_dir_)) {
++    if (!std::filesystem::exists(save_dir_)) {
+       RCLCPP_WARN(
+         logger_,
+         "Provided save directory for photo at waypoint plugin does not exist,"
+         "provided directory is: %s, the directory will be created automatically.",
+         save_dir_.c_str()
+       );
+-      if (!std::experimental::filesystem::create_directory(save_dir_)) {
++      if (!std::filesystem::create_directory(save_dir_)) {
+         RCLCPP_ERROR(
+           logger_,
+           "Failed to create directory!: %s required by photo at waypoint plugin, "
+@@ -110,16 +110,16 @@ bool PhotoAtWaypoint::processAtWaypoint(
+   }
+   try {
+     // construct the full path to image filename
+-    std::experimental::filesystem::path file_name = std::to_string(
++    std::filesystem::path file_name = std::to_string(
+       curr_waypoint_index) + "_" +
+       std::to_string(curr_pose.header.stamp.sec) + "." + image_format_;
+-    std::experimental::filesystem::path full_path_image_path = save_dir_ / file_name;
++    std::filesystem::path full_path_image_path = save_dir_ / file_name;
+ 
+     // save the taken photo at this waypoint to given directory
      std::lock_guard<std::mutex> guard(global_mutex_);
      cv::Mat curr_frame_mat;
      deepCopyMsg2Mat(curr_frame_msg_, curr_frame_mat);
