@@ -46,20 +46,20 @@ packages_select_by_deps:
   - vision_msgs
   - ros_environment
   - ros_base
-  - navigation2
-  - desktop_full
-  - desktop
-  - cv_bridge
-  - perception
-  - gazebo_msgs
-  - gazebo_dev
-  - gazebo_ros
-  - gazebo_plugins
-  - gazebo_ros2_control
-  - gazebo_ros_pkgs
-  - turtlebot3_simulations
-  - rosbridge_suite
-  - ament_cmake_catch2
+  # - navigation2
+  # - desktop_full
+  # - desktop
+  # - cv_bridge
+  # - perception
+  # - gazebo_msgs
+  # - gazebo_dev
+  # - gazebo_ros
+  # - gazebo_plugins
+  # - gazebo_ros2_control
+  # - gazebo_ros_pkgs
+  # - turtlebot3_simulations
+  # - rosbridge_suite
+  # - ament_cmake_catch2
   # - moveit
 
 patch_dir: patch
