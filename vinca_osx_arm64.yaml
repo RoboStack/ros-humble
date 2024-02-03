@@ -82,7 +82,7 @@ packages_select_by_deps:
   - sbg_driver
   - ackermann-msgs
 
-  # - moveit
+  - moveit
 
 
 patch_dir: patch
