@@ -126,16 +126,17 @@ packages_select_by_deps:
   - apriltag
   - apriltag_ros
 
-  # - webots_ros2
-  # - moveit
-  # - moveit-resources
-  # - moveit-ros-perception
-  # - moveit-runtime
-  # - moveit-servo
-  # - moveit_visual_tools
-  # - moveit_servo
-  # - rqt-moveit
+  - moveit
+  - moveit-ros-perception
+  - moveit-runtime
+  - moveit-servo
+  - moveit_visual_tools
+  - moveit_servo
+  - rqt-moveit
 
+  # Needs fixing
+  # - webots_ros2
+  # - moveit-resources
 
 
   # ----- end of package support -----
