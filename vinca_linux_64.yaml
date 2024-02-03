@@ -135,7 +135,7 @@ packages_select_by_deps:
   - rqt-moveit
 
   # Needs fixing
-  # - webots_ros2
+  - webots_ros2
   # - moveit-resources
 
 
