@@ -7,7 +7,7 @@ index fca501e86..fa414b150 100644
      for (unsigned int i = 0; i < controlHardware.size(); i++) {
  // Necessary hotfix for renamed variables present in "hardware_interface" package for versions above 3.5 (#590)
 -#if HARDWARE_INTERFACE_VERSION_MAJOR >= 3 && HARDWARE_INTERFACE_VERSION_MINOR >= 5
-+#if 1
++#if 0
        const std::string pluginName = controlHardware[i].hardware_plugin_name;
        auto webotsSystem =
          std::unique_ptr<webots_ros2_control::Ros2ControlSystemInterface>(mHardwareLoader->createUnmanagedInstance(pluginName));
