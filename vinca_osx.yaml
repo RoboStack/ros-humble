@@ -91,7 +91,7 @@ packages_select_by_deps:
   - apriltag
   - apriltag_ros
 
-  # - moveit
-  # - moveit_servo
+  - moveit
+  - moveit_servo
 
 patch_dir: patch
