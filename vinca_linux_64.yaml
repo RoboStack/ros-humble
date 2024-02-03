@@ -47,7 +47,6 @@ packages_select_by_deps:
   - navigation2
   - graph_msgs
   - nav2_bringup
-  - webots_ros2
   - turtlebot3
   - desktop_full
   - apriltag
@@ -127,6 +126,7 @@ packages_select_by_deps:
   - apriltag
   - apriltag_ros
 
+  # - webots_ros2
   # - moveit
   # - moveit-resources
   # - moveit-ros-perception
