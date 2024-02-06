@@ -39,6 +39,7 @@ packages_select_by_deps:
 
   - qt-qui-cpp # needs to be compiled locally
 
+  - generator-dds-idl
   - ros_workspace
   - ros_environment
   - ament_cmake
