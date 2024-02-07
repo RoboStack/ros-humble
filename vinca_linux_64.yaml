@@ -135,8 +135,13 @@ packages_select_by_deps:
   - moveit_servo
   - rqt-moveit
 
-  # Needs fixing
+  - librealsense2
+  - realsense2-camera
+  - realsense2-camera-msgs
+  - realsense2-description
   - webots_ros2
+
+  # Needs fixing
   # - moveit-resources
 
 
@@ -383,7 +388,6 @@ packages_select_by_deps:
   # - launch-system-modes
   # - lgsvl-msgs
   # - libmavconn
-  - librealsense2
   # - marti-can-msgs
   # - marti-common-msgs
   # - marti-dbw-msgs
@@ -433,9 +437,6 @@ packages_select_by_deps:
   # - rc-reason-clients
   # - rc-reason-msgs
   # - rcss3d-agent
-  - realsense2-camera
-  - realsense2-camera-msgs
-  - realsense2-description
   # - realtime-tools
   # - rmf-battery
   # - rmf-building-map-msgs
