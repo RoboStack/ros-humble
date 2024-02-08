@@ -30,7 +30,7 @@ index 0000000..2ab2b55
 +[tool.sip.project]
 +sip-files-dir = "@SIP_FILES_DIR@"
 +build-dir = "@SIP_BUILD_DIR@"
-+
++verbose = true
 +# Specify the PEP 566 metadata for the project.
 +[tool.sip.metadata]
 +name = "lib@PROJECT_NAME@"
