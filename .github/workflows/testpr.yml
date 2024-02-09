@@ -1,7 +1,5 @@
 on:
-  pull_request:
-    paths:
-      - '*.yaml'
+  pull_request
 
 env:
   ROS_VERSION: 2
