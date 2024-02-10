@@ -15,8 +15,8 @@ index d31ad8de3..8a17fc870 100644
 +target_link_libraries(${PROJECT_NAME}
 +  pluginlib::pluginlib
 +  rcutils::rcutils
-+  rclcpp::rclcpp
-+  rmw::rmw
++  rcpputils::rcpputils
++  
 +  yaml-cpp::yaml-cpp
 +)
  
