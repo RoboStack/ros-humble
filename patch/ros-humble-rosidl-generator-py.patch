@@ -132,6 +132,7 @@ index a6d8263..f231ea2 100644
 -endif()
 +endif()
 \ No newline at end of file
+<<<<<<< HEAD
 diff --git a/rosidl_generator_py-extras.cmake.in b/rosidl_generator_py-extras.cmake.in
 index 80bed29..ba70acc 100644
 --- a/rosidl_generator_py-extras.cmake.in
@@ -144,3 +145,5 @@ index 80bed29..ba70acc 100644
 +  "@PYTHON_INSTALL_DIR@/rosidl_generator_py/__init__.py;@PYTHON_INSTALL_DIR@/rosidl_generator_py/generate_py_impl.py"
    "${rosidl_generator_py_DIR}/../resource"
  )
+=======
+>>>>>>> 63c1c4f (Remove patches that assume that PYTHON_INSTALL_DIR is an absolute path)
