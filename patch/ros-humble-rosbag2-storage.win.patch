@@ -1,31 +1,24 @@
 diff --git a/rosbag2_storage/CMakeLists.txt b/rosbag2_storage/CMakeLists.txt
-index d31ad8de3..c288eb0b2 100644
+index d31ad8de3..8a17fc870 100644
 --- a/rosbag2_storage/CMakeLists.txt
 +++ b/rosbag2_storage/CMakeLists.txt
-@@ -24,7 +24,7 @@ find_package(ament_cmake REQUIRED)
- find_package(pluginlib REQUIRED)
- find_package(rcpputils REQUIRED)
- find_package(rcutils REQUIRED)
--find_package(yaml_cpp_vendor REQUIRED)
-+find_package(yaml-cpp REQUIRED)
- 
- add_library(
-   ${PROJECT_NAME}
-@@ -44,7 +44,7 @@ ament_target_dependencies(
-   pluginlib
-   rcpputils
-   rcutils
+@@ -39,12 +39,13 @@ target_include_directories(${PROJECT_NAME}
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
+ )
+-ament_target_dependencies(
+-  ${PROJECT_NAME}
+-  pluginlib
+-  rcpputils
+-  rcutils
 -  yaml_cpp_vendor)
-+  yaml-cpp)
++target_link_libraries(${PROJECT_NAME}
++  pluginlib::pluginlib
++  rcutils::rcutils
++  rclcpp::rclcpp
++  rmw::rmw
++  yaml-cpp::yaml-cpp
++)
  
  # Causes the visibility macros to use dllexport rather than dllimport,
  # which is appropriate when building the dll but not consuming it.
-@@ -68,7 +68,7 @@ ament_export_libraries(${PROJECT_NAME})
- # Export modern CMake targets
- ament_export_targets(export_${PROJECT_NAME})
- 
--ament_export_dependencies(pluginlib yaml_cpp_vendor)
-+ament_export_dependencies(pluginlib yaml-cpp)
- 
- if(BUILD_TESTING)
-   find_package(ament_lint_auto REQUIRED)
