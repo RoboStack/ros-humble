@@ -38,15 +38,14 @@ skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
-  - joint-trajectory-controller
-  # - ament-cmake-core
-  # - ros2_control
-  # - ros2_controllers
-  # - backward_ros
-  # - ros_workspace
-  # - vision_msgs
-  # - ros_environment
-  # - ros_base
+  - ament-cmake-core
+  - ros2_control
+  - ros2_controllers
+  - backward_ros
+  - ros_workspace
+  - vision_msgs
+  - ros_environment
+  - ros_base
   # - navigation2
   # - desktop_full
   # - desktop
