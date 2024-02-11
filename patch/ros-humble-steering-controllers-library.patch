@@ -10,3 +10,15 @@ index 095db7674b..88063ea4a2 100644
  #include <cmath>
  #include <memory>
  #include <queue>
+diff --git a/steering_controllers_library/src/steering_odometry.cpp b/steering_controllers_library/src/steering_odometry.cpp
+index 3e1b586807..dbbbf6f850 100644
+--- a/steering_controllers_library/src/steering_odometry.cpp
++++ b/steering_controllers_library/src/steering_odometry.cpp
+@@ -19,6 +19,7 @@
+ 
+ #include "steering_controllers_library/steering_odometry.hpp"
+ 
++#define _USE_MATH_DEFINES
+ #include <cmath>
+ #include <iostream>
+ 
