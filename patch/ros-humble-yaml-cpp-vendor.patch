@@ -9,28 +9,12 @@ Signed-off-by: Silvio Traversaro <silvio@traversaro.it>
  1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/yaml_cpp_vendor-extras.cmake.in b/yaml_cpp_vendor-extras.cmake.in
-index d0f9766..d3bf920 100644
+index deac98c..48eb4a9 100644
 --- a/yaml_cpp_vendor-extras.cmake.in
 +++ b/yaml_cpp_vendor-extras.cmake.in
-@@ -11,10 +11,15 @@ find_package(yaml-cpp REQUIRED)
+@@ -15,4 +15,4 @@ endif()
  set(yaml_cpp_vendor_LIBRARIES ${YAML_CPP_LIBRARIES})
  set(yaml_cpp_vendor_INCLUDE_DIRS ${YAML_CPP_INCLUDE_DIR})
  
 -list(APPEND yaml_cpp_vendor_TARGETS yaml-cpp)
--if(WIN32)
--  # On Windows, yaml-cpp 0.7.0 requires that downstream consumers set YAML_CPP_DLL and
--  # not yaml_cpp_EXPORT in order to set dllimport properly.
--  # This behavior will likely change in future versions of yaml-cpp.
--  set_target_properties(yaml-cpp PROPERTIES INTERFACE_COMPILE_DEFINITIONS YAML_CPP_DLL)
-+# since yaml-cpp 0.8.0, yaml-cpp supports the yaml-cpp::yaml-cpp target
-+if(TARGET yaml-cpp::yaml-cpp)
-+  list(APPEND yaml_cpp_vendor_TARGETS yaml-cpp::yaml-cpp)
-+else()
-+  list(APPEND yaml_cpp_vendor_TARGETS yaml-cpp)
-+  if(WIN32)
-+    # On Windows, yaml-cpp 0.7.0 requires that downstream consumers set YAML_CPP_DLL and
-+    # not yaml_cpp_EXPORT in order to set dllimport properly.
-+    # This behavior will likely change in future versions of yaml-cpp.
-+    set_target_properties(yaml-cpp PROPERTIES INTERFACE_COMPILE_DEFINITIONS YAML_CPP_DLL)
-+  endif()
- endif()
++list(APPEND yaml_cpp_vendor_TARGETS yaml-cpp::yaml-cpp)
