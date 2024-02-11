@@ -6,7 +6,7 @@ index cdc69f182a..94fba916b1 100644
  )
  target_link_libraries(tricycle_controller PUBLIC tricycle_controller_parameters)
  ament_target_dependencies(tricycle_controller PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
-+target_compile_definitions(tricycle_controller PRIVATE _USE_MATH_DEFINES)
++target_compile_definitions(tricycle_controller PRIVATE "TRICYCLE_CONTROLLER_BUILDING_DLL" _USE_MATH_DEFINES)
  
  pluginlib_export_plugin_description_file(controller_interface tricycle_controller.xml)
  

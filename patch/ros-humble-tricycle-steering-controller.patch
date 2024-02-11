@@ -1,0 +1,34 @@
+diff --git a/tricycle_steering_controller/CMakeLists.txt b/tricycle_steering_controller/CMakeLists.txt
+index 02c9453ace..21604df0c4 100644
+--- a/tricycle_steering_controller/CMakeLists.txt
++++ b/tricycle_steering_controller/CMakeLists.txt
+@@ -44,7 +44,7 @@ ament_target_dependencies(tricycle_steering_controller PUBLIC ${THIS_PACKAGE_INC
+ 
+ # Causes the visibility macros to use dllexport rather than dllimport,
+ # which is appropriate when building the dll but not consuming it.
+-target_compile_definitions(tricycle_steering_controller PRIVATE "ACKERMANN_STEERING_CONTROLLER_BUILDING_DLL")
++target_compile_definitions(tricycle_steering_controller PRIVATE "TRICYCLE_STEERING_CONTROLLER__VISIBILITY_BUILDING_DLL")
+ 
+ pluginlib_export_plugin_description_file(
+   controller_interface tricycle_steering_controller.xml)
+diff --git a/tricycle_steering_controller/include/tricycle_steering_controller/tricycle_steering_controller.hpp b/tricycle_steering_controller/include/tricycle_steering_controller/tricycle_steering_controller.hpp
+index 607a684df5..0ae5db0a26 100644
+--- a/tricycle_steering_controller/include/tricycle_steering_controller/tricycle_steering_controller.hpp
++++ b/tricycle_steering_controller/include/tricycle_steering_controller/tricycle_steering_controller.hpp
+@@ -45,13 +45,13 @@ class TricycleSteeringController : public steering_controllers_library::Steering
+ public:
+   TricycleSteeringController();
+ 
+-  STEERING_CONTROLLERS__VISIBILITY_PUBLIC controller_interface::CallbackReturn configure_odometry()
++  TRICYCLE_STEERING_CONTROLLER__VISIBILITY_PUBLIC controller_interface::CallbackReturn configure_odometry()
+     override;
+ 
+-  STEERING_CONTROLLERS__VISIBILITY_PUBLIC bool update_odometry(
++  TRICYCLE_STEERING_CONTROLLER__VISIBILITY_PUBLIC bool update_odometry(
+     const rclcpp::Duration & period) override;
+ 
+-  STEERING_CONTROLLERS__VISIBILITY_PUBLIC void initialize_implementation_parameter_listener()
++  TRICYCLE_STEERING_CONTROLLER__VISIBILITY_PUBLIC void initialize_implementation_parameter_listener()
+     override;
+ 
+ protected:
