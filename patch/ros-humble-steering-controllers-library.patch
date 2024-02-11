@@ -1,0 +1,12 @@
+diff --git a/steering_controllers_library/include/steering_controllers_library/steering_controllers_library.hpp b/steering_controllers_library/include/steering_controllers_library/steering_controllers_library.hpp
+index 095db7674b..88063ea4a2 100644
+--- a/steering_controllers_library/include/steering_controllers_library/steering_controllers_library.hpp
++++ b/steering_controllers_library/include/steering_controllers_library/steering_controllers_library.hpp
+@@ -16,6 +16,7 @@
+ #define STEERING_CONTROLLERS_LIBRARY__STEERING_CONTROLLERS_LIBRARY_HPP_
+ 
+ #include <chrono>
++#define _USE_MATH_DEFINES
+ #include <cmath>
+ #include <memory>
+ #include <queue>
