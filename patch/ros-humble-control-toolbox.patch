@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7d3a2c7..4d5745c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -73,6 +73,7 @@ target_include_directories(low_pass_filter PUBLIC
+     $<INSTALL_INTERFACE:include/control_toolbox>
+ )
+ target_link_libraries(low_pass_filter PUBLIC low_pass_filter_parameters)
++set_target_properties(low_pass_filter PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+ ament_target_dependencies(low_pass_filter PUBLIC ${CONTROL_FILTERS_INCLUDE_DEPENDS})
+ 
+ # Install pluginlib xml
