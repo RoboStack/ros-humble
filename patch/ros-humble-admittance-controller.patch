@@ -1,0 +1,23 @@
+diff --git a/admittance_controller/include/admittance_controller/admittance_controller.hpp b/admittance_controller/include/admittance_controller/admittance_controller.hpp
+index 6ff6cdae7a..e8b17c1530 100644
+--- a/admittance_controller/include/admittance_controller/admittance_controller.hpp
++++ b/admittance_controller/include/admittance_controller/admittance_controller.hpp
+@@ -95,8 +95,10 @@ class AdmittanceController : public controller_interface::ChainableControllerInt
+     const rclcpp::Time & time, const rclcpp::Duration & period) override;
+ 
+ protected:
++  ADMITTANCE_CONTROLLER_PUBLIC
+   std::vector<hardware_interface::CommandInterface> on_export_reference_interfaces() override;
+ 
++  ADMITTANCE_CONTROLLER_PUBLIC
+   controller_interface::return_type update_reference_from_subscribers(
+     const rclcpp::Time & time, const rclcpp::Duration & period) override;
+ 
+@@ -169,6 +171,7 @@ class AdmittanceController : public controller_interface::ChainableControllerInt
+    * @brief Read values from hardware interfaces and set corresponding fields of state_current and
+    * ft_values
+    */
++  ADMITTANCE_CONTROLLER_PUBLIC
+   void read_state_from_hardware(
+     trajectory_msgs::msg::JointTrajectoryPoint & state_current,
+     geometry_msgs::msg::Wrench & ft_values);

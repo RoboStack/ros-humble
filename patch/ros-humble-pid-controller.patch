@@ -11,3 +11,18 @@ index 15e903222a..6c9e00ef8b 100644
  
  pluginlib_export_plugin_description_file(controller_interface pid_controller.xml)
  
+diff --git a/pid_controller/include/pid_controller/pid_controller.hpp b/pid_controller/include/pid_controller/pid_controller.hpp
+index f7b8cc4491..788f39f1ed 100644
+--- a/pid_controller/include/pid_controller/pid_controller.hpp
++++ b/pid_controller/include/pid_controller/pid_controller.hpp
+@@ -121,8 +121,10 @@ class PidController : public controller_interface::ChainableControllerInterface
+   std::unique_ptr<ControllerStatePublisher> state_publisher_;
+ 
+   // override methods from ChainableControllerInterface
++  PID_CONTROLLER__VISIBILITY_PUBLIC
+   std::vector<hardware_interface::CommandInterface> on_export_reference_interfaces() override;
+ 
++  PID_CONTROLLER__VISIBILITY_PUBLIC
+   bool on_set_chained_mode(bool chained_mode) override;
+ 
+   // internal methods
