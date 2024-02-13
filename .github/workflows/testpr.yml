@@ -78,6 +78,11 @@ jobs:
       run: |
         rm -rf /c/Strawberry
 
+    # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
+    - name: Clean up PATH
+      if: contains(matrix.os, 'windows')
+      uses: egor-tensin/cleanup-path@v4
+
     - name: Check what files have changed
       id: filecheck
       shell: bash -l {0}
