@@ -39,8 +39,9 @@ jobs:
       if: contains(matrix.os, 'windows')
       uses: egor-tensin/cleanup-path@v4
       with:
-        # cygpath in C:\Program Files\Git\usr\bin is used by install micromamba 
-        dirs: 'C:\Program Files\Git\usr\bin'
+        # cygpath in C:\Program Files\Git\usr\bin is used by install micromamba
+        # git in C:\Program Files\Git\bin is used by pip install git+ 
+        dirs: 'C:\Program Files\Git\usr\bin;C:\Program Files\Git\bin'
 
     - uses: actions/checkout@master
     - name: install micromamba
