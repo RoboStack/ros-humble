@@ -2,18 +2,25 @@ diff --git a/gazebo_ros2_control/src/gazebo_ros2_control_plugin.cpp b/gazebo_ros
 index 1ed72fc..6015669 100644
 --- a/gazebo_ros2_control/src/gazebo_ros2_control_plugin.cpp
 +++ b/gazebo_ros2_control/src/gazebo_ros2_control_plugin.cpp
-@@ -36,6 +36,11 @@
+@@ -36,6 +36,8 @@
  #include <memory>
  #include <utility>
  #include <vector>
 +#include <chrono>
 +#include <thread>
+ 
+ #include "gazebo_ros/node.hpp"
+@@ -48,6 +48,10 @@
+ 
+ #include "rclcpp/rclcpp.hpp"
+ 
 +#ifdef ERROR
 +#undef ERROR
 +#endif
- 
- #include "gazebo_ros/node.hpp"
- 
++
+ #include "hardware_interface/resource_manager.hpp"
+ #include "hardware_interface/component_parser.hpp"
+ #include "hardware_interface/types/hardware_interface_type_values.hpp"
 @@ -506,7 +508,7 @@ std::string GazeboRosControlPrivate::getURDF(std::string param_name) const
          model_nh_->get_logger(), "gazebo_ros2_control plugin is waiting for model"
          " URDF in parameter [%s] on the ROS param server.", param_name.c_str());
@@ -44,17 +51,17 @@ index cfba129..b954ccc 100644
    angles
    gazebo_dev
 diff --git a/gazebo_ros2_control/src/gazebo_system.cpp b/gazebo_ros2_control/src/gazebo_system.cpp
-index c688541..420e6a2 100644
+index c688541..3b6efc6 100644
 --- a/gazebo_ros2_control/src/gazebo_system.cpp
 +++ b/gazebo_ros2_control/src/gazebo_system.cpp
-@@ -19,6 +19,10 @@
- #include <vector>
- #include <utility>
+@@ -24,6 +24,10 @@
+ #include "gazebo/sensors/ForceTorqueSensor.hh"
+ #include "gazebo/sensors/SensorManager.hh"
  
 +#ifdef ERROR
 +#undef ERROR
 +#endif
 +
- #include "gazebo_ros2_control/gazebo_system.hpp"
- #include "gazebo/sensors/ImuSensor.hh"
- #include "gazebo/sensors/ForceTorqueSensor.hh"
+ #include "hardware_interface/hardware_info.hpp"
+ #include "hardware_interface/lexical_casts.hpp"
+ #include "hardware_interface/types/hardware_interface_type_values.hpp"
