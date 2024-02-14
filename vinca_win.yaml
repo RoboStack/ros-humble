@@ -38,8 +38,28 @@ skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
+  - ament-cmake-core
+  - ros2_control
+  - ros2_controllers
+  - backward_ros
+  - ros_workspace
+  - vision_msgs
+  - ros_environment
+  - ros_base
+  - navigation2
   - desktop
+  - cv_bridge
   - perception
+  - gazebo_msgs
+  - gazebo_dev
+  - gazebo_ros
+  - gazebo_plugins
+  - gazebo_ros2_control
+  - gazebo_ros_pkgs
+  - turtlebot3_simulations
+  - rosbridge_suite
+  - ament_cmake_catch2
+  # - desktop_full
   # - moveit
 
 patch_dir: patch
