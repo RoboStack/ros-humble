@@ -28,7 +28,7 @@ index cfba129..b954ccc 100644
  add_library(${PROJECT_NAME} SHARED
    src/gazebo_ros2_control_plugin.cpp
  )
-+target_compile_definitions(${PROJECT_NAME} PRIVATE "_USE_MATH_DEFINES")
++target_compile_definitions(${PROJECT_NAME} PRIVATE "_USE_MATH_DEFINES" "NO_STRICT")
  ament_target_dependencies(${PROJECT_NAME}
    angles
    controller_manager
@@ -36,7 +36,7 @@ index cfba129..b954ccc 100644
  add_library(gazebo_hardware_plugins SHARED
    src/gazebo_system.cpp
  )
-+target_compile_definitions(gazebo_hardware_plugins PRIVATE "_USE_MATH_DEFINES")
++target_compile_definitions(gazebo_hardware_plugins PRIVATE "_USE_MATH_DEFINES" "NO_STRICT")
  ament_target_dependencies(gazebo_hardware_plugins
    angles
    gazebo_dev
