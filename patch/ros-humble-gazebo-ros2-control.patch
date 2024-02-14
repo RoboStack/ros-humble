@@ -1,39 +1,7 @@
-diff --git a/gazebo_ros2_control/src/gazebo_ros2_control_plugin.cpp b/gazebo_ros2_control/src/gazebo_ros2_control_plugin.cpp
-index 1ed72fc..6015669 100644
---- a/gazebo_ros2_control/src/gazebo_ros2_control_plugin.cpp
-+++ b/gazebo_ros2_control/src/gazebo_ros2_control_plugin.cpp
-@@ -36,6 +36,8 @@
- #include <memory>
- #include <utility>
- #include <vector>
-+#include <chrono>
-+#include <thread>
- 
- #include "gazebo_ros/node.hpp"
-@@ -48,6 +48,10 @@
- 
- #include "rclcpp/rclcpp.hpp"
- 
-+#ifdef ERROR
-+#undef ERROR
-+#endif
-+
- #include "hardware_interface/resource_manager.hpp"
- #include "hardware_interface/component_parser.hpp"
- #include "hardware_interface/types/hardware_interface_type_values.hpp"
-@@ -506,7 +508,7 @@ std::string GazeboRosControlPrivate::getURDF(std::string param_name) const
-         model_nh_->get_logger(), "gazebo_ros2_control plugin is waiting for model"
-         " URDF in parameter [%s] on the ROS param server.", param_name.c_str());
-     }
--    usleep(100000);
-+    std::this_thread::sleep_for(std::chrono::microseconds(100000));
-   }
-   RCLCPP_INFO(
-     model_nh_->get_logger(), "Received urdf from param server, parsing...");
-diff --git a/gazebo_ros2_control/CMakeLists.txt b/gazebo_ros2_control/CMakeLists.txt
-index cfba129..b954ccc 100644
---- a/gazebo_ros2_control/CMakeLists.txt
-+++ b/gazebo_ros2_control/CMakeLists.txt
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cfba129..d91c6a3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
 @@ -30,6 +30,7 @@ link_directories(
  add_library(${PROJECT_NAME} SHARED
    src/gazebo_ros2_control_plugin.cpp
@@ -50,10 +18,43 @@ index cfba129..b954ccc 100644
  ament_target_dependencies(gazebo_hardware_plugins
    angles
    gazebo_dev
-diff --git a/gazebo_ros2_control/src/gazebo_system.cpp b/gazebo_ros2_control/src/gazebo_system.cpp
-index c688541..3b6efc6 100644
---- a/gazebo_ros2_control/src/gazebo_system.cpp
-+++ b/gazebo_ros2_control/src/gazebo_system.cpp
+diff --git a/src/gazebo_ros2_control_plugin.cpp b/src/gazebo_ros2_control_plugin.cpp
+index 82b7ba7..eee85e6 100644
+--- a/src/gazebo_ros2_control_plugin.cpp
++++ b/src/gazebo_ros2_control_plugin.cpp
+@@ -36,6 +36,8 @@
+ #include <memory>
+ #include <utility>
+ #include <vector>
++#include <chrono>
++#include <thread>
+ 
+ #include "gazebo_ros/node.hpp"
+ 
+@@ -46,6 +48,10 @@
+ 
+ #include "rclcpp/rclcpp.hpp"
+ 
++#ifdef ERROR
++#undef ERROR
++#endif
++
+ #include "hardware_interface/resource_manager.hpp"
+ #include "hardware_interface/component_parser.hpp"
+ #include "hardware_interface/types/hardware_interface_type_values.hpp"
+@@ -465,7 +471,7 @@ std::string GazeboRosControlPrivate::getURDF(std::string param_name) const
+         model_nh_->get_logger(), "gazebo_ros2_control plugin is waiting for model"
+         " URDF in parameter [%s] on the ROS param server.", search_param_name.c_str());
+     }
+-    usleep(100000);
++    std::this_thread::sleep_for(std::chrono::microseconds(100000));
+   }
+   RCLCPP_INFO(
+     model_nh_->get_logger(), "Received urdf from param server, parsing...");
+diff --git a/src/gazebo_system.cpp b/src/gazebo_system.cpp
+index a9292bd..61693d5 100644
+--- a/src/gazebo_system.cpp
++++ b/src/gazebo_system.cpp
 @@ -24,6 +24,10 @@
  #include "gazebo/sensors/ForceTorqueSensor.hh"
  #include "gazebo/sensors/SensorManager.hh"
@@ -63,5 +64,5 @@ index c688541..3b6efc6 100644
 +#endif
 +
  #include "hardware_interface/hardware_info.hpp"
- #include "hardware_interface/lexical_casts.hpp"
  #include "hardware_interface/types/hardware_interface_type_values.hpp"
+ 
