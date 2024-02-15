@@ -55,6 +55,7 @@ packages_select_by_deps:
 
   - joint-state-broadcaster
   - joint-state-publisher
+  - joint_state_publisher_gui
   - joint-trajectory-controller
   - xacro
   - robot-localization
