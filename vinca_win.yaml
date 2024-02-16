@@ -59,7 +59,10 @@ packages_select_by_deps:
   - turtlebot3_simulations
   - rosbridge_suite
   - ament_cmake_catch2
-  # - desktop_full
+  - desktop_full
+  - nav2-bringup
+  - nav2-mppi-controller
+  - slam-toolbox
   # - moveit
 
 patch_dir: patch
