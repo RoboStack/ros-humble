@@ -61,7 +61,9 @@ packages_select_by_deps:
   - ament_cmake_catch2
   - nav2-bringup
   - nav2-mppi-controller
-  - slam-toolbox
+  # Fails due to not finding csparse, could borrow patch from mrpt2
+  # - slam-toolbox
+  # Currently has upstream issues with git LFS
   # - moveit
   # Broken for now until we migrate to newer gazebo
   # - desktop_full
