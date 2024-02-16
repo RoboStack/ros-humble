@@ -59,7 +59,18 @@ packages_select_by_deps:
   - turtlebot3_simulations
   - rosbridge_suite
   - ament_cmake_catch2
-  # - desktop_full
+  - nav2-mppi-controller
+
+  # PREVIOUSLY SUPPORTED PACKAGES, CURRENTLY BROKEN
+  # Currently has upstream issues with git LFS
   # - moveit
+  # Broken for now until we migrate to newer gazebo
+  # - desktop_full
+
+  # REQUESTED PACKAGES
+  # Fails due to not finding csparse, could borrow patch from mrpt2
+  # - slam-toolbox
+  # Needs slam-toolbox
+  # - nav2-bringup
 
 patch_dir: patch
