@@ -85,6 +85,9 @@ packages_select_by_deps:
   # - control_toolbox
   # - ros1_bridge
 
+  # Modern gz-sim integration
+  - ros-gz
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
