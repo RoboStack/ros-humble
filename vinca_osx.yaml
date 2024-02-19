@@ -91,6 +91,9 @@ packages_select_by_deps:
   - apriltag
   - apriltag_ros
 
+  # Modern gz-sim integration
+  - ros-gz
+
   # - moveit
   # - moveit_servo
 
