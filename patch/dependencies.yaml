@@ -42,8 +42,8 @@ pcl_ros:
 rviz_rendering:
   add_host: ["glew"]
 behaviortree_cpp_v3:
-  add_host: ["boost-cpp", "cppzmq"]
-  add_run: ["boost-cpp"]
+  add_host: ["libboost-devel", "cppzmq"]
+  add_run: ["libboost"]
 plotjuggler:
   add_host: ["libxcb", {sel(linux): elfutils}, "ros-humble-ros-workspace"]
 embree_vendor:
@@ -57,7 +57,7 @@ ign_rviz_plugins:
 image_view:
   add_host: ["REQUIRE_OPENGL"]
 nao_lola:
-  add_host: ["boost"]
+  add_host: ["libboost-devel"]
 ros_ign_gazebo:
   add_host: ["ros-humble-std-msgs", "ros-humble-rclcpp", "REQUIRE_OPENGL"]
 ros_ign_gazebo_demos:
@@ -73,8 +73,8 @@ libg2o:
 fmilibrary_vendor:
   add_host: ["fmilib"]
 mrpt2:
-  add_host:  ["assimp", "octomap", "tinyxml2", "boost-cpp", "jsoncpp", "gtest", "boost", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
-  add_run:   ["assimp", "octomap", "tinyxml2", "boost-cpp", "jsoncpp", "gtest", "boost", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
+  add_host:  ["assimp", "octomap", "tinyxml2", "libboost-devel", "jsoncpp", "gtest", "libboost-python-devel", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
+  add_run:   ["assimp", "octomap", "tinyxml2", "libboost-devel", "jsoncpp", "gtest", "libboost-python-devel", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
   add_build: [{"sel(linux)": "{{ cdt('libxcomposite-devel') }}"}]
 ros1_rosbag_storage_vendor:
   add_host: ["ros-noetic-roscpp", "ros-noetic-roslz4", "ros-noetic-rostest"]
@@ -89,7 +89,7 @@ nav2_smac_planner:
   add_build: [{"sel(osx)": "llvm-openmp"}]
   add_host: [{"sel(osx)": "llvm-openmp"}, "ompl", "libode"]
 nav2_util:
-  add_host: ["boost-cpp"]
+  add_host: ["libboost-devel"]
 nav2_constrained_smoother:
   add_host: [{"sel(win)": "openblas"}]
 ompl:
