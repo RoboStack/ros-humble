@@ -127,6 +127,7 @@ packages_select_by_deps:
 
   # Modern gz-sim integration
   - ros-gz
+  - libg2o
 
   # Needs fixing
   # - moveit-resources
