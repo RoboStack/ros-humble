@@ -42,6 +42,7 @@ packages_select_by_deps:
   - ros_environment
   - ros_base
   - rmw_cyclonedds_cpp
+  - moveit
   # - navigation2
   # - desktop
   # - cv_bridge
@@ -57,9 +58,6 @@ packages_select_by_deps:
   # - ament_cmake_catch2
   # - nav2-mppi-controller
 
-  # PREVIOUSLY SUPPORTED PACKAGES, CURRENTLY BROKEN
-  # Currently has upstream issues with git LFS
-  # - moveit
   # Broken for now until we migrate to newer gazebo
   # - desktop_full
 
