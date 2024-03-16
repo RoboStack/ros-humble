@@ -1,0 +1,42 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cfba129..d91c6a3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -30,6 +30,7 @@ link_directories(
+ add_library(${PROJECT_NAME} SHARED
+   src/gazebo_ros2_control_plugin.cpp
+ )
++target_compile_definitions(${PROJECT_NAME} PRIVATE "_USE_MATH_DEFINES" "NO_STRICT")
+ ament_target_dependencies(${PROJECT_NAME}
+   angles
+   controller_manager
+@@ -44,6 +45,7 @@ ament_target_dependencies(${PROJECT_NAME}
+ add_library(gazebo_hardware_plugins SHARED
+   src/gazebo_system.cpp
+ )
++target_compile_definitions(gazebo_hardware_plugins PRIVATE "_USE_MATH_DEFINES" "NO_STRICT")
+ ament_target_dependencies(gazebo_hardware_plugins
+   angles
+   gazebo_dev
+diff --git a/src/gazebo_ros2_control_plugin.cpp b/src/gazebo_ros2_control_plugin.cpp
+index 82b7ba7..eee85e6 100644
+--- a/src/gazebo_ros2_control_plugin.cpp
++++ b/src/gazebo_ros2_control_plugin.cpp
+@@ -36,6 +36,8 @@
+ #include <memory>
+ #include <utility>
+ #include <vector>
++#include <chrono>
++#include <thread>
+ 
+ #include "gazebo_ros/node.hpp"
+ 
+@@ -465,7 +471,7 @@ std::string GazeboRosControlPrivate::getURDF(std::string param_name) const
+         model_nh_->get_logger(), "gazebo_ros2_control plugin is waiting for model"
+         " URDF in parameter [%s] on the ROS param server.", search_param_name.c_str());
+     }
+-    usleep(100000);
++    std::this_thread::sleep_for(std::chrono::microseconds(100000));
+   }
+   RCLCPP_INFO(
+     model_nh_->get_logger(), "Received urdf from param server, parsing...");

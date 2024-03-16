@@ -1,0 +1,76 @@
+package:
+  name: ros-humble-gazebo-ros2-control
+  version: 0.4.6
+source:
+  git_url: https://github.com/ros2-gbp/gazebo_ros2_control-release.git
+  git_rev: release/humble/gazebo_ros2_control/0.4.6-1
+  folder: ros-humble-gazebo-ros2-control/src/work
+  patches:
+    - patch/ros-humble-gazebo-ros2-control.patch
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 6
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - sel(linux64): sysroot_linux-64 2.17
+    - ninja
+    - setuptools
+    - sel(unix): make
+    - sel(unix): coreutils
+    - sel(osx): tapi
+    - sel(build_platform != target_platform): pkg-config
+    - cmake
+    - cython
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): numpy
+  host:
+    - numpy
+    - pip
+    - sel(build_platform == target_platform): pkg-config
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-lint-auto
+    - ros-humble-ament-lint-common
+    - ros-humble-angles
+    - ros-humble-controller-manager
+    - ros-humble-gazebo-dev
+    - ros-humble-gazebo-ros
+    - ros-humble-hardware-interface
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-std-msgs
+    - ros-humble-yaml-cpp-vendor
+    - ros2-distro-mutex 0.5 humble
+  run:
+    - python
+    - ros-humble-angles
+    - ros-humble-controller-manager
+    - ros-humble-gazebo-dev
+    - ros-humble-gazebo-ros
+    - ros-humble-hardware-interface
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-ros-workspace
+    - ros-humble-std-msgs
+    - ros-humble-yaml-cpp-vendor
+    - ros2-distro-mutex 0.5 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
