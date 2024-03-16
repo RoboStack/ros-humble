@@ -126,6 +126,9 @@ packages_select_by_deps:
   - realsense2-description
   - webots_ros2
 
+  # ros2_control
+  - gazebo-ros2-control
+
   # Modern gz-sim integration
   - ros-gz
   - libg2o

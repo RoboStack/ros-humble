@@ -42,6 +42,8 @@ packages_select_by_deps:
   - ros_environment
   - ros_base
   - rmw_cyclonedds_cpp
+  - xacro
+  - gazebo-ros
   # - navigation2
   # - desktop
   # - cv_bridge
@@ -56,6 +58,10 @@ packages_select_by_deps:
   # - rosbridge_suite
   # - ament_cmake_catch2
   # - nav2-mppi-controller
+
+  # ros2_control
+  - gazebo-ros2-control
+  - ros2-controllers-test-nodes
 
   # PREVIOUSLY SUPPORTED PACKAGES, CURRENTLY BROKEN
   # Currently has upstream issues with git LFS
