@@ -57,6 +57,10 @@ packages_select_by_deps:
   # - ament_cmake_catch2
   # - nav2-mppi-controller
 
+  # ros2_control
+  - gazebo_ros2_control
+
+
   # PREVIOUSLY SUPPORTED PACKAGES, CURRENTLY BROKEN
   # Currently has upstream issues with git LFS
   # - moveit
