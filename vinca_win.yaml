@@ -62,6 +62,7 @@ packages_select_by_deps:
   # ros2_control
   - gazebo-ros2-control
   - ros2-controllers-test-nodes
+  - joint-state-publisher-gui
 
   # PREVIOUSLY SUPPORTED PACKAGES, CURRENTLY BROKEN
   # Currently has upstream issues with git LFS
