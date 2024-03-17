@@ -1,0 +1,3 @@
+ros-humble-python-qt-binding
+ros-humble-joint-state-publisher
+ros-humble-joint-state-publisher-gui
