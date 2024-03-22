@@ -85,6 +85,9 @@ packages_select_by_deps:
   # - control_toolbox
   # - ros1_bridge
 
+  # ros2_control
+  - gazebo-ros2-control
+
   # Modern gz-sim integration
   - ros-gz
 

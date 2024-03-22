@@ -72,8 +72,6 @@ packages_select_by_deps:
   - plotjuggler-ros
   - plotjuggler
 
-  - ros2_control
-  - ros2_controllers
   - ament_cmake_catch2
 
   - apriltag
@@ -82,6 +80,11 @@ packages_select_by_deps:
   - velodyne
   - sbg_driver
   - ackermann-msgs
+
+  # ros2_control
+  - ros2_control
+  - ros2_controllers
+  - gazebo-ros2-control
 
   # Modern gz-sim integration
   - ros-gz
