@@ -125,6 +125,7 @@ packages_select_by_deps:
   - realsense2-camera-msgs
   - realsense2-description
   - webots_ros2
+  - rosidl-generator-dds-idl
 
   # ros2_control
   - gazebo-ros2-control
