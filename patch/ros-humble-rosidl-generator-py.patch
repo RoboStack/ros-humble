@@ -65,7 +65,7 @@ index a6d8263..f231ea2 100644
 +  set_target_properties(${_target_name_lib} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
 +  target_include_directories(${_target_name_lib} PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
 +else()
-+  target_link_libraries(${_target_name_lib} PUBLIC Python3::NumPy Python3::Module Python3::Python)
++  target_link_libraries(${_target_name_lib} PRIVATE Python3::NumPy Python3::Python)
  endif()
  
  rosidl_get_typesupport_target(c_typesupport_target "${rosidl_generate_interfaces_TARGET}" "rosidl_typesupport_c")
