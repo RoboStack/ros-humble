@@ -81,7 +81,6 @@ packages_select_by_deps:
   - gazebo_dev
   - gazebo_ros
   - gazebo_plugins
-  - gazebo_ros2_control
   - gazebo_ros_pkgs
 
   - turtlebot3_gazebo
@@ -90,6 +89,14 @@ packages_select_by_deps:
 
   - apriltag
   - apriltag_ros
+
+  # ros2_control
+  - gazebo_ros2_control
+  - ros2_control
+  - ros2_controllers
+
+  # Modern gz-sim integration
+  - ros-gz
 
   # - moveit
   # - moveit_servo

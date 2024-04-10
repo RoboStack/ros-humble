@@ -111,6 +111,7 @@ packages_select_by_deps:
   - ament_cmake_catch2
   - apriltag
   - apriltag_ros
+  - marker-msgs
   # - moveit
   # - moveit-ros-perception
   # - moveit-runtime
@@ -124,6 +125,14 @@ packages_select_by_deps:
   - realsense2-camera-msgs
   - realsense2-description
   - webots_ros2
+  - rosidl-generator-dds-idl
+
+  # ros2_control
+  - gazebo-ros2-control
+
+  # Modern gz-sim integration
+  - ros-gz
+  - libg2o
 
   # Needs fixing
   # - moveit-resources

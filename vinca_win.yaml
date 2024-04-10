@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 6
+build_number: 7
 
 mutex_package: ros2-distro-mutex 0.5 humble
 
@@ -18,16 +18,11 @@ full_rebuild: true
 packages_skip_by_deps:
   - cartographer
   - octomap
-  - iceoryx_utils
-  - iceoryx_binding_c
-  - iceoryx_posh
-  - cyclonedds
   - rttest
 
 packages_remove_from_deps:
   - cartographer
   - octomap
-  - rmw_cyclonedds_cpp
   - tlsf
   - tlsf_cpp
   - pendulum_control
@@ -39,15 +34,17 @@ skip_existing:
 
 packages_select_by_deps:
   - ament-cmake-core
-  - ros2_control
-  - ros2_controllers
+  #- ros2_control
+  #- ros2_controllers
   - backward_ros
   - ros_workspace
   - vision_msgs
   - ros_environment
   - ros_base
+  - rmw_cyclonedds_cpp
+  - xacro
+  - gazebo-ros
   # - navigation2
-  # - desktop_full
   # - desktop
   # - cv_bridge
   # - perception
@@ -60,6 +57,23 @@ packages_select_by_deps:
   # - turtlebot3_simulations
   # - rosbridge_suite
   # - ament_cmake_catch2
+  # - nav2-mppi-controller
+
+  # ros2_control
+  - gazebo-ros2-control
+  - ros2-controllers-test-nodes
+  - joint-state-publisher-gui
+
+  # PREVIOUSLY SUPPORTED PACKAGES, CURRENTLY BROKEN
+  # Currently has upstream issues with git LFS
   # - moveit
+  # Broken for now until we migrate to newer gazebo
+  # - desktop_full
+
+  # REQUESTED PACKAGES
+  # Fails due to not finding csparse, could borrow patch from mrpt2
+  # - slam-toolbox
+  # Needs slam-toolbox
+  # - nav2-bringup
 
 patch_dir: patch

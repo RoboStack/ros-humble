@@ -1,0 +1,47 @@
+diff --git a/tricycle_controller/CMakeLists.txt b/tricycle_controller/CMakeLists.txt
+index cdc69f182a..94fba916b1 100644
+--- a/tricycle_controller/CMakeLists.txt
++++ b/tricycle_controller/CMakeLists.txt
+@@ -47,6 +47,7 @@ target_include_directories(tricycle_controller PUBLIC
+ )
+ target_link_libraries(tricycle_controller PUBLIC tricycle_controller_parameters)
+ ament_target_dependencies(tricycle_controller PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
++target_compile_definitions(tricycle_controller PRIVATE "TRICYCLE_CONTROLLER_BUILDING_DLL" _USE_MATH_DEFINES)
+ 
+ pluginlib_export_plugin_description_file(controller_interface tricycle_controller.xml)
+ 
+diff --git a/tricycle_controller/include/tricycle_controller/tricycle_controller.hpp b/tricycle_controller/include/tricycle_controller/tricycle_controller.hpp
+index 24aaf89de9..f76451d607 100644
+--- a/tricycle_controller/include/tricycle_controller/tricycle_controller.hpp
++++ b/tricycle_controller/include/tricycle_controller/tricycle_controller.hpp
+@@ -105,11 +105,15 @@ class TricycleController : public controller_interface::ControllerInterface
+     std::reference_wrapper<hardware_interface::LoanedCommandInterface> position_command;
+   };
+ 
++  TRICYCLE_CONTROLLER_PUBLIC
+   CallbackReturn get_traction(
+     const std::string & traction_joint_name, std::vector<TractionHandle> & joint);
++  TRICYCLE_CONTROLLER_PUBLIC
+   CallbackReturn get_steering(
+     const std::string & steering_joint_name, std::vector<SteeringHandle> & joint);
++  TRICYCLE_CONTROLLER_PUBLIC
+   double convert_trans_rot_vel_to_steering_angle(double v, double omega, double wheelbase);
++  TRICYCLE_CONTROLLER_PUBLIC
+   std::tuple<double, double> twist_to_ackermann(double linear_command, double angular_command);
+ 
+   // Parameters from ROS for tricycle_controller
+@@ -155,11 +159,14 @@ class TricycleController : public controller_interface::ControllerInterface
+ 
+   bool is_halted = false;
+ 
++  TRICYCLE_CONTROLLER_PUBLIC
+   void reset_odometry(
+     const std::shared_ptr<rmw_request_id_t> request_header,
+     const std::shared_ptr<std_srvs::srv::Empty::Request> req,
+     std::shared_ptr<std_srvs::srv::Empty::Response> res);
++  TRICYCLE_CONTROLLER_PUBLIC
+   bool reset();
++  TRICYCLE_CONTROLLER_PUBLIC
+   void halt();
+ };
+ }  // namespace tricycle_controller

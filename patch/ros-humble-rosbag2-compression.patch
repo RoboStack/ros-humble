@@ -1,0 +1,12 @@
+diff --git a/include/rosbag2_compression/compression_options.hpp b/include/rosbag2_compression/compression_options.hpp
+index 37fe5007e..191bb6d71 100644
+--- a/include/rosbag2_compression/compression_options.hpp
++++ b/include/rosbag2_compression/compression_options.hpp
+@@ -16,6 +16,7 @@
+ #define ROSBAG2_COMPRESSION__COMPRESSION_OPTIONS_HPP_
+ 
+ #include <string>
++#include <cstdint>
+ 
+ #include "visibility_control.hpp"
+ 
