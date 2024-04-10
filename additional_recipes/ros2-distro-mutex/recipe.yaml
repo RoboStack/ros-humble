@@ -5,9 +5,6 @@ package:
 build:
   number: 0
   string: humble
-  run_exports:
-    weak:
-      - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
 
 requirements:
   # NOTE:
@@ -28,15 +25,19 @@ requirements:
   # values here should be applied from run_exports!
   # if the upstream package does not have run_exports
   # please change it in the conda_build_config.yaml!
-  run_constrained:
+  run_constraints:
     - libboost 1.82
     - libboost-devel 1.82
     - pcl 1.13.1
     - gazebo 11
     - libpqxx 6
 
+  run_exports:
+    weak:
+      - ${{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}
+
 about:
-  home: https://github.com/robostack/ros-humble
+  homepage: https://github.com/robostack/ros-humble
   license: BSD-3-Clause
   summary: |
     The ROS2 distro mutex. To switch between ROS2 versions, you need to change the mutex.

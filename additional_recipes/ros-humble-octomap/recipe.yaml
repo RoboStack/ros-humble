@@ -11,10 +11,11 @@ requirements:
 
 
 about:
-  home: https://github.com/conda-forge/octomap-feedstock
+  homepage: https://github.com/conda-forge/octomap-feedstock
   license: BSD-3-Clause
   summary: |
     An Efficient Probabilistic 3D Mapping Framework Based on Octrees
+
 extra:
   recipe-maintainers:
     - ros-forge
