@@ -112,13 +112,14 @@ packages_select_by_deps:
   - apriltag
   - apriltag_ros
   - marker-msgs
-  # - moveit
-  # - moveit-ros-perception
-  # - moveit-runtime
-  # - moveit-servo
-  # - moveit_visual_tools
-  # - moveit_servo
-  # - rqt-moveit
+  - moveit
+  - moveit-ros-perception
+  - moveit-runtime
+  - moveit-servo
+  - moveit_visual_tools
+  - moveit_servo
+  - moveit2_tutorials
+  - rqt-moveit
 
   - librealsense2
   - realsense2-camera
@@ -127,7 +128,7 @@ packages_select_by_deps:
   - webots_ros2
   - rosidl-generator-dds-idl
 
-  # ros2_control
+  - ros2_control
   - gazebo-ros2-control
 
   # Modern gz-sim integration
