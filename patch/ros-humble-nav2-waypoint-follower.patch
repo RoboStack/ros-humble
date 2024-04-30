@@ -11,3 +11,19 @@ index a3b46942b..e228086fa 100644
  # Try for OpenCV 4.X, but settle for whatever is installed
  find_package(OpenCV 4 QUIET)
  if(NOT OpenCV_FOUND)
+
+diff --git a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+index 9c46fdf1f8..1e6048aefc 100644
+--- a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
++++ b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+@@ -32,8 +32,8 @@
+ 
+ #include "sensor_msgs/msg/image.hpp"
+ #include "nav2_core/waypoint_task_executor.hpp"
+-#include "opencv4/opencv2/core.hpp"
+-#include "opencv4/opencv2/opencv.hpp"
++#include "opencv2/core.hpp"
++#include "opencv2/opencv.hpp"
+ #include "cv_bridge/cv_bridge.hpp"
+ #include "image_transport/image_transport.hpp"
+ 
