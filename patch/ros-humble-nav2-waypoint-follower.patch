@@ -12,10 +12,10 @@ index a3b46942b..e228086fa 100644
  find_package(OpenCV 4 QUIET)
  if(NOT OpenCV_FOUND)
 
-diff --git a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+diff --git a/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
 index 9c46fdf1f8..1e6048aefc 100644
---- a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
-+++ b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+--- a/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
++++ b/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
 @@ -32,8 +32,8 @@
  
  #include "sensor_msgs/msg/image.hpp"
