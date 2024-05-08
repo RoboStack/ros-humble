@@ -101,4 +101,6 @@ packages_select_by_deps:
   # - moveit
   # - moveit_servo
 
+  - gtsam
+
 patch_dir: patch

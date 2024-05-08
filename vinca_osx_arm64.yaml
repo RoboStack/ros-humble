@@ -91,5 +91,6 @@ packages_select_by_deps:
 
   # - moveit
 
+  - gtsam
 
 patch_dir: patch
