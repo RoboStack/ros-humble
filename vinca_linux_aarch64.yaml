@@ -91,6 +91,8 @@ packages_select_by_deps:
   # Modern gz-sim integration
   - ros-gz
 
+  - gtsam
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
