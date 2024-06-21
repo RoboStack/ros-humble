@@ -14,6 +14,7 @@ skip_all_deps: false
 # If full rebuild, the build number of the existing package has
 # to match the selected build number for skipping
 full_rebuild: true
+trigger_new_versions: true
 
 packages_skip_by_deps:
   # trigger
