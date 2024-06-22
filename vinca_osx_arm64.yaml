@@ -42,57 +42,59 @@ packages_select_by_deps:
   # trigger
   - ros_workspace
   - ros_environment
+  - ament_cmake
   - ros_base
-  - demo_nodes_py
-  - demo_nodes_cpp
   - desktop
-  - graph_msgs
-  - desktop_full
-  - navigation2
-  - rosbridge_suite
-  - vision_msgs
-  - rosbag2_storage_mcap
-  - foxglove_bridge
-  - turtlebot3
 
-  - joint-state-broadcaster
-  - joint-state-publisher
-  - joint-state-publisher-gui
-  - joint-trajectory-controller
-  - xacro
-  - robot-localization
-  - vision-opencv
+  # - desktop_full
+  # - demo_nodes_py
+  # - demo_nodes_cpp
+  # - graph_msgs
+  # - navigation2
+  # - rosbridge_suite
+  # - vision_msgs
+  # - rosbag2_storage_mcap
+  # - foxglove_bridge
+  # - turtlebot3
 
-  - gazebo_msgs
-  - gazebo_dev
-  - gazebo_ros
-  - gazebo_plugins
-  - gazebo_ros2_control
-  - gazebo_ros_pkgs
-  - turtlebot3_gazebo
+  # - joint-state-broadcaster
+  # - joint-state-publisher
+  # - joint-state-publisher-gui
+  # - joint-trajectory-controller
+  # - xacro
+  # - robot-localization
+  # - vision-opencv
 
-  - plotjuggler-ros
-  - plotjuggler
+  # - gazebo_msgs
+  # - gazebo_dev
+  # - gazebo_ros
+  # - gazebo_plugins
+  # - gazebo_ros2_control
+  # - gazebo_ros_pkgs
+  # - turtlebot3_gazebo
 
-  - ament_cmake_catch2
+  # - plotjuggler-ros
+  # - plotjuggler
 
-  - apriltag
-  - apriltag_ros
+  # - ament_cmake_catch2
 
-  - velodyne
-  - sbg_driver
-  - ackermann-msgs
+  # - apriltag
+  # - apriltag_ros
 
-  # ros2_control
-  - ros2_control
-  - ros2_controllers
-  - gazebo-ros2-control
+  # - velodyne
+  # - sbg_driver
+  # - ackermann-msgs
 
-  # Modern gz-sim integration
-  - ros-gz
+  # # ros2_control
+  # - ros2_control
+  # - ros2_controllers
+  # - gazebo-ros2-control
 
-  # - moveit
+  # # Modern gz-sim integration
+  # - ros-gz
 
-  - gtsam
+  # # - moveit
+
+  # - gtsam
 
 patch_dir: patch

@@ -42,67 +42,70 @@ packages_select_by_deps:
   # trigger
   - ros_workspace
   - ros_environment
+  - ament_cmake
   - ros_base
   - desktop
-  - desktop_full
-  - navigation2
-  - rosbridge_suite
-  - vision_msgs
-  - rosbag2_storage_mcap
-  - foxglove_bridge
-  - turtlebot3
 
-  - control_msgs
-  - steering-controllers-library
-  - ackermann-steering-controller
-  - admittance-controller
-  - forward-command-controller
-  - bicycle_steering_controller
-  - diff_drive_controller
-  - effort_controllers
-  - force_torque_sensor_broadcaster
-  - imu_sensor_broadcaster
-  - position_controllers
+  # - desktop_full
 
-  - ros2_control
-  - ros2_controllers
+  # - navigation2
+  # - rosbridge_suite
+  # - vision_msgs
+  # - rosbag2_storage_mcap
+  # - foxglove_bridge
+  # - turtlebot3
 
-  - joint-state-broadcaster
-  - joint-state-publisher
-  - joint-trajectory-controller
-  - joint-limits
-  - xacro
-  - robot-localization
-  - velodyne
-  - sbg_driver
-  - vision-opencv
-  - ackermann-msgs
-  - ament_cmake_catch2
+  # - control_msgs
+  # - steering-controllers-library
+  # - ackermann-steering-controller
+  # - admittance-controller
+  # - forward-command-controller
+  # - bicycle_steering_controller
+  # - diff_drive_controller
+  # - effort_controllers
+  # - force_torque_sensor_broadcaster
+  # - imu_sensor_broadcaster
+  # - position_controllers
 
-  - gazebo_msgs
-  - gazebo_dev
-  - gazebo_ros
-  - gazebo_plugins
-  - gazebo_ros_pkgs
+  # - ros2_control
+  # - ros2_controllers
 
-  - turtlebot3_gazebo
-  - plotjuggler-ros
-  - plotjuggler
+  # - joint-state-broadcaster
+  # - joint-state-publisher
+  # - joint-trajectory-controller
+  # - joint-limits
+  # - xacro
+  # - robot-localization
+  # - velodyne
+  # - sbg_driver
+  # - vision-opencv
+  # - ackermann-msgs
+  # - ament_cmake_catch2
 
-  - apriltag
-  - apriltag_ros
+  # - gazebo_msgs
+  # - gazebo_dev
+  # - gazebo_ros
+  # - gazebo_plugins
+  # - gazebo_ros_pkgs
 
-  # ros2_control
-  - gazebo_ros2_control
-  - ros2_control
-  - ros2_controllers
+  # - turtlebot3_gazebo
+  # - plotjuggler-ros
+  # - plotjuggler
 
-  # Modern gz-sim integration
-  - ros-gz
+  # - apriltag
+  # - apriltag_ros
 
-  # - moveit
-  # - moveit_servo
+  # # ros2_control
+  # - gazebo_ros2_control
+  # - ros2_control
+  # - ros2_controllers
 
-  - gtsam
+  # # Modern gz-sim integration
+  # - ros-gz
+
+  # # - moveit
+  # # - moveit_servo
+
+  # - gtsam
 
 patch_dir: patch
