@@ -114,13 +114,13 @@ packages_select_by_deps:
   - apriltag
   - apriltag_ros
   - marker-msgs
-  - moveit
-  - moveit-ros-perception
-  - moveit-runtime
-  - moveit-servo
-  - moveit_visual_tools
-  - moveit_servo
-  - moveit2_tutorials
+  # - moveit
+  # - moveit-ros-perception
+  # - moveit-runtime
+  # - moveit-servo
+  # - moveit_visual_tools
+  # - moveit_servo
+  # - moveit2_tutorials
   - rqt-moveit
 
   - librealsense2
