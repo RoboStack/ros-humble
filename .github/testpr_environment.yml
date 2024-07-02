@@ -6,7 +6,7 @@ dependencies:
   - python 3.11.*
   - pip
   - boa
-  - conda-build <3.28
+  - conda-build
   - rospkg
   - catkin_pkg >=0.4.16
   - ruamel.yaml >=0.16.6,<0.18
