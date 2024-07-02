@@ -10,7 +10,7 @@ requirements:
     - urdfdom-py 1.2.0
 
 about:
-  home: https://github.com/ros/urdf_parser_py
+  homepage: https://github.com/ros/urdf_parser_py
   license: BSD-3-Clause
   summary: |
     Standalone URDF parser for Python.
