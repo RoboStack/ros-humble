@@ -1,0 +1,17 @@
+diff --git a/moveit_core/collision_detection_fcl/CMakeLists.txt b/moveit_core/collision_detection_fcl/CMakeLists.txt
+index 382dc41c70..99d49531ef 100644
+--- a/moveit_core/collision_detection_fcl/CMakeLists.txt
++++ b/moveit_core/collision_detection_fcl/CMakeLists.txt
+@@ -14,11 +14,11 @@ ament_target_dependencies(${MOVEIT_LIB_NAME}
+   urdf
+   urdfdom
+   urdfdom_headers
+-  LIBFCL
+   visualization_msgs
+ )
+ target_link_libraries(${MOVEIT_LIB_NAME}
+   moveit_collision_detection
++  ${LIBFCL_LINK_LIBRARIES}
+ )
+ 
+ add_library(collision_detector_fcl_plugin SHARED src/collision_detector_fcl_plugin_loader.cpp)

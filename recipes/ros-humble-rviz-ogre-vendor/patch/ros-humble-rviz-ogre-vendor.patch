@@ -1,0 +1,259 @@
+diff --git a/0001-enable-pkg-config-for-Windows.patch b/0001-enable-pkg-config-for-Windows.patch
+new file mode 100644
+index 00000000..e446e639
+--- /dev/null
++++ b/0001-enable-pkg-config-for-Windows.patch
+@@ -0,0 +1,72 @@
++diff --git a/CMake/ConfigureBuild.cmake b/CMake/ConfigureBuild.cmake
++index 0e04f59701..40f933c4bc 100644
++--- a/CMake/ConfigureBuild.cmake
+++++ b/CMake/ConfigureBuild.cmake
++@@ -149,7 +149,7 @@ if (BUILD_TYPE_LOWER STREQUAL "debug" AND WIN32)
++ endif ()
++ 
++ # Create the pkg-config package files on Unix systems
++-if (UNIX)
+++#if (UNIX)
++   set(OGRE_PLUGIN_PREFIX "")
++   set(OGRE_PLUGIN_EXT ".so")
++   set(OGRE_PAGING_ADDITIONAL_PACKAGES "")
++@@ -158,12 +158,17 @@ if (UNIX)
++     set(OGRE_PLUGIN_EXT ".a")
++   endif ()
++ 
+++  if (WIN32)
+++    set(OGRE_PLUGIN_PREFIX "")
+++    set(OGRE_PLUGIN_EXT ".lib")
+++  endif()
+++
++   set(OGRE_ADDITIONAL_LIBS "")
++   set(OGRE_ADDITIONAL_INCLUDE_DIRS "")
++ 
++   set(OGRE_CFLAGS "")
++-  set(OGRE_PREFIX_PATH ${CMAKE_INSTALL_PREFIX})
++-  if (OGRE_CONFIG_THREADS GREATER 0)
+++  set(OGRE_PREFIX_PATH "")
+++  if (UNIX AND OGRE_CONFIG_THREADS GREATER 0)
++     set(OGRE_CFLAGS "-pthread")
++     set(OGRE_ADDITIONAL_LIBS "${OGRE_ADDITIONAL_LIBS} -lpthread")
++   endif ()
++@@ -236,7 +241,7 @@ if (UNIX)
++     configure_file(${OGRE_TEMPLATES_DIR}/OGRE-HLMS.pc.in ${PROJECT_BINARY_DIR}/pkgconfig/OGRE-HLMS.pc @ONLY)
++     install(FILES ${PROJECT_BINARY_DIR}/pkgconfig/OGRE-HLMS.pc DESTINATION ${OGRE_LIB_DIRECTORY}/pkgconfig)
++   endif ()
++-endif ()
+++# endif ()
++ 
++ if(OGRE_CONFIG_STATIC_LINK_CRT)
++ #We statically link to reduce dependencies
++diff --git a/CMake/Templates/OGRE.pc.in b/CMake/Templates/OGRE.pc.in
++index 5d752f2991..a4baaafa65 100644
++--- a/CMake/Templates/OGRE.pc.in
+++++ b/CMake/Templates/OGRE.pc.in
++@@ -2,7 +2,7 @@ prefix=@OGRE_PREFIX_PATH@
++ exec_prefix=${prefix}
++ libdir=${prefix}/@OGRE_LIB_DIRECTORY@
++ includedir=${prefix}/include
++-plugindir=${libdir}/OGRE
+++plugindir=${prefix}/@OGRE_PLUGIN_DIRECTORY@
++ 
++ Name: OGRE
++ Description: Object-Oriented Graphics Rendering Engine
++diff --git a/CMakeLists.txt b/CMakeLists.txt
++index 376af45b89..bcdab0b274 100644
++--- a/CMakeLists.txt
+++++ b/CMakeLists.txt
++@@ -388,6 +388,12 @@ cmake_dependent_option(OGRE_CONFIG_STATIC_LINK_CRT "Statically link the MS CRT d
++ set(OGRE_LIB_DIRECTORY "lib${LIB_SUFFIX}" CACHE STRING "Install path for libraries, e.g. 'lib64' on some 64-bit Linux distros.")
++ set(OGRE_BIN_DIRECTORY "bin" CACHE STRING "Install path for binaries")
++ 
+++if (WIN32)
+++  set(OGRE_PLUGIN_DIRECTORY "bin" CACHE STRING "Install path for plugins.")
+++else()
+++  set(OGRE_PLUGIN_DIRECTORY "lib${LIB_SUFFIX}/OGRE" CACHE STRING "Install path for plugins.")
+++endif()
+++
++ cmake_dependent_option(OGRE_INSTALL_VSPROPS "Install Visual Studio Property Page." FALSE "MSVC" FALSE)
++ if (OGRE_INSTALL_VSPROPS)
++   configure_file(${OGRE_TEMPLATES_DIR}/OGRE.props.in ${PROJECT_BINARY_DIR}/OGRE.props)
+\ No newline at end of file
+diff --git a/0002-osx-no-framework.patch b/0002-osx-no-framework.patch
+new file mode 100644
+index 00000000..c1041040
+--- /dev/null
++++ b/0002-osx-no-framework.patch
+@@ -0,0 +1,22 @@
++diff --git a/OgreMain/src/OgreDynLib.cpp b/OgreMain/src/OgreDynLib.cpp
++index b4ce78e46..21304062c 100644
++--- a/OgreMain/src/OgreDynLib.cpp
+++++ b/OgreMain/src/OgreDynLib.cpp
++@@ -99,7 +99,7 @@ namespace Ogre {
++         LogManager::getSingleton().logMessage("Loading library " + name);
++ 
++         mInst = (DYNLIB_HANDLE)DYNLIB_LOAD( name.c_str() );
++-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+++/*#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
++         if(!mInst)
++         {
++             name = mName;
++@@ -108,7 +108,7 @@ namespace Ogre {
++             // Try again as a framework
++             mInst = (DYNLIB_HANDLE)FRAMEWORK_LOAD( name );
++         }
++-#endif
+++#endif*/
++         if( !mInst )
++             OGRE_EXCEPT(
++                 Exception::ERR_INTERNAL_ERROR, 
+\ No newline at end of file
+diff --git a/0003-clang11-fix.patch b/0003-clang11-fix.patch
+new file mode 100644
+index 00000000..ab1c324c
+--- /dev/null
++++ b/0003-clang11-fix.patch
+@@ -0,0 +1,23 @@
++diff --git a/CMakeLists.txt b/CMakeLists.txt
++index f4d8fd4aa..2795f3490 100644
++--- a/CMakeLists.txt
+++++ b/CMakeLists.txt
++@@ -93,6 +93,18 @@ if (NOT CMAKE_BUILD_TYPE)
++   set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose the type of build, options are: None (CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel." FORCE)
++ endif ()
++ 
+++if(${CMAKE_C_COMPILER_ID} STREQUAL "Clang" AND ${CMAKE_C_COMPILER_VERSION} VERSION_GREATER_EQUAL "11")
+++  # newer Clang chokes on the idiomatic way to use CF_ENUM; e.g. like this:
+++  #     typedef CF_ENUM(int, MyEnum) {
+++  #       MY_ENUM_THING,
+++  #       MY_ENUM_OTHER_THING,
+++  #       # etc...
+++  #     }
+++  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-elaborated-enum-base -Wno-undef-prefix")
+++  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-elaborated-enum-base -Wno-undef-prefix")
+++  SET(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -Wno-undef-prefix")
+++endif()
+++
++ # determine Ogre version numbers
++ message(STATUS "Configuring OGRE ${OGRE_VERSION}")
++ # Configure version file for use by scripts
+\ No newline at end of file
+diff --git a/0004-fix-arm64.patch b/0004-fix-arm64.patch
+new file mode 100644
+index 00000000..fb54a574
+--- /dev/null
++++ b/0004-fix-arm64.patch
+@@ -0,0 +1,20 @@
++diff --git a/CMakeLists.txt b/CMakeLists.txt
++index 20984c5eba1..607bf7cec5e 100644
++--- a/CMakeLists.txt
+++++ b/CMakeLists.txt
++@@ -280,15 +280,6 @@ elseif(EMSCRIPTEN)
++ 
++   set(OGRE_CONFIG_THREADS "0" CACHE STRING "Threading is unstable on Emscripten" FORCE)
++ elseif (APPLE AND NOT APPLE_IOS)
++-
++-  set(XCODE_ATTRIBUTE_SDKROOT macosx)
++-  if(CMAKE_GENERATOR STREQUAL "Unix Makefiles")
++-    execute_process(COMMAND xcodebuild -version -sdk "${XCODE_ATTRIBUTE_SDKROOT}" Path | head -n 1 OUTPUT_VARIABLE CMAKE_OSX_SYSROOT)
++-    string(REGEX REPLACE "(\r?\n)+$" "" CMAKE_OSX_SYSROOT "${CMAKE_OSX_SYSROOT}")
++-  else()
++-    set(CMAKE_OSX_SYSROOT macosx)
++-  endif()
++-
++   # Make sure that the GLES2 render system is disabled for non-iOS Apple builds
++   set(OGRE_BUILD_RENDERSYSTEM_GLES2 FALSE CACHE BOOL "" FORCE)
++ endif ()
+\ No newline at end of file
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 122f2f29..c837ae29 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -12,8 +12,8 @@ if(POLICY CMP0135)
+ endif()
+ 
+ if(WIN32)
+-  set(BUILDING_FREETYPE_LOCALLY ON)
+-  set(BUILDING_ZLIB_LOCALLY ON)
++  set(BUILDING_FREETYPE_LOCALLY OFF)
++  set(BUILDING_ZLIB_LOCALLY OFF)
+ else()
+   set(BUILDING_FREETYPE_LOCALLY OFF)
+   set(BUILDING_ZLIB_LOCALLY OFF)
+@@ -125,7 +125,11 @@ macro(build_ogre)
+     set(OGRE_CXX_FLAGS "${OGRE_CXX_FLAGS} /w /EHsc")
+   elseif(APPLE)
+     set(OGRE_CXX_FLAGS "${OGRE_CXX_FLAGS} -std=c++14 -stdlib=libc++ -w")
+-    list(APPEND extra_cmake_args "-DCMAKE_OSX_ARCHITECTURES='x86_64'")
++    if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "arm64")
++      list(APPEND extra_cmake_args "-DCMAKE_OSX_ARCHITECTURES='arm64'")
++    else()
++      list(APPEND extra_cmake_args "-DCMAKE_OSX_ARCHITECTURES='x86_64'")
++    endif()
+   else()  # Linux
+     set(OGRE_C_FLAGS "${OGRE_C_FLAGS} -w")
+     # include Clang -Wno-everything to disable warnings in that build. GCC doesn't mind it
+@@ -161,9 +165,8 @@ macro(build_ogre)
+ 
+   find_package(Patch REQUIRED)
+   include(ExternalProject)
+-  ExternalProject_Add(ogre-v1.12.1
+-    URL https://github.com/OGRECave/ogre/archive/v1.12.1.zip
+-    URL_MD5 cdbea4006d223c173e0a93864111b936
++  ExternalProject_Add(ogre-v1.12.13
++    URL https://github.com/OGRECave/ogre/archive/v1.12.13.zip
+     TIMEOUT 1200
+     LOG_CONFIGURE ${should_log}
+     LOG_BUILD ${should_log}
+@@ -185,21 +185,26 @@ macro(build_ogre)
+       -DOGRE_BUILD_COMPONENT_JAVA:BOOL=FALSE
+       -DOGRE_BUILD_COMPONENT_CSHARP:BOOL=FALSE
+       -DOGRE_BUILD_COMPONENT_BITES:BOOL=FALSE
++      -DOGRE_BUILD_PLUGIN_EXRCODEC=FALSE
++      -DOGRE_ENABLE_PRECOMPILED_HEADERS=0
+       ${extra_cmake_args}
+       -Wno-dev
+     PATCH_COMMAND
+       ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/pragma-patch.diff &&
+-      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/fix-arm64.diff &&
++      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0001-enable-pkg-config-for-Windows.patch &&
++      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0002-osx-no-framework.patch &&
++      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0003-clang11-fix.patch &&
++      ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/0004-fix-arm64.patch &&
+       ${Patch_EXECUTABLE} -p1 -N < ${CMAKE_CURRENT_SOURCE_DIR}/relocatable.patch
+     COMMAND
+-      ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/FindFreetype.cmake ${CMAKE_CURRENT_BINARY_DIR}/ogre-v1.12.1-prefix/src/ogre-v1.12.1/CMake/Packages/FindFreetype.cmake
++      ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/FindFreetype.cmake ${CMAKE_CURRENT_BINARY_DIR}/ogre-v1.12.13-prefix/src/ogre-v1.12.13/CMake/Packages/FindFreetype.cmake
+   )
+ 
+   if(BUILDING_FREETYPE_LOCALLY)
+-    add_dependencies(ogre-v1.12.1 freetype-2.8.1)
++    add_dependencies(ogre-v1.12.13 freetype-2.8.1)
+   endif()
+   if(BUILDING_ZLIB_LOCALLY)
+-    add_dependencies(ogre-v1.12.1 zlib-1.2.11)
++    add_dependencies(ogre-v1.12.13 zlib-1.2.11)
+   endif()
+ 
+   # The external project will install to the build folder, but we'll install that on make install.
+diff --git a/rviz_ogre_vendor-extras.cmake.in b/rviz_ogre_vendor-extras.cmake.in
+index 786aff99..dd0455d4 100644
+--- a/rviz_ogre_vendor-extras.cmake.in
++++ b/rviz_ogre_vendor-extras.cmake.in
+@@ -97,16 +97,8 @@ foreach(_lib IN LISTS OGRE_LIBRARIES)
+       message(FATAL_ERROR "Could not find freetype package")
+     endif()
+ 
+-    if(WIN32)
+-      if(_ogre_main_static_library_debug_abs)
+-        set(ZLIB_LIBRARIES "${ZLIB_HOME}/lib/zlibstaticd.lib")
+-      else()
+-        set(ZLIB_LIBRARIES "${ZLIB_HOME}/lib/zlibstatic.lib")
+-      endif()
+-    else()
+-      find_package(ZLIB REQUIRED)
+-    endif()
+-
++    find_package(ZLIB REQUIRED)
++    
+     if(NOT ZLIB_LIBRARIES)
+       message(FATAL_ERROR "Could not find zlib library")
+     endif()

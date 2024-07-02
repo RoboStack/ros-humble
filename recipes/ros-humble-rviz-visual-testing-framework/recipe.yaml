@@ -1,0 +1,80 @@
+package:
+  name: ros-humble-rviz-visual-testing-framework
+  version: 11.2.12
+source:
+  git_url: https://github.com/ros2-gbp/rviz-release.git
+  git_rev: release/humble/rviz_visual_testing_framework/11.2.12-1
+  folder: ros-humble-rviz-visual-testing-framework/src/work
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 7
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - sel(linux64): sysroot_linux-64 2.17
+    - ninja
+    - setuptools
+    - sel(unix): make
+    - sel(unix): coreutils
+    - sel(osx): tapi
+    - sel(build_platform != target_platform): pkg-config
+    - cmake
+    - cython
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): numpy
+    - sel(linux): "{{ cdt('mesa-libgl-devel') }}"
+    - sel(linux): "{{ cdt('mesa-dri-drivers') }}"
+    - sel(linux): "{{ cdt('libselinux') }}"
+    - sel(linux): "{{ cdt('libxdamage') }}"
+    - sel(linux): "{{ cdt('libxxf86vm') }}"
+    - sel(linux): "{{ cdt('libxfixes') }}"
+    - sel(linux): "{{ cdt('libxext') }}"
+    - sel(linux): "{{ cdt('libxau') }}"
+    - sel(linux): "{{ cdt('libxcb') }}"
+  host:
+    - numpy
+    - pip
+    - sel(build_platform == target_platform): pkg-config
+    - python
+    - qt-main
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-cppcheck
+    - ros-humble-ament-cmake-cpplint
+    - ros-humble-ament-cmake-gmock
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-cmake-lint-cmake
+    - ros-humble-ament-cmake-uncrustify
+    - ros-humble-ament-cmake-xmllint
+    - ros-humble-ament-lint-auto
+    - ros-humble-rcutils
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-rviz-common
+    - ros2-distro-mutex 0.5 humble
+    - sel(unix): xorg-libx11
+    - sel(unix): xorg-libxext
+  run:
+    - python
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-rcutils
+    - ros-humble-ros-workspace
+    - ros-humble-rviz-common
+    - ros2-distro-mutex 0.5 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
+    - sel(unix): xorg-libx11
+    - sel(unix): xorg-libxext
