@@ -1,8 +1,8 @@
 diff --git a/src/prbt_manipulator_ikfast_moveit_plugin.cpp b/src/prbt_manipulator_ikfast_moveit_plugin.cpp
-index 7479184c..4151126f 100644
+index a0143f8fa..610d7e4a4 100644
 --- a/src/prbt_manipulator_ikfast_moveit_plugin.cpp
 +++ b/src/prbt_manipulator_ikfast_moveit_plugin.cpp
-@@ -805,13 +805,15 @@ bool IKFastKinematicsPlugin::getPositionFK(const std::vector<std::string>& link_
+@@ -804,13 +804,15 @@ bool IKFastKinematicsPlugin::getPositionFK(const std::vector<std::string>& link_
      return false;
    }
  
@@ -19,3 +19,18 @@ index 7479184c..4151126f 100644
    for (int i = 0; i < 3; ++i)
      p_out.p.data[i] = eetrans[i];
  
+diff --git a/src/prbt_manipulator_ikfast_solver.cpp b/src/prbt_manipulator_ikfast_solver.cpp
+index b22d0f73d..d0a7a93b7 100644
+--- a/src/prbt_manipulator_ikfast_solver.cpp
++++ b/src/prbt_manipulator_ikfast_solver.cpp
+@@ -25,10 +25,6 @@
+ #include "ikfast.h" // found inside share/openrave-X.Y/python/ikfast.h
+ using namespace ikfast;
+ 
+-// check if the included ikfast version matches what this file was compiled with
+-#define IKFAST_COMPILE_ASSERT(x) extern int __dummy[static_cast<int>(x)]
+-IKFAST_COMPILE_ASSERT(IKFAST_VERSION==0x1000004a);
+-
+ #include <cmath>
+ #include <vector>
+ #include <limits>
