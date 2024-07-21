@@ -137,6 +137,7 @@ packages_select_by_deps:
   - libg2o
 
   - gtsam
+  - motion-capture-tracking
 
   # Needs fixing
   # - moveit-resources
