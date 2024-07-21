@@ -161,4 +161,4 @@ vision_msgs_rviz_plugins:
 velodyne_pointcloud:
   add_host: ["libboost-devel"]
 motion_capture_tracking:
-  add_host: ["libboost-devel"]
+  add_host: ["REQUIRE_OPENGL", "libboost-devel"]
