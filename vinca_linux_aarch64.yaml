@@ -80,8 +80,9 @@ packages_select_by_deps:
   - apriltag
   - apriltag_ros
 
-  # - moveit
-  # - moveit_servo
+  - moveit
+  - moveit_servo
+  - moveit-planners-chomp
 
   # - control_toolbox
   # - ros1_bridge
