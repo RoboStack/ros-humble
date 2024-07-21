@@ -90,7 +90,8 @@ packages_select_by_deps:
   # Modern gz-sim integration
   - ros-gz
 
-  # - moveit
+  - moveit
+  - moveit-planners-chomp
 
   - gtsam
 
