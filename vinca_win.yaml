@@ -44,6 +44,7 @@ packages_select_by_deps:
   - ros_base
   - rmw_cyclonedds_cpp
   - moveit
+  - moveit-planners-chomp
   - xacro
   - gazebo-ros
   # - navigation2
