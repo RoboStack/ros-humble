@@ -1,0 +1,259 @@
+jobs:
+  stage_0_job_0:
+    name: urdfdom-py moveit-resources-panda-description octomap-msgs object-recognition-msgs
+      random-numbers
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-urdfdom-py ros-humble-moveit-resources-panda-description
+        ros-humble-octomap-msgs ros-humble-object-recognition-msgs ros-humble-random-numbers
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-urdfdom-py ros-humble-moveit-resources-panda-description
+          ros-humble-octomap-msgs ros-humble-object-recognition-msgs ros-humble-random-numbers
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_0_job_1:
+    name: eigen-stl-containers moveit-resources-pr2-description moveit-common moveit-resources-fanuc-description
+      launch-param-builder
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-eigen-stl-containers ros-humble-moveit-resources-pr2-description
+        ros-humble-moveit-common ros-humble-moveit-resources-fanuc-description ros-humble-launch-param-builder
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-eigen-stl-containers ros-humble-moveit-resources-pr2-description
+          ros-humble-moveit-common ros-humble-moveit-resources-fanuc-description ros-humble-launch-param-builder
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_1_job_2:
+    name: srdfdom moveit-resources-panda-moveit-config moveit-msgs geometric-shapes
+      moveit-resources-fanuc-moveit-config
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    - stage_0_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-srdfdom ros-humble-moveit-resources-panda-moveit-config
+        ros-humble-moveit-msgs ros-humble-geometric-shapes ros-humble-moveit-resources-fanuc-moveit-config
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-srdfdom ros-humble-moveit-resources-panda-moveit-config
+          ros-humble-moveit-msgs ros-humble-geometric-shapes ros-humble-moveit-resources-fanuc-moveit-config
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_2_job_3:
+    name: moveit-core moveit-configs-utils
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-core ros-humble-moveit-configs-utils
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-core ros-humble-moveit-configs-utils
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_3_job_4:
+    name: moveit-ros-occupancy-map-monitor moveit-simple-controller-manager moveit-resources-prbt-ikfast-manipulator-plugin
+      pilz-industrial-motion-planner-testutils chomp-motion-planner
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-occupancy-map-monitor ros-humble-moveit-simple-controller-manager
+        ros-humble-moveit-resources-prbt-ikfast-manipulator-plugin ros-humble-pilz-industrial-motion-planner-testutils
+        ros-humble-chomp-motion-planner
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-occupancy-map-monitor ros-humble-moveit-simple-controller-manager
+          ros-humble-moveit-resources-prbt-ikfast-manipulator-plugin ros-humble-pilz-industrial-motion-planner-testutils
+          ros-humble-chomp-motion-planner
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_4_job_5:
+    name: moveit-ros-planning moveit-plugins moveit-planners-chomp
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-planning ros-humble-moveit-plugins ros-humble-moveit-planners-chomp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-planning ros-humble-moveit-plugins
+          ros-humble-moveit-planners-chomp
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_5_job_6:
+    name: moveit-kinematics moveit-ros-warehouse moveit-planners-ompl moveit-ros-robot-interaction
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_5
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-kinematics ros-humble-moveit-ros-warehouse ros-humble-moveit-planners-ompl
+        ros-humble-moveit-ros-robot-interaction
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-kinematics ros-humble-moveit-ros-warehouse
+          ros-humble-moveit-planners-ompl ros-humble-moveit-ros-robot-interaction
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_6_job_7:
+    name: moveit-ros-move-group moveit-ros-benchmarks moveit-ros-planning-interface
+      moveit-resources-prbt-moveit-config
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_5_job_6
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-move-group ros-humble-moveit-ros-benchmarks
+        ros-humble-moveit-ros-planning-interface ros-humble-moveit-resources-prbt-moveit-config
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-move-group ros-humble-moveit-ros-benchmarks
+          ros-humble-moveit-ros-planning-interface ros-humble-moveit-resources-prbt-moveit-config
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_7_job_8:
+    name: moveit-ros-visualization moveit-resources-prbt-pg70-support
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_7
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-visualization ros-humble-moveit-resources-prbt-pg70-support
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-visualization ros-humble-moveit-resources-prbt-pg70-support
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_8_job_9:
+    name: moveit-setup-framework pilz-industrial-motion-planner moveit-ros
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_7_job_8
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-framework ros-humble-pilz-industrial-motion-planner
+        ros-humble-moveit-ros
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-framework ros-humble-pilz-industrial-motion-planner
+          ros-humble-moveit-ros
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_9_job_10:
+    name: moveit-setup-core-plugins moveit-setup-controllers moveit-setup-app-plugins
+      moveit-setup-srdf-plugins moveit-planners
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_8_job_9
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-core-plugins ros-humble-moveit-setup-controllers
+        ros-humble-moveit-setup-app-plugins ros-humble-moveit-setup-srdf-plugins ros-humble-moveit-planners
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-core-plugins ros-humble-moveit-setup-controllers
+          ros-humble-moveit-setup-app-plugins ros-humble-moveit-setup-srdf-plugins
+          ros-humble-moveit-planners
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+  stage_10_job_11:
+    name: moveit-setup-assistant moveit
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_9_job_10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-assistant ros-humble-moveit
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-assistant ros-humble-moveit
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_osx_arm64.sh
+name: build_osx
+on:
+  push:
+    branches:
+    - buildbranch_osx_arm64

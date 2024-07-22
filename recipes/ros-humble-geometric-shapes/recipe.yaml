@@ -1,0 +1,88 @@
+package:
+  name: ros-humble-geometric-shapes
+  version: 2.1.3
+source:
+  git_url: https://github.com/ros2-gbp/geometric_shapes-release.git
+  git_rev: release/humble/geometric_shapes/2.1.3-2
+  folder: ros-humble-geometric-shapes/src/work
+
+build:
+  script:
+    sel(win): bld_ament_cmake.bat
+    sel(unix): build_ament_cmake.sh
+  number: 5
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - sel(linux64): sysroot_linux-64 2.17
+    - ninja
+    - setuptools
+    - sel(unix): make
+    - sel(unix): coreutils
+    - sel(osx): tapi
+    - sel(build_platform != target_platform): pkg-config
+    - cmake
+    - cython
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): numpy
+  host:
+    - assimp
+    - eigen
+    - libboost-devel
+    - numpy
+    - octomap
+    - pip
+    - sel(build_platform == target_platform): pkg-config
+    - pkg-config
+    - python
+    - qhull
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-copyright
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-lint-auto
+    - ros-humble-ament-lint-cmake
+    - ros-humble-console-bridge-vendor
+    - ros-humble-eigen-stl-containers
+    - ros-humble-eigen3-cmake-module
+    - ros-humble-geometry-msgs
+    - ros-humble-random-numbers
+    - ros-humble-rclcpp
+    - ros-humble-resource-retriever
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-rosidl-default-generators
+    - ros-humble-shape-msgs
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.5 humble
+  run:
+    - assimp
+    - eigen
+    - libboost
+    - libboost-devel
+    - python
+    - qhull
+    - ros-humble-console-bridge-vendor
+    - ros-humble-eigen-stl-containers
+    - ros-humble-eigen3-cmake-module
+    - ros-humble-geometry-msgs
+    - ros-humble-random-numbers
+    - ros-humble-rclcpp
+    - ros-humble-resource-retriever
+    - ros-humble-ros-workspace
+    - ros-humble-rosidl-default-runtime
+    - ros-humble-shape-msgs
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.5 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
