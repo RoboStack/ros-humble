@@ -1,0 +1,453 @@
+jobs:
+  stage_0_job_0:
+    name: moveit-kinematics
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-kinematics
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-kinematics
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_0_job_1:
+    name: moveit-ros-warehouse
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-warehouse
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-warehouse
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_0_job_2:
+    name: moveit-planners-ompl
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-planners-ompl
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-planners-ompl
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_0_job_3:
+    name: moveit-ros-robot-interaction
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-robot-interaction
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-robot-interaction
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_1_job_4:
+    name: moveit-ros-move-group
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    - stage_0_job_1
+    - stage_0_job_2
+    - stage_0_job_3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-move-group
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-move-group
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_1_job_5:
+    name: moveit-ros-benchmarks
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    - stage_0_job_1
+    - stage_0_job_2
+    - stage_0_job_3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-benchmarks
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-benchmarks
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_2_job_6:
+    name: moveit-ros-planning-interface
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_4
+    - stage_1_job_5
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-planning-interface
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-planning-interface
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_2_job_7:
+    name: moveit-resources-prbt-moveit-config
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_4
+    - stage_1_job_5
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-resources-prbt-moveit-config
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-resources-prbt-moveit-config
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_3_job_8:
+    name: moveit-ros-visualization
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_6
+    - stage_2_job_7
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-visualization
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-visualization
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_3_job_9:
+    name: moveit-resources-prbt-pg70-support
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_6
+    - stage_2_job_7
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-resources-prbt-pg70-support
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-resources-prbt-pg70-support
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_3_job_10:
+    name: moveit-servo
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_6
+    - stage_2_job_7
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-servo
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-servo
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_4_job_11:
+    name: moveit-setup-framework
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_8
+    - stage_3_job_9
+    - stage_3_job_10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-framework
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-framework
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_4_job_12:
+    name: pilz-industrial-motion-planner
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_8
+    - stage_3_job_9
+    - stage_3_job_10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-pilz-industrial-motion-planner
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-pilz-industrial-motion-planner
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_4_job_13:
+    name: moveit-ros
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_8
+    - stage_3_job_9
+    - stage_3_job_10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_5_job_14:
+    name: moveit-setup-core-plugins
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_11
+    - stage_4_job_12
+    - stage_4_job_13
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-core-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-core-plugins
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_5_job_15:
+    name: moveit-setup-controllers
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_11
+    - stage_4_job_12
+    - stage_4_job_13
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-controllers
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-controllers
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_5_job_16:
+    name: moveit-setup-app-plugins
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_11
+    - stage_4_job_12
+    - stage_4_job_13
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-app-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-app-plugins
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_5_job_17:
+    name: moveit-setup-srdf-plugins
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_11
+    - stage_4_job_12
+    - stage_4_job_13
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-srdf-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-srdf-plugins
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_5_job_18:
+    name: moveit-planners
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_11
+    - stage_4_job_12
+    - stage_4_job_13
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-planners
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-planners
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_6_job_19:
+    name: moveit-setup-assistant
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_5_job_14
+    - stage_5_job_15
+    - stage_5_job_16
+    - stage_5_job_17
+    - stage_5_job_18
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-assistant
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-assistant
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+  stage_7_job_20:
+    name: moveit
+    runs-on: cirun-linux-aarch64--${{ github.run_id }}
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/run_docker_build.sh
+name: build_linux
+on:
+  push:
+    branches:
+    - buildbranch_linux_aarch64

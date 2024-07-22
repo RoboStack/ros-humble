@@ -1,0 +1,35 @@
+diff --git a/moveit_setup_assistant/moveit_setup_assistant/src/collisions_updater.cpp b/moveit_setup_assistant/moveit_setup_assistant/src/collisions_updater.cpp
+index 48babb454c..e30581f92e 100644
+--- a/moveit_setup_assistant/moveit_setup_assistant/src/collisions_updater.cpp
++++ b/moveit_setup_assistant/moveit_setup_assistant/src/collisions_updater.cpp
+@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
+     auto package_settings = config_data->get<moveit_setup::PackageSettingsConfig>("package_settings");
+     try
+     {
+-      package_settings->loadExisting(config_pkg_path);
++      package_settings->loadExisting(config_pkg_path.string());
+     }
+     catch (const std::runtime_error& e)
+     {
+@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
+     RCLCPP_ERROR_STREAM(LOGGER, "Please provide config package or URDF and SRDF path");
+     return 1;
+   }
+-  else if (rdf_loader::RDFLoader::isXacroFile(srdf_path) && output_path.empty())
++  else if (rdf_loader::RDFLoader::isXacroFile(srdf_path.string()) && output_path.empty())
+   {
+     RCLCPP_ERROR_STREAM(LOGGER, "Please provide a different output file for SRDF xacro input file");
+     return 1;
+diff --git a/moveit_setup_assistant/moveit_setup_assistant/src/setup_assistant_widget.cpp b/moveit_setup_assistant/moveit_setup_assistant/src/setup_assistant_widget.cpp
+index 2f9a76f5e4..1253268ce9 100644
+--- a/moveit_setup_assistant/moveit_setup_assistant/src/setup_assistant_widget.cpp
++++ b/moveit_setup_assistant/moveit_setup_assistant/src/setup_assistant_widget.cpp
+@@ -71,7 +71,7 @@ SetupAssistantWidget::SetupAssistantWidget(const rviz_common::ros_integration::R
+ 
+   // Setting the window icon
+   auto icon_path = getSharePath("moveit_ros_visualization") / "icons/classes/MotionPlanning.png";
+-  this->setWindowIcon(QIcon(icon_path.c_str()));
++  this->setWindowIcon(QIcon(icon_path.string().c_str()));
+ 
+   // Basic widget container -----------------------------------------
+   QHBoxLayout* layout = new QHBoxLayout();
