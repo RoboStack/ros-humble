@@ -1,0 +1,56 @@
+package:
+  name: ros-humble-urdfdom-py
+  version: 1.2.1
+source:
+  git_url: https://github.com/ros2-gbp/urdfdom_py-release.git
+  git_rev: release/humble/urdfdom_py/1.2.1-1
+  folder: ros-humble-urdfdom-py/src/work
+
+build:
+  script:
+    sel(win): bld_ament_python.bat
+    sel(unix): build_ament_python.sh
+  number: 6
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - sel(linux64): sysroot_linux-64 2.17
+    - ninja
+    - setuptools
+    - sel(unix): make
+    - sel(unix): coreutils
+    - sel(osx): tapi
+    - sel(build_platform != target_platform): pkg-config
+    - cmake
+    - cython
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): numpy
+  host:
+    - numpy
+    - pip
+    - sel(build_platform == target_platform): pkg-config
+    - python
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros2-distro-mutex 0.5 humble
+    - setuptools
+  run:
+    - lxml
+    - python
+    - pyyaml
+    - ros-humble-rclpy
+    - ros-humble-ros-workspace
+    - ros2-distro-mutex 0.5 humble
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

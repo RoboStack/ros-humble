@@ -1,0 +1,108 @@
+ros_distro: humble
+
+# mapping for package keys
+conda_index:
+  - robostack.yaml
+  - packages-ignore.yaml
+
+build_number: 6
+
+mutex_package: ros2-distro-mutex 0.5 humble
+
+skip_all_deps: false
+
+# If full rebuild, the build number of the existing package has
+# to match the selected build number for skipping
+full_rebuild: true
+
+# build_in_own_azure_stage:
+# - ros-galactic-rviz-rendering
+
+packages_skip_by_deps:
+  # - rttest
+  - cartographer
+  - octomap
+
+packages_remove_from_deps:
+  - cartographer
+  - octomap
+  - tlsf
+  - tlsf_cpp
+  - pendulum_control
+  - rttest
+  # Not available for macOS and Windows!
+  - gripper_controllers
+
+skip_existing:
+  # - https://conda.anaconda.org/robostack-humble/
+  - https://conda.anaconda.org/robostack-staging/
+
+packages_select_by_deps:
+  # trigger
+  - ros_workspace
+  - ros_environment
+  - ros_base
+  - desktop
+  - desktop_full
+  - navigation2
+  - rosbridge_suite
+  - vision_msgs
+  - rosbag2_storage_mcap
+  - foxglove_bridge
+  - turtlebot3
+
+  - control_msgs
+  - steering-controllers-library
+  - ackermann-steering-controller
+  - admittance-controller
+  - forward-command-controller
+  - bicycle_steering_controller
+  - diff_drive_controller
+  - effort_controllers
+  - force_torque_sensor_broadcaster
+  - imu_sensor_broadcaster
+  - position_controllers
+
+  - ros2_control
+  - ros2_controllers
+
+  - joint-state-broadcaster
+  - joint-state-publisher
+  - joint-trajectory-controller
+  - joint-limits
+  - xacro
+  - robot-localization
+  - velodyne
+  - sbg_driver
+  - vision-opencv
+  - ackermann-msgs
+  - ament_cmake_catch2
+
+  - gazebo_msgs
+  - gazebo_dev
+  - gazebo_ros
+  - gazebo_plugins
+  - gazebo_ros_pkgs
+
+  - turtlebot3_gazebo
+  - plotjuggler-ros
+  - plotjuggler
+
+  - apriltag
+  - apriltag_ros
+
+  # ros2_control
+  - gazebo_ros2_control
+  - ros2_control
+  - ros2_controllers
+
+  # Modern gz-sim integration
+  - ros-gz
+
+  - moveit
+  - moveit_servo
+  - moveit-planners-chomp
+
+  - gtsam
+
+patch_dir: patch

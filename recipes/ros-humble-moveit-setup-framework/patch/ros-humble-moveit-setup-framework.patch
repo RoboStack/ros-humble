@@ -1,0 +1,190 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 36e80da028..8a458bc389 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -11,8 +11,9 @@ find_package(ament_index_cpp REQUIRED)
+ find_package(moveit_core REQUIRED)
+ find_package(moveit_ros_planning REQUIRED)
+ find_package(moveit_ros_visualization REQUIRED)
+-find_package(Qt5Core REQUIRED)
+-find_package(Qt5Widgets REQUIRED)
++# find_package(Qt5Core REQUIRED)
++# find_package(Qt5Widgets REQUIRED)
++find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+ find_package(pluginlib REQUIRED)
+ find_package(rclcpp REQUIRED)
+ find_package(rviz_common REQUIRED)
+@@ -42,6 +43,10 @@ add_library(${PROJECT_NAME}
+     src/xml_syntax_highlighter.cpp
+     ${MOC_FILES}
+ )
++include(GenerateExportHeader)
++generate_export_header(${PROJECT_NAME})
++target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
++
+ target_include_directories(${PROJECT_NAME} PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+@@ -52,8 +57,9 @@ ament_target_dependencies(${PROJECT_NAME}
+   moveit_ros_planning
+   moveit_ros_visualization
+   pluginlib
+-  Qt5Core
+-  Qt5Widgets
++  # Qt5Core
++  # Qt5Widgets
++  Qt5
+   rclcpp
+   rviz_common
+   rviz_rendering
+@@ -82,10 +88,12 @@ install(TARGETS ${PROJECT_NAME}
+         RUNTIME DESTINATION bin
+         INCLUDES DESTINATION include
+ )
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_export.h DESTINATION include)
++
+ ament_export_include_directories(include)
+ ament_export_dependencies(rclcpp)
+-ament_export_dependencies(Qt5Core)
+-ament_export_dependencies(Qt5Widgets)
++# ament_export_dependencies(Qt5Core)
++# ament_export_dependencies(Qt5Widgets)
+ ament_export_dependencies(moveit_common)
+ ament_export_dependencies(moveit_core)
+ ament_export_dependencies(moveit_ros_planning)
+diff --git a/include/moveit_setup_framework/qt/setup_step_widget.hpp b/include/moveit_setup_framework/qt/setup_step_widget.hpp
+index f32e7b5ad3..c6f472682d 100644
+--- a/include/moveit_setup_framework/qt/setup_step_widget.hpp
++++ b/include/moveit_setup_framework/qt/setup_step_widget.hpp
+@@ -40,12 +40,14 @@
+ #include <moveit_setup_framework/qt/rviz_panel.hpp>
+ #include <QWidget>
+ 
++#include <moveit_setup_framework_export.h>
++
+ namespace moveit_setup
+ {
+ /**
+  * @brief The GUI code for one SetupStep
+  */
+-class SetupStepWidget : public QWidget
++class MOVEIT_SETUP_FRAMEWORK_EXPORT SetupStepWidget : public QWidget
+ {
+   Q_OBJECT
+ public:
+diff --git a/include/moveit_setup_framework/templates.hpp b/include/moveit_setup_framework/templates.hpp
+index fb90a75703..695f7a9cfb 100644
+--- a/include/moveit_setup_framework/templates.hpp
++++ b/include/moveit_setup_framework/templates.hpp
+@@ -38,6 +38,8 @@
+ #include <moveit_setup_framework/generated_file.hpp>
+ #include <string>
+ 
++#include <moveit_setup_framework_export.h>
++
+ namespace moveit_setup
+ {
+ /**
+@@ -69,7 +71,7 @@ class TemplatedGeneratedFile : public GeneratedFile
+ 
+   bool write() override;
+ 
+-  static std::vector<TemplateVariable> variables_;
++  static MOVEIT_SETUP_FRAMEWORK_EXPORT std::vector<TemplateVariable> variables_;
+ };
+ 
+ }  // namespace moveit_setup
+diff --git a/src/urdf_config.cpp b/src/urdf_config.cpp
+index 290c9e8a2a..accfae25af 100644
+--- a/src/urdf_config.cpp
++++ b/src/urdf_config.cpp
+@@ -116,7 +116,7 @@ void URDFConfig::setPackageName()
+ void URDFConfig::loadFromPackage(const std::filesystem::path& package_name, const std::filesystem::path& relative_path,
+                                  const std::string& xacro_args)
+ {
+-  urdf_pkg_name_ = package_name;
++  urdf_pkg_name_ = package_name.string();
+   urdf_pkg_relative_path_ = relative_path;
+   xacro_args_ = xacro_args;
+ 
+@@ -129,12 +129,12 @@ void URDFConfig::load()
+   RCLCPP_DEBUG_STREAM(*logger_, "URDF Package Name: " << urdf_pkg_name_);
+   RCLCPP_DEBUG_STREAM(*logger_, "URDF Package Path: " << urdf_pkg_relative_path_);
+ 
+-  if (!rdf_loader::RDFLoader::loadXmlFileToString(urdf_string_, urdf_path_, xacro_args_vec_))
++  if (!rdf_loader::RDFLoader::loadXmlFileToString(urdf_string_, urdf_path_.string(), xacro_args_vec_))
+   {
+     throw std::runtime_error("URDF/COLLADA file not found: " + urdf_path_.string());
+   }
+ 
+-  if (urdf_string_.empty() && rdf_loader::RDFLoader::isXacroFile(urdf_path_))
++  if (urdf_string_.empty() && rdf_loader::RDFLoader::isXacroFile(urdf_path_.string()))
+   {
+     throw std::runtime_error("Running xacro failed.\nPlease check console for errors.");
+   }
+@@ -144,7 +144,7 @@ void URDFConfig::load()
+   {
+     throw std::runtime_error("URDF/COLLADA file is not a valid robot model.");
+   }
+-  urdf_from_xacro_ = rdf_loader::RDFLoader::isXacroFile(urdf_path_);
++  urdf_from_xacro_ = rdf_loader::RDFLoader::isXacroFile(urdf_path_.string());
+ 
+   // Set parameter
+   parent_node_->set_parameter(rclcpp::Parameter("robot_description", urdf_string_));
+@@ -154,7 +154,7 @@ void URDFConfig::load()
+ 
+ bool URDFConfig::isXacroFile() const
+ {
+-  return rdf_loader::RDFLoader::isXacroFile(urdf_path_);
++  return rdf_loader::RDFLoader::isXacroFile(urdf_path_.string());
+ }
+ 
+ bool URDFConfig::isConfigured() const
+@@ -172,7 +172,7 @@ void URDFConfig::collectVariables(std::vector<TemplateVariable>& variables)
+   std::string urdf_location;
+   if (urdf_pkg_name_.empty())
+   {
+-    urdf_location = urdf_path_;
++    urdf_location = urdf_path_.string();
+   }
+   else
+   {
+diff --git a/include/moveit_setup_framework/data/srdf_config.hpp b/include/moveit_setup_framework/data/srdf_config.hpp
+index 4b3fae3440..c6a28092e7 100644
+--- a/include/moveit_setup_framework/data/srdf_config.hpp
++++ b/include/moveit_setup_framework/data/srdf_config.hpp
+@@ -262,7 +262,7 @@ class SRDFConfig : public SetupConfig
+ 
+   bool write(const std::filesystem::path& path)
+   {
+-    return srdf_.writeSRDF(path);
++    return srdf_.writeSRDF(path.string());
+   }
+ 
+   std::filesystem::path getPath() const
+diff --git a/src/srdf_config.cpp b/src/srdf_config.cpp
+index 9058aea1c0..394687af2d 100644
+--- a/src/srdf_config.cpp
++++ b/src/srdf_config.cpp
+@@ -88,7 +88,7 @@ void SRDFConfig::loadSRDFFile(const std::filesystem::path& srdf_file_path, const
+   loadURDFModel();
+ 
+   std::string srdf_string;
+-  if (!rdf_loader::RDFLoader::loadXmlFileToString(srdf_string, srdf_path_, xacro_args))
++  if (!rdf_loader::RDFLoader::loadXmlFileToString(srdf_string, srdf_path_.string(), xacro_args))
+   {
+     throw std::runtime_error("SRDF file not found: " + srdf_path_.string());
+   }
+diff --git a/src/utilities.cpp b/src/utilities.cpp
+index 51e207f0d8..145f39fda8 100644
+--- a/src/utilities.cpp
++++ b/src/utilities.cpp
+@@ -62,7 +62,7 @@ bool extractPackageNameFromPath(const std::filesystem::path& path, std::string&
+       // Default package name to folder name
+       package_name = sub_path.filename().string();
+       tinyxml2::XMLDocument package_xml_file;
+-      auto is_open = package_xml_file.LoadFile((sub_path / "package.xml").c_str());
++      auto is_open = package_xml_file.LoadFile((sub_path / "package.xml").string().c_str());
+       if (is_open == tinyxml2::XML_SUCCESS)
+       {
+         auto name_potential =
