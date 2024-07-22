@@ -17,8 +17,8 @@ conda activate base
 
 conda config --set remote_max_retries 5
 
-echo -e "\n\nInstalling conda-forge-ci-setup=3 and conda-build."
-mamba install -n base --quiet --yes conda-forge-ci-setup=3 "conda-build>=24.5.0" pip boa quetz-client -c conda-forge
+echo -e "\n\nInstalling conda-forge-ci-setup and conda-build."
+mamba install -n base --quiet --yes conda-forge-ci-setup "conda-build>=24.5.0" pip boa quetz-client -c conda-forge
 
 set -e
 
