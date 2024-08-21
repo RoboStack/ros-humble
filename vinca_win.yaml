@@ -66,6 +66,7 @@ packages_select_by_deps:
   - gazebo-ros2-control
   - ros2-controllers-test-nodes
   - joint-state-publisher-gui
+  - rosbag2-storage-mcap
 
   # Broken for now until we migrate to newer gazebo
   # - desktop_full
