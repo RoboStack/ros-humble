@@ -139,6 +139,7 @@ packages_select_by_deps:
 
   - gtsam
   - motion-capture-tracking
+  - rosbag2-storage-mcap
 
   # Needs fixing
   # - moveit-resources
