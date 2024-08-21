@@ -1,5 +1,5 @@
 diff --git a/pid_controller/CMakeLists.txt b/pid_controller/CMakeLists.txt
-index 15e903222a..6c9e00ef8b 100644
+index 81cbe6f006..d7798b579b 100644
 --- a/pid_controller/CMakeLists.txt
 +++ b/pid_controller/CMakeLists.txt
 @@ -45,7 +45,7 @@ ament_target_dependencies(pid_controller PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
@@ -12,10 +12,10 @@ index 15e903222a..6c9e00ef8b 100644
  pluginlib_export_plugin_description_file(controller_interface pid_controller.xml)
  
 diff --git a/pid_controller/include/pid_controller/pid_controller.hpp b/pid_controller/include/pid_controller/pid_controller.hpp
-index f7b8cc4491..788f39f1ed 100644
+index 105a915442..4919a739ce 100644
 --- a/pid_controller/include/pid_controller/pid_controller.hpp
 +++ b/pid_controller/include/pid_controller/pid_controller.hpp
-@@ -121,8 +121,10 @@ class PidController : public controller_interface::ChainableControllerInterface
+@@ -119,8 +119,10 @@ class PidController : public controller_interface::ChainableControllerInterface
    std::unique_ptr<ControllerStatePublisher> state_publisher_;
  
    // override methods from ChainableControllerInterface
