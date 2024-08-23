@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 6
+build_number: 7
 
 mutex_package: ros2-distro-mutex 0.5 humble
 
@@ -35,110 +35,112 @@ skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
+
   # only subset of packages to reduce maintainer load
   # trigger
-  - qt-qui-cpp # needs to be compiled locally
 
-  - generator-dds-idl
-  - ros_workspace
-  - ros_environment
-  - ament_cmake
-  - ros_base
-  - desktop
-  - navigation2
-  - graph_msgs
-  - nav2_bringup
-  - turtlebot3
-  - desktop_full
-  - apriltag
-  - turtlebot3_fake_node
-  - ur
-  - ublox
-  - robot_localization
-  - topic_tools
-  - stubborn_buddies
-  - teleop_tools
-  - udp_driver
-  - urdf_tutorial
-  - test_bond
-  - apex_test_tools
-  - ublox_dgnss
-  - velodyne_description
-  - velodyne
-  - visp
-  - apex_containers
-  - apex_test_tools
-  - bno055
-  - aws_robomaker_small_warehouse_world
-  - avt_vimba_camera
-  - ros_ign
-  - spacenav
-  - system_modes
-  - tf_transformations
-  - turtle_tf2_cpp
-  - turtle_tf2_py
-  - ros2controlcli
-  - robot_controllers
+  # -- build 7 re-select --
   - ros2_control
   - ros2_controllers
   - control-toolbox
-  - joint-trajectory-controller
-  - gazebo-dev
-  - gazebo-plugins
-  - gazebo-ros
-  - gazebo-ros-pkgs
-  - turtlebot3_gazebo
-  - turtlebot3_simulations
-  - rqt
-  - rqt_image_overlay
-  - rqt-robot-dashboard
-  - rqt-robot-monitor
-  - rqt-robot-steering
-  - joint-state-broadcaster
-  - joint-state-publisher
-  - xacro
-  - image-pipeline
-  - image-view
-  - bond-core
-  - camera-calibration
-  - camera-calibration-parsers
-  - camera-info-manager
-  - slam-toolbox
-  - foxglove_bridge
-  - ament-cmake-nose
-  - geographic_info
-  - geodesy
-  - rosbridge_suite
-  - ament_cmake_catch2
-  - apriltag
-  - apriltag_ros
-  - marker-msgs
-  - moveit
-  - moveit-ros-perception
-  - moveit-runtime
-  - moveit-servo
-  - moveit_visual_tools
-  - moveit_servo
-  - moveit2_tutorials
-  - moveit-planners-chomp
-  - rqt-moveit
-
-  - librealsense2
-  - realsense2-camera
-  - realsense2-camera-msgs
-  - realsense2-description
-  - webots_ros2
-  - rosidl-generator-dds-idl
-
-  - ros2_control
   - gazebo-ros2-control
 
-  # Modern gz-sim integration
-  - ros-gz
-  - libg2o
+  # - qt-qui-cpp # needs to be compiled locally
 
-  - gtsam
-  - motion-capture-tracking
+  # - generator-dds-idl
+  # - ros_workspace
+  # - ros_environment
+  # - ament_cmake
+  # - ros_base
+  # - desktop
+  # - navigation2
+  # - graph_msgs
+  # - nav2_bringup
+  # - turtlebot3
+  # - desktop_full
+  # - apriltag
+  # - turtlebot3_fake_node
+  # - ur
+  # - ublox
+  # - robot_localization
+  # - topic_tools
+  # - stubborn_buddies
+  # - teleop_tools
+  # - udp_driver
+  # - urdf_tutorial
+  # - test_bond
+  # - apex_test_tools
+  # - ublox_dgnss
+  # - velodyne_description
+  # - velodyne
+  # - visp
+  # - apex_containers
+  # - apex_test_tools
+  # - bno055
+  # - aws_robomaker_small_warehouse_world
+  # - avt_vimba_camera
+  # - ros_ign
+  # - spacenav
+  # - system_modes
+  # - tf_transformations
+  # - turtle_tf2_cpp
+  # - turtle_tf2_py
+  # - ros2controlcli
+  # - robot_controllers
+  # - joint-trajectory-controller
+  # - gazebo-dev
+  # - gazebo-plugins
+  # - gazebo-ros
+  # - gazebo-ros-pkgs
+  # - turtlebot3_gazebo
+  # - turtlebot3_simulations
+  # - rqt
+  # - rqt_image_overlay
+  # - rqt-robot-dashboard
+  # - rqt-robot-monitor
+  # - rqt-robot-steering
+  # - joint-state-broadcaster
+  # - joint-state-publisher
+  # - xacro
+  # - image-pipeline
+  # - image-view
+  # - bond-core
+  # - camera-calibration
+  # - camera-calibration-parsers
+  # - camera-info-manager
+  # - slam-toolbox
+  # - foxglove_bridge
+  # - ament-cmake-nose
+  # - geographic_info
+  # - geodesy
+  # - rosbridge_suite
+  # - ament_cmake_catch2
+  # - apriltag
+  # - apriltag_ros
+  # - marker-msgs
+  # - moveit
+  # - moveit-ros-perception
+  # - moveit-runtime
+  # - moveit-servo
+  # - moveit_visual_tools
+  # - moveit_servo
+  # - moveit2_tutorials
+  # - moveit-planners-chomp
+  # - rqt-moveit
+
+  # - librealsense2
+  # - realsense2-camera
+  # - realsense2-camera-msgs
+  # - realsense2-description
+  # - webots_ros2
+  # - rosidl-generator-dds-idl
+
+  # Modern gz-sim integration
+  # - ros-gz
+  # - libg2o
+
+  # - gtsam
+  # - motion-capture-tracking
 
   # Needs fixing
   # - moveit-resources
