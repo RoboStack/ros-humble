@@ -21,6 +21,8 @@ packages_skip_by_deps:
   # - diagnostic_updater
   - cartographer
   - octomap
+  - pid-controller
+  - rosx-introspection
 
 packages_remove_from_deps:
   - cartographer
