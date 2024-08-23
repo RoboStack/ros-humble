@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 6
+build_number: 7
 
 mutex_package: ros2-distro-mutex 0.5 humble
 
@@ -38,71 +38,72 @@ skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
+
+  # only subset of packages to reduce maintainer load
   # trigger
-  - ros_workspace
-  - ros_environment
-  - ros_base
-  - desktop
-  - desktop_full
-  - navigation2
-  - rosbridge_suite
-  - vision_msgs
-  - rosbag2_storage_mcap
-  - foxglove_bridge
-  - turtlebot3
 
-  - control_msgs
-  - steering-controllers-library
-  - ackermann-steering-controller
-  - admittance-controller
-  - forward-command-controller
-  - bicycle_steering_controller
-  - diff_drive_controller
-  - effort_controllers
-  - force_torque_sensor_broadcaster
-  - imu_sensor_broadcaster
-  - position_controllers
-
+  # -- build 7 re-select --
   - ros2_control
   - ros2_controllers
+  - control-toolbox
+  - gazebo-ros2-control
 
-  - joint-state-broadcaster
-  - joint-state-publisher
-  - joint-trajectory-controller
-  - joint-limits
-  - xacro
-  - robot-localization
-  - velodyne
-  - sbg_driver
-  - vision-opencv
-  - ackermann-msgs
-  - ament_cmake_catch2
+  # - ros_workspace
+  # - ros_environment
+  # - ros_base
+  # - desktop
+  # - desktop_full
+  # - navigation2
+  # - rosbridge_suite
+  # - vision_msgs
+  # - rosbag2_storage_mcap
+  # - foxglove_bridge
+  # - turtlebot3
 
-  - gazebo_msgs
-  - gazebo_dev
-  - gazebo_ros
-  - gazebo_plugins
-  - gazebo_ros_pkgs
+  # - control_msgs
+  # - steering-controllers-library
+  # - ackermann-steering-controller
+  # - admittance-controller
+  # - forward-command-controller
+  # - bicycle_steering_controller
+  # - diff_drive_controller
+  # - effort_controllers
+  # - force_torque_sensor_broadcaster
+  # - imu_sensor_broadcaster
+  # - position_controllers
 
-  - turtlebot3_gazebo
-  - plotjuggler-ros
-  - plotjuggler
+  # - joint-state-broadcaster
+  # - joint-state-publisher
+  # - joint-trajectory-controller
+  # - joint-limits
+  # - xacro
+  # - robot-localization
+  # - velodyne
+  # - sbg_driver
+  # - vision-opencv
+  # - ackermann-msgs
+  # - ament_cmake_catch2
 
-  - apriltag
-  - apriltag_ros
+  # - gazebo_msgs
+  # - gazebo_dev
+  # - gazebo_ros
+  # - gazebo_plugins
+  # - gazebo_ros_pkgs
 
-  # ros2_control
-  - gazebo_ros2_control
-  - ros2_control
-  - ros2_controllers
+  # - turtlebot3_gazebo
+  # - plotjuggler-ros
+  # - plotjuggler
+
+  # - apriltag
+  # - apriltag_ros
 
   # Modern gz-sim integration
-  - ros-gz
+  # - ros-gz
 
-  - moveit
-  - moveit_servo
-  - moveit-planners-chomp
+  # - moveit
+  # - moveit_servo
+  # - moveit-planners-chomp
 
-  - gtsam
+  # - gtsam
 
 patch_dir: patch
