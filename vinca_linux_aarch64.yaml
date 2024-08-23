@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 4
+build_number: 5
 
 mutex_package: ros2-distro-mutex 0.5 humble
 
@@ -38,62 +38,65 @@ skip_existing:
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
-  - ros2-controllers
-  - diff-drive-controller
-  - libcamera
-  - ros_workspace
-  - ros_environment
-  - ament_cmake
-  - ros_base
-  - desktop
-  - desktop_full
-  - rosbag2_storage_mcap
-  - cartographer-ros
-  - foxglove_bridge
 
-  - gazebo_msgs
-  - gazebo_dev
-  - gazebo_ros
-  - gazebo_plugins
-  - gazebo_ros2_control
-  - gazebo_ros_pkgs
+  # only subset of packages to reduce maintainer load
+  # trigger
 
-  - ackermann-msgs
-  - velodyne
-  - geodesy
-  - geographic_info
-  - tf-transformations
-  - robot_localization
-
-  - rosbridge_suite
-  - vision-msgs
-  - slam-toolbox
-
+  # -- build 5 re-select --
   - ros2_control
-  - vision-msgs-rviz-plugins
-
-  - navigation2
-  - rviz2
-  - behaviortree_cpp_v3
-  - ament_cmake_catch2
-
-  - apriltag
-  - apriltag_ros
-
-  - moveit
-  - moveit_servo
-  - moveit-planners-chomp
-
-  # - control_toolbox
-  # - ros1_bridge
-
-  # ros2_control
+  - ros2_controllers
+  - control-toolbox
   - gazebo-ros2-control
 
-  # Modern gz-sim integration
-  - ros-gz
+  # - diff-drive-controller
+  # - libcamera
+  # - ros_workspace
+  # - ros_environment
+  # - ament_cmake
+  # - ros_base
+  # - desktop
+  # - desktop_full
+  # - rosbag2_storage_mcap
+  # - cartographer-ros
+  # - foxglove_bridge
 
-  - gtsam
+  # - gazebo_msgs
+  # - gazebo_dev
+  # - gazebo_ros
+  # - gazebo_plugins
+  # - gazebo_ros_pkgs
+
+  # - ackermann-msgs
+  # - velodyne
+  # - geodesy
+  # - geographic_info
+  # - tf-transformations
+  # - robot_localization
+
+  # - rosbridge_suite
+  # - vision-msgs
+  # - slam-toolbox
+
+  # - vision-msgs-rviz-plugins
+
+  # - navigation2
+  # - rviz2
+  # - behaviortree_cpp_v3
+  # - ament_cmake_catch2
+
+  # - apriltag
+  # - apriltag_ros
+
+  # - moveit
+  # - moveit_servo
+  # - moveit-planners-chomp
+
+  # - ros1_bridge
+
+  # Modern gz-sim integration
+  # - ros-gz
+
+  # - gtsam
 
   # Used to work, now needs fixes
   # - rtabmap
@@ -215,7 +218,6 @@ packages_select_by_deps:
   # - compressed-depth-image-transport
   # - compressed-image-transport
   # - control-box-rst
-  # - control-toolbox
   # - depth-image-proc
   # - diagnostic-aggregator
   # - diagnostic-updater
