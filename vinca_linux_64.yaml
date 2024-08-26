@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 6
+build_number: 7
 
 mutex_package: ros2-distro-mutex 0.5 humble
 
@@ -37,108 +37,264 @@ skip_existing:
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
   # trigger
-  - qt-qui-cpp # needs to be compiled locally
 
-  - generator-dds-idl
-  - ros_workspace
-  - ros_environment
-  - ament_cmake
-  - ros_base
-  - desktop
-  - navigation2
-  - graph_msgs
-  - nav2_bringup
-  - turtlebot3
-  - desktop_full
-  - apriltag
-  - turtlebot3_fake_node
-  - ur
-  - ublox
-  - robot_localization
-  - topic_tools
-  - stubborn_buddies
-  - teleop_tools
-  - udp_driver
-  - urdf_tutorial
-  - test_bond
-  - apex_test_tools
-  - ublox_dgnss
-  - velodyne_description
-  - velodyne
-  - visp
-  - apex_containers
-  - apex_test_tools
-  - bno055
-  - aws_robomaker_small_warehouse_world
-  - avt_vimba_camera
-  - ros_ign
-  - spacenav
-  - system_modes
-  - tf_transformations
-  - turtle_tf2_cpp
-  - turtle_tf2_py
-  - ros2controlcli
-  - robot_controllers
-  - ros2_control
-  - ros2_controllers
-  - control-toolbox
-  - joint-trajectory-controller
-  - gazebo-dev
-  - gazebo-plugins
-  - gazebo-ros
-  - gazebo-ros-pkgs
-  - turtlebot3_gazebo
-  - turtlebot3_simulations
-  - rqt
-  - rqt_image_overlay
-  - rqt-robot-dashboard
-  - rqt-robot-monitor
-  - rqt-robot-steering
-  - joint-state-broadcaster
-  - joint-state-publisher
-  - xacro
-  - image-pipeline
-  - image-view
-  - bond-core
-  - camera-calibration
-  - camera-calibration-parsers
-  - camera-info-manager
-  - slam-toolbox
-  - foxglove_bridge
-  - ament-cmake-nose
-  - geographic_info
-  - geodesy
-  - rosbridge_suite
-  - ament_cmake_catch2
-  - apriltag
-  - apriltag_ros
-  - marker-msgs
-  - moveit
-  - moveit-ros-perception
-  - moveit-runtime
-  - moveit-servo
-  - moveit_visual_tools
-  - moveit_servo
-  - moveit2_tutorials
-  - moveit-planners-chomp
-  - rqt-moveit
+  # build 7 reselect
+  - ros_core    # ** which includes ** :
+                # ros-humble-actionlib-msgs                         
+                # ros-humble-action-msgs                            
+                # ros-humble-ament-cmake                            
+                # ros-humble-ament-cmake-auto                       
+                # ros-humble-ament-cmake-copyright                  
+                # ros-humble-ament-cmake-core                       
+                # ros-humble-ament-cmake-cppcheck                   
+                # ros-humble-ament-cmake-cpplint                    
+                # ros-humble-ament-cmake-export-definitions         
+                # ros-humble-ament-cmake-export-dependencies        
+                # ros-humble-ament-cmake-export-include-directories 
+                # ros-humble-ament-cmake-export-interfaces          
+                # ros-humble-ament-cmake-export-libraries           
+                # ros-humble-ament-cmake-export-link-flags          
+                # ros-humble-ament-cmake-export-targets             
+                # ros-humble-ament-cmake-flake8                     
+                # ros-humble-ament-cmake-gen-version-h              
+                # ros-humble-ament-cmake-gmock                      
+                # ros-humble-ament-cmake-gtest                      
+                # ros-humble-ament-cmake-include-directories        
+                # ros-humble-ament-cmake-libraries                  
+                # ros-humble-ament-cmake-lint-cmake                 
+                # ros-humble-ament-cmake-pep257                     
+                # ros-humble-ament-cmake-pytest                     
+                # ros-humble-ament-cmake-python                     
+                # ros-humble-ament-cmake-ros                        
+                # ros-humble-ament-cmake-target-dependencies        
+                # ros-humble-ament-cmake-test                       
+                # ros-humble-ament-cmake-uncrustify                 
+                # ros-humble-ament-cmake-version                    
+                # ros-humble-ament-cmake-xmllint                    
+                # ros-humble-ament-copyright                        
+                # ros-humble-ament-cppcheck                         
+                # ros-humble-ament-cpplint                          
+                # ros-humble-ament-flake8                           
+                # ros-humble-ament-index-cpp                        
+                # ros-humble-ament-index-python                     
+                # ros-humble-ament-lint                             
+                # ros-humble-ament-lint-auto                        
+                # ros-humble-ament-lint-cmake                       
+                # ros-humble-ament-lint-common                      
+                # ros-humble-ament-package                          
+                # ros-humble-ament-pep257                           
+                # ros-humble-ament-uncrustify                       
+                # ros-humble-ament-xmllint                          
+                # ros-humble-builtin-interfaces                     
+                # ros-humble-class-loader                           
+                # ros-humble-common-interfaces                      
+                # ros-humble-composition-interfaces                 
+                # ros-humble-console-bridge-vendor                  
+                # ros-humble-cyclonedds                             
+                # ros-humble-diagnostic-msgs                        
+                # ros-humble-domain-coordinator                     
+                # ros-humble-fastcdr                                
+                # ros-humble-fastrtps                               
+                # ros-humble-fastrtps-cmake-module                  
+                # ros-humble-foonathan-memory-vendor                
+                # ros-humble-geometry-msgs                          
+                # ros-humble-gmock-vendor                           
+                # ros-humble-gtest-vendor                           
+                # ros-humble-iceoryx-binding-c                      
+                # ros-humble-iceoryx-hoofs                          
+                # ros-humble-iceoryx-posh                           
+                # ros-humble-launch                                 
+                # ros-humble-launch-ros                             
+                # ros-humble-launch-testing                         
+                # ros-humble-launch-testing-ament-cmake             
+                # ros-humble-launch-testing-ros                     
+                # ros-humble-launch-xml                             
+                # ros-humble-launch-yaml                            
+                # ros-humble-libstatistics-collector                
+                # ros-humble-libyaml-vendor                         
+                # ros-humble-lifecycle-msgs                         
+                # ros-humble-nav-msgs                               
+                # ros-humble-osrf-pycommon                          
+                # ros-humble-pluginlib                              
+                # ros-humble-python-cmake-module                    
+                # ros-humble-rcl                                    
+                # ros-humble-rcl-action                             
+                # ros-humble-rclcpp                                 
+                # ros-humble-rclcpp-action                          
+                # ros-humble-rclcpp-components                      
+                # ros-humble-rclcpp-lifecycle                       
+                # ros-humble-rcl-interfaces                         
+                # ros-humble-rcl-lifecycle                          
+                # ros-humble-rcl-logging-interface                  
+                # ros-humble-rcl-logging-spdlog                     
+                # ros-humble-rclpy                                  
+                # ros-humble-rcl-yaml-param-parser                  
+                # ros-humble-rcpputils                              
+                # ros-humble-rcutils                                
+                # ros-humble-rmw                                    
+                # ros-humble-rmw-connextdds                         
+                # ros-humble-rmw-connextdds-common                  
+                # ros-humble-rmw-cyclonedds-cpp                     
+                # ros-humble-rmw-dds-common                         
+                # ros-humble-rmw-fastrtps-cpp                       
+                # ros-humble-rmw-fastrtps-dynamic-cpp               
+                # ros-humble-rmw-fastrtps-shared-cpp                
+                # ros-humble-rmw-implementation                     
+                # ros-humble-rmw-implementation-cmake               
+                # ros-humble-ros2action                             
+                # ros-humble-ros2cli                                
+                # ros-humble-ros2cli-common-extensions              
+                # ros-humble-ros2component                          
+                # ros-humble-ros2doctor                             
+                # ros-humble-ros2interface                          
+                # ros-humble-ros2launch                             
+                # ros-humble-ros2lifecycle                          
+                # ros-humble-ros2multicast                          
+                # ros-humble-ros2node                               
+                # ros-humble-ros2param                              
+                # ros-humble-ros2pkg                                
+                # ros-humble-ros2run                                
+                # ros-humble-ros2service                            
+                # ros-humble-ros2topic                              
+                # ros-humble-ros-environment                        
+                # ros-humble-rosgraph-msgs                          
+                # ros-humble-rosidl-adapter                         
+                # ros-humble-rosidl-cli                             
+                # ros-humble-rosidl-cmake                           
+                # ros-humble-rosidl-default-generators              
+                # ros-humble-rosidl-default-runtime                 
+                # ros-humble-rosidl-generator-c                     
+                # ros-humble-rosidl-generator-cpp                   
+                # ros-humble-rosidl-generator-py                    
+                # ros-humble-rosidl-parser                          
+                # ros-humble-rosidl-runtime-c                       
+                # ros-humble-rosidl-runtime-cpp                     
+                # ros-humble-rosidl-runtime-py                      
+                # ros-humble-rosidl-typesupport-c                   
+                # ros-humble-rosidl-typesupport-cpp                 
+                # ros-humble-rosidl-typesupport-fastrtps-c          
+                # ros-humble-rosidl-typesupport-fastrtps-cpp        
+                # ros-humble-rosidl-typesupport-interface           
+                # ros-humble-rosidl-typesupport-introspection-c     
+                # ros-humble-rosidl-typesupport-introspection-cpp   
+                # ros-humble-ros-workspace                          
+                # ros-humble-rpyutils                               
+                # ros-humble-rti-connext-dds-cmake-module           
+                # ros-humble-sensor-msgs                            
+                # ros-humble-shape-msgs                             
+                # ros-humble-spdlog-vendor                          
+                # ros-humble-sros2                                  
+                # ros-humble-sros2-cmake                            
+                # ros-humble-statistics-msgs                        
+                # ros-humble-std-msgs                               
+                # ros-humble-std-srvs                               
+                # ros-humble-stereo-msgs                            
+                # ros-humble-tinyxml2-vendor                        
+                # ros-humble-tracetools                             
+                # ros-humble-trajectory-msgs                        
+                # ros-humble-uncrustify-vendor                      
+                # ros-humble-unique-identifier-msgs                 
+                # ros-humble-visualization-msgs                     
 
-  - librealsense2
-  - realsense2-camera
-  - realsense2-camera-msgs
-  - realsense2-description
-  - webots_ros2
-  - rosidl-generator-dds-idl
 
-  - ros2_control
-  - gazebo-ros2-control
+  # - qt-qui-cpp # needs to be compiled locally
 
-  # Modern gz-sim integration
-  - ros-gz
-  - libg2o
+  # - generator-dds-idl
+  # - desktop
+  # - navigation2
+  # - graph_msgs
+  # - nav2_bringup
+  # - turtlebot3
+  # - desktop_full
+  # - apriltag
+  # - turtlebot3_fake_node
+  # - ur
+  # - ublox
+  # - robot_localization
+  # - topic_tools
+  # - stubborn_buddies
+  # - teleop_tools
+  # - udp_driver
+  # - urdf_tutorial
+  # - test_bond
+  # - apex_test_tools
+  # - ublox_dgnss
+  # - velodyne_description
+  # - velodyne
+  # - visp
+  # - apex_containers
+  # - apex_test_tools
+  # - bno055
+  # - aws_robomaker_small_warehouse_world
+  # - avt_vimba_camera
+  # - ros_ign
+  # - spacenav
+  # - system_modes
+  # - tf_transformations
+  # - turtle_tf2_cpp
+  # - turtle_tf2_py
+  # - ros2controlcli
+  # - robot_controllers
+  # - ros2_control
+  # - ros2_controllers
+  # - control-toolbox
+  # - joint-trajectory-controller
+  # - gazebo-dev
+  # - gazebo-plugins
+  # - gazebo-ros
+  # - gazebo-ros-pkgs
+  # - turtlebot3_gazebo
+  # - turtlebot3_simulations
+  # - rqt
+  # - rqt_image_overlay
+  # - rqt-robot-dashboard
+  # - rqt-robot-monitor
+  # - rqt-robot-steering
+  # - joint-state-broadcaster
+  # - joint-state-publisher
+  # - xacro
+  # - image-pipeline
+  # - image-view
+  # - bond-core
+  # - camera-calibration
+  # - camera-calibration-parsers
+  # - camera-info-manager
+  # - slam-toolbox
+  # - foxglove_bridge
+  # - ament-cmake-nose
+  # - geographic_info
+  # - geodesy
+  # - rosbridge_suite
+  # - ament_cmake_catch2
+  # - apriltag
+  # - apriltag_ros
+  # - marker-msgs
+  # - moveit
+  # - moveit-ros-perception
+  # - moveit-runtime
+  # - moveit-servo
+  # - moveit_visual_tools
+  # - moveit_servo
+  # - moveit2_tutorials
+  # - moveit-planners-chomp
+  # - rqt-moveit
 
-  - gtsam
-  - motion-capture-tracking
+  # - librealsense2
+  # - realsense2-camera
+  # - realsense2-camera-msgs
+  # - realsense2-description
+  # - webots_ros2
+  # - rosidl-generator-dds-idl
+
+  # - ros2_control
+  # - gazebo-ros2-control
+
+  # # Modern gz-sim integration
+  # - ros-gz
+  # - libg2o
+
+  # - gtsam
+  # - motion-capture-tracking
 
   # Needs fixing
   # - moveit-resources
