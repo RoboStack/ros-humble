@@ -313,6 +313,84 @@ packages_select_by_deps:
                 # ros-humble-ros-ign-interfaces
                 # ros-humble-vision-msgs
 
+  - desktop     # ** which includes **
+                # ros-humble-action-tutorials-cpp
+                # ros-humble-action-tutorials-interf…
+                # ros-humble-action-tutorials-py
+                # ros-humble-angles
+                # ros-humble-composition
+                # ros-humble-cv-bridge
+                # ros-humble-demo-nodes-cpp
+                # ros-humble-demo-nodes-cpp-native
+                # ros-humble-demo-nodes-py
+                # ros-humble-depthimage-to-laserscan
+                # ros-humble-dummy-map-server
+                # ros-humble-dummy-robot-bringup
+                # ros-humble-dummy-sensors
+                # ros-humble-example-interfaces
+                # ros-humble-examples-rclcpp-minimal…
+                # ros-humble-examples-rclcpp-multith…
+                # ros-humble-examples-rclpy-executors
+                # ros-humble-examples-rclpy-minimal-…
+                # ros-humble-ignition-cmake2-vendor
+                # ros-humble-ignition-math6-vendor
+                # ros-humble-image-geometry
+                # ros-humble-image-tools
+                # ros-humble-interactive-markers
+                # ros-humble-intra-process-demo
+                # ros-humble-joy
+                # ros-humble-laser-geometry
+                # ros-humble-libcurl-vendor
+                # ros-humble-lifecycle
+                # ros-humble-logging-demo
+                # ros-humble-map-msgs
+                # ros-humble-pcl-conversions
+                # ros-humble-pcl-msgs
+                # ros-humble-pendulum-control
+                # ros-humble-pendulum-msgs
+                # ros-humble-python-qt-binding
+                # ros-humble-qt-dotgraph
+                # ros-humble-qt-gui
+                # ros-humble-qt-gui-cpp
+                # ros-humble-qt-gui-py-common
+                # ros-humble-quality-of-service-demo…
+                # ros-humble-resource-retriever
+                # ros-humble-rqt-action
+                # ros-humble-rqt-bag
+                # ros-humble-rqt-bag-plugins
+                # ros-humble-rqt-common-plugins
+                # ros-humble-rqt-console
+                # ros-humble-rqt-graph
+                # ros-humble-rqt-gui
+                # ros-humble-rqt-gui-cpp
+                # ros-humble-rqt-gui-py
+                # ros-humble-rqt-image-view
+                # ros-humble-rqt-msg
+                # ros-humble-rqt-plot
+                # ros-humble-rqt-publisher
+                # ros-humble-rqt-py-common
+                # ros-humble-rqt-py-console
+                # ros-humble-rqt-reconfigure
+                # ros-humble-rqt-service-caller
+                # ros-humble-rqt-shell
+                # ros-humble-rqt-srv
+                # ros-humble-rqt-topic
+                # ros-humble-rttest
+                # ros-humble-rviz2
+                # ros-humble-rviz-assimp-vendor
+                # ros-humble-rviz-common
+                # ros-humble-rviz-default-plugins
+                # ros-humble-rviz-ogre-vendor
+                # ros-humble-rviz-rendering
+                # ros-humble-sensor-msgs-py
+                # ros-humble-tango-icons-vendor
+                # ros-humble-teleop-twist-joy
+                # ros-humble-teleop-twist-keyboard
+                # ros-humble-tlsf
+                # ros-humble-tlsf-cpp
+                # ros-humble-topic-monitor
+                # ros-humble-turtlesim
+
   # - qt-qui-cpp # needs to be compiled locally
 
   # - generator-dds-idl
