@@ -391,6 +391,48 @@ packages_select_by_deps:
                 # ros-humble-topic-monitor
                 # ros-humble-turtlesim
 
+  - desktop_full # ** which includes **
+                # ros-humble-actuator-msgs
+                # ros-humble-camera-calibration
+                # ros-humble-camera-calibration-pars…
+                # ros-humble-camera-info-manager
+                # ros-humble-compressed-depth-image-…
+                # ros-humble-compressed-image-transp…
+                # ros-humble-depth-image-proc
+                # ros-humble-desktop
+                # ros-humble-filters
+                # ros-humble-gps-msgs
+                # ros-humble-image-common
+                # ros-humble-image-pipeline
+                # ros-humble-image-proc
+                # ros-humble-image-publisher
+                # ros-humble-image-rotate
+                # ros-humble-image-transport-plugins
+                # ros-humble-image-view
+                # ros-humble-laser-filters
+                # ros-humble-pcl-ros
+                # ros-humble-perception
+                # ros-humble-perception-pcl
+                # ros-humble-ros-gz-bridge
+                # ros-humble-ros-gz-image
+                # ros-humble-ros-gz-interfaces
+                # ros-humble-ros-gz-sim
+                # ros-humble-ros-gz-sim-demos
+                # ros-humble-ros-ign-bridge
+                # ros-humble-ros-ign-gazebo
+                # ros-humble-ros-ign-gazebo-demos
+                # ros-humble-ros-ign-image
+                # ros-humble-ros-ign-interfaces
+                # ros-humble-sdformat-urdf
+                # ros-humble-simulation
+                # ros-humble-stereo-image-proc
+                # ros-humble-theora-image-transport
+                # ros-humble-tracetools-image-pipeli…
+                # ros-humble-vision-msgs
+                # ros-humble-vision-opencv
+                # ros-humble-xacro
+
+
   # - qt-qui-cpp # needs to be compiled locally
 
   # - generator-dds-idl
