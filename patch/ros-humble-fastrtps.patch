@@ -11,3 +11,29 @@ index 899fe693..f1e7e37d 100644
        COMPONENT discovery)
  else()
      # Use ln to create the symbolic link. We remove the version from the file name but keep the debug suffix
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7f377363..599ce98d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -27,6 +27,9 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+ endif()
+
++set(SM_RUN_RESULT 0 CACHE INTERNAL "")
++set(SM_RUN_RESULT__TRYRUN_OUTPUT "" CACHE INTERNAL "")
++
+ ###############################################################################
+ # Project                                                                     #
+ ###############################################################################
+diff --git a/src/cpp/CMakeLists.txt b/src/cpp/CMakeLists.txt
+index 6f66a18d..ddab62a5 100644
+--- a/src/cpp/CMakeLists.txt
++++ b/src/cpp/CMakeLists.txt
+@@ -399,7 +399,7 @@ try_run(SM_RUN_RESULT SM_COMPILE_RESULT
+         RUN_OUTPUT_VARIABLE SM_RUN_OUTPUT)
+
+ if(SM_COMPILE_RESULT AND NOT SM_RUN_RESULT)
+-    string(STRIP ${SM_RUN_OUTPUT} SM_RUN_OUTPUT)
++    string(STRIP "${SM_RUN_OUTPUT}" SM_RUN_OUTPUT)
+     message(STATUS "Framework's shared_mutex is ${SM_RUN_OUTPUT}")
+ endif()
