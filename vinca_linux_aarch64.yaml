@@ -428,6 +428,47 @@ packages_select_by_deps:
                 # ros-humble-rqt-srv
                 # ros-humble-rqt-bag-plugins
 
+  - desktop_full # ** which contains **
+                # ros-humble-desktop
+                # ros-humble-perception
+                # ros-humble-ros-ign-gazebo-demos
+                # ros-humble-simulation
+                # ros-humble-tracetools-image-pipeline
+                # ros-humble-xacro
+                # ros-humble-sdformat-urdf
+                # ros-humble-gps-msgs
+                # ros-humble-actuator-msgs
+                # ros-humble-vision-msgs
+                # ros-humble-ros-gz-interfaces
+                # ros-humble-ros-ign-interfaces
+                # ros-humble-vision-opencv
+                # ros-humble-camera-calibration-parsers
+                # ros-humble-filters
+                # ros-humble-ros-gz-sim
+                # ros-humble-camera-info-manager
+                # ros-humble-camera-calibration
+                # ros-humble-ros-gz-bridge
+                # ros-humble-ros-ign-gazebo
+                # ros-humble-image-proc
+                # ros-humble-image-view
+                # ros-humble-image-publisher
+                # ros-humble-compressed-depth-image-transport
+                # ros-humble-compressed-image-transport
+                # ros-humble-theora-image-transport
+                # ros-humble-image-common
+                # ros-humble-laser-filters
+                # ros-humble-ros-gz-image
+                # ros-humble-ros-ign-bridge
+                # ros-humble-stereo-image-proc
+                # ros-humble-image-transport-plugins
+                # ros-humble-image-rotate
+                # ros-humble-depth-image-proc
+                # ros-humble-ros-ign-image
+                # ros-humble-image-pipeline
+                # ros-humble-ros-gz-sim-demos
+                # ros-humble-pcl-ros
+                # ros-humble-perception-pcl
+
 
   # - ros2-controllers
   # - diff-drive-controller
