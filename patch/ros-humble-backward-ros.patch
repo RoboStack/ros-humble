@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8927192..cb461f6 100644
+index 64af86c..9be355d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -29,6 +29,7 @@ include(cmake/BackwardConfig.cmake)
+@@ -27,6 +27,7 @@ include(cmake/BackwardConfig.cmake)
  
  set(CMAKE_CXX_STANDARD_REQUIRED True)
  set(CMAKE_CXX_STANDARD 11)
@@ -10,25 +10,6 @@ index 8927192..cb461f6 100644
  
  ###############################################################################
  # COMPILER FLAGS
-diff --git a/cmake/BackwardConfigAment.cmake b/cmake/BackwardConfigAment.cmake
-index 273a51a..d981cbb 100644
---- a/cmake/BackwardConfigAment.cmake
-+++ b/cmake/BackwardConfigAment.cmake
-@@ -24,5 +24,13 @@ foreach(lib ${backward_ros_forced_LIBRARIES})
-         set(backward_ros_full_path_LIBRARIES "${backward_ros_full_path_LIBRARIES} ${lib}")
-     endif()
- endforeach()
--SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--no-as-needed ${backward_ros_full_path_LIBRARIES} -Wl,--as-needed ${CMAKE_EXE_LINKER_FLAGS}")
-+set(no_as_needed)
-+set(as_needed)
- 
-+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-+    set(no_as_needed "-Wl,--no-as-needed")
-+    set(as_needed "-Wl,--as-needed")
-+endif()
-+
-+SET(CMAKE_EXE_LINKER_FLAGS "${no_as_needed} ${backward_ros_full_path_LIBRARIES} ${as_needed} ${CMAKE_EXE_LINKER_FLAGS}")
-+ 
 diff --git a/cmake/BackwardConfig.cmake b/cmake/BackwardConfig.cmake
 index 77d22d2..8e95287 100644
 --- a/cmake/BackwardConfig.cmake
@@ -50,4 +31,35 @@ index 77d22d2..8e95287 100644
 +    REQUIRED_VARS ${FIND_PACKAGE_REQUIRED_VARS}
  )
  list(APPEND _BACKWARD_INCLUDE_DIRS ${BACKWARD_INCLUDE_DIR})
+ 
+diff --git a/cmake/BackwardConfigAment.cmake b/cmake/BackwardConfigAment.cmake
+index 273a51a..d981cbb 100644
+--- a/cmake/BackwardConfigAment.cmake
++++ b/cmake/BackwardConfigAment.cmake
+@@ -24,5 +24,13 @@ foreach(lib ${backward_ros_forced_LIBRARIES})
+         set(backward_ros_full_path_LIBRARIES "${backward_ros_full_path_LIBRARIES} ${lib}")
+     endif()
+ endforeach()
+-SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--no-as-needed ${backward_ros_full_path_LIBRARIES} -Wl,--as-needed ${CMAKE_EXE_LINKER_FLAGS}")
++set(no_as_needed)
++set(as_needed)
+ 
++if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
++    set(no_as_needed "-Wl,--no-as-needed")
++    set(as_needed "-Wl,--as-needed")
++endif()
++
++SET(CMAKE_EXE_LINKER_FLAGS "${no_as_needed} ${backward_ros_full_path_LIBRARIES} ${as_needed} ${CMAKE_EXE_LINKER_FLAGS}")
++ 
+diff --git a/package.xml b/package.xml
+index e8bc10a..d39e613 100644
+--- a/package.xml
++++ b/package.xml
+@@ -11,6 +11,7 @@
+   <url type="website">https://github.com/pal-robotics/backward_ros</url>
+ 
+   <buildtool_depend>cmake</buildtool_depend>
++  <buildtool_depend>ament_cmake_libraries</buildtool_depend>
+ 
+   <depend>libdw-dev</depend>
  

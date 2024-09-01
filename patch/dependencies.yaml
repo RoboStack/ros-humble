@@ -84,7 +84,7 @@ popf:
 rtabmap:
   add_host: ["REQUIRE_OPENGL", "ceres-solver", "libdc1394", "libusb", "vtk"]
 backward_ros:
-  add_host: [{sel(linux or (osx and x86_64)): binutils}, {sel(linux): elfutils}]
+  add_host: [{sel(linux or (osx and x86_64)): binutils}, {sel(linux): elfutils}, "ros-humble-ament-cmake-libraries"]
 nav2_smac_planner:
   add_build: [{"sel(osx)": "llvm-openmp"}]
   add_host: [{"sel(osx)": "llvm-openmp"}, "ompl", "libode"]
@@ -162,3 +162,5 @@ velodyne_pointcloud:
   add_host: ["libboost-devel"]
 motion_capture_tracking:
   add_host: ["REQUIRE_OPENGL", "libboost-devel"]
+rosx_introspection:
+  add_host: ["rapidjson"]
