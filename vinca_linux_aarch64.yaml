@@ -50,6 +50,7 @@ packages_select_by_deps:
   - rosbag2_storage_mcap
   - cartographer-ros
   - foxglove_bridge
+  - vinca_osx_arm64.yaml
 
   - gazebo_msgs
   - gazebo_dev

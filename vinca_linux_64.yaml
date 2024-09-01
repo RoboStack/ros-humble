@@ -106,6 +106,7 @@ packages_select_by_deps:
   - slam-toolbox
   - foxglove_bridge
   - ament-cmake-nose
+  - ament-cmake-vendor-package
   - geographic_info
   - geodesy
   - rosbridge_suite

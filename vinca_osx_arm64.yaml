@@ -53,6 +53,7 @@ packages_select_by_deps:
   - rosbag2_storage_mcap
   - foxglove_bridge
   - turtlebot3
+  - ament-cmake-vendor-package
 
   - joint-state-broadcaster
   - joint-state-publisher
