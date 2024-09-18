@@ -1,6 +1,14 @@
 import os
 import shutil
 import builder
+import patch_verifier
+import robostack_AI as ai
+
+def vibe_check(source):
+    with open(source, "r") as source_file:
+        pass
+DEBUG_PATCH = "./DEBUG_HARDWARE_INTERFACE.patch"
+vibe_check(DEBUG_PATCH)
 
 def DEBUG_REPLACE_PATCH(source, target):
     os.remove(target)
@@ -22,7 +30,7 @@ def insert_after_category(file_path, category_name, added_insert):
         file.writelines(lines)
 
 
-DEBUG_PATCH = "DEBUG_HARDWARE_INTERFACE.patch"
+
 skip_existing_flag = "  - /home/ryan/bld_work"
 target_file = "vinca_linux_64.yaml"
 
@@ -30,13 +38,31 @@ target_file = "vinca_linux_64.yaml"
 
 recipes_dir = "../recipes"
 source_vinca = f"./{target_file}"
-target_vinca = f"../vinca.yaml"
+target_vinca = f"./vinca.yaml"
 shutil.copyfile(source_vinca, target_vinca)
 
 insert_after_category(target_vinca,"skip_existing:", skip_existing_flag)
-arg_list = ['-s', './']
-builder_parser = builder.get_argparser()
-builder_args =  builder_parser.parse_args(arg_list)
-build_log_path = builder.run_all(builder_args)
+build_log_path = builder.run_all()
 build_success, failed_package = patch_verifier.check(build_log_path)
 print(f"Built Successfully: {build_success}")
+
+if not build_success:
+        patch_location = f"./recipes/{failed_package}/patch/{failed_package}.patch"
+        patch_arg_list = ['-e', build_log_path, '-t', patch_location]
+        if os.path.exists(patch_location):
+            print("patch Exists")
+            patch_arg_list.append('-p')
+            patch_arg_list.append(patch_location)
+        
+        ai_parser = ai.get_argparser()
+        ai_args = ai_parser.parse_args(patch_arg_list)
+        ai.fix(ai_args)
+        print(DEBUG_PATCH)
+        DEBUG_REPLACE_PATCH(DEBUG_PATCH, patch_location)
+        build_log_path_2 = builder.build_packages()
+        build_success_2, failed_package_2 = patch_verifier.check(build_log_path_2)
+        
+        if not build_success_2:
+            print("unable to resolve.")
+        else:
+            print("Patch Sucessfully resolved Build Error.")
