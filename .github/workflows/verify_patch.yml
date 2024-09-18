@@ -16,4 +16,5 @@ jobs:
 
       - name: commiter on success
         if: ${{success()}}
-        run: echo "Going to commit now!"
+        uses: stefanzweifel/git-auto-commit-action@v4
+
