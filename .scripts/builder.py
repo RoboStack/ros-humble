@@ -10,15 +10,15 @@ import datetime
 def build_recipes(args):
     time = datetime.datetime.today()
 
-    if os.path.exists(f"{args.source}/recipes/"):
-        shutil.rmtree(f"{args.source}/recipes/")
+    if os.path.exists(f"../recipes/"):
+        shutil.rmtree(f"../recipes/")
     
-    os.mkdir(f"{args.source}/recipes")
+    os.mkdir(f"../recipes")
 
-    br = os.popen(f"cd {args.source} && vinca -m").read()
+    br = os.popen(f"cd .. && vinca -m").read()
     print(br)
     
-    with open(f"logs/boa_recipe_log_{time}.txt", 'w') as file:
+    with open(f"../logs/boa_recipe_log_{time}.txt", 'w') as file:
         file.write(br)
 
 def build_packages(args):
