@@ -7,7 +7,7 @@ conda_index:
 
 build_number: 7
 
-mutex_package: ros2-distro-mutex 0.5 humble
+mutex_package: ros2-distro-mutex 0.6 humble_*
 
 skip_all_deps: false
 
@@ -58,6 +58,9 @@ packages_select_by_deps:
 
   - moveit
   - moveit_visual_tools
+  - moveit_servo
+  - moveit2_tutorials
+  - moveit-planners-chomp
   - rqt-moveit
   # - moveit2_tutorials   # this does not exist anymore
 
@@ -169,7 +172,8 @@ packages_select_by_deps:
   # - vitis_common
   # - urg_node
   # - ur_bringup
-
+  # - ublox_dgnss_node
+  # - ublox_ubx_interfaces
   # - twist_mux
 
   # - ros2acceleration
@@ -235,28 +239,28 @@ packages_select_by_deps:
   # - velodyne_simulator
   # - wiimote
   # - depthai
-
+  # - turtlebot3
 
   # - behaviortree_cpp_v3
   # - ros_workspace
   # - ros1_bridge
 
   # Used to work, now needs fixes
-  # - webots-ros2                      <== Done above
-  # - webots-ros2-abb                  none such a repo exists anymore
-  # - webots-ros2-core                 none such a repo exists anymore
-  # - webots-ros2-demos                none such a repo exists anymore
-  # - webots-ros2-epuck                <== Done above
-  # - webots-ros2-examples             none such a repo exists anymore
-  # - webots-ros2-importer             <== Done above
-  # - webots-ros2-msgs                 <== Done above
-  # - webots-ros2-tesla                <== Done above
-  # - webots-ros2-tiago                <== Done above
-  # - webots-ros2-turtlebot            <== Done above
-  # - webots-ros2-tutorials            none such a repo exists anymore
-  # - webots-ros2-universal-robot      <== Done above
-  # - webots-ros2-ur-e-description     none such a repo exists anymore
-  # - webots_ros2                      same as the webots-ros2 
+  # - webots-ros2
+  # - webots-ros2-abb
+  # - webots-ros2-core
+  # - webots-ros2-demos
+  # - webots-ros2-epuck
+  # - webots-ros2-examples
+  # - webots-ros2-importer
+  # - webots-ros2-msgs
+  # - webots-ros2-tesla
+  # - webots-ros2-tiago
+  # - webots-ros2-turtlebot
+  # - webots-ros2-tutorials
+  # - webots-ros2-universal-robot
+  # - webots-ros2-ur-e-description
+  # - webots_ros2
 
   # needs a rebuild of ros-noetic first
   # - ros1-rosbag-storage-vendor
@@ -327,6 +331,7 @@ packages_select_by_deps:
   # - ament_cmake_clang_tidy
   # - ament-cmake-clang-format
   # - ament_cmake_mypy
+  # - ament_cmake_nose
   # - ament_cmake_pclint
   # - ament_cmake_pycodestyle
   # - ament_cmake_pyflakes
