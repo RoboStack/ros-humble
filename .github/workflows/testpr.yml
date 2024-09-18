@@ -121,6 +121,7 @@ jobs:
       shell: bash -l {0}
       if: steps.filecheck.outputs.LINUX_YAML_CHANGED == 1 && matrix.os == 'ubuntu-latest' && matrix.platform == 'linux-64'
       run: |
+        echo "CONDA_BLD_PATH=$HOME/conda-bld" >> $GITHUB_ENV
         git clean -fdx
         cp vinca_linux_64.yaml vinca.yaml
         vinca --platform linux-64
