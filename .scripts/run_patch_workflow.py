@@ -71,5 +71,5 @@ if not build_success:
             raise Exception("Unable to patch package")
         else:
             print("Patch Sucessfully resolved Build Error.")
-            patch_package_dir = f"./patches/{failed_package}.patch"
+            patch_package_dir = f"./patch/{failed_package}.patch"
             replace_patch(patch_location,patch_package_dir)
