@@ -4,6 +4,8 @@ import builder
 import patch_verifier
 import robostack_AI as ai
 
+raise Exception("Testing")
+
 def vibe_check(source):
     with open(source, "r") as source_file:
         pass
