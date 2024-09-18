@@ -1,9 +1,10 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: pull_request
+on: [pull_request]
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: self-hosted
     steps:
-      - run: |
-      python ./scripts/run_patch_workflow.py
+      - run: echo "Running AI Patch Checker Workflow!"
+      - run: python ./scripts/run_patch_workflow.py
