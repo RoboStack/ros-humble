@@ -176,8 +176,8 @@ jobs:
       shell: bash -l {0}
       run: |
         mkdir -p $CONDA_BLD_PATH
-        conda index $CONDA_BLD_PATH
         boa build additional_recipes/ros2-distro-mutex/ -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
+        conda index $CONDA_BLD_PATH
         boa build . -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.LINUX_YAML_CHANGED == 1 && matrix.os == 'ubuntu-latest' && matrix.platform == 'linux-64'
     - name: Build recipes for linux-aarch64
