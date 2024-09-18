@@ -7,4 +7,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - run: echo "Running AI Patch Checker Workflow!"
-      - run: python ./scripts/run_patch_workflow.py
+      - run: python ./scripts/test.py
