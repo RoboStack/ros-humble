@@ -6,7 +6,7 @@ build:
   number: 0
   # Note: keep in sync with build number
   # Cannot be done automatically, see https://github.com/mamba-org/boa/issues/278
-  string: 'humble_0'
+  string: humble_0
   run_exports:
     weak:
       - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
