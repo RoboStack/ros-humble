@@ -10,6 +10,9 @@ def build_recipes():
     if os.path.exists(f"./recipes/"):
         print("Cleaning recipes")
         shutil.rmtree(f"./recipes/")
+
+    if not os.path.exists(f"./logs"):
+        os.mkdir("./logs")
     
     os.mkdir(f"./recipes")
 
@@ -21,6 +24,8 @@ def build_recipes():
 
 def build_packages():
     time = datetime.datetime.today()
+    if not os.path.exists(f"./logs"):
+        os.mkdir("./logs")
     os.popen(f"cd . && boa build recipes -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml > './logs/boa_package_log_{time}.txt' 2>&1").read()
     #br = Popen(f"ros_build_recipes.bat {args.source}")
     #bp = Popen("ros_build_packages.bat")
