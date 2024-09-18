@@ -3,6 +3,7 @@ import shutil
 import builder
 import patch_verifier
 import robostack_AI as ai
+import re
 
 
 def vibe_check(source):
@@ -30,7 +31,21 @@ def insert_after_category(file_path, category_name, added_insert):
     with open(file_path, 'w') as file:
         file.writelines(lines)
 
+def fetch_script(package_name):
+    recipe = f"./recipes/{package_name}"
+    with open(recipe, "r") as recipe_file:
+        data = recipe_file.read()
+    pattern = r'git_url:\s*(.*)'
+    match = re.search(pattern, data)
+    if match:
+        git_url = match.group(1)
+        print(f"Extracted git_url: {git_url}")
+    else:
+        print("git_url not found in the source.")
+    data
 
+
+    pass
 
 
 skip_existing_flag = "  - /home/ryan/bld_work"
@@ -56,11 +71,18 @@ if not build_success:
             patch_arg_list.append('-p')
             patch_arg_list.append(patch_location)
         
+        fetch_script(failed_package)
+
+
+
+
         ai_parser = ai.get_argparser()
         ai_args = ai_parser.parse_args(patch_arg_list)
         ai.fix(ai_args)
         print(DEBUG_PATCH)
 
+
+            
         #THIS IS DEBUGGING CODE AND NEEDS TO BE CHANGED
         replace_patch(DEBUG_PATCH, patch_location)
 
