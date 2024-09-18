@@ -1,10 +1,12 @@
 package:
   name: ros2-distro-mutex
-  version: 0.5.0
+  version: 0.6.0
 
 build:
   number: 0
-  string: humble
+  # Note: keep in sync with build number
+  # Cannot be done automatically, see https://github.com/mamba-org/boa/issues/278
+  string: 'humble_0'
   run_exports:
     weak:
       - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
