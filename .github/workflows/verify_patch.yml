@@ -6,4 +6,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - run: |
-      if [git diff --name-only]
+      python ./scripts/run_patch_workflow.py

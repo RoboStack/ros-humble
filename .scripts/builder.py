@@ -1,42 +1,36 @@
 #from subprocess import Popen
-import argparse
 import os
-import subprocess
 import shutil
-import hashlib
 import datetime
 
 
-def build_recipes(args):
+def build_recipes():
     time = datetime.datetime.today()
 
-    if os.path.exists(f"../recipes/"):
-        shutil.rmtree(f"../recipes/")
+    if os.path.exists(f"./recipes/"):
+        print("Cleaning recipes")
+        shutil.rmtree(f"./recipes/")
     
-    os.mkdir(f"../recipes")
+    os.mkdir(f"./recipes")
 
-    br = os.popen(f"cd .. && vinca -m").read()
+    br = os.popen(f"cd . && vinca -m").read()
     print(br)
     
-    with open(f"../logs/boa_recipe_log_{time}.txt", 'w') as file:
+    with open(f"./logs/boa_recipe_log_{time}.txt", 'w') as file:
         file.write(br)
 
-def build_packages(args):
+def build_packages():
     time = datetime.datetime.today()
-    os.popen(f"cd {args.source} && boa build recipes -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml > '../logs/boa_package_log_{time}.txt' 2>&1").read()
+    os.popen(f"cd . && boa build recipes -m ./.ci_support/conda_forge_pinnings.yaml -m ./conda_build_config.yaml > './logs/boa_package_log_{time}.txt' 2>&1").read()
     #br = Popen(f"ros_build_recipes.bat {args.source}")
     #bp = Popen("ros_build_packages.bat")
     #input("Press any key to continue")
     return f"logs/boa_package_log_{time}.txt"
 
-def get_argparser():
-    parser = argparse.ArgumentParser(description="")
-    parser.add_argument('-s', '--source', type=str, default="ros-humble", help="Directory of robostack")
-    return parser
 
-def run_all(args):
-    build_recipes(args)
-    return build_packages(args)
+def run_all():
+    build_recipes()
+    return build_packages()
     
 
 
@@ -44,6 +38,4 @@ def run_all(args):
 
 
 if __name__ =="__main__":
-    parser = get_argparser()
-    args = parser.parse_args()
-    run_all(args)
+    run_all()

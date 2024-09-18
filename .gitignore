@@ -4,4 +4,6 @@ recipes/
 *.sh
 *.ps1
 *.json
+logs/
+.scripts/__pycache__/
 .DS_Store
