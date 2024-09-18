@@ -1,5 +1,5 @@
 name: GitHub Actions Demo
-run-name: $Running AI Patcher Verifier! 🚀
+run-name: Running AI Patcher Verifier! 🚀
 on: [pull_request]
 
 jobs:
@@ -13,3 +13,7 @@ jobs:
 
 
       - run: python .scripts/run_patch_workflow.py
+
+      - name: commiter on success
+        if: ${{success()}}
+        run: echo "Going to commit now!"
