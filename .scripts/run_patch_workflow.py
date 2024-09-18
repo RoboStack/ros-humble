@@ -10,7 +10,7 @@ def vibe_check(source):
 DEBUG_PATCH = "./DEBUG_HARDWARE_INTERFACE.patch"
 vibe_check(DEBUG_PATCH)
 
-def DEBUG_REPLACE_PATCH(source, target):
+def replace_patch(source, target):
     os.remove(target)
     with open(target,"w") as target_file:
         with open(source, "r") as source_file:
@@ -28,6 +28,7 @@ def insert_after_category(file_path, category_name, added_insert):
 
     with open(file_path, 'w') as file:
         file.writelines(lines)
+
 
 
 
@@ -58,11 +59,17 @@ if not build_success:
         ai_args = ai_parser.parse_args(patch_arg_list)
         ai.fix(ai_args)
         print(DEBUG_PATCH)
-        DEBUG_REPLACE_PATCH(DEBUG_PATCH, patch_location)
+
+        #THIS IS DEBUGGING CODE AND NEEDS TO BE CHANGED
+        replace_patch(DEBUG_PATCH, patch_location)
+
         build_log_path_2 = builder.build_packages()
         build_success_2, failed_package_2 = patch_verifier.check(build_log_path_2)
         
         if not build_success_2:
             print("unable to resolve.")
+            raise Exception("Unable to patch package")
         else:
             print("Patch Sucessfully resolved Build Error.")
+            patch_package_dir = f"./patches/{failed_package}.patch"
+            replace_patch(patch_location,patch_package_dir)
