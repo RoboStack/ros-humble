@@ -864,6 +864,8 @@ qt5-qmake:
   robostack: [qt-main, REQUIRE_OPENGL]
 qtbase5-dev:
   robostack: [qt-main, REQUIRE_OPENGL]
+rapidjson-dev:
+  robostack: [rapidjson]
 roboticstoolbox-python:
   robostack: [roboticstoolbox-python]
 rsync:
@@ -955,4 +957,3 @@ zbar:
   robostack: [zbar]
 zlib:
   robostack: [zlib]
-
