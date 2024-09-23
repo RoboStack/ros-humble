@@ -92,6 +92,7 @@ packages_select_by_deps:
 
   - moveit
   - moveit-planners-chomp
+  - moveit-visual-tools
 
   - gtsam
 
