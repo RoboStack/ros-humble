@@ -33,7 +33,7 @@ def get_argparser():
     )
     return parser
 
-def generate_response(prompt):
+def generate_AI_response(prompt):
     #"model":"llama3.1:8b-instruct-fp16"
     data = {"model":"llama3.1", "role": "system", "prompt":prompt, "stream": False}
     url = 'http://172.21.64.1:11434/api/generate'
@@ -53,7 +53,7 @@ def generate_repair(error, script):
 
     if not script == None:
         print("Script? True")
-        script_prompt = f"Here is the relevant script ```{script}```. "
+        script_prompt = f"Here is the relevant script ```{script}```.\n"
     else:
         print("Script? False")
         script_prompt = ""
@@ -61,24 +61,24 @@ def generate_repair(error, script):
     
     error_prompt = f"The error is that is causing the build to fail is \n ```{error} \n```. "
     
-    prompt = "Recreate the script fully with the added fixes " + error_prompt + script_prompt
+    prompt = "Recreate the script fully with the added fixes. " + error_prompt + script_prompt
 
     
     
-    return generate_response(prompt), prompt
+    return generate_AI_response(prompt), prompt
 
 
 
 def extract_response_code(text):
-    code_blocks = re.findall(r'```\s*(.*?)\s*```\n', text, re.DOTALL)
+    code_blocks = re.findall(r'```(?:.*?)\n(.*?)\n```', text, re.DOTALL)
     patch_code = ''
-    for block in code_blocks:
+    for block in code_blocks: 
         lines = block.split('\n')
         for line in lines:
             patch_code += line + '\n'
     return patch_code
 
-def create_patch(error_file, output, script_file):
+def create_repair(error_file, output, script_file):
     print("Creating patch...")
     repair_response, prompt = generate_repair(script=script_file, error=error_file)
     print(repair_response["response"])
@@ -92,7 +92,7 @@ def create_patch(error_file, output, script_file):
 
 def fix(bad_script_path, error_log):
     script_file = open(bad_script_path,"r",encoding="utf-8").read()
-    create_patch(error_file=error_log, script_file=script_file, output=bad_script_path)
+    create_repair(error_file=error_log, script_file=script_file, output=bad_script_path)
 
 
 if __name__ == "__main__":
