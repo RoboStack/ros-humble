@@ -51,14 +51,8 @@ def generate_AI_response(prompt):
 
 def generate_repair(error, script):
 
-    if not script == None:
-        print("Script? True")
-        script_prompt = f"Here is the relevant script ```{script}```.\n"
-    else:
-        print("Script? False")
-        script_prompt = ""
-    
-    
+
+    script_prompt = f"Here is the relevant script ```{script}```.\n"
     error_prompt = f"The error is that is causing the build to fail is \n ```{error} \n```. "
     
     prompt = "Recreate the script fully with the added fixes. " + error_prompt + script_prompt

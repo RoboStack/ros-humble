@@ -208,7 +208,7 @@ def run():
             else:
                 print("Patch Sucessfully resolved Build Error.")
                 patch_package_dir = f"./patch/{failed_package}.patch"
-                #replace_patch(patch_location,patch_package_dir)
+                replace_patch(patch_location,patch_package_dir)
 
 if "__main__" == __name__:
     #failed_package = 'ros-humble-hardware-interface'
