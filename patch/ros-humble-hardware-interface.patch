@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 [ZoneTransfer]
 ZoneId=3
+=======
+./recipes/ros-humble-hardware-interface/patch/ros-humble-hardware-interface.patch
+>>>>>>> origin/For_Demonstration
