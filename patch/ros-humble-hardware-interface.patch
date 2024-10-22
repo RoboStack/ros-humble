@@ -1,6 +1,52 @@
-<<<<<<< HEAD
-[ZoneTransfer]
-ZoneId=3
-=======
-./recipes/ros-humble-hardware-interface/patch/ros-humble-hardware-interface.patch
->>>>>>> origin/For_Demonstration
+diff --git a/hardware_interface/include/hardware_interface/lexical_casts.hpp b/hardware_interface/include/hardware_interface/lexical_casts.hpp
+index 1b9bad701..aec186211 100644
+--- a/hardware_interface/include/hardware_interface/lexical_casts.hpp
++++ b/hardware_interface/include/hardware_interface/lexical_casts.hpp
+@@ -20,6 +20,8 @@
+ #include <stdexcept>
+ #include <string>
+ 
++#include "hardware_interface/visibility_control.h"
++
+ namespace hardware_interface
+ {
+ 
+@@ -28,8 +30,10 @@ namespace hardware_interface
+  * from
+  https://github.com/ros-planning/srdfdom/blob/ad17b8d25812f752c397a6011cec64aeff090c46/src/model.cpp#L53
+ */
++HARDWARE_INTERFACE_PUBLIC
+ double stod(const std::string & s);
+ 
++HARDWARE_INTERFACE_PUBLIC
+ bool parse_bool(const std::string & bool_string);
+ 
+ }  // namespace hardware_interface
+diff --git a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
+index 5c3ea22ca..271dc29fa 100644
+--- a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
++++ b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
+@@ -17,6 +17,10 @@
+ 
+ #include <cstdint>
+ 
++#ifdef ERROR
++#undef ERROR
++#endif
++
+ namespace hardware_interface
+ {
+ enum class return_type : std::uint8_t
+diff --git a/hardware_interface/src/lexical_casts.cpp b/hardware_interface/src/lexical_casts.cpp
+index c9adcccf8..8013dd519 100644
+--- a/hardware_interface/src/lexical_casts.cpp
++++ b/hardware_interface/src/lexical_casts.cpp
+@@ -22,7 +22,7 @@ double stod(const std::string & s)
+   std::istringstream stream(s);
+   stream.imbue(std::locale::classic());
+   double result;
+-  stream >> result;
++  strea >> result;
+   if (stream.fail() || !stream.eof())
+   {
+     throw std::invalid_argument("Failed converting string to real number");
