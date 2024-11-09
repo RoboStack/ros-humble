@@ -3,26 +3,24 @@ import shutil
 import builder
 import patch_verifier
 import robostack_AI as ai
-import subprocess
 import re
-from github import Github, Auth
 import git
-import patch
 import time
+import argparse
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--ip', type=str, required=True, help="IP Address for Accessing LLM Model API")
+    parser.add_argument('-d', '--debug', action='store_true', default=False, help="Stops any changes from occuring to RoboStack")
+    parser.add_argument('-s', '--skip_existing', type=str, default=None, help="The Skip existing directory for packages that won't be checked for failing builds. Used for faster build times")
+    return parser.parse_args()
 
 def filter_strings(strings, substring):
     return [s for s in strings if substring not in s]
 
 def extract_file_paths(log_content):
-    # Regular expression to match file paths
     path_pattern = r'(?:^|\s)(\S+/\S+)'
-    
-    # Find all matches
     matches = re.findall(path_pattern, log_content)
-    
-    # Remove duplicate paths and sort
-
-    
     return matches
 
 def split_and_filter_string(strings, split_string):
@@ -56,11 +54,6 @@ def isolate_build_error(package, log_path):
             full_directory = os.path.abspath(new_directory)
             if os.path.isfile(full_directory):
                 added_directories.append(full_directory)
-            print("A")
-        print("B")
-        
-
-
         return modified_log, added_directories
 
 def remove_recipe_patch(package_name):
@@ -70,22 +63,12 @@ def remove_recipe_patch(package_name):
 
     with open(recipe_path, 'r+') as recipe_file:
         content = recipe_file.read()
-
         edit = re.sub(r'patches:\s*\n(    - .*\n)*', '', content)
-        
         recipe_file.seek(0)
-
         recipe_file.write(edit)
-
         recipe_file.truncate()
 
-def vibe_check(source):
-    with open(source, "r") as source_file:
-        pass
-DEBUG_PATCH = "./DEBUG_HARDWARE_INTERFACE.patch"
-vibe_check(DEBUG_PATCH)
-
-def replace_patch(content, target):
+def replace_file(content, target):
     os.remove(target)
     with open(target,"w") as target_file:
         target_file.write(content)
@@ -93,25 +76,20 @@ def replace_patch(content, target):
 def insert_after_category(file_path, category_name, added_insert):
     with open(file_path, 'r') as file:
         lines = file.readlines()
-
     for i, line in enumerate(lines):
         if category_name in line:
             # Insert the URL on the next line
             lines.insert(i + 1, added_insert + '\n')
             break
-
+        
     with open(file_path, 'w') as file:
         file.writelines(lines)
 
 def fetch_script(package_name, log_path):
-    
-    DEBUG_PATCH = "./DEBUG_HARDWARE_INTERFACE.patch"
-
     recipe = f"./recipes/{package_name}/recipe.yaml"
     patch_path = f"./recipes/{package_name}/patch/{package_name}.patch"
     local_path = f'./temp/{package_name}'
     temp_path = "./temp"
-
 
     with open(recipe, "r") as recipe_file:
         data = recipe_file.read()
@@ -139,13 +117,10 @@ def fetch_script(package_name, log_path):
     git_rev = re.sub(r'(.*?\/)(\d+\.\d+\.\d+-\d+)$', r'\1', git_rev)
     git_rev = git_rev.rstrip('/')
     os.mkdir(temp_path)
-
     equivelant_name = local_path.replace("ros-humble-", "", 1)
     equivelant_name = equivelant_name.replace("-","_")
-
     repo = git.Repo.clone_from(git_url,equivelant_name,branch=git_rev)
     repo.git.checkout(git_rev)
-
     try:
         repo.git.execute(['git','apply', '-p2',os.path.abspath(patch_path)])
         print("Patch Successfully Applied")
@@ -154,14 +129,18 @@ def fetch_script(package_name, log_path):
         remove_recipe_patch(package_name)
         log_path = builder.build_packages()
         build_success, failed_package = patch_verifier.check(log_path)
+        if not build_success:
+            return fetch_script(package_name, log_path)
+        else:
+            return None, None, None
     pass
+
     filtered_log, potential_paths = isolate_build_error(package_name, log_path)
     return filtered_log, potential_paths, repo
 
 
 
 
-skip_existing_flag = "  - /home/ryan/bld_work"
 target_file = "vinca_linux_64.yaml"
 recipes_dir = "../recipes"
 source_vinca = f"./{target_file}"
@@ -170,10 +149,14 @@ target_vinca = f"./vinca.yaml"
 
 
 
-def run():
+def run(args):
+    skip_existing_flag = f"  - {args.skip_existing}"
     start_1 = time.time()
     shutil.copyfile(source_vinca, target_vinca)
-    insert_after_category(target_vinca,"skip_existing:", skip_existing_flag)
+    if not(args.skip_existing is None or args.skip_existing == ""):
+        skip_existing_flag = f"  - {args.skip_existing}"
+        insert_after_category(target_vinca,"skip_existing:", skip_existing_flag)
+    
     start_2 = time.time()
     build_log_path = builder.run_all()
     start_3 = time.time()
@@ -185,25 +168,17 @@ def run():
             start_5 = time.time()
             patch_location = f"./recipes/{failed_package}/patch/{failed_package}.patch"
             filtered_log, bad_scripts, repo = fetch_script(failed_package,build_log_path)
+            if bad_scripts is None:
+                print(f"{failed_package} patch removal resulted in successful build.")
+                return
             target_script = bad_scripts[0]
-
-
-            
             start_6 = time.time()
-            ai.fix(bad_script_path=target_script,error_log=filtered_log)
+            ai.fix(ip=args.ip, bad_script_path=target_script,error_log=filtered_log)
             start_7 = time.time()
-            print(DEBUG_PATCH)
-
             equivelant_name = failed_package.removeprefix("ros-humble-")
             equivelant_name = equivelant_name.replace("-","_")
-
             patch = repo.git.execute(['git', 'diff', f'--src-prefix=a/{equivelant_name}/', f'--dst-prefix=b/{equivelant_name}/'])
-
-
-                
-            #THIS IS DEBUGGING CODE AND NEEDS TO BE CHANGED
-            #replace_patch(DEBUG_PATCH, patch_location)
-            replace_patch(patch,patch_location)
+            replace_file(patch,patch_location)
             start_8 = time.time()
             build_log_path_2 = builder.build_packages()
             build_success_2, failed_package_2 = patch_verifier.check(build_log_path_2)
@@ -214,15 +189,12 @@ def run():
             else:
                 print("Patch Sucessfully resolved Build Error.")
                 patch_package_dir = f"./patch/{failed_package}.patch"
-                #replace_patch(patch,patch_package_dir)
+                if not args.debug:
+                    replace_file(patch,patch_package_dir)
             print(f"Setup : {round(start_2 - start_1)}, Build 1 : {round(start_3-start_2)}, Check 1 : {round(start_4-start_3)}, Script Retrieval : {round(start_6-start_5)}, AI Repair : {round(start_7 - start_6)}")
             print(f"Patch Generation : {round(start_8-start_7)}, Build 2 : {round(start_9-start_8)}")
             return [start_1, start_2, start_3, start_4, start_5, start_6, start_7, start_8, start_9]
 
 if "__main__" == __name__:
-    #failed_package = 'ros-humble-hardware-interface'
-    #log_path = os.path.abspath("./logs/this_log.txt")
-    #builder.build_recipes()
-    #fetch_script(failed_package, log_path)
-    run()
-    #builder.build_packages()
+    args = parse_arguments()
+    run(args)

@@ -1,8 +1,8 @@
 diff --git a/hardware_interface/include/hardware_interface/lexical_casts.hpp b/hardware_interface/include/hardware_interface/lexical_casts.hpp
-index 1b9bad701..aec186211 100644
+index 846d9f757c..042361e392 100644
 --- a/hardware_interface/include/hardware_interface/lexical_casts.hpp
 +++ b/hardware_interface/include/hardware_interface/lexical_casts.hpp
-@@ -20,6 +20,8 @@
+@@ -21,6 +21,8 @@
  #include <stdexcept>
  #include <string>
  
@@ -11,7 +11,7 @@ index 1b9bad701..aec186211 100644
  namespace hardware_interface
  {
  
-@@ -28,8 +30,10 @@ namespace hardware_interface
+@@ -29,8 +31,10 @@ namespace hardware_interface
   * from
   https://github.com/ros-planning/srdfdom/blob/ad17b8d25812f752c397a6011cec64aeff090c46/src/model.cpp#L53
  */
@@ -23,7 +23,7 @@ index 1b9bad701..aec186211 100644
  
  }  // namespace hardware_interface
 diff --git a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
-index 5c3ea22ca..271dc29fa 100644
+index 5c3ea22ca0..271dc29faf 100644
 --- a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
 +++ b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
 @@ -17,6 +17,10 @@
@@ -37,20 +37,3 @@ index 5c3ea22ca..271dc29fa 100644
  namespace hardware_interface
  {
  enum class return_type : std::uint8_t
-diff --git a/hardware_interface/src/lexical_casts.cpp b/hardware_interface/src/lexical_casts.cpp
-index c9adcccf8..d73f45bbd 100644
---- a/hardware_interface/src/lexical_casts.cpp
-+++ b/hardware_interface/src/lexical_casts.cpp
-@@ -19,10 +19,9 @@ namespace hardware_interface
- double stod(const std::string & s)
- {
-   // convert from string using no locale
--  std::istringstream stream(s);
--  stream.imbue(std::locale::classic());
-+  std::istringstream stream(s); // Declare variable here
-   double result;
--  stream >> result;
-+  stream >> result; // Typo corrected, 'strea' -> 'stream'
-   if (stream.fail() || !stream.eof())
-   {
-     throw std::invalid_argument("Failed converting string to real number");
