@@ -54,7 +54,6 @@ def generate_repair(error, script):
 
     script_prompt = f"Here is the relevant script ```{script}```.\n"
     error_prompt = f"The error is that is causing the build to fail is \n ```{error} \n```. "
-    
     prompt = "Recreate the script fully with the added fixes. " + error_prompt + script_prompt
 
     

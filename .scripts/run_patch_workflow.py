@@ -8,6 +8,7 @@ import re
 from github import Github, Auth
 import git
 import patch
+import time
 
 def filter_strings(strings, substring):
     return [s for s in strings if substring not in s]
@@ -170,22 +171,27 @@ target_vinca = f"./vinca.yaml"
 
 
 def run():
+    start_1 = time.time()
     shutil.copyfile(source_vinca, target_vinca)
     insert_after_category(target_vinca,"skip_existing:", skip_existing_flag)
+    start_2 = time.time()
     build_log_path = builder.run_all()
+    start_3 = time.time()
     build_success, failed_package = patch_verifier.check(build_log_path)
+    start_4 = time.time()
     print(f"Built Successfully: {build_success}")
 
     if not build_success:
+            start_5 = time.time()
             patch_location = f"./recipes/{failed_package}/patch/{failed_package}.patch"
             filtered_log, bad_scripts, repo = fetch_script(failed_package,build_log_path)
             target_script = bad_scripts[0]
 
 
             
-
+            start_6 = time.time()
             ai.fix(bad_script_path=target_script,error_log=filtered_log)
-
+            start_7 = time.time()
             print(DEBUG_PATCH)
 
             equivelant_name = failed_package.removeprefix("ros-humble-")
@@ -198,17 +204,20 @@ def run():
             #THIS IS DEBUGGING CODE AND NEEDS TO BE CHANGED
             #replace_patch(DEBUG_PATCH, patch_location)
             replace_patch(patch,patch_location)
-
-            #build_log_path_2 = builder.build_packages()
-            #build_success_2, failed_package_2 = patch_verifier.check(build_log_path_2)
-            build_success_2 = True
+            start_8 = time.time()
+            build_log_path_2 = builder.build_packages()
+            build_success_2, failed_package_2 = patch_verifier.check(build_log_path_2)
+            start_9 = time.time()
             if not build_success_2:
                 print("unable to resolve.")
                 raise Exception("Unable to patch package")
             else:
                 print("Patch Sucessfully resolved Build Error.")
                 patch_package_dir = f"./patch/{failed_package}.patch"
-                replace_patch(patch_location,patch_package_dir)
+                #replace_patch(patch,patch_package_dir)
+            print(f"Setup : {round(start_2 - start_1)}, Build 1 : {round(start_3-start_2)}, Check 1 : {round(start_4-start_3)}, Script Retrieval : {round(start_6-start_5)}, AI Repair : {round(start_7 - start_6)}")
+            print(f"Patch Generation : {round(start_8-start_7)}, Build 2 : {round(start_9-start_8)}")
+            return [start_1, start_2, start_3, start_4, start_5, start_6, start_7, start_8, start_9]
 
 if "__main__" == __name__:
     #failed_package = 'ros-humble-hardware-interface'
