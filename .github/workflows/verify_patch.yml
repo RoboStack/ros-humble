@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
 
 
-      - run: python .scripts/run_patch_workflow.py
+      - run: python .scripts/run_patch_workflow.py --ip {LLM_IP} -s {skip_existing_dir}
 
       - name: commiter on success
         if: ${{success()}}

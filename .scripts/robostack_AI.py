@@ -1,10 +1,10 @@
 import requests
 import re
 
-def generate_AI_response(ip, prompt):
+def generate_AI_response(args, prompt):
     #"model":"llama3.1:8b-instruct-fp16"
-    data = {"model":"llama3.1", "role": "system", "prompt":prompt, "stream": False}
-    url = f'http://{ip}:11434/api/generate'
+    data = {"model":f"{args.model}", "role": "system", "prompt":prompt, "stream": False}
+    url = f'http://{args.ip}:{args.port}/api/generate'
     response = requests.post(url, json=data)
     response_json = response.json()
     print("HERE")
@@ -28,11 +28,11 @@ def extract_response_code(text):
             patch_code += line + '\n'
     return patch_code
 
-def fix(ip, bad_script_path, error_log):
+def fix(args, bad_script_path, error_log):
     script_file = open(bad_script_path,"r",encoding="utf-8").read()
     print("Creating Repair...")
     prompt = generate_prompt(script=script_file, error=error_log)
-    repair_response = generate_AI_response(ip, prompt)
+    repair_response = generate_AI_response(args, prompt)
     print(repair_response["response"])
     repaired_code = extract_response_code(repair_response["response"])
     repaired_file = open(f"{bad_script_path}", "w")

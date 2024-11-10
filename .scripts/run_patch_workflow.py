@@ -10,9 +10,11 @@ import argparse
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--ip', type=str, required=True, help="IP Address for Accessing LLM Model API")
+    parser.add_argument('-ip', '--ip', type=str, required=True, help="IP Address for Accessing LLM Model API")
+    parser.add_argument("-p", "--port", type=str, default="11434")
     parser.add_argument('-d', '--debug', action='store_true', default=False, help="Stops any changes from occuring to RoboStack")
     parser.add_argument('-s', '--skip_existing', type=str, default=None, help="The Skip existing directory for packages that won't be checked for failing builds. Used for faster build times")
+    parser.add_argument('-m', '--model', type=str, default='llama3.1')
     return parser.parse_args()
 
 def filter_strings(strings, substring):
@@ -173,7 +175,7 @@ def run(args):
                 return
             target_script = bad_scripts[0]
             start_6 = time.time()
-            ai.fix(ip=args.ip, bad_script_path=target_script,error_log=filtered_log)
+            ai.fix(args=args, bad_script_path=target_script,error_log=filtered_log)
             start_7 = time.time()
             equivelant_name = failed_package.removeprefix("ros-humble-")
             equivelant_name = equivelant_name.replace("-","_")
