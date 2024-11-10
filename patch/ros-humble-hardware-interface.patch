@@ -38,7 +38,7 @@ index 5c3ea22ca..271dc29fa 100644
  {
  enum class return_type : std::uint8_t
 diff --git a/hardware_interface/src/lexical_casts.cpp b/hardware_interface/src/lexical_casts.cpp
-index c9adcccf8..8013dd519 100644
+index c9adcccf8..851b7d45c 100644
 --- a/hardware_interface/src/lexical_casts.cpp
 +++ b/hardware_interface/src/lexical_casts.cpp
 @@ -22,7 +22,7 @@ double stod(const std::string & s)
@@ -46,7 +46,7 @@ index c9adcccf8..8013dd519 100644
    stream.imbue(std::locale::classic());
    double result;
 -  stream >> result;
-+  strea >> result;
++  stream >> result;  // Fix: Changed 'strea' to 'stream'
    if (stream.fail() || !stream.eof())
    {
      throw std::invalid_argument("Failed converting string to real number");
