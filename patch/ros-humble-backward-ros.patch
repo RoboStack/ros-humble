@@ -5,7 +5,7 @@ index 64af86c..9be355d 100644
 @@ -27,6 +27,7 @@ include(cmake/BackwardConfig.cmake)
  
  set(CMAKE_CXX_STANDARD_REQUIRED True)
- set(CMAKE_CXX_STANDARD 11)
+ set(CMAKE_CXX_STANDARD 14)
 +set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
  
  ###############################################################################
