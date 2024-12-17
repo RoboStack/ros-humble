@@ -13,7 +13,7 @@ yaml_cpp_vendor:
   add_host: ["yaml-cpp"]
   add_run: ["yaml-cpp"]
 zstd_vendor:
-  add_host: ["zstd", {sel(not win): zstd-static}]
+  add_host: ["zstd", "${{ 'zstd-static' if not win }}"]
   add_run: ["zstd"]
 sqlite3_vendor:
   add_host: ["sqlite"]
@@ -34,6 +34,7 @@ intra_process_demo:
   add_host: ["REQUIRE_OPENGL"]
 rviz_ogre_vendor:
   add_host: ["zlib", "freeimage", "freetype", "assimp", "zziplib", "pugixml"]
+  add_build: ["vcstool"]
   add_run: ["assimp"]
 pcl_conversions:
   add_host: ["REQUIRE_OPENGL", "libboost-devel"]
@@ -45,7 +46,7 @@ behaviortree_cpp_v3:
   add_host: ["libboost-devel", "cppzmq"]
   add_run: ["libboost"]
 plotjuggler:
-  add_host: ["libxcb", {sel(linux): elfutils}, "ros-humble-ros-workspace"]
+  add_host: ["libxcb", "${{ 'elfutils' if linux }}", "ros-humble-ros-workspace"]
 embree_vendor:
   add_host: ["REQUIRE_OPENGL", "libpng", "libjpeg-turbo", "openimageio", "tbb", "tbb-devel", "embree"]
 ign_rviz_common:
@@ -75,7 +76,7 @@ fmilibrary_vendor:
 mrpt2:
   add_host:  ["assimp", "octomap", "tinyxml2", "libboost-devel", "jsoncpp", "gtest", "libboost-python-devel", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
   add_run:   ["assimp", "octomap", "tinyxml2", "libboost-devel", "jsoncpp", "gtest", "libboost-python-devel", "libdc1394", "xorg-libxcomposite", "libftdi", "ros-humble-octomap"]
-  add_build: [{"sel(linux)": "{{ cdt('libxcomposite-devel') }}"}]
+  add_build: ["${{ cdt('libxcomposite-devel') if linux }}"]
 ros1_rosbag_storage_vendor:
   add_host: ["ros-noetic-roscpp", "ros-noetic-roslz4", "ros-noetic-rostest"]
   add_run: ["ros-noetic-roscpp", "ros-noetic-roslz4"]
@@ -84,14 +85,14 @@ popf:
 rtabmap:
   add_host: ["REQUIRE_OPENGL", "ceres-solver", "libdc1394", "libusb", "vtk"]
 backward_ros:
-  add_host: [{sel(linux or (osx and x86_64)): binutils}, {sel(linux): elfutils}, "ros-humble-ament-cmake-libraries"]
+  add_host: ["${{ 'binutils' if linux or (osx and x86_64) }}", "${{ 'elfutils' if linux }}"]
 nav2_smac_planner:
-  add_build: [{"sel(osx)": "llvm-openmp"}]
-  add_host: [{"sel(osx)": "llvm-openmp"}, "ompl", "libode"]
+  add_build: ["${{ 'llvm-openmp' if osx }}"]
+  add_host: ["${{ 'llvm-openmp' if osx }}", "ompl", "libode"]
 nav2_util:
   add_host: ["libboost-devel"]
 nav2_constrained_smoother:
-  add_host: [{"sel(win)": "openblas"}]
+  add_host: ["${{ 'openblas' if win }}"]
 ompl:
   add_host: ["ompl"]
 pybind11_vendor:
@@ -101,7 +102,7 @@ python_qt_binding:
   add_host: ["pyqt-builder"]
   add_run: ["pyqt-builder"]
 qt_gui_cpp:
-  add_build: [{sel(build_platform != target_platform): pyqt}, {sel(build_platform != target_platform): qt-main}]
+  add_build: ["${{ 'pyqt' if (build_platform != target_platform) }}", "${{ 'qt-main' if (build_platform != target_platform) }}"]
   add_host: ["REQUIRE_OPENGL", "pyqt-builder", "pep517"]
   add_run: ["pyqt-builder", "pep517"]
 rqt_gui_cpp:
@@ -153,14 +154,21 @@ ros_image_to_qimage:
 rqt_image_overlay:
   add_host: ["REQUIRE_OPENGL"]
 slam_toolbox:
-  add_build: [{sel(build_platform != target_platform): qt-main}]
+  add_build: ["${{ 'qt-main' if (build_platform != target_platform) }}"]
   add_host: ["REQUIRE_OPENGL"]
 vision_msgs_rviz_plugins:
-  add_build: [{sel(build_platform != target_platform): qt-main}]
+  add_build: ["${{ 'qt-main' if (build_platform != target_platform) }}"]
   add_host: ["REQUIRE_OPENGL"]
 velodyne_pointcloud:
   add_host: ["libboost-devel"]
-motion_capture_tracking:
-  add_host: ["REQUIRE_OPENGL", "libboost-devel"]
-rosx_introspection:
-  add_host: ["rapidjson"]
+# TODO unvendor?!
+uncrustify_vendor:
+  add_build: ["vcstool"]
+mimick_vendor:
+  add_build: ["vcstool"]
+gz_cmake_vendor:
+  add_build: ["vcstool"]
+gz_math_vendor:
+  add_build: ["vcstool"]
+gz_utils_vendor:
+  add_build: ["vcstool"]

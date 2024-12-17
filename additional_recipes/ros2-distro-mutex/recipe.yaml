@@ -7,9 +7,6 @@ build:
   # Note: keep in sync with build number
   # Cannot be done automatically, see https://github.com/mamba-org/boa/issues/278
   string: humble_0
-  run_exports:
-    weak:
-      - "{{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}"
 
 requirements:
   # NOTE:
@@ -18,7 +15,7 @@ requirements:
   # packages. Therefore I am currently manually adding them to run_constrained.
   # This has to be synchronized with our current conda_build_config all the time :(
   # host:
-  #   # values here should 
+  #   # values here should
   #   - log4cxx
   #   - poco
   #   - pcl
@@ -30,13 +27,18 @@ requirements:
   # values here should be applied from run_exports!
   # if the upstream package does not have run_exports
   # please change it in the conda_build_config.yaml!
-  run_constrained:
-    - libboost 1.86
-    - libboost-devel 1.86
+  run_constraints:
+    - libboost 1.86.*
+    - libboost-devel 1.86.*
     - pcl 1.14.1
-    - gazebo 11
-    - libpqxx 6
+    - gazebo 11.*
+    - libpqxx 6.*
     - libprotobuf 4.25.3
+
+  run_exports:
+    weak:
+      - ${{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}
+
 
 about:
   home: https://github.com/robostack/ros-humble
