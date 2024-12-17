@@ -39,6 +39,7 @@ packages_select_by_deps:
   # trigger
 
   # build 7 reselect
+  - ros_workspace
   - ros_core
   - ament-cmake-nose
   - ros_base
