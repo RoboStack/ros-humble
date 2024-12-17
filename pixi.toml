@@ -20,7 +20,8 @@ rattler-build = "*"
 anaconda-client = ">=1.12"
 
 [feature.beta.pypi-dependencies]
-vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "rattler-build" }
+# commit on rattler-build branch
+vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "58bbf36ea79aaafdc974b58e60729e1bdea9c113" }
 
 [feature.beta.tasks]
 rename-file = { cmd ="cp vinca_linux_64.yaml vinca.yaml" }
