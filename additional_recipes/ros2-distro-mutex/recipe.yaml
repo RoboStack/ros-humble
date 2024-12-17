@@ -37,7 +37,7 @@ requirements:
 
   run_exports:
     weak:
-      - ${{ pin_subpackage('ros2-distro-mutex', max_pin='x.x') }}
+      - ${{ pin_subpackage('ros2-distro-mutex', upper_bound='x.x') }}
 
 
 about:
