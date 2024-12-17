@@ -1,13 +1,13 @@
 gazebo:
-  - '11'
+  - '11.*'
 libpqxx:
-  - 6
+  - 6.*
 numpy:
-  - 1.23
+  - 1.23.*
 ogre:
   - 1.12.*
 setuptools:
-  - 69
+  - 69.*
   
 cdt_name:  # [linux]
   - cos7   # [linux]
