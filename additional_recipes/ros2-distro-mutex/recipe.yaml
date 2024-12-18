@@ -41,7 +41,7 @@ requirements:
 
 
 about:
-  home: https://github.com/robostack/ros-humble
+  homepage: https://github.com/robostack/ros-humble
   license: BSD-3-Clause
   summary: |
     The ROS2 distro mutex. To switch between ROS2 versions, you need to change the mutex.
