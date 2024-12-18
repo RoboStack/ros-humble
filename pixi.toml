@@ -20,8 +20,11 @@ rattler-build = "*"
 anaconda-client = ">=1.12"
 
 [feature.beta.pypi-dependencies]
-# commit on rattler-build-humble branch
-vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "0e23184afde4c45adeaee0fddd0c469dd55fed55" }
+# This is tipically the latest commit on rattler-build-humble branch
+vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "f6ce41dd4e485f3230a305b5672d1bac00dbe4cf" }
+# Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
+# (and regenerate the pixi.lock) once you push the modified commit to the repo
+# vinca = { path = "../vinca", editable = true }
 
 [feature.beta.tasks]
 rename-file = { cmd ="cp vinca_linux_64.yaml vinca.yaml" }
