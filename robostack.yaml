@@ -447,9 +447,9 @@ libvtk:
 libvtk-qt:
   robostack: [vtk]
 libx11:
-  robostack: [xorg-libx11, REQUIRE_OPENGL]
+  robostack: [xorg-libx11, xorg-xorgproto, REQUIRE_OPENGL]
 libx11-dev:
-  robostack: [xorg-libx11, REQUIRE_OPENGL]
+  robostack: [xorg-libx11, xorg-xorgproto, REQUIRE_OPENGL]
 libxaw:
   robostack:
     linux: [xorg-libxaw]
