@@ -4,6 +4,8 @@ libprotobuf:
   - 5.28.2
 protobuf:
   - 5.28.2
+sdplog:
+  - 1.14
 
 cdt_name:
   - ${{ "cos7" if linux }}
