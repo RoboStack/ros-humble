@@ -358,7 +358,7 @@ libpcap:
 libpcl-all:
   robostack: [pcl]
 libpcl-all-dev:
-  robostack: [pcl]
+  robostack: [pcl, libboost-devel, vtk-base, REQUIRE_OPENGL]
 libpng-dev:
   robostack: [libpng]
 libpoco-dev:
