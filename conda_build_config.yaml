@@ -4,7 +4,7 @@ libprotobuf:
   - 5.28.2
 protobuf:
   - 5.28.2
-sdplog:
+spdlog:
   - 1.14
 
 cdt_name:
