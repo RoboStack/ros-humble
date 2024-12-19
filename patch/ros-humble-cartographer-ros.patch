@@ -109,3 +109,29 @@ index 324426b..443dac2 100644
    rclcpp::TimerBase::SharedPtr occupancy_grid_publisher_timer_;
    std::string last_frame_id_;
    rclcpp::Time last_timestamp_;
+
+diff --git a/src/ros_log_sink.cpp b/src/ros_log_sink.cpp
+index 1396381..73541fa 100644
+--- a/src/ros_log_sink.cpp
++++ b/src/ros_log_sink.cpp
+@@ -33,6 +33,11 @@ const char* GetBasename(const char* filepath) {
+   return base ? (base + 1) : filepath;
+ }
+
++std::chrono::system_clock::time_point tmToTimePoint(const std::tm& tm) {
++    std::time_t timeT = std::mktime(const_cast<std::tm*>(&tm)); // Convert std::tm to time_t
++    return std::chrono::system_clock::from_time_t(timeT);      // Convert time_t to time_point
++}
++
+ }  // namespace
+
+ ScopedRosLogSink::ScopedRosLogSink() : will_die_(false) { AddLogSink(this); }
+@@ -54,7 +59,7 @@ void ScopedRosLogSink::send(const ::google::LogSeverity severity,
+       severity, GetBasename(filename), line, tm_time, message, message_len);
+ #else
+   const std::string message_string = ::google::LogSink::ToString(
+-      severity, GetBasename(filename), line, ::google::LogMessageTime(*tm_time), message, message_len);
++      severity, GetBasename(filename), line, ::google::LogMessageTime(tmToTimePoint(*tm_time)), message, message_len);
+ #endif
+   switch (severity) {
+     case ::google::GLOG_INFO:
