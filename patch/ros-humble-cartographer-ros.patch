@@ -1,16 +1,56 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1beca59..3b63beb 100644
+index f7f476296..0725a05d5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -49,6 +49,8 @@ find_package(tf2_ros REQUIRED)
- find_package(urdf REQUIRED)
+@@ -50,6 +50,16 @@ find_package(urdf REQUIRED)
  find_package(urdfdom_headers REQUIRED)
  find_package(visualization_msgs REQUIRED)
+
 +find_package(Protobuf REQUIRED CONFIG)
++# glog is not linked, however we look for it to detect the glog version
++# and use a different code path if glog >= 0.7.0 is detected
++find_package(glog CONFIG QUIET)
++if(DEFINED glog_VERSION)
++  if(NOT glog_VERSION VERSION_LESS 0.7.0)
++    add_definitions(-DROS_CARTOGRAPHER_GLOG_GE_070)
++  endif()
++endif()
 +
- 
  include_directories(
    include
+   ${PCL_INCLUDE_DIRS}
+diff --git a/src/ros_log_sink.cpp b/src/ros_log_sink.cpp
+index 1396381d4..9e189c690 100644
+--- a/src/ros_log_sink.cpp
++++ b/src/ros_log_sink.cpp
+@@ -33,6 +33,11 @@ const char* GetBasename(const char* filepath) {
+   return base ? (base + 1) : filepath;
+ }
+
++std::chrono::system_clock::time_point ConvertTmToTimePoint(const std::tm& tm) {
++    std::time_t timeT = std::mktime(const_cast<std::tm*>(&tm)); // Convert std::tm to time_t
++    return std::chrono::system_clock::from_time_t(timeT);      // Convert time_t to time_point
++}
++
+ }  // namespace
+
+ ScopedRosLogSink::ScopedRosLogSink() : will_die_(false) { AddLogSink(this); }
+@@ -46,10 +51,13 @@ void ScopedRosLogSink::send(const ::google::LogSeverity severity,
+                             const size_t message_len) {
+   (void) base_filename; // TODO: remove unused arg ?
+
++#if defined(ROS_CARTOGRAPHER_GLOG_GE_070)
++  const std::string message_string = ::google::LogSink::ToString(
++      severity, GetBasename(filename), line, ::google::LogMessageTime(ConvertTmToTimePoint(*tm_time)), message, message_len);
+   // Google glog broke the ToString API, but has no way to tell what version it is using.
+   // To support both newer and older glog versions, use a nasty hack were we infer the
+   // version based on whether GOOGLE_GLOG_DLL_DECL is defined
+-#if defined(GOOGLE_GLOG_DLL_DECL)
++#elif defined(GOOGLE_GLOG_DLL_DECL)
+   const std::string message_string = ::google::LogSink::ToString(
+       severity, GetBasename(filename), line, tm_time, message, message_len);
+ #else
+
 diff --git a/include/cartographer_ros/map_builder_bridge.h b/include/cartographer_ros/map_builder_bridge.h
 index b2c00b7..9c1befd 100644
 --- a/include/cartographer_ros/map_builder_bridge.h
@@ -110,28 +150,3 @@ index 324426b..443dac2 100644
    std::string last_frame_id_;
    rclcpp::Time last_timestamp_;
 
-diff --git a/src/ros_log_sink.cpp b/src/ros_log_sink.cpp
-index 1396381..73541fa 100644
---- a/src/ros_log_sink.cpp
-+++ b/src/ros_log_sink.cpp
-@@ -33,6 +33,11 @@ const char* GetBasename(const char* filepath) {
-   return base ? (base + 1) : filepath;
- }
-
-+std::chrono::system_clock::time_point tmToTimePoint(const std::tm& tm) {
-+    std::time_t timeT = std::mktime(const_cast<std::tm*>(&tm)); // Convert std::tm to time_t
-+    return std::chrono::system_clock::from_time_t(timeT);      // Convert time_t to time_point
-+}
-+
- }  // namespace
-
- ScopedRosLogSink::ScopedRosLogSink() : will_die_(false) { AddLogSink(this); }
-@@ -54,7 +59,7 @@ void ScopedRosLogSink::send(const ::google::LogSeverity severity,
-       severity, GetBasename(filename), line, tm_time, message, message_len);
- #else
-   const std::string message_string = ::google::LogSink::ToString(
--      severity, GetBasename(filename), line, ::google::LogMessageTime(*tm_time), message, message_len);
-+      severity, GetBasename(filename), line, ::google::LogMessageTime(tmToTimePoint(*tm_time)), message, message_len);
- #endif
-   switch (severity) {
-     case ::google::GLOG_INFO:
