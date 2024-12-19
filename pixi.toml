@@ -16,7 +16,7 @@ upload = "anaconda -t $ANACONDA_API_TOKEN upload"
 
 [dependencies]
 python = ">=3.11.0,<3.12"
-rattler-build = "*"
+rattler-build = ">=0.33"
 anaconda-client = ">=1.12"
 
 [feature.beta.pypi-dependencies]

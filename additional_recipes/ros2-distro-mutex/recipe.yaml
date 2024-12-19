@@ -32,7 +32,6 @@ requirements:
     - libboost-devel 1.86.*
     - pcl 1.14.1
     - gazebo 11.*
-    - libpqxx 6.*
     - libprotobuf 4.25.3
 
   run_exports:
