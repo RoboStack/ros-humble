@@ -30,7 +30,8 @@ vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "f6ce41dd4e485f32
 rename-file = { cmd ="cp vinca_linux_64.yaml vinca.yaml" }
 generate-recipes = { cmd = "vinca -m", depends_on = ["rename-file"] }
 remove-file = { cmd = "rm vinca.yaml", depends_on = ["generate-recipes"] }
-build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml --skip-existing", depends_on = ["remove-file"] }
+build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml --skip-existing", depends_on = ["remove-file"] }
+build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml --skip-existing", depends_on = ["build_additional_recipes"] }
 
 [environments]
 beta = ["beta"]
