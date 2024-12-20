@@ -1,7 +1,7 @@
-diff --git a/moveit_ros/benchmarks/src/BenchmarkExecutor.cpp b/moveit_ros/benchmarks/src/BenchmarkExecutor.cpp
+diff --git a/src/BenchmarkExecutor.cpp b/src/BenchmarkExecutor.cpp
 index cd0033d368..50760073fd 100644
---- a/moveit_ros/benchmarks/src/BenchmarkExecutor.cpp
-+++ b/moveit_ros/benchmarks/src/BenchmarkExecutor.cpp
+--- a/src/BenchmarkExecutor.cpp
++++ b/src/BenchmarkExecutor.cpp
 @@ -43,13 +43,10 @@
  #include <tf2_eigen/tf2_eigen.hpp>
  #include <moveit/utils/logger.hpp>
@@ -17,12 +17,11 @@ index cd0033d368..50760073fd 100644
  #include <boost/date_time/posix_time/posix_time.hpp>
  #include <math.h>
  #include <limits>
-@@ -776,7 +773,7 @@ void BenchmarkExecutor::runBenchmark(moveit_msgs::msg::MotionPlanRequest request
-   }
-   num_planners += options.parallel_planning_pipelines.size();
+@@ -784,7 +784,7 @@ void BenchmarkExecutor::runBenchmark(moveit_msgs::msg::MotionPlanRequest request
+   for (const std::pair<const std::string, std::vector<std::string>>& pipeline_entry : pipeline_map)
+     num_planners += pipeline_entry.second.size();
  
--  boost::progress_display progress(num_planners * options.runs, std::cout);
-+  boost::timer::progress_display progress(num_planners * options.runs, std::cout);
+-  boost::progress_display progress(num_planners * runs, std::cout);
++  boost::timer::progress_display progress(num_planners * runs, std::cout);
  
    // Iterate through all planning pipelines
-   auto planning_pipelines = moveit_cpp_->getPlanningPipelines();
