@@ -398,7 +398,7 @@ libreadline-dev:
 libsndfile1-dev:
   robostack: [libsndfile]
 libspnav-dev:
-  robostack: [libspnav]
+  robostack: [libspnav, xorg-xorgproto]
 libsqlite3-dev:
   robostack: [sqlite 3.*]
 libssl-dev:
