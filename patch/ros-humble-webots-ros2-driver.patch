@@ -2,12 +2,20 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 8856bcb90..0834db8ab 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -31,7 +31,7 @@ find_package(TinyXML2 REQUIRED)
+@@ -30,13 +30,9 @@ find_package(tinyxml2_vendor REQUIRED)
+ find_package(TinyXML2 REQUIRED)
  find_package(yaml-cpp REQUIRED)
  
- if($ENV{ROS_DISTRO} MATCHES "humble")
+-if($ENV{ROS_DISTRO} MATCHES "humble")
 -  find_package(Python 3.10 EXACT REQUIRED COMPONENTS Development)
-+  find_package(Python REQUIRED COMPONENTS Development)
- elseif($ENV{ROS_DISTRO} MATCHES "jazzy")
-   find_package(Python 3.12 EXACT REQUIRED COMPONENTS Development)
- elseif($ENV{ROS_DISTRO} MATCHES "rolling")
+-elseif($ENV{ROS_DISTRO} MATCHES "jazzy")
+-  find_package(Python 3.12 EXACT REQUIRED COMPONENTS Development)
+-elseif($ENV{ROS_DISTRO} MATCHES "rolling")
+-  find_package(Python 3.12 EXACT REQUIRED COMPONENTS Development)
+-endif()
++message(STATUS "==============> Python_EXECUTABLE: ${Python_EXECUTABLE}")
++message(STATUS "==============> ENV ROS_DISTRO: $ENV{ROS_DISTRO}")
++find_package(Python REQUIRED COMPONENTS Development)
+ 
+ add_custom_target(compile-lib-controller ALL
+   COMMAND ${CMAKE_COMMAND} -E env "WEBOTS_HOME=${CMAKE_CURRENT_SOURCE_DIR}/webots" make release -f Makefile > /dev/null 2>&1
