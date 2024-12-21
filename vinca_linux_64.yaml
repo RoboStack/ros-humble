@@ -40,6 +40,6 @@ packages_select_by_deps:
 
   # build 7 reselect
   - ros_workspace
-  - webots_ros2         # Cyberbotics
+  - webots_ros2_driver         # Cyberbotics
 
 patch_dir: patch
