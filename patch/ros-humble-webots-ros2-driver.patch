@@ -1,4 +1,15 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8856bcb90..bfefbd625 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.10)
++cmake_minimum_required(VERSION 3.16)
+ project(webots_ros2_driver)
+
+ set(CMAKE_CXX_STANDARD 17)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 8856bcb90..0834db8ab 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
