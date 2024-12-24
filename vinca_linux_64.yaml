@@ -107,6 +107,7 @@ packages_select_by_deps:
   - apriltag            # AprilRobotics
   - apriltag_ros        # Christian Rauch
   - ur_robot_driver     # Universal Robots
+  - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
   - ublox               # Kumar Robotics      
   - ublox_dgnss         # Aussie Robots
   - ublox_dgnss_node
@@ -145,6 +146,10 @@ packages_select_by_deps:
   - gtsam               # Borglab
   - motion_capture_tracking # IMRC Lab
   - moveit_resources
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/228
+  - event_camera_codecs
+  - event_camera_renderer
 
   # ----- end of package support -----
 
