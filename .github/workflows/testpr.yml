@@ -146,7 +146,7 @@ jobs:
         cp vinca_win.yaml vinca.yaml
         mkdir -p recipes
         $HOME/.pixi/bin/pixi run -e beta -v vinca --platform win-64 -m -n
-        ls -la recipes        cp vinca_win.yaml vinca.yaml
+        ls -la recipes
     - name: Check if there are packages to be built
       id: newrecipecheck
       shell: bash -l {0}
