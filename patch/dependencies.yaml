@@ -34,7 +34,7 @@ intra_process_demo:
   add_host: ["REQUIRE_OPENGL"]
 rviz_ogre_vendor:
   add_host: ["zlib", "freeimage", "freetype", "assimp", "zziplib", "pugixml"]
-  add_build: ["vcstool"]
+  add_build: ["vcstool", "patch"]
   add_run: ["assimp"]
 pcl_conversions:
   add_host: ["REQUIRE_OPENGL", "libboost-devel"]
