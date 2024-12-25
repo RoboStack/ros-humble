@@ -1,7 +1,7 @@
 [project]
 name = "ros-humble"
 # Just a convention, this is the same of the mutex package
-version = "0.7.0"
+version = "0.6.0"
 description = "RoboStack repo for package ros-humble packages as conda packages"
 authors = ["Tobias Fischer <tobias.fischer@qut.edu.au>", "Wolf Vollprecht <w.vollprecht@gmail.com>", "Silvio Traversaro <silvio@traversaro.it>"]
 channels = ["conda-forge"]
@@ -27,11 +27,26 @@ vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "72363bafc116e5e1
 #vinca = { path = "../vinca", editable = true }
 
 [feature.beta.tasks]
-rename-file = { cmd ="cp vinca_linux_64.yaml vinca.yaml" }
 generate-recipes = { cmd = "vinca -m", depends_on = ["rename-file"] }
-remove-file = { cmd = "rm vinca.yaml", depends_on = ["generate-recipes"] }
-build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml --skip-existing", depends_on = ["remove-file"] }
-build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml --skip-existing", depends_on = ["build_additional_recipes"] }
+remove-file = { cmd = "rm vinca.yaml" }
+build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml --skip-existing" }
+build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml --skip-existing", depends_on = ["build_additional_recipes", "generate-recipes"] }
+build_one_package = { cmd = "rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml", env = { PACKAGE = "ros-humble-ros-workspace" } }
 
 [environments]
 beta = ["beta"]
+
+[target.linux-64.tasks]
+rename-file = { cmd = "cp vinca_linux_64.yaml vinca.yaml", depends_on = ["remove-file"] }
+
+[target.osx-64.tasks]
+rename-file = { cmd = "cp vinca_osx.yaml vinca.yaml", depends_on = ["remove-file"] }
+
+[target.osx-arm64.tasks]
+rename-file = { cmd = "ln -s vinca_osx_arm64.yaml vinca.yaml", depends_on = ["remove-file"] }
+
+[target.linux-aarch64.tasks]
+rename-file = { cmd = "cp vinca_linux_aarch64.yaml vinca.yaml", depends_on = ["remove-file"] }
+
+[target.win-64.tasks]
+rename-file = { cmd = "cp vinca_win.yaml vinca.yaml", depends_on = ["remove-file"] }
