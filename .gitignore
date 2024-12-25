@@ -1,3 +1,5 @@
+.pixi
+output/
 vinca.yaml
 recipes/
 *.bat
