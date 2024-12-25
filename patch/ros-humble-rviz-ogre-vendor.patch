@@ -138,31 +138,62 @@ index 00000000..ab1c324c
 \ No newline at end of file
 diff --git a/0004-fix-arm64.patch b/0004-fix-arm64.patch
 new file mode 100644
-index 00000000..fb54a574
+index 000000000..9e9540007
 --- /dev/null
 +++ b/0004-fix-arm64.patch
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,52 @@
 +diff --git a/CMakeLists.txt b/CMakeLists.txt
 +index 20984c5eba1..607bf7cec5e 100644
 +--- a/CMakeLists.txt
 ++++ b/CMakeLists.txt
-+@@ -280,15 +280,6 @@ elseif(EMSCRIPTEN)
++@@ -14,9 +14,9 @@
++ # and provide build configuration options.
++ ######################################################################
 + 
-+   set(OGRE_CONFIG_THREADS "0" CACHE STRING "Threading is unstable on Emscripten" FORCE)
++-cmake_minimum_required(VERSION 3.3.0)
+++cmake_minimum_required(VERSION 3.21.0)
++ 
++-set(CMAKE_CXX_STANDARD 11)
+++set(CMAKE_CXX_STANDARD 11)
++ set(CMAKE_CXX_STANDARD_REQUIRED ON)
++ set(CMAKE_CXX_EXTENSIONS OFF)
++ 
++@@ -283,12 +283,13 @@ elseif(EMSCRIPTEN)
 + elseif (APPLE AND NOT APPLE_IOS)
-+-
-+-  set(XCODE_ATTRIBUTE_SDKROOT macosx)
++ 
++   set(XCODE_ATTRIBUTE_SDKROOT macosx)
 +-  if(CMAKE_GENERATOR STREQUAL "Unix Makefiles")
-+-    execute_process(COMMAND xcodebuild -version -sdk "${XCODE_ATTRIBUTE_SDKROOT}" Path | head -n 1 OUTPUT_VARIABLE CMAKE_OSX_SYSROOT)
-+-    string(REGEX REPLACE "(\r?\n)+$" "" CMAKE_OSX_SYSROOT "${CMAKE_OSX_SYSROOT}")
+++  # if(CMAKE_GENERATOR STREQUAL "Unix Makefiles")
++     execute_process(COMMAND xcodebuild -version -sdk "${XCODE_ATTRIBUTE_SDKROOT}" Path | head -n 1 OUTPUT_VARIABLE CMAKE_OSX_SYSROOT)
++     string(REGEX REPLACE "(\r?\n)+$" "" CMAKE_OSX_SYSROOT "${CMAKE_OSX_SYSROOT}")
 +-  else()
 +-    set(CMAKE_OSX_SYSROOT macosx)
 +-  endif()
-+-
+++    add_definitions(-D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION)
+++  # else()
+++  #   set(CMAKE_OSX_SYSROOT macosx)
+++  # endif()
++ 
 +   # Make sure that the GLES2 render system is disabled for non-iOS Apple builds
 +   set(OGRE_BUILD_RENDERSYSTEM_GLES2 FALSE CACHE BOOL "" FORCE)
-+ endif ()
-\ No newline at end of file
++
++diff --git a/Components/Overlay/include/OgreUTFString.h b/Components/Overlay/include/OgreUTFString.h
++index 4b29f9d..bb55630 100644
++--- a/Components/Overlay/include/OgreUTFString.h
+++++ b/Components/Overlay/include/OgreUTFString.h
++@@ -183,10 +183,10 @@ namespace Ogre {
++         static const size_type npos = static_cast<size_type>(~0);
++ 
++         //! a single 32-bit Unicode character
++-        typedef uint32 unicode_char;
+++        typedef char32_t unicode_char;
++ 
++         //! a single UTF-16 code point
++-        typedef uint16 code_point;
+++        typedef char16_t code_point;
++ 
++         //! value type typedef for use in iterators
++         typedef code_point value_type;
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 122f2f29..c837ae29 100644
 --- a/CMakeLists.txt
