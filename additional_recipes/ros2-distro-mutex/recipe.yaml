@@ -15,7 +15,7 @@ requirements:
   # packages. Therefore I am currently manually adding them to run_constrained.
   # This has to be synchronized with our current conda_build_config all the time :(
   # host:
-  #   # values here should
+  #   # values here should 
   #   - log4cxx
   #   - poco
   #   - pcl
