@@ -22,6 +22,8 @@ anaconda-client = ">=1.12"
 [target.win-64.dependencies]
 # patch is required by rattler-build
 m2-patch = "*"
+# git is required by rattler-build
+git = "*"
 
 [feature.beta.pypi-dependencies]
 # This is tipically the latest commit on rattler-build-humble branch

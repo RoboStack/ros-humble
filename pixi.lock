@@ -329,6 +329,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/conda-package-streaming-0.11.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/cpython-3.11.11-py311hd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/defusedxml-0.7.1-pyhd8ed1ab_0.tar.bz2
+      - conda: https://repo.prefix.dev/conda-forge/win-64/git-2.47.1-h57928b3_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/h2-4.1.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/hpack-4.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/hyperframe-6.0.1-pyhd8ed1ab_1.conda
@@ -661,6 +662,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/conda-package-streaming-0.11.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/cpython-3.11.11-py311hd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/defusedxml-0.7.1-pyhd8ed1ab_0.tar.bz2
+      - conda: https://repo.prefix.dev/conda-forge/win-64/git-2.47.1-h57928b3_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/h2-4.1.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/hpack-4.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/hyperframe-6.0.1-pyhd8ed1ab_1.conda
@@ -1144,6 +1146,13 @@ packages:
   name: empy
   version: 3.3.4
   sha256: 73ac49785b601479df4ea18a7c79bc1304a8a7c34c02b9472cf1206ae88f01b3
+- conda: https://repo.prefix.dev/conda-forge/win-64/git-2.47.1-h57928b3_0.conda
+  sha256: e140c2348b2a967bb7259c22420201e9dcac5b75aca3881e30f2a3f6c88e44d0
+  md5: 84cd6e6a2d60974df8c954eafdf72f2b
+  license: GPL-2.0-or-later and LGPL-2.1-or-later
+  purls: []
+  size: 122064793
+  timestamp: 1732612079527
 - conda: https://repo.prefix.dev/conda-forge/noarch/h2-4.1.0-pyhd8ed1ab_1.conda
   sha256: 843ddad410c370672a8250470697027618f104153612439076d4d7b91eeb7b5c
   md5: 825927dc7b0f287ef8d4d0011bb113b1
