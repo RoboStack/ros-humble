@@ -93,6 +93,8 @@ nav2_util:
   add_host: ["libboost-devel"]
 nav2_constrained_smoother:
   add_host: ["${{ 'openblas' if win }}"]
+nav2_mppi_controller:
+  add_build: ["${{ 'clang <19' if osx }}"]
 ompl:
   add_host: ["ompl"]
 pybind11_vendor:

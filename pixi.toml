@@ -28,10 +28,10 @@ vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "4215543e2eeace1b
 
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends_on = ["rename-file"] }
-remove-file = { cmd = "rm vinca.yaml" }
+remove-file = { cmd = "rm vinca.yaml; rm -rf recipes" }
 build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml --skip-existing" }
-build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml --skip-existing", depends_on = ["build_additional_recipes", "generate-recipes"], env = { CONDA_BUILD_SYSROOT = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/" } }
-build_one_package = { cmd = "rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml", env = { PACKAGE = "ros-humble-ros-workspace", CONDA_BUILD_SYSROOT = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/" } }
+build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml --skip-existing", depends_on = ["build_additional_recipes", "generate-recipes"] }
+build_one_package = { cmd = "cp ./patch/$PACKAGE.*patch ./recipes/$PACKAGE/patch/; rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml", env = { PACKAGE = "ros-humble-ros-workspace" } }
 
 [environments]
 beta = ["beta"]
