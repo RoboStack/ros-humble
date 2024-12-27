@@ -84,11 +84,13 @@ jobs:
 
     # For some reason, the Strawberry perl's pkg-config is found
     # instead of the conda's one, so let's delete the /c/Strawberry directory
+    # Furthermore, we also need to remove an older SDK that is used and can result in compilation problems
     - name: Debug pkg-config problem
       if: contains(matrix.os, 'windows')
       shell: bash -l {0}
       run: |
         rm -rf /c/Strawberry
+        rm -rf "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17763.0/"
 
     - name: Check what files have changed
       id: filecheck
