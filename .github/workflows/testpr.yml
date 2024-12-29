@@ -145,6 +145,9 @@ jobs:
       shell: bash -l {0}
       if: steps.filecheck.outputs.WIN_YAML_CHANGED == 1 && matrix.os == 'windows-2019' && matrix.platform == 'win-64'
       run: |
+        # Workaround for problem related to long paths
+        echo "CONDA_BLD_PATH=C:\\bld\\" >> $GITHUB_ENV
+        mkdir /c/bld
         cp vinca_win.yaml vinca.yaml
         mkdir -p recipes
         $HOME/.pixi/bin/pixi run -e beta -v vinca --platform win-64 -m -n
