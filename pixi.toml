@@ -27,10 +27,10 @@ git = "*"
 
 [feature.beta.pypi-dependencies]
 # This is tipically the latest commit on rattler-build-humble branch
-vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "7c72438e3e2cb1d148acbe4615fde770651a5c0b" }
+vinca = { git ="https://github.com/RoboStack/vinca.git", rev = "7e7b6be5e1bed3f41cdc44c8e88bb3126162933f" }
 # Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
 # (and regenerate the pixi.lock) once you push the modified commit to the repo
-# vinca = { path = "../vinca", editable = true }
+#vinca = { path = "../vinca", editable = true }
 
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends_on = ["rename-file"] }
