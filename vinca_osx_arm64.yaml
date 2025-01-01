@@ -91,6 +91,7 @@ packages_select_by_deps:
   - ros-gz
 
   - moveit
+  - moveit_visual_tools
   - moveit-planners-chomp
 
   - gtsam

@@ -81,6 +81,7 @@ packages_select_by_deps:
   - apriltag_ros
 
   - moveit
+  - moveit_visual_tools
   - moveit_servo
   - moveit-planners-chomp
 
