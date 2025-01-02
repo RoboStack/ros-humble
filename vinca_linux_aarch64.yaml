@@ -96,6 +96,9 @@ packages_select_by_deps:
 
   - gtsam
 
+  - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
