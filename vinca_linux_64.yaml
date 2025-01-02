@@ -152,6 +152,9 @@ packages_select_by_deps:
   - event_camera_codecs
   - event_camera_renderer
 
+  # requested in https://github.com/RoboStack/ros-humble/pull/205
+  - rosbag2_storage_mcap
+
   # ----- end of package support -----
 
   # - rtabmap

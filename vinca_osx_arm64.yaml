@@ -98,5 +98,7 @@ packages_select_by_deps:
 
   - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
 
+  # requested in https://github.com/RoboStack/ros-humble/pull/205
+  - rosbag2_storage_mcap
 
 patch_dir: patch
