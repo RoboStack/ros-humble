@@ -32,6 +32,10 @@ packages_remove_from_deps:
   - apex_containers
   # never worked in Windows, probably trivial to support if someone needs it
   - avt_vimba_camera
+  # navigation still does not compile fine on windows
+  - cartographer_ros
+  - cartographer_ros_msgs
+  - slam_toolbox
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/

@@ -7,5 +7,5 @@ tests:
         - test -f ${PREFIX}/lib/demo_nodes_cpp/listener
     - if: win
       then:
-        - if not exist %LIBRARY_LIB%\demo_nodes_cpp\talker exit 1
-        - if not exist %LIBRARY_LIB%\demo_nodes_cpp\listener exit 1
+        - if not exist %LIBRARY_LIB%\demo_nodes_cpp\talker.exe exit 1
+        - if not exist %LIBRARY_LIB%\demo_nodes_cpp\listener.exe exit 1

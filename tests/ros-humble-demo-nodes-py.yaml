@@ -7,5 +7,5 @@ tests:
         - test -f ${PREFIX}/lib/demo_nodes_py/listener
     - if: win
       then:
-        - if not exist %LIBRARY_LIB%\demo_nodes_py\talker exit 1
-        - if not exist %LIBRARY_LIB%\demo_nodes_py\listener exit 1
+        - if not exist %LIBRARY_LIB%\demo_nodes_py\talker.exe exit 1
+        - if not exist %LIBRARY_LIB%\demo_nodes_py\listener.exe exit 1
