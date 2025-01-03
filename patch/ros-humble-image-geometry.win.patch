@@ -4,13 +4,13 @@ Date: Fri, 24 Jun 2022 09:47:36 +0200
 Subject: [PATCH] Fix visibility of static const data member
 
 ---
- image_geometry/include/image_geometry/stereo_camera_model.h | 1 +
+ include/image_geometry/stereo_camera_model.h | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/image_geometry/include/image_geometry/stereo_camera_model.h b/image_geometry/include/image_geometry/stereo_camera_model.h
+diff --git a/include/image_geometry/stereo_camera_model.h b/include/image_geometry/stereo_camera_model.h
 index f1568ac5..83a081fc 100644
---- a/image_geometry/include/image_geometry/stereo_camera_model.h
-+++ b/image_geometry/include/image_geometry/stereo_camera_model.h
+--- a/include/image_geometry/stereo_camera_model.h
++++ b/include/image_geometry/stereo_camera_model.h
 @@ -72,6 +72,7 @@ class StereoCameraModel
    IMAGE_GEOMETRY_PUBLIC
    void projectDisparityImageTo3d(const cv::Mat& disparity, cv::Mat& point_cloud,
