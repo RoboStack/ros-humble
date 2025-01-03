@@ -36,6 +36,17 @@ packages_remove_from_deps:
   - cartographer_ros
   - cartographer_ros_msgs
   - slam_toolbox
+  # skip as Ignition Fortress is not working in conda-forge on Windows,
+  # see https://github.com/conda-forge/libignition-gazebo-feedstock/pull/59#issuecomment-1902107706
+  - ros_gz_sim
+  - ros_gz
+  - ros_ign_gazebo
+  - ros_ign
+  # event_camera_codecs uses gcc/clang-specific options and attributes
+  - event_camera_codecs
+  - event_camera_renderer
+  # foxglove_bridge has some windows-specific issues
+  - foxglove_bridge
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
