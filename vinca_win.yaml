@@ -30,8 +30,6 @@ packages_remove_from_deps:
   - pilz-industrial-motion-planner
   # removed in jazzy, never supported windows, no packages depend on it
   - apex_containers
-  # Never built on Windows, probably trivial to fix if anyone show interest for it
-  - avt_vimba_camera
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
