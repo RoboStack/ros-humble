@@ -47,6 +47,8 @@ packages_remove_from_deps:
   - event_camera_renderer
   # foxglove_bridge has some windows-specific issues
   - foxglove_bridge
+  # CMake and boost problems
+  - gtsam
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
