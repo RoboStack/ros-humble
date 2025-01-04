@@ -38,8 +38,12 @@ packages_remove_from_deps:
   - slam_toolbox
   # skip as Ignition Fortress is not working in conda-forge on Windows,
   # see https://github.com/conda-forge/libignition-gazebo-feedstock/pull/59#issuecomment-1902107706
-  - ros_gz_sim
   - ros_gz
+  - ros_gz_sim
+  - ros_gz_bridge
+  - ros_gz_image
+  - ros_gz_interfaces
+  - ros_gz_sim_demos
   - ros_ign_gazebo
   - ros_ign
   # event_camera_codecs uses gcc/clang-specific options and attributes
