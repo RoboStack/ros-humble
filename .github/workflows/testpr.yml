@@ -150,7 +150,7 @@ jobs:
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.LINUX_AARCH_YAML_CHANGED == 1 && matrix.platform == 'linux-aarch64'
       run: |
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe additional_recipes/ros2-distro-mutex/ --target-platform linux-aarch64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-aarch64 --test skip -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-aarch64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
     - name: Build recipes for osx-64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.OSX_YAML_CHANGED == 1 && matrix.platform == 'osx-64'
