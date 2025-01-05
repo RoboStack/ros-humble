@@ -44,6 +44,11 @@ packages_remove_from_deps:
   - ros_gz_image
   - ros_gz_interfaces
   - ros_gz_sim_demos
+  - ros_ign_interfaces
+  - ros_ign_bridge
+  - ros_ign_image
+  - ros_ign_interfaces
+  - ros_ign_gazebo_demos
   - ros_ign_gazebo
   - ros_ign
   # event_camera_codecs uses gcc/clang-specific options and attributes
