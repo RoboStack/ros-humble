@@ -1,8 +1,7 @@
 tests:
   - python:
-      imports:
-        - if: build_platform == target_platform
-          then:
-            - rclpy
+    - if: build_platform == target_platform
+      then:
+        imports:
+          - rclpy
       pip_check: false
-

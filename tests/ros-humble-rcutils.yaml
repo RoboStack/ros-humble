@@ -1,6 +1,6 @@
 tests:
   - python:
-      imports:
-        - if: build_platform == target_platform
-          then:
-          - rcutils
+    - if: build_platform == target_platform
+      then:
+        imports:
+        - rcutils
