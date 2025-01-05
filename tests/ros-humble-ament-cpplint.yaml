@@ -1,3 +1,5 @@
 tests:
   - script:
-    - ament_cpplint --help
+    - if: build_platform == target_platform
+      then:
+        - ament_cpplint --help

@@ -1,4 +1,6 @@
 tests:
   - python:
       imports:
-        - rcutils
+        - if: build_platform == target_platform
+          then:
+          - rcutils

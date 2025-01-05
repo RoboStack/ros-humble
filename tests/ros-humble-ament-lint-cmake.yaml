@@ -1,3 +1,5 @@
 tests:
   - script:
-    - ament_lint_cmake --help
+    - if: build_platform == target_platform
+      then:
+        - ament_lint_cmake --help
