@@ -36,6 +36,8 @@ packages_remove_from_deps:
   - cartographer_ros
   - cartographer_ros_msgs
   - slam_toolbox
+  - nav2_amcl
+  - nav2_waypoint_follower
   # skip as Ignition Fortress is not working in conda-forge on Windows,
   # see https://github.com/conda-forge/libignition-gazebo-feedstock/pull/59#issuecomment-1902107706
   - ros_gz
@@ -58,7 +60,23 @@ packages_remove_from_deps:
   - foxglove_bridge
   # CMake and boost problems
   - gtsam
-
+  # realsense was never compiled on Windows, not even in conda-forge
+  - librealsense2
+  - realsense2-camera
+  # Path too long on Windows
+  - motion-capture-tracking-interfaces
+  - motion_capture_tracking
+  # min/max conflicts on Windows
+  - ntrip_client_node
+  # M_PI not defined on Windows problems
+  - robot_controllers
+  - robot_localization
+  # Several rqt-related packages do not support Windows due to complex pip/sip build issues
+  - qt_gui_cpp
+  - rqt_gui_cpp
+  - rqt_image_overlay
+  # libspnav is not available on Windows
+  - spacenav
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/

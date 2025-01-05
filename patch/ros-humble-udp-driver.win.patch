@@ -1,0 +1,12 @@
+diff --git a/udp_driver/CMakeLists.txt b/udp_driver/CMakeLists.txt
+index a9b3c61..f78d262 100644
+--- a/udp_driver/CMakeLists.txt
++++ b/udp_driver/CMakeLists.txt
+@@ -25,6 +25,7 @@ endif()
+ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   add_compile_options(-Wall -Wextra -Wpedantic)
+ endif()
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 
+ ## dependencies
+ find_package(ament_cmake_auto REQUIRED)
