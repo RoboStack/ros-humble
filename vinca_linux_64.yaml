@@ -64,6 +64,7 @@ packages_select_by_deps:
   - moveit-planners-chomp
   - rqt-moveit
   # - moveit2_tutorials   # this does not exist anymore
+  - pilz-industrial-motion-planner
 
   - topic_tools
 

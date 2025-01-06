@@ -93,6 +93,7 @@ packages_select_by_deps:
   - moveit
   - moveit_visual_tools
   - moveit-planners-chomp
+  - pilz-industrial-motion-planner
 
   - gtsam
 

@@ -1,5 +1,3 @@
 tests:
   - script:
-    - if: build_platform == target_platform
-      then:
-        - ament_xmllint --help
+    - ament_xmllint --help
