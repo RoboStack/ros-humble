@@ -1,0 +1,3 @@
+tests:
+  - script:
+    - ament_cpplint --help

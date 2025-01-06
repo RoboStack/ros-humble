@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 7
+build_number: 8
 
-mutex_package: ros2-distro-mutex 0.5 humble
+mutex_package: ros2-distro-mutex 0.6.* humble_*
 
 skip_all_deps: false
 
@@ -28,52 +28,205 @@ packages_remove_from_deps:
   - pendulum_control
   - warehouse_ros_mongo
   - pilz-industrial-motion-planner
+  # removed in jazzy, never supported windows, no packages depend on it
+  - apex_containers
+  # never worked in Windows, probably trivial to support if someone needs it
+  - avt_vimba_camera
+  # navigation still does not compile fine on windows
+  - cartographer_ros
+  - cartographer_ros_msgs
+  - slam_toolbox
+  - nav2_amcl
+  - nav2_waypoint_follower
+  # skip as Ignition Fortress is not working in conda-forge on Windows,
+  # see https://github.com/conda-forge/libignition-gazebo-feedstock/pull/59#issuecomment-1902107706
+  - ros_gz
+  - ros_gz_sim
+  - ros_gz_bridge
+  - ros_gz_image
+  - ros_gz_interfaces
+  - ros_gz_sim_demos
+  - ros_ign_interfaces
+  - ros_ign_bridge
+  - ros_ign_image
+  - ros_ign_interfaces
+  - ros_ign_gazebo_demos
+  - ros_ign_gazebo
+  - ros_ign
+  # event_camera_codecs uses gcc/clang-specific options and attributes
+  - event_camera_codecs
+  - event_camera_renderer
+  # foxglove_bridge has some windows-specific issues
+  - foxglove_bridge
+  # CMake and boost problems
+  - gtsam
+  # realsense was never compiled on Windows, not even in conda-forge
+  - librealsense2
+  - realsense2-camera
+  # Path too long on Windows
+  - motion-capture-tracking-interfaces
+  - motion_capture_tracking
+  # min/max conflicts on Windows
+  - ntrip_client_node
+  # M_PI not defined on Windows problems
+  - robot_controllers
+  - robot_localization
+  # Several rqt-related packages do not support Windows due to complex pip/sip build issues
+  - qt_gui_cpp
+  - rqt_gui_cpp
+  - rqt_image_overlay
+  # libspnav is not available on Windows
+  - spacenav
+  # ublox packages are not supported on Windows
+  - ublox_gps
+  - ublox_msgs
+  - ublox
+  - ublox-dgnss-node
+  - ublox-nav-sat-fix-hp-node
+  - ublox-dgnss
+  # Some packages in ur stack do not support Windows
+  - ur-client-library
+  - ur-controllers
+  - ur_robot_driver
+  - ur_calibration
+  # Some packages in velodyne repo do not support Windows
+  - velodyne_driver
+  - velodyne_pointcloud
+  - velodyne_laserscan
+  - velodyne
+  - velodyne_gazebo_plugins
+  - velodyne_simulator
+  # webots_ros2 is not supported on Windows
+  - webots_ros2
+  - webots_ros2_control
+  - webots_ros2_driver
+  - webots_ros2_epuck
+  - webots_ros2_importer
+  - webots_ros2_mavic
+  - webots_ros2_msgs
+  - webots_ros2_tesla
+  - webots_ros2_tiago
+  - webots_ros2_turtlebot
+  - webots_ros2_universal_robot
+  - webots_ros2_tests
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
-  # trigger
-  - ament-cmake-core
-  #- ros2_control
-  #- ros2_controllers
-  - backward_ros
   - ros_workspace
-  - vision_msgs
-  - ros_environment
+  - ros_core
+  - ament-cmake-nose
   - ros_base
-  - rmw_cyclonedds_cpp
+  - perception
+  - rosidl-generator-dds-idl
+  - simulation
+  - desktop
+  - desktop_full
+
+  # rqt
+  - rqt
+  - rqt_image_overlay
+  - rqt-robot-dashboard
+  - rqt-robot-monitor
+  - rqt-robot-steering
+
   - moveit
+  - moveit_visual_tools
+  - moveit_servo
+  - moveit2_tutorials
   - moveit-planners-chomp
-  - xacro
-  - gazebo-ros
-  # - navigation2
-  # - desktop
-  # - cv_bridge
-  # - perception
-  # - gazebo_msgs
-  # - gazebo_dev
-  # - gazebo_ros
-  # - gazebo_plugins
-  # - gazebo_ros2_control
-  # - gazebo_ros_pkgs
-  # - turtlebot3_simulations
-  # - rosbridge_suite
-  # - ament_cmake_catch2
-  # - nav2-mppi-controller
+  - rqt-moveit
+  # - moveit2_tutorials   # this does not exist anymore
 
-  # ros2_control
+  - topic_tools
+
+  - navigation2
+
+  # ros control
+  - ros2_control
+  - ros2_controllers
+  - joint-state-publisher # probably this should not be here as there is some strange porting to ros2
+  - control-toolbox
+  - realtime_tools
+  - control_msgs
+  - teleop_tools
   - gazebo-ros2-control
-  - ros2-controllers-test-nodes
-  - joint-state-publisher-gui
+  - gazebo_ros2_control_demos
 
-  # Broken for now until we migrate to newer gazebo
-  # - desktop_full
+  # - joystick_drivers
+  - joy
+  - joy_linux
+  - sdl2_vendor
+  - spacenav
+  # - wiimote          # needs bluetooth and is not in conda-forge
+  # - wiimote_msgs
 
-  # REQUESTED PACKAGES
-  # Fails due to not finding csparse, could borrow patch from mrpt2
-  # - slam-toolbox
-  # Needs slam-toolbox
-  # - nav2-bringup
+  # other control
+  - robot_controllers
+  - bond_core
+
+  # *** learning and tutorials ***
+  - turtlebot3
+  - turtlebot3_simulations
+  - urdf_tutorial
+  - geometry_tutorials
+
+  # gazebo
+  - gazebo-ros-pkgs
+  - ros_gz
+
+  # *** Vendor packages ***
+  - graph_msgs          # PickNik Robotics
+  - apriltag            # AprilRobotics
+  - apriltag_ros        # Christian Rauch
+  - ur_robot_driver     # Universal Robots
+  - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
+  - ublox               # Kumar Robotics
+  - ublox_dgnss         # Aussie Robots
+  - ublox_dgnss_node
+  - ublox_ubx_interfaces
+  - robot_localization  # Charles River Analytics, Inc.
+  - stubborn_buddies    # Open RMF
+  - ament_cmake_catch2  # Open RMF
+  - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+
+  # - transport_drivers
+  - asio_cmake_module
+  - io_context
+  - serial_driver
+  - udp_driver
+
+  - apex_test_tools
+  - apex_containers     # Apex AI
+  - velodyne
+  - velodyne_simulator  # Dataspeed Inc.
+
+  # - visp # this does not exist in Humble anymore
+
+  - bno055              # flynneva
+  - aws_robomaker_small_warehouse_world # AWS Robotics
+  - avt_vimba_camera    #  Allied Vision Technologies
+  - system_modes        # Micro-ROS
+  - tf_transformations  # DLu
+  - slam-toolbox        # Steve Macenski
+  - foxglove_bridge     # foxglove
+  - geographic_info     # ros-geographic-info
+  - rosbridge_suite     # RobotWebTools
+  - marker-msgs         # TUW Robotics
+  - librealsense2       # IntelRealSense
+  - realsense2-camera   # IntelRealSense
+  - webots_ros2         # Cyberbotics
+  # - libg2o      # this does not exist anymore
+  - gtsam               # Borglab
+  - motion_capture_tracking # IMRC Lab
+  - moveit_resources
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/228
+  - event_camera_codecs
+  - event_camera_renderer
+
+  # requested in https://github.com/RoboStack/ros-humble/pull/205
+  - rosbag2_storage_mcap
 
 patch_dir: patch

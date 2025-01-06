@@ -1,0 +1,9 @@
+tests:
+  # Regression test for https://github.com/RoboStack/ros-humble/pull/229#issuecomment-2567039092
+  - script:
+    - cmake-package-check backward_ros
+    requirements:
+      run:
+        - cmake-package-check
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}

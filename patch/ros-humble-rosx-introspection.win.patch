@@ -1,0 +1,42 @@
+diff --git a/src/ros_parser.cpp b/src/ros_parser.cpp
+index 40c161b..8a1523c 100644
+--- a/src/ros_parser.cpp
++++ b/src/ros_parser.cpp
+@@ -581,8 +581,7 @@ bool Parser::serializeFromJson(const std::string_view json_string,
+             }
+             else
+             {
+-              rapidjson::Value next_value = value_field->GetObject();
+-              serializeImpl(msg_node_child.get(), &next_value);
++              serializeImpl(msg_node_child.get(), value_field);
+             }
+           }
+           break;
+@@ -600,7 +599,7 @@ bool Parser::serializeFromJson(const std::string_view json_string,
+   auto root_msg =
+       _schema->field_tree.croot()->value()->getMessagePtr(_schema->msg_library);
+
+-  rapidjson::Value json_root = json_document.GetObject();
++  rapidjson::Value& json_root = json_document;
+   serializeImpl(root_msg.get(), &json_root);
+
+   return true;
+
+diff --git a/src/ros_utils/message_definition_cache.cpp b/src/ros_utils/message_definition_cache.cpp
+index 7c4da1f..41b8f5e 100644
+--- a/src/ros_utils/message_definition_cache.cpp
++++ b/src/ros_utils/message_definition_cache.cpp
+@@ -22,3 +22,4 @@
++#include <functional>
+ #include <regex>
+ #include <set>
+ #include <string>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 005588b..16a8b50 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -7,2 +7,3 @@ project(rosx_introspection LANGUAGES CXX VERSION 1.0.2)
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
+

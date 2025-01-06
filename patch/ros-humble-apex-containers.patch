@@ -1,13 +1,23 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ebab722..452127f 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -27,8 +27,6 @@ set(apex_containers_sources
+diff --git a/apex_containers/CMakeLists.txt b/apex_containers/CMakeLists.txt
+index ebab72230e7a18cb65aaa151e211e3c1c60bc2da..89aaf1b82b05f3af120c66e81fbc9b8b32e0a766 100644
+--- a/apex_containers/CMakeLists.txt
++++ b/apex_containers/CMakeLists.txt
+@@ -26,9 +26,8 @@ set(apex_containers_sources
+ 
  set_source_files_properties(${apex_containers_sources} PROPERTIES language "CXX")
  add_library(${PROJECT_NAME} SHARED ${apex_containers_sources})
++if(NOT WIN)
  target_compile_options(${PROJECT_NAME} PRIVATE
 -  -Wall
 -  -Werror
    -Wextra
    -pedantic
    -Wcast-align
+@@ -40,6 +39,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
+   # C++-only options
+ target_compile_options(${PROJECT_NAME}
+   PRIVATE $<$<COMPILE_LANGUAGE:CXX>: -Woverloaded-virtual -Wold-style-cast>)
++endif()
+ 
+ ament_target_dependencies(${PROJECT_NAME}
+     foonathan_memory_vendor)

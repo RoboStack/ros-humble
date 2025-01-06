@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 6
+build_number: 7
 
-mutex_package: ros2-distro-mutex 0.5 humble
+mutex_package: ros2-distro-mutex 0.6.* humble_*
 
 skip_all_deps: false
 
@@ -100,9 +100,16 @@ packages_select_by_deps:
   - ros-gz
 
   - moveit
+  - moveit_visual_tools
   - moveit_servo
   - moveit-planners-chomp
+  - pilz-industrial-motion-planner
 
   - gtsam
+
+  - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+
+  # requested in https://github.com/RoboStack/ros-humble/pull/205
+  - rosbag2_storage_mcap
 
 patch_dir: patch

@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 4
+build_number: 5
 
-mutex_package: ros2-distro-mutex 0.5 humble
+mutex_package: ros2-distro-mutex 0.6.* humble_*
 
 skip_all_deps: false
 
@@ -81,8 +81,10 @@ packages_select_by_deps:
   - apriltag_ros
 
   - moveit
+  - moveit_visual_tools
   - moveit_servo
   - moveit-planners-chomp
+  - pilz-industrial-motion-planner
 
   # - control_toolbox
   # - ros1_bridge
@@ -94,6 +96,9 @@ packages_select_by_deps:
   - ros-gz
 
   - gtsam
+
+  - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+
 
   # Used to work, now needs fixes
   # - rtabmap
@@ -393,3 +398,4 @@ packages_select_by_deps:
   # - osrf_testing_tools_cpp
 
 patch_dir: patch
+

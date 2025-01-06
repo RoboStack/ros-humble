@@ -1,0 +1,9 @@
+tests:
+  # Regression test for https://github.com/RoboStack/ros-humble/pull/229#issuecomment-2563868968
+  - script:
+    - cmake-package-check rosidl_typesupport_introspection_c
+    requirements:
+      run:
+        - cmake-package-check
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}

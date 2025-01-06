@@ -1,27 +1,82 @@
-diff --git a/src/thread_priority.cpp b/src/thread_priority.cpp
-index 72749e3..778c06a 100644
---- a/src/thread_priority.cpp
-+++ b/src/thread_priority.cpp
-@@ -37,20 +37,12 @@ namespace realtime_tools
- {
- bool has_realtime_kernel()
- {
--  std::ifstream realtime_file("/sys/kernel/realtime", std::ios::in);
--  bool has_realtime = false;
--  if (realtime_file.is_open()) {
--    realtime_file >> has_realtime;
--  }
--  return has_realtime;
-+  return false;
- }
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5a9be70..9141953 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -40,7 +40,7 @@ target_include_directories(realtime_tools PUBLIC
+   $<INSTALL_INTERFACE:include/realtime_tools>
+ )
+ ament_target_dependencies(realtime_tools PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
+-if(UNIX)
++if(UNIX AND NOT APPLE)
+   target_link_libraries(realtime_tools PUBLIC cap)
+ endif()
  
- bool configure_sched_fifo(int priority)
- {
--  struct sched_param schedp;
--  memset(&schedp, 0, sizeof(schedp));
--  schedp.sched_priority = priority;
--  return !sched_setscheduler(0, SCHED_FIFO, &schedp);
-+  return false;
- }
+@@ -54,7 +54,7 @@ target_include_directories(thread_priority PUBLIC
+   $<INSTALL_INTERFACE:include/realtime_tools>
+ )
+ ament_target_dependencies(thread_priority PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
+-if(UNIX)
++if(UNIX AND NOT APPLE)
+   target_link_libraries(thread_priority PUBLIC cap)
+ endif()
  
- }  // namespace realtime_tools
+diff --git a/src/realtime_helpers.cpp b/src/realtime_helpers.cpp
+index e55894c..e75e4c8 100644
+--- a/src/realtime_helpers.cpp
++++ b/src/realtime_helpers.cpp
+@@ -30,12 +30,15 @@
+ 
+ #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+ #include <sched.h>
+-#include <sys/capability.h>
+ #include <sys/mman.h>
+ 
+ #include <unistd.h>
+ #endif
+ 
++#if defined(__unix__)
++#include <sys/capability.h>
++#endif
++
+ #include <cstring>
+ #include <fstream>
+ 
+@@ -56,6 +59,19 @@ bool configure_sched_fifo(int priority)
+ #ifdef _WIN32
+   HANDLE thread = GetCurrentThread();
+   return SetThreadPriority(thread, priority);
++#elif defined(__APPLE__)
++    pthread_t thread = pthread_self();
++    struct sched_param schedp;
++    memset(&schedp, 0, sizeof(schedp));
++    schedp.sched_priority = priority;
++
++    int policy = SCHED_FIFO;
++    if (pthread_setschedparam(thread, policy, &schedp) == 0) {
++        return true;
++    } else {
++        // Optionally log strerror(errno) for debugging
++        return false;
++    }
+ #else
+   struct sched_param schedp;
+   memset(&schedp, 0, sizeof(schedp));
+@@ -75,6 +91,8 @@ std::pair<bool, std::string> lock_memory()
+ {
+ #ifdef _WIN32
+   return {false, "Memory locking is not supported on Windows."};
++#elif defined(__APPLE__)
++  return {false, "Memory locking is not supported on MacOS."};
+ #else
+   auto is_capable = [](cap_value_t v) -> bool {
+     bool rc = false;
+@@ -127,6 +145,9 @@ std::pair<bool, std::string> set_thread_affinity(
+ #ifdef _WIN32
+   message = "Thread affinity is not supported on Windows.";
+   return std::make_pair(false, message);
++#elif defined(__APPLE__)
++  message = "Memory locking is not supported on MacOS.";
++  return std::make_pair(false, message);
+ #else
+   auto set_affinity_result_message = [](int result, std::string & msg) -> bool {
+     if (result == 0) {

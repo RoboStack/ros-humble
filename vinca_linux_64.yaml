@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 6
+build_number: 7
 
-mutex_package: ros2-distro-mutex 0.5 humble
+mutex_package: ros2-distro-mutex 0.6.* humble_*
 
 skip_all_deps: false
 
@@ -37,111 +37,124 @@ skip_existing:
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
   # trigger
-  - qt-qui-cpp # needs to be compiled locally
 
-  - generator-dds-idl
+  # build 7 reselect
   - ros_workspace
-  - ros_environment
-  - ament_cmake
+  - ros_core
+  - ament-cmake-nose
   - ros_base
+  - perception
+  - rosidl-generator-dds-idl
+  - simulation
   - desktop
-  - navigation2
-  - graph_msgs
-  - nav2_bringup
-  - turtlebot3
   - desktop_full
-  - apriltag
-  - turtlebot3_fake_node
-  - ur
-  - ublox
-  - robot_localization
-  - topic_tools
-  - stubborn_buddies
-  - teleop_tools
-  - udp_driver
-  - urdf_tutorial
-  - test_bond
-  - apex_test_tools
-  - ublox_dgnss
-  - velodyne_description
-  - velodyne
-  - visp
-  - apex_containers
-  - apex_test_tools
-  - bno055
-  - aws_robomaker_small_warehouse_world
-  - avt_vimba_camera
-  - ros_ign
-  - spacenav
-  - system_modes
-  - tf_transformations
-  - turtle_tf2_cpp
-  - turtle_tf2_py
-  - ros2controlcli
-  - robot_controllers
-  - ros2_control
-  - ros2_controllers
-  - control-toolbox
-  - joint-trajectory-controller
-  - gazebo-dev
-  - gazebo-plugins
-  - gazebo-ros
-  - gazebo-ros-pkgs
-  - turtlebot3_gazebo
-  - turtlebot3_simulations
+  # - qt-qui-cpp # needs to be compiled locally
+
+  # rqt
   - rqt
   - rqt_image_overlay
   - rqt-robot-dashboard
   - rqt-robot-monitor
   - rqt-robot-steering
-  - joint-state-broadcaster
-  - joint-state-publisher
-  - xacro
-  - image-pipeline
-  - image-view
-  - bond-core
-  - camera-calibration
-  - camera-calibration-parsers
-  - camera-info-manager
-  - slam-toolbox
-  - foxglove_bridge
-  - ament-cmake-nose
-  - geographic_info
-  - geodesy
-  - rosbridge_suite
-  - ament_cmake_catch2
-  - apriltag
-  - apriltag_ros
-  - marker-msgs
+
   - moveit
-  - moveit-ros-perception
-  - moveit-runtime
-  - moveit-servo
   - moveit_visual_tools
   - moveit_servo
   - moveit2_tutorials
   - moveit-planners-chomp
   - rqt-moveit
+  # - moveit2_tutorials   # this does not exist anymore
+  - pilz-industrial-motion-planner
 
-  - librealsense2
-  - realsense2-camera
-  - realsense2-camera-msgs
-  - realsense2-description
-  - webots_ros2
-  - rosidl-generator-dds-idl
+  - topic_tools
 
+  - navigation2
+
+  # ros control
   - ros2_control
+  - ros2_controllers
+  - joint-state-publisher # probably this should not be here as there is some strange porting to ros2
+  - control-toolbox
+  - realtime_tools
+  - control_msgs
+  - teleop_tools
   - gazebo-ros2-control
+  - gazebo_ros2_control_demos
 
-  # Modern gz-sim integration
-  - ros-gz
-  - libg2o
+  # - joystick_drivers
+  - joy
+  - joy_linux
+  - sdl2_vendor
+  - spacenav
+  # - wiimote          # needs bluetooth and is not in conda-forge
+  # - wiimote_msgs
 
-  - gtsam
-  - motion-capture-tracking
+  # other control
+  - robot_controllers
+  - bond_core
 
-  # Needs fixing
-  # - moveit-resources
+  # *** learning and tutorials ***
+  - turtlebot3
+  - turtlebot3_simulations
+  - urdf_tutorial
+  - geometry_tutorials
+
+  # gazebo
+  - gazebo-ros-pkgs
+  - ros_gz
+
+  # *** Vendor packages ***
+  - graph_msgs          # PickNik Robotics
+  - apriltag            # AprilRobotics
+  - apriltag_ros        # Christian Rauch
+  - ur_robot_driver     # Universal Robots
+  - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
+  - ublox               # Kumar Robotics      
+  - ublox_dgnss         # Aussie Robots
+  - ublox_dgnss_node
+  - ublox_ubx_interfaces
+  - robot_localization  # Charles River Analytics, Inc.
+  - stubborn_buddies    # Open RMF
+  - ament_cmake_catch2  # Open RMF
+  - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+
+  # - transport_drivers 
+  - asio_cmake_module
+  - io_context
+  - serial_driver
+  - udp_driver
+
+  - apex_test_tools
+  - apex_containers     # Apex AI
+  - velodyne
+  - velodyne_simulator  # Dataspeed Inc.
+
+  # - visp # this does not exist in Humble anymore
+
+  - bno055              # flynneva
+  - aws_robomaker_small_warehouse_world # AWS Robotics
+  - avt_vimba_camera    #  Allied Vision Technologies
+  - system_modes        # Micro-ROS
+  - tf_transformations  # DLu
+  - slam-toolbox        # Steve Macenski
+  - foxglove_bridge     # foxglove
+  - geographic_info     # ros-geographic-info
+  - rosbridge_suite     # RobotWebTools
+  - marker-msgs         # TUW Robotics
+  - librealsense2       # IntelRealSense
+  - realsense2-camera   # IntelRealSense
+  - webots_ros2         # Cyberbotics
+  # - libg2o      # this does not exist anymore
+  - gtsam               # Borglab
+  - motion_capture_tracking # IMRC Lab
+  - moveit_resources
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/228
+  - event_camera_codecs
+  - event_camera_renderer
+
+  # requested in https://github.com/RoboStack/ros-humble/pull/205
+  - rosbag2_storage_mcap
 
   # ----- end of package support -----
 

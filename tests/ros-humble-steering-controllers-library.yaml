@@ -1,0 +1,10 @@
+tests:
+  - script:
+    - cmake-package-check steering_controllers_library --targets steering_controllers_library::steering_controllers_library
+    requirements:
+      run:
+        - cmake-package-check
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+        # workaround for https://github.com/ros-controls/ros2_controllers/pull/1463
+        - ros-humble-generate-parameter-library

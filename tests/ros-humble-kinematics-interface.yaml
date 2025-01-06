@@ -1,0 +1,8 @@
+tests:
+  - script:
+    - cmake-package-check kinematics_interface --targets kinematics_interface::kinematics_interface
+    requirements:
+      run:
+        - cmake-package-check
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}

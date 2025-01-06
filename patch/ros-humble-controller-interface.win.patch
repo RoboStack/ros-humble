@@ -7,10 +7,10 @@ Subject: [PATCH] Add missing export symbol in protected methods
  .../controller_interface/chainable_controller_interface.hpp      | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/controller_interface/include/controller_interface/chainable_controller_interface.hpp b/controller_interface/include/controller_interface/chainable_controller_interface.hpp
+diff --git a/include/controller_interface/chainable_controller_interface.hpp b/include/controller_interface/chainable_controller_interface.hpp
 index 2bdccefdc5..13c8b3f9b9 100644
---- a/controller_interface/include/controller_interface/chainable_controller_interface.hpp
-+++ b/controller_interface/include/controller_interface/chainable_controller_interface.hpp
+--- a/include/controller_interface/chainable_controller_interface.hpp
++++ b/include/controller_interface/chainable_controller_interface.hpp
 @@ -88,6 +88,7 @@ class ChainableControllerInterface : public ControllerInterfaceBase
     * \default returns true so the method don't have to be overridden if controller can always switch
     * chained mode.

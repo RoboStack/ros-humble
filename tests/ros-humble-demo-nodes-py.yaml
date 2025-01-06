@@ -1,0 +1,11 @@
+tests:
+  # Regression test for https://github.com/RoboStack/ros-humble/issues/150
+  - script:
+    - if: unix
+      then:
+        - test -f ${PREFIX}/lib/demo_nodes_py/talker
+        - test -f ${PREFIX}/lib/demo_nodes_py/listener
+    - if: win
+      then:
+        - if not exist %LIBRARY_LIB%\demo_nodes_py\talker.exe exit 1
+        - if not exist %LIBRARY_LIB%\demo_nodes_py\listener.exe exit 1
