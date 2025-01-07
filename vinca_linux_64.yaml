@@ -23,7 +23,7 @@ packages_skip_by_deps:
   - octomap
   - urdfdom-py
 
-  packages_remove_from_deps:
+packages_remove_from_deps:
   - cartographer
   - octomap
   - warehouse_ros_mongo
