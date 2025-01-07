@@ -21,8 +21,9 @@ packages_skip_by_deps:
   # - diagnostic_updater
   - cartographer
   - octomap
+  - urdfdom-py
 
-packages_remove_from_deps:
+  packages_remove_from_deps:
   - cartographer
   - octomap
   - warehouse_ros_mongo

@@ -19,6 +19,7 @@ packages_skip_by_deps:
   - cartographer
   - octomap
   - rttest
+  - urdfdom-py
 
 packages_remove_from_deps:
   - cartographer
