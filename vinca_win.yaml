@@ -90,6 +90,7 @@ packages_remove_from_deps:
   - ur-controllers
   - ur_robot_driver
   - ur_calibration
+  - ur
   # Some packages in velodyne repo do not support Windows
   - velodyne_driver
   - velodyne_pointcloud
@@ -184,6 +185,7 @@ packages_select_by_deps:
   - apriltag_ros        # Christian Rauch
   - ur_robot_driver     # Universal Robots
   - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
+  - ur                  # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/234, https://github.com/RoboStack/ros-humble/issues/227 and https://github.com/RoboStack/ros-humble/issues/222 
   - ublox               # Kumar Robotics
   - ublox_dgnss         # Aussie Robots
   - ublox_dgnss_node

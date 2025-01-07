@@ -87,6 +87,10 @@ packages_select_by_deps:
   - moveit-planners-chomp
   - pilz-industrial-motion-planner
 
+  # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/234, https://github.com/RoboStack/ros-humble/issues/227 and https://github.com/RoboStack/ros-humble/issues/222 
+  - ur
+
+
   # - control_toolbox
   # - ros1_bridge
 

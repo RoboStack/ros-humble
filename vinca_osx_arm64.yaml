@@ -33,6 +33,11 @@ packages_remove_from_deps:
   - rttest
   # Not available for macOS and Windows!
   - gripper_controllers
+  # Some packages in ur stack do not support macOS
+  - ur_client_library
+  - ur_robot_driver
+  - ur_calibration
+  - ur
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
@@ -102,5 +107,9 @@ packages_select_by_deps:
 
   # requested in https://github.com/RoboStack/ros-humble/pull/205
   - rosbag2_storage_mcap
+  
+  # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/234, https://github.com/RoboStack/ros-humble/issues/227 and https://github.com/RoboStack/ros-humble/issues/222 
+  - ur                  
+
 
 patch_dir: patch
