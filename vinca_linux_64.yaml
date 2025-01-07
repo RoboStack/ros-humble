@@ -160,8 +160,8 @@ packages_select_by_deps:
   # requested in https://github.com/RoboStack/ros-humble/pull/205
   - rosbag2_storage_mcap
 
-  - plotjuggler
-  - plotjuggler_ros
+  #- plotjuggler
+  #- plotjuggler_ros
   - plotjuggler_msgs
 
   - visp
