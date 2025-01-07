@@ -26,7 +26,6 @@ packages_skip_by_deps:
 
 packages_remove_from_deps:
   - cartographer
-  - octomap
   - tlsf
   - tlsf_cpp
   - pendulum_control
@@ -93,6 +92,7 @@ packages_select_by_deps:
   - turtlebot3_gazebo
   - plotjuggler-ros
   - plotjuggler
+  - plotjuggler-msgs
 
   - apriltag
   - apriltag_ros
