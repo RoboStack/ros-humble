@@ -143,29 +143,29 @@ jobs:
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.LINUX_YAML_CHANGED == 1 && matrix.platform == 'linux-64'
       run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe additional_recipes/ros2-distro-mutex/ --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
     - name: Build recipes for linux-aarch64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.LINUX_AARCH_YAML_CHANGED == 1 && matrix.platform == 'linux-aarch64'
       run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe additional_recipes/ros2-distro-mutex/ --target-platform linux-aarch64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform linux-aarch64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-aarch64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
     - name: Build recipes for osx-64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.OSX_YAML_CHANGED == 1 && matrix.platform == 'osx-64'
       run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe additional_recipes/ros2-distro-mutex/ --target-platform osx-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform osx-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform osx-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
     - name: Build recipes for osx-arm64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.OSX_ARM_YAML_CHANGED == 1 && matrix.platform == 'osx-arm64'
       run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe additional_recipes/ros2-distro-mutex/ --target-platform osx-arm64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform osx-arm64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform osx-arm64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
     - name: Build recipes for win-64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.WIN_YAML_CHANGED == 1 && matrix.platform == 'win-64'
       run: |
-        $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe additional_recipes/ros2-distro-mutex/ --target-platform win-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+        $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform win-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes -m ./conda_build_config.yaml --target-platform win-64 -c robostack-staging -c conda-forge --skip-existing

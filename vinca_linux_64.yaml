@@ -25,7 +25,6 @@ packages_skip_by_deps:
 
 packages_remove_from_deps:
   - cartographer
-  - octomap
   - warehouse_ros_mongo
   # - stage-ros
   # - python_qt_binding
@@ -66,6 +65,8 @@ packages_select_by_deps:
   - rqt-moveit
   # - moveit2_tutorials   # this does not exist anymore
   - pilz-industrial-motion-planner
+  - moveit_runtime
+  - moveit_ros_perception
 
   - topic_tools
 
@@ -102,6 +103,7 @@ packages_select_by_deps:
 
   # gazebo
   - gazebo-ros-pkgs
+  - ros_ign
   - ros_gz
 
   # *** Vendor packages ***
@@ -131,8 +133,7 @@ packages_select_by_deps:
   - velodyne
   - velodyne_simulator  # Dataspeed Inc.
 
-  # - visp # this does not exist in Humble anymore
-
+  - visp
   - bno055              # flynneva
   - aws_robomaker_small_warehouse_world # AWS Robotics
   - avt_vimba_camera    #  Allied Vision Technologies
@@ -145,8 +146,9 @@ packages_select_by_deps:
   - marker-msgs         # TUW Robotics
   - librealsense2       # IntelRealSense
   - realsense2-camera   # IntelRealSense
+  - realsense2-description # IntelRealSense
   - webots_ros2         # Cyberbotics
-  # - libg2o      # this does not exist anymore
+  - libg2o
   - gtsam               # Borglab
   - motion_capture_tracking # IMRC Lab
   - moveit_resources
@@ -158,13 +160,20 @@ packages_select_by_deps:
   # requested in https://github.com/RoboStack/ros-humble/pull/205
   - rosbag2_storage_mcap
 
+  - plotjuggler
+  - plotjuggler_ros
+  - plotjuggler_msgs
+
+  - visp
+
+  - turtle_tf2_py
+  - turtle_tf2_cpp
+
   # ----- end of package support -----
 
   # - rtabmap
   # - control-box-rst
 
-  # - plotjuggler
-  # - plotjuggler_ros
 
   # - zmqpp_vendor
 
