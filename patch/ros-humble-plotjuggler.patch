@@ -59,12 +59,13 @@ diff --git a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt b/3rdparty/Qt-Advanced-
 index 6b650f1b..82c58edb 100644
 --- a/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
 +++ b/3rdparty/Qt-Advanced-Docking/CMakeLists.txt
-@@ -67,7 +67,8 @@ target_link_libraries(qt_advanced_docking PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets
+@@ -67,7 +67,9 @@ target_link_libraries(qt_advanced_docking PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets
  
  if(UNIX AND NOT APPLE)
      target_link_libraries(qt_advanced_docking PUBLIC Qt5::X11Extras)
 -        target_link_libraries(qt_advanced_docking PRIVATE xcb)
-+    target_link_libraries(qt_advanced_docking PRIVATE ${XCB_LIBRARIES})
++    find_package(XCB REQUIRED)
++    target_link_libraries(qt_advanced_docking PUBLIC ${XCB_LIBRARIES})
 +    target_include_directories(qt_advanced_docking SYSTEM PUBLIC ${XCB_INCLUDE_DIRS})
  endif()
  
@@ -419,26 +420,6 @@ index cb27e058..cecdb1fd 100644
          , indent_char(ichar)
          , indent_string(512, indent_char)
          , error_handler(error_handler_)
-diff --git a/3rdparty/sol/sol.hpp b/3rdparty/sol/sol.hpp
-index 0bb68ebe..fe90262a 100644
---- a/3rdparty/sol/sol.hpp
-+++ b/3rdparty/sol/sol.hpp
-@@ -6747,12 +6747,9 @@ namespace sol {
- 		/// one.
- 		///
- 		/// \group emplace
--		template <class... Args>
--		T& emplace(Args&&... args) noexcept {
--			static_assert(std::is_constructible<T, Args&&...>::value, "T must be constructible with Args");
--
--			*this = nullopt;
--			this->construct(std::forward<Args>(args)...);
-+		T& emplace(T& arg) noexcept {
-+			m_value = &arg;
-+			return **this;
- 		}
- 
- 		/// Swaps this optional with the other.
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index c6de4a98..d181ff43 100644
 --- a/CMakeLists.txt
@@ -623,3 +604,25 @@ index f70a881f..7afe1fea 100644
  
    const QStringList& errors()
    {
+diff --git a/3rdparty/sol/sol.hpp b/3rdparty/sol/sol.hpp
+index 0bb68ebe..d956d801 100644
+--- a/3rdparty/sol/sol.hpp
++++ b/3rdparty/sol/sol.hpp
+@@ -6747,13 +6747,10 @@ namespace sol {
+ 		/// one.
+ 		///
+ 		/// \group emplace
+-		template <class... Args>
+-		T& emplace(Args&&... args) noexcept {
+-			static_assert(std::is_constructible<T, Args&&...>::value, "T must be constructible with Args");
+-
+-			*this = nullopt;
+-			this->construct(std::forward<Args>(args)...);
+-		}
++		T& emplace(T& arg) noexcept {
++			m_value = &arg;
++			return **this;
++ 		}
+ 
+ 		/// Swaps this optional with the other.
+ 		///
