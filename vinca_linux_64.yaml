@@ -35,6 +35,7 @@ skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
+  - grid_map
   # only subset of packages to reduce maintainer load
   # trigger
 

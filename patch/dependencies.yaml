@@ -176,3 +176,7 @@ gz_utils_vendor:
   add_build: ["vcstool"]
 rosx_introspection:
   add_host: ["rapidjson"]
+octomap_ros:
+  add_host: ["octomap"]
+octomap_rviz_plugins:
+  add_host: ["octomap"]
