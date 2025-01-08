@@ -35,9 +35,7 @@ skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
-  - grid_map
   # only subset of packages to reduce maintainer load
-  # trigger
 
   # build 7 reselect
   - ros_workspace
@@ -169,6 +167,8 @@ packages_select_by_deps:
 
   - turtle_tf2_py
   - turtle_tf2_cpp
+
+  - grid_map
 
   # ----- end of package support -----
 
