@@ -1,0 +1,17 @@
+diff --git a/include/grid_map_cv/GridMapCvConverter.hpp b/include/grid_map_cv/GridMapCvConverter.hpp
+index 233c28a..6f785ba 100644
+--- a/include/grid_map_cv/GridMapCvConverter.hpp
++++ b/include/grid_map_cv/GridMapCvConverter.hpp
+@@ -262,8 +262,10 @@ public:
+             imageIndex(0),
+             imageIndex(1))[++channel] = imageValue;
+         }
+-        if (hasAlpha) {
+-          image.at<cv::Vec<Type_, NChannels_>>(imageIndex(0), imageIndex(1))[++channel] = imageMax;
++        if constexpr (NChannels_ >= 4) {
++          if (hasAlpha) {
++            image.at<cv::Vec<Type_, NChannels_>>(imageIndex(0), imageIndex(1))[++channel] = imageMax;
++          }
+         }
+       }
+     }
