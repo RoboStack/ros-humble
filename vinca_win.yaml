@@ -27,7 +27,6 @@ packages_remove_from_deps:
   - tlsf_cpp
   - pendulum_control
   - warehouse_ros_mongo
-  - pilz-industrial-motion-planner
   # removed in jazzy, never supported windows, no packages depend on it
   - apex_containers
   # never worked in Windows, probably trivial to support if someone needs it
@@ -139,6 +138,8 @@ packages_select_by_deps:
   - moveit2_tutorials
   - moveit-planners-chomp
   - rqt-moveit
+  # Requested in https://github.com/RoboStack/ros-humble/issues/211
+  - pilz-industrial-motion-planner
   # - moveit2_tutorials   # this does not exist anymore
 
   - topic_tools
