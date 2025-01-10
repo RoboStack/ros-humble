@@ -109,7 +109,9 @@ packages_select_by_deps:
   - rosbag2_storage_mcap
   
   # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/234, https://github.com/RoboStack/ros-humble/issues/227 and https://github.com/RoboStack/ros-humble/issues/222 
-  - ur                  
+  - ur
+
+  - lanelet2                  
 
 
 patch_dir: patch

@@ -170,6 +170,8 @@ packages_select_by_deps:
 
   - grid_map
 
+  - lanelet2
+
   # ----- end of package support -----
 
   # - rtabmap
@@ -307,7 +309,6 @@ packages_select_by_deps:
   # - plansys2-bt-actions
   # - plansys2-terminal
   # - nav2-system-tests
-  # - lanelet2
   # - plansys2-bringup
   # - octovis
   # - gps-umd
