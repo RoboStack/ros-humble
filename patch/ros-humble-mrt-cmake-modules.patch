@@ -1,3 +1,16 @@
+diff --git a/cmake/Modules/FindBoostPython.cmake b/cmake/Modules/FindBoostPython.cmake
+index 409cfaf..a3d9984 100644
+--- a/cmake/Modules/FindBoostPython.cmake
++++ b/cmake/Modules/FindBoostPython.cmake
+@@ -8,7 +8,7 @@
+ if(PYTHON_VERSION)
+     set(_python_version ${PYTHON_VERSION})
+ else()
+-    set(_python_version 2.7)
++    set(_python_version 3)
+ endif()
+ if(_python_version VERSION_EQUAL 3 AND CMAKE_VERSION VERSION_GREATER 3.15)
+     # we also need the subversion
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index aa99d8d..8327d4e 100644
 --- a/CMakeLists.txt

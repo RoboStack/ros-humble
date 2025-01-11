@@ -63,7 +63,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/rpds-py-0.22.3-py311h9e33e62_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/tk-8.6.13-noxft_h4845f30_101.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -145,7 +145,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/rpds-py-0.22.3-py311h7270cec_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/tk-8.6.13-h194ca79_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -217,7 +217,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-64/rpds-py-0.22.3-py311h3b9c2be_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-64/tk-8.6.13-h1abcd95_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -289,7 +289,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-arm64/rpds-py-0.22.3-py311h3ff9189_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-arm64/tk-8.6.13-h5083fa2_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -364,7 +364,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/rpds-py-0.22.3-py311h533ab2d_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/tk-8.6.13-h5226925_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -456,7 +456,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/rpds-py-0.22.3-py311h9e33e62_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/tk-8.6.13-noxft_h4845f30_101.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -523,7 +523,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/rpds-py-0.22.3-py311h7270cec_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/tk-8.6.13-h194ca79_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -580,7 +580,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-64/rpds-py-0.22.3-py311h3b9c2be_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-64/tk-8.6.13-h1abcd95_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -637,7 +637,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-arm64/rpds-py-0.22.3-py311h3ff9189_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-arm64/tk-8.6.13-h5083fa2_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -697,7 +697,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-toolbelt-1.0.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/rpds-py-0.22.3-py311h533ab2d_0.conda
-      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/tk-8.6.13-h5226925_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/tqdm-4.67.1-pyhd8ed1ab_1.conda
@@ -2651,17 +2651,17 @@ packages:
   version: 0.2.12
   sha256: 4a6679521a58256a90b0d89e03992c15144c5f3858f40d7c18886023d7943db6
   requires_python: '>=3.9'
-- conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.7.0-pyhff2d567_0.conda
-  sha256: c653155d975cecf78156423d85e754e21ed8ec747e0afe8301afab50fa088b4f
-  md5: 764aced8c122bc0f3f1d01d401536b82
+- conda: https://repo.prefix.dev/conda-forge/noarch/setuptools-75.8.0-pyhff2d567_0.conda
+  sha256: e0778e4f276e9a81b51c56f51ec22a27b4d8fc955abc0be77ad09ca9bea06bb9
+  md5: 8f28e299c11afdd79e0ec1e279dcdc52
   depends:
   - python >=3.9
   license: MIT
   license_family: MIT
   purls:
   - pkg:pypi/setuptools?source=hash-mapping
-  size: 774395
-  timestamp: 1736450264351
+  size: 775598
+  timestamp: 1736512753595
 - conda: https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
   sha256: 41db0180680cc67c3fa76544ffd48d6a5679d96f4b71d7498a759e94edc9a2db
   md5: a451d576819089b0d672f18768be0f65

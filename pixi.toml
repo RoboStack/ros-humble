@@ -35,7 +35,7 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "35f09634dbd3c36
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends_on = ["rename-file"] }
 remove-file = { cmd = "rm vinca.yaml; rm -rf recipes" }
-build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml --skip-existing" }
+build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing" }
 build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing", depends_on = ["build_additional_recipes", "generate-recipes"] }
 build_one_package = { cmd = "cp ./patch/$PACKAGE.*patch ./recipes/$PACKAGE/patch/; rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge", env = { PACKAGE = "ros-humble-ros-workspace" } }
 create_snapshot = { cmd = "vinca-snapshot -d humble -o snapshot_$(date +\"%Y-%m-%d-%H-%M-%S\").yaml" }
