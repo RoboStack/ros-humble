@@ -1,3 +1,24 @@
+diff --git a/include/lanelet2_core/geometry/impl/LineString.h b/include/lanelet2_core/geometry/impl/LineString.h
+index a6461cfc..cde31746 100644
+--- a/include/lanelet2_core/geometry/impl/LineString.h
++++ b/include/lanelet2_core/geometry/impl/LineString.h
+@@ -799,11 +799,11 @@ IfLS<LineString3dT, std::pair<BasicPoint3d, BasicPoint3d>> projectedPoint3d(cons
+   return internal::projectedPoint3d(traits::toHybrid(l1), traits::toHybrid(l2));
+ }
+ 
+-template <typename LineString3d1T, typename LineString3d2T>
+-IfLS2<LineString3d1T, LineString3d2T, double> distance3d(const LineString3d1T& l1, const LineString3d2T& l2) {
+-  auto projPoint = internal::projectedPoint3d(traits::toHybrid(traits::to3D(l1)), traits::toHybrid(traits::to3D(l2)));
+-  return (projPoint.first - projPoint.second).norm();
+-}
++// template <typename LineString3d1T, typename LineString3d2T>
++// IfLS2<LineString3d1T, LineString3d2T, double> distance3d(const LineString3d1T& l1, const LineString3d2T& l2) {
++//   auto projPoint = internal::projectedPoint3d(traits::toHybrid(traits::to3D(l1)), traits::toHybrid(traits::to3D(l2)));
++//   return (projPoint.first - projPoint.second).norm();
++// }
+ 
+ template <typename LineString1T, typename LineString2T>
+ std::pair<LineString1T, LineString2T> align(LineString1T left, LineString2T right) {
 diff --git a/include/lanelet2_core/primitives/Polygon.h b/include/lanelet2_core/primitives/Polygon.h
 index a458cb49..6c9dfab6 100644
 --- a/include/lanelet2_core/primitives/Polygon.h
