@@ -1,0 +1,25 @@
+diff --git a/include/lanelet2_core/primitives/Polygon.h b/include/lanelet2_core/primitives/Polygon.h
+index a458cb49..371b5e42 100644
+--- a/include/lanelet2_core/primitives/Polygon.h
++++ b/include/lanelet2_core/primitives/Polygon.h
+@@ -399,12 +399,10 @@ std::enable_if_t<traits::isPolygonT<PolygonT>(), BasicPolygon2d> toBasicPolygon2
+   return traits::to2D(t).basicPolygon();
+ }
+ 
+-template <>
+ inline BasicPolygon2d toBasicPolygon2d<BasicPolygon2d>(const BasicPolygon2d& t) {
+   return t;
+ }
+ 
+-template <>
+ inline BasicPolygon2d toBasicPolygon2d<BasicPolygon3d>(const BasicPolygon3d& t) {
+   return traits::to2D(t);
+ }
+@@ -416,7 +414,6 @@ std::enable_if_t<traits::isPolygonT<PolygonT>(), BasicPolygon3d> toBasicPolygon3
+   return traits::to3D(t).basicPolygon();
+ }
+ 
+-template <>
+ inline BasicPolygon3d toBasicPolygon3d<BasicPolygon3d>(const BasicPolygon3d& t) {
+   return t;
+ }
