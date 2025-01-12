@@ -1,0 +1,13 @@
+diff --git a/rmw_wasm_cpp/CMakeLists.txt b/rmw_wasm_cpp/CMakeLists.txt
+index 3f533b7..e4fdcc0 100644
+--- a/rmw_wasm_cpp/CMakeLists.txt
++++ b/rmw_wasm_cpp/CMakeLists.txt
+@@ -60,6 +60,8 @@ set(${PROJECT_NAME}_SOURCES
+ 
+ add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
+ 
++target_compile_options(${PROJECT_NAME} PUBLIC -fPIC)
++
+ target_include_directories(${PROJECT_NAME} PRIVATE
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"

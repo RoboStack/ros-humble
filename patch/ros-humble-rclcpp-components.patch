@@ -1,0 +1,42 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0b9cda78..a5ea756a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,12 +13,29 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   )
+ endif()
+ 
++find_package(Python COMPONENTS Interpreter Development REQUIRED)
+ find_package(ament_cmake_ros REQUIRED)
+ find_package(ament_index_cpp REQUIRED)
+ find_package(class_loader REQUIRED)
+ find_package(composition_interfaces REQUIRED)
+ find_package(rclcpp REQUIRED)
+ find_package(rcpputils REQUIRED)
++find_package(rmw_wasm_cpp REQUIRED)
++find_package(BZip2 REQUIRED)
++find_package(SQLite3 REQUIRED)
++find_package(ZLIB REQUIRED)
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(libffi REQUIRED libffi)
++
++# Hack: avoid double link of libyaml-cpp
++foreach(item ${rmw_wasm_cpp_LIBRARIES})
++    if(item MATCHES "libyaml-cpp.a$")
++        list(REMOVE_ITEM rmw_wasm_cpp_LIBRARIES ${item})
++    endif()
++endforeach()
++
++
++set(CMAKE_EXECUTABLE_SUFFIX ".wasm")
+ 
+ # Add an interface library that can be dependend upon by libraries who register components
+ add_library(component INTERFACE)
+@@ -44,6 +61,7 @@ ament_target_dependencies(component_manager
+   "rclcpp"
+   "rcpputils"
+ )
++target_link_libraries(component_manager ${rmw_wasm_cpp_LIBRARIES} ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
+ target_compile_definitions(component_manager
+   PRIVATE "RCLCPP_COMPONENTS_BUILDING_LIBRARY")
+ 

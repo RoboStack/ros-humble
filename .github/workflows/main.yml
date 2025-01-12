@@ -148,6 +148,8 @@ jobs:
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 
+#TODO NICOLAS: Add emscripten target (low priority, get local builds first)
+
 on:
   push:
     branches:

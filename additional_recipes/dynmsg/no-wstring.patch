@@ -1,0 +1,166 @@
+diff --git a/dynmsg/CMakeLists.txt b/dynmsg/CMakeLists.txt
+index aa2075d..28975c2 100644
+--- a/dynmsg/CMakeLists.txt
++++ b/dynmsg/CMakeLists.txt
+@@ -32,7 +32,7 @@ option(DYNMSG_YAML_CPP_BAD_INT8_HANDLING "Work around buggy [u]int8_t handling b
+ option(DYNMSG_PARSER_DEBUG "Enable debugging-related logs for YAML->msg conversion" OFF)
+ configure_file(include/${PROJECT_NAME}/config.hpp.in include/${PROJECT_NAME}/config.hpp)
+ 
+-add_library(dynmsg STATIC
++add_library(dynmsg SHARED
+   src/msg_parser_c.cpp
+   src/msg_parser_cpp.cpp
+   src/message_reading_c.cpp
+diff --git a/dynmsg/src/message_reading_c.cpp b/dynmsg/src/message_reading_c.cpp
+index a6bd289..ea37513 100644
+--- a/dynmsg/src/message_reading_c.cpp
++++ b/dynmsg/src/message_reading_c.cpp
+@@ -96,13 +96,13 @@ member_type_to_string(const MemberInfo & member_info)
+         result << "<=" << member_info.string_upper_bound_;
+       }
+       break;
+-    case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
++    /*case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
+       result << "wstring";
+       // WStrings may have an upper bound
+       if (member_info.string_upper_bound_ > 0) {
+         result << "<=" << member_info.string_upper_bound_;
+       }
+-      break;
++      break;*/
+     case rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE:
+       // For nested types, the string representation must include the name space as well as the
+       // type name
+@@ -169,8 +169,8 @@ size_of_member_type(uint8_t type_id)
+       return sizeof(int64_t);
+     case rosidl_typesupport_introspection_c__ROS_TYPE_STRING:
+       return sizeof(rosidl_runtime_c__String);
+-    case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
+-      return sizeof(rosidl_runtime_c__U16String);
++    //case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
++    //  return sizeof(rosidl_runtime_c__U16String);
+     case rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE:
+       assert(0 && "Cannot get the size of a nested message");
+       return 0;
+@@ -253,14 +253,14 @@ void member_to_yaml_array_item(
+       array_node.push_back(
+         std::string(reinterpret_cast<const rosidl_runtime_c__String *>(member_data)->data));
+       break;
+-    case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
++    /*case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
+       // WStrings require going through some intermediate formats
+       array_node.push_back(
+         u16string_to_string(
+           std::u16string(
+             reinterpret_cast<const char16_t *>(
+               reinterpret_cast<const rosidl_runtime_c__U16String *>(member_data)->data))));
+-      break;
++      break;*/
+     case rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE:
+       // For nested types, don't copy the data out of the buffer directly. Recursively read the
+       // nested type into the YAML.
+@@ -346,13 +346,13 @@ void basic_value_to_yaml(
+     case rosidl_typesupport_introspection_c__ROS_TYPE_STRING:
+       member["value"] = reinterpret_cast<const rosidl_runtime_c__String *>(member_data)->data;
+       break;
+-    case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
++    /*case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
+       // WStrings require going through some intermediate formats
+       member["value"] = u16string_to_string(
+         std::u16string(
+           reinterpret_cast<const char16_t *>(
+             reinterpret_cast<const rosidl_runtime_c__U16String *>(member_data)->data)));
+-      break;
++      break;*/
+     case rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE:
+       // For nested types, don't copy the data out of the buffer directly. Recursively read the
+       // nested type into the YAML.
+@@ -484,12 +484,12 @@ dynamic_array_to_yaml(
+         reinterpret_cast<const rosidl_runtime_c__String__Sequence *>(member_data),
+         array_node);
+       break;
+-    case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
++    /*case rosidl_typesupport_introspection_c__ROS_TYPE_WSTRING:
+       dynamic_array_to_yaml_impl(
+         member_info,
+         reinterpret_cast<const rosidl_runtime_c__U16String__Sequence *>(member_data),
+         array_node);
+-      break;
++      break;*/
+     case rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE:
+       // We do not know the specific type of the sequence because the type is not available at
+       // compile-time, but they all follow the same structure pattern, where a pointer to the data
+diff --git a/dynmsg/src/message_reading_cpp.cpp b/dynmsg/src/message_reading_cpp.cpp
+index 072819c..3eb5b5f 100644
+--- a/dynmsg/src/message_reading_cpp.cpp
++++ b/dynmsg/src/message_reading_cpp.cpp
+@@ -94,13 +94,13 @@ member_type_to_string(const MemberInfo_Cpp & member_info)
+         result << "<=" << member_info.string_upper_bound_;
+       }
+       break;
+-    case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
++    /*case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
+       result << "wstring";
+       // WStrings may have an upper bound
+       if (member_info.string_upper_bound_ > 0) {
+         result << "<=" << member_info.string_upper_bound_;
+       }
+-      break;
++      break;*/
+     case rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
+       // For nested types, the string representation must include the name space as well as the
+       // type name
+@@ -167,8 +167,8 @@ size_of_member_type(uint8_t type_id)
+       return sizeof(int64_t);
+     case rosidl_typesupport_introspection_cpp::ROS_TYPE_STRING:
+       return sizeof(std::string);
+-    case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
+-      return sizeof(std::u16string);
++    //case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
++    //  return sizeof(std::u16string);
+     case rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
+       assert(0 && "Cannot get the size of a nested message");
+       return 0;
+@@ -251,11 +251,11 @@ void member_to_yaml_array_item(
+     case rosidl_typesupport_introspection_cpp::ROS_TYPE_STRING:
+       array_node.push_back(*reinterpret_cast<const std::string *>(member_data));
+       break;
+-    case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
++    /*case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
+       // WStrings require going through some intermediate formats
+       array_node.push_back(
+         u16string_to_string(*reinterpret_cast<const std::u16string *>(member_data)));
+-      break;
++      break;*/
+     case rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
+       // For nested types, don't copy the data out of the buffer directly. Recursively read the
+       // nested type into the YAML.
+@@ -349,11 +349,11 @@ void basic_value_to_yaml(
+           ", size=" << reinterpret_cast<const std::string *>(member_data)->size() << std::endl);
+       member["value"] = *reinterpret_cast<const std::string *>(member_data);
+       break;
+-    case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
++    /*case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
+       // WStrings require going through some intermediate formats
+       member["value"] =
+         u16string_to_string(*reinterpret_cast<const std::u16string *>(member_data));
+-      break;
++      break;*/
+     case rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
+       // For nested types, don't copy the data out of the buffer directly. Recursively read the
+       // nested type into the YAML.
+@@ -509,12 +509,12 @@ dynamic_array_to_yaml(
+         reinterpret_cast<const std::vector<std::string> *>(member_data),
+         array_node);
+       break;
+-    case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
++    /*case rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
+       dynamic_array_to_yaml_impl(
+         member_info,
+         reinterpret_cast<const std::vector<std::u16string> *>(member_data),
+         array_node);
+-      break;
++      break;*/
+     case rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
+       // We do not know the specific type of the sequence because the type is not available at
+       // compile-time, but we know it's a vector and we know the size of the contained type.

@@ -1,0 +1,15 @@
+diff --git a/cmake/ament_cmake_export_dependencies-extras.cmake.in b/cmake/ament_cmake_export_dependencies-extras.cmake.in
+index ab3d1e3f9..58a5ac89a 100644
+--- a/cmake/ament_cmake_export_dependencies-extras.cmake.in
++++ b/cmake/ament_cmake_export_dependencies-extras.cmake.in
+@@ -86,7 +86,9 @@ if(NOT _exported_dependencies STREQUAL "")
+     endif()
+     if(_libraries)
+       ament_libraries_deduplicate(_libraries "${_libraries}")
+-      list(APPEND @PROJECT_NAME@_LIBRARIES "${_libraries}")
++      list(APPEND _libraries ${@PROJECT_NAME@_LIBRARIES})
++      list(REMOVE_DUPLICATES _libraries)
++      set(@PROJECT_NAME@_LIBRARIES ${_libraries})
+     endif()
+   endforeach()
+ endif()

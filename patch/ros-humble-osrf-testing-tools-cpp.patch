@@ -1,11 +1,26 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e6f56ba..9e1cf50 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -17,16 +17,6 @@ endif()
+From f5f0af0a4988e13578ec59df9c0960d61f0bac41 Mon Sep 17 00:00:00 2001
+From: Mick Batchelor <mickbatch98@gmail.com>
+Date: Wed, 23 Aug 2023 22:04:01 +1000
+Subject: [PATCH 2/2] no backtrace for emscripten and fixed building
+ test_runner
+
+---
+ osrf_testing_tools_cpp/CMakeLists.txt                  | 10 ----------
+ .../count_function_occurrences_in_backtrace.hpp        | 10 +++++-----
+ .../vendor/bombela/backward-cpp/backward.hpp           |  6 +++++-
+ osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt  |  9 +++++++++
+ 4 files changed, 19 insertions(+), 16 deletions(-)
+
+diff --git a/osrf_testing_tools_cpp/CMakeLists.txt b/osrf_testing_tools_cpp/CMakeLists.txt
+index e6f56ba..ef02bf9 100644
+--- a/osrf_testing_tools_cpp/CMakeLists.txt
++++ b/osrf_testing_tools_cpp/CMakeLists.txt
+@@ -15,18 +15,12 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   -Wshadow -Wnon-virtual-dtor)
+ endif()
  
- add_subdirectory(src)
- 
+-add_subdirectory(src)
+-
 -include(CTest)
 -if(BUILD_TESTING)
 -  include(cmake/osrf_testing_tools_cpp_require_googletest.cmake)
@@ -14,8 +29,109 @@ index e6f56ba..9e1cf50 100644
 -    VENDOR_DIR "${CMAKE_SOURCE_DIR}/vendor")
 -
 -  add_subdirectory(test)
--endif()
--
++if (EMSCRIPTEN)
++  set(CMAKE_CXX_FLAGS "-pthread ${CMAKE_CXX_FLAGS}")
+ endif()
+ 
++add_subdirectory(src)
++
  configure_file(osrf_testing_tools_cppConfig.cmake.in
    "${PROJECT_BINARY_DIR}/osrf_testing_tools_cppConfig.cmake" @ONLY)
  configure_file(osrf_testing_tools_cppConfigVersion.cmake.in
+diff --git a/osrf_testing_tools_cpp/src/memory_tools/count_function_occurrences_in_backtrace.hpp b/osrf_testing_tools_cpp/src/memory_tools/count_function_occurrences_in_backtrace.hpp
+index c5e0cc2..8baf340 100644
+--- a/osrf_testing_tools_cpp/src/memory_tools/count_function_occurrences_in_backtrace.hpp
++++ b/osrf_testing_tools_cpp/src/memory_tools/count_function_occurrences_in_backtrace.hpp
+@@ -17,11 +17,11 @@
+ 
+ #include "./safe_fwrite.hpp"
+ 
+-#if defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__)
++#if defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+ 
+ // Include nothing for now.
+ 
+-#else  // defined(_WIN32) || defined(__ANDROID__)
++#else  // defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+ 
+ #include <cstdio>
+ #include <cstdlib>
+@@ -50,7 +50,7 @@ struct is_function_pointer
+   >
+ {};
+ 
+-#if defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__)
++#if defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+ 
+ struct count_function_occurrences_in_backtrace_is_implemented : std::false_type {};
+ 
+@@ -62,7 +62,7 @@ impl_count_function_occurrences_in_backtrace(void * function_address)
+   throw not_implemented();
+ }
+ 
+-#else  // defined(_WIN32) || defined(__ANDROID__)
++#else  // defined(_WIN32) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+ 
+ struct count_function_occurrences_in_backtrace_is_implemented : std::true_type {};
+ 
+@@ -100,7 +100,7 @@ impl_count_function_occurrences_in_backtrace(void * function_address)
+   return number_of_occurences;
+ }
+ 
+-#endif  // defined(_WIN32)
++#endif  // defined(_WIN32) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+ 
+ /// Return the number of times a given function pointer occurs the backtrace.
+ /**
+diff --git a/osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp b/osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
+index ac7ad51..442c9de 100644
+--- a/osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
++++ b/osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
+@@ -63,7 +63,9 @@
+ #elif defined(BACKWARD_SYSTEM_UNKNOWN)
+ #elif defined(BACKWARD_SYSTEM_WINDOWS)
+ #else
+-#if defined(__linux) || defined(__linux__)
++#if defined(__EMSCRIPTEN__)
++#define BACKWARD_SYSTEM_UNKNOWN // Not supported in emscripten
++#elif defined(__linux) || defined(__linux__)
+ #define BACKWARD_SYSTEM_LINUX
+ #elif defined(__APPLE__)
+ #define BACKWARD_SYSTEM_DARWIN
+@@ -393,12 +395,14 @@ typedef SSIZE_T ssize_t;
+ // anyway.
+ //
+ // Luckily we can play on the fact that the guard macros have a different name:
++#ifndef __EMSCRIPTEN__ // Emscripten has the same prototype as gcc
+ #ifdef __CLANG_UNWIND_H
+ // In fact, this function still comes from libgcc (on my different linux boxes,
+ // clang links against libgcc).
+ #include <inttypes.h>
+ extern "C" uintptr_t _Unwind_GetIPInfo(_Unwind_Context *, int *);
+ #endif
++#endif
+ 
+ #endif // BACKWARD_HAS_UNWIND == 1
+ 
+diff --git a/osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt b/osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt
+index ffbc9cf..8bc17a6 100644
+--- a/osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt
++++ b/osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt
+@@ -1,5 +1,14 @@
+ add_executable(test_runner main.cpp)
+ 
++if (DEFINED EMSCRIPTEN)
++  set_target_properties(
++    test_runner 
++    PROPERTIES SUFFIX ".wasm"
++  )
++
++  target_compile_options(test_runner PUBLIC -fPIC)
++endif (DEFINED EMSCRIPTEN)
++
+ install(TARGETS test_runner
+   EXPORT test_runner
+   DESTINATION lib/${PROJECT_NAME}
+-- 
+2.39.2.windows.1
+

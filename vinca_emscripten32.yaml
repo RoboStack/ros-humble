@@ -1,0 +1,63 @@
+ros_distro: humble
+
+# mapping for package keys
+conda_index:
+  - robostack.yaml
+  - packages-ignore.yaml
+
+build_number: 6
+
+mutex_package: ros2-distro-mutex 0.5 humble
+
+skip_all_deps: false
+
+# If full rebuild, the build number of the existing package has
+# to match the selected build number for skipping
+full_rebuild: true
+
+packages_skip_by_deps:
+  - cartographer
+  - octomap
+  - rmw_fastrtps_cpp
+  - rmw_cyclonedds_cpp
+  - rmw_connextdds
+  - rmw_fastrtps_shared_cpp
+  - rmw_fastrtps_dynamic_cpp
+  - rmw_fastrtps_dds_common
+  - mimick_vendor
+
+packages_remove_from_deps:
+  - cartographer
+  - octomap
+  - warehouse_ros_mongo
+
+skip_existing:
+  - https://repo.mamba.pm/robostack-wasm
+  - https://repo.mamba.pm/emscripten-forge
+
+packages_select_by_deps:
+  # only subset of packages to reduce maintainer load
+  - rclpy
+  - ros_workspace
+  - ros_environment
+  - ament_cmake
+  - ament_pep257
+  - ament_flake8
+  - ament_lint
+  - ament_lint_common
+  - ament_pycodestyle
+  - rmw
+  - rclc
+  - rclcpp
+  - examples_rclcpp_minimal_subscriber
+  - examples_rclcpp_minimal_publisher
+  - builtin_interfaces
+  - rcutils
+  - rcpputils
+  - rosidl_runtime_c
+  - rosidl_runtime_cpp
+  - rosidl_typesupport_introspection_c
+  - rosidl_typesupport_introspection_cpp
+  - yaml_cpp_vendor
+
+patch_dir: patch

@@ -155,6 +155,57 @@ ros_image_to_qimage:
   add_host: ["REQUIRE_OPENGL"]
 rqt_image_overlay:
   add_host: ["REQUIRE_OPENGL"]
+# TODO FOR NICOLAS: CHJANGE TO NEW FORMAT
+tracetools:
+  remove_host: [ "pkg-config" ]
+spdlog_vendor:
+  add_host: ["fmt"]
+  add_run: ["fmt"]
+rcl_logging_spdlog:
+  add_host: [ "fmt" ]
+rcl:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+libstatistics_collector:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+rcl_action:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+rclc:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+rclcpp:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+rclcpp_action:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+examples_rclcpp_minimal_subscriber:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
+examples_rclcpp_minimal_publisher:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
+rclcpp_components:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
+rmw_implementation:
+  remove_host:
+    - ros-humble-rmw-connextdds
+    - ros-humble-rmw-cyclonedds-cpp
+    - ros-humble-rmw-fastrtps-cpp
+    - ros-humble-rmw-fastrtps-dynamic-cpp
+  remove_run:
+    - ros-humble-rmw-connextdds
+    - ros-humble-rmw-cyclonedds-cpp
+    - ros-humble-rmw-fastrtps-cpp
+    - ros-humble-rmw-fastrtps-dynamic-cpp
+  add_run:
+    - { "sel(target_platform == 'emscripten-wasm32')": ros-humble-rmw-wasm-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-connextdds }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-cyclonedds-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-dynamic-cpp }
+  add_host:
+    - { "sel(target_platform == 'emscripten-wasm32')": ros-humble-rmw-wasm-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-connextdds }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-cyclonedds-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-cpp }
+    - { "sel(target_platform != 'emscripten-wasm32')": ros-humble-rmw-fastrtps-dynamic-cpp }
+    - "ros-humble-yaml-cpp-vendor"
+    - "fmt"
 slam_toolbox:
   add_build: ["${{ 'qt-main' if (build_platform != target_platform) }}"]
   add_host: ["REQUIRE_OPENGL"]

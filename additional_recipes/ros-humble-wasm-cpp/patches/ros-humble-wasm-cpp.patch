@@ -1,0 +1,50 @@
+diff --git a/wasm_cpp/CMakeLists.txt b/wasm_cpp/CMakeLists.txt
+index 69aee2d..8b37fea 100644
+--- a/wasm_cpp/CMakeLists.txt
++++ b/wasm_cpp/CMakeLists.txt
+@@ -14,7 +14,7 @@ find_package(ament_cmake REQUIRED)
+ find_package(rcutils REQUIRED)
+ 
+ # Targets and link
+-include(cmake/WasmBuildOptions.cmake)
++# include(cmake/WasmBuildOptions.cmake)
+ 
+ set(${PROJECT_NAME}_SOURCES
+   src/guard_condition.cpp
+@@ -30,6 +30,26 @@ set(${PROJECT_NAME}_SOURCES
+ )
+ 
+ add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
++target_compile_options(${PROJECT_NAME} PUBLIC -fPIC)
++
++target_compile_options(${PROJECT_NAME} PUBLIC "SHELL: -fexceptions")
++
++target_link_options(${PROJECT_NAME}
++  PUBLIC "SHELL: -lembind"
++  PUBLIC "SHELL: --pre-js ${CMAKE_SOURCE_DIR}/src/pre.js"
++  PUBLIC "SHELL: -fexceptions"
++  # PUBLIC "SHELL: -s ASYNCIFY=1"
++  PUBLIC "SHELL: -s ALLOW_MEMORY_GROWTH=1"
++  PUBLIC "SHELL: -s DEMANGLE_SUPPORT=1"
++  PUBLIC "SHELL: -s ASSERTIONS=0"
++  PUBLIC "SHELL: -s EXIT_RUNTIME=1"
++  PUBLIC "SHELL: -s WASM=1"
++  PUBLIC "SHELL: -s USE_PTHREADS=0"
++  PUBLIC "SHELL: -s TOTAL_STACK=16mb"
++  PUBLIC "SHELL: -s INITIAL_MEMORY=64mb"
++  # PUBLIC "SHELL: -s ASYNCIFY_STACK_SIZE=24576"
++  PUBLIC "SHELL: -03" # Optimize for async
++)
+ 
+ ament_target_dependencies(${PROJECT_NAME})
+ 
+@@ -59,9 +79,6 @@ ament_target_dependencies(${PROJECT_NAME}
+ 
+ ament_export_include_directories(include)
+ 
+-wasm_compile_options(wasm_cpp)
+-wasm_link_options(wasm_cpp)
+-
+ if(BUILD_TESTING)
+   find_package(ament_lint_auto REQUIRED)
+   # the following line skips the linter which checks for copyrights

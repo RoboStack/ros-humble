@@ -169,3 +169,5 @@ jobs:
       run: |
         $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform win-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes -m ./conda_build_config.yaml --target-platform win-64 -c robostack-staging -c conda-forge --skip-existing
+
+#TODO NICOLAS: CREATE EMSCRIPTEN TARGET, LOW PRIORITY

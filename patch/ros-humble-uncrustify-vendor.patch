@@ -1,0 +1,120 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ca0f133..5ff9e8a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -10,9 +10,39 @@ find_package(ament_cmake REQUIRED)
+ 
+ macro(build_uncrustify)
+   set(extra_cmake_args)
++
+   if(DEFINED CMAKE_BUILD_TYPE)
+     list(APPEND extra_cmake_args -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE})
+   endif()
++
++  if(DEFINED CMAKE_POSITION_INDEPENDENT_CODE)
++    list(APPEND extra_cmake_args "-DCMAKE_POSITION_INDEPENDENT_CODE=${CMAKE_POSITION_INDEPENDENT_CODE}")
++  endif()
++
++  if (DEFINED PYTHON_EXECUTABLE)
++    list(APPEND extra_cmake_args "-DPYTHON_EXECUTABLE=${PYTHON_EXECUTABLE}")
++  endif()
++  
++  if (DEFINED Python_EXECUTABLE)
++    list(APPEND extra_cmake_args "-DPython_EXECUTABLE=${Python_EXECUTABLE}")
++  endif()
++  
++  if (DEFINED Python3_EXECUTABLE)
++    list(APPEND extra_cmake_args "-DPython_EXECUTABLE=${Python3_EXECUTABLE}")
++  endif()
++  
++  if (DEFINED CMAKE_INSTALL_PREFIX)
++    list(APPEND extra_cmake_args "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
++  endif()
++  
++  if (DEFINED CMAKE_PREFIX_PATH)
++    list(APPEND extra_cmake_args "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}")
++  endif()
++  
++  if (DEFINED AMENT_PREFIX_PATH)
++    list(APPEND extra_cmake_args "-DAMENT_PREFIX_PATH=${AMENT_PREFIX_PATH}")
++  endif()
++
+   if(DEFINED CMAKE_TOOLCHAIN_FILE)
+     list(APPEND extra_cmake_args "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
+     if(ANDROID)
+@@ -37,28 +67,59 @@ macro(build_uncrustify)
+       if(DEFINED ANDROID_TOOLCHAIN_NAME)
+         list(APPEND extra_cmake_args "-DANDROID_TOOLCHAIN_NAME=${ANDROID_TOOLCHAIN_NAME}")
+       endif()
++      if(DEFINED ANDROID_TOOLCHAIN_NAME)
++        list(APPEND extra_cmake_args "-DANDROID_TOOLCHAIN_NAME=${ANDROID_TOOLCHAIN_NAME}")
++      endif()
+     endif()
+   endif()
+ 
+   include(ExternalProject)
+ 
+   # Get uncrustify 0.72.0
+-  ExternalProject_Add(uncrustify-0.72.0
+-    GIT_REPOSITORY https://github.com/uncrustify/uncrustify.git
+-    GIT_TAG 1d3d8fa5e81bece0fac4b81316b0844f7cc35926  # uncrustify-0.72.0
+-    GIT_CONFIG advice.detachedHead=false
+-    # Suppress git update due to https://gitlab.kitware.com/cmake/cmake/-/issues/16419
+-    # See https://github.com/ament/uncrustify_vendor/pull/22 for details
+-    UPDATE_COMMAND ""
+-    TIMEOUT 600
+-    CMAKE_ARGS
+-      -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_install
+-      ${extra_cmake_args}
+-      -Wno-dev
+-      --no-warn-unused-cli
+-    PATCH_COMMAND
+-      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/install-patch.diff
+-  )
++  if (EMSCRIPTEN)
++    ExternalProject_Add(uncrustify-0.72.0
++      GIT_REPOSITORY https://github.com/uncrustify/uncrustify.git
++      GIT_TAG 1d3d8fa5e81bece0fac4b81316b0844f7cc35926  # uncrustify-0.72.0
++      GIT_CONFIG advice.detachedHead=false
++      # Suppress git update due to https://gitlab.kitware.com/cmake/cmake/-/issues/16419
++      # See https://github.com/ament/uncrustify_vendor/pull/22 for details
++      UPDATE_COMMAND ""
++      TIMEOUT 600
++      CONFIGURE_COMMAND ""
++      BUILD_IN_SOURCE 1
++      BUILD_COMMAND mkdir build
++      COMMAND cd build
++      COMMAND emcmake cmake .. -G "Ninja"
++        ${extra_cmake_args}
++        -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_install
++        -DCMAKE_BUILD_TYPE=Release
++        -DBUILD_SHARED_LIBS=ON
++        -DBUILD_TESTING=OFF
++        -DCMAKE_POSITION_INDEPENDENT_CODE=ON
++      COMMAND cmake --build . --config Release
++      COMMAND cmake --build . --config Release --target install
++      INSTALL_COMMAND ""
++      PATCH_COMMAND
++        ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/install-patch.diff
++    )
++  else()
++    ExternalProject_Add(uncrustify-0.72.0
++      GIT_REPOSITORY https://github.com/uncrustify/uncrustify.git
++      GIT_TAG 1d3d8fa5e81bece0fac4b81316b0844f7cc35926  # uncrustify-0.72.0
++      GIT_CONFIG advice.detachedHead=false
++      # Suppress git update due to https://gitlab.kitware.com/cmake/cmake/-/issues/16419
++      # See https://github.com/ament/uncrustify_vendor/pull/22 for details
++      UPDATE_COMMAND ""
++      TIMEOUT 600
++      CMAKE_ARGS
++        -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_install
++        ${extra_cmake_args}
++        -Wno-dev
++        --no-warn-unused-cli
++      PATCH_COMMAND
++        ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn ${CMAKE_CURRENT_SOURCE_DIR}/install-patch.diff
++    )
++  endif()
+ 
+   # The external project will install to the build folder, but we'll install that on make install.
+   install(

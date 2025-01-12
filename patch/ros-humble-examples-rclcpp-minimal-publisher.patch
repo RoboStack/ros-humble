@@ -1,0 +1,58 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 504411d57..d4dfb1dc9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,24 +13,47 @@ endif()
+ find_package(ament_cmake REQUIRED)
+ find_package(rclcpp REQUIRED)
+ find_package(std_msgs REQUIRED)
++find_package(Python COMPONENTS Interpreter Development REQUIRED)
++find_package(BZip2 REQUIRED)
++find_package(SQLite3 REQUIRED)
++find_package(ZLIB REQUIRED)
++find_package(rmw_implementation REQUIRED)
++find_package(rmw_wasm_cpp REQUIRED)
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(libffi REQUIRED libffi)
++
++# Hack: avoid double link of libyaml-cpp
++foreach(item ${rmw_wasm_cpp_LIBRARIES})
++    if(item MATCHES "libyaml-cpp.a$")
++        list(REMOVE_ITEM rmw_wasm_cpp_LIBRARIES ${item})
++    endif()
++endforeach()
++
++set(CMAKE_EXECUTABLE_SUFFIX ".wasm")
+ 
+ add_executable(publisher_lambda lambda.cpp)
+-ament_target_dependencies(publisher_lambda rclcpp std_msgs)
++target_link_libraries(publisher_lambda PUBLIC ${std_msgs_TARGETS} ${rmw_wasm_cpp_LIBRARIES} rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
++target_compile_options(publisher_lambda PUBLIC -fPIC)
+ 
+ add_executable(publisher_member_function member_function.cpp)
+-ament_target_dependencies(publisher_member_function rclcpp std_msgs)
++target_link_libraries(publisher_member_function PUBLIC ${std_msgs_TARGETS} ${rmw_wasm_cpp_LIBRARIES} rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
++target_compile_options(publisher_member_function PUBLIC -fPIC)
+ 
+ add_executable(publisher_member_function_with_type_adapter member_function_with_type_adapter.cpp)
+-ament_target_dependencies(publisher_member_function_with_type_adapter rclcpp std_msgs)
++target_link_libraries(publisher_member_function_with_type_adapter PUBLIC ${std_msgs_TARGETS} ${rmw_wasm_cpp_LIBRARIES} rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
++target_compile_options(publisher_member_function_with_type_adapter PUBLIC -fPIC)
+ 
+ add_executable(publisher_member_function_with_unique_network_flow_endpoints member_function_with_unique_network_flow_endpoints.cpp)
+-ament_target_dependencies(publisher_member_function_with_unique_network_flow_endpoints rclcpp std_msgs)
++target_link_libraries(publisher_member_function_with_unique_network_flow_endpoints PUBLIC ${std_msgs_TARGETS} ${rmw_wasm_cpp_LIBRARIES} rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
++target_compile_options(publisher_member_function_with_unique_network_flow_endpoints PUBLIC -fPIC)
+ 
+ add_executable(publisher_wait_for_all_acked member_function_with_wait_for_all_acked.cpp)
+-ament_target_dependencies(publisher_wait_for_all_acked rclcpp std_msgs)
++target_link_libraries(publisher_wait_for_all_acked PUBLIC ${std_msgs_TARGETS} ${rmw_wasm_cpp_LIBRARIES} rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
++target_compile_options(publisher_wait_for_all_acked PUBLIC -fPIC)
+ 
+ add_executable(publisher_not_composable not_composable.cpp)
+-ament_target_dependencies(publisher_not_composable rclcpp std_msgs)
++target_link_libraries(publisher_not_composable PUBLIC ${std_msgs_TARGETS} ${rmw_wasm_cpp_LIBRARIES} rclcpp::rclcpp ${libffi_LINK_LIBRARIES} Python::Python ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
++target_compile_options(publisher_not_composable PUBLIC -fPIC)
+ 
+ install(TARGETS
+   publisher_lambda
