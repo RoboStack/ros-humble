@@ -83,16 +83,16 @@ create_snapshot = { cmd = "vinca-snapshot -d humble -o snapshot_$(date +\"%Y-%m-
 rename-file = { cmd = "ln -s vinca_emscripten32.yaml vinca.yaml", depends-on = ["remove-file"] }
 
 [target.linux-64.tasks]
-rename-file = { cmd = "ln -s vinca_linux_64.yaml vinca.yaml", depends_on = ["remove-file"] }
+rename-file = { cmd = "ln -s vinca_linux_64.yaml vinca.yaml", depends-on = ["remove-file"] }
 
 [target.osx-64.tasks]
-rename-file = { cmd = "ln -s vinca_osx.yaml vinca.yaml", depends_on = ["remove-file"] }
+rename-file = { cmd = "ln -s vinca_osx.yaml vinca.yaml", depends-on = ["remove-file"] }
 
 [target.osx-arm64.tasks]
-rename-file = { cmd = "ln -s vinca_osx_arm64.yaml vinca.yaml", depends_on = ["remove-file"] }
+rename-file = { cmd = "ln -s vinca_osx_arm64.yaml vinca.yaml", depends-on = ["remove-file"] }
 
 [target.linux-aarch64.tasks]
-rename-file = { cmd = "ln -s vinca_linux_aarch64.yaml vinca.yaml", depends_on = ["remove-file"] }
+rename-file = { cmd = "ln -s vinca_linux_aarch64.yaml vinca.yaml", depends-on = ["remove-file"] }
 
 [target.win-64.tasks]
-rename-file = { cmd = "cp vinca_win.yaml vinca.yaml", depends_on = ["remove-file"] }
+rename-file = { cmd = "cp vinca_win.yaml vinca.yaml", depends-on = ["remove-file"] }
