@@ -94,7 +94,7 @@ jobs:
       run: |
         cp vinca_linux_64.yaml vinca.yaml
         mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-64 -m -n
+        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-64 -m
         ls -la recipes
     - name: Generate recipes for linux-aarch64
       shell: bash -l {0}
@@ -102,7 +102,7 @@ jobs:
       run: |
         cp vinca_linux_aarch64.yaml vinca.yaml
         mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-aarch64 -m -n
+        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-aarch64 -m
         ls -la recipes
     - name: Generate recipes for osx-64
       shell: bash -l {0}
@@ -110,7 +110,7 @@ jobs:
       run: |
         cp vinca_osx.yaml vinca.yaml
         mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform osx-64 -m -n
+        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform osx-64 -m
         ls -la recipes
     - name: Generate recipes for osx-arm64
       shell: bash -l {0}
@@ -118,7 +118,7 @@ jobs:
       run: |
         cp vinca_osx_arm64.yaml vinca.yaml
         mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform osx-arm64 -m -n
+        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform osx-arm64 -m
         ls -la recipes
     - name: Generate recipes for win-64
       shell: bash -l {0}
@@ -129,7 +129,7 @@ jobs:
         mkdir /c/bld
         cp vinca_win.yaml vinca.yaml
         mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform win-64 -m -n
+        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform win-64 -m
         ls -la recipes
     - name: Check if there are packages to be built
       id: newrecipecheck
