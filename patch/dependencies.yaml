@@ -155,7 +155,6 @@ ros_image_to_qimage:
   add_host: ["REQUIRE_OPENGL"]
 rqt_image_overlay:
   add_host: ["REQUIRE_OPENGL"]
-# TODO FOR NICOLAS: CHJANGE TO NEW FORMAT
 tracetools:
   remove_host: [ "pkg-config" ]
 spdlog_vendor:

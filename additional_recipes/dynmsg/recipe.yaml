@@ -1,45 +1,56 @@
 #TODO NICOLAS: CHANGE TO NEW FORMAT
-\context:
-  version: 1.0
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
 
 package:
   name: dynmsg
-  version: '{{ version }}'
+  version: "1.0" # TODO Check this one
 
 source:
-  git_url: https://github.com/osrf/dynamic_message_introspection.git
-  git_rev: main
-  folder: dynmsg/src/work
+  git: https://github.com/osrf/dynamic_message_introspection.git
+  rev: main
+  target_directory: dynmsg/src/work
   patches:
     - no-wstring.patch
 
 build:
-  script:
-    sel(unix): build.sh
-    sel(emscripten-wasm32): build.sh
   number: 6
+  script:
+    build.sh
 
 requirements:
   build:
-    - sel(target_platform != 'emscripten-wasm32'): "{{ compiler('cxx') }}"
-    - sel(target_platform != 'emscripten-wasm32'): "{{ compiler('c') }}"
-    - sel(target_platform == 'emscripten-wasm32'): emscripten_emscripten-wasm32
-    - sel(linux64): sysroot_linux-64 2.17
+    - if: target_platform == 'emscripten-wasm32'
+      then:
+        - emscripten_emscripten-wasm32
+      else: 
+        - ${{ compiler('cxx') }}
+        - ${{ compiler('c') }}
+    - if: linux64
+      then:
+        - sysroot_linux-64 2.17
+    - if: unix
+      then:
+        - make
+        - coreutils
+    - if: osx
+      then: tapi
+    - if: build_platform != target_platform
+      then:
+        - pkg-config
+        - python
+        - cross-python_${{ target_platform }}
+        - cython
+        - numpy
     - ninja
     - setuptools
-    - sel(unix): make
-    - sel(unix): coreutils
-    - sel(osx): tapi
-    - sel(build_platform != target_platform): pkg-config
     - cmake
-    - sel(build_platform != target_platform): python
-    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
-    - sel(build_platform != target_platform): cython
-    - sel(build_platform != target_platform): numpy
   host:
     - numpy
     - pip
-    - sel(build_platform == target_platform): pkg-config
+    - if: build_platform == target_platform
+      then:
+        - pkg-config
     - python
     - ros-humble-ament-cmake
     - ros-humble-rcutils
@@ -48,19 +59,21 @@ requirements:
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
     - ros-humble-yaml-cpp-vendor
-    - ros2-distro-mutex 0.5 humble
+    - ros2-distro-mutex 0.5.* humble
   run:
-    - sel(target_platform != 'emscripten-wasm32'): cmake
+    - if: target_platform != 'emscripten-wasm32'
+      then:
+        - cmake
     - python
     - ros-humble-rosidl-runtime-c
     - ros-humble-rosidl-runtime-cpp
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
-    - ros2-distro-mutex 0.5 humble
-    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
-
+    - ros2-distro-mutex 0.5.* humble
+    - if: osx and x86_64
+      then: __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
 about:
-  license: Apache License 2.0
+  license: Apache-2.0
   license_file: LICENSE
   summary: dynmsg
-  dev_url: https://github.com/osrf/dynamic_message_introspection.git
+  repository: https://github.com/osrf/dynamic_message_introspection.git

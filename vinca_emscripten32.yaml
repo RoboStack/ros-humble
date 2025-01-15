@@ -7,7 +7,7 @@ conda_index:
 
 build_number: 6
 
-mutex_package: ros2-distro-mutex 0.5 humble
+mutex_package: ros2-distro-mutex 0.5.* humble
 
 skip_all_deps: false
 
