@@ -105,6 +105,8 @@ packages_select_by_deps:
 
   - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
 
+  - grid_map
+
   - lanelet2
 
   # requested in https://github.com/RoboStack/ros-humble/issues/249

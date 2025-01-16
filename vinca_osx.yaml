@@ -127,6 +127,8 @@ packages_select_by_deps:
   # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/234, https://github.com/RoboStack/ros-humble/issues/227 and https://github.com/RoboStack/ros-humble/issues/222 
   - ur
 
+  - grid_map
+
   - lanelet2
 
   # requested in https://github.com/RoboStack/ros-humble/issues/249
