@@ -33,7 +33,7 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "aa102b280adcad0
 #vinca = { path = "../vinca", editable = true }
 [feature.emscripten.pypi-dependencies]
 # pull vinca emscripten branch
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "864f416d83aa361ba75dd8a19ec9028ba0a7063d" } 
+vinca = { path = "../vinca", editable = true} 
 
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }
@@ -52,24 +52,25 @@ emscripten = ["emscripten"]
       "rattler-build", "build",
       "--recipe-dir" , "./additional_recipes",
       "-m",  "./conda_build_config.yaml",
-      "-c", "https://repo.mamba.pm/robostack-wasm",
-      "-c", "https://repo.prefix.dev/robostack-staging", 
       "-c", "https://repo.prefix.dev/conda-forge",
-      "-c", "https://repo.mamba.pm/emscripten-forge", 
+      "-c", "https://repo.prefix.dev/robostack-staging", 
+      "-c", "https://repo.mamba.pm/robostack-wasm",
       "-c", "file:///home/nmarticorena/Documents/pixi_project/recipes/output",
-      "--target-platform", "emscripten-wasm32"]
-      # "--skip-existing" 
+      "-c", "https://repo.mamba.pm/emscripten-forge", 
+      "--target-platform", "emscripten-wasm32",
+      "--skip-existing"
+      ]
 
 [feature.emscripten.tasks.build]
   cmd = [
       "rattler-build", "build",
       "--recipe-dir", "./recipes",
       "-m", "./conda_build_config.yaml",
-      "-c", "robostack-staging",
-      "-c", "https://repo.mamba.pm/robostack-wasm",
-      "-c", "https://repo.prefix.dev/robostack-staging",
       "-c", "https://repo.prefix.dev/conda-forge",
+      "-c", "https://repo.prefix.dev/robostack-staging", 
+      "-c", "https://repo.mamba.pm/robostack-wasm",
       "-c", "file:///home/nmarticorena/Documents/pixi_project/recipes/output",
+      "-c", "https://repo.mamba.pm/emscripten-forge", 
       "--target-platform", "emscripten-wasm32",
       # "--skip-existing"
       ]
