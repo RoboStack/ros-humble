@@ -1,5 +1,5 @@
 numpy:
-  - 1.26
+  - 2
 libprotobuf:
   - 5.28.2
 protobuf:
@@ -11,7 +11,7 @@ cdt_name:
   - ${{ "cos7" if linux }}
 
 python:
-  - 3.11.* *_cpython
+  - 3.13.* *_cp313
 python_impl:
   - cpython
 

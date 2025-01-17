@@ -5,9 +5,9 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 6
+build_number: 7
 
-mutex_package: ros2-distro-mutex 0.5.* humble
+mutex_package: ros2-distro-mutex 0.6.* humble_*
 
 skip_all_deps: false
 
@@ -33,7 +33,6 @@ packages_remove_from_deps:
 
 skip_existing:
   - https://repo.mamba.pm/robostack-wasm
-  - https://repo.mamba.pm/emscripten-forge
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
