@@ -34,6 +34,7 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "aa102b280adcad0
 [feature.emscripten.pypi-dependencies]
 # pull vinca emscripten branch
 vinca = { path = "../vinca", editable = true} 
+# vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "aa102b280adcad0374e4d231b25d21bf0db27d61" }
 
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }
@@ -70,13 +71,16 @@ emscripten = ["emscripten"]
       "-c", "https://repo.prefix.dev/robostack-staging", 
       "-c", "https://repo.mamba.pm/robostack-wasm",
       "-c", "file:///home/nmarticorena/Documents/pixi_project/recipes/output",
+      "-c", "https://repo.prefix.dev/emscripten-forge-dev", 
       "-c", "https://repo.mamba.pm/emscripten-forge", 
       "--target-platform", "emscripten-wasm32",
+      "--channel-priority" , "disabled",
       # "--skip-existing"
       ]
-  depends-on = ["build_additional_recipes", "generate-recipes"]
+  depends-on = ["generate-recipes", "build_additional_recipes"]
 
 [feature.emscripten.tasks]
+# build_additional_recipes = {cmd = "sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \\;'"}
 generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }
 remove-file = { cmd = "rm vinca.yaml; rm -rf recipes" }
 build_one_package = { cmd = "cp ./patch/$PACKAGE.*patch ./recipes/$PACKAGE/patch/; rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge", env = { PACKAGE = "ros-humble-ros-workspace" } }
