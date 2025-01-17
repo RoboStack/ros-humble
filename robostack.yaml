@@ -130,7 +130,12 @@ glut:
     osx: []
     win64: [freeglut]
 google-mock:
-  robostack: [gmock]
+  robostack:
+    linux: [gmock]
+    osx: [gmock]
+    win64: [gmock]
+    emscripten: []
+
 graphicsmagick:
   robostack: [graphicsmagick]
 graphviz:
