@@ -25,11 +25,19 @@ packages_skip_by_deps:
   - rmw_fastrtps_dynamic_cpp
   - rmw_fastrtps_dds_common
   - mimick_vendor
+  - ament_xmllint
+  - ament_cmake_xmllint
+  - performance_test_fixture
+  - osrf_testing_tools_cpp
 
 packages_remove_from_deps:
   - cartographer
   - octomap
   - warehouse_ros_mongo
+  - ament_xmllint
+  - ament_cmake_xmllint
+  - performance_test_fixture
+  - osrf_testing_tools_cpp
 
 skip_existing:
   - https://repo.mamba.pm/robostack-wasm

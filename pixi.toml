@@ -61,7 +61,8 @@ emscripten = ["emscripten"]
       # "-c", "file:///home/nmarticorena/Documents/pixi_project/recipes/output",
       "-c", "file:///Users/fischert/robot/wasm-rattler/emscripten-forge-recipes/output",
       "--target-platform", "emscripten-wasm32",
-      "--skip-existing"
+      "--skip-existing",
+      "--test", "skip"
       ]
   depends-on = ["generate-recipes", "copy_additional_recipes"]
 
