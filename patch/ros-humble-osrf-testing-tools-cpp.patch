@@ -1,21 +1,8 @@
-From f5f0af0a4988e13578ec59df9c0960d61f0bac41 Mon Sep 17 00:00:00 2001
-From: Mick Batchelor <mickbatch98@gmail.com>
-Date: Wed, 23 Aug 2023 22:04:01 +1000
-Subject: [PATCH 2/2] no backtrace for emscripten and fixed building
- test_runner
-
----
- osrf_testing_tools_cpp/CMakeLists.txt                  | 10 ----------
- .../count_function_occurrences_in_backtrace.hpp        | 10 +++++-----
- .../vendor/bombela/backward-cpp/backward.hpp           |  6 +++++-
- osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt  |  9 +++++++++
- 4 files changed, 19 insertions(+), 16 deletions(-)
-
-diff --git a/osrf_testing_tools_cpp/CMakeLists.txt b/osrf_testing_tools_cpp/CMakeLists.txt
-index e6f56ba..ef02bf9 100644
---- a/osrf_testing_tools_cpp/CMakeLists.txt
-+++ b/osrf_testing_tools_cpp/CMakeLists.txt
-@@ -15,18 +15,12 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e6f56ba..73669b1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -15,17 +15,11 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
    -Wshadow -Wnon-virtual-dtor)
  endif()
  
@@ -27,22 +14,21 @@ index e6f56ba..ef02bf9 100644
 -  # ensures target gtest_main exists
 -  osrf_testing_tools_cpp_require_googletest(VERSION_GTE 1.10
 -    VENDOR_DIR "${CMAKE_SOURCE_DIR}/vendor")
--
--  add_subdirectory(test)
 +if (EMSCRIPTEN)
 +  set(CMAKE_CXX_FLAGS "-pthread ${CMAKE_CXX_FLAGS}")
- endif()
++ endif()
  
+-  add_subdirectory(test)
+-endif()
 +add_subdirectory(src)
-+
+ 
  configure_file(osrf_testing_tools_cppConfig.cmake.in
    "${PROJECT_BINARY_DIR}/osrf_testing_tools_cppConfig.cmake" @ONLY)
- configure_file(osrf_testing_tools_cppConfigVersion.cmake.in
-diff --git a/osrf_testing_tools_cpp/src/memory_tools/count_function_occurrences_in_backtrace.hpp b/osrf_testing_tools_cpp/src/memory_tools/count_function_occurrences_in_backtrace.hpp
-index c5e0cc2..8baf340 100644
---- a/osrf_testing_tools_cpp/src/memory_tools/count_function_occurrences_in_backtrace.hpp
-+++ b/osrf_testing_tools_cpp/src/memory_tools/count_function_occurrences_in_backtrace.hpp
-@@ -17,11 +17,11 @@
+diff --git a/src/memory_tools/count_function_occurrences_in_backtrace.hpp b/src/memory_tools/count_function_occurrences_in_backtrace.hpp
+index c5e0cc2..c3b8cb5 100644
+--- a/src/memory_tools/count_function_occurrences_in_backtrace.hpp
++++ b/src/memory_tools/count_function_occurrences_in_backtrace.hpp
+@@ -17,7 +17,7 @@
  
  #include "./safe_fwrite.hpp"
  
@@ -51,11 +37,6 @@ index c5e0cc2..8baf340 100644
  
  // Include nothing for now.
  
--#else  // defined(_WIN32) || defined(__ANDROID__)
-+#else  // defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
- 
- #include <cstdio>
- #include <cstdlib>
 @@ -50,7 +50,7 @@ struct is_function_pointer
    >
  {};
@@ -65,28 +46,10 @@ index c5e0cc2..8baf340 100644
  
  struct count_function_occurrences_in_backtrace_is_implemented : std::false_type {};
  
-@@ -62,7 +62,7 @@ impl_count_function_occurrences_in_backtrace(void * function_address)
-   throw not_implemented();
- }
- 
--#else  // defined(_WIN32) || defined(__ANDROID__)
-+#else  // defined(_WIN32) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
- 
- struct count_function_occurrences_in_backtrace_is_implemented : std::true_type {};
- 
-@@ -100,7 +100,7 @@ impl_count_function_occurrences_in_backtrace(void * function_address)
-   return number_of_occurences;
- }
- 
--#endif  // defined(_WIN32)
-+#endif  // defined(_WIN32) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
- 
- /// Return the number of times a given function pointer occurs the backtrace.
- /**
-diff --git a/osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp b/osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
+diff --git a/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp b/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
 index ac7ad51..442c9de 100644
---- a/osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
-+++ b/osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
+--- a/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
++++ b/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
 @@ -63,7 +63,9 @@
  #elif defined(BACKWARD_SYSTEM_UNKNOWN)
  #elif defined(BACKWARD_SYSTEM_WINDOWS)
@@ -113,10 +76,10 @@ index ac7ad51..442c9de 100644
  
  #endif // BACKWARD_HAS_UNWIND == 1
  
-diff --git a/osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt b/osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt
+diff --git a/src/test_runner/CMakeLists.txt b/src/test_runner/CMakeLists.txt
 index ffbc9cf..8bc17a6 100644
---- a/osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt
-+++ b/osrf_testing_tools_cpp/src/test_runner/CMakeLists.txt
+--- a/src/test_runner/CMakeLists.txt
++++ b/src/test_runner/CMakeLists.txt
 @@ -1,5 +1,14 @@
  add_executable(test_runner main.cpp)
  
@@ -132,6 +95,3 @@ index ffbc9cf..8bc17a6 100644
  install(TARGETS test_runner
    EXPORT test_runner
    DESTINATION lib/${PROJECT_NAME}
--- 
-2.39.2.windows.1
-
