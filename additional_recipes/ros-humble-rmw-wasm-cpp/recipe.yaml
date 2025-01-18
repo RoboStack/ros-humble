@@ -72,7 +72,7 @@ requirements:
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
     - ros-humble-yaml-cpp-vendor
-    - ros2-distro-mutex 0.5.* humble
+    - ros2-distro-mutex 0.6.* humble_*
   run:
     - if: target_platform != 'emscripten-wasm32'
       then:
@@ -87,7 +87,7 @@ requirements:
     - ros-humble-rosidl-runtime-cpp
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
-    - ros2-distro-mutex 0.5.* humble
+    - ros2-distro-mutex 0.6.* humble_*
     - if: osx and x86_64
       then: 
         - __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

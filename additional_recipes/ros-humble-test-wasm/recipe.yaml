@@ -66,7 +66,7 @@ requirements:
     - ros-humble-yaml-cpp-vendor
     - yaml
     - yaml-cpp
-    - ros2-distro-mutex 0.5.* humble
+    - ros2-distro-mutex 0.6.* humble_*
     - sqlite
     - bzip2
     - zlib
@@ -81,6 +81,6 @@ requirements:
     - ros-humble-std-msgs
     - ros-humble-example-interfaces
     - ros-humble-yaml-cpp-vendor
-    - ros2-distro-mutex 0.5.* humble
+    - ros2-distro-mutex 0.6.* humble_*
     - if: (osx and x86_64)
       then: __osx >=${{MACOSX_DEPLOYMENT_TARGET|default('10.14')}}

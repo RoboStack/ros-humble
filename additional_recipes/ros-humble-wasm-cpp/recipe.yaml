@@ -61,13 +61,13 @@ requirements:
     - python
     - ros-humble-ament-cmake
     - ros-humble-rcutils
-    - ros2-distro-mutex 0.5.* humble
+    - ros2-distro-mutex 0.6.* humble_*
   run:
     - if: target_platform != 'emscripten-wasm32'
       then:
         - cmake
     - python
     - ros-humble-rcutils
-    - ros2-distro-mutex 0.5.* humble
+    - ros2-distro-mutex 0.6.* humble_*
     - if: osx and x86_64
       then: __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
