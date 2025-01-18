@@ -1,4 +1,3 @@
-#TODO NICOLAS: CHANGE TO NEW FORMAT
 # yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
 schema_version: 1
 
@@ -69,6 +68,7 @@ requirements:
     - ros-humble-rosidl-runtime-cpp
     - ros-humble-rosidl-typesupport-introspection-c
     - ros-humble-rosidl-typesupport-introspection-cpp
+    - ros-humble-yaml-cpp-vendor
     - ros2-distro-mutex 0.6.* humble_*
     - if: osx and x86_64
       then: __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
