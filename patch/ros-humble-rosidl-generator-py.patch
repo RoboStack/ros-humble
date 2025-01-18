@@ -2,15 +2,29 @@ diff --git a/cmake/rosidl_generator_py_generate_interfaces.cmake b/cmake/rosidl_
 index a6d8263..f231ea2 100644
 --- a/cmake/rosidl_generator_py_generate_interfaces.cmake
 +++ b/cmake/rosidl_generator_py_generate_interfaces.cmake
-@@ -17,10 +17,9 @@ find_package(rosidl_runtime_c REQUIRED)
+@@ -17,10 +17,22 @@ find_package(rosidl_runtime_c REQUIRED)
  find_package(rosidl_typesupport_c REQUIRED)
  find_package(rosidl_typesupport_interface REQUIRED)
  
 -find_package(PythonInterp 3.6 REQUIRED)
 -
  find_package(python_cmake_module REQUIRED)
- find_package(PythonExtra MODULE REQUIRED)
-+find_package(Python3 REQUIRED COMPONENTS Development NumPy)
+-find_package(PythonExtra MODULE REQUIRED)
++if (EMSCRIPTEN)
++  # Fixes an error where find_path fails to find numpy headers as it only searches
++  # with the sysroot prefix. An absolute path is appended to the sysroot prefix
++  # and the numpy headers are not found.
++  set(_PREV_CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${CMAKE_FIND_ROOT_PATH})
++  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)
++  find_package(Python REQUIRED COMPONENTS Interpreter Development NumPy)
++  find_package(PythonExtra REQUIRED)
++  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${_PREV_CMAKE_FIND_ROOT_PATH_MODE_INCLUDE})
++  set(Python_NumPy_INCLUDE_DIRS "$ENV{PREFIX}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages/numpy/_core/include")
++  message(WARNING "Python_NumPy_INCLUDE_DIRS: ${Python_NumPy_INCLUDE_DIRS}")
++else()
++  find_package(PythonExtra REQUIRED)
++  find_package(Python REQUIRED COMPONENTS Interpreter Development NumPy)
++endif()
  
  # Get a list of typesupport implementations from valid rmw implementations.
  rosidl_generator_py_get_typesupports(_typesupport_impls)
@@ -61,11 +75,11 @@ index a6d8263..f231ea2 100644
 -  endif()
 -  message(STATUS "Using numpy include directory: ${_output}")
 -  target_include_directories(${_target_name_lib} PUBLIC "${_output}")
-+if(APPLE)
++if(APPLE OR EMSCRIPTEN)
 +  set_target_properties(${_target_name_lib} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
-+  target_include_directories(${_target_name_lib} PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
++  target_include_directories(${_target_name_lib} PUBLIC ${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
 +else()
-+  target_link_libraries(${_target_name_lib} PRIVATE Python3::NumPy Python3::Python)
++  target_link_libraries(${_target_name_lib} PRIVATE Python::NumPy Python::Python)
  endif()
  
  rosidl_get_typesupport_target(c_typesupport_target "${rosidl_generate_interfaces_TARGET}" "rosidl_typesupport_c")
@@ -82,7 +96,7 @@ index a6d8263..f231ea2 100644
      ${_target_name_lib}
 -    ${PythonExtra_LIBRARIES}
      ${rosidl_generate_interfaces_TARGET}__${_typesupport_impl}
-+    Python3::Module
++    Python::Module
    )
  
    target_include_directories(${_target_name}
