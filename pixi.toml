@@ -56,10 +56,11 @@ emscripten = ["emscripten"]
       "--recipe-dir", "./recipes",
       "-m", "./conda_build_config.yaml",
       "-c", "https://repo.prefix.dev/conda-forge",
+      "-c", "file:///Users/fischert/robot/wasm-rattler/emscripten-forge-recipes/output",
       "-c", "https://repo.prefix.dev/emscripten-forge-dev",
       # "-c", "https://repo.mamba.pm/robostack-wasm",
       # "-c", "file:///home/nmarticorena/Documents/pixi_project/recipes/output",
-      "-c", "file:///Users/fischert/robot/wasm-rattler/emscripten-forge-recipes/output",
+      "-c", "file:///Users/fischert/robot/ros-humble/output",
       "--target-platform", "emscripten-wasm32",
       "--skip-existing",
       "--test", "skip"
