@@ -19,7 +19,7 @@ index a6d8263..f231ea2 100644
 +  find_package(Python REQUIRED COMPONENTS Interpreter Development NumPy)
 +  find_package(PythonExtra REQUIRED)
 +  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${_PREV_CMAKE_FIND_ROOT_PATH_MODE_INCLUDE})
-+  set(Python_NumPy_INCLUDE_DIRS "$ENV{PREFIX}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages/numpy/_core/include")
++  set(Python_NumPy_INCLUDE_DIRS "$ENV{PREFIX}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages/numpy/core/include")
 +  message(WARNING "Python_NumPy_INCLUDE_DIRS: ${Python_NumPy_INCLUDE_DIRS}")
 +else()
 +  find_package(PythonExtra REQUIRED)

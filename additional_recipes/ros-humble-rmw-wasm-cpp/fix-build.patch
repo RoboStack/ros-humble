@@ -1,0 +1,26 @@
+diff --git a/rmw_wasm_cpp/CMakeLists.txt b/rmw_wasm_cpp/CMakeLists.txt
+index 3f533b7..ad0d2e0 100644
+--- a/rmw_wasm_cpp/CMakeLists.txt
++++ b/rmw_wasm_cpp/CMakeLists.txt
+@@ -30,6 +30,13 @@ find_package(rosidl_runtime_cpp REQUIRED)
+ find_package(rosidl_typesupport_introspection_c REQUIRED)
+ find_package(rosidl_typesupport_introspection_cpp REQUIRED)
+ 
++
++find_package(BZip2 REQUIRED)
++find_package(SQLite3 REQUIRED)
++find_package(ZLIB REQUIRED)
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(libffi REQUIRED libffi)
++
+ set(${PROJECT_NAME}_SOURCES
+   src/rmw_wasm_identifier.cpp
+   src/rmw_wasm_guard_condition.cpp
+@@ -59,6 +66,7 @@ set(${PROJECT_NAME}_SOURCES
+ )
+ 
+ add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
++target_link_libraries(${PROJECT_NAME} ${libffi_LINK_LIBRARIES} ${SQLite3_LIBRARIES} BZip2::BZip2 ZLIB::ZLIB)
+ 
+ target_include_directories(${PROJECT_NAME} PRIVATE
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"

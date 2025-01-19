@@ -1,4 +1,3 @@
-#TODO NICOLAS: CHANGE TO NEW FORMAT
 # yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
 schema_version: 1
 
@@ -10,7 +9,7 @@ source:
   rev: main
   target_directory: ros-humble-wasm-cpp/src/work
   patches:
-    - patches/ros-humble-wasm-cpp.patch
+    - fix-build.patch
 
 build:
   script:

@@ -10,7 +10,7 @@ source:
   rev: main
   target_directory: ros-humble-rmw-wasm-cpp/src/work
   patches:
-    - fix-fpic.patch
+    - fix-build.patch
 
 build:
   script:
@@ -72,6 +72,10 @@ requirements:
     - ros-humble-rosidl-typesupport-introspection-cpp
     - ros-humble-yaml-cpp-vendor
     - ros2-distro-mutex 0.6.* humble_*
+    - sqlite
+    - bzip2
+    - zlib
+    - libffi
   run:
     - if: target_platform != 'emscripten-wasm32'
       then:

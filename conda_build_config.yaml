@@ -1,5 +1,6 @@
 numpy:
-  - 2
+#  - 2
+  - 1.26
 libprotobuf:
   - 5.28.2
 protobuf:
@@ -11,7 +12,8 @@ cdt_name:
   - ${{ "cos7" if linux }}
 
 python:
-  - 3.13.* *_cp313
+#   - 3.13.* *_cp313
+  - 3.11.* *_cpython
 python_impl:
   - cpython
 
@@ -27,7 +29,9 @@ c_compiler:
   - ${{ "gcc" if linux }}
   - ${{ "clang" if osx }}
   - ${{ "vs2019" if win }}
+  - ${{ "emscripten" if emscripten }}
 cxx_compiler:
   - ${{ "gxx" if linux }}
   - ${{ "clangxx" if osx }}
   - ${{ "vs2019" if win }}
+  - ${{ "emscripten" if emscripten }}
