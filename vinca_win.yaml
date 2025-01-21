@@ -243,4 +243,8 @@ packages_select_by_deps:
 
   - lanelet2
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/249
+  - twist_mux
+
 patch_dir: patch
+rosdistro_snapshot: rosdistro_snapshot.yaml
