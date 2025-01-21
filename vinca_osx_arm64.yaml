@@ -113,12 +113,14 @@ packages_select_by_deps:
 
   # requested in https://github.com/RoboStack/ros-humble/pull/205
   - rosbag2_storage_mcap
-  
+
   # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/234, https://github.com/RoboStack/ros-humble/issues/227 and https://github.com/RoboStack/ros-humble/issues/222 
   - ur
 
-  - lanelet2                  
+  - lanelet2
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/249
+  - twist_mux
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
