@@ -243,6 +243,9 @@ packages_select_by_deps:
 
   - lanelet2
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/249
+  - twist_mux
+
   # autoware
   - autoware_common_msgs
   - autoware_control_msgs
@@ -259,3 +262,4 @@ packages_select_by_deps:
   - autoware_lanelet2_extension
 
 patch_dir: patch
+rosdistro_snapshot: rosdistro_snapshot.yaml
