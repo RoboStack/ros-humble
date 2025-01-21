@@ -17,6 +17,14 @@ python:
 python_impl:
   - cpython
 
+c_compiler:
+  - gcc                        # [linux]
+  - clang                      # [osx]
+  - vs2019                     # [win and x86_64]
+  - vs2022                     # [win and arm64]
+c_compiler_version:            # [unix]
+  - 13                         # [linux]
+  - 18                         # [osx]
 c_stdlib:
   - sysroot                    # [linux]
   - macosx_deployment_target   # [osx]
@@ -33,4 +41,3 @@ cxx_compiler:
 cxx_compiler_version:          # [unix]
   - 13                         # [linux]
   - 18                         # [osx]
-  - vs2019                     # [win]
