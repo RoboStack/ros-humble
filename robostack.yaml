@@ -43,6 +43,8 @@ cartographer:
   robostack: [cartographer]
 ca-certificates:
   robostack: [ca-certificates]
+cargo:
+  robostack: [rust]
 clang-format:
   robostack: [clang-format]
 clang-tidy:

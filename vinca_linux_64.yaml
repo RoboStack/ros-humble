@@ -181,6 +181,9 @@ packages_select_by_deps:
   # requested in https://github.com/RoboStack/ros-humble/issues/249
   - twist_mux
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/252
+  - rmw_zenoh_cpp
+
   # ----- end of package support -----
 
   # - rtabmap
