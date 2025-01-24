@@ -34,8 +34,8 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "aa102b280adcad0
 
 [feature.emscripten.pypi-dependencies]
 # pull vinca emscripten branch
-vinca = { path = "../vinca", editable = true} 
-# vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "aa102b280adcad0374e4d231b25d21bf0db27d61" }
+# vinca = { path = "../vinca", editable = true} 
+vinca = { git = "https://github.com/nmarticorena/vinca.git", rev = "ccaa2d53f6dabeb7f6a75ac0309b946be563718f" }
 
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }
@@ -56,12 +56,8 @@ emscripten = ["emscripten"]
       "--recipe-dir", "./recipes",
       "-m", "./conda_build_config.yaml",
       "-c", "https://repo.prefix.dev/conda-forge",
-      # "-c", "file:///Users/fischert/robot/wasm-rattler/emscripten-forge-recipes/output",
-      "-c", "file:///Users/fischert/robot/wasm-rattler/emscripten-forge-recipes-old/output",
+      "-c", "nmarticorena",
       "-c", "https://repo.mamba.pm/emscripten-forge",
-      # "-c", "https://repo.mamba.pm/robostack-wasm",
-      # "-c", "file:///home/nmarticorena/Documents/pixi_project/recipes/output",
-      # "-c", "file:///Users/fischert/robot/ros-humble/output",
       "-c", "robostack-staging",
       "--target-platform", "emscripten-wasm32",
       "--skip-existing",

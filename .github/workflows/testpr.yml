@@ -80,6 +80,8 @@ jobs:
         set +e
         git diff --exit-code --name-only origin/main -- vinca_linux_64.yaml > /dev/null
         echo "::set-output name=LINUX_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_emscripten32.yaml > /dev/null
+        echo "::set-output name=EMSCRIPTEN32_YAML_CHANGED::${?}"
         git diff --exit-code --name-only origin/main -- vinca_linux_aarch64.yaml > /dev/null
         echo "::set-output name=LINUX_AARCH_YAML_CHANGED::${?}"
         git diff --exit-code --name-only origin/main -- vinca_osx.yaml > /dev/null
@@ -95,6 +97,14 @@ jobs:
         cp vinca_linux_64.yaml vinca.yaml
         mkdir -p recipes
         $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-64 -m -n
+        ls -la recipes
+    - name: Generate recipes for emscripten-wasm32
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.EMSCRIPTEN32_YAML_CHANGED == 1 && matrix.platform == 'linux-64'
+      run: |
+        cp vinca_emscripten32.yaml vinca.yaml
+        mkdir -p recipes
+        $HOME/.pixi/bin/pixi run -e emscripten -v vinca --platform emscripten-wasm32  -m -n
         ls -la recipes
     - name: Generate recipes for linux-aarch64
       shell: bash -l {0}
@@ -145,6 +155,12 @@ jobs:
       run: |
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+    - name: Build recipes for emscripten-wasm32
+      shell: bash -l {0}
+      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.EMSCRIPTEN32_YAML_CHANGED == 1 && matrix.platform == 'linux-64'
+      run: |
+        env -i $HOME/.pixi/bin/pixi run -e emscripten rattler-build build --recipe-dir additional_recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge -c nmarticorena --skip-existing
+        env -i $HOME/.pixi/bin/pixi run -e emscripten rattler-build build --recipe-dir recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge -c nmarticorena --skip-existing
     - name: Build recipes for linux-aarch64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.LINUX_AARCH_YAML_CHANGED == 1 && matrix.platform == 'linux-aarch64'
