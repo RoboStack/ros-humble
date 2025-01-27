@@ -113,6 +113,9 @@ packages_select_by_deps:
   # requested in https://github.com/RoboStack/ros-humble/issues/252
   - rmw_zenoh_cpp
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/256
+  - rqt_controller_manager
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
