@@ -1,0 +1,345 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 37a3107f..a8620438 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,6 +3,10 @@ set(MRT_PKG_VERSION 4.0.0)
+ cmake_minimum_required(VERSION 3.5.1)
+ project(lanelet2_core)
+ 
++if(WIN32 AND MSVC)
++  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++endif()
++
+ ###################
+ ## Find packages ##
+ ###################
+diff --git a/include/lanelet2_core/geometry/Area.h b/include/lanelet2_core/geometry/Area.h
+index 1e2bdeca..feb1e79a 100644
+--- a/include/lanelet2_core/geometry/Area.h
++++ b/include/lanelet2_core/geometry/Area.h
+@@ -12,8 +12,8 @@ namespace geometry {
+  * @param point point to check
+  * @return true if the point is within or at the border, false otherwise
+  */
+-template <typename AreaT>
+-IfAr<AreaT, bool> inside(const AreaT& area, const BasicPoint2d& point);
++template <typename AreaT, IfAr<AreaT, int> = 0>
++bool inside(const AreaT& area, const BasicPoint2d& point);
+ 
+ /**
+  * @brief calculates an up-right 2d bounding box
+@@ -22,30 +22,30 @@ IfAr<AreaT, bool> inside(const AreaT& area, const BasicPoint2d& point);
+  *
+  * Linear on number of points.
+  */
+-template <typename AreaT>
+-IfAr<AreaT, BoundingBox2d> boundingBox2d(const AreaT& area);
++template <typename AreaT, IfAr<AreaT, int> = 0>
++BoundingBox2d boundingBox2d(const AreaT& area);
+ 
+ /**
+  * @brief calculates 3d bounding box
+  * @param area area to calculate it from.
+  * @return the bounding box
+  */
+-template <typename AreaT>
+-IfAr<AreaT, BoundingBox3d> boundingBox3d(const AreaT& area);
++template <typename AreaT, IfAr<AreaT, int> = 0>
++BoundingBox3d boundingBox3d(const AreaT& area);
+ 
+ //! test whether two areas intersect in 2d.
+-template <typename Area1T, typename Area2T>
+-IfAr<Area1T, bool> intersects2d(const Area1T& area, const Area2T& otherArea);
++template <typename Area1T, typename Area2T, IfAr<Area1T, int> = 0>
++bool intersects2d(const Area1T& area, const Area2T& otherArea);
+ 
+ //! test whether two areas overlap in 2d (common area < 0).
+ //! This is an approximation that ignores the holes of the areas!
+-template <typename AreaT>
+-IfAr<AreaT, bool> overlaps2d(const AreaT& area, const AreaT& otherArea);
++template <typename AreaT, IfAr<AreaT, int> = 0>
++bool overlaps2d(const AreaT& area, const AreaT& otherArea);
+ 
+ //! test whether two areas overlap in 3d.
+ //! This is an approximation that uses the overlap of the outer bound
+-template <typename AreaT>
+-IfAr<AreaT, bool> overlaps3d(const AreaT& area, const AreaT& otherArea, double heightTolerance);
++template <typename AreaT, IfAr<AreaT, int> = 0>
++bool overlaps3d(const AreaT& area, const AreaT& otherArea, double heightTolerance);
+ 
+ //! test whether an area and a lanelet overlap in 2d
+ //! This is an approximation that uses the overlap of the outer bound
+diff --git a/include/lanelet2_core/geometry/Lanelet.h b/include/lanelet2_core/geometry/Lanelet.h
+index f046185c..77df47e7 100644
+--- a/include/lanelet2_core/geometry/Lanelet.h
++++ b/include/lanelet2_core/geometry/Lanelet.h
+@@ -10,8 +10,8 @@ namespace geometry {
+  * @param point point to check
+  * @return true if the point is within or at the border, false otherwise
+  */
+-template <typename LaneletT>
+-IfLL<LaneletT, bool> inside(const LaneletT& lanelet, const BasicPoint2d& point);
++template <typename LaneletT, IfLL<LaneletT, int> = 0>
++bool inside(const LaneletT& lanelet, const BasicPoint2d& point);
+ 
+ /**
+  * @brief approximates length by sampling points along left bound
+@@ -68,16 +68,16 @@ double distanceToCenterline3d(const LaneletT& lanelet, const BasicPoint3d& point
+  *
+  * Linear on number of points.
+  */
+-template <typename LaneletT>
+-IfLL<LaneletT, BoundingBox2d> boundingBox2d(const LaneletT& lanelet);
++template <typename LaneletT, IfLL<LaneletT, int> = 0>
++BoundingBox2d boundingBox2d(const LaneletT& lanelet);
+ 
+ /**
+  * @brief calculates 3d bounding box
+  * @param lanelet lanelet to calculate it from.
+  * @return the bounding box
+  */
+-template <typename LaneletT>
+-IfLL<LaneletT, BoundingBox3d> boundingBox3d(const LaneletT& lanelet);
++template <typename LaneletT, IfLL<LaneletT, int> = 0>
++BoundingBox3d boundingBox3d(const LaneletT& lanelet);
+ 
+ /**
+  * @brief test whether two lanelets intersect in 2d.
+@@ -89,8 +89,8 @@ IfLL<LaneletT, BoundingBox3d> boundingBox3d(const LaneletT& lanelet);
+  * This also returns true if the two lanelets only touch each other. Use
+  * overlaps if you do not want this.
+  */
+-template <typename Lanelet1T, typename Lanelet2T>
+-IfLL<Lanelet1T, bool> intersects2d(const Lanelet1T& lanelet, const Lanelet2T& otherLanelet);
++template <typename Lanelet1T, typename Lanelet2T, IfLL<Lanelet1T, int> = 0>
++bool intersects2d(const Lanelet1T& lanelet, const Lanelet2T& otherLanelet);
+ 
+ /**
+  * @brief test whether two lanelets overlap in 2d.
+diff --git a/include/lanelet2_core/geometry/Polygon.h b/include/lanelet2_core/geometry/Polygon.h
+index 63c9a731..4a77599c 100644
+--- a/include/lanelet2_core/geometry/Polygon.h
++++ b/include/lanelet2_core/geometry/Polygon.h
+@@ -245,14 +245,14 @@ IfPoly<Polygon3dT, double> distanceToBorder3d(const Polygon3dT& poly1, const Pol
+  *
+  * @return The enclosing axis aligned bounding box of all points.
+  */
+-template <typename Polygon3dT>
+-IfPoly<Polygon3dT, BoundingBox3d> boundingBox3d(const Polygon3dT& polygon);
++template <typename Polygon3dT, IfPoly<Polygon3dT, int> = 0>
++BoundingBox3d boundingBox3d(const Polygon3dT& polygon);
+ 
+-template <typename Polygon2dT>
+-IfPoly<Polygon2dT, BoundingBox2d> boundingBox2d(const Polygon2dT& polygon);
++template <typename Polygon2dT, IfPoly<Polygon2dT, int> = 0>
++BoundingBox2d boundingBox2d(const Polygon2dT& polygon);
+ 
+-template <typename Polygon3dT>
+-IfPoly<Polygon3dT, BoundingBox3d> boundingBox3d(const Polygon3dT& polygon) {
++template <typename Polygon3dT, IfPoly<Polygon3dT, int>>
++BoundingBox3d boundingBox3d(const Polygon3dT& polygon) {
+   static_assert(traits::is3D<Polygon3dT>(), "Please call this function with a 3D type!");
+   BoundingBox3d bb;
+   for (const auto& p : polygon) {
+@@ -261,8 +261,8 @@ IfPoly<Polygon3dT, BoundingBox3d> boundingBox3d(const Polygon3dT& polygon) {
+   return bb;
+ }
+ 
+-template <typename Polygon2dT>
+-IfPoly<Polygon2dT, BoundingBox2d> boundingBox2d(const Polygon2dT& polygon) {
++template <typename Polygon2dT, IfPoly<Polygon2dT, int>>
++BoundingBox2d boundingBox2d(const Polygon2dT& polygon) {
+   static_assert(traits::is2D<Polygon2dT>(), "Please call this function with a 2D type!");
+   BoundingBox2d bb;
+   for (const auto& p : polygon) {
+diff --git a/include/lanelet2_core/geometry/impl/Area.h b/include/lanelet2_core/geometry/impl/Area.h
+index 0edece94..4be56d0b 100644
+--- a/include/lanelet2_core/geometry/impl/Area.h
++++ b/include/lanelet2_core/geometry/impl/Area.h
+@@ -16,36 +16,36 @@ struct GetGeometry<T, IfAr<T, void>> {
+ };
+ }  // namespace internal
+ 
+-template <typename AreaT>
+-IfAr<AreaT, bool> inside(const AreaT& area, const BasicPoint2d& point) {
++template <typename AreaT, IfAr<AreaT, int>>
++bool inside(const AreaT& area, const BasicPoint2d& point) {
+   return boost::geometry::covered_by(point, area.basicPolygonWithHoles2d());
+ }
+ 
+-template <typename AreaT>
+-IfAr<AreaT, BoundingBox2d> boundingBox2d(const AreaT& area) {
++template <typename AreaT, IfAr<AreaT, int>>
++BoundingBox2d boundingBox2d(const AreaT& area) {
+   return boundingBox2d(traits::to2D(area.outerBoundPolygon()));
+ }
+ 
+-template <typename AreaT>
+-IfAr<AreaT, BoundingBox3d> boundingBox3d(const AreaT& area) {
++template <typename AreaT, IfAr<AreaT, int>>
++BoundingBox3d boundingBox3d(const AreaT& area) {
+   return boundingBox3d(area.outerBoundPolygon());
+ }
+ 
+-template <typename Area1T, typename Area2T>
+-IfAr<Area1T, bool> intersects2d(const Area1T& area, const Area2T& otherArea) {
++template <typename Area1T, typename Area2T, IfAr<Area1T, int>>
++bool intersects2d(const Area1T& area, const Area2T& otherArea) {
+   if (area == otherArea) {
+     return true;
+   }
+   return intersects(area.basicPolygonWithHoles2d(), otherArea.basicPolygonWithHoles2d());
+ }
+ 
+-template <typename AreaT>
+-IfAr<AreaT, bool> overlaps2d(const AreaT& area, const AreaT& otherArea) {
++template <typename AreaT, IfAr<AreaT, int>>
++bool overlaps2d(const AreaT& area, const AreaT& otherArea) {
+   return overlaps2d(traits::to2D(area.outerBoundPolygon()), traits::to2D(otherArea.outerBoundPolygon()));
+ }
+ 
+-template <typename AreaT>
+-IfAr<AreaT, bool> overlaps3d(const AreaT& area, const AreaT& otherArea, double heightTolerance) {
++template <typename AreaT, IfAr<AreaT, int>>
++bool overlaps3d(const AreaT& area, const AreaT& otherArea, double heightTolerance) {
+   return overlaps3d(area.outerBoundPolygon(), otherArea.outerBoundPolygon(), heightTolerance);
+ }
+ 
+diff --git a/include/lanelet2_core/geometry/impl/Lanelet.h b/include/lanelet2_core/geometry/impl/Lanelet.h
+index 39a82a04..cdc4b512 100644
+--- a/include/lanelet2_core/geometry/impl/Lanelet.h
++++ b/include/lanelet2_core/geometry/impl/Lanelet.h
+@@ -21,8 +21,8 @@ struct GetGeometry<T, IfLL<T, void>> {
+ };
+ }  // namespace internal
+ 
+-template <typename LaneletT>
+-IfLL<LaneletT, bool> inside(const LaneletT& lanelet, const BasicPoint2d& point) {
++template <typename LaneletT, IfLL<LaneletT, int>>
++bool inside(const LaneletT& lanelet, const BasicPoint2d& point) {
+   return boost::geometry::covered_by(point, lanelet.polygon2d());
+ }
+ 
+@@ -36,22 +36,22 @@ double distanceToCenterline3d(const LaneletT& lanelet, const BasicPoint3d& point
+   return distance(lanelet.centerline3d(), point);
+ }
+ 
+-template <typename LaneletT>
+-IfLL<LaneletT, BoundingBox2d> boundingBox2d(const LaneletT& lanelet) {
++template <typename LaneletT, IfLL<LaneletT, int>>
++BoundingBox2d boundingBox2d(const LaneletT& lanelet) {
+   BoundingBox2d bb = boundingBox2d(lanelet.leftBound2d());
+   bb.extend(boundingBox2d(lanelet.rightBound2d()));
+   return bb;
+ }
+ 
+-template <typename LaneletT>
+-IfLL<LaneletT, BoundingBox3d> boundingBox3d(const LaneletT& lanelet) {
++template <typename LaneletT, IfLL<LaneletT, int>>
++BoundingBox3d boundingBox3d(const LaneletT& lanelet) {
+   BoundingBox3d bb = boundingBox3d(lanelet.leftBound3d());
+   bb.extend(boundingBox3d(lanelet.rightBound3d()));
+   return bb;
+ }
+ 
+-template <typename Lanelet1T, typename Lanelet2T>
+-IfLL<Lanelet1T, bool> intersects2d(const Lanelet1T& lanelet, const Lanelet2T& otherLanelet) {
++template <typename Lanelet1T, typename Lanelet2T, IfLL<Lanelet1T, int>>
++bool intersects2d(const Lanelet1T& lanelet, const Lanelet2T& otherLanelet) {
+   if (lanelet.constData() == otherLanelet.constData()) {
+     return true;
+   }
+diff --git a/include/lanelet2_core/geometry/impl/LineString.h b/include/lanelet2_core/geometry/impl/LineString.h
+index a6461cfc..990286b9 100644
+--- a/include/lanelet2_core/geometry/impl/LineString.h
++++ b/include/lanelet2_core/geometry/impl/LineString.h
+@@ -799,8 +799,9 @@ IfLS<LineString3dT, std::pair<BasicPoint3d, BasicPoint3d>> projectedPoint3d(cons
+   return internal::projectedPoint3d(traits::toHybrid(l1), traits::toHybrid(l2));
+ }
+ 
+-template <typename LineString3d1T, typename LineString3d2T>
+-IfLS2<LineString3d1T, LineString3d2T, double> distance3d(const LineString3d1T& l1, const LineString3d2T& l2) {
++template <typename LineString3d1T, typename LineString3d2T,
++          IfLS2<LineString3d1T, LineString3d2T, int> = 0>
++double distance3d(const LineString3d1T& l1, const LineString3d2T& l2) {
+   auto projPoint = internal::projectedPoint3d(traits::toHybrid(traits::to3D(l1)), traits::toHybrid(traits::to3D(l2)));
+   return (projPoint.first - projPoint.second).norm();
+ }
+diff --git a/include/lanelet2_core/primitives/Polygon.h b/include/lanelet2_core/primitives/Polygon.h
+index a458cb49..6c9dfab6 100644
+--- a/include/lanelet2_core/primitives/Polygon.h
++++ b/include/lanelet2_core/primitives/Polygon.h
+@@ -394,8 +394,9 @@ inline BasicPolygon2d to2D<BasicPolygon3d>(const BasicPolygon3d& primitive) {
+   return p2d;
+ }
+ 
+-template <typename PolygonT>
+-std::enable_if_t<traits::isPolygonT<PolygonT>(), BasicPolygon2d> toBasicPolygon2d(const PolygonT& t) {
++template <typename PolygonT,
++          std::enable_if_t<traits::isPolygonT<PolygonT>(), int> = 0>
++BasicPolygon2d toBasicPolygon2d(const PolygonT& t) {
+   return traits::to2D(t).basicPolygon();
+ }
+ 
+@@ -411,8 +412,9 @@ inline BasicPolygon2d toBasicPolygon2d<BasicPolygon3d>(const BasicPolygon3d& t)
+ 
+ inline BasicPolygon2d toBasicPolygon2d(BasicPolygon2d&& t) { return std::move(t); }
+ 
+-template <typename PolygonT>
+-std::enable_if_t<traits::isPolygonT<PolygonT>(), BasicPolygon3d> toBasicPolygon3d(const PolygonT& t) {
++template <typename PolygonT,
++          std::enable_if_t<traits::isPolygonT<PolygonT>(), int> = 0>
++BasicPolygon3d toBasicPolygon3d(const PolygonT& t) {
+   return traits::to3D(t).basicPolygon();
+ }
+ 
+diff --git a/include/lanelet2_core/utility/HybridMap.h b/include/lanelet2_core/utility/HybridMap.h
+index 9ba57a4e..85c63d0b 100644
+--- a/include/lanelet2_core/utility/HybridMap.h
++++ b/include/lanelet2_core/utility/HybridMap.h
+@@ -65,7 +65,7 @@ void replaceIterator(Vector& v, const Iterator& replace, const Iterator& by) {
+  */
+ template <typename ValueT, typename PairArrayT, PairArrayT PairArray>
+ class HybridMap {
+-  using Array = detail::ArrayView<PairArrayT, PairArray>;
++  using Array = lanelet::detail::ArrayView<PairArrayT, PairArray>;
+ 
+  public:
+   using Map = std::map<std::string, ValueT>;
+@@ -82,19 +82,19 @@ class HybridMap {
+   HybridMap() noexcept = default;
+   HybridMap(HybridMap&& rhs) noexcept : m_(std::move(rhs.m_)), v_{std::move(rhs.v_)} {
+     // move invalidates no iterators except end
+-    detail::replaceIterator(v_, rhs.m_.end(), m_.end());
++    lanelet::detail::replaceIterator(v_, rhs.m_.end(), m_.end());
+   }
+   HybridMap& operator=(HybridMap&& rhs) noexcept {
+     m_ = std::move(rhs.m_);
+     v_ = std::move(rhs.v_);
+     // move invalidates no iterators except end
+-    detail::replaceIterator(v_, rhs.m_.end(), m_.end());
++    lanelet::detail::replaceIterator(v_, rhs.m_.end(), m_.end());
+     return *this;
+   }
+-  HybridMap(const HybridMap& rhs) : m_{rhs.m_}, v_{detail::copyIterators(rhs.v_, rhs.m_, m_)} {}
++  HybridMap(const HybridMap& rhs) : m_{rhs.m_}, v_{lanelet::detail::copyIterators(rhs.v_, rhs.m_, m_)} {}
+   HybridMap& operator=(const HybridMap& rhs) {
+     m_ = rhs.m_;
+-    v_ = detail::copyIterators(rhs.v_, rhs.m_, m_);
++    v_ = lanelet::detail::copyIterators(rhs.v_, rhs.m_, m_);
+     return *this;
+   }
+   HybridMap(const std::initializer_list<std::pair<const std::string, ValueT>>& list) {
+diff --git a/src/LaneletMap.cpp b/src/LaneletMap.cpp
+index ad53b2f2..0d53f953 100644
+--- a/src/LaneletMap.cpp
++++ b/src/LaneletMap.cpp
+@@ -312,7 +312,7 @@ struct PrimitiveLayer<Point3d>::Tree {
+   using TreeNode = std::pair<BasicPoint2d, Point3d>;
+   using RTree = bgi::rtree<TreeNode, bgi::quadratic<16>>;
+   static TreeNode treeNode(const Point3d& p) { return {Point2d(p).basicPoint(), p}; }
+-  explicit Tree(const PrimitiveLayer::Map& primitives) {
++  explicit Tree(const PrimitiveLayer<Point3d>::Map& primitives) {
+     std::vector<TreeNode> nodes;
+     nodes.reserve(primitives.size());
+     std::transform(primitives.begin(), primitives.end(), std::back_inserter(nodes),

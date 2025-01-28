@@ -235,4 +235,6 @@ packages_select_by_deps:
 
   - plotjuggler_msgs
 
+  - lanelet2
+
 patch_dir: patch

@@ -99,6 +99,8 @@ packages_select_by_deps:
 
   - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
 
+  - lanelet2
+
 
   # Used to work, now needs fixes
   # - rtabmap
@@ -144,7 +146,6 @@ packages_select_by_deps:
   # - plansys2-bt-actions
   # - plansys2-terminal
   # - nav2-system-tests
-  # - lanelet2
   # - plansys2-bringup
   # - octovis
   # - gps-umd
