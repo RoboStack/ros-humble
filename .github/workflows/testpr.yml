@@ -22,6 +22,8 @@ jobs:
             platform: osx-arm64
           - os: windows-2019
             platform: win-64
+          - os: ubuntu-latest
+            platform: emscripten-wasm32
 
     runs-on: ${{ matrix.os }}
 
@@ -33,8 +35,9 @@ jobs:
 
     - uses: prefix-dev/setup-pixi@v0.8.1
       with:
-        environments: beta
+        environments: beta emscripten
         frozen: true
+        pixi-version: v.0.40.2
 
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
@@ -80,6 +83,8 @@ jobs:
         set +e
         git diff --exit-code --name-only origin/main -- vinca_linux_64.yaml > /dev/null
         echo "::set-output name=LINUX_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_emscripten32.yaml > /dev/null
+        echo "::set-output name=EMSCRIPTEN32_YAML_CHANGED::${?}"
         git diff --exit-code --name-only origin/main -- vinca_linux_aarch64.yaml > /dev/null
         echo "::set-output name=LINUX_AARCH_YAML_CHANGED::${?}"
         git diff --exit-code --name-only origin/main -- vinca_osx.yaml > /dev/null
@@ -95,6 +100,14 @@ jobs:
         cp vinca_linux_64.yaml vinca.yaml
         mkdir -p recipes
         $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-64 -m -n
+        ls -la recipes
+    - name: Generate recipes for emscripten-wasm32
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.EMSCRIPTEN32_YAML_CHANGED == 1 && matrix.platform == 'emscripten-wasm32'
+      run: |
+        cp vinca_emscripten32.yaml vinca.yaml
+        mkdir -p recipes
+        $HOME/.pixi/bin/pixi run -e emscripten -v vinca --platform emscripten-wasm32  -m -n
         ls -la recipes
     - name: Generate recipes for linux-aarch64
       shell: bash -l {0}
@@ -145,6 +158,12 @@ jobs:
       run: |
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+    - name: Build recipes for emscripten-wasm32
+      shell: bash -l {0}
+      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.EMSCRIPTEN32_YAML_CHANGED == 1 && matrix.platform == 'emscripten-wasm32'
+      run: |
+        env -i $HOME/.pixi/bin/pixi run -e emscripten sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \;'
+        env -i $HOME/.pixi/bin/pixi run -e emscripten rattler-build build --recipe-dir ./recipes --target-platform emscripten-wasm32 -m ./conda_build_config.yaml -c https://repo.prefix.dev/conda-forge -c nmarticorena -c https://repo.mamba.pm/emscripten-forge/ -c robostack-staging  --skip-existing --test skip
     - name: Build recipes for linux-aarch64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.LINUX_AARCH_YAML_CHANGED == 1 && matrix.platform == 'linux-aarch64'
