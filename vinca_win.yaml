@@ -252,5 +252,7 @@ packages_select_by_deps:
   # requested in https://github.com/RoboStack/ros-humble/issues/256
   - rqt_controller_manager
 
+  - open3d_conversions
+
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
