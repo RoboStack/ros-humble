@@ -116,6 +116,8 @@ packages_select_by_deps:
   # requested in https://github.com/RoboStack/ros-humble/issues/256
   - rqt_controller_manager
 
+  - open3d_conversions
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2

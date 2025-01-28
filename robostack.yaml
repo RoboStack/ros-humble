@@ -371,6 +371,8 @@ libomp-dev:
     linux: [libgomp]
     osx: [llvm-openmp]
     win64: []
+libopen3d-dev:
+  robostack: [open3d, REQUIRE_OPENGL]
 libopenblas-dev:
   robostack: [libblas]
 libopencv-dev:
