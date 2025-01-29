@@ -189,6 +189,10 @@ packages_select_by_deps:
 
   - open3d_conversions
 
+  - ffmpeg_image_transport
+
+  - foxglove_compressed_image_transport
+
   # ----- end of package support -----
 
   # - rtabmap
