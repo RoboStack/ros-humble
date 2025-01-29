@@ -118,6 +118,8 @@ packages_select_by_deps:
 
   - open3d_conversions
 
+  - point_cloud_transport_plugins
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
