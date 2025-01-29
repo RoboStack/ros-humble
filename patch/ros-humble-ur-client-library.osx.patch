@@ -1,0 +1,226 @@
+diff --git a/include/ur_client_library/comm/bin_parser.h b/include/ur_client_library/comm/bin_parser.h
+index e13aba6..6931af3 100644
+--- a/include/ur_client_library/comm/bin_parser.h
++++ b/include/ur_client_library/comm/bin_parser.h
+@@ -21,7 +21,31 @@
+ #pragma once
+ 
+ #include <assert.h>
++#ifdef __APPLE__
++
++#include <machine/endian.h>
++#include <libkern/OSByteOrder.h>
++
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++
++#else
++
+ #include <endian.h>
++
++#endif /* __APPLE__ */
+ #include <inttypes.h>
+ #include <array>
+ #include <bitset>
+diff --git a/include/ur_client_library/comm/package_serializer.h b/include/ur_client_library/comm/package_serializer.h
+index 7745da9..78859d9 100644
+--- a/include/ur_client_library/comm/package_serializer.h
++++ b/include/ur_client_library/comm/package_serializer.h
+@@ -29,7 +29,31 @@
+ #ifndef UR_CLIENT_LIBRARY_PACKAGE_SERIALIZER_H_INCLUDED
+ #define UR_CLIENT_LIBRARY_PACKAGE_SERIALIZER_H_INCLUDED
+ 
++#ifdef __APPLE__
++
++#include <machine/endian.h>
++#include <libkern/OSByteOrder.h>
++
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++
++#else
++
+ #include <endian.h>
++
++#endif /* __APPLE__ */
+ #include <cstring>
+ 
+ namespace urcl
+diff --git a/include/ur_client_library/control/reverse_interface.h b/include/ur_client_library/control/reverse_interface.h
+index 9919dbd..077403e 100644
+--- a/include/ur_client_library/control/reverse_interface.h
++++ b/include/ur_client_library/control/reverse_interface.h
+@@ -35,7 +35,31 @@
+ #include "ur_client_library/log.h"
+ #include "ur_client_library/ur/robot_receive_timeout.h"
+ #include <cstring>
++#ifdef __APPLE__
++
++#include <machine/endian.h>
++#include <libkern/OSByteOrder.h>
++
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++
++#else
++
+ #include <endian.h>
++
++#endif /* __APPLE__ */
+ #include <condition_variable>
+ 
+ namespace urcl
+diff --git a/include/ur_client_library/primary/package_header.h b/include/ur_client_library/primary/package_header.h
+index cd64bda..b4738dd 100644
+--- a/include/ur_client_library/primary/package_header.h
++++ b/include/ur_client_library/primary/package_header.h
+@@ -32,7 +32,31 @@
+ 
+ #include <inttypes.h>
+ #include <cstddef>
++#ifdef __APPLE__
++
++#include <machine/endian.h>
++#include <libkern/OSByteOrder.h>
++
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++
++#else
++
+ #include <endian.h>
++
++#endif /* __APPLE__ */
+ #include "ur_client_library/types.h"
+ 
+ namespace urcl
+diff --git a/include/ur_client_library/rtde/package_header.h b/include/ur_client_library/rtde/package_header.h
+index f910a08..4013e26 100644
+--- a/include/ur_client_library/rtde/package_header.h
++++ b/include/ur_client_library/rtde/package_header.h
+@@ -31,7 +31,31 @@
+ #define UR_CLIENT_LIBRARY_RTDE__HEADER_H_INCLUDED
+ 
+ #include <cstddef>
++#ifdef __APPLE__
++
++#include <machine/endian.h>
++#include <libkern/OSByteOrder.h>
++
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++
++#else
++
+ #include <endian.h>
++
++#endif /* __APPLE__ */
+ #include "ur_client_library/types.h"
+ #include "ur_client_library/comm/package_serializer.h"
+ 
+diff --git a/src/comm/tcp_socket.cpp b/src/comm/tcp_socket.cpp
+index 8803664..f75f381 100644
+--- a/src/comm/tcp_socket.cpp
++++ b/src/comm/tcp_socket.cpp
+@@ -21,7 +21,31 @@
+  */
+ 
+ #include <arpa/inet.h>
++#ifdef __APPLE__
++
++#include <machine/endian.h>
++#include <libkern/OSByteOrder.h>
++
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++
++#else
++
+ #include <endian.h>
++
++#endif /* __APPLE__ */
+ #include <netinet/tcp.h>
+ #include <unistd.h>
+ #include <chrono>
+@@ -48,7 +72,9 @@ void TCPSocket::setupOptions()
+ {
+   int flag = 1;
+   setsockopt(socket_fd_, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
++#ifndef __APPLE__
+   setsockopt(socket_fd_, IPPROTO_TCP, TCP_QUICKACK, &flag, sizeof(int));
++#endif
+ 
+   if (recv_timeout_ != nullptr)
+   {
