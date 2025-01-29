@@ -35,7 +35,7 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "cbb8eba834ce383
 [feature.emscripten.pypi-dependencies]
 # pull vinca emscripten branch
 # vinca = { path = "../vinca", editable = true} 
-vinca = { git = "https://github.com/nmarticorena/vinca.git", rev = "ccaa2d53f6dabeb7f6a75ac0309b946be563718f" }
+vinca = { git = "https://github.com/nmarticorena/vinca.git", rev = "0440727f19b394db8a32d422e34d2e2a8494552c" }
 
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }

@@ -15,12 +15,47 @@ jobs:
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+        ref: emscripten # TODO remove, this is for testing before merging to main
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11' # Version range or exact version of a Python version to use, using SemVer's version range syntax
     - name: Install vinca
       run: |
-        pip install git+https://github.com/RoboStack/vinca.git
+        # pip install git+https://github.com/RoboStack/vinca.git
+        pip install git+https://github.com/nmarticorena/vinca.git@emscripten
+   
+    # Build emscripten-wasm32
+    - name: Reset repo
+      run: |
+        git reset --hard origin/emscripten # TODO  remove this trick 
+    - name: Generate recipes for emscripten-wasm32
+      run: |
+        git clean -fdx
+        cp vinca_emscripten32.yaml vinca.yaml
+        vinca --multiple --platform emscripten-wasm32
+        sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \;'
+        
+    - name: Generate azure pipelines for emscripten-wasm32
+      run: |
+        vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten -d ./recipes --additional-recipes
+    - name: Commit files for emscripten-wasm32
+      run: |
+        if [[ -f "emscripten_wasm32.yml" ]]; then
+            mv emscripten_wasm32.yml .github/workflows/
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add . -f
+            git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
+            remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push "${remote_repo}" HEAD:buildbranch_emscripten --follow-tags --force
+        fi
+      env:
+        INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
+
+    # Build Linux-64
+    - name: Reset repo
+      run: |
+        git reset --hard origin/main
 
     - name: Generate recipes for linux-64
       run: |
@@ -148,10 +183,10 @@ jobs:
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 
-#TODO NICOLAS: Add emscripten target (low priority, get local builds first)
-
+   
 on:
   push:
     branches:
       - master
       - main
+      - emscripten
