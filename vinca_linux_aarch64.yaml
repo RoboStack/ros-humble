@@ -118,6 +118,10 @@ packages_select_by_deps:
 
   - open3d_conversions
 
+  - ffmpeg_image_transport
+
+  - foxglove_compressed_image_transport
+
   - point_cloud_transport_plugins
 
   # Used to work, now needs fixes
