@@ -180,3 +180,7 @@ octomap_ros:
   add_host: ["octomap"]
 octomap_rviz_plugins:
   add_host: ["octomap"]
+zenoh_cpp_vendor:
+  add_host: ["libzenohc", "libzenohcxx"]
+rmw_zenoh_cpp:
+  add_host: ["libzenohc", "libzenohcxx"]

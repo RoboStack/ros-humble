@@ -119,7 +119,6 @@ packages_remove_from_deps:
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
-
 packages_select_by_deps:
   - ros_workspace
   - ros_core
@@ -246,6 +245,14 @@ packages_select_by_deps:
   # requested in https://github.com/RoboStack/ros-humble/issues/249
   - twist_mux
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/252
+  - rmw_zenoh_cpp
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/256
+  - rqt_controller_manager
+
+  - open3d_conversions
+
   # autoware
   - autoware_common_msgs
   - autoware_control_msgs
@@ -259,7 +266,6 @@ packages_select_by_deps:
   - autoware_vehicle_msgs
 
   - autoware_utils
-  - autoware_lanelet2_extension
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

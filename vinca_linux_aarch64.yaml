@@ -110,6 +110,20 @@ packages_select_by_deps:
   # requested in https://github.com/RoboStack/ros-humble/issues/249
   - twist_mux
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/252
+  - rmw_zenoh_cpp
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/256
+  - rqt_controller_manager
+
+  - open3d_conversions
+
+  - ffmpeg_image_transport
+
+  - foxglove_compressed_image_transport
+
+  - point_cloud_transport_plugins
+
   # autoware
   - autoware_common_msgs
   - autoware_control_msgs
@@ -123,7 +137,7 @@ packages_select_by_deps:
   - autoware_vehicle_msgs
 
   - autoware_utils
-  - autoware_lanelet2_extension
+  - autoware_lanelet_extensions
 
   # Used to work, now needs fixes
   # - rtabmap

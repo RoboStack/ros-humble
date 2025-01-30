@@ -38,11 +38,6 @@ packages_remove_from_deps:
   - rttest
   # Not available for macOS and Windows!
   - gripper_controllers
-  # Some packages in ur stack do not support macOS
-  - ur_client_library
-  - ur_robot_driver
-  - ur_calibration
-  - ur
 
 skip_existing:
   # - https://conda.anaconda.org/robostack-humble/
@@ -131,6 +126,18 @@ packages_select_by_deps:
 
   # requested in https://github.com/RoboStack/ros-humble/issues/249
   - twist_mux
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/252
+  - rmw_zenoh_cpp
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/256
+  - rqt_controller_manager
+
+  - open3d_conversions
+
+  - ffmpeg_image_transport
+
+  - foxglove_compressed_image_transport
 
   # autoware
   - autoware_common_msgs

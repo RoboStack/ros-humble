@@ -196,6 +196,20 @@ packages_select_by_deps:
   - autoware_utils
   - autoware_lanelet2_extension
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/252
+  - rmw_zenoh_cpp
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/256
+  - rqt_controller_manager
+
+  - open3d_conversions
+
+  - ffmpeg_image_transport
+
+  - foxglove_compressed_image_transport
+  
+  - point_cloud_transport_plugins
+
   # ----- end of package support -----
 
   # - rtabmap

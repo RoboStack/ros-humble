@@ -43,6 +43,8 @@ cartographer:
   robostack: [cartographer]
 ca-certificates:
   robostack: [ca-certificates]
+cargo:
+  robostack: [rust]
 clang-format:
   robostack: [clang-format]
 clang-tidy:
@@ -262,6 +264,8 @@ libcurl-dev:
   robostack: [libcurl]
 libdc1394-dev:
   robostack: [libdc1394]
+libdraco-dev:
+  robostack: [draco]
 libdw-dev:
   robostack:
     linux: [elfutils]
@@ -369,6 +373,8 @@ libomp-dev:
     linux: [libgomp]
     osx: [llvm-openmp]
     win64: []
+libopen3d-dev:
+  robostack: [open3d, REQUIRE_OPENGL]
 libopenblas-dev:
   robostack: [libblas]
 libopencv-dev:

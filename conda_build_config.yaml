@@ -41,3 +41,8 @@ cxx_compiler:
 cxx_compiler_version:          # [unix]
   - 13                         # [linux]
   - 18                         # [osx]
+
+libzenohc:
+  - 1.1.1
+libzenohcxx:
+  - 1.1.1
