@@ -39,8 +39,8 @@ packages_remove_from_deps:
   - performance_test_fixture
   - osrf_testing_tools_cpp
 
-skip_existing:
-  - https://repo.mamba.pm/robostack-wasm
+# skip_existing:
+  # - https://repo.mamba.pm/robostack-wasm
 
 packages_select_by_deps:
   # only subset of packages to reduce maintainer load
