@@ -33,7 +33,7 @@ fi
 
 if [[ "$target" == "emscripten-wasm32" ]]; then
     extra_channel="-c nmarticorena -c https://repo.mamba.pm/emscripten-forge"
-    cross_compile="--target-platform emscripten-wasm32"
+    cross_compile="--target-platform emscripten-wasm32 --test skip"
 
 else
     extra_channel=""
