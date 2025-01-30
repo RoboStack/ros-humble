@@ -264,6 +264,8 @@ libcurl-dev:
   robostack: [libcurl]
 libdc1394-dev:
   robostack: [libdc1394]
+libdraco-dev:
+  robostack: [draco]
 libdw-dev:
   robostack:
     linux: [elfutils]

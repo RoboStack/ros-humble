@@ -192,6 +192,8 @@ packages_select_by_deps:
   - ffmpeg_image_transport
 
   - foxglove_compressed_image_transport
+  
+  - point_cloud_transport_plugins
 
   # ----- end of package support -----
 

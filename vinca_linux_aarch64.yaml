@@ -122,6 +122,8 @@ packages_select_by_deps:
 
   - foxglove_compressed_image_transport
 
+  - point_cloud_transport_plugins
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
