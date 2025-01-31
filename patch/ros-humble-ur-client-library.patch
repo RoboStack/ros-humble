@@ -1,8 +1,37 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3c41f99..04ecc7b 100644
+index 878ffed..82ba8d5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -61,6 +61,9 @@ endif()
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.0.2)
++cmake_minimum_required(VERSION 3.14.0)
+ project(ur_client_library)
+ 
+ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/" ${CMAKE_MODULE_PATH})
+@@ -10,13 +10,6 @@ endif()
+ 
+ option(WITH_ASAN "Compile with address sanitizer support" OFF)
+ 
+-##
+-## Check C++11 support / enable global pedantic and Wall
+-##
+-include(DefineCXX17CompilerFlag)
+-DEFINE_CXX_17_COMPILER_FLAG(CXX17_FLAG)
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+-
+ add_library(urcl SHARED
+     src/comm/tcp_socket.cpp
+     src/comm/tcp_server.cpp
+@@ -52,7 +45,7 @@ add_library(urcl SHARED
+ )
+ add_library(ur_client_library::urcl ALIAS urcl)
+ target_compile_options(urcl PRIVATE -Wall -Wextra -Wno-unused-parameter)
+-target_compile_options(urcl PUBLIC ${CXX17_FLAG})
++target_compile_options(urcl PUBLIC cxx_std_17)
+ if(WITH_ASAN)
+   target_compile_options(urcl PUBLIC -fsanitize=address)
+   target_link_options(urcl PUBLIC -fsanitize=address)
+@@ -69,6 +62,9 @@ endif()
  if(CMAKE_THREAD_LIBS_INIT)
    target_link_libraries(urcl PUBLIC "${CMAKE_THREAD_LIBS_INIT}")
  endif()
@@ -47,7 +76,7 @@ index 7745da9..ded500a 100644
  namespace urcl
  {
 diff --git a/include/ur_client_library/control/reverse_interface.h b/include/ur_client_library/control/reverse_interface.h
-index 9919dbd..275bba3 100644
+index 707c455..ee8c318 100644
 --- a/include/ur_client_library/control/reverse_interface.h
 +++ b/include/ur_client_library/control/reverse_interface.h
 @@ -35,8 +35,8 @@
