@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 878ffed..82ba8d5 100644
+index 878ffed..a1b176e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,4 +1,4 @@
@@ -22,16 +22,21 @@ index 878ffed..82ba8d5 100644
  add_library(urcl SHARED
      src/comm/tcp_socket.cpp
      src/comm/tcp_server.cpp
-@@ -52,7 +45,7 @@ add_library(urcl SHARED
+@@ -51,8 +44,11 @@ add_library(urcl SHARED
+     src/helpers.cpp
  )
  add_library(ur_client_library::urcl ALIAS urcl)
- target_compile_options(urcl PRIVATE -Wall -Wextra -Wno-unused-parameter)
+-target_compile_options(urcl PRIVATE -Wall -Wextra -Wno-unused-parameter)
 -target_compile_options(urcl PUBLIC ${CXX17_FLAG})
++target_compile_options(urcl PRIVATE
++  $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
++  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused-parameter>
++)
 +target_compile_options(urcl PUBLIC cxx_std_17)
  if(WITH_ASAN)
    target_compile_options(urcl PUBLIC -fsanitize=address)
    target_link_options(urcl PUBLIC -fsanitize=address)
-@@ -69,6 +62,9 @@ endif()
+@@ -69,6 +65,9 @@ endif()
  if(CMAKE_THREAD_LIBS_INIT)
    target_link_libraries(urcl PUBLIC "${CMAKE_THREAD_LIBS_INIT}")
  endif()
@@ -41,6 +46,24 @@ index 878ffed..82ba8d5 100644
  
  ##
  ## Build testing if enabled by option
+diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
+index eb4c313..6972cf4 100644
+--- a/examples/CMakeLists.txt
++++ b/examples/CMakeLists.txt
+@@ -3,13 +3,6 @@ project(ur_driver_examples)
+ 
+ # find_package(ur_client_library REQUIRED)
+ 
+-# #
+-# # Check C++11 support / enable global pedantic and Wall
+-# #
+-include(DefineCXX17CompilerFlag)
+-DEFINE_CXX_17_COMPILER_FLAG(CXX17_FLAG)
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+-
+ add_executable(driver_example
+   full_driver.cpp)
+ target_compile_options(driver_example PUBLIC ${CXX17_FLAG})
 diff --git a/include/ur_client_library/comm/bin_parser.h b/include/ur_client_library/comm/bin_parser.h
 index e13aba6..83f8e6c 100644
 --- a/include/ur_client_library/comm/bin_parser.h
