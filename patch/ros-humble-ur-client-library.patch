@@ -32,7 +32,7 @@ index 878ffed..a1b176e 100644
 +  $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
 +  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused-parameter>
 +)
-+target_compile_options(urcl PUBLIC cxx_std_17)
++target_compile_features(urcl PUBLIC cxx_std_17)
  if(WITH_ASAN)
    target_compile_options(urcl PUBLIC -fsanitize=address)
    target_link_options(urcl PUBLIC -fsanitize=address)
