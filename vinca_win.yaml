@@ -90,7 +90,6 @@ packages_remove_from_deps:
   - ublox-nav-sat-fix-hp-node
   - ublox-dgnss
   # Some packages in ur stack do not support Windows
-  # - ur-client-library
   - ur-controllers
   - ur_robot_driver
   - ur_calibration
