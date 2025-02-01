@@ -91,10 +91,10 @@ packages_remove_from_deps:
   - ublox-dgnss
   # Some packages in ur stack do not support Windows
   # - ur-client-library
-  # - ur-controllers
-  # - ur_robot_driver
-  # - ur_calibration
-  # - ur
+  - ur-controllers
+  - ur_robot_driver
+  - ur_calibration
+  - ur
   # Some packages in velodyne repo do not support Windows
   - velodyne_driver
   - velodyne_pointcloud
