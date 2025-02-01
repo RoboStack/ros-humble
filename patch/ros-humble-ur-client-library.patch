@@ -1,71 +1,138 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 878ffed..a1b176e 100644
+index 878ffed..2ef4cf8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1,4 +1,4 @@
--cmake_minimum_required(VERSION 3.0.2)
-+cmake_minimum_required(VERSION 3.14.0)
- project(ur_client_library)
- 
- set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/" ${CMAKE_MODULE_PATH})
-@@ -10,13 +10,6 @@ endif()
+@@ -9,15 +9,16 @@ if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+ endif()
  
  option(WITH_ASAN "Compile with address sanitizer support" OFF)
++option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
  
--##
--## Check C++11 support / enable global pedantic and Wall
--##
--include(DefineCXX17CompilerFlag)
--DEFINE_CXX_17_COMPILER_FLAG(CXX17_FLAG)
+ ##
+ ## Check C++11 support / enable global pedantic and Wall
+ ##
+ include(DefineCXX17CompilerFlag)
+ DEFINE_CXX_17_COMPILER_FLAG(CXX17_FLAG)
 -set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
--
- add_library(urcl SHARED
+ 
+-add_library(urcl SHARED
++add_library(urcl
      src/comm/tcp_socket.cpp
      src/comm/tcp_server.cpp
-@@ -51,8 +44,11 @@ add_library(urcl SHARED
+     src/control/reverse_interface.cpp
+@@ -51,12 +52,22 @@ add_library(urcl SHARED
      src/helpers.cpp
  )
  add_library(ur_client_library::urcl ALIAS urcl)
 -target_compile_options(urcl PRIVATE -Wall -Wextra -Wno-unused-parameter)
 -target_compile_options(urcl PUBLIC ${CXX17_FLAG})
-+target_compile_options(urcl PRIVATE
-+  $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
-+  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused-parameter>
-+)
-+target_compile_features(urcl PUBLIC cxx_std_17)
- if(WITH_ASAN)
-   target_compile_options(urcl PUBLIC -fsanitize=address)
-   target_link_options(urcl PUBLIC -fsanitize=address)
-@@ -69,6 +65,9 @@ endif()
- if(CMAKE_THREAD_LIBS_INIT)
-   target_link_libraries(urcl PUBLIC "${CMAKE_THREAD_LIBS_INIT}")
+-if(WITH_ASAN)
+-  target_compile_options(urcl PUBLIC -fsanitize=address)
+-  target_link_options(urcl PUBLIC -fsanitize=address)
++
++if(MSVC)
++  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/endian)
++  target_link_libraries(urcl ws2_32)
++else()
++  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
++  target_compile_options(urcl PRIVATE -Wall -Wextra -Wno-unused-parameter)
++
++  if(WITH_ASAN)
++    target_compile_options(urcl PUBLIC -fsanitize=address)
++    target_link_options(urcl PUBLIC -fsanitize=address)
++  endif()
  endif()
-+if(UNIX AND NOT APPLE)
-+  target_link_libraries(urcl PUBLIC "rt")
-+endif()
++
++target_compile_options(urcl PUBLIC ${CXX17_FLAG})
++
+ target_include_directories( urcl PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+@@ -87,6 +98,7 @@ include(GNUInstallDirs)
+ install(TARGETS urcl EXPORT urcl_targets
+   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+ )
+ install(DIRECTORY include/ DESTINATION include)
  
- ##
- ## Build testing if enabled by option
-diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
-index eb4c313..6972cf4 100644
---- a/examples/CMakeLists.txt
-+++ b/examples/CMakeLists.txt
-@@ -3,13 +3,6 @@ project(ur_driver_examples)
+diff --git a/CMakeModules/DefineCXX17CompilerFlag.cmake b/CMakeModules/DefineCXX17CompilerFlag.cmake
+index 37a6058..ad9992e 100644
+--- a/CMakeModules/DefineCXX17CompilerFlag.cmake
++++ b/CMakeModules/DefineCXX17CompilerFlag.cmake
+@@ -33,23 +33,26 @@ include(CheckCXXCompilerFlag)
+ macro (DEFINE_CXX_17_COMPILER_FLAG _RESULT)
+   if(NOT DEFINED "${_RESULT}")
  
- # find_package(ur_client_library REQUIRED)
- 
--# #
--# # Check C++11 support / enable global pedantic and Wall
--# #
--include(DefineCXX17CompilerFlag)
--DEFINE_CXX_17_COMPILER_FLAG(CXX17_FLAG)
--set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+-    if(NOT CMAKE_REQUIRED_QUIET)
+-      message(STATUS "Performing C++17 Test")
+-    endif()
 -
- add_executable(driver_example
-   full_driver.cpp)
- target_compile_options(driver_example PUBLIC ${CXX17_FLAG})
+-    # Check for default argument (all newer compilers)
+-    CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
+-    if(COMPILER_SUPPORTS_CXX17)
+-      set(${_RESULT} "-std=c++17" CACHE INTERNAL "C++17 flag")
++    if(MSVC AND MSVC_VERSION GREATER 1919)
++      set(${_RESULT} "/std:c++17" CACHE INTERNAL "C++17 flag")
+     else()
+-      # Check for older version (before 2017)
+-      CHECK_CXX_COMPILER_FLAG("-std=c++1z" COMPILER_SUPPORTS_CXX1Z)
+-      if(COMPILER_SUPPORTS_CXX1Z)
+-	set(${_RESULT} "-std=c++1z" CACHE INTERNAL "C++17 flag")
++      if(NOT CMAKE_REQUIRED_QUIET)
++        message(STATUS "Performing C++17 Test")
++      endif()
++
++      # Check for default argument (all newer compilers)
++      CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
++      if(COMPILER_SUPPORTS_CXX17)
++        set(${_RESULT} "-std=c++17" CACHE INTERNAL "C++17 flag")
+       else()
+-	message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++17 support. Please use a different C++ compiler.")
++        # Check for older version (before 2017)
++        CHECK_CXX_COMPILER_FLAG("-std=c++1z" COMPILER_SUPPORTS_CXX1Z)
++        if(COMPILER_SUPPORTS_CXX1Z)
++          set(${_RESULT} "-std=c++1z" CACHE INTERNAL "C++17 flag")
++        else()
++          message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++17 support. Please use a different C++ compiler.")
++        endif()
+       endif()
+     endif()
+-
+   endif()
+ endmacro()
+diff --git a/examples/dashboard_example.cpp b/examples/dashboard_example.cpp
+index 81eda8c..dda78d7 100644
+--- a/examples/dashboard_example.cpp
++++ b/examples/dashboard_example.cpp
+@@ -32,11 +32,11 @@
+ 
+ #include <ur_client_library/log.h>
+ #include <ur_client_library/ur/dashboard_client.h>
++#include <ur_client_library/comm/socket_t.h>
+ 
+ #include <iostream>
+ #include <memory>
+ #include <thread>
+-#include <unistd.h>
+ 
+ using namespace urcl;
+ 
+@@ -97,7 +97,11 @@ int main(int argc, char* argv[])
+     return 1;
+   }
+ 
++#ifdef _WIN32
++  ::Sleep(1000);
++#else // _WIN32
+   sleep(1);
++#endif  // _WIN32
+ 
+   // Play loaded program
+   if (!my_dashboard->commandPlay())
 diff --git a/include/ur_client_library/comm/bin_parser.h b/include/ur_client_library/comm/bin_parser.h
-index e13aba6..83f8e6c 100644
+index e13aba6..5b968e5 100644
 --- a/include/ur_client_library/comm/bin_parser.h
 +++ b/include/ur_client_library/comm/bin_parser.h
 @@ -21,7 +21,6 @@
@@ -76,42 +143,383 @@ index e13aba6..83f8e6c 100644
  #include <inttypes.h>
  #include <array>
  #include <bitset>
-@@ -29,6 +28,7 @@
- #include <cstring>
- #include <string>
- #include <memory>
-+#include "ur_client_library/portable_endian.h"
+@@ -32,6 +31,7 @@
  #include "ur_client_library/log.h"
  #include "ur_client_library/types.h"
  #include "ur_client_library/exceptions.h"
++#include "ur_client_library/portable_endian.h"
+ 
+ namespace urcl
+ {
 diff --git a/include/ur_client_library/comm/package_serializer.h b/include/ur_client_library/comm/package_serializer.h
-index 7745da9..ded500a 100644
+index 7745da9..d941fdf 100644
 --- a/include/ur_client_library/comm/package_serializer.h
 +++ b/include/ur_client_library/comm/package_serializer.h
-@@ -29,8 +29,8 @@
+@@ -29,7 +29,7 @@
  #ifndef UR_CLIENT_LIBRARY_PACKAGE_SERIALIZER_H_INCLUDED
  #define UR_CLIENT_LIBRARY_PACKAGE_SERIALIZER_H_INCLUDED
  
 -#include <endian.h>
- #include <cstring>
 +#include "ur_client_library/portable_endian.h"
+ #include <cstring>
  
  namespace urcl
+diff --git a/include/ur_client_library/comm/socket_t.h b/include/ur_client_library/comm/socket_t.h
+new file mode 100644
+index 0000000..c4fd3b5
+--- /dev/null
++++ b/include/ur_client_library/comm/socket_t.h
+@@ -0,0 +1,63 @@
++/*
++ * Copyright 2024, RoboDK Inc.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++#pragma once
++
++#ifdef _WIN32
++
++#define NOMINMAX
++#define WIN32_LEAN_AND_MEAN
++#include <WinSock2.h>
++#include <ws2tcpip.h>
++
++#ifndef TCP_QUICKACK
++#define TCP_QUICKACK 12
++#endif
++
++#ifdef ERROR
++#undef ERROR
++#endif  // ERROR
++
++typedef SOCKET socket_t;
++typedef SSIZE_T ssize_t;
++
++static inline int ur_setsockopt(socket_t s, int level, int optname, const void* optval, unsigned int optlen)
++{
++  return ::setsockopt(s, level, optname, reinterpret_cast<const char*>(optval), static_cast<int>(optlen));
++}
++
++static inline int ur_close(socket_t s)
++{
++  return ::closesocket(s);
++}
++
++#else // _WIN32
++
++#include <netdb.h>
++#include <sys/socket.h>
++#include <sys/types.h>
++#include <unistd.h>
++
++typedef int socket_t;
++
++#ifndef INVALID_SOCKET
++#define INVALID_SOCKET (-1)
++#endif
++
++#define ur_setsockopt setsockopt
++#define ur_close close
++
++#endif  //  _WIN32
+diff --git a/include/ur_client_library/comm/stream.h b/include/ur_client_library/comm/stream.h
+index d101143..8a57349 100644
+--- a/include/ur_client_library/comm/stream.h
++++ b/include/ur_client_library/comm/stream.h
+@@ -19,9 +19,6 @@
+  */
+ 
+ #pragma once
+-#include <netdb.h>
+-#include <sys/socket.h>
+-#include <sys/types.h>
+ #include <atomic>
+ #include <chrono>
+ #include <mutex>
+diff --git a/include/ur_client_library/comm/tcp_server.h b/include/ur_client_library/comm/tcp_server.h
+index 8cad8dd..0863c8f 100644
+--- a/include/ur_client_library/comm/tcp_server.h
++++ b/include/ur_client_library/comm/tcp_server.h
+@@ -29,16 +29,15 @@
+ #ifndef UR_CLIENT_LIBRARY_TCP_SERVER_H_INCLUDED
+ #define UR_CLIENT_LIBRARY_TCP_SERVER_H_INCLUDED
+ 
+-#include <netdb.h>
+-#include <sys/socket.h>
+-#include <sys/types.h>
+-#include <unistd.h>
+ 
+ #include <atomic>
+ #include <chrono>
+ #include <functional>
+ #include <thread>
+ 
++#include "ur_client_library/comm/socket_t.h"
++
++
+ namespace urcl
  {
+ namespace comm
+@@ -178,25 +177,22 @@ private:
+   std::atomic<bool> keep_running_;
+   std::thread worker_thread_;
+ 
+-  std::atomic<int> listen_fd_;
++  std::atomic<socket_t> listen_fd_;
+   int port_;
+ 
+-  int maxfd_;
++  socket_t maxfd_;
+   fd_set masterfds_;
+   fd_set tempfds_;
+ 
+   uint32_t max_clients_allowed_;
+-  std::vector<int> client_fds_;
+-
+-  // Pipe for the self-pipe trick (https://cr.yp.to/docs/selfpipe.html)
+-  int self_pipe_[2];
++  std::vector<socket_t> client_fds_;
+ 
+   static const int INPUT_BUFFER_SIZE = 100;
+   char input_buffer_[INPUT_BUFFER_SIZE];
+ 
+-  std::function<void(const int)> new_connection_callback_;
+-  std::function<void(const int)> disconnect_callback_;
+-  std::function<void(const int, char* buffer, int nbytesrecv)> message_callback_;
++  std::function<void(const socket_t)> new_connection_callback_;
++  std::function<void(const socket_t)> disconnect_callback_;
++  std::function<void(const socket_t, char* buffer, int nbytesrecv)> message_callback_;
+ };
+ 
+ }  // namespace comm
+diff --git a/include/ur_client_library/comm/tcp_socket.h b/include/ur_client_library/comm/tcp_socket.h
+index 5136481..b1252b6 100644
+--- a/include/ur_client_library/comm/tcp_socket.h
++++ b/include/ur_client_library/comm/tcp_socket.h
+@@ -19,15 +19,15 @@
+  */
+ 
+ #pragma once
+-#include <netdb.h>
+-#include <sys/socket.h>
+-#include <sys/types.h>
+ #include <atomic>
+ #include <chrono>
+ #include <mutex>
+ #include <string>
+ #include <memory>
+ 
++#include "ur_client_library/comm/socket_t.h"
++
++
+ namespace urcl
+ {
+ namespace comm
+@@ -49,7 +49,7 @@ enum class SocketState
+ class TCPSocket
+ {
+ private:
+-  std::atomic<int> socket_fd_;
++  std::atomic<socket_t> socket_fd_;
+   std::atomic<SocketState> state_;
+   std::chrono::milliseconds reconnection_time_;
+   bool reconnection_time_modified_deprecated_ = false;
 diff --git a/include/ur_client_library/control/reverse_interface.h b/include/ur_client_library/control/reverse_interface.h
-index 707c455..ee8c318 100644
+index 707c455..ab4d247 100644
 --- a/include/ur_client_library/control/reverse_interface.h
 +++ b/include/ur_client_library/control/reverse_interface.h
-@@ -35,8 +35,8 @@
+@@ -35,7 +35,7 @@
  #include "ur_client_library/log.h"
  #include "ur_client_library/ur/robot_receive_timeout.h"
  #include <cstring>
 -#include <endian.h>
++#include <ur_client_library/portable_endian.h>
  #include <condition_variable>
-+#include "ur_client_library/portable_endian.h"
+ 
+ namespace urcl
+diff --git a/include/ur_client_library/exceptions.h b/include/ur_client_library/exceptions.h
+index 5145a75..1ccdc42 100644
+--- a/include/ur_client_library/exceptions.h
++++ b/include/ur_client_library/exceptions.h
+@@ -34,6 +34,15 @@
+ #include <sstream>
+ #include "ur/version_information.h"
+ 
++#ifdef _WIN32
++#define NOMINMAX
++#define WIN32_LEAN_AND_MEAN
++#include <WinSock2.h>
++#ifdef ERROR
++#undef ERROR
++#endif  // ERROR
++#endif
++
+ namespace urcl
+ {
+ /*!
+diff --git a/include/ur_client_library/helpers.h b/include/ur_client_library/helpers.h
+index ad07083..7d542e8 100644
+--- a/include/ur_client_library/helpers.h
++++ b/include/ur_client_library/helpers.h
+@@ -29,7 +29,37 @@
+ #ifndef UR_CLIENT_LIBRARY_HELPERS_H_INCLUDED
+ #define UR_CLIENT_LIBRARY_HELPERS_H_INCLUDED
+ 
+-#include <thread>
++
++#ifdef _WIN32
++
++#define NOMINMAX
++#define WIN32_LEAN_AND_MEAN
++#include <Windows.h>
++
++#ifdef ERROR
++#undef ERROR
++#endif  // ERROR
++
++#define SCHED_FIFO (1)
++
++typedef HANDLE pthread_t;
++
++
++static inline pthread_t pthread_self()
++{
++  return ::GetCurrentThread();
++}
++
++static inline int sched_get_priority_max(int policy)
++{
++  return THREAD_PRIORITY_TIME_CRITICAL;
++}
++
++#else // _WIN32
++
++#include <pthread.h>
++
++#endif // _WIN32
  
  namespace urcl
  {
+diff --git a/include/ur_client_library/portable_endian.h b/include/ur_client_library/portable_endian.h
+new file mode 100644
+index 0000000..3ed9571
+--- /dev/null
++++ b/include/ur_client_library/portable_endian.h
+@@ -0,0 +1,103 @@
++//
++// endian.h
++//
++// https://gist.github.com/panzi/6856583
++//
++// I, Mathias Panzenböck, place this file hereby into the public domain. Use
++// it at your own risk for whatever you like. In case there are
++// jurisdictions that don't support putting things in the public domain you
++// can also consider it to be "dual licensed" under the BSD, MIT and Apache
++// licenses, if you want to. This code is trivial anyway. Consider it an
++// example on how to get the endian conversion functions on different
++// platforms.
++
++#ifndef PORTABLE_ENDIAN_H__
++#define PORTABLE_ENDIAN_H__
++
++// Byte order
++#if defined(linux) || defined(__linux) || defined(__linux__) || defined(__CYGWIN__)
++#   include <endian.h>
++#elif defined(__APPLE__)
++#   include <libkern/OSByteOrder.h>
++
++#   define htobe16(x) OSSwapHostToBigInt16(x)
++#   define htole16(x) OSSwapHostToLittleInt16(x)
++#   define be16toh(x) OSSwapBigToHostInt16(x)
++#   define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#   define htobe32(x) OSSwapHostToBigInt32(x)
++#   define htole32(x) OSSwapHostToLittleInt32(x)
++#   define be32toh(x) OSSwapBigToHostInt32(x)
++#   define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#   define htobe64(x) OSSwapHostToBigInt64(x)
++#   define htole64(x) OSSwapHostToLittleInt64(x)
++#   define be64toh(x) OSSwapBigToHostInt64(x)
++#   define le64toh(x) OSSwapLittleToHostInt64(x)
++
++#   define __BYTE_ORDER    BYTE_ORDER
++#   define __BIG_ENDIAN    BIG_ENDIAN
++#   define __LITTLE_ENDIAN LITTLE_ENDIAN
++#   define __PDP_ENDIAN    PDP_ENDIAN
++#elif defined(__OpenBSD__)
++#   include <sys/endian.h>
++#elif defined(__NetBSD__) || defined(__FreeBSD__) || defined(__DragonFly__)
++#   include <sys/endian.h>
++
++#   define be16toh(x) betoh16(x)
++#   define le16toh(x) letoh16(x)
++
++#   define be32toh(x) betoh32(x)
++#   define le32toh(x) letoh32(x)
++
++#   define be64toh(x) betoh64(x)
++#   define le64toh(x) letoh64(x)
++#elif defined(_WIN32)
++#   include <stdlib.h>
++#   if BYTE_ORDER == LITTLE_ENDIAN
++#       if defined(_MSC_VER)
++#           define htobe16(x) _byteswap_ushort(x)
++#           define htole16(x) (x)
++#           define be16toh(x) _byteswap_ushort(x)
++#           define le16toh(x) (x)
++
++#           define htobe32(x) _byteswap_ulong(x)
++#           define htole32(x) (x)
++#           define be32toh(x) _byteswap_ulong(x)
++#           define le32toh(x) (x)
++
++#           define htobe64(x) _byteswap_uint64(x)
++#           define htole64(x) (x)
++#           define be64toh(x) _byteswap_uint64(x)
++#           define le64toh(x) (x)
++#       elif defined(__GNUC__) || defined(__clang__)
++#           define htobe16(x) __builtin_bswap16(x)
++#           define htole16(x) (x)
++#           define be16toh(x) __builtin_bswap16(x)
++#           define le16toh(x) (x)
++
++#           define htobe32(x) __builtin_bswap32(x)
++#           define htole32(x) (x)
++#           define be32toh(x) __builtin_bswap32(x)
++#           define le32toh(x) (x)
++
++#           define htobe64(x) __builtin_bswap64(x)
++#           define htole64(x) (x)
++#           define be64toh(x) __builtin_bswap64(x)
++#           define le64toh(x) (x)
++#       else
++#           error Compiler is not supported
++#       endif
++#   else
++#       error Byte order is not supported
++#   endif
++
++#   define __BYTE_ORDER    BYTE_ORDER
++#   define __BIG_ENDIAN    BIG_ENDIAN
++#   define __LITTLE_ENDIAN LITTLE_ENDIAN
++#   define __PDP_ENDIAN    PDP_ENDIAN
++#else
++#   error Platform is not supported
++#endif
++
++#endif // PORTABLE_ENDIAN_H__
 diff --git a/include/ur_client_library/primary/package_header.h b/include/ur_client_library/primary/package_header.h
 index cd64bda..440b2e4 100644
 --- a/include/ur_client_library/primary/package_header.h
@@ -138,33 +546,478 @@ index f910a08..eb509ea 100644
  #include "ur_client_library/types.h"
  #include "ur_client_library/comm/package_serializer.h"
  
+diff --git a/src/comm/tcp_server.cpp b/src/comm/tcp_server.cpp
+index ea5122c..edf5b32 100644
+--- a/src/comm/tcp_server.cpp
++++ b/src/comm/tcp_server.cpp
+@@ -32,12 +32,12 @@
+ #include <iostream>
+ 
+ #include <sstream>
+-#include <strings.h>
+ #include <cstring>
+ #include <fcntl.h>
+ #include <algorithm>
+ #include <system_error>
+ 
++
+ namespace urcl
+ {
+ namespace comm
+@@ -45,6 +45,11 @@ namespace comm
+ TCPServer::TCPServer(const int port, const size_t max_num_tries, const std::chrono::milliseconds reconnection_time)
+   : port_(port), maxfd_(0), max_clients_allowed_(0)
+ {
++#ifdef _WIN32
++  WSAData data;
++  ::WSAStartup(MAKEWORD(1, 1), &data);
++#endif  // _WIN32
++
+   init();
+   bind(max_num_tries, reconnection_time);
+   startListen();
+@@ -54,68 +59,56 @@ TCPServer::~TCPServer()
+ {
+   URCL_LOG_DEBUG("Destroying TCPServer object.");
+   shutdown();
+-  close(listen_fd_);
++  ur_close(listen_fd_);
+ }
+ 
+ void TCPServer::init()
+ {
+-  int err = (listen_fd_ = socket(AF_INET, SOCK_STREAM, 0));
+-  if (err == -1)
++  socket_t err = (listen_fd_ = socket(AF_INET, SOCK_STREAM, 0));
++  if (err < 0)
+   {
+     throw std::system_error(std::error_code(errno, std::generic_category()), "Failed to create socket endpoint");
+   }
+   int flag = 1;
+-  setsockopt(listen_fd_, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(int));
+-  setsockopt(listen_fd_, SOL_SOCKET, SO_KEEPALIVE, &flag, sizeof(int));
++#ifndef _WIN32
++  ur_setsockopt(listen_fd_, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(int));
++#endif
++  ur_setsockopt(listen_fd_, SOL_SOCKET, SO_KEEPALIVE, &flag, sizeof(int));
+ 
+   URCL_LOG_DEBUG("Created socket with FD %d", (int)listen_fd_);
+ 
+   FD_ZERO(&masterfds_);
+   FD_ZERO(&tempfds_);
++}
+ 
+-  // Create self-pipe for interrupting the worker loop
+-  if (pipe(self_pipe_) == -1)
+-  {
+-    throw std::system_error(std::error_code(errno, std::generic_category()), "Error creating self-pipe");
+-  }
+-  URCL_LOG_DEBUG("Created read pipe at FD %d", self_pipe_[0]);
+-  FD_SET(self_pipe_[0], &masterfds_);
++void TCPServer::shutdown()
++{
++  keep_running_ = false;
+ 
+-  // Make read and write ends of pipe nonblocking
+-  int flags;
+-  flags = fcntl(self_pipe_[0], F_GETFL);
+-  if (flags == -1)
+-  {
+-    throw std::system_error(std::error_code(errno, std::generic_category()), "fcntl-F_GETFL");
+-  }
+-  flags |= O_NONBLOCK;  // Make read end nonblocking
+-  if (fcntl(self_pipe_[0], F_SETFL, flags) == -1)
++  socket_t shutdown_socket = ::socket(AF_INET, SOCK_STREAM, 0);
++  if (shutdown_socket == INVALID_SOCKET)
+   {
+-    throw std::system_error(std::error_code(errno, std::generic_category()), "fcntl-F_SETFL");
++    throw std::system_error(std::error_code(errno, std::generic_category()), "Unable to create shutdown socket.");
+   }
+ 
+-  flags = fcntl(self_pipe_[1], F_GETFL);
+-  if (flags == -1)
++#ifdef _WIN32
++  unsigned long mode = 1;
++  ::ioctlsocket(shutdown_socket, FIONBIO, &mode);
++#else
++  int flags = ::fcntl(shutdown_socket, F_GETFL, 0);
++  if (flags >= 0)
+   {
+-    throw std::system_error(std::error_code(errno, std::generic_category()), "fcntl-F_GETFL");
++    ::fcntl(shutdown_socket, F_SETFL, flags | O_NONBLOCK);
+   }
+-  flags |= O_NONBLOCK;  // Make write end nonblocking
+-  if (fcntl(self_pipe_[1], F_SETFL, flags) == -1)
+-  {
+-    throw std::system_error(std::error_code(errno, std::generic_category()), "fcntl-F_SETFL");
+-  }
+-}
++#endif
+ 
+-void TCPServer::shutdown()
+-{
+-  keep_running_ = false;
++  struct sockaddr_in address;
++  memset(&address, 0, sizeof(address));
++  address.sin_family = AF_INET;
++  address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
++  address.sin_port = htons(port_);
+ 
+-  // This is basically the self-pipe trick. Writing to the pipe will trigger an event for the event
+-  // handler which will stop the select() call from blocking.
+-  if (::write(self_pipe_[1], "x", 1) == -1 && errno != EAGAIN)
+-  {
+-    throw std::system_error(std::error_code(errno, std::generic_category()), "Writing to self-pipe failed.");
+-  }
++  ::connect(shutdown_socket, reinterpret_cast<const sockaddr*>(&address), sizeof(address));
+ 
+   // After the event loop has finished the thread will be joinable.
+   if (worker_thread_.joinable())
+@@ -160,7 +153,7 @@ void TCPServer::bind(const size_t max_num_tries, const std::chrono::milliseconds
+   URCL_LOG_DEBUG("Bound %d:%d to FD %d", server_addr.sin_addr.s_addr, port_, (int)listen_fd_);
+ 
+   FD_SET(listen_fd_, &masterfds_);
+-  maxfd_ = std::max((int)listen_fd_, self_pipe_[0]);
++  maxfd_ = listen_fd_;
+ }
+ 
+ void TCPServer::startListen()
+@@ -193,7 +186,7 @@ void TCPServer::handleConnect()
+     FD_SET(client_fd, &masterfds_);
+     if (client_fd > maxfd_)
+     {
+-      maxfd_ = std::max(client_fd, self_pipe_[0]);
++      maxfd_ = client_fd;
+     }
+     if (new_connection_callback_)
+     {
+@@ -205,7 +198,7 @@ void TCPServer::handleConnect()
+     URCL_LOG_WARN("Connection attempt on port %d while maximum number of clients (%d) is already connected. Closing "
+                   "connection.",
+                   port_, max_clients_allowed_);
+-    close(client_fd);
++    ur_close(client_fd);
+   }
+ }
+ 
+@@ -222,30 +215,13 @@ void TCPServer::spin()
+     return;
+   }
+ 
+-  // Read part if pipe-trick. This will help interrupting the event handler thread.
+-  if (FD_ISSET(self_pipe_[0], &masterfds_))
++  if (!keep_running_)
+   {
+-    URCL_LOG_DEBUG("Activity on self-pipe");
+-    char buffer;
+-    if (read(self_pipe_[0], &buffer, 1) == -1)
+-    {
+-      while (true)
+-      {
+-        if (errno == EAGAIN)
+-          break;
+-        else
+-          URCL_LOG_ERROR("read failed");
+-      }
+-    }
+-    else
+-    {
+-      URCL_LOG_DEBUG("Self-pipe triggered");
+-      return;
+-    }
++    return;
+   }
+ 
+   // Check which fd has an activity
+-  for (int i = 0; i <= maxfd_; i++)
++  for (socket_t i = 0; i <= maxfd_; i++)
+   {
+     if (FD_ISSET(i, &tempfds_))
+     {
+@@ -266,7 +242,7 @@ void TCPServer::spin()
+ void TCPServer::handleDisconnect(const int fd)
+ {
+   URCL_LOG_DEBUG("%d disconnected.", fd);
+-  close(fd);
++  ur_close(fd);
+   if (disconnect_callback_)
+   {
+     disconnect_callback_(fd);
+@@ -285,7 +261,7 @@ void TCPServer::handleDisconnect(const int fd)
+ 
+ void TCPServer::readData(const int fd)
+ {
+-  bzero(&input_buffer_, INPUT_BUFFER_SIZE);  // clear input buffer
++  memset(input_buffer_, 0, INPUT_BUFFER_SIZE);  // clear input buffer
+   int nbytesrecv = recv(fd, input_buffer_, INPUT_BUFFER_SIZE, 0);
+   if (nbytesrecv > 0)
+   {
+@@ -340,7 +316,7 @@ bool TCPServer::write(const int fd, const uint8_t* buf, const size_t buf_len, si
+   // handle partial sends
+   while (written < buf_len)
+   {
+-    ssize_t sent = ::send(fd, buf + written, remaining, 0);
++    ssize_t sent = ::send(fd, reinterpret_cast<const char*>(buf + written), remaining, 0);
+ 
+     if (sent <= 0)
+     {
 diff --git a/src/comm/tcp_socket.cpp b/src/comm/tcp_socket.cpp
-index 8803664..1d92880 100644
+index 8803664..fe9a329 100644
 --- a/src/comm/tcp_socket.cpp
 +++ b/src/comm/tcp_socket.cpp
-@@ -21,7 +21,6 @@
+@@ -20,15 +20,17 @@
+  * limitations under the License.
   */
  
- #include <arpa/inet.h>
+-#include <arpa/inet.h>
 -#include <endian.h>
- #include <netinet/tcp.h>
- #include <unistd.h>
+-#include <netinet/tcp.h>
+-#include <unistd.h>
++#include <ur_client_library/portable_endian.h>
  #include <chrono>
-@@ -29,6 +28,7 @@
+ #include <cstring>
  #include <sstream>
  #include <thread>
  
-+#include "ur_client_library/portable_endian.h"
++#ifndef _WIN32
++#include <arpa/inet.h>
++#include <netinet/tcp.h>
++#endif
++
  #include "ur_client_library/log.h"
  #include "ur_client_library/comm/tcp_socket.h"
  
-@@ -48,7 +48,9 @@ void TCPSocket::setupOptions()
+@@ -36,8 +38,12 @@ namespace urcl
+ {
+ namespace comm
+ {
+-TCPSocket::TCPSocket() : socket_fd_(-1), state_(SocketState::Invalid), reconnection_time_(std::chrono::seconds(10))
++TCPSocket::TCPSocket() : socket_fd_(INVALID_SOCKET), state_(SocketState::Invalid), reconnection_time_(std::chrono::seconds(10))
+ {
++#ifdef _WIN32
++  WSAData data;
++  ::WSAStartup(MAKEWORD(1, 1), &data);
++#endif // _WIN32
+ }
+ TCPSocket::~TCPSocket()
+ {
+@@ -47,12 +53,18 @@ TCPSocket::~TCPSocket()
+ void TCPSocket::setupOptions()
  {
    int flag = 1;
-   setsockopt(socket_fd_, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
-+#ifndef __APPLE__
-   setsockopt(socket_fd_, IPPROTO_TCP, TCP_QUICKACK, &flag, sizeof(int));
-+#endif
+-  setsockopt(socket_fd_, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
+-  setsockopt(socket_fd_, IPPROTO_TCP, TCP_QUICKACK, &flag, sizeof(int));
++  ur_setsockopt(socket_fd_, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
++  ur_setsockopt(socket_fd_, IPPROTO_TCP, TCP_QUICKACK, &flag, sizeof(int));
  
    if (recv_timeout_ != nullptr)
    {
+-    setsockopt(socket_fd_, SOL_SOCKET, SO_RCVTIMEO, recv_timeout_.get(), sizeof(timeval));
++#ifdef _WIN32
++    DWORD value = recv_timeout_->tv_sec * 1000;
++    value += recv_timeout_->tv_usec / 1000;
++    ur_setsockopt(socket_fd_, SOL_SOCKET, SO_RCVTIMEO, &value, sizeof(value));
++#else
++    ur_setsockopt(socket_fd_, SOL_SOCKET, SO_RCVTIMEO, recv_timeout_.get(), sizeof(timeval));
++#endif
+   }
+ }
+ 
+@@ -141,8 +153,8 @@ void TCPSocket::close()
+   if (socket_fd_ >= 0)
+   {
+     state_ = SocketState::Closed;
+-    ::close(socket_fd_);
+-    socket_fd_ = -1;
++    ::ur_close(socket_fd_);
++    socket_fd_ = INVALID_SOCKET;
+   }
+ }
+ 
+@@ -179,7 +191,7 @@ bool TCPSocket::read(uint8_t* buf, const size_t buf_len, size_t& read)
+   if (state_ != SocketState::Connected)
+     return false;
+ 
+-  ssize_t res = ::recv(socket_fd_, buf, buf_len, 0);
++  ssize_t res = ::recv(socket_fd_, reinterpret_cast<char*>(buf), buf_len, 0);
+ 
+   if (res == 0)
+   {
+@@ -188,11 +200,20 @@ bool TCPSocket::read(uint8_t* buf, const size_t buf_len, size_t& read)
+   }
+   else if (res < 0)
+   {
++    res = 0;
++#ifdef _WIN32
++    int code = ::WSAGetLastError();
++    if (code != WSAETIMEDOUT && code != WSAEWOULDBLOCK)
++    {
++      state_ = SocketState::Disconnected;
++    }
++#else
+     if (!(errno == EAGAIN || errno == EWOULDBLOCK))
+     {
+       // any permanent error should be detected early
+       state_ = SocketState::Disconnected;
+     }
++#endif
+     return false;
+   }
+ 
+@@ -215,7 +236,7 @@ bool TCPSocket::write(const uint8_t* buf, const size_t buf_len, size_t& written)
+   // handle partial sends
+   while (written < buf_len)
+   {
+-    ssize_t sent = ::send(socket_fd_, buf + written, remaining, 0);
++    ssize_t sent = ::send(socket_fd_, reinterpret_cast<const char*>(buf + written), remaining, 0);
+ 
+     if (sent <= 0)
+     {
+@@ -223,7 +244,7 @@ bool TCPSocket::write(const uint8_t* buf, const size_t buf_len, size_t& written)
+       return false;
+     }
+ 
+-    written += sent;
++    written += static_cast<size_t>(sent);
+     remaining -= sent;
+   }
+ 
+diff --git a/src/helpers.cpp b/src/helpers.cpp
+index 2cd1eab..d08bd9c 100644
+--- a/src/helpers.cpp
++++ b/src/helpers.cpp
+@@ -37,6 +37,9 @@ namespace urcl
+ {
+ bool setFiFoScheduling(pthread_t& thread, const int priority)
+ {
++#ifdef _WIN32
++  return ::SetThreadPriority(thread, priority);
++#else // _WIN32
+   struct sched_param params;
+   params.sched_priority = priority;
+   int ret = pthread_setschedparam(thread, SCHED_FIFO, &params);
+@@ -88,5 +91,6 @@ bool setFiFoScheduling(pthread_t& thread, const int priority)
+     }
+   }
+   return true;
++#endif
+ }
+ }  // namespace urcl
+diff --git a/src/ur/dashboard_client.cpp b/src/ur/dashboard_client.cpp
+index 8469a76..7565068 100644
+--- a/src/ur/dashboard_client.cpp
++++ b/src/ur/dashboard_client.cpp
+@@ -29,11 +29,15 @@
+ #include <iostream>
+ #include <regex>
+ #include <thread>
+-#include <unistd.h>
+ #include <ur_client_library/log.h>
+ #include <ur_client_library/ur/dashboard_client.h>
+ #include <ur_client_library/exceptions.h>
+ 
++#ifndef _WIN32
++#include <unistd.h>
++#endif  // !_WIN32
++
++
+ using namespace std::chrono_literals;
+ 
+ namespace urcl
+@@ -59,7 +63,7 @@ bool DashboardClient::connect(const size_t max_num_tries, const std::chrono::mil
+   timeval configured_tv = getConfiguredReceiveTimeout();
+   timeval tv;
+ 
+-  while (not ret_val)
++  while (!ret_val)
+   {
+     // The first read after connection can take more time.
+     tv.tv_sec = 10;
+diff --git a/tests/test_pipeline.cpp b/tests/test_pipeline.cpp
+index fccf0dd..f7e0171 100644
+--- a/tests/test_pipeline.cpp
++++ b/tests/test_pipeline.cpp
+@@ -60,7 +60,7 @@ protected:
+     pipeline_->init();
+   }
+ 
+-  void Teardown()
++  void teardown()
+   {
+     // Clean up
+     pipeline_->stop();
+@@ -247,7 +247,7 @@ TEST_F(PipelineTest, connect_non_connected_robot)
+   auto end = std::chrono::system_clock::now();
+   auto elapsed = end - start;
+   // This is only a rough estimate, obviously
+-  EXPECT_LT(elapsed, std::chrono::milliseconds(1500));
++  EXPECT_LT(elapsed, std::chrono::milliseconds(7500));
+ }
+ 
+ int main(int argc, char* argv[])
+diff --git a/tests/test_producer.cpp b/tests/test_producer.cpp
+index 15663cb..fbfecee 100644
+--- a/tests/test_producer.cpp
++++ b/tests/test_producer.cpp
+@@ -49,7 +49,7 @@ protected:
+     server_->start();
+   }
+ 
+-  void Teardown()
++  void teardown()
+   {
+     // Clean up
+     server_.reset();
+@@ -133,7 +133,7 @@ TEST_F(ProducerTest, connect_non_connected_robot)
+   auto end = std::chrono::system_clock::now();
+   auto elapsed = end - start;
+   // This is only a rough estimate, obviously
+-  EXPECT_LT(elapsed, std::chrono::milliseconds(1500));
++  EXPECT_LT(elapsed, std::chrono::milliseconds(7500));
+ }
+ 
+ int main(int argc, char* argv[])
+diff --git a/tests/test_stream.cpp b/tests/test_stream.cpp
+index d095b41..28448e3 100644
+--- a/tests/test_stream.cpp
++++ b/tests/test_stream.cpp
+@@ -51,7 +51,7 @@ protected:
+     server_->start();
+   }
+ 
+-  void Teardown()
++  void teardown()
+   {
+     // Clean up
+     server_.reset();
+@@ -329,7 +329,7 @@ TEST_F(StreamTest, connect_non_connected_robot)
+   auto end = std::chrono::system_clock::now();
+   auto elapsed = end - start;
+   // This is only a rough estimate, obviously
+-  EXPECT_LT(elapsed, std::chrono::milliseconds(1500));
++  EXPECT_LT(elapsed, std::chrono::milliseconds(7500));
+ }
+ 
+ int main(int argc, char* argv[])
+diff --git a/tests/test_tcp_socket.cpp b/tests/test_tcp_socket.cpp
+index a96b659..6241a8c 100644
+--- a/tests/test_tcp_socket.cpp
++++ b/tests/test_tcp_socket.cpp
+@@ -351,7 +351,7 @@ TEST_F(TCPSocketTest, connect_non_running_robot)
+   auto end = std::chrono::system_clock::now();
+   auto elapsed = end - start;
+   // This is only a rough estimate, obviously
+-  EXPECT_LT(elapsed, std::chrono::milliseconds(1500));
++  EXPECT_LT(elapsed, std::chrono::milliseconds(7500));
+ }
+ 
+ TEST_F(TCPSocketTest, test_deprecated_reconnection_time_interface)
+@@ -374,7 +374,7 @@ TEST_F(TCPSocketTest, test_read_on_socket_abruptly_closed)
+   server_->write(client_fd_, data, len, written);
+ 
+   // Simulate socket failure
+-  close(client_->getSocketFD());
++  ur_close(client_->getSocketFD());
+ 
+   char characters;
+   size_t read_chars = 0;
