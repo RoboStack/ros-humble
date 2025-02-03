@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 878ffed..2ef4cf8 100644
+index 878ffede2..2ef4cf829 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -9,15 +9,16 @@ if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
@@ -56,9 +56,9 @@ index 878ffed..2ef4cf8 100644
 +  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
  )
  install(DIRECTORY include/ DESTINATION include)
- 
+
 diff --git a/CMakeModules/DefineCXX17CompilerFlag.cmake b/CMakeModules/DefineCXX17CompilerFlag.cmake
-index 37a6058..ad9992e 100644
+index 37a6058b0..ad9992e65 100644
 --- a/CMakeModules/DefineCXX17CompilerFlag.cmake
 +++ b/CMakeModules/DefineCXX17CompilerFlag.cmake
 @@ -33,23 +33,26 @@ include(CheckCXXCompilerFlag)
@@ -103,7 +103,7 @@ index 37a6058..ad9992e 100644
    endif()
  endmacro()
 diff --git a/examples/dashboard_example.cpp b/examples/dashboard_example.cpp
-index 81eda8c..dda78d7 100644
+index 81eda8cbe..dda78d761 100644
 --- a/examples/dashboard_example.cpp
 +++ b/examples/dashboard_example.cpp
 @@ -32,11 +32,11 @@
@@ -132,12 +132,12 @@ index 81eda8c..dda78d7 100644
    // Play loaded program
    if (!my_dashboard->commandPlay())
 diff --git a/include/ur_client_library/comm/bin_parser.h b/include/ur_client_library/comm/bin_parser.h
-index e13aba6..5b968e5 100644
+index e13aba6b9..5b968e5a6 100644
 --- a/include/ur_client_library/comm/bin_parser.h
 +++ b/include/ur_client_library/comm/bin_parser.h
 @@ -21,7 +21,6 @@
  #pragma once
- 
+
  #include <assert.h>
 -#include <endian.h>
  #include <inttypes.h>
@@ -148,25 +148,25 @@ index e13aba6..5b968e5 100644
  #include "ur_client_library/types.h"
  #include "ur_client_library/exceptions.h"
 +#include "ur_client_library/portable_endian.h"
- 
+
  namespace urcl
  {
 diff --git a/include/ur_client_library/comm/package_serializer.h b/include/ur_client_library/comm/package_serializer.h
-index 7745da9..d941fdf 100644
+index 7745da9da..d941fdfe2 100644
 --- a/include/ur_client_library/comm/package_serializer.h
 +++ b/include/ur_client_library/comm/package_serializer.h
 @@ -29,7 +29,7 @@
  #ifndef UR_CLIENT_LIBRARY_PACKAGE_SERIALIZER_H_INCLUDED
  #define UR_CLIENT_LIBRARY_PACKAGE_SERIALIZER_H_INCLUDED
- 
+
 -#include <endian.h>
 +#include "ur_client_library/portable_endian.h"
  #include <cstring>
- 
+
  namespace urcl
 diff --git a/include/ur_client_library/comm/socket_t.h b/include/ur_client_library/comm/socket_t.h
 new file mode 100644
-index 0000000..c4fd3b5
+index 000000000..c4fd3b56b
 --- /dev/null
 +++ b/include/ur_client_library/comm/socket_t.h
 @@ -0,0 +1,63 @@
@@ -234,7 +234,7 @@ index 0000000..c4fd3b5
 +
 +#endif  //  _WIN32
 diff --git a/include/ur_client_library/comm/stream.h b/include/ur_client_library/comm/stream.h
-index d101143..8a57349 100644
+index d10114345..8a573492e 100644
 --- a/include/ur_client_library/comm/stream.h
 +++ b/include/ur_client_library/comm/stream.h
 @@ -19,9 +19,6 @@
@@ -248,7 +248,7 @@ index d101143..8a57349 100644
  #include <chrono>
  #include <mutex>
 diff --git a/include/ur_client_library/comm/tcp_server.h b/include/ur_client_library/comm/tcp_server.h
-index 8cad8dd..0863c8f 100644
+index 8cad8ddee..0863c8fc0 100644
 --- a/include/ur_client_library/comm/tcp_server.h
 +++ b/include/ur_client_library/comm/tcp_server.h
 @@ -29,16 +29,15 @@
@@ -271,7 +271,7 @@ index 8cad8dd..0863c8f 100644
  namespace urcl
  {
  namespace comm
-@@ -178,25 +177,22 @@ private:
+@@ -178,25 +177,22 @@ class TCPServer
    std::atomic<bool> keep_running_;
    std::thread worker_thread_;
  
@@ -304,7 +304,7 @@ index 8cad8dd..0863c8f 100644
  
  }  // namespace comm
 diff --git a/include/ur_client_library/comm/tcp_socket.h b/include/ur_client_library/comm/tcp_socket.h
-index 5136481..b1252b6 100644
+index 513648106..b1252b6e4 100644
 --- a/include/ur_client_library/comm/tcp_socket.h
 +++ b/include/ur_client_library/comm/tcp_socket.h
 @@ -19,15 +19,15 @@
@@ -336,7 +336,7 @@ index 5136481..b1252b6 100644
    std::chrono::milliseconds reconnection_time_;
    bool reconnection_time_modified_deprecated_ = false;
 diff --git a/include/ur_client_library/control/reverse_interface.h b/include/ur_client_library/control/reverse_interface.h
-index 707c455..ab4d247 100644
+index 707c4554b..ab4d2478a 100644
 --- a/include/ur_client_library/control/reverse_interface.h
 +++ b/include/ur_client_library/control/reverse_interface.h
 @@ -35,7 +35,7 @@
@@ -346,10 +346,10 @@ index 707c455..ab4d247 100644
 -#include <endian.h>
 +#include <ur_client_library/portable_endian.h>
  #include <condition_variable>
- 
+
  namespace urcl
 diff --git a/include/ur_client_library/exceptions.h b/include/ur_client_library/exceptions.h
-index 5145a75..1ccdc42 100644
+index 5145a75d8..1ccdc4294 100644
 --- a/include/ur_client_library/exceptions.h
 +++ b/include/ur_client_library/exceptions.h
 @@ -34,6 +34,15 @@
@@ -369,13 +369,13 @@ index 5145a75..1ccdc42 100644
  {
  /*!
 diff --git a/include/ur_client_library/helpers.h b/include/ur_client_library/helpers.h
-index ad07083..7d542e8 100644
+index ad070836e..7d542e804 100644
 --- a/include/ur_client_library/helpers.h
 +++ b/include/ur_client_library/helpers.h
 @@ -29,7 +29,37 @@
  #ifndef UR_CLIENT_LIBRARY_HELPERS_H_INCLUDED
  #define UR_CLIENT_LIBRARY_HELPERS_H_INCLUDED
- 
+
 -#include <thread>
 +
 +#ifdef _WIN32
@@ -413,7 +413,7 @@ index ad07083..7d542e8 100644
  {
 diff --git a/include/ur_client_library/portable_endian.h b/include/ur_client_library/portable_endian.h
 new file mode 100644
-index 0000000..3ed9571
+index 000000000..3ed95719b
 --- /dev/null
 +++ b/include/ur_client_library/portable_endian.h
 @@ -0,0 +1,103 @@
@@ -520,34 +520,21 @@ index 0000000..3ed9571
 +#endif
 +
 +#endif // PORTABLE_ENDIAN_H__
-diff --git a/include/ur_client_library/primary/package_header.h b/include/ur_client_library/primary/package_header.h
-index cd64bda..440b2e4 100644
---- a/include/ur_client_library/primary/package_header.h
-+++ b/include/ur_client_library/primary/package_header.h
-@@ -32,7 +32,7 @@
- 
- #include <inttypes.h>
- #include <cstddef>
--#include <endian.h>
-+#include "ur_client_library/portable_endian.h"
- #include "ur_client_library/types.h"
- 
- namespace urcl
 diff --git a/include/ur_client_library/rtde/package_header.h b/include/ur_client_library/rtde/package_header.h
-index f910a08..eb509ea 100644
+index f910a0843..eb509ea54 100644
 --- a/include/ur_client_library/rtde/package_header.h
 +++ b/include/ur_client_library/rtde/package_header.h
 @@ -31,7 +31,7 @@
  #define UR_CLIENT_LIBRARY_RTDE__HEADER_H_INCLUDED
- 
+
  #include <cstddef>
 -#include <endian.h>
 +#include "ur_client_library/portable_endian.h"
  #include "ur_client_library/types.h"
  #include "ur_client_library/comm/package_serializer.h"
- 
+
 diff --git a/src/comm/tcp_server.cpp b/src/comm/tcp_server.cpp
-index ea5122c..edf5b32 100644
+index ea5122c7e..edf5b3214 100644
 --- a/src/comm/tcp_server.cpp
 +++ b/src/comm/tcp_server.cpp
 @@ -32,12 +32,12 @@
@@ -762,7 +749,7 @@ index ea5122c..edf5b32 100644
      if (sent <= 0)
      {
 diff --git a/src/comm/tcp_socket.cpp b/src/comm/tcp_socket.cpp
-index 8803664..fe9a329 100644
+index 8803664a8..fe9a32980 100644
 --- a/src/comm/tcp_socket.cpp
 +++ b/src/comm/tcp_socket.cpp
 @@ -20,15 +20,17 @@
@@ -883,7 +870,7 @@ index 8803664..fe9a329 100644
    }
  
 diff --git a/src/helpers.cpp b/src/helpers.cpp
-index 2cd1eab..d08bd9c 100644
+index 2cd1eab10..d08bd9cb0 100644
 --- a/src/helpers.cpp
 +++ b/src/helpers.cpp
 @@ -37,6 +37,9 @@ namespace urcl
@@ -904,7 +891,7 @@ index 2cd1eab..d08bd9c 100644
  }
  }  // namespace urcl
 diff --git a/src/ur/dashboard_client.cpp b/src/ur/dashboard_client.cpp
-index 8469a76..7565068 100644
+index 8469a766c..75650688f 100644
 --- a/src/ur/dashboard_client.cpp
 +++ b/src/ur/dashboard_client.cpp
 @@ -29,11 +29,15 @@
@@ -934,10 +921,10 @@ index 8469a76..7565068 100644
      // The first read after connection can take more time.
      tv.tv_sec = 10;
 diff --git a/tests/test_pipeline.cpp b/tests/test_pipeline.cpp
-index fccf0dd..f7e0171 100644
+index fccf0dd80..f7e0171d2 100644
 --- a/tests/test_pipeline.cpp
 +++ b/tests/test_pipeline.cpp
-@@ -60,7 +60,7 @@ protected:
+@@ -60,7 +60,7 @@ class PipelineTest : public ::testing::Test
      pipeline_->init();
    }
  
@@ -956,10 +943,10 @@ index fccf0dd..f7e0171 100644
  
  int main(int argc, char* argv[])
 diff --git a/tests/test_producer.cpp b/tests/test_producer.cpp
-index 15663cb..fbfecee 100644
+index 15663cbb1..fbfecee95 100644
 --- a/tests/test_producer.cpp
 +++ b/tests/test_producer.cpp
-@@ -49,7 +49,7 @@ protected:
+@@ -49,7 +49,7 @@ class ProducerTest : public ::testing::Test
      server_->start();
    }
  
@@ -978,10 +965,10 @@ index 15663cb..fbfecee 100644
  
  int main(int argc, char* argv[])
 diff --git a/tests/test_stream.cpp b/tests/test_stream.cpp
-index d095b41..28448e3 100644
+index d095b41d9..28448e3c5 100644
 --- a/tests/test_stream.cpp
 +++ b/tests/test_stream.cpp
-@@ -51,7 +51,7 @@ protected:
+@@ -51,7 +51,7 @@ class StreamTest : public ::testing::Test
      server_->start();
    }
  
@@ -1000,7 +987,7 @@ index d095b41..28448e3 100644
  
  int main(int argc, char* argv[])
 diff --git a/tests/test_tcp_socket.cpp b/tests/test_tcp_socket.cpp
-index a96b659..6241a8c 100644
+index a96b6595b..6241a8c8d 100644
 --- a/tests/test_tcp_socket.cpp
 +++ b/tests/test_tcp_socket.cpp
 @@ -351,7 +351,7 @@ TEST_F(TCPSocketTest, connect_non_running_robot)
@@ -1021,3 +1008,13 @@ index a96b659..6241a8c 100644
  
    char characters;
    size_t read_chars = 0;
+
+diff --git a/include/ur_client_library/primary/package_header.h b/include/ur_client_library/primary/package_header.h
+index cd64bdaf0..440b2e405 100644
+--- a/include/ur_client_library/primary/package_header.h
++++ b/include/ur_client_library/primary/package_header.h
+@@ -35,4 +35,4 @@
+-#include <endian.h>
++#include "ur_client_library/portable_endian.h"
+ #include "ur_client_library/types.h"
+
