@@ -35,7 +35,7 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "cbb8eba834ce383
 [feature.emscripten.pypi-dependencies]
 # pull vinca emscripten branch
 # vinca = { path = "../vinca", editable = true} 
-vinca = { git = "https://github.com/nmarticorena/vinca.git", rev = "0440727f19b394db8a32d422e34d2e2a8494552c" }
+vinca = { git = "https://github.com/nmarticorena/vinca.git", rev = "a402143f0f55964ca0a41884702ce829e7f5013a" }
 
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }
@@ -56,7 +56,6 @@ emscripten = ["emscripten"]
       "--recipe-dir", "./recipes",
       "-m", "./conda_build_config.yaml",
       "-c", "https://repo.prefix.dev/conda-forge",
-      "-c", "nmarticorena",
       "-c", "https://repo.mamba.pm/emscripten-forge",
       "-c", "robostack-staging",
       "--target-platform", "emscripten-wasm32",
