@@ -32,7 +32,7 @@ if [[ "$target" == *"osx"* ]]; then
 fi
 
 if [[ "$target" == "emscripten-wasm32" ]]; then
-    extra_channel="-c https://repo.mamba.pm/emscripten-forge"
+    extra_channel="-c https://repo.mamba.pm/emscripten-forge -c nmarticorena"
     cross_compile="--target-platform emscripten-wasm32 --test skip"
 
 else
