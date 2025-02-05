@@ -152,7 +152,6 @@ packages_select_by_deps:
   - autoware_vehicle_msgs
 
   - autoware_utils
-  - autoware_lanelet2_extension
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

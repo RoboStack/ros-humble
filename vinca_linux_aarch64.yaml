@@ -137,7 +137,6 @@ packages_select_by_deps:
   - autoware_vehicle_msgs
 
   - autoware_utils
-  - autoware_lanelet_extensions
 
   # Used to work, now needs fixes
   # - rtabmap

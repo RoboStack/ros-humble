@@ -130,7 +130,6 @@ packages_select_by_deps:
   - autoware_vehicle_msgs
 
   - autoware_utils
-  - autoware_lanelet2_extension
 
   # requested in https://github.com/RoboStack/ros-humble/issues/252
   - rmw_zenoh_cpp
