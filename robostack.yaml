@@ -927,6 +927,8 @@ qt5-qmake:
   robostack: [qt-main, REQUIRE_OPENGL]
 qtbase5-dev:
   robostack: [qt-main, REQUIRE_OPENGL]
+range-v3:
+  robostack: [range-v3]
 rapidjson-dev:
   robostack: [rapidjson]
 roboticstoolbox-python:
