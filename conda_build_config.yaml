@@ -35,3 +35,10 @@ cxx_compiler:
   - ${{ "clangxx" if osx }}
   - ${{ "vs2019" if win }}
   - ${{ "emscripten" if emscripten }}
+
+emscripten_emscripten-wasm32:
+  - 3.1.45  
+
+cross-python_emscripten-wasm32:
+  - 3.11.* *_12
+
