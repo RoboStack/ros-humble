@@ -78,6 +78,7 @@ packages_select_by_deps:
   - rviz2
   - behaviortree_cpp_v3
   - ament_cmake_catch2
+  - ament_cmake_mypy
 
   - apriltag
   - apriltag_ros

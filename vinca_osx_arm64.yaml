@@ -81,6 +81,7 @@ packages_select_by_deps:
   - plotjuggler-msgs
 
   - ament_cmake_catch2
+  - ament_cmake_mypy
 
   - apriltag
   - apriltag_ros
