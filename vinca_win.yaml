@@ -198,6 +198,7 @@ packages_select_by_deps:
   - stubborn_buddies    # Open RMF
   - ament_cmake_catch2  # Open RMF
   - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+  - ament_cmake_mypy
 
   # - transport_drivers
   - asio_cmake_module

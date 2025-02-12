@@ -83,6 +83,7 @@ packages_select_by_deps:
   - vision-opencv
   - ackermann-msgs
   - ament_cmake_catch2
+  - ament_cmake_mypy
 
   - gazebo_msgs
   - gazebo_dev
