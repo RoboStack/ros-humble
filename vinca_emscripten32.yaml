@@ -38,7 +38,7 @@ packages_remove_from_deps:
   - performance_test_fixture
 
 skip_existing:
-  - https://conda.anaconda.org/nmarticorena
+  # - https://conda.anaconda.org/nmarticorena
   # - https://repo.mamba.pm/robostack-wasm
 
 packages_select_by_deps:
