@@ -6,8 +6,8 @@ package:
   version: 1.1.0
 
 source:
-  git: https://github.com/ihuicatl/rmw_wasm.git
-  rev: main
+  git: https://github.com/mbatc/rmw_wasm.git
+  rev: mbatchelor/roslibjs 
   target_directory: ros-humble-rmw-wasm-cpp/src/work
   patches:
     - fix-build.patch
