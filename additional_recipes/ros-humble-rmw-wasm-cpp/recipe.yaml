@@ -7,7 +7,7 @@ package:
 
 source:
   git: https://github.com/mbatc/rmw_wasm.git
-  rev: mbatchelor/roslibjs 
+  branch: mbatchelor/roslibjs
   target_directory: ros-humble-rmw-wasm-cpp/src/work
   patches:
     - fix-build.patch
@@ -76,6 +76,7 @@ requirements:
     - bzip2
     - zlib
     - libffi
+    - yaml-cpp
   run:
     - if: target_platform != 'emscripten-wasm32'
       then:

@@ -5,8 +5,8 @@ package:
   name: ros-humble-wasm-cpp
   version: 1.0.0
 source:
-  git: https://github.com/ihuicatl/rmw_wasm.git
-  rev: main
+  git: https://github.com/mbatc/rmw_wasm.git
+  branch: mbatchelor/roslibjs
   target_directory: ros-humble-wasm-cpp/src/work
   patches:
     - fix-build.patch
@@ -61,6 +61,7 @@ requirements:
     - ros-humble-ament-cmake
     - ros-humble-rcutils
     - ros2-distro-mutex 0.6.* humble_*
+    - ros-humble-yaml-cpp-vendor
   run:
     - if: target_platform != 'emscripten-wasm32'
       then:
