@@ -181,34 +181,14 @@ examples_rclcpp_minimal_publisher:
 rclcpp_components:
   add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
 rmw_implementation:
-  remove_host:
-    - ros-humble-rmw-connextdds
-    - ros-humble-rmw-cyclonedds-cpp
-    - ros-humble-rmw-fastrtps-cpp
-    - ros-humble-rmw-fastrtps-dynamic-cpp
-  remove_run:
-    - ros-humble-rmw-connextdds
-    - ros-humble-rmw-cyclonedds-cpp
-    - ros-humble-rmw-fastrtps-cpp
-    - ros-humble-rmw-fastrtps-dynamic-cpp
   add_run:
     - if: (target_platform == 'emscripten-wasm32')
       then:
         - ros-humble-rmw-wasm-cpp
-      else:
-        - ros-humble-rmw-connextdds
-        - ros-humble-rmw-cyclonedds-cpp
-        - ros-humble-rmw-fastrtps-cpp
-        - ros-humble-rmw-fastrtps-dynamic-cpp
   add_host:
     - if: (target_platform == 'emscripten-wasm32')
       then:
         - ros-humble-rmw-wasm-cpp
-      else:
-        - ros-humble-rmw-connextdds
-        - ros-humble-rmw-cyclonedds-cpp
-        - ros-humble-rmw-fastrtps-cpp
-        - ros-humble-rmw-fastrtps-dynamic-cpp
     - "ros-humble-yaml-cpp-vendor"
     - "fmt"
 slam_toolbox:

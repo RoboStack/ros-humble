@@ -18,7 +18,10 @@ full_rebuild: true
 packages_skip_by_deps:
   - cartographer
   - octomap
+  - fastrtps_cmake_module
   - rmw_fastrtps_cpp
+  - rosidl_typesupport_fastrtps_c
+  - rosidl_typesupport_fastrtps_cpp
   - rmw_cyclonedds_cpp
   - rmw_connextdds
   - rmw_fastrtps_shared_cpp
@@ -28,6 +31,8 @@ packages_skip_by_deps:
   - ament_xmllint
   - ament_cmake_xmllint
   - performance_test_fixture
+  - rmw_connextdds
+  - rmw_cyclonedds_cpp
 
 packages_remove_from_deps:
   - cartographer
@@ -36,6 +41,13 @@ packages_remove_from_deps:
   - ament_xmllint
   - ament_cmake_xmllint
   - performance_test_fixture
+  - rosidl_typesupport_fastrtps_c
+  - rosidl_typesupport_fastrtps_cpp
+  - fastrtps_cmake_module
+  - rmw_connextdds
+  - rmw_cyclonedds_cpp
+  - rmw_fastrtps_cpp
+  - rmw_fastrtps_dynamic_cpp
 
 skip_existing:
   # - https://conda.anaconda.org/nmarticorena
