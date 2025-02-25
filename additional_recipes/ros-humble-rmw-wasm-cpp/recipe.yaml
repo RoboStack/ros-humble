@@ -6,11 +6,9 @@ package:
   version: 1.1.0
 
 source:
-  git: https://github.com/mbatc/rmw_wasm.git
-  branch: mbatchelor/roslibjs
+  git: https://github.com/Tobias-Fischer/rmw_wasm
+  branch: emscripten-async-fixes
   target_directory: ros-humble-rmw-wasm-cpp/src/work
-  patches:
-    - fix-build.patch
 
 build:
   script:
