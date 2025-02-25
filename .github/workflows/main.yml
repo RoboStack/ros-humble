@@ -37,7 +37,7 @@ jobs:
         
     - name: Generate azure pipelines for emscripten-wasm32
       run: |
-        vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten -d ./recipes --additional-recipes
+        vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten -d ./recipes --additional-recipes --batch_size 1
     - name: Commit files for emscripten-wasm32
       run: |
         if [[ -f "emscripten_wasm32.yml" ]]; then
