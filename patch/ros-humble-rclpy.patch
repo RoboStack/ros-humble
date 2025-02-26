@@ -6,9 +6,9 @@ index 569a898..8900632 100644
    rcutils::rcutils
    rosidl_runtime_c::rosidl_runtime_c
  )
-+target_link_options(_rclpy_pybind11 PRIVATE
-+  "-Wl,--no-whole-archive"
-+)
++# target_link_options(_rclpy_pybind11 PRIVATE
++#   "-Wl,--no-whole-archive"
++# )
  configure_build_install_location(_rclpy_pybind11)
  
  if(NOT WIN32)
