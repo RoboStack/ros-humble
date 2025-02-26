@@ -2,13 +2,22 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 569a898..8900632 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
+@@ -70,7 +72,7 @@ function(configure_build_install_location _library_name)
+ endfunction()
+ 
+ # Split from main extension and converted to pybind11
+-pybind11_add_module(_rclpy_pybind11 SHARED
++pybind11_add_module(_rclpy_pybind11 MODULE NO_EXTRAS
+   src/rclpy/_rclpy_logging.cpp
+   src/rclpy/_rclpy_pybind11.cpp
+   src/rclpy/action_client.cpp
 @@ -116,6 +116,9 @@ target_link_libraries(_rclpy_pybind11 PRIVATE
    rcutils::rcutils
    rosidl_runtime_c::rosidl_runtime_c
  )
-+# target_link_options(_rclpy_pybind11 PRIVATE
-+#   "-Wl,--no-whole-archive"
-+# )
++target_link_options(_rclpy_pybind11 PRIVATE
++  "$<LINK_GROUP:python_once;${Python3_LIBRARIES}>"
++)
  configure_build_install_location(_rclpy_pybind11)
  
  if(NOT WIN32)
