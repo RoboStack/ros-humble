@@ -15,9 +15,9 @@ index 569a898..8900632 100644
    rcutils::rcutils
    rosidl_runtime_c::rosidl_runtime_c
  )
-+target_link_options(_rclpy_pybind11 PRIVATE
-+  "$<LINK_GROUP:python_once;${Python3_LIBRARIES}>"
-+)
++  set_target_properties(_rclpy_pybind11 PROPERTIES
++    LINK_FLAGS "-sWASM_BIGINT=1 -sSIDE_MODULE=1 -sLINKABLE=1 -sEXPORT_ALL=1 -sMODULARIZE=1"
++  )
  configure_build_install_location(_rclpy_pybind11)
  
  if(NOT WIN32)
