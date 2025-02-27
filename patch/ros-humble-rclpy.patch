@@ -11,13 +11,16 @@ index 569a898..8900632 100644
    src/rclpy/_rclpy_logging.cpp
    src/rclpy/_rclpy_pybind11.cpp
    src/rclpy/action_client.cpp
-@@ -116,6 +116,9 @@ target_link_libraries(_rclpy_pybind11 PRIVATE
+@@ -116,6 +116,12 @@ target_link_libraries(_rclpy_pybind11 PRIVATE
    rcutils::rcutils
    rosidl_runtime_c::rosidl_runtime_c
  )
-+  set_target_properties(_rclpy_pybind11 PROPERTIES
-+    LINK_FLAGS "-sWASM_BIGINT=1 -sSIDE_MODULE=1 -sLINKABLE=1 -sEXPORT_ALL=1 -sMODULARIZE=1"
-+  )
++ add_custom_command(TARGET _rclpy_pybind11 PRE_LINK
++   COMMAND ${CMAKE_COMMAND} -E echo "Fixing link command..."
++   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/CMakeFiles/_rclpy_pybind11.dir/link.txt ${CMAKE_BINARY_DIR}/CMakeFiles/_rclpy_pybind11.dir/link.txt.bak
++   COMMAND sed -i 's|${Python3_LIBRARIES} .* ${Python3_LIBRARIES}|${Python3_LIBRARIES}|g' ${CMAKE_BINARY_DIR}/CMakeFiles/_rclpy_pybind11.dir/link.txt
++   COMMENT "Removing duplicate Python library from link command"
++ )
  configure_build_install_location(_rclpy_pybind11)
  
  if(NOT WIN32)
