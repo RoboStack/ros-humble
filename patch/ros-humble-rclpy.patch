@@ -7,7 +7,7 @@ index 569a898..8900632 100644
  
  # Split from main extension and converted to pybind11
 -pybind11_add_module(_rclpy_pybind11 SHARED
-+pybind11_add_module(_rclpy_pybind11 MODULE
++pybind11_add_module(_rclpy_pybind11 MODULE NO_EXTRAS
    src/rclpy/_rclpy_logging.cpp
    src/rclpy/_rclpy_pybind11.cpp
    src/rclpy/action_client.cpp
