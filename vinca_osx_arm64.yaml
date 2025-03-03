@@ -117,6 +117,20 @@ packages_select_by_deps:
 
   # requested in https://github.com/RoboStack/ros-humble/issues/249
   - twist_mux
+  
+  # autoware
+  - autoware_common_msgs
+  - autoware_control_msgs
+  - autoware_localization_msgs
+  - autoware_map_msgs
+  - autoware_perception_msgs
+  - autoware_planning_msgs
+  - autoware_sensing_msgs
+  - autoware_system_msgs
+  - autoware_v2x_msgs
+  - autoware_vehicle_msgs
+
+  - autoware_utils
 
   # requested in https://github.com/RoboStack/ros-humble/issues/252
   - rmw_zenoh_cpp
