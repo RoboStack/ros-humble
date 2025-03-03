@@ -15,7 +15,7 @@ build:
     build.sh
     # sel(unix): build.sh
     # sel(emscripten-wasm32): build.sh
-  number: 6
+  number: 11
 
 
 about:

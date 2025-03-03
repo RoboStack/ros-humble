@@ -13,7 +13,7 @@ source:
     - no-wstring.patch
 
 build:
-  number: 6
+  number: 11
   script:
     build.sh
 
