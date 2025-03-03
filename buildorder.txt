@@ -1,0 +1,13 @@
+ros-humble-autoware-lint-common
+ros-humble-autoware-planning-msgs
+ros-humble-autoware-map-msgs
+ros-humble-autoware-perception-msgs
+ros-humble-autoware-v2x-msgs
+ros-humble-autoware-system-msgs
+ros-humble-autoware-sensing-msgs
+ros-humble-autoware-localization-msgs
+ros-humble-autoware-control-msgs
+ros-humble-autoware-common-msgs
+ros-humble-autoware-cmake
+ros-humble-autoware-vehicle-msgs
+ros-humble-autoware-utils
