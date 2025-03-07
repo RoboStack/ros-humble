@@ -1,0 +1,19 @@
+diff --git a/rmw_wasm_cpp/CMakeLists.txt b/rmw_wasm_cpp/CMakeLists.txt
+index 7905b29..22671c2 100644
+--- a/rmw_wasm_cpp/CMakeLists.txt
++++ b/rmw_wasm_cpp/CMakeLists.txt
+@@ -103,11 +103,11 @@ target_link_libraries(${PROJECT_NAME}
+   rmw::rmw
+   ${wasm_cpp_LIBRARIES}
+   rcpputils::rcpputils
+-  rcutils::rcutils
++  # rcutils::rcutils
+   dynmsg::dynmsg
+-  rosidl_runtime_c::rosidl_runtime_c
++  # rosidl_runtime_c::rosidl_runtime_c
+   rosidl_runtime_cpp::rosidl_runtime_cpp
+-  rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
++  # rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
+   rosidl_typesupport_introspection_cpp::rosidl_typesupport_introspection_cpp
+   ${libffi_LINK_LIBRARIES}
+   ${SQLite3_LIBRARIES}

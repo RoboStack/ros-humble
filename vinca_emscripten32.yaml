@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-build_number: 11
+build_number: 12
 
 mutex_package: ros2-distro-mutex 0.6.* humble_*
 
@@ -70,8 +70,8 @@ packages_select_by_deps:
   - rmw
   - rclc
   - rclcpp
-  - examples_rclcpp_minimal_subscriber
-  - examples_rclcpp_minimal_publisher
+  # - examples_rclcpp_minimal_subscriber
+  # - examples_rclcpp_minimal_publisher
   - builtin_interfaces
   - rcutils
   - rcpputils

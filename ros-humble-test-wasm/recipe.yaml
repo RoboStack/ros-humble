@@ -1,30 +1,37 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
 schema_version: 1
-
 package:
-  name: dynmsg
-  version: "1.0" # TODO Check this one
+  name: ros-humble-test-wasm
+  version: 1.0.0
 
 source:
-  git: https://github.com/osrf/dynamic_message_introspection.git
+  git: https://github.com/ihuicatl/rmw_wasm.git
   rev: main
-  target_directory: dynmsg/src/work
+  target_directory: ros-humble-test-wasm/src/work
   patches:
     - fix-build.patch
 
 build:
-  number: 12
   script:
     build.sh
+    # sel(unix): build.sh
+    # sel(emscripten-wasm32): build.sh
+  number: 1
+
+about:
+  homepage: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
 
 requirements:
   build:
     - if: target_platform == 'emscripten-wasm32'
       then:
         - emscripten_emscripten-wasm32
-      else: 
-        - ${{ compiler('cxx') }}
-        - ${{ compiler('c') }}
+      else:
+        - ${{compiler('c')}}
+        - ${{compiler('cxx')}}
     - if: linux64
       then:
         - sysroot_linux-64 2.17
@@ -38,7 +45,7 @@ requirements:
       then:
         - pkg-config
         - python
-        - cross-python_${{ target_platform }}
+        - cross-python_${{target_platform}}
         - cython
         - numpy
     - ninja
@@ -52,28 +59,27 @@ requirements:
         - pkg-config
     - python
     - ros-humble-ament-cmake
-    - ros-humble-rcutils
-    - ros-humble-rosidl-runtime-c
-    - ros-humble-rosidl-runtime-cpp
-    - ros-humble-rosidl-typesupport-introspection-c
-    - ros-humble-rosidl-typesupport-introspection-cpp
+    - ros-humble-rclcpp
+    - ros-humble-std-msgs
+    - ros-humble-example-interfaces
     - ros-humble-yaml-cpp-vendor
+    - yaml
+    - yaml-cpp
     - ros2-distro-mutex 0.6.* humble_*
+    - sqlite
+    - bzip2
+    - zlib
+    - ros-humble-rmw-wasm-cpp
+    - libffi
   run:
     - if: target_platform != 'emscripten-wasm32'
       then:
         - cmake
     - python
-    - ros-humble-rosidl-runtime-c
-    - ros-humble-rosidl-runtime-cpp
-    - ros-humble-rosidl-typesupport-introspection-c
-    - ros-humble-rosidl-typesupport-introspection-cpp
+    - ros-humble-rclcpp
+    - ros-humble-std-msgs
+    - ros-humble-example-interfaces
     - ros-humble-yaml-cpp-vendor
     - ros2-distro-mutex 0.6.* humble_*
-    - if: osx and x86_64
-      then: __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
-about:
-  license: Apache-2.0
-  license_file: LICENSE
-  summary: dynmsg
-  repository: https://github.com/osrf/dynamic_message_introspection.git
+    - if: (osx and x86_64)
+      then: __osx >=${{MACOSX_DEPLOYMENT_TARGET|default('10.14')}}

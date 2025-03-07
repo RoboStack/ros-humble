@@ -1,0 +1,12 @@
+diff --git a/rosidl_typesupport_c/cmake/rosidl_typesupport_c_generate_interfaces.cmake b/rosidl_typesupport_c/cmake/rosidl_typesupport_c_generate_interfaces.cmake
+index 98eeed86..647eae8b 100644
+--- a/rosidl_typesupport_c/cmake/rosidl_typesupport_c_generate_interfaces.cmake
++++ b/rosidl_typesupport_c/cmake/rosidl_typesupport_c_generate_interfaces.cmake
+@@ -121,7 +121,6 @@ target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBL
+   ${rosidl_generate_interfaces_TARGET}__rosidl_generator_c)
+ 
+ target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PRIVATE
+-  rosidl_runtime_c::rosidl_runtime_c
+   rosidl_typesupport_c::rosidl_typesupport_c
+   rosidl_typesupport_interface::rosidl_typesupport_interface)
+ 
