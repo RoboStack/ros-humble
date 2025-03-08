@@ -7,38 +7,50 @@ protobuf:
   - 5.28.2
 spdlog:
   - 1.15
+pugixml:
+  - '1.14'
 
-cdt_name:
-  - ${{ "cos7" if linux }}
+cdt_name:  # [linux]
+  - conda  # [linux]
 
 python:
-#   - 3.13.* *_cp313
   - 3.11.* *_cpython
 python_impl:
   - cpython
 
-c_stdlib:
-  - ${{ "sysroot" if linux }}
-  - ${{ "macosx_deployment_target" if osx }}
-  - ${{ "vs" if win }}
-c_stdlib_version:
-  - ${{ "2.17" if linux }}
-  - ${{ "10.14" if osx and x86_64 }}
-  - ${{ "11.0" if osx and arm64 }}
-c_compiler:
-  - ${{ "gcc" if linux }}
-  - ${{ "clang" if osx }}
-  - ${{ "vs2019" if win }}
-  - ${{ "emscripten" if emscripten }}
-cxx_compiler:
-  - ${{ "gxx" if linux }}
-  - ${{ "clangxx" if osx }}
-  - ${{ "vs2019" if win }}
-  - ${{ "emscripten" if emscripten }}
-
 emscripten_emscripten-wasm32:
   - 3.1.45  
-
 cross-python_emscripten-wasm32:
   - 3.11.* *_12
 
+c_compiler:
+  - gcc                        # [linux]
+  - clang                      # [osx]
+  - vs2019                     # [win and x86_64]
+  - vs2022                     # [win and arm64]
+  - emscripten                 # [emscripten]
+c_compiler_version:            # [unix]
+  - 13                         # [linux]
+  - 18                         # [osx]
+c_stdlib:
+  - sysroot                    # [linux]
+  - macosx_deployment_target   # [osx]
+  - vs                         # [win]
+c_stdlib_version:              # [unix]
+  - 2.17                       # [linux]
+  - 10.13                      # [osx and x86_64]
+  - 11.0                       # [osx and arm64]
+cxx_compiler:
+  - gxx                        # [linux]
+  - clangxx                    # [osx]
+  - vs2019                     # [win and x86_64]
+  - vs2022                     # [win and arm64]
+  - emscripten                 # [emscripten]
+cxx_compiler_version:          # [unix]
+  - 13                         # [linux]
+  - 18                         # [osx]
+
+libzenohc:
+  - 1.1.1
+libzenohcxx:
+  - 1.1.1

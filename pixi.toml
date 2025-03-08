@@ -16,7 +16,7 @@ upload = "anaconda -t $ANACONDA_API_TOKEN upload"
 
 [dependencies]
 python = ">=3.11.0,<3.12"
-rattler-build = "==0.34.1"
+rattler-build = ">=0.35.5"
 anaconda-client = ">=1.12"
 
 [target.win-64.dependencies]
@@ -33,15 +33,17 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "cbb8eba834ce383
 #vinca = { path = "../vinca", editable = true }
 
 [feature.emscripten.pypi-dependencies]
-# pull vinca emscripten branch
-# vinca = { path = "../vinca", editable = true} 
+# This is tipically the latest commit on main branch
 vinca = { git = "https://github.com/nmarticorena/vinca.git", rev = "a402143f0f55964ca0a41884702ce829e7f5013a" }
+# Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
+# (and regenerate the pixi.lock) once you push the modified commit to the repo
+# vinca = { path = "../vinca", editable = true} 
 
 [feature.beta.tasks]
 generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }
-remove-file = { cmd = "rm vinca.yaml; rm -rf recipes" }
-copy_additional_recipes = { cmd = "sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \\;'" }
-build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing", depends-on = ["generate-recipes", "copy_additional_recipes"] }
+remove-file = { cmd = "rm vinca.yaml; rm -rf recipes; mkdir recipes" }
+build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing" }
+build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing", depends-on = ["build_additional_recipes", "generate-recipes"] }
 build_one_package = { cmd = "cp ./patch/$PACKAGE.*patch ./recipes/$PACKAGE/patch/; rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge", env = { PACKAGE = "ros-humble-ros-workspace" } }
 create_snapshot = { cmd = "vinca-snapshot -d humble -o snapshot_$(date +\"%Y-%m-%d-%H-%M-%S\").yaml" }
 
@@ -65,11 +67,9 @@ emscripten = ["emscripten"]
   depends-on = ["generate-recipes", "copy_additional_recipes"]
 
 [feature.emscripten.tasks]
-# build_additional_recipes = {cmd = "sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \\;'"}
 generate-recipes = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["rename-file"] }
 remove-file = { cmd = "rm vinca.yaml; rm -rf recipes" }
 copy_additional_recipes = { cmd = "sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \\;'" }
-build_one_package = { cmd = "cp ./patch/$PACKAGE.*patch ./recipes/$PACKAGE/patch/; rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge", env = { PACKAGE = "ros-humble-ros-workspace" } }
 create_snapshot = { cmd = "vinca-snapshot -d humble -o snapshot_$(date +\"%Y-%m-%d-%H-%M-%S\").yaml" }
 rename-file = { cmd = "ln -s vinca_emscripten32.yaml vinca.yaml", depends-on = ["remove-file"] }
 
