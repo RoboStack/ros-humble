@@ -158,28 +158,55 @@ rqt_image_overlay:
 tracetools:
   remove_host: [ "pkg-config" ]
 spdlog_vendor:
-  add_host: ["fmt"]
-  add_run: ["fmt"]
+  add_host: ["${{ 'fmt' if emscripten }}"]
+  add_run: ["${{ 'fmt' if emscripten }}"]
 rcl_logging_spdlog:
-  add_host: [ "fmt" ]
+  add_host: ["${{ 'fmt' if emscripten }}"]
 rcl:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
 libstatistics_collector:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
 rcl_action:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
 rclc:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
 rclcpp:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
 rclcpp_action:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt" ]
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
 examples_rclcpp_minimal_subscriber:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
+  add_host:
+    - if: (target_platform == 'emscripten-wasm32')
+      then:
+        - ros-humble-rmw-wasm-cpp
+        - fmt
+        - sqlite
+        - bzip2
+        - zlib
+        - libffi
+        - ros-humble-rmw-wasm-cpp
 examples_rclcpp_minimal_publisher:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
+  add_host:
+    - if: (target_platform == 'emscripten-wasm32')
+      then:
+        - ros-humble-rmw-wasm-cpp
+        - fmt
+        - sqlite
+        - bzip2
+        - zlib
+        - libffi
+        - ros-humble-rmw-wasm-cpp
 rclcpp_components:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "fmt", "sqlite", "bzip2", "zlib", "ros-humble-rmw-wasm-cpp", "libffi" ]
+  add_host:
+    - if: (target_platform == 'emscripten-wasm32')
+      then:
+        - ros-humble-rmw-wasm-cpp
+        - fmt
+        - sqlite
+        - bzip2
+        - zlib
+        - libffi
+        - ros-humble-rmw-wasm-cpp
 rmw_implementation:
   add_run:
     - if: (target_platform == 'emscripten-wasm32')

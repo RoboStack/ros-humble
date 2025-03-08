@@ -1,5 +1,4 @@
 numpy:
-#  - 2
   - 1.26
 libprotobuf:
   - 5.28.2
