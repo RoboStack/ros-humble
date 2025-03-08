@@ -65,15 +65,15 @@ if [[ $target_platform =~ emscripten.* ]]; then
   echo "set(CMAKE_STRIP FALSE)  # used by default in pybind11 on .so modules">> $SRC_DIR/__vinca_shared_lib_patch.cmake
   echo "set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)  # fixes an error where numpy header files are not found correctly">> $SRC_DIR/__vinca_shared_lib_patch.cmake
 
-  if [ "${PKG_NAME}" == "ros-humble-examples-rclcpp-minimal-publisher" ] || [ "${PKG_NAME}" == "ros-humble-examples-rclcpp-minimal-subscriber" ] || [ "${PKG_NAME}" == "ros-humble-rclcpp-components" ]; then
-    echo "set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS \"-s ASSERTIONS=1 -s SIDE_MODULE=1 -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 -sASYNCIFY -O3 -s ASYNCIFY_STACK_SIZE=24576 \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
-    echo "set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS \"-s ASSERTIONS=1 -s SIDE_MODULE=1 -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 -sASYNCIFY -O3 -s ASYNCIFY_STACK_SIZE=24576 \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
-    echo "set(CMAKE_EXE_LINKER_FLAGS \"-sMAIN_MODULE=1 -sASSERTIONS=1 -fexceptions -lembind -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -sALLOW_MEMORY_GROWTH=1 -sASYNCIFY -O3 -s ASYNCIFY_STACK_SIZE=24576 -L$SRC_DIR/build -L$PREFIX/lib\")  # remove SIDE_MODULE from exe linker flags">> $SRC_DIR/__vinca_shared_lib_patch.cmake
-  else
-    echo "set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS \"-s ASSERTIONS=1 -s SIDE_MODULE=1 -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 -sSTACK_SIZE=655360 \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
-    echo "set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS \"-s ASSERTIONS=1 -s SIDE_MODULE=1 -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 -sSTACK_SIZE=655360 \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
-    echo "set(CMAKE_EXE_LINKER_FLAGS \"-sMAIN_MODULE=1 -sASSERTIONS=1 -fexceptions -lembind -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -sALLOW_MEMORY_GROWTH=1 -sSTACK_SIZE=655360 -L$SRC_DIR/build -L$PREFIX/lib\")  # remove SIDE_MODULE from exe linker flags">> $SRC_DIR/__vinca_shared_lib_patch.cmake
-  fi
+  # if [ "${PKG_NAME}" == "ros-humble-examples-rclcpp-minimal-publisher" ] || [ "${PKG_NAME}" == "ros-humble-examples-rclcpp-minimal-subscriber" ] || [ "${PKG_NAME}" == "ros-humble-rclcpp-components" ]; then
+  #   echo "set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS \"-s ASSERTIONS=1 -s SIDE_MODULE=1 -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
+  #   echo "set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS \"-s ASSERTIONS=1 -s SIDE_MODULE=1 -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -s ALLOW_MEMORY_GROWTH=1 -sASYNCIFY -O3 -s ASYNCIFY_STACK_SIZE=24576 \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
+  #   echo "set(CMAKE_EXE_LINKER_FLAGS \"-sMAIN_MODULE=1 -sASSERTIONS=1 -fexceptions -lembind -sWASM_BIGINT -s USE_PTHREADS=0 -s DEMANGLE_SUPPORT=1 -sALLOW_MEMORY_GROWTH=1 -sASYNCIFY -O3 -s ASYNCIFY_STACK_SIZE=24576 -L$SRC_DIR/build -L$PREFIX/lib\")  # remove SIDE_MODULE from exe linker flags">> $SRC_DIR/__vinca_shared_lib_patch.cmake
+  # else
+    echo "set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS \"-s ASSERTIONS=1 -s SIDE_MODULE=1 -sWASM_BIGINT -s USE_PTHREADS=0 -s ALLOW_MEMORY_GROWTH=1 -s DEMANGLE_SUPPORT=1 \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
+    echo "set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS \"-s ASSERTIONS=1 -s SIDE_MODULE=1 -sWASM_BIGINT -s USE_PTHREADS=0 -s ALLOW_MEMORY_GROWTH=1 -s DEMANGLE_SUPPORT=1 \")">> $SRC_DIR/__vinca_shared_lib_patch.cmake
+    echo "set(CMAKE_EXE_LINKER_FLAGS \"-sMAIN_MODULE=1 -sASSERTIONS=1 -fexceptions -lembind -sWASM_BIGINT -s USE_PTHREADS=0 -sALLOW_MEMORY_GROWTH=1 -s DEMANGLE_SUPPORT=1 -L$SRC_DIR/build -L$PREFIX/lib\")  # remove SIDE_MODULE from exe linker flags">> $SRC_DIR/__vinca_shared_lib_patch.cmake
+  # fi
 
   # export USE_WASM=ON
   # -DTHREADS_PREFER_PTHREAD_FLAG=TRUE\
@@ -81,7 +81,7 @@ if [[ $target_platform =~ emscripten.* ]]; then
   export EXTRA_CMAKE_ARGS=" \
       -DPYTHON_SOABI="cpython-${ROS_PYTHON_VERSION//./}-wasm32-emscripten" \
       -DRMW_IMPLEMENTATION=rmw_wasm_cpp \
-      -DCMAKE_FIND_ROOT_PATH=$PREFIX    \
+      -DCMAKE_FIND_ROOT_PATH=$PREFIX \
       -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
       -DCMAKE_PROJECT_INCLUDE=$SRC_DIR/__vinca_shared_lib_patch.cmake \
   "
@@ -89,11 +89,30 @@ if [[ $target_platform =~ emscripten.* ]]; then
     unset -f cmake
     export CMAKE_GEN="emcmake cmake"
     export CMAKE_BLD="cmake"
+    if [ "${PKG_NAME}" == "ros-humble-rosidl-typesupport-c" ] || [ "${PKG_NAME}" == "ros-humble-rosidl-typesupport-cpp" ] || [ "${PKG_NAME}" == "ros-humble-typesupport-introspection-c" ] || [ "${PKG_NAME}" == "ros-humble-typesupport-introspection-cpp" ]; then
+      export SHARED_TYPE="ON"
+    else
+      export SHARED_TYPE="ON"
+    fi
 else
-    export BUILD_TYPE="RELEASE"
+    export BUILD_TYPE="Release"
     export CMAKE_GEN="cmake"
     export CMAKE_BLD="cmake"
+    export SHARED_TYPE="ON"
 fi;
+
+if [ "${PKG_NAME}" == "ros-humble-rmw-wasm-cpp" ]; then
+  WORK_DIR=$SRC_DIR/$PKG_NAME/src/work/rmw_wasm_cpp
+elif [ "${PKG_NAME}" == "ros-humble-wasm-cpp" ]; then
+  WORK_DIR=$SRC_DIR/$PKG_NAME/src/work/wasm_cpp
+elif [ "${PKG_NAME}" == "dynmsg" ]; then
+  WORK_DIR=$SRC_DIR/$PKG_NAME/src/work/dynmsg
+else
+  WORK_DIR=$SRC_DIR/$PKG_NAME/src/work
+fi;
+
+export STATIC_ROSIDL_TYPESUPPORT_C=rosidl_typesupport_introspection_c
+export STATIC_ROSIDL_TYPESUPPORT_CPP=rosidl_typesupport_introspection_cpp
 
 $CMAKE_GEN \
     -G "Ninja" \
@@ -111,12 +130,12 @@ $CMAKE_GEN \
     -DSETUPTOOLS_DEB_LAYOUT=OFF \
     -DCATKIN_SKIP_TESTING=$SKIP_TESTING \
     -DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=True \
-    -DBUILD_SHARED_LIBS=ON  \
+    -DBUILD_SHARED_LIBS=$SHARED_TYPE \
     -DBUILD_TESTING=OFF \
     -DCMAKE_IGNORE_PREFIX_PATH="/opt/homebrew;/usr/local/homebrew" \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=$OSX_DEPLOYMENT_TARGET \
     --compile-no-warning-as-error \
     $EXTRA_CMAKE_ARGS \
-    $SRC_DIR/$PKG_NAME/src/work/rmw_wasm_cpp
+    $WORK_DIR
 
 $CMAKE_BLD --build . --config $BUILD_TYPE --target install
