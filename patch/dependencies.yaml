@@ -179,33 +179,15 @@ examples_rclcpp_minimal_subscriber:
     - if: (target_platform == 'emscripten-wasm32')
       then:
         - ros-humble-rmw-wasm-cpp
-        - fmt
-        - sqlite
-        - bzip2
-        - zlib
-        - libffi
-        - ros-humble-rmw-wasm-cpp
 examples_rclcpp_minimal_publisher:
   add_host:
     - if: (target_platform == 'emscripten-wasm32')
       then:
         - ros-humble-rmw-wasm-cpp
-        - fmt
-        - sqlite
-        - bzip2
-        - zlib
-        - libffi
-        - ros-humble-rmw-wasm-cpp
 rclcpp_components:
   add_host:
     - if: (target_platform == 'emscripten-wasm32')
       then:
-        - ros-humble-rmw-wasm-cpp
-        - fmt
-        - sqlite
-        - bzip2
-        - zlib
-        - libffi
         - ros-humble-rmw-wasm-cpp
 rmw_implementation:
   add_run:
