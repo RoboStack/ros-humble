@@ -69,5 +69,10 @@ requirements:
     - python
     - ros-humble-rcutils
     - ros2-distro-mutex 0.6.* humble_*
+    - fmt
+    - sqlite
+    - bzip2
+    - zlib
+    - libffi
     - if: osx and x86_64
       then: __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
