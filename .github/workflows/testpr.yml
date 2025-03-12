@@ -35,7 +35,7 @@ jobs:
 
     - uses: prefix-dev/setup-pixi@v0.8.1
       with:
-        environments: beta emscripten
+        environments: beta
         frozen: true
         pixi-version: v0.40.2
 
