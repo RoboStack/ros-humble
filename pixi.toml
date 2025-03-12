@@ -19,9 +19,6 @@ python = ">=3.11.0,<3.12"
 rattler-build = ">=0.35.5"
 anaconda-client = ">=1.12"
 
-[pypi-dependencies]
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "cbb8eba834ce3834df552977d6b08c325a30768e" }
-
 [target.win-64.dependencies]
 # patch is required by rattler-build
 m2-patch = "*"
