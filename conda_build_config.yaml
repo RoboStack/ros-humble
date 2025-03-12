@@ -5,7 +5,8 @@ libprotobuf:
 protobuf:
   - 5.28.2
 spdlog:
-  - 1.15
+  - 1.14  # [not emscripten]
+  - 1.15  # [emscripten]
 pugixml:
   - '1.14'
 
