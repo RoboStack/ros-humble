@@ -2,13 +2,13 @@
 schema_version: 1
 
 package:
-  name: dynmsg
+  name: ros-humble-dynmsg
   version: "1.0.0"
 
 source:
   git: https://github.com/osrf/dynamic_message_introspection.git
   rev: 50277e341f61455c42a6015b5718804a4f8588f6
-  target_directory: dynmsg/src/work
+  target_directory: ros-humble-dynmsg/src/work
   patches:
     - fix-build.patch
 

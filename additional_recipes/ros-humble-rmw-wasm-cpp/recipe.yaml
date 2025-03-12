@@ -64,7 +64,7 @@ requirements:
     - ros-humble-rmw
     - ros-humble-wasm-cpp
     - ros-humble-ament-cmake
-    - dynmsg
+    - ros-humble-dynmsg
     - ros-humble-rosidl-runtime-c
     - ros-humble-rosidl-runtime-cpp
     - ros-humble-rosidl-typesupport-introspection-c
@@ -81,7 +81,7 @@ requirements:
       then:
         - cmake
     - python
-    - dynmsg
+    - ros-humble-dynmsg
     - ros-humble-rmw
     - ros-humble-wasm-cpp
     - ros-humble-rcutils

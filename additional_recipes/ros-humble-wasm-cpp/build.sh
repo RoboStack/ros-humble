@@ -105,7 +105,7 @@ if [ "${PKG_NAME}" == "ros-humble-rmw-wasm-cpp" ]; then
   WORK_DIR=$SRC_DIR/$PKG_NAME/src/work/rmw_wasm_cpp
 elif [ "${PKG_NAME}" == "ros-humble-wasm-cpp" ]; then
   WORK_DIR=$SRC_DIR/$PKG_NAME/src/work/wasm_cpp
-elif [ "${PKG_NAME}" == "dynmsg" ]; then
+elif [ "${PKG_NAME}" == "ros-humble-dynmsg" ]; then
   WORK_DIR=$SRC_DIR/$PKG_NAME/src/work/dynmsg
 else
   WORK_DIR=$SRC_DIR/$PKG_NAME/src/work
