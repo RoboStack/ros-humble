@@ -31,23 +31,15 @@ index aa2075d..3dd265c 100644
 -  rosidl_typesupport_introspection_cpp
 -  yaml_cpp_vendor
 -)
-+# ament_target_dependencies(dynmsg
-+#   rcutils
-+#   rosidl_runtime_c
-+#   rosidl_runtime_cpp
-+#   rosidl_typesupport_introspection_c
-+#   rosidl_typesupport_introspection_cpp
-+#   yaml_cpp_vendor
-+# )
-+# use target_link_libraries instead
 +target_link_libraries(dynmsg
 +  # rcutils::rcutils
 +  # rosidl_runtime_c::rosidl_runtime_c
-+  rosidl_runtime_cpp::rosidl_runtime_cpp
++  # rosidl_runtime_cpp::rosidl_runtime_cpp
 +  # rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
-+  rosidl_typesupport_introspection_cpp::rosidl_typesupport_introspection_cpp
-+  yaml-cpp)
-+
++  # rosidl_typesupport_introspection_cpp::rosidl_typesupport_introspection_cpp
++  # yaml-cpp
++  )
++ 
  target_include_directories(dynmsg PUBLIC
    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
    "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"
