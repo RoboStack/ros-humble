@@ -37,7 +37,6 @@ jobs:
       with:
         environments: beta
         frozen: true
-        pixi-version: v0.40.2
 
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
