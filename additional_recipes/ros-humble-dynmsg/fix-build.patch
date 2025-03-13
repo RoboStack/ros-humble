@@ -1,5 +1,5 @@
 diff --git a/dynmsg/CMakeLists.txt b/dynmsg/CMakeLists.txt
-index aa2075d..3dd265c 100644
+index aa2075d..3b9bc27 100644
 --- a/dynmsg/CMakeLists.txt
 +++ b/dynmsg/CMakeLists.txt
 @@ -25,6 +25,7 @@ find_package(rosidl_runtime_cpp REQUIRED)
@@ -19,7 +19,7 @@ index aa2075d..3dd265c 100644
    src/msg_parser_c.cpp
    src/msg_parser_cpp.cpp
    src/message_reading_c.cpp
-@@ -42,14 +43,23 @@ add_library(dynmsg STATIC
+@@ -42,14 +43,16 @@ add_library(dynmsg STATIC
    src/string_utils.cpp
    src/yaml_utils.cpp
  )
@@ -30,16 +30,16 @@ index aa2075d..3dd265c 100644
 -  rosidl_typesupport_introspection_c
 -  rosidl_typesupport_introspection_cpp
 -  yaml_cpp_vendor
--)
++# use target_link_libraries instead
 +target_link_libraries(dynmsg
 +  # rcutils::rcutils
 +  # rosidl_runtime_c::rosidl_runtime_c
 +  # rosidl_runtime_cpp::rosidl_runtime_cpp
 +  # rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
 +  # rosidl_typesupport_introspection_cpp::rosidl_typesupport_introspection_cpp
-+  # yaml-cpp
-+  )
-+ 
++  # yaml-cpp)
+ )
++
  target_include_directories(dynmsg PUBLIC
    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
    "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"
@@ -196,4 +196,3 @@ index 072819c..ed4716f 100644
      case rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
        // We do not know the specific type of the sequence because the type is not available at
        // compile-time, but we know it's a vector and we know the size of the contained type.
-
