@@ -35,7 +35,7 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "cbb8eba834ce383
 [feature.beta.tasks]
 rename-file-emscripten = { cmd = "ln -s vinca_emscripten32.yaml vinca.yaml", depends-on = ["remove-file"] }
 generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }
-generate-recipes-emscripten = { cmd = "vinca -m", depends-on = ["rename-file-emscripten"] }
+generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["rename-file-emscripten"] }
 remove-file = { cmd = "rm vinca.yaml; rm -rf recipes; mkdir recipes" }
 build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing" }
 copy_additional_recipes = { cmd = "sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \\;'" }
