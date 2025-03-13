@@ -14,9 +14,9 @@ source:
 build:
   script:
     build.sh
-    # sel(unix): build.sh
-    # sel(emscripten-wasm32): build.sh
   number: 1
+  skip:
+    - not emscripten
 
 about:
   homepage: https://www.ros.org/
