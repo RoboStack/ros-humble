@@ -16,6 +16,8 @@ build:
   number: 12
   script:
     build.sh
+  skip:
+    - not emscripten
 
 requirements:
   build:
