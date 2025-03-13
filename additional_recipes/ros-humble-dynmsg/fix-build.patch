@@ -196,3 +196,4 @@ index 072819c..ed4716f 100644
      case rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
        // We do not know the specific type of the sequence because the type is not available at
        // compile-time, but we know it's a vector and we know the size of the contained type.
+
