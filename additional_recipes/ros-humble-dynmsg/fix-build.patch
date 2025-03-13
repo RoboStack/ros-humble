@@ -1,5 +1,5 @@
 diff --git a/dynmsg/CMakeLists.txt b/dynmsg/CMakeLists.txt
-index aa2075d..3b9bc27 100644
+index aa2075d..05458c8 100644
 --- a/dynmsg/CMakeLists.txt
 +++ b/dynmsg/CMakeLists.txt
 @@ -25,6 +25,7 @@ find_package(rosidl_runtime_cpp REQUIRED)
@@ -37,7 +37,7 @@ index aa2075d..3b9bc27 100644
 +  rosidl_runtime_cpp::rosidl_runtime_cpp
 +  rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
 +  rosidl_typesupport_introspection_cpp::rosidl_typesupport_introspection_cpp
-+  yaml-cpp)
++  yaml-cpp
  )
 +
  target_include_directories(dynmsg PUBLIC
