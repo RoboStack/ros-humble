@@ -3,7 +3,7 @@ schema_version: 1
 
 package:
   name: ros-humble-rmw-wasm-cpp
-  version: 1.1.0
+  version: 0.0.1
 
 source:
   git: https://github.com/Tobias-Fischer/rmw_wasm
@@ -13,10 +13,9 @@ source:
 build:
   script:
     build.sh
-    # sel(unix): build.sh
-    # sel(emscripten-wasm32): build.sh
   number: 12
-
+  skip:
+    - not emscripten
 
 about:
   homepage: https://www.ros.org/
