@@ -5,7 +5,8 @@ libprotobuf:
 protobuf:
   - 5.28.2
 spdlog:
-  - 1.14
+  - 1.14  # [not emscripten]
+  - 1.15  # [emscripten]
 pugixml:
   - '1.14'
 
@@ -17,11 +18,17 @@ python:
 python_impl:
   - cpython
 
+emscripten_emscripten-wasm32:
+  - 3.1.45  
+cross-python_emscripten-wasm32:
+  - 3.11.* *_12
+
 c_compiler:
   - gcc                        # [linux]
   - clang                      # [osx]
   - vs2019                     # [win and x86_64]
   - vs2022                     # [win and arm64]
+  - emscripten                 # [emscripten]
 c_compiler_version:            # [unix]
   - 13                         # [linux]
   - 18                         # [osx]
@@ -38,6 +45,7 @@ cxx_compiler:
   - clangxx                    # [osx]
   - vs2019                     # [win and x86_64]
   - vs2022                     # [win and arm64]
+  - emscripten                 # [emscripten]
 cxx_compiler_version:          # [unix]
   - 13                         # [linux]
   - 18                         # [osx]

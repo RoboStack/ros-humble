@@ -78,3 +78,39 @@ index 4914c4f..15901e2 100644
      sizeof(error_string->str) == (
        sizeof(error_state->message) +
        sizeof(format_1) - 1 /* minus the null-term */ +
+diff --git a/src/strerror.c b/src/strerror.c
+index a425010..282a107 100644
+--- a/src/strerror.c
++++ b/src/strerror.c
+@@ -27,7 +27,7 @@ rcutils_strerror(char * buffer, size_t buffer_length)
+ {
+ #if defined(_WIN32)
+   strerror_s(buffer, buffer_length, errno);
+-#elif defined(_GNU_SOURCE) && (!defined(ANDROID) || __ANDROID_API__ >= 23) && !defined(__QNXNTO__)
++#elif defined(_GNU_SOURCE) && (!defined(ANDROID) || __ANDROID_API__ >= 23) && !defined(__QNXNTO__) && !defined(__EMSCRIPTEN__)
+   /* GNU-specific */
+   char * msg = strerror_r(errno, buffer, buffer_length);
+   if (msg != buffer) {
+diff --git a/src/shared_library.c b/src/shared_library.c
+index 0190afcc..5e0d023e 100644
+--- a/src/shared_library.c
++++ b/src/shared_library.c
+@@ -127,7 +127,7 @@ rcutils_load_shared_library(
+     goto fail;
+   }
+   lib->library_path = rcutils_strdup(image_name, lib->allocator);
+-#elif defined(_GNU_SOURCE) && !defined(__QNXNTO__) && !defined(__ANDROID__)
++#elif defined(_GNU_SOURCE) && !defined(__QNXNTO__) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+   struct link_map * map = NULL;
+   if (dlinfo(lib->lib_pointer, RTLD_DI_LINKMAP, &map) != 0) {
+     RCUTILS_SET_ERROR_MSG_WITH_FORMAT_STRING("dlinfo error: %s", dlerror());
+@@ -294,7 +294,7 @@ rcutils_get_platform_library_name(
+ 
+   int written = 0;
+ 
+-#if defined(__linux__) || defined(__QNXNTO__)
++#if defined(__linux__) || defined(__QNXNTO__) || defined(__EMSCRIPTEN__)
+   if (debug) {
+     if (buffer_size >= (strlen(library_name) + 8)) {
+       written = rcutils_snprintf(
+

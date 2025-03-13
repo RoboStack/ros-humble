@@ -1,21 +1,97 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e6f56ba..9e1cf50 100644
+index e6f56ba..73669b1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -17,16 +17,6 @@ endif()
+@@ -15,17 +15,11 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   -Wshadow -Wnon-virtual-dtor)
+ endif()
  
- add_subdirectory(src)
- 
+-add_subdirectory(src)
+-
 -include(CTest)
 -if(BUILD_TESTING)
 -  include(cmake/osrf_testing_tools_cpp_require_googletest.cmake)
 -  # ensures target gtest_main exists
 -  osrf_testing_tools_cpp_require_googletest(VERSION_GTE 1.10
 -    VENDOR_DIR "${CMAKE_SOURCE_DIR}/vendor")
--
++if (EMSCRIPTEN)
++  set(CMAKE_CXX_FLAGS "-pthread ${CMAKE_CXX_FLAGS}")
++ endif()
+ 
 -  add_subdirectory(test)
 -endif()
--
++add_subdirectory(src)
+ 
  configure_file(osrf_testing_tools_cppConfig.cmake.in
    "${PROJECT_BINARY_DIR}/osrf_testing_tools_cppConfig.cmake" @ONLY)
- configure_file(osrf_testing_tools_cppConfigVersion.cmake.in
+diff --git a/src/memory_tools/count_function_occurrences_in_backtrace.hpp b/src/memory_tools/count_function_occurrences_in_backtrace.hpp
+index c5e0cc2..c3b8cb5 100644
+--- a/src/memory_tools/count_function_occurrences_in_backtrace.hpp
++++ b/src/memory_tools/count_function_occurrences_in_backtrace.hpp
+@@ -17,7 +17,7 @@
+ 
+ #include "./safe_fwrite.hpp"
+ 
+-#if defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__)
++#if defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+ 
+ // Include nothing for now.
+ 
+@@ -50,7 +50,7 @@ struct is_function_pointer
+   >
+ {};
+ 
+-#if defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__)
++#if defined(_WIN32) || defined(__QNXNTO__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+ 
+ struct count_function_occurrences_in_backtrace_is_implemented : std::false_type {};
+ 
+diff --git a/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp b/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
+index ac7ad51..442c9de 100644
+--- a/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
++++ b/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp
+@@ -63,7 +63,9 @@
+ #elif defined(BACKWARD_SYSTEM_UNKNOWN)
+ #elif defined(BACKWARD_SYSTEM_WINDOWS)
+ #else
+-#if defined(__linux) || defined(__linux__)
++#if defined(__EMSCRIPTEN__)
++#define BACKWARD_SYSTEM_UNKNOWN // Not supported in emscripten
++#elif defined(__linux) || defined(__linux__)
+ #define BACKWARD_SYSTEM_LINUX
+ #elif defined(__APPLE__)
+ #define BACKWARD_SYSTEM_DARWIN
+@@ -393,12 +395,14 @@ typedef SSIZE_T ssize_t;
+ // anyway.
+ //
+ // Luckily we can play on the fact that the guard macros have a different name:
++#ifndef __EMSCRIPTEN__ // Emscripten has the same prototype as gcc
+ #ifdef __CLANG_UNWIND_H
+ // In fact, this function still comes from libgcc (on my different linux boxes,
+ // clang links against libgcc).
+ #include <inttypes.h>
+ extern "C" uintptr_t _Unwind_GetIPInfo(_Unwind_Context *, int *);
+ #endif
++#endif
+ 
+ #endif // BACKWARD_HAS_UNWIND == 1
+ 
+diff --git a/src/test_runner/CMakeLists.txt b/src/test_runner/CMakeLists.txt
+index ffbc9cf..8bc17a6 100644
+--- a/src/test_runner/CMakeLists.txt
++++ b/src/test_runner/CMakeLists.txt
+@@ -1,5 +1,14 @@
+ add_executable(test_runner main.cpp)
+ 
++if (DEFINED EMSCRIPTEN)
++  set_target_properties(
++    test_runner 
++    PROPERTIES SUFFIX ".wasm"
++  )
++
++  target_compile_options(test_runner PUBLIC -fPIC)
++endif (DEFINED EMSCRIPTEN)
++
+ install(TARGETS test_runner
+   EXPORT test_runner
+   DESTINATION lib/${PROJECT_NAME}
