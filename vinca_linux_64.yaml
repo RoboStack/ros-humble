@@ -41,6 +41,7 @@ skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
+  - spatio_temporal_voxel_layer
   # only subset of packages to reduce maintainer load
 
   # build 7 reselect
