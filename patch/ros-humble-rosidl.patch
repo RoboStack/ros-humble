@@ -1,0 +1,35 @@
+diff --git a/rosidl_cli/completion/rosidl-argcomplete.bash b/rosidl_cli/completion/rosidl-argcomplete.bash
+index 0262ec2..c3e8606 100644
+--- a/rosidl_cli/completion/rosidl-argcomplete.bash
++++ b/rosidl_cli/completion/rosidl-argcomplete.bash
+@@ -12,8 +12,6 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-if type register-python-argcomplete3 > /dev/null 2>&1; then
+-  eval "$(register-python-argcomplete3 rosidl)"
+-elif type register-python-argcomplete > /dev/null 2>&1; then
++if type register-python-argcomplete > /dev/null 2>&1; then
+   eval "$(register-python-argcomplete rosidl)"
+ fi
+diff --git a/rosidl_cli/setup.py b/rosidl_cli/setup.py
+index bacc9e8..ef8dc4f 100644
+--- a/rosidl_cli/setup.py
++++ b/rosidl_cli/setup.py
+@@ -14,10 +14,14 @@ setup(
+         ]),
+         ('share/rosidl_cli', [
+             'package.xml',
+-            'resource/package.dsv',
++            # [pixi] autocompletion scripts are loaded automatically from appropriate directories
++            # 'resource/package.dsv',
+         ]),
+-        ('share/rosidl_cli/environment', [
++        # [pixi] install autocompletion scripts
++        ('share/bash-completion/completions', [
+             'completion/rosidl-argcomplete.bash',
++        ]),
++        ('share/zsh/site-functions', [
+             'completion/rosidl-argcomplete.zsh'
+         ]),
+     ],
