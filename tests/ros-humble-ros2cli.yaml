@@ -3,5 +3,5 @@ tests:
   - script:
     - if: unix
       then:
-        - test -f ${PREFIX}/share/bash-completion/completions/ros2
-        - test -f ${PREFIX}/share/zsh/site-functions/ros2
+        - test -f ${PREFIX}/share/bash-completion/completions/ros2-argcomplete.bash
+        - test -f ${PREFIX}/share/zsh/site-functions/ros2-argcomplete.zsh
