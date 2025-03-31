@@ -185,6 +185,6 @@ zenoh_cpp_vendor:
 rmw_zenoh_cpp:
   add_host: ["libzenohc", "libzenohcxx"]
 openvdb_vendor:
-  add_host: ["blosc"]
+  add_host: ["openvdb"]
 spatio_temporal_voxel_layer:
   add_host: ["REQUIRE_OPENGL"]

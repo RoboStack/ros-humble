@@ -1,0 +1,27 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c158a4a..8fad1d8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,7 +4,11 @@ project(openvdb_vendor)
+ find_package(ament_cmake REQUIRED)
+ find_package(ament_cmake_vendor_package REQUIRED)
+ 
++list(APPEND CMAKE_MODULE_PATH "$ENV{PREFIX}/lib/cmake/OpenVDB")
++find_package(OpenVDB REQUIRED)
++
+ ament_vendor(${PROJECT_NAME}
++  SATISFIED ${OpenVDB_FOUND}
+   VCS_URL https://github.com/AcademySoftwareFoundation/openvdb.git
+   VCS_VERSION v10.0.1
+   VCS_TYPE git
+diff --git a/openvdb_vendor-extras.cmake b/openvdb_vendor-extras.cmake
+index a32dfc5..93ce1b9 100644
+--- a/openvdb_vendor-extras.cmake
++++ b/openvdb_vendor-extras.cmake
+@@ -3,5 +3,5 @@ if(NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
+   set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+ endif()
+ message( STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}" )
+-list(APPEND CMAKE_MODULE_PATH "${openvdb_vendor_DIR}/../../../opt/openvdb_vendor/lib/cmake/OpenVDB")
++list(APPEND CMAKE_MODULE_PATH "$ENV{PREFIX}/lib/cmake/OpenVDB")
+ find_package(OpenVDB REQUIRED)
