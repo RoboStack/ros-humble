@@ -1,5 +1,5 @@
 tests:
-  # Regression test for https://github.com/RoboStack/ros-humble/issues/150
+  # Regression test for https://github.com/RoboStack/ros-humble/issues/271
   - script:
     - if: unix
       then:
