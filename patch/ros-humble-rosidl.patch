@@ -13,16 +13,10 @@ index 0262ec2..c3e8606 100644
    eval "$(register-python-argcomplete rosidl)"
  fi
 diff --git a/rosidl_cli/setup.py b/rosidl_cli/setup.py
-index bacc9e8..b0c5b53 100644
+index bacc9e8..b4fd32c 100644
 --- a/rosidl_cli/setup.py
 +++ b/rosidl_cli/setup.py
-@@ -14,12 +14,19 @@ setup(
-         ]),
-         ('share/rosidl_cli', [
-             'package.xml',
--            'resource/package.dsv',
-         ]),
-         ('share/rosidl_cli/environment', [
+@@ -20,6 +20,14 @@ setup(
              'completion/rosidl-argcomplete.bash',
              'completion/rosidl-argcomplete.zsh'
          ]),
