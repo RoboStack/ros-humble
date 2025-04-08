@@ -101,14 +101,12 @@ jobs:
       id: newrecipecheck
       shell: bash -l {0}
       run: |
+        set +e
         if [ ! -d recipes ] || [ -z "$(ls -A recipes)" ]; then
           echo "RECIPE_CREATED=0" >> $GITHUB_OUTPUT
         else
           echo "RECIPE_CREATED=1" >> $GITHUB_OUTPUT
         fi
-        # continue on error
-        set +e
-        test ! -d recipes
     - name: Build recipes for linux-64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && matrix.platform == 'linux-64'
