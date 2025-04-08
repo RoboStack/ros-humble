@@ -1,7 +1,6 @@
 on:
   pull_request:
-    paths:
-      - '*.yaml'
+  workflow_dispatch:
 
 env:
   ROS_VERSION: 2
@@ -73,7 +72,7 @@ jobs:
         ls -la recipes
     - name: Generate recipes for osx-64
       shell: bash -l {0}
-      if: steps.filecheck.outputs.OSX_YAML_CHANGED == 1 && matrix.platform == 'osx-64'
+      if: matrix.platform == 'osx-64'
       run: |
         cp vinca_osx.yaml vinca.yaml
         mkdir -p recipes
