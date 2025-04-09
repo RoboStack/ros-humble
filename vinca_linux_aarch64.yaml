@@ -140,6 +140,10 @@ packages_select_by_deps:
 
   - autoware_utils
 
+  - flex_sync
+  
+  - apriltag_detector
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
