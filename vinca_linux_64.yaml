@@ -211,6 +211,10 @@ packages_select_by_deps:
   
   - point_cloud_transport_plugins
 
+  - flex_sync
+  
+  - apriltag_detector
+
   # ----- end of package support -----
 
   # - rtabmap

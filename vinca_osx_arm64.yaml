@@ -143,6 +143,10 @@ packages_select_by_deps:
   - ffmpeg_image_transport
 
   - foxglove_compressed_image_transport
+  
+  - flex_sync
+  
+  - apriltag_detector
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
