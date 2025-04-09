@@ -1,0 +1,7 @@
+tests:
+  # Regression test for https://github.com/RoboStack/ros-humble/issues/271
+  - script:
+    - if: unix
+      then:
+        - test -f ${PREFIX}/share/bash-completion/completions/rosidl-argcomplete.bash
+        - test -f ${PREFIX}/share/zsh/site-functions/rosidl-argcomplete.zsh
