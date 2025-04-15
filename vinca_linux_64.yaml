@@ -217,6 +217,8 @@ packages_select_by_deps:
 
   - ament_cmake_black
 
+  - behaviortree_cpp
+
   # ----- end of package support -----
 
   # - rtabmap
