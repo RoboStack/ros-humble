@@ -189,4 +189,4 @@ openvdb_vendor:
 spatio_temporal_voxel_layer:
   add_host: ["REQUIRE_OPENGL"]
 behaviortree_cpp:
-  add_host: ["cppzmq"]
+  add_host: ["zeromq", "sqlite"]
