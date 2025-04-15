@@ -215,6 +215,8 @@ packages_select_by_deps:
   
   - apriltag_detector
 
+  - ament_cmake_black
+
   # ----- end of package support -----
 
   # - rtabmap

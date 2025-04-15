@@ -144,6 +144,8 @@ packages_select_by_deps:
   
   - apriltag_detector
 
+  - ament_cmake_black
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
