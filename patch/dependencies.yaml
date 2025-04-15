@@ -188,3 +188,6 @@ openvdb_vendor:
   add_host: ["openvdb"]
 spatio_temporal_voxel_layer:
   add_host: ["REQUIRE_OPENGL"]
+behaviortree_cpp:
+  add_host: ["libboost-devel", "cppzmq"]
+  add_run: ["libboost"]
