@@ -219,7 +219,9 @@ packages_select_by_deps:
 
   - behaviortree_cpp
 
-  # ----- end of package support -----
+  - py-binding-tools
+
+# ----- end of package support -----
 
   # - rtabmap
   # - control-box-rst
