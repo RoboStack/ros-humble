@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 31c98e5..37125ec 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -6,6 +6,8 @@ cmake_minimum_required(VERSION 3.16)
+ 
+ project(apriltag_mit VERSION 1.0.0 LANGUAGES CXX)
+ 
++add_compile_definitions(_USE_MATH_DEFINES)
++
+ include(CMakePackageConfigHelpers)
+ include(GNUInstallDirs)
+ 
