@@ -221,6 +221,9 @@ packages_select_by_deps:
 
   - apriltag_detector_mit
 
+  - ament_cmake_black
+
+  - py-binding-tools
   # ----- end of package support -----
 
   # - rtabmap

@@ -153,6 +153,7 @@ packages_select_by_deps:
   - apriltag_detector_umich
 
   - apriltag_detector_mit
+  - ament_cmake_black
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
