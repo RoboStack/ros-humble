@@ -45,6 +45,9 @@ rviz_rendering:
 behaviortree_cpp_v3:
   add_host: ["libboost-devel", "cppzmq"]
   add_run: ["libboost"]
+behaviortree_cpp:
+  add_host: ["libboost-devel", "cppzmq", "zeromq", "sqlite"]
+  add_run: ["libboost"]
 plotjuggler:
   add_host: ["libxcb", "${{ 'elfutils' if linux }}", "ros-humble-ros-workspace"]
 embree_vendor:
@@ -188,5 +191,3 @@ openvdb_vendor:
   add_host: ["openvdb"]
 spatio_temporal_voxel_layer:
   add_host: ["REQUIRE_OPENGL"]
-behaviortree_cpp:
-  add_host: ["zeromq", "sqlite"]
