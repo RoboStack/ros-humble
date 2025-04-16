@@ -217,6 +217,7 @@ packages_select_by_deps:
 
   - ament_cmake_black
 
+  - py-binding-tools
   # ----- end of package support -----
 
   # - rtabmap
