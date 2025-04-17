@@ -76,6 +76,7 @@ packages_select_by_deps:
   - vision-msgs-rviz-plugins
 
   - navigation2
+  - nav2_bringup
   - rviz2
   - behaviortree_cpp_v3
   - ament_cmake_catch2
