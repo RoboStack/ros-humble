@@ -223,8 +223,11 @@ packages_select_by_deps:
 
   - ament_cmake_black
 
+  - behaviortree_cpp
+
   - py-binding-tools
-  # ----- end of package support -----
+
+# ----- end of package support -----
 
   # - rtabmap
   # - control-box-rst
