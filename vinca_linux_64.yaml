@@ -215,6 +215,14 @@ packages_select_by_deps:
   
   - apriltag_detector
 
+  - apriltag_draw
+
+  - apriltag_tools
+
+  - apriltag_detector_umich
+
+  - apriltag_detector_mit
+
   - ament_cmake_black
 
   - behaviortree_cpp
