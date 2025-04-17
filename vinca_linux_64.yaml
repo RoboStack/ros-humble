@@ -217,6 +217,8 @@ packages_select_by_deps:
 
   - apriltag_draw
 
+  - apriltag_tools
+
   - apriltag_detector_umich
 
   - apriltag_detector_mit
