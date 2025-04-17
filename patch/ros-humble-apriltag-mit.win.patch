@@ -1,0 +1,34 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 31c98e5..37125ec 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -6,6 +6,8 @@ cmake_minimum_required(VERSION 3.16)
+ 
+ project(apriltag_mit VERSION 1.0.0 LANGUAGES CXX)
+ 
++add_compile_definitions(_USE_MATH_DEFINES)
++
+ include(CMakePackageConfigHelpers)
+ include(GNUInstallDirs)
+ 
+diff --git a/src/TagFamily.cc b/src/TagFamily.cc
+index 023094b..37f7141 100644
+--- a/src/TagFamily.cc
++++ b/src/TagFamily.cc
+@@ -104,7 +104,15 @@ code_t Rotate90DegCwise(code_t w, int d) {
+ 
+ unsigned HammingDistance(code_t a, code_t b) {
+   // Because code_t is unsigned long long
+-  return __builtin_popcountll(a ^ b);
++  #if defined(__GNUC__)
++    return (int)__builtin_popcountll(a ^ b);
++  #else
++    uint64_t v = a ^ b;
++    v = v - ((v >> 1) & 0x5555555555555555ULL);
++    v = (v & 0x3333333333333333ULL) + ((v >> 2) & 0x3333333333333333ULL);
++    v = (v + (v >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
++    return int((uint64_t)(v * 0x0101010101010101ULL) >> 56);
++  #endif
+ }
+ 
+ } // namespace AprilTags
