@@ -157,6 +157,12 @@ packages_select_by_deps:
 
   - behaviortree_cpp
 
+  - dual-laser-merger
+
+  - pointcloud-to-laserscan
+
+  - laser-segmentation
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2

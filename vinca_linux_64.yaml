@@ -229,6 +229,12 @@ packages_select_by_deps:
 
   - py-binding-tools
 
+  - dual-laser-merger
+
+  - pointcloud-to-laserscan
+
+  - laser-segmentation
+
 # ----- end of package support -----
 
   # - rtabmap
