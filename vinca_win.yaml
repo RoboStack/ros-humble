@@ -267,5 +267,13 @@ packages_select_by_deps:
 
   - autoware_utils
 
+  - flex_sync
+  
+  - apriltag_detector
+
+  - ament_cmake_black
+
+  - behaviortree_cpp
+
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

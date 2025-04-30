@@ -143,6 +143,29 @@ packages_select_by_deps:
   - ffmpeg_image_transport
 
   - foxglove_compressed_image_transport
+  
+  - flex_sync
+  
+  - apriltag_detector
+
+  - apriltag_draw
+
+  - apriltag_detector_umich
+
+  - apriltag_detector_mit
+
+  - apriltag_tools
+
+  - ament_cmake_black
+
+  - behaviortree_cpp
+
+  - dual-laser-merger
+
+  - pointcloud-to-laserscan
+
+  - laser-segmentation
+
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

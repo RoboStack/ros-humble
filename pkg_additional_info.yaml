@@ -2,3 +2,7 @@ lanelet2_io:
   build_number: 9
 ros_workspace:
   build_number: 9
+rosidl_cli:
+  build_number: 9
+ros2cli:
+  build_number: 9

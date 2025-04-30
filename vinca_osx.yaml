@@ -154,5 +154,27 @@ packages_select_by_deps:
 
   - autoware_utils
 
+  - flex_sync
+  
+  - apriltag_detector
+
+  - apriltag_draw
+
+  - apriltag_detector_umich
+
+  - apriltag_detector_mit
+
+  - apriltag_tools
+
+  - ament_cmake_black
+
+  - behaviortree_cpp
+
+  - dual-laser-merger
+
+  - pointcloud-to-laserscan
+
+  - laser-segmentation
+
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

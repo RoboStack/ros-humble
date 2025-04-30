@@ -35,6 +35,7 @@ else
     cross_compile=""
 fi
 
+
 for recipe in ${CURRENT_RECIPES[@]}; do
 	pixi run -v rattler-build build \
 		--recipe ${FEEDSTOCK_ROOT}/recipes/${recipe} \

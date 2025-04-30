@@ -39,6 +39,7 @@ skip_existing:
   # - /home/ubuntu/micromamba/envs/devenv/conda-bld/
 
 packages_select_by_deps:
+  - spatio_temporal_voxel_layer
   # only subset of packages to reduce maintainer load
   - ros2-controllers
   - diff-drive-controller
@@ -75,6 +76,7 @@ packages_select_by_deps:
   - vision-msgs-rviz-plugins
 
   - navigation2
+  - nav2_bringup
   - rviz2
   - behaviortree_cpp_v3
   - ament_cmake_catch2
@@ -138,6 +140,28 @@ packages_select_by_deps:
   - autoware_vehicle_msgs
 
   - autoware_utils
+
+  - flex_sync
+  
+  - apriltag_detector
+
+  - apriltag_draw
+
+  - apriltag_detector_umich
+
+  - apriltag_detector_mit
+
+  - apriltag_tools
+
+  - ament_cmake_black
+
+  - behaviortree_cpp
+
+  - dual-laser-merger
+
+  - pointcloud-to-laserscan
+
+  - laser-segmentation
 
   # Used to work, now needs fixes
   # - rtabmap
