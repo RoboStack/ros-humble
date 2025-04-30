@@ -5,8 +5,8 @@ package:
   name: ros-humble-wasm-cpp
   version: 1.0.0
 source:
-  git: https://github.com/Tobias-Fischer/rmw_wasm
-  branch: emscripten-async-fixes
+  git: https://github.com/ros2wasm/rmw_wasm
+  rev: 15bc309ffd5ba2a2451cbe22864a8356da251e65
   target_directory: ros-humble-wasm-cpp/src/work
   # patches:
   #   - fix-build.patch
