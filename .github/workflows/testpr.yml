@@ -21,6 +21,8 @@ jobs:
             platform: osx-arm64
           - os: windows-2019
             platform: win-64
+          - os: ubuntu-latest
+            platform: emscripten-wasm32
 
     runs-on: ${{ matrix.os }}
 
@@ -54,6 +56,25 @@ jobs:
         rm -rf /c/Strawberry
         rm -rf "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17763.0/"
 
+    - name: Check what files have changed
+      id: filecheck
+      shell: bash -l {0}
+      run: |
+        git fetch origin main
+        # continue on error
+        set +e
+        git diff --exit-code --name-only origin/main -- vinca_linux_64.yaml > /dev/null
+        echo "::set-output name=LINUX_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_emscripten32.yaml > /dev/null
+        echo "::set-output name=EMSCRIPTEN32_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_linux_aarch64.yaml > /dev/null
+        echo "::set-output name=LINUX_AARCH_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_osx.yaml > /dev/null
+        echo "::set-output name=OSX_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_osx_arm64.yaml > /dev/null
+        echo "::set-output name=OSX_ARM_YAML_CHANGED::${?}"
+        git diff --exit-code --name-only origin/main -- vinca_win.yaml > /dev/null
+        echo "::set-output name=WIN_YAML_CHANGED::${?}"
     - name: Generate recipes for linux-64
       shell: bash -l {0}
       if: matrix.platform == 'linux-64'
@@ -61,6 +82,14 @@ jobs:
         cp vinca_linux_64.yaml vinca.yaml
         mkdir -p recipes
         $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-64 -m
+        ls -la recipes
+    - name: Generate recipes for emscripten-wasm32
+      shell: bash -l {0}
+      if: steps.filecheck.outputs.EMSCRIPTEN32_YAML_CHANGED == 1 && matrix.platform == 'emscripten-wasm32'
+      run: |
+        cp vinca_emscripten32.yaml vinca.yaml
+        mkdir -p recipes
+        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform emscripten-wasm32 -m -n
         ls -la recipes
     - name: Generate recipes for linux-aarch64
       shell: bash -l {0}
@@ -113,6 +142,12 @@ jobs:
       run: |
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
         env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+    - name: Build recipes for emscripten-wasm32
+      shell: bash -l {0}
+      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.EMSCRIPTEN32_YAML_CHANGED == 1 && matrix.platform == 'emscripten-wasm32'
+      run: |
+        env -i $HOME/.pixi/bin/pixi run -e beta sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \;'
+        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir ./recipes --target-platform emscripten-wasm32 -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c robostack-staging -c conda-forge --skip-existing --test skip
     - name: Build recipes for linux-aarch64
       shell: bash -l {0}
       if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && matrix.platform == 'linux-aarch64'

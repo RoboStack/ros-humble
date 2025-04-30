@@ -1,5 +1,5 @@
 ament_package:
-  add_host: ['importlib_resources']
+  add_host: ["importlib_resources"]
 foxglove_bridge:
   add_host: ["ros-humble-ament-cmake"]
 ros_ign_interfaces:
@@ -158,6 +158,51 @@ ros_image_to_qimage:
   add_host: ["REQUIRE_OPENGL"]
 rqt_image_overlay:
   add_host: ["REQUIRE_OPENGL"]
+tracetools:
+  remove_host: [ "pkg-config" ]
+spdlog_vendor:
+  add_host: ["${{ 'fmt' if emscripten }}"]
+  add_run: ["${{ 'fmt' if emscripten }}"]
+rcl_logging_spdlog:
+  add_host: ["${{ 'fmt' if emscripten }}"]
+rcl:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+libstatistics_collector:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+rcl_action:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+rclc:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+rclcpp:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+rclcpp_action:
+  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+examples_rclcpp_minimal_subscriber:
+  add_host:
+    - if: (target_platform == 'emscripten-wasm32')
+      then:
+        - ros-humble-rmw-wasm-cpp
+examples_rclcpp_minimal_publisher:
+  add_host:
+    - if: (target_platform == 'emscripten-wasm32')
+      then:
+        - ros-humble-rmw-wasm-cpp
+rclcpp_components:
+  add_host:
+    - if: (target_platform == 'emscripten-wasm32')
+      then:
+        - ros-humble-rmw-wasm-cpp
+rmw_implementation:
+  add_run:
+    - if: (target_platform == 'emscripten-wasm32')
+      then:
+        - ros-humble-rmw-wasm-cpp
+  add_host:
+    - if: (target_platform == 'emscripten-wasm32')
+      then:
+        - ros-humble-rmw-wasm-cpp
+    - "ros-humble-yaml-cpp-vendor"
+    - "fmt"
 slam_toolbox:
   add_build: ["${{ 'qt-main' if (build_platform != target_platform) }}"]
   add_host: ["REQUIRE_OPENGL"]

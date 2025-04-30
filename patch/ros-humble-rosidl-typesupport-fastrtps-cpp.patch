@@ -1,0 +1,29 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d42ce68..0bcd371 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -50,10 +50,19 @@ set_property(TARGET ${PROJECT_NAME}
+ target_include_directories(${PROJECT_NAME} PUBLIC
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
+-target_link_libraries(${PROJECT_NAME} PUBLIC
+-  fastcdr
+-  rosidl_runtime_c::rosidl_runtime_c
+-  rmw::rmw)
++
++if (EMSCRIPTEN)
++  # Don't explicitly link rosidl_runtime_c here.
++  # It is linked by rmw and emcc produces errors if the library is specified more than once in the input list
++  target_link_libraries(${PROJECT_NAME} PUBLIC
++    fastcdr
++    rmw::rmw)
++else()
++  target_link_libraries(${PROJECT_NAME} PUBLIC
++    fastcdr
++    rosidl_runtime_c::rosidl_runtime_c
++    rmw::rmw)
++endif()
+ 
+ # Export old-style CMake variables
+ ament_export_include_directories("include/${PROJECT_NAME}")
+
