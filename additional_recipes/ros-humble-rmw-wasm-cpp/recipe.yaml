@@ -3,11 +3,11 @@ schema_version: 1
 
 package:
   name: ros-humble-rmw-wasm-cpp
-  version: 0.0.1
+  version: 0.0.2
 
 source:
   git: https://github.com/ros2wasm/rmw_wasm
-  rev: 15bc309ffd5ba2a2451cbe22864a8356da251e65
+  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
   target_directory: ros-humble-rmw-wasm-cpp/src/work
 
 build:
