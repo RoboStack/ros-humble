@@ -9,6 +9,8 @@ spdlog:
   - 1.15  # [emscripten]
 pugixml:
   - '1.14'
+cmake:
+  - 3.*
 
 cdt_name:  # [linux]
   - conda  # [linux]
