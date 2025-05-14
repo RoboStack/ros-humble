@@ -58,6 +58,7 @@ packages_select_by_deps:
 
   # rqt
   - rqt
+  - rqt-gui
   - rqt_image_overlay
   - rqt-robot-dashboard
   - rqt-robot-monitor
@@ -234,6 +235,8 @@ packages_select_by_deps:
   - pointcloud-to-laserscan
 
   - laser-segmentation
+  
+  - rqt_tf_tree
 
 # ----- end of package support -----
 
