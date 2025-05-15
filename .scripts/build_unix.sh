@@ -48,4 +48,10 @@ for recipe in ${CURRENT_RECIPES[@]}; do
 
 done
 
-pixi run upload ${CONDA_BLD_PATH}/${target}*/*.conda --force
+# Check if it build something, this is a hotfix for the skips inside additional_recipes 
+if compgen -G "${CONDA_BLD_PATH}/${target}*/*.conda" > /dev/null; then
+    pixi run upload "${CONDA_BLD_PATH}/${target}"*/*.conda --force
+else
+    echo "Warning: No .conda files found in ${CONDA_BLD_PATH}/${target}"
+    echo "This might be due to all the packages being skipped"
+fi
