@@ -163,6 +163,8 @@ packages_select_by_deps:
 
   - laser-segmentation
 
+  - rqt_tf_tree
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
