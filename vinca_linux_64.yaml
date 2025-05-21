@@ -238,6 +238,8 @@ packages_select_by_deps:
   
   - rqt_tf_tree
 
+  - rmf-dev
+
 # ----- end of package support -----
 
   # - rtabmap
