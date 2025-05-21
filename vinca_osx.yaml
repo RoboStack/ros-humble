@@ -178,5 +178,7 @@ packages_select_by_deps:
 
   - rqt_tf_tree
 
+  - rmf-dev
+
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

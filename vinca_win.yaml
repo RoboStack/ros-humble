@@ -275,5 +275,7 @@ packages_select_by_deps:
 
   - behaviortree_cpp
 
+  - rmf-dev
+
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
