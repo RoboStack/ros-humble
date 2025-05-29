@@ -86,5 +86,7 @@ packages_select_by_deps:
   - yaml_cpp_vendor
   - osrf_testing_tools_cpp
 
+  - rviz_satellite
+
 patch_dir: patch
 
