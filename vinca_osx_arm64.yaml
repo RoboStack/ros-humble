@@ -170,5 +170,7 @@ packages_select_by_deps:
 
   - rviz_satellite
 
+  - odom_to_tf_ros2
+
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

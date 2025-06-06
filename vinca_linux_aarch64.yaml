@@ -167,6 +167,8 @@ packages_select_by_deps:
 
   - rviz_satellite
 
+  - odom_to_tf_ros2
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
