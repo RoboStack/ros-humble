@@ -240,6 +240,8 @@ packages_select_by_deps:
 
   - rviz_satellite
 
+  - odom_to_tf_ros2
+
 # ----- end of package support -----
 
   # - rtabmap
