@@ -132,6 +132,9 @@ packages_select_by_deps:
 
   - autoware_utils
 
+  # requested in https://github.com/RoboStack/ros-humble/issues/307
+  - ros-humble-urdf-tutorials
+  
   # requested in https://github.com/RoboStack/ros-humble/issues/252
   - rmw_zenoh_cpp
 
