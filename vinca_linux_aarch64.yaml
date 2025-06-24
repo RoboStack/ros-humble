@@ -169,6 +169,15 @@ packages_select_by_deps:
 
   - odom_to_tf_ros2
 
+  # Microstrain IMU Packages + dependencies
+  - microstrain_inertial_description
+  - microstrain_inertial_driver
+  - microstrain_inertial_examples
+  - microstrain_inertial_msgs
+  - microstrain_inertial_rqt
+  - nmea_msgs
+  - rtcm_msgs
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
