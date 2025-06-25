@@ -251,6 +251,10 @@ packages_select_by_deps:
   - nmea_msgs
   - rtcm_msgs
 
+  # cascade lifecycle packages
+  - cascade-lifecycle-msgs
+  - rclcpp-cascade-lifecycle
+
 # ----- end of package support -----
 
   # - rtabmap
