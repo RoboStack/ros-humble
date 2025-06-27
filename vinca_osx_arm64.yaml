@@ -188,5 +188,10 @@ packages_select_by_deps:
   - cascade-lifecycle-msgs
   - rclcpp-cascade-lifecycle
 
+  # Sick safety scanner packages
+  - sick_safetyscanners_base 
+  - sick_safetyscanners2_interfaces
+  - sick_safetyscanners2
+
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
