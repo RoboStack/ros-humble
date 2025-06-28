@@ -187,6 +187,8 @@ packages_select_by_deps:
   - sick_safetyscanners2_interfaces
   - sick_safetyscanners2
 
+  - topic_tools
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2

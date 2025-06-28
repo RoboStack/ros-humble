@@ -200,5 +200,6 @@ packages_select_by_deps:
   - sick_safetyscanners2_interfaces
   - sick_safetyscanners2
 
+  - topic_tools
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

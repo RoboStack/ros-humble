@@ -260,6 +260,9 @@ packages_select_by_deps:
   - sick_safetyscanners2_interfaces
   - sick_safetyscanners2
 
+  # Phidgets packages
+  - topic_tools
+
 # ----- end of package support -----
 
   # - rtabmap
