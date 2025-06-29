@@ -1,26 +1,29 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6c7abf3..3737f94 100644
+index 2387c32..0413704 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -15,8 +15,8 @@ ament_auto_find_build_dependencies()
+@@ -8,7 +8,7 @@ endif()
  
- ## pkg-config libraries
- find_package(PkgConfig REQUIRED)
--pkg_check_modules(avcodec libavcodec REQUIRED)
--pkg_check_modules(swscale libswscale REQUIRED)
-+pkg_search_module(avcodec libavcodec REQUIRED)
-+pkg_search_module(swscale libswscale REQUIRED)
+ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   if($ENV{ROS_VERSION} EQUAL 2)
+-    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
++    add_compile_options(-Wall -Wextra -Wpedantic)
+   endif()
+ endif()
  
- include_directories(include
-   ${avcodec_INCLUDE_DIRS}
-@@ -35,8 +35,8 @@ ament_auto_add_library(${PROJECT_NAME}_node SHARED
+diff --git a/include/usb_cam/formats/av_pixel_format_helper.hpp b/include/usb_cam/formats/av_pixel_format_helper.hpp
+index ad1792e..1ea720d 100644
+--- a/include/usb_cam/formats/av_pixel_format_helper.hpp
++++ b/include/usb_cam/formats/av_pixel_format_helper.hpp
+@@ -744,11 +744,6 @@ const std::unordered_map<std::string, AVPixelFormat> STR_2_AVPIXFMT = {
+                                                                       ///< big-endian
  
- target_link_libraries(${PROJECT_NAME}_node
-   ${PROJECT_NAME}
--  ${avcodec_LIBRARIES}
--  ${swscale_LIBRARIES}
-+  ${avcodec_LINK_LIBRARIES}
-+  ${swscale_LINK_LIBRARIES}
-   # TODO(lucasw) should this have been in libavcodec?
-   #avutil
- )
+ 
+-  {stringify(AV_PIX_FMT_XVMC), AV_PIX_FMT_XVMC},                      ///< XVideo Motion
+-                                                                      ///< Acceleration via common
+-                                                                      ///< packet passing
+-
+-
+   {stringify(AV_PIX_FMT_YUV440P10LE), AV_PIX_FMT_YUV440P10LE},        ///< planar YUV 4:4:0,20bpp,
+                                                                       ///< (1 Cr & Cb sample per
+                                                                       ///< 1x2 Y samples),
