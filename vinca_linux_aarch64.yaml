@@ -189,6 +189,8 @@ packages_select_by_deps:
 
   - topic_tools
 
+  - usb-cam
+
   # Used to work, now needs fixes
   # - rtabmap
   # - webots-ros2
@@ -236,7 +238,6 @@ packages_select_by_deps:
   # - plansys2-bringup
   # - octovis
   # - gps-umd
-  # - usb-cam
   # - tvm-vendor
   # - ros2-socketcan
   # - mrpt2

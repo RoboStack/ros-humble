@@ -263,6 +263,7 @@ packages_select_by_deps:
   # Phidgets packages
   - topic_tools
 
+  - usb_cam
 # ----- end of package support -----
 
   # - rtabmap
@@ -282,7 +283,6 @@ packages_select_by_deps:
   # - gscam
 
   # - v4l2_camera
-  # - usb_cam
 
   # - zbar_ros
   # - vitis_common
