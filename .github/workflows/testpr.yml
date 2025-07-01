@@ -19,7 +19,7 @@ jobs:
             platform: osx-64
           - os: macos-14
             platform: osx-arm64
-          - os: windows-2019
+          - os: windows-2022
             platform: win-64
           - os: ubuntu-latest
             platform: emscripten-wasm32
