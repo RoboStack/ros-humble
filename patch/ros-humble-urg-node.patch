@@ -1,0 +1,12 @@
+diff --git a/src/urg_c_wrapper.cpp b/src/urg_c_wrapper.cpp
+index 10d2ed3b..41018825 100644
+--- a/src/urg_c_wrapper.cpp
++++ b/src/urg_c_wrapper.cpp
+@@ -39,6 +39,7 @@
+ #include <memory>
+ #include <string>
+ #include <vector>
++#include <unistd.h>
+ 
+ #include "boost/crc.hpp"
+

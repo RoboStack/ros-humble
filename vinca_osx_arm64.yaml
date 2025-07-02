@@ -194,5 +194,8 @@ packages_select_by_deps:
   - sick_safetyscanners2
 
   - topic_tools
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/302
+  - urg-node
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
