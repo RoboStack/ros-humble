@@ -197,5 +197,12 @@ packages_select_by_deps:
 
   # requested in https://github.com/RoboStack/ros-humble/issues/302
   - urg-node
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/305
+  - turtle-tf2-py
+
+  # requested in https://github.com/RoboStack/ros-humble/issues/304
+  - rosbag2-performance-benchmarking
+  
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
