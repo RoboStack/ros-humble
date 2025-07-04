@@ -34,7 +34,6 @@ jobs:
 
     - uses: prefix-dev/setup-pixi@v0.8.10
       with:
-        environments: beta
         frozen: true
 
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
@@ -74,21 +73,21 @@ jobs:
       shell: bash -l {0}
       run: |
         mkdir -p recipes
-        pixi run -e beta -v vinca --platform ${{ matrix.platform }} -m -n
+        pixi run -v vinca --platform ${{ matrix.platform }} -m -n
 
     - name: Check patches
       shell: bash -l {0}
       run: |
-        pixi run -e beta python check_patches_clean_apply.py
+        pixi run python check_patches_clean_apply.py
 
     - name: Build recipes [non emscripten]
       shell: bash -l {0}
       if: matrix.platform != 'emscripten-wasm32'
       run: |
-        pixi run -e beta rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+        pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
 
     - name: Build recipes [emscripten]
       shell: bash -l {0}
       if: matrix.platform == 'emscripten-wasm32'
       run: |
-        pixi run -e beta rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/  -c robostack-staging -c conda-forge --skip-existing
+        pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/  -c robostack-staging -c conda-forge --skip-existing
