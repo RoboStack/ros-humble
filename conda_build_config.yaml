@@ -1,14 +1,19 @@
 numpy:
   - 1.26
 libprotobuf:
-  - 5.28.2
+  - 5.29.3
 protobuf:
-  - 5.28.2
+  - 5.29.3
 spdlog:
-  - 1.14  # [not emscripten]
-  - 1.15  # [emscripten]
+  - 1.15
 pugixml:
-  - '1.14'
+  - '1.15'
+libopencv:
+  - 4.11.0
+libxml2:
+  - 2.13.*
+graphviz:
+  - 12.*
 cmake:
   - 3.*
 
@@ -21,7 +26,7 @@ python_impl:
   - cpython
 
 emscripten_emscripten-wasm32:
-  - 3.1.45  
+  - 3.1.45
 cross-python_emscripten-wasm32:
   - 3.11.* *_12
 
@@ -51,6 +56,8 @@ cxx_compiler_version:          # [unix]
   - 18                         # [osx]
 
 libzenohc:
-  - 1.1.1
+  - 1.4.0
 libzenohcxx:
-  - 1.1.1
+  - 1.4.0
+libcap:
+  - 2.71
