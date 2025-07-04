@@ -351,6 +351,8 @@ liblz4-dev:
   robostack: [lz4]
 libmicrohttpd:
   robostack: [libmicrohttpd]
+libnanoflann-dev:
+  robostack: [nanoflann]
 libncurses-dev:
   robostack:
     linux: [ncurses]
@@ -961,7 +963,10 @@ sdl-image:
 sdl2:
   robostack: [sdl2]
 socat:
-  robostack: [socat]
+  robostack:
+    linux: [socat]
+    osx: [socat]
+    win64: []
 spacenavd:
   robostack: [libspnav]
 spdlog:
