@@ -13,13 +13,26 @@ build_number: 13
 # of all build numbers used in the target channel
 use_explicit_build_number: true
 
-mutex_package: ros2-distro-mutex 0.7.* humble_*
+mutex_package:
+  name: "ros2-distro-mutex"
+  version: "0.7.0"
+  upper_bound: "x.x"
+  run_constraints:
+    - libboost 1.86.*
+    - libboost-devel 1.86.*
+    - pcl 1.15.0.*
+    - gazebo 11.*
+    - libprotobuf 5.29.3.*
 
 skip_all_deps: false
 
 # If full rebuild, the build number of the existing package has
 # to match the selected build number for skipping
 full_rebuild: true
+
+patch_dir: patch
+rosdistro_snapshot: rosdistro_snapshot.yaml
+rosdistro_additional_recipes: rosdistro_additional_recipes.yaml
 
 packages_skip_by_deps:
   - if: not linux
@@ -98,6 +111,14 @@ packages_select_by_deps:
   - rosidl_typesupport_introspection_cpp
   - yaml_cpp_vendor
   - osrf_testing_tools_cpp
+
+  # These are emscripten-wasm32 specific packages
+  - if: wasm32
+    then:
+      - dynmsg
+      - rmw_wasm_cpp
+      - test_wasm
+      - wasm_cpp
 
   # these are the packages that are not build on wasm32, but are built on
   # all the other platforms (so the majority)
@@ -329,7 +350,3 @@ packages_select_by_deps:
       - odom_to_tf_ros2
       # TODO on windows: cannot open pcl_io.lib
       - ouster_ros
-
-
-patch_dir: patch
-rosdistro_snapshot: rosdistro_snapshot.yaml

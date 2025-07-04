@@ -32,7 +32,7 @@ jobs:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-    - uses: prefix-dev/setup-pixi@v0.8.1
+    - uses: prefix-dev/setup-pixi@v0.8.10
       with:
         environments: beta
         frozen: true
@@ -56,113 +56,39 @@ jobs:
         rm -rf /c/Strawberry
         rm -rf "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17763.0/"
 
-    - name: Check what files have changed
-      id: filecheck
+    # Regression for https://github.com/RoboStack/ros-jazzy/issues/44
+    - name: Check that anaconda-client command works fine
       shell: bash -l {0}
       run: |
-        git fetch origin main
-        # continue on error
-        set +e
-        git diff --exit-code --name-only origin/main -- vinca_linux_64.yaml > /dev/null
-        echo "::set-output name=LINUX_YAML_CHANGED::${?}"
-        git diff --exit-code --name-only origin/main -- vinca_emscripten32.yaml > /dev/null
-        echo "::set-output name=EMSCRIPTEN32_YAML_CHANGED::${?}"
-        git diff --exit-code --name-only origin/main -- vinca_linux_aarch64.yaml > /dev/null
-        echo "::set-output name=LINUX_AARCH_YAML_CHANGED::${?}"
-        git diff --exit-code --name-only origin/main -- vinca_osx.yaml > /dev/null
-        echo "::set-output name=OSX_YAML_CHANGED::${?}"
-        git diff --exit-code --name-only origin/main -- vinca_osx_arm64.yaml > /dev/null
-        echo "::set-output name=OSX_ARM_YAML_CHANGED::${?}"
-        git diff --exit-code --name-only origin/main -- vinca_win.yaml > /dev/null
-        echo "::set-output name=WIN_YAML_CHANGED::${?}"
-    - name: Generate recipes for linux-64
-      shell: bash -l {0}
-      if: matrix.platform == 'linux-64'
-      run: |
-        mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-64 -m
-        ls -la recipes
-    - name: Generate recipes for emscripten-wasm32
-      shell: bash -l {0}
-      if: steps.filecheck.outputs.EMSCRIPTEN32_YAML_CHANGED == 1 && matrix.platform == 'emscripten-wasm32'
-      run: |
-        mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform emscripten-wasm32 -m -n
-        ls -la recipes
-    - name: Generate recipes for linux-aarch64
-      shell: bash -l {0}
-      if: matrix.platform == 'linux-aarch64'
-      run: |
-        mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform linux-aarch64 -m
-        ls -la recipes
-    - name: Generate recipes for osx-64
-      shell: bash -l {0}
-      if: matrix.platform == 'osx-64'
-      run: |
-        mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform osx-64 -m
-        ls -la recipes
-    - name: Generate recipes for osx-arm64
-      shell: bash -l {0}
-      if: matrix.platform == 'osx-arm64'
-      run: |
-        mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform osx-arm64 -m
-        ls -la recipes
-    - name: Generate recipes for win-64
+        pixi run anaconda --version
+
+    - name: Long paths workarounds for win-64
       shell: bash -l {0}
       if: matrix.platform == 'win-64'
       run: |
         # Workaround for problem related to long paths
         echo "CONDA_BLD_PATH=C:\\bld\\" >> $GITHUB_ENV
         mkdir /c/bld
+
+    - name: Generate recipes
+      shell: bash -l {0}
+      run: |
         mkdir -p recipes
-        $HOME/.pixi/bin/pixi run -e beta -v vinca --platform win-64 -m
-        ls -la recipes
-    - name: Check if there are packages to be built
-      id: newrecipecheck
+        pixi run -e beta -v vinca --platform ${{ matrix.platform }} -m -n
+
+    - name: Check patches
       shell: bash -l {0}
       run: |
-        set +e
-        if [ ! -d recipes ] || [ -z "$(ls -A recipes)" ]; then
-          echo "RECIPE_CREATED=0" >> $GITHUB_OUTPUT
-        else
-          echo "RECIPE_CREATED=1" >> $GITHUB_OUTPUT
-        fi
-    - name: Build recipes for linux-64
+        pixi run -e beta python check_patches_clean_apply.py
+
+    - name: Build recipes [non emscripten]
       shell: bash -l {0}
-      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && matrix.platform == 'linux-64'
+      if: matrix.platform != 'emscripten-wasm32'
       run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-    - name: Build recipes for emscripten-wasm32
+        pixi run -e beta rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
+
+    - name: Build recipes [emscripten]
       shell: bash -l {0}
-      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && steps.filecheck.outputs.EMSCRIPTEN32_YAML_CHANGED == 1 && matrix.platform == 'emscripten-wasm32'
+      if: matrix.platform == 'emscripten-wasm32'
       run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \;'
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir ./recipes --target-platform emscripten-wasm32 -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c robostack-staging -c conda-forge --skip-existing --test skip
-    - name: Build recipes for linux-aarch64
-      shell: bash -l {0}
-      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && matrix.platform == 'linux-aarch64'
-      run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform linux-aarch64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform linux-aarch64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-    - name: Build recipes for osx-64
-      shell: bash -l {0}
-      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && matrix.platform == 'osx-64'
-      run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform osx-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform osx-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-    - name: Build recipes for osx-arm64
-      shell: bash -l {0}
-      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && matrix.platform == 'osx-arm64'
-      run: |
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform osx-arm64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-        env -i $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes --target-platform osx-arm64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-    - name: Build recipes for win-64
-      shell: bash -l {0}
-      if: steps.newrecipecheck.outputs.RECIPE_CREATED == 1 && matrix.platform == 'win-64'
-      run: |
-        $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir additional_recipes --target-platform win-64 -m ./conda_build_config.yaml -c robostack-staging -c conda-forge --skip-existing
-        $HOME/.pixi/bin/pixi run -e beta rattler-build build --recipe-dir recipes -m ./conda_build_config.yaml --target-platform win-64 -c robostack-staging -c conda-forge --skip-existing
+        pixi run -e beta rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/  -c robostack-staging -c conda-forge --skip-existing
