@@ -1,7 +1,7 @@
 [project]
 name = "ros-humble"
 # Just a convention, this is the same as the mutex package
-version = "0.6.0"
+version = "0.7.0"
 description = "RoboStack repo to package ros-humble packages as conda packages"
 authors = ["Tobias Fischer <tobias.fischer@qut.edu.au>", "Wolf Vollprecht <w.vollprecht@gmail.com>", "Silvio Traversaro <silvio@traversaro.it>"]
 channels = ["https://repo.prefix.dev/conda-forge"]
@@ -10,9 +10,6 @@ platforms = ["osx-arm64", "linux-64", "osx-64", "linux-aarch64", "win-64"]
 [system-requirements]
 # 2.17 is the glibc version used in centos 7
 libc = { family="glibc", version="2.17" }
-
-[tasks]
-upload = "anaconda -t $ANACONDA_API_TOKEN upload"
 
 [dependencies]
 python = ">=3.11.0,<3.12"
@@ -25,14 +22,15 @@ m2-patch = "*"
 # git is required by rattler-build
 git = "*"
 
-[feature.beta.pypi-dependencies]
+[pypi-dependencies]
 # This is tipically the latest commit on main branch
 vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "df7f9739c5e14babf449125ca72a3e8de1794f1b" }
 # Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
 # (and regenerate the pixi.lock) once you push the modified commit to the repo
 #vinca = { path = "../vinca", editable = true }
 
-[feature.beta.tasks]
+[tasks]
+upload = "anaconda -t $ANACONDA_API_TOKEN upload"
 generate-recipes = { cmd = "vinca -m", depends-on = ["remove-file"] }
 generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["remove-file"] }
 remove-file = { cmd = "rm -rf recipes; mkdir recipes" }
@@ -40,10 +38,8 @@ build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_con
 build_one_package = { cmd = "cp ./patch/$PACKAGE.*patch ./recipes/$PACKAGE/patch/; rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge", env = { PACKAGE = "ros-humble-ros-workspace" } }
 create_snapshot = { cmd = "vinca-snapshot" }
 
-[environments]
-beta = ["beta"]
 
-[feature.beta.tasks.build-emscripten]
+[tasks.build-emscripten]
   cmd = [
       "rattler-build", "build",
       "--package-format", "tar-bz2",
