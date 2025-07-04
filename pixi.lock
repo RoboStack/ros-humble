@@ -79,7 +79,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-7_cp311.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/pyyaml-6.0.2-py311h2dc5d0c_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/linux-64/rattler-build-0.41.0-h159367c_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/linux-64/rattler-build-0.44.0-h2d22210_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/readline-8.2-h8c095d6_2.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
@@ -112,13 +112,15 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/8f/d7/9322c609343d929e75e7e5e6255e614fcc67572cfd083959cdef3b7aad79/docutils-0.21.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/f1/a4/aefb044a2cd8d7334c8a47d3fb2c9f328ac48cb349468cc31c20b539305f/MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/b9/54/dd730b32ea14ea797530a4479b2ed46a6fb250f682a9cfb997e968bf0261/networkx-3.4.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/05/e7/df2285f3d08fee213f2d041540fa4fc9ca6c2d44cf36d3a035bf2a8d2bcc/pyparsing-3.2.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/32/d0fbc4383a6a213d315c39dda9107f81654d9941c43d6c687e61995ec388/rosdistro-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fa/c1/b0616243c1f922252ceb4513c22abefc1773cf372bfc0b6f7e59c2829f96/rospkg-1.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/35/79/5e2cffa1c77432f11cd93a5351f30732c997a239d3a3090856a72d6d8ba7/ruamel.yaml-0.17.40-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/68/6e/264c50ce2a31473a9fdbf4fa66ca9b2b17c7455b31ef585462343818bd6c/ruamel.yaml.clib-0.2.12-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-      - pypi: git+https://github.com/robostack/vinca?rev=9d6af673f3957c00fe99f274e075ef7c371ea5f0#9d6af673f3957c00fe99f274e075ef7c371ea5f0
+      - pypi: git+https://github.com/RoboStack/vinca.git?rev=df7f9739c5e14babf449125ca72a3e8de1794f1b#df7f9739c5e14babf449125ca72a3e8de1794f1b
       linux-aarch64:
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/_openmp_mutex-4.5-2_gnu.tar.bz2
       - conda: https://repo.prefix.dev/conda-forge/noarch/anaconda-cli-base-0.5.2-pyhd8ed1ab_0.conda
@@ -191,7 +193,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-7_cp311.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/pyyaml-6.0.2-py311h58d527c_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/rattler-build-0.41.0-h112f5b8_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/rattler-build-0.44.0-h3618846_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/readline-8.2-h8382b9d_2.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
@@ -224,13 +226,15 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/8f/d7/9322c609343d929e75e7e5e6255e614fcc67572cfd083959cdef3b7aad79/docutils-0.21.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/f2/96/9cdafba8445d3a53cae530aaf83c38ec64c4d5427d975c974084af5bc5d2/MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/b9/54/dd730b32ea14ea797530a4479b2ed46a6fb250f682a9cfb997e968bf0261/networkx-3.4.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/05/e7/df2285f3d08fee213f2d041540fa4fc9ca6c2d44cf36d3a035bf2a8d2bcc/pyparsing-3.2.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/32/d0fbc4383a6a213d315c39dda9107f81654d9941c43d6c687e61995ec388/rosdistro-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fa/c1/b0616243c1f922252ceb4513c22abefc1773cf372bfc0b6f7e59c2829f96/rospkg-1.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/35/79/5e2cffa1c77432f11cd93a5351f30732c997a239d3a3090856a72d6d8ba7/ruamel.yaml-0.17.40-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3c/d2/b79b7d695e2f21da020bd44c782490578f300dd44f0a4c57a92575758a76/ruamel.yaml.clib-0.2.12-cp311-cp311-manylinux2014_aarch64.whl
-      - pypi: git+https://github.com/robostack/vinca?rev=9d6af673f3957c00fe99f274e075ef7c371ea5f0#9d6af673f3957c00fe99f274e075ef7c371ea5f0
+      - pypi: git+https://github.com/RoboStack/vinca.git?rev=df7f9739c5e14babf449125ca72a3e8de1794f1b#df7f9739c5e14babf449125ca72a3e8de1794f1b
       osx-64:
       - conda: https://repo.prefix.dev/conda-forge/noarch/anaconda-cli-base-0.5.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/anaconda-client-1.13.0-pyh29332c3_1.conda
@@ -294,7 +298,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-7_cp311.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-64/pyyaml-6.0.2-py311ha3cf9ac_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/osx-64/rattler-build-0.40.0-h05de357_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/osx-64/rattler-build-0.44.0-h39668a9_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-64/readline-8.2-h7cca4af_2.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
@@ -327,13 +331,15 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/8f/d7/9322c609343d929e75e7e5e6255e614fcc67572cfd083959cdef3b7aad79/docutils-0.21.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6b/28/bbf83e3f76936960b850435576dd5e67034e200469571be53f69174a2dfd/MarkupSafe-3.0.2-cp311-cp311-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/b9/54/dd730b32ea14ea797530a4479b2ed46a6fb250f682a9cfb997e968bf0261/networkx-3.4.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/05/e7/df2285f3d08fee213f2d041540fa4fc9ca6c2d44cf36d3a035bf2a8d2bcc/pyparsing-3.2.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/32/d0fbc4383a6a213d315c39dda9107f81654d9941c43d6c687e61995ec388/rosdistro-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fa/c1/b0616243c1f922252ceb4513c22abefc1773cf372bfc0b6f7e59c2829f96/rospkg-1.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/35/79/5e2cffa1c77432f11cd93a5351f30732c997a239d3a3090856a72d6d8ba7/ruamel.yaml-0.17.40-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/20/84/80203abff8ea4993a87d823a5f632e4d92831ef75d404c9fc78d0176d2b5/ruamel.yaml.clib-0.2.12.tar.gz
-      - pypi: git+https://github.com/robostack/vinca?rev=9d6af673f3957c00fe99f274e075ef7c371ea5f0#9d6af673f3957c00fe99f274e075ef7c371ea5f0
+      - pypi: git+https://github.com/RoboStack/vinca.git?rev=df7f9739c5e14babf449125ca72a3e8de1794f1b#df7f9739c5e14babf449125ca72a3e8de1794f1b
       osx-arm64:
       - conda: https://repo.prefix.dev/conda-forge/noarch/anaconda-cli-base-0.5.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/anaconda-client-1.13.0-pyh29332c3_1.conda
@@ -397,7 +403,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-7_cp311.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-arm64/pyyaml-6.0.2-py311h4921393_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/osx-arm64/rattler-build-0.41.0-h8dba533_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/osx-arm64/rattler-build-0.44.0-hf783435_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-arm64/readline-8.2-h1d1bf99_2.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
@@ -430,13 +436,15 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/8f/d7/9322c609343d929e75e7e5e6255e614fcc67572cfd083959cdef3b7aad79/docutils-0.21.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6c/30/316d194b093cde57d448a4c3209f22e3046c5bb2fb0820b118292b334be7/MarkupSafe-3.0.2-cp311-cp311-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/b9/54/dd730b32ea14ea797530a4479b2ed46a6fb250f682a9cfb997e968bf0261/networkx-3.4.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/05/e7/df2285f3d08fee213f2d041540fa4fc9ca6c2d44cf36d3a035bf2a8d2bcc/pyparsing-3.2.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/32/d0fbc4383a6a213d315c39dda9107f81654d9941c43d6c687e61995ec388/rosdistro-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fa/c1/b0616243c1f922252ceb4513c22abefc1773cf372bfc0b6f7e59c2829f96/rospkg-1.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/35/79/5e2cffa1c77432f11cd93a5351f30732c997a239d3a3090856a72d6d8ba7/ruamel.yaml-0.17.40-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fb/8f/683c6ad562f558cbc4f7c029abcd9599148c51c54b5ef0f24f2638da9fbb/ruamel.yaml.clib-0.2.12-cp311-cp311-macosx_13_0_arm64.whl
-      - pypi: git+https://github.com/robostack/vinca?rev=9d6af673f3957c00fe99f274e075ef7c371ea5f0#9d6af673f3957c00fe99f274e075ef7c371ea5f0
+      - pypi: git+https://github.com/RoboStack/vinca.git?rev=df7f9739c5e14babf449125ca72a3e8de1794f1b#df7f9739c5e14babf449125ca72a3e8de1794f1b
       win-64:
       - conda: https://repo.prefix.dev/conda-forge/win-64/_openmp_mutex-4.5-2_gnu.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/anaconda-cli-base-0.5.2-pyhd8ed1ab_0.conda
@@ -508,7 +516,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/pywin32-307-py311hda3d55a_3.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/pyyaml-6.0.2-py311h5082efb_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/win-64/rattler-build-0.41.0-ha073cba_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/win-64/rattler-build-0.44.0-h18a1a76_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
@@ -532,8 +540,8 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/win-64/ucrt-10.0.22621.0-h57928b3_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/urllib3-2.4.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/vc-14.3-h2b53caa_26.conda
-      - conda: https://repo.prefix.dev/conda-forge/win-64/vc14_runtime-14.42.34438-hfd919c2_26.conda
-      - conda: https://repo.prefix.dev/conda-forge/win-64/vs2015_runtime-14.42.34438-h7142326_26.conda
+      - conda: https://repo.prefix.dev/conda-forge/win-64/vc14_runtime-14.44.35208-h818238b_26.conda
+      - conda: https://repo.prefix.dev/conda-forge/win-64/vs2015_runtime-14.44.35208-h38c0c73_26.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/win_inet_pton-1.1.0-pyh7428d3b_8.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/xorg-libxau-1.0.12-h0e40799_0.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/xorg-libxdmcp-1.1.5-h0e40799_0.conda
@@ -545,13 +553,15 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/8f/d7/9322c609343d929e75e7e5e6255e614fcc67572cfd083959cdef3b7aad79/docutils-0.21.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/da/b8/3a3bd761922d416f3dc5d00bfbed11f66b1ab89a0c2b6e887240a30b0f6b/MarkupSafe-3.0.2-cp311-cp311-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/b9/54/dd730b32ea14ea797530a4479b2ed46a6fb250f682a9cfb997e968bf0261/networkx-3.4.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/05/e7/df2285f3d08fee213f2d041540fa4fc9ca6c2d44cf36d3a035bf2a8d2bcc/pyparsing-3.2.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/32/d0fbc4383a6a213d315c39dda9107f81654d9941c43d6c687e61995ec388/rosdistro-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fa/c1/b0616243c1f922252ceb4513c22abefc1773cf372bfc0b6f7e59c2829f96/rospkg-1.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/35/79/5e2cffa1c77432f11cd93a5351f30732c997a239d3a3090856a72d6d8ba7/ruamel.yaml-0.17.40-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b4/4f/b52f634c9548a9291a70dfce26ca7ebce388235c93588a1068028ea23fcc/ruamel.yaml.clib-0.2.12-cp311-cp311-win_amd64.whl
-      - pypi: git+https://github.com/robostack/vinca?rev=9d6af673f3957c00fe99f274e075ef7c371ea5f0#9d6af673f3957c00fe99f274e075ef7c371ea5f0
+      - pypi: git+https://github.com/RoboStack/vinca.git?rev=df7f9739c5e14babf449125ca72a3e8de1794f1b#df7f9739c5e14babf449125ca72a3e8de1794f1b
   default:
     channels:
     - url: https://repo.prefix.dev/conda-forge/
@@ -629,7 +639,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-7_cp311.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/pyyaml-6.0.2-py311h2dc5d0c_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/linux-64/rattler-build-0.41.0-h159367c_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/linux-64/rattler-build-0.44.0-h2d22210_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-64/readline-8.2-h8c095d6_2.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
@@ -730,7 +740,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-7_cp311.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/pyyaml-6.0.2-py311h58d527c_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/rattler-build-0.41.0-h112f5b8_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/rattler-build-0.44.0-h3618846_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/linux-aarch64/readline-8.2-h8382b9d_2.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
@@ -822,7 +832,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-7_cp311.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-64/pyyaml-6.0.2-py311ha3cf9ac_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/osx-64/rattler-build-0.40.0-h05de357_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/osx-64/rattler-build-0.44.0-h39668a9_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-64/readline-8.2-h7cca4af_2.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
@@ -914,7 +924,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-7_cp311.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-arm64/pyyaml-6.0.2-py311h4921393_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/osx-arm64/rattler-build-0.41.0-h8dba533_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/osx-arm64/rattler-build-0.44.0-hf783435_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/osx-arm64/readline-8.2-h1d1bf99_2.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
@@ -1014,7 +1024,7 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/noarch/pytz-2025.2-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/pywin32-307-py311hda3d55a_3.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/pyyaml-6.0.2-py311h5082efb_2.conda
-      - conda: https://repo.prefix.dev/conda-forge/win-64/rattler-build-0.41.0-ha073cba_0.conda
+      - conda: https://repo.prefix.dev/conda-forge/win-64/rattler-build-0.44.0-h18a1a76_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
@@ -1038,8 +1048,8 @@ environments:
       - conda: https://repo.prefix.dev/conda-forge/win-64/ucrt-10.0.22621.0-h57928b3_1.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/urllib3-2.4.0-pyhd8ed1ab_0.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/vc-14.3-h2b53caa_26.conda
-      - conda: https://repo.prefix.dev/conda-forge/win-64/vc14_runtime-14.42.34438-hfd919c2_26.conda
-      - conda: https://repo.prefix.dev/conda-forge/win-64/vs2015_runtime-14.42.34438-h7142326_26.conda
+      - conda: https://repo.prefix.dev/conda-forge/win-64/vc14_runtime-14.44.35208-h818238b_26.conda
+      - conda: https://repo.prefix.dev/conda-forge/win-64/vs2015_runtime-14.44.35208-h38c0c73_26.conda
       - conda: https://repo.prefix.dev/conda-forge/noarch/win_inet_pton-1.1.0-pyh7428d3b_8.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/xorg-libxau-1.0.12-h0e40799_0.conda
       - conda: https://repo.prefix.dev/conda-forge/win-64/xorg-libxdmcp-1.1.5-h0e40799_0.conda
@@ -1606,6 +1616,14 @@ packages:
   - pkg:pypi/importlib-resources?source=hash-mapping
   size: 33781
   timestamp: 1736252433366
+- pypi: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
+  name: jinja2
+  version: 3.1.6
+  sha256: 85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67
+  requires_dist:
+  - markupsafe>=2.0
+  - babel>=2.7 ; extra == 'i18n'
+  requires_python: '>=3.7'
 - conda: https://repo.prefix.dev/conda-forge/noarch/jsonschema-4.23.0-pyhd8ed1ab_1.conda
   sha256: be992a99e589146f229c58fe5083e0b60551d774511c494f91fe011931bd7893
   md5: a3cead9264b331b32fe8f0aabc967522
@@ -2843,6 +2861,31 @@ packages:
   - pkg:pypi/markdown-it-py?source=hash-mapping
   size: 64430
   timestamp: 1733250550053
+- pypi: https://files.pythonhosted.org/packages/6b/28/bbf83e3f76936960b850435576dd5e67034e200469571be53f69174a2dfd/MarkupSafe-3.0.2-cp311-cp311-macosx_10_9_universal2.whl
+  name: markupsafe
+  version: 3.0.2
+  sha256: 9025b4018f3a1314059769c7bf15441064b2207cb3f065e6ea1e7359cb46db9d
+  requires_python: '>=3.9'
+- pypi: https://files.pythonhosted.org/packages/6c/30/316d194b093cde57d448a4c3209f22e3046c5bb2fb0820b118292b334be7/MarkupSafe-3.0.2-cp311-cp311-macosx_11_0_arm64.whl
+  name: markupsafe
+  version: 3.0.2
+  sha256: 93335ca3812df2f366e80509ae119189886b0f3c2b81325d39efdb84a1e2ae93
+  requires_python: '>=3.9'
+- pypi: https://files.pythonhosted.org/packages/da/b8/3a3bd761922d416f3dc5d00bfbed11f66b1ab89a0c2b6e887240a30b0f6b/MarkupSafe-3.0.2-cp311-cp311-win_amd64.whl
+  name: markupsafe
+  version: 3.0.2
+  sha256: 70a87b411535ccad5ef2f1df5136506a10775d267e197e4cf531ced10537bd6b
+  requires_python: '>=3.9'
+- pypi: https://files.pythonhosted.org/packages/f1/a4/aefb044a2cd8d7334c8a47d3fb2c9f328ac48cb349468cc31c20b539305f/MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  name: markupsafe
+  version: 3.0.2
+  sha256: a123e330ef0853c6e822384873bef7507557d8e4a082961e1defa947aa59ba84
+  requires_python: '>=3.9'
+- pypi: https://files.pythonhosted.org/packages/f2/96/9cdafba8445d3a53cae530aaf83c38ec64c4d5427d975c974084af5bc5d2/MarkupSafe-3.0.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+  name: markupsafe
+  version: 3.0.2
+  sha256: 2cb8438c3cbb25e220c2ab33bb226559e7afb3baec11c4f218ffa7308603c832
+  requires_python: '>=3.9'
 - conda: https://repo.prefix.dev/conda-forge/noarch/mdurl-0.1.2-pyhd8ed1ab_1.conda
   sha256: 78c1bbe1723449c52b7a9df1af2ee5f005209f67e40b6e1d3c7619127c43b1c7
   md5: 592132998493b3ff25fd7479396e8351
@@ -3722,9 +3765,9 @@ packages:
   - pkg:pypi/pyyaml?source=hash-mapping
   size: 187430
   timestamp: 1737454904007
-- conda: https://repo.prefix.dev/conda-forge/linux-64/rattler-build-0.41.0-h159367c_0.conda
-  sha256: ee1fb9a3cf8969ae54a093ac2275401560bf23b42e64bb845e0cb1c5767d8012
-  md5: 65cb2d12fe849b15c1d4f94cb7b8b335
+- conda: https://repo.prefix.dev/conda-forge/linux-64/rattler-build-0.44.0-h2d22210_0.conda
+  sha256: f42b8bcab699f1eb312062cb0c1095066eeb5aabb9117574b3a91d2687ed4474
+  md5: fc7102e7482525f017a3cbe2750f35f9
   depends:
   - patchelf
   - __glibc >=2.17,<3.0.a0
@@ -3735,11 +3778,11 @@ packages:
   license: BSD-3-Clause
   license_family: BSD
   purls: []
-  size: 15794152
-  timestamp: 1746021851385
-- conda: https://repo.prefix.dev/conda-forge/linux-aarch64/rattler-build-0.41.0-h112f5b8_0.conda
-  sha256: 1aa1a0a75398e7ad9a587c0eb59105001ee68594a28b85332de79821818cf763
-  md5: 30d6ed2b6301c6b20241d268ec4e567c
+  size: 16357677
+  timestamp: 1750800802907
+- conda: https://repo.prefix.dev/conda-forge/linux-aarch64/rattler-build-0.44.0-h3618846_0.conda
+  sha256: 903324242bee99d7ca95546c65099a5649f11abbaf1bb3a35b6c35b755b89d8a
+  md5: f3ecdbbb4908cffc959cac8d2e245157
   depends:
   - patchelf
   - libgcc >=13
@@ -3749,11 +3792,11 @@ packages:
   license: BSD-3-Clause
   license_family: BSD
   purls: []
-  size: 15877585
-  timestamp: 1746021914699
-- conda: https://repo.prefix.dev/conda-forge/osx-64/rattler-build-0.40.0-h05de357_0.conda
-  sha256: eea3f45a62c982b4c027655323a87f676400d44fe7ce77c72c7891b84903203a
-  md5: c280d2a291bcc434c0e717f5d9980bbf
+  size: 16372237
+  timestamp: 1750800821377
+- conda: https://repo.prefix.dev/conda-forge/osx-64/rattler-build-0.44.0-h39668a9_0.conda
+  sha256: 48ea4d40bf53db8489f8b2cbfa7d211b952c52f63aebdca07c34022caa6e687f
+  md5: a463aa469bb1b8ea8236594646bb4667
   depends:
   - __osx >=10.13
   constrains:
@@ -3761,11 +3804,11 @@ packages:
   license: BSD-3-Clause
   license_family: BSD
   purls: []
-  size: 11441573
-  timestamp: 1744818217193
-- conda: https://repo.prefix.dev/conda-forge/osx-arm64/rattler-build-0.41.0-h8dba533_0.conda
-  sha256: de701ec656fb9fe7bef966e227e7e95d395b37e51d8864f648c6530e66c04eab
-  md5: 52ba9f0c0c2f74e7fca80b089685ebea
+  size: 14756499
+  timestamp: 1750800866620
+- conda: https://repo.prefix.dev/conda-forge/osx-arm64/rattler-build-0.44.0-hf783435_0.conda
+  sha256: 9261c1ed8243ff73a9ae8fb70086e5ee1d348e46885243080ac66b9b233a8c19
+  md5: 83eaa51c3ac116c23dc77e96497cdfae
   depends:
   - __osx >=11.0
   constrains:
@@ -3773,23 +3816,23 @@ packages:
   license: BSD-3-Clause
   license_family: BSD
   purls: []
-  size: 13306099
-  timestamp: 1746021886773
-- conda: https://repo.prefix.dev/conda-forge/win-64/rattler-build-0.41.0-ha073cba_0.conda
-  sha256: ddcd3b52b339c605b4c9fa94fa93dce32f4b82fc2061ac6b2b0b3b9e4ab5d1e2
-  md5: 70c0c1e8c91de3e4aa32d3995ed7d3a0
+  size: 13803732
+  timestamp: 1750800856755
+- conda: https://repo.prefix.dev/conda-forge/win-64/rattler-build-0.44.0-h18a1a76_0.conda
+  sha256: 90586fa59a640dfb69c8cd8178dc4922e4ba2e814e835bea45807ec346aa81c4
+  md5: 056857dc95ab25a90146912a98051380
   depends:
-  - vc >=14.2,<15
-  - vc14_runtime >=14.29.30139
+  - vc >=14.3,<15
+  - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
-  - vc >=14.2,<15
-  - vc14_runtime >=14.29.30139
+  - vc >=14.3,<15
+  - vc14_runtime >=14.44.35208
   - ucrt >=10.0.20348.0
   license: BSD-3-Clause
   license_family: BSD
   purls: []
-  size: 12984801
-  timestamp: 1746021924009
+  size: 17121562
+  timestamp: 1750800855132
 - conda: https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda
   sha256: 370bb44b7e9bb446f163e3c096378385509900878865a7ab11f40d18cb0c5470
   md5: 03476f20cbb666a090074d37e4c3faa9
@@ -4273,19 +4316,19 @@ packages:
   purls: []
   size: 17893
   timestamp: 1743195261486
-- conda: https://repo.prefix.dev/conda-forge/win-64/vc14_runtime-14.42.34438-hfd919c2_26.conda
-  sha256: 30dcb71bb166e351aadbdc18f1718757c32cdaa0e1e5d9368469ee44f6bf4709
-  md5: 91651a36d31aa20c7ba36299fb7068f4
+- conda: https://repo.prefix.dev/conda-forge/win-64/vc14_runtime-14.44.35208-h818238b_26.conda
+  sha256: 7bad6e25a7c836d99011aee59dcf600b7f849a6fa5caa05a406255527e80a703
+  md5: 14d65350d3f5c8ff163dc4f76d6e2830
   depends:
   - ucrt >=10.0.20348.0
   constrains:
-  - vs2015_runtime 14.42.34438.* *_26
+  - vs2015_runtime 14.44.35208.* *_26
   license: LicenseRef-MicrosoftVisualCpp2015-2022Runtime
   license_family: Proprietary
   purls: []
-  size: 750733
-  timestamp: 1743195092905
-- pypi: git+https://github.com/robostack/vinca?rev=9d6af673f3957c00fe99f274e075ef7c371ea5f0#9d6af673f3957c00fe99f274e075ef7c371ea5f0
+  size: 756109
+  timestamp: 1750371459116
+- pypi: git+https://github.com/RoboStack/vinca.git?rev=df7f9739c5e14babf449125ca72a3e8de1794f1b#df7f9739c5e14babf449125ca72a3e8de1794f1b
   name: vinca
   version: 0.1.0
   requires_dist:
@@ -4296,17 +4339,18 @@ packages:
   - requests>=2.24.0
   - networkx>=2.5
   - rich>=10
+  - jinja2>=3.0.0
   requires_python: '>=3.6'
-- conda: https://repo.prefix.dev/conda-forge/win-64/vs2015_runtime-14.42.34438-h7142326_26.conda
-  sha256: 432f2937206f1ad4a77e39f84fabc1ce7d2472b669836fb72bd2bfd19a2defc9
-  md5: 3357e4383dbce31eed332008ede242ab
+- conda: https://repo.prefix.dev/conda-forge/win-64/vs2015_runtime-14.44.35208-h38c0c73_26.conda
+  sha256: d18d77c8edfbad37fa0e0bb0f543ad80feb85e8fe5ced0f686b8be463742ec0b
+  md5: 312f3a0a6b3c5908e79ce24002411e32
   depends:
-  - vc14_runtime >=14.42.34438
+  - vc14_runtime >=14.44.35208
   license: BSD-3-Clause
   license_family: BSD
   purls: []
-  size: 17873
-  timestamp: 1743195097269
+  size: 17888
+  timestamp: 1750371463202
 - conda: https://repo.prefix.dev/conda-forge/noarch/win_inet_pton-1.1.0-pyh7428d3b_8.conda
   sha256: 93807369ab91f230cf9e6e2a237eaa812492fe00face5b38068735858fba954f
   md5: 46e441ba871f524e2b067929da3051c2
