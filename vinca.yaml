@@ -1,0 +1,335 @@
+ros_distro: humble
+
+# mapping for package keys
+conda_index:
+  - robostack.yaml
+  - packages-ignore.yaml
+
+# Reminder for next full rebuild, the next build number should be 14
+build_number: 13
+
+# Specify that exactly the build_number used vinca*.yaml or pkg_additional_info.yaml
+# should be used, not some build number obtained by checking the maximum
+# of all build numbers used in the target channel
+use_explicit_build_number: true
+
+mutex_package: ros2-distro-mutex 0.7.* humble_*
+
+skip_all_deps: false
+
+# If full rebuild, the build number of the existing package has
+# to match the selected build number for skipping
+full_rebuild: true
+
+packages_skip_by_deps:
+  - if: not linux
+    then:
+      - pendulum_control
+      - rttest
+      - tlsf
+      - tlsf_cpp
+  - if: wasm32
+    then:
+      - rmw_fastrtps_cpp
+      - rosidl_typesupport_fastrtps_c
+      - rosidl_typesupport_fastrtps_cpp
+      - rmw_cyclonedds_cpp
+      - rmw_connextdds
+      - rmw_fastrtps_shared_cpp
+      - rmw_fastrtps_dynamic_cpp
+      - rmw_fastrtps_dds_common
+      - mimick_vendor
+      - ament_xmllint
+      - ament_cmake_xmllint
+      - performance_test_fixture
+      - rmw_connextdds
+      - rmw_cyclonedds_cpp
+      - osrf_testing_tools_cpp
+
+packages_remove_from_deps:
+  - if: not linux
+    then:
+      - pendulum_control
+      - rttest
+      - tlsf
+      - tlsf_cpp
+  - if: wasm32
+    then:
+      - rmw_fastrtps_cpp
+      - rosidl_typesupport_fastrtps_c
+      - rosidl_typesupport_fastrtps_cpp
+      - rmw_cyclonedds_cpp
+      - rmw_connextdds
+      - rmw_fastrtps_shared_cpp
+      - rmw_fastrtps_dynamic_cpp
+      - rmw_fastrtps_dds_common
+      - mimick_vendor
+      - ament_xmllint
+      - ament_cmake_xmllint
+      - performance_test_fixture
+      - rmw_connextdds
+      - rmw_cyclonedds_cpp
+      - osrf_testing_tools_cpp
+
+skip_existing:
+  - https://conda.anaconda.org/robostack-staging/
+
+packages_select_by_deps:
+  # These are the packages that are build on all platforms, including wasm32
+    # only subset of packages to reduce maintainer load
+  - rclpy
+  - ros_workspace
+  - ros_environment
+  - ament_cmake
+  - ament_pep257
+  - ament_flake8
+  - ament_lint
+  - ament_lint_common
+  - ament_pycodestyle
+  - rmw
+  - rclc
+  - rclcpp
+  - builtin_interfaces
+  - rcutils
+  - rcpputils
+  - rosidl_runtime_c
+  - rosidl_runtime_cpp
+  - rosidl_typesupport_introspection_c
+  - rosidl_typesupport_introspection_cpp
+  - yaml_cpp_vendor
+  - osrf_testing_tools_cpp
+
+  # these are the packages that are not build on wasm32, but are built on
+  # all the other platforms (so the majority)
+  - if: not wasm32
+    then:
+      - spatio_temporal_voxel_layer
+      - ros2-controllers
+      - diff-drive-controller
+      - libcamera
+      - ros_workspace
+      - ros_core
+      - ros_environment
+      - ament_cmake
+      - ament_cmake_nose
+      - ros_base
+      - perception
+      - rosidl-generator-dds-idl
+      - simulation
+      - desktop
+      - desktop_full
+      - rosbag2_storage_mcap
+      - cartographer-ros
+      - foxglove_bridge
+      # rqt
+      - rqt
+      - rqt-gui
+      - rqt_image_overlay
+      - rqt-robot-dashboard
+      - rqt-robot-monitor
+      - rqt-robot-steering
+      # gazebo
+      - gazebo_msgs
+      - gazebo_dev
+      - gazebo_ros
+      - gazebo_plugins
+      - gazebo_ros2_control
+      - gazebo_ros_pkgs
+      - ackermann-msgs
+      - geodesy
+      - geographic_info
+      - tf-transformations
+      - robot_localization
+      - rosbridge_suite
+      - vision-msgs
+      - slam-toolbox
+      - ros2_control
+      - vision-msgs-rviz-plugins
+      - navigation2
+      - nav2_bringup
+      - rviz2
+      - behaviortree_cpp_v3
+      - moveit
+      - moveit_visual_tools
+      - moveit_servo
+      - moveit2_tutorials
+      - moveit-planners-chomp
+      - rqt-moveit
+      - pilz-industrial-motion-planner
+      - topic_tools
+      - ur
+      # ros control
+      - joint-state-publisher # probably this should not be here as there is some strange porting to ros2
+      - control-toolbox
+      - realtime_tools
+      - control_msgs
+      - teleop_tools
+      - gazebo_ros2_control_demos
+      - ros2_controllers
+      # - joystick_drivers
+      - joy
+      - joy_linux
+      - sdl2_vendor
+      - spacenav
+      # - wiimote          # needs bluetooth and is not in conda-forge
+      # - wiimote_msgs
+      # other control
+      - robot_controllers
+      - bond_core
+      # Modern gz-sim integration
+      - ros_gz
+      - gtsam
+      # *** learning and tutorials ***
+      - turtlebot3
+      - turtlebot3_simulations
+      - turtlebot3_gazebo
+      # requested in https://github.com/RoboStack/ros-humble/issues/307
+      - urdf_tutorial
+      - geometry_tutorials
+      # gazebo
+      - gazebo-ros-pkgs
+      - ros_ign
+      # *** Vendor packages ***
+      - graph_msgs          # PickNik Robotics
+      - apriltag            # AprilRobotics
+      - apriltag_ros        # Christian Rauch
+      - ur_robot_driver     # Universal Robots
+      - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
+      - ublox               # Kumar Robotics
+      - ublox_dgnss         # Aussie Robots
+      - ublox_dgnss_node
+      - ublox_ubx_interfaces
+      - stubborn_buddies    # Open RMF
+      - ament_cmake_catch2  # Open RMF
+      - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+      - ament_cmake_mypy
+      # - transport_drivers
+      - asio_cmake_module
+      - io_context
+      - serial_driver
+      - udp_driver
+      - apex_test_tools
+      - apex_containers     # Apex AI
+      - velodyne_simulator  # Dataspeed Inc.
+      - visp
+      - bno055              # flynneva
+      - aws_robomaker_small_warehouse_world # AWS Robotics
+      - avt_vimba_camera    #  Allied Vision Technologies
+      - system_modes        # Micro-ROS
+      - tf_transformations  # DLu
+      - marker-msgs         # TUW Robotics
+      - librealsense2       # IntelRealSense
+      - realsense2-camera   # IntelRealSense
+      - realsense2-description # IntelRealSense
+      - webots_ros2         # Cyberbotics
+      - libg2o
+      - motion_capture_tracking # IMRC Lab
+      - moveit_resources
+      # requested in https://github.com/RoboStack/ros-humble/issues/228
+      - event_camera_codecs
+      - event_camera_renderer
+      # requested in https://github.com/RoboStack/ros-humble/pull/205
+      - plotjuggler
+      - plotjuggler_msgs
+      - turtle_tf2_py
+      - turtle_tf2_cpp
+      # requested in https://github.com/RoboStack/ros-humble/issues/249
+      - twist_mux
+      # requested in https://github.com/RoboStack/ros-humble/issues/252
+      - rmw_zenoh_cpp
+      # requested in https://github.com/RoboStack/ros-humble/issues/256
+      - rqt_controller_manager
+      - open3d_conversions
+      - point_cloud_transport_plugins
+      - grid_map
+      - lanelet2
+      # autoware
+      - autoware_common_msgs
+      - autoware_control_msgs
+      - autoware_localization_msgs
+      - autoware_map_msgs
+      - autoware_perception_msgs
+      - autoware_planning_msgs
+      - autoware_sensing_msgs
+      - autoware_system_msgs
+      - autoware_v2x_msgs
+      - autoware_vehicle_msgs
+      - autoware_utils
+      - flex_sync
+      - apriltag_detector
+      - ament_cmake_black
+      - behaviortree_cpp
+      - py-binding-tools
+      # Microstrain IMU Packages + dependencies
+      - microstrain_inertial_description
+      - microstrain_inertial_driver
+      - microstrain_inertial_examples
+      - microstrain_inertial_msgs
+      - microstrain_inertial_rqt
+      - nmea_msgs
+      - rtcm_msgs
+      # cascade lifecycle packages
+      - cascade-lifecycle-msgs
+      - rclcpp-cascade-lifecycle
+      # Sick safety scanner packages
+      - sick_safetyscanners_base
+      - sick_safetyscanners2_interfaces
+      - sick_safetyscanners2
+      # Demo nodes
+      - demo_nodes_py
+      - demo_nodes_cpp
+      # requested in https://github.com/RoboStack/ros-humble/issues/302
+      - urg-node
+      # requested in https://github.com/RoboStack/ros-humble/issues/305
+      - turtle-tf2-py
+      # requested in https://github.com/RoboStack/ros-humble/issues/304
+      - rosbag2-performance-benchmarking
+
+  # These packages are only built on Linux as they depend on Linux-specific API
+  - if: linux
+    then:
+      # Depends on socketcan
+      - ros2_socketcan
+      # Depends on v4l
+      - usb_cam
+      - libcamera
+        # Depends on libcamera that is only available on linux
+      - camera_ros
+      # Depends on v4l that is only available on linux
+      - v4l2_camera
+
+  # These packages are currently only build on Linux,
+  # as trying to build them in the past on macos or Windows resulted in errors
+  - if: linux
+    then:
+      - py_binding_tools
+      - livox_ros_driver2
+
+  # These packages are currently not build on Windows, but they be with some work
+  - if: not wasm32 and not win
+    then:
+      - plotjuggler_ros
+      - foxglove_compressed_video_transport
+      - velodyne
+      - moveit_py
+      - moveit_ros_perception
+      - moveit_ros_occupancy_map_monitor
+      - moveit_runtime
+      # TODO on windows: fix iconv link issue
+      - ffmpeg_image_transport
+      - apriltag_draw
+      - apriltag_tools
+      - apriltag_detector_umich
+      - apriltag_detector_mit
+      - dual_laser_merger
+      - pointcloud_to_laserscan
+      - laser_segmentation
+      - rqt_tf_tree
+      - rviz_satellite
+      - odom_to_tf_ros2
+      # TODO on windows: cannot open pcl_io.lib
+      - ouster_ros
+
+
+patch_dir: patch
+rosdistro_snapshot: rosdistro_snapshot.yaml

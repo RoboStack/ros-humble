@@ -1,8 +1,4 @@
-vinca.yaml
 recipes/
-*.bat
-*.sh
-*.ps1
 *.json
 .DS_Store
 # pixi environments

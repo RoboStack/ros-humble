@@ -33,10 +33,9 @@ vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "df7f9739c5e14ba
 #vinca = { path = "../vinca", editable = true }
 
 [feature.beta.tasks]
-rename-file-emscripten = { cmd = "ln -s vinca_emscripten32.yaml vinca.yaml", depends-on = ["remove-file"] }
-generate-recipes = { cmd = "vinca -m", depends-on = ["rename-file"] }
-generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["rename-file-emscripten"] }
-remove-file = { cmd = "rm vinca.yaml; rm -rf recipes; mkdir recipes" }
+generate-recipes = { cmd = "vinca -m", depends-on = ["remove-file"] }
+generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["remove-file"] }
+remove-file = { cmd = "rm -rf recipes; mkdir recipes" }
 build_additional_recipes = { cmd = "rattler-build build --recipe-dir ./additional_recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing" }
 copy_additional_recipes = { cmd = "sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \\;'" }
 build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing", depends-on = ["build_additional_recipes", "generate-recipes"] }
@@ -60,18 +59,3 @@ beta = ["beta"]
       "--test", "skip"
       ]
   depends-on = ["generate-recipes-emscripten", "copy_additional_recipes"]
-
-[target.linux-64.tasks]
-rename-file = { cmd = "ln -s vinca_linux_64.yaml vinca.yaml", depends-on = ["remove-file"] }
-
-[target.osx-64.tasks]
-rename-file = { cmd = "ln -s vinca_osx.yaml vinca.yaml", depends-on = ["remove-file"] }
-
-[target.osx-arm64.tasks]
-rename-file = { cmd = "ln -s vinca_osx_arm64.yaml vinca.yaml", depends-on = ["remove-file"] }
-
-[target.linux-aarch64.tasks]
-rename-file = { cmd = "ln -s vinca_linux_aarch64.yaml vinca.yaml", depends-on = ["remove-file"] }
-
-[target.win-64.tasks]
-rename-file = { cmd = "cp vinca_win.yaml vinca.yaml", depends-on = ["remove-file"] }
