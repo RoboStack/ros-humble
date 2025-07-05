@@ -24,10 +24,10 @@ git = "*"
 
 [pypi-dependencies]
 # This is tipically the latest commit on main branch
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "df7f9739c5e14babf449125ca72a3e8de1794f1b" }
+vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "59f7b13e39e4f1ec3cba62476e7ba6f653452f46" }
 # Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
 # (and regenerate the pixi.lock) once you push the modified commit to the repo
-#vinca = { path = "../vinca", editable = true }
+# vinca = { path = "../vinca", editable = true }
 
 [tasks]
 upload = "anaconda -t $ANACONDA_API_TOKEN upload"

@@ -1,4 +1,5 @@
 recipes/
+recipes_only_patch/
 *.json
 .DS_Store
 # pixi environments
