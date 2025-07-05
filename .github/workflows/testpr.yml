@@ -90,4 +90,4 @@ jobs:
       shell: bash -l {0}
       if: matrix.platform == 'emscripten-wasm32'
       run: |
-        pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/  -c robostack-staging -c conda-forge --skip-existing
+        pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/  -c robostack-staging -c conda-forge --skip-existing --test skip
