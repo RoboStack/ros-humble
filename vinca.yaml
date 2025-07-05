@@ -239,9 +239,6 @@ packages_select_by_deps:
       - system_modes        # Micro-ROS
       - tf_transformations  # DLu
       - marker-msgs         # TUW Robotics
-      - librealsense2       # IntelRealSense
-      - realsense2-camera   # IntelRealSense
-      - realsense2-description # IntelRealSense
       - webots_ros2         # Cyberbotics
       - libg2o
       - motion_capture_tracking # IMRC Lab
@@ -350,3 +347,7 @@ packages_select_by_deps:
       - odom_to_tf_ros2
       # TODO on windows: cannot open pcl_io.lib
       - ouster_ros
+      # librealsense is not available on Windows in conda-forge, see https://github.com/conda-forge/librealsense-feedstock/issues/3
+      - librealsense2       # IntelRealSense
+      - realsense2-camera   # IntelRealSense
+      - realsense2-description # IntelRealSense
