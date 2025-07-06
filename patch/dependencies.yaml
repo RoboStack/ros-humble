@@ -107,6 +107,9 @@ ompl:
 pybind11_vendor:
   add_host: ["pybind11"]
   add_run: ["pybind11"]
+pybind11_json_vendor:
+  add_host: ["pybind11_json"]
+  add_run: ["pybind11_json"]
 python_qt_binding:
   add_host: ["pyqt-builder"]
   add_run: ["pyqt-builder"]
@@ -237,6 +240,12 @@ spatio_temporal_voxel_layer:
 console_bridge_vendor:
   add_host: ["console_bridge"]
   add_run: ["console_bridge"]
+ignition_cmake2_vendor:
+  add_host: ["libignition-cmake2"]
+  add_run: ["libignition-cmake2"]
+ignition_math6_vendor:
+  add_host: ["libignition-math6"]
+  add_run: ["libignition-math6"]
 rclpy:
   add_host: ["typing_extensions"]
   add_run: ["typing_extensions"]
@@ -250,3 +259,6 @@ gazebo_ros:
   add_host: ["REQUIRE_OPENGL"]
 wasm_cpp:
   add_run: ["${{ 'fmt' if emscripten }}", "${{ 'sqlite' if emscripten }}", "${{ 'bzip2' if emscripten }}", "${{ 'zlib' if emscripten }}", "${{ 'libffi' if emscripten }}"]
+aws_sdk_cpp_vendor:
+  add_host: ["aws-sdk-cpp"]
+  add_run: ["aws-sdk-cpp"]
