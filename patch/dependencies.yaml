@@ -92,7 +92,7 @@ popf:
 rtabmap:
   add_host: ["REQUIRE_OPENGL", "ceres-solver", "libdc1394", "libusb", "vtk"]
 backward_ros:
-  add_host: ["${{ 'binutils' if linux or (osx and x86_64) }}", "${{ 'elfutils' if linux }}", "ros-humble-ament-cmake-libraries"]
+  add_host: ["${{ 'binutils' if linux }}", "${{ 'elfutils' if linux }}", "ros-humble-ament-cmake-libraries"]
 nav2_smac_planner:
   add_build: ["${{ 'llvm-openmp' if osx }}"]
   add_host: ["${{ 'llvm-openmp' if osx }}", "ompl", "libode"]
