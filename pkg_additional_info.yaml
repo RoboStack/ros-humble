@@ -3,6 +3,8 @@ libcamera:
     dep_name: libcamera
     # see https://git.libcamera.org/libcamera/libcamera.git/tree/meson.build?h=v0.5.1#n65
     max_pin: 'x.x'
+    # humble is on 0.1.0, but we stick to 0.5.0 for compat
+    override_version: '0.5.0'
 octomap:
   generate_dummy_package_with_run_deps:
     dep_name: octomap
