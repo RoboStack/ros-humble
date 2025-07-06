@@ -7,6 +7,8 @@ octomap:
   generate_dummy_package_with_run_deps:
     dep_name: octomap
     max_pin: 'x.x'
+    # humble is on 1.9.8, but we stick to 1.10.0 for compat
+    override_version: '1.10.0'
 ompl:
   generate_dummy_package_with_run_deps:
     dep_name: ompl
