@@ -32,6 +32,8 @@ cartographer:
   generate_dummy_package_with_run_deps:
     dep_name: cartographer
     max_pin: 'x.x'
+    # ROS uses a custom versioning scheme currently at 2.0.9004
+    override_version: '2.0.0'
 hpp_fcl:
   generate_dummy_package_with_run_deps:
     dep_name: hpp-fcl
