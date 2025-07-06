@@ -39,8 +39,6 @@ bullet:
   robostack: [bullet]
 bzip2:
   robostack: [bzip2]
-cartographer:
-  robostack: [cartographer]
 ca-certificates:
   robostack: [ca-certificates]
 cargo:
