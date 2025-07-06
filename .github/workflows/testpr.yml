@@ -13,16 +13,22 @@ jobs:
         include:
           - os: ubuntu-latest
             platform: linux-64
+            folder_cache: "output/linux-64"
           - os: ubuntu-24.04-arm
             platform: linux-aarch64
+            folder_cache: "output/linux-aarch64"
           - os: macos-13
             platform: osx-64
+            folder_cache: "output/osx-64"
           - os: macos-14
             platform: osx-arm64
+            folder_cache: "output/osx-arm64"
           - os: windows-2022
             platform: win-64
+            folder_cache: "C:/bld/win-64"
           - os: ubuntu-latest
             platform: emscripten-wasm32
+            folder_cache: "output/emscripten-wasm32"
 
     runs-on: ${{ matrix.os }}
 
@@ -80,6 +86,13 @@ jobs:
       run: |
         pixi run python check_patches_clean_apply.py
 
+    - name: Restore build cache
+      id: cache-restore
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ matrix.folder_cache }}
+        key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}
+
     - name: Build recipes [non emscripten]
       shell: bash -l {0}
       if: matrix.platform != 'emscripten-wasm32'
@@ -91,3 +104,10 @@ jobs:
       if: matrix.platform == 'emscripten-wasm32'
       run: |
         pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/  -c robostack-staging -c conda-forge --skip-existing --test skip
+
+    - name: Save build cache
+      uses: actions/cache/save@v4
+      if: always()
+      with:
+        path: ${{ matrix.folder_cache }}
+        key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}
