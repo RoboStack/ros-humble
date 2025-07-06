@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3e3d417fb..91c15c6b2 100644
+index 36e80da02..ca5263f2d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -12,8 +12,7 @@ find_package(fmt REQUIRED)
+@@ -11,8 +11,7 @@ find_package(ament_index_cpp REQUIRED)
  find_package(moveit_core REQUIRED)
  find_package(moveit_ros_planning REQUIRED)
  find_package(moveit_ros_visualization REQUIRED)
@@ -12,18 +12,18 @@ index 3e3d417fb..91c15c6b2 100644
  find_package(pluginlib REQUIRED)
  find_package(rclcpp REQUIRED)
  find_package(rviz_common REQUIRED)
-@@ -43,6 +42,10 @@ add_library(
-   src/utilities.cpp
-   src/xml_syntax_highlighter.cpp
-   ${MOC_FILES})
+@@ -42,6 +41,10 @@ add_library(${PROJECT_NAME}
+     src/xml_syntax_highlighter.cpp
+     ${MOC_FILES}
+ )
 +
 +include(GenerateExportHeader)
 +generate_export_header(${PROJECT_NAME})
 +
- target_include_directories(
-   moveit_setup_framework
-   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-@@ -54,8 +57,7 @@ ament_target_dependencies(
+ target_include_directories(${PROJECT_NAME} PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+@@ -52,8 +55,7 @@ ament_target_dependencies(${PROJECT_NAME}
    moveit_ros_planning
    moveit_ros_visualization
    pluginlib
@@ -33,14 +33,14 @@ index 3e3d417fb..91c15c6b2 100644
    rclcpp
    rviz_common
    rviz_rendering
-@@ -67,6 +69,7 @@ install(FILES moveit_setup_framework_plugins.xml
-         DESTINATION share/moveit_setup_framework)
-
- install(DIRECTORY templates DESTINATION share/moveit_setup_framework)
+@@ -73,6 +75,7 @@ install(FILES moveit_setup_framework_plugins.xml
+ )
+ 
+ install(DIRECTORY templates DESTINATION share/${PROJECT_NAME})
 +install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_export.h DESTINATION include)
-
- ament_export_targets(moveit_setup_frameworkTargets HAS_LIBRARY_TARGET)
- install(
+ 
+ ament_export_targets(export_moveit_setup_framework HAS_LIBRARY_TARGET)
+ install(TARGETS ${PROJECT_NAME}
 diff --git a/include/moveit_setup_framework/qt/setup_step_widget.hpp b/include/moveit_setup_framework/qt/setup_step_widget.hpp
 index f32e7b5ad..c6f472682 100644
 --- a/include/moveit_setup_framework/qt/setup_step_widget.hpp
@@ -62,7 +62,7 @@ index f32e7b5ad..c6f472682 100644
    Q_OBJECT
  public:
 diff --git a/include/moveit_setup_framework/templates.hpp b/include/moveit_setup_framework/templates.hpp
-index 1555eee16..b02d52024 100644
+index fb90a7570..695f7a9cf 100644
 --- a/include/moveit_setup_framework/templates.hpp
 +++ b/include/moveit_setup_framework/templates.hpp
 @@ -38,6 +38,8 @@
@@ -78,20 +78,8 @@ index 1555eee16..b02d52024 100644
  
    bool write() override;
  
--  static std::vector<TemplateVariable> variables;
-+  static MOVEIT_SETUP_FRAMEWORK_EXPORT std::vector<TemplateVariable> variables;
+-  static std::vector<TemplateVariable> variables_;
++  static MOVEIT_SETUP_FRAMEWORK_EXPORT std::vector<TemplateVariable> variables_;
  };
  
  }  // namespace moveit_setup
-diff --git a/src/urdf_config.cpp b/src/urdf_config.cpp
-index 72d9bf4af..3ca176656 100644
---- a/src/urdf_config.cpp
-+++ b/src/urdf_config.cpp
-@@ -36,6 +36,7 @@
- #include <moveit_setup_framework/utilities.hpp>
- #include <moveit/rdf_loader/rdf_loader.hpp>
- #include <fmt/format.h>
-+#include <fmt/ranges.h>
- 
- namespace moveit_setup
- {
