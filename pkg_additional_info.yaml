@@ -46,8 +46,8 @@ eigenpy:
   generate_dummy_package_with_run_deps:
     dep_name: eigenpy
     max_pin: 'x.x.x'
-    # the version on ros is outdated w.r.t. to the conda-forge one
-    override_version: '3.10.0'
+    # the version in ros is not compatible with conda-forge's coal and hpp_fcl builds
+    override_version: '3.10.3'
 pinocchio:
   generate_dummy_package_with_run_deps:
     dep_name: pinocchio
