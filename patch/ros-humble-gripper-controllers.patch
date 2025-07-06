@@ -1,0 +1,55 @@
+From 35e0cef8864885948e99d1016f531ea511a607e2 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio.traversaro@iit.it>
+Date: Sat, 4 Jan 2025 01:52:28 +0100
+Subject: [PATCH 1/3] Remove custom logic to skip configuration of
+ gripper_controllers on Windows or macOS
+
+---
+ gripper_controllers/CMakeLists.txt | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/gripper_controllers/CMakeLists.txt b/gripper_controllers/CMakeLists.txt
+index 4ffdc76168..05174402d0 100644
+--- a/gripper_controllers/CMakeLists.txt
++++ b/gripper_controllers/CMakeLists.txt
+@@ -1,11 +1,6 @@
+ cmake_minimum_required(VERSION 3.16)
+ project(gripper_controllers)
+ 
+-if(APPLE OR WIN32)
+-  message(WARNING "gripper controllers are not available on OSX or Windows")
+-  return()
+-endif()
+-
+ if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
+   add_compile_options(-Wall -Wextra -Wpedantic -Werror=conversion -Werror=unused-but-set-variable
+                       -Werror=return-type -Werror=shadow -Werror=format -Werror=range-loop-construct
+
+From 9523c10e6990b0f90490722a69a6b6ca51ab8cba Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio.traversaro@iit.it>
+Date: Sun, 5 Jan 2025 16:37:21 +0100
+Subject: [PATCH 2/3] Export all symbols on Windows in gripper_controllers
+
+Co-authored-by: Sai Kishor Kothakota <saisastra3@gmail.com>
+---
+ gripper_controllers/CMakeLists.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/gripper_controllers/CMakeLists.txt b/gripper_controllers/CMakeLists.txt
+index 05174402d0..a56443e31a 100644
+--- a/gripper_controllers/CMakeLists.txt
++++ b/gripper_controllers/CMakeLists.txt
+@@ -1,7 +1,11 @@
+ cmake_minimum_required(VERSION 3.16)
+ project(gripper_controllers)
+ 
+-if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
++# using this instead of visibility macros
++# S1 from https://github.com/ros-controls/ros2_controllers/issues/1053
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++
++ if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
+   add_compile_options(-Wall -Wextra -Wpedantic -Werror=conversion -Werror=unused-but-set-variable
+                       -Werror=return-type -Werror=shadow -Werror=format -Werror=range-loop-construct
+                       -Werror=missing-braces)
+
