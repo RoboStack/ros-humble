@@ -248,3 +248,5 @@ camera_calibration:
   add_run: ["libopencv * *qt6*"]
 gazebo_ros:
   add_host: ["REQUIRE_OPENGL"]
+wasm_cpp:
+  add_run: ["${{ 'fmt' if emscripten }}", "${{ 'sqlite' if emscripten }}", "${{ 'bzip2' if emscripten }}", "${{ 'zlib' if emscripten }}", "${{ 'libffi' if emscripten }}"]
