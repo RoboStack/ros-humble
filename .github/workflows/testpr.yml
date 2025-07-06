@@ -92,6 +92,9 @@ jobs:
       with:
         path: ${{ matrix.folder_cache }}
         key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}
+        # allow a later run to pick up a cache that has an extra suffix
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}-
 
     - name: Build recipes [non emscripten]
       shell: bash -l {0}
@@ -107,7 +110,8 @@ jobs:
 
     - name: Save build cache
       uses: actions/cache/save@v4
-      if: always()
+      # steps.cache.outcome == 'success' to ensure that only jobts that pass the check-patches step actually save cache
+      if: always() && steps.cache.outcome == 'success'
       with:
         path: ${{ matrix.folder_cache }}
-        key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}
+        key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}-${{ github.run_id }}-${{ github.run_attempt }}
