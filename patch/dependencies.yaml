@@ -77,7 +77,7 @@ tvm_vendor:
 libphidget22:
   add_host: ["libusb"]
 libg2o:
-  add_host: ["qt-main", "libglu", "${{ 'freeglut' if not osx }}]
+  add_host: ["qt-main", "libglu", "${{ 'freeglut' if not osx }}"]
 fmilibrary_vendor:
   add_host: ["fmilib"]
 mrpt2:
