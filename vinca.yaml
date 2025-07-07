@@ -244,9 +244,6 @@ packages_select_by_deps:
       - libg2o
       - motion_capture_tracking # IMRC Lab
       - moveit_resources
-      # requested in https://github.com/RoboStack/ros-humble/issues/228
-      - event_camera_codecs
-      - event_camera_renderer
       # requested in https://github.com/RoboStack/ros-humble/pull/205
       - plotjuggler
       - plotjuggler_msgs
@@ -326,6 +323,12 @@ packages_select_by_deps:
     then:
       - py_binding_tools
       - livox_ros_driver2
+      # requested in https://github.com/RoboStack/ros-humble/issues/228,
+      # event_camera_codecs uses endian.h so it only builds on Linux,
+      # while event_camera_renderer does not support Windows shared library,
+      # both can probably work on all platform with some work
+      - event_camera_codecs
+      - event_camera_renderer
 
   # These packages are currently not build on Windows, but they be with some work
   - if: not wasm32 and not win
