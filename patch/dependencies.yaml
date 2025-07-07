@@ -63,7 +63,7 @@ ign_rviz_plugins:
 image_view:
   add_host: ["REQUIRE_OPENGL"]
   # Depends on opencv with gui support, see  https://github.com/ros-perception/image_pipeline/blob/746268fcfd21b389bc39ae60bb6345a53c838558/image_view/src/stereo_view_node.cpp#L253
-  add_run: ["${{ 'libopencv * *qt6*' if not (ppc64le or aarch64 or osx) }}"]
+  add_run: ["libopencv * *qt6*"]
 nao_lola:
   add_host: ["libboost-devel"]
 ros_ign_gazebo:
@@ -77,7 +77,7 @@ tvm_vendor:
 libphidget22:
   add_host: ["libusb"]
 libg2o:
-  add_host: ["qt-main", "libglu", "freeglut"]
+  add_host: ["qt-main", "libglu", "${{ 'freeglut' if not osx }}]
 fmilibrary_vendor:
   add_host: ["fmilib"]
 mrpt2:
