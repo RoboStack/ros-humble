@@ -238,7 +238,6 @@ packages_select_by_deps:
       - system_modes        # Micro-ROS
       - tf_transformations  # DLu
       - marker-msgs         # TUW Robotics
-      - webots_ros2         # Cyberbotics
       - libg2o
       - motion_capture_tracking # IMRC Lab
       - moveit_resources
@@ -332,6 +331,8 @@ packages_select_by_deps:
       # Uses linux-specific flags in  https://github.com/SteveMacenski/spatio_temporal_voxel_layer/blob/e23d730d35407bd8e2bf9c33d10388a6a07c735d/spatio_temporal_voxel_layer/CMakeLists.txt#L124,
       # but should be easy to fix
       - spatio_temporal_voxel_layer
+      # Some missing support for macOS, see https://github.com/cyberbotics/webots_ros2/pull/733
+      - webots_ros2         # Cyberbotics
 
   # These packages are currently not build on Windows, but they be with some work
   - if: not wasm32 and not win
