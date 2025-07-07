@@ -242,7 +242,6 @@ packages_select_by_deps:
       - motion_capture_tracking # IMRC Lab
       - moveit_resources
       # requested in https://github.com/RoboStack/ros-humble/pull/205
-      - plotjuggler
       - plotjuggler_msgs
       - turtle_tf2_py
       - turtle_tf2_cpp
@@ -334,10 +333,9 @@ packages_select_by_deps:
       # Some missing support for macOS, see https://github.com/cyberbotics/webots_ros2/pull/733
       - webots_ros2         # Cyberbotics
 
-  # These packages are currently not build on Windows, but they be with some work
+  # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
     then:
-      - plotjuggler_ros
       - foxglove_compressed_video_transport
       - velodyne
       - moveit_py
@@ -364,4 +362,7 @@ packages_select_by_deps:
       - realsense2-description # IntelRealSense
       # removed in jazzy, never supported windows, no packages depend on it
       - apex_containers
-
+      # A few compilation errors, solvable as the upstream project as a CI on Windows
+      # requested in https://github.com/RoboStack/ros-humble/pull/205
+      - plotjuggler
+      - plotjuggler_ros

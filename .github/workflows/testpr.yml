@@ -42,6 +42,22 @@ jobs:
       with:
         frozen: true
 
+    - name: Restore build cache
+      id: cache-restore
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          ${{ matrix.folder_cache }}
+        key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}
+        # allow a later run to pick up a cache that has an extra suffix
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}-
+
+    - name: See packages restored by cache
+      shell: bash -l {0}
+      run: |
+        ls ${{ matrix.folder_cache }}
+
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
       if: contains(matrix.os, 'windows')
@@ -85,22 +101,6 @@ jobs:
       shell: bash -l {0}
       run: |
         pixi run python check_patches_clean_apply.py
-
-    - name: Restore build cache
-      id: cache-restore
-      uses: actions/cache/restore@v4
-      with:
-        path: |
-          ${{ matrix.folder_cache }}
-        key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}
-        # allow a later run to pick up a cache that has an extra suffix
-        restore-keys: |
-          ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}-
-
-    - name: See packages restored by cache
-      shell: bash -l {0}
-      run: |
-        ls ${{ matrix.folder_cache }}
 
     - name: Build recipes [non emscripten]
       shell: bash -l {0}
