@@ -235,7 +235,8 @@ packages_select_by_deps:
       - visp
       - bno055              # flynneva
       - aws_robomaker_small_warehouse_world # AWS Robotics
-      - avt_vimba_camera    #  Allied Vision Technologies
+      # Only msgs as avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
+      - avt_vimba_camera_msgs    #  Allied Vision Technologies
       - system_modes        # Micro-ROS
       - tf_transformations  # DLu
       - marker-msgs         # TUW Robotics
@@ -315,6 +316,9 @@ packages_select_by_deps:
       - camera_ros
       # Depends on v4l that is only available on linux
       - v4l2_camera
+      #  avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
+      - avt_vimba_camera
+
 
   # These packages are currently only build on Linux,
   # as trying to build them in the past on macos or Windows resulted in errors
@@ -351,3 +355,6 @@ packages_select_by_deps:
       - librealsense2       # IntelRealSense
       - realsense2-camera   # IntelRealSense
       - realsense2-description # IntelRealSense
+      # removed in jazzy, never supported windows, no packages depend on it
+      - apex_containers
+

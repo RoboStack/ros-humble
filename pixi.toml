@@ -36,8 +36,8 @@ check-patches = { cmd = "python check_patches_clean_apply.py", depends-on = ["ge
 generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["remove-file"] }
 check-patches-emscripten = { cmd = "python check_patches_clean_apply.py", depends-on = ["generate-recipes-emscripten"] }
 remove-file = { cmd = "rm -rf recipes; mkdir recipes" }
-build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge --skip-existing", depends-on = ["generate-recipes"] }
-build_one_package = { cmd = "cp ./patch/$PACKAGE.*patch ./recipes/$PACKAGE/patch/; rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml -c robostack-staging -c https://repo.prefix.dev/conda-forge", env = { PACKAGE = "ros-humble-ros-workspace" } }
+build = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c https://repo.prefix.dev/conda-forge -c robostack-staging  --skip-existing", depends-on = ["generate-recipes"] }
+build_one_package = { cmd = "cp ./patch/$PACKAGE.*patch ./recipes/$PACKAGE/patch/; rattler-build build --recipe ./recipes/$PACKAGE/recipe.yaml -m ./conda_build_config.yaml -c https://repo.prefix.dev/conda-forge -c robostack-staging", env = { PACKAGE = "ros-humble-ros-workspace" } }
 create_snapshot = { cmd = "vinca-snapshot" }
 
 
