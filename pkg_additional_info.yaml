@@ -126,6 +126,11 @@ pybind11_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
 pybind11_json_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
-# Temporary for avoid getting the wrong package from cache
-grid_map_cmake_helpers:
+visp:
+  generate_dummy_package_with_run_deps:
+    dep_name: visp
+    max_pin: 'x.x'
+    # the version on ros is outdated w.r.t. to the conda-forge one
+    override_version: '3.6.0'
+  # Temporary for avoid getting the wrong package from cache
   build_number: 14

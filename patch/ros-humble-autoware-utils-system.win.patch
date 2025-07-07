@@ -1,0 +1,32 @@
+diff --git a/src/backtrace.cpp b/src/backtrace.cpp
+index 3bdfa8f..ee27f35 100644
+--- a/src/backtrace.cpp
++++ b/src/backtrace.cpp
+@@ -16,7 +16,9 @@
+ 
+ #include <rclcpp/rclcpp.hpp>
+ 
++#if !defined(_MSC_VER)
+ #include <execinfo.h>
++#endif
+ 
+ #include <iostream>
+ #include <memory>
+@@ -29,6 +31,7 @@ namespace autoware_utils_system
+ // cppcheck-suppress unusedFunction
+ void print_backtrace()
+ {
++#if !defined(_MSC_VER)
+   constexpr size_t max_frames = 100;
+   void * addrlist[max_frames + 1];
+ 
+@@ -49,5 +52,9 @@ void print_backtrace()
+ 
+   free(symbol_list);
+ }
++#else
++  return;
++}
++#endif
+ 
+ }  // namespace autoware_utils_system
