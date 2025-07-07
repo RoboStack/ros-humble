@@ -228,7 +228,6 @@ packages_select_by_deps:
       - serial_driver
       - udp_driver
       - apex_test_tools
-      - apex_containers     # Apex AI
       - velodyne_simulator  # Dataspeed Inc.
       - visp
       - bno055              # flynneva
@@ -333,6 +332,11 @@ packages_select_by_deps:
       - webots_ros2         # Cyberbotics
       # Linking problems on macOS, probably a missing link to draco library or similar
       - point_cloud_transport_plugins
+      # librealsense is not available on Windows in conda-forge, see https://github.com/conda-forge/librealsense-feedstock/issues/3
+      # and on macos there are some CMake failures
+      - librealsense2       # IntelRealSense
+      - realsense2-camera   # IntelRealSense
+      - realsense2-description # IntelRealSense
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
@@ -357,10 +361,6 @@ packages_select_by_deps:
       - odom_to_tf_ros2
       # TODO on windows: cannot open pcl_io.lib
       - ouster_ros
-      # librealsense is not available on Windows in conda-forge, see https://github.com/conda-forge/librealsense-feedstock/issues/3
-      - librealsense2       # IntelRealSense
-      - realsense2-camera   # IntelRealSense
-      - realsense2-description # IntelRealSense
       # removed in jazzy, never supported windows, no packages depend on it
       - apex_containers
       # A few compilation errors, solvable as the upstream project as a CI on Windows
