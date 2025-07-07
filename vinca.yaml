@@ -252,7 +252,6 @@ packages_select_by_deps:
       # requested in https://github.com/RoboStack/ros-humble/issues/256
       - rqt_controller_manager
       - open3d_conversions
-      - point_cloud_transport_plugins
       - grid_map
       - lanelet2
       # autoware
@@ -332,6 +331,8 @@ packages_select_by_deps:
       - spatio_temporal_voxel_layer
       # Some missing support for macOS, see https://github.com/cyberbotics/webots_ros2/pull/733
       - webots_ros2         # Cyberbotics
+      # Linking problems on macOS, probably a missing link to draco library or similar
+      - point_cloud_transport_plugins
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
