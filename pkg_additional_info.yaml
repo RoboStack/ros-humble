@@ -126,3 +126,6 @@ pybind11_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
 pybind11_json_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
+# Temporary for avoid getting the wrong package from cache
+grid_map_cmake_helpers:
+  build_number: 14
