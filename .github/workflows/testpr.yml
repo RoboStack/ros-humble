@@ -13,22 +13,22 @@ jobs:
         include:
           - os: ubuntu-latest
             platform: linux-64
-            folder_cache: "output/linux-64"
+            folder_cache: 'output/linux-64'
           - os: ubuntu-24.04-arm
             platform: linux-aarch64
-            folder_cache: "output/linux-aarch64"
+            folder_cache: 'output/linux-aarch64'
           - os: macos-13
             platform: osx-64
-            folder_cache: "output/osx-64"
+            folder_cache: 'output/osx-64'
           - os: macos-14
             platform: osx-arm64
-            folder_cache: "output/osx-arm64"
+            folder_cache: 'output/osx-arm64'
           - os: windows-2022
             platform: win-64
-            folder_cache: "C:/bld/win-64"
+            folder_cache: 'C:/bld/win-64'
           - os: ubuntu-latest
             platform: emscripten-wasm32
-            folder_cache: "output/emscripten-wasm32"
+            folder_cache: 'output/emscripten-wasm32'
 
     runs-on: ${{ matrix.os }}
 
@@ -90,7 +90,8 @@ jobs:
       id: cache-restore
       uses: actions/cache/restore@v4
       with:
-        path: ${{ matrix.folder_cache }}
+        path: |
+          ${{ matrix.folder_cache }}
         key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}
         # allow a later run to pick up a cache that has an extra suffix
         restore-keys: |
@@ -113,5 +114,6 @@ jobs:
       # steps.cache.outcome == 'success' to ensure that only jobts that pass the check-patches step actually save cache
       if: always()
       with:
-        path: ${{ matrix.folder_cache }}
+        path: |
+          ${{ matrix.folder_cache }}
         key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}-${{ github.run_id }}-${{ github.run_attempt }}

@@ -124,7 +124,6 @@ packages_select_by_deps:
   # all the other platforms (so the majority)
   - if: not wasm32
     then:
-      - spatio_temporal_voxel_layer
       - ros2-controllers
       - diff-drive-controller
       - libcamera
@@ -189,7 +188,6 @@ packages_select_by_deps:
       - ros2_controllers
       # - joystick_drivers
       - joy
-      - joy_linux
       - sdl2_vendor
       - spacenav
       # - wiimote          # needs bluetooth and is not in conda-forge
@@ -315,10 +313,12 @@ packages_select_by_deps:
       - v4l2_camera
       #  avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
       - avt_vimba_camera
-
+      # Require Linux-specific joystick interfaces
+      - joy_linux
 
   # These packages are currently only build on Linux,
-  # as trying to build them in the past on macos or Windows resulted in errors
+  # as trying to build them in the past on macos or Windows resulted in errors,
+  # but probably they can work on all platform with some work
   - if: linux
     then:
       - py_binding_tools
@@ -329,6 +329,9 @@ packages_select_by_deps:
       # both can probably work on all platform with some work
       - event_camera_codecs
       - event_camera_renderer
+      # Uses linux-specific flags in  https://github.com/SteveMacenski/spatio_temporal_voxel_layer/blob/e23d730d35407bd8e2bf9c33d10388a6a07c735d/spatio_temporal_voxel_layer/CMakeLists.txt#L124,
+      # but should be easy to fix
+      - spatio_temporal_voxel_layer
 
   # These packages are currently not build on Windows, but they be with some work
   - if: not wasm32 and not win
