@@ -174,7 +174,6 @@ packages_select_by_deps:
       - moveit_servo
       - moveit2_tutorials
       - moveit_planners_chomp
-      - moveit_ros_perception
       - moveit_ros_occupancy_map_monitor
       - rqt-moveit
       - pilz-industrial-motion-planner
@@ -345,6 +344,8 @@ packages_select_by_deps:
       - realsense2-description # IntelRealSense
        # removed in jazzy, never supported windows or macos, no packages depend on it
       - apex_containers
+      # CMake errors related to OpenCV on macos, probably fixable
+      - moveit_ros_perception
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
