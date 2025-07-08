@@ -4,7 +4,7 @@ tests:
     - python robot_state_publisher_smoke_test_launch.py
     requirements:
       run:
-        - ros-humble-launch_testing-ros 
+        - ros-humble-launch-testing-ros 
     files:
       recipe:
         - robot_state_publisher_smoke_test_launch.py
