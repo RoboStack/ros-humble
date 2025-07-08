@@ -5,7 +5,7 @@ on:
 env:
   ROS_VERSION: 2
   # Change to 'true' to enable the cache upload as artifacts
-  SAVE_CACHE_AS_ARTIFACT: 'true'
+  SAVE_CACHE_AS_ARTIFACT: 'false'
 jobs:
   build:
     strategy:
