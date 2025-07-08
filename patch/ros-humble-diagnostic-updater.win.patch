@@ -1,7 +1,7 @@
-diff --git a/diagnostic_updater/CMakeLists.txt b/diagnostic_updater/CMakeLists.txt
+diff --git a/CMakeLists.txt b/CMakeLists.txt
 index eb1644a..f4bb5f3 100644
---- a/diagnostic_updater/CMakeLists.txt
-+++ b/diagnostic_updater/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
 @@ -53,6 +53,10 @@ ament_target_dependencies(
  )
  target_link_libraries(example ${PROJECT_NAME})
@@ -13,10 +13,10 @@ index eb1644a..f4bb5f3 100644
  if(BUILD_TESTING)
    find_package(ament_lint_auto REQUIRED)
    set(ament_cmake_copyright_FOUND TRUE)
-diff --git a/diagnostic_updater/include/diagnostic_updater/diagnostic_updater.hpp b/diagnostic_updater/include/diagnostic_updater/diagnostic_updater.hpp
+diff --git a/include/diagnostic_updater/diagnostic_updater.hpp b/include/diagnostic_updater/diagnostic_updater.hpp
 index 635ead0..ea8cbf5 100644
---- a/diagnostic_updater/include/diagnostic_updater/diagnostic_updater.hpp
-+++ b/diagnostic_updater/include/diagnostic_updater/diagnostic_updater.hpp
+--- a/include/diagnostic_updater/diagnostic_updater.hpp
++++ b/include/diagnostic_updater/diagnostic_updater.hpp
 @@ -47,6 +47,7 @@
  #include "diagnostic_msgs/msg/diagnostic_status.hpp"
  
@@ -34,11 +34,11 @@ index 635ead0..ea8cbf5 100644
  {
  public:
    bool verbose_;
-diff --git a/diagnostic_updater/include/diagnostic_updater/visibility_control.hpp b/diagnostic_updater/include/diagnostic_updater/visibility_control.hpp
+diff --git a/include/diagnostic_updater/visibility_control.hpp b/include/diagnostic_updater/visibility_control.hpp
 new file mode 100644
 index 0000000..a595cd3
 --- /dev/null
-+++ b/diagnostic_updater/include/diagnostic_updater/visibility_control.hpp
++++ b/include/diagnostic_updater/visibility_control.hpp
 @@ -0,0 +1,70 @@
 +/*********************************************************************
 + * Software License Agreement (BSD License)
