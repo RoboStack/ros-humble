@@ -139,7 +139,6 @@ packages_select_by_deps:
       - desktop
       - desktop_full
       - rosbag2_storage_mcap
-      - cartographer-ros
       - foxglove_bridge
       # rqt
       - rqt
@@ -368,3 +367,5 @@ packages_select_by_deps:
       # requested in https://github.com/RoboStack/ros-humble/pull/205
       - plotjuggler
       - plotjuggler_ros
+      # A few compilation errors, probably solvable as the package is available in kilted
+      - cartographer-ros
