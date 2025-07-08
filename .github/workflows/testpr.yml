@@ -1,6 +1,12 @@
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      upload_cache_artifacts:
+        description: 'Also upload the build cache as workflow artifacts'
+        required: false
+        default: 'false'   # toggle to true in the UI if you want the artifacts
+        type: boolean
 
 env:
   ROS_VERSION: 2
@@ -101,7 +107,7 @@ jobs:
       if: contains(matrix.os, 'windows')
       shell: bash -l {0}
       run: |
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-autoware-*
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-pcl-ros*
 
     - name: See packages restored by cache
       shell: bash -l {0}
@@ -133,3 +139,11 @@ jobs:
         path: |
           ${{ matrix.folder_cache }}
         key: ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+    - name: Upload build cache as artifact
+      if: ${{ always() && github.event_name == 'workflow_dispatch' && github.event.inputs.upload_cache_artifacts == 'true' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: cache-${{ matrix.platform }}
+        path: ${{ matrix.folder_cache }}
+        retention-days: 7
