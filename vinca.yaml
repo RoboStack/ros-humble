@@ -346,6 +346,7 @@ packages_select_by_deps:
       - apex_containers
       # CMake errors related to OpenCV on macos, probably fixable
       - moveit_ros_perception
+      - moveit_runtime
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
@@ -353,7 +354,6 @@ packages_select_by_deps:
       - foxglove_compressed_video_transport
       - velodyne
       - moveit_py
-      - moveit_runtime
       # TODO on windows: fix iconv link issue
       - ffmpeg_image_transport
       - dual_laser_merger
