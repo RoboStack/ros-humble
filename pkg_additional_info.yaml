@@ -132,5 +132,3 @@ visp:
     max_pin: 'x.x'
     # the version on ros is outdated w.r.t. to the conda-forge one
     override_version: '3.6.0'
-  # Temporary for avoid getting the wrong package from cache
-  build_number: 14

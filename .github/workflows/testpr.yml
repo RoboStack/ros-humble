@@ -97,17 +97,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}-
 
+    - name: Delete broken packages from cache [temp]
+      if: contains(matrix.os, 'windows')
+      shell: bash -l {0}
+      run: |
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-autoware-*
+
     - name: See packages restored by cache
       shell: bash -l {0}
       run: |
         ls ${{ matrix.folder_cache }}
-
-    - name: Build recipes [non emscripten]
-      shell: bash -l {0}
-      if: matrix.platform != 'emscripten-wasm32'
-      run: |
-        pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
-
 
     - name: Build recipes [non emscripten]
       shell: bash -l {0}
