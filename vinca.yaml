@@ -298,6 +298,7 @@ packages_select_by_deps:
       - turtle-tf2-py
       # requested in https://github.com/RoboStack/ros-humble/issues/304
       - rosbag2-performance-benchmarking
+      - cartographer_ros
 
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
@@ -367,5 +368,3 @@ packages_select_by_deps:
       # requested in https://github.com/RoboStack/ros-humble/pull/205
       - plotjuggler
       - plotjuggler_ros
-      # A few compilation errors, probably solvable as the package is available in kilted
-      - cartographer-ros

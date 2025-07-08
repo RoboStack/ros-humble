@@ -1,7 +1,7 @@
 tests:
   # Regression test for https://github.com/RoboStack/ros-humble/issues/274
   - script:
-    - python robot_state_publisher_smoke_test_launch.py
+    - launch_test robot_state_publisher_smoke_test_launch.py
     requirements:
       run:
         - ros-humble-launch-testing-ros 
