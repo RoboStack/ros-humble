@@ -58,6 +58,22 @@ packages_skip_by_deps:
       - rmw_connextdds
       - rmw_cyclonedds_cpp
       - osrf_testing_tools_cpp
+  - if: win
+    then:
+      # Modern gz-sim integration is not supported on Humble on Windows, please
+      # look to Jazzy or Kilted if you are interested in it, see
+      # https://github.com/RoboStack/ros-humble/issues/68
+      - ros_gz
+      - ros_gz_bridge
+      - ros_gz_image 
+      - ros_gz_sim 
+      - ros_gz_sim_demos
+      - test_ros_gz_bridge
+      - ros_ign 
+      - ros_ign_bridge 
+      - ros_ign_gazebo 
+      - ros_ign_gazebo_demos 
+      - ros_ign_image
 
 packages_remove_from_deps:
   - if: not linux
@@ -87,13 +103,18 @@ packages_remove_from_deps:
     then:
       # Modern gz-sim integration is not supported on Humble on Windows, please
       # look to Jazzy or Kilted if you are interested in it, see
-      # https://github.com/RoboStack/ros-humble/pull/320
+      # https://github.com/RoboStack/ros-humble/issues/68
       - ros_gz
       - ros_gz_bridge
       - ros_gz_image 
       - ros_gz_sim 
       - ros_gz_sim_demos
       - test_ros_gz_bridge
+      - ros_ign 
+      - ros_ign_bridge 
+      - ros_ign_gazebo 
+      - ros_ign_gazebo_demos 
+      - ros_ign_image
 
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
@@ -208,9 +229,10 @@ packages_select_by_deps:
       - bond_core
       # Modern gz-sim integration is not supported on Humble on Windows, please
       # look to Jazzy or Kilted if you are interested in it, see
-      # https://github.com/RoboStack/ros-humble/pull/320, we just include ros_gz_interfaces
+      # https://github.com/RoboStack/ros-humble/issues/68, we just include ros_gz_interfaces
       # to interfaced with simulations working on Linux or macOS
       - ros_gz_interfaces
+      - ros_ign_interfaces
       - gtsam
       # *** learning and tutorials ***
       - turtlebot3
