@@ -2,7 +2,8 @@ diff --git a/ros_gz_bridge/CMakeLists.txt b/ros_gz_bridge/CMakeLists.txt
 index 44911577..76779457 100644
 --- a/ros_gz_bridge/CMakeLists.txt
 +++ b/ros_gz_bridge/CMakeLists.txt
-@@ -11,4 +11,7 @@ if(NOT CMAKE_CXX_STANDARD)
+@@ -11,4 +11,8 @@ if(NOT CMAKE_CXX_STANDARD)
++endif()
 +if(MSVC)
 +  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
  endif()
