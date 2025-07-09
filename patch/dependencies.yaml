@@ -33,7 +33,7 @@ libcurl_vendor:
 intra_process_demo:
   add_host: ["REQUIRE_OPENGL"]
   # Depends on opencv with gui support, see https://github.com/ros2/demos/blob/8f361a1ece2daae54016959f3ea9ab2e7692ddbb/intra_process_demo/include/image_pipeline/image_view_node.hpp#L58
-  add_run: ["${{ 'libopencv * *qt6*' if not (ppc64le or aarch64 or osx) }}"]
+  add_run: ["libopencv * *qt6*"]
 rviz_ogre_vendor:
   add_host: ["zlib", "freeimage", "freetype", "assimp", "zziplib", "pugixml", "${{ 'libglu' if linux }}"]
   add_build: ["vcstool"]
