@@ -36,3 +36,16 @@ index efc65dc..994d91b 100644
  
  message(STATUS "ROS_VERSION: " $ENV{ROS_VERSION})
  message(STATUS "ROS_DISTRO: " $ENV{ROS_DISTRO})
+diff --git a/ros2_foxglove_bridge/src/message_definition_cache.cpp b/ros2_foxglove_bridge/src/message_definition_cache.cpp
+index 262c482a..5598182d 100644
+--- a/ros2_foxglove_bridge/src/message_definition_cache.cpp
++++ b/ros2_foxglove_bridge/src/message_definition_cache.cpp
+@@ -234,7 +234,7 @@ const MessageSpec& MessageDefinitionCache::load_message_spec(
+   }
+ 
+   // Read the file
+-  const std::string full_path = share_dir + std::filesystem::path::preferred_separator + *it;
++  const std::string full_path = (std::filesystem::path(share_dir) / *it).string();
+   std::ifstream file{full_path};
+   if (!file.good()) {
+     throw DefinitionNotFoundError(definition_identifier.package_resource_name);
