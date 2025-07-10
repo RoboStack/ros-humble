@@ -541,6 +541,12 @@ lz4:
   robostack: [lz4]
 maven:
   robostack: [maven]
+microcdr:
+  robostack:
+    linux: []
+    osx: []
+    win64: []
+    emscripten: [micro-cdr]
 mongodb:
   robostack: [mongodb]
 mosquitto:
@@ -1026,6 +1032,12 @@ yaml-cpp:
   robostack: [yaml-cpp]
 zbar:
   robostack: [zbar]
+zenohpico:
+  robostack:
+    linux: []
+    osx: []
+    win64: []
+    emscripten: [zenoh-pico]
 zlib:
   robostack: [zlib]
 zziplib:

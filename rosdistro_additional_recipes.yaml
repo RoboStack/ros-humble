@@ -1,0 +1,11 @@
+# This file is used to add additional recipes to the ROS 2 distribution, not contained in the
+# upstream rosdistro. Differently from rosdistro_snapshot.yaml, this file is not
+# automatically generated, but manually maintained.
+rmw_zenoh_pico:
+  tag: 1.3.1
+  url: https://github.com/esol-community/rmw_zenoh_pico.git
+  version: 1.3.1
+  # This is an attribute that is not found in rosdistro_snapshot.yaml,
+  # but it is used in rosdistro_additional_recipes.yaml to indicate if the
+  # package to build is not in the root of the repository, but in a subfolder.
+  additional_folder: "rmw_zenoh_pico"

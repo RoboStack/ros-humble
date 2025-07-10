@@ -85,6 +85,10 @@ packages_select_by_deps:
   - rosidl_typesupport_introspection_cpp
   - yaml_cpp_vendor
   - osrf_testing_tools_cpp
+  - rmw_zenoh_pico
 
 patch_dir: patch
-
+# Tempory workaround, switch back to the unified rosdistro_snapshot.yaml
+# on the first full rebuild
+rosdistro_snapshot: rosdistro_snapshot_emscripten32.yaml
+rosdistro_additional_recipes: rosdistro_additional_recipes.yaml
