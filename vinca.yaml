@@ -171,7 +171,6 @@ packages_select_by_deps:
       - desktop
       - desktop_full
       - rosbag2_storage_mcap
-      - foxglove_bridge
       # rqt
       - rqt
       - rqt-gui
@@ -388,6 +387,8 @@ packages_select_by_deps:
   - if: not wasm32 and not win
     then:
       - foxglove_compressed_video_transport
+      # Windows can be easily fixed by backporting https://github.com/RoboStack/ros-jazzy/blob/main/patch/ros-jazzy-foxglove-bridge.win.patch
+      - foxglove_bridge
       - velodyne
       - moveit_py
       # TODO on windows: fix iconv link issue
