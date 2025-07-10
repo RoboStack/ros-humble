@@ -36,6 +36,20 @@ index efc65dc..994d91b 100644
  
  message(STATUS "ROS_VERSION: " $ENV{ROS_VERSION})
  message(STATUS "ROS_DISTRO: " $ENV{ROS_DISTRO})
+diff --git a/ros2_foxglove_bridge/src/generic_client.cpp b/ros2_foxglove_bridge/src/generic_client.cpp
+index b3a4eca2..235a1874 100644
+--- a/ros2_foxglove_bridge/src/generic_client.cpp
++++ b/ros2_foxglove_bridge/src/generic_client.cpp
+@@ -126,7 +126,8 @@ GenericClient::GenericClient(rclcpp::node_interfaces::NodeBaseInterface* nodeBas
+ 
+   // get_typesupport_handle is deprecated since rclcpp 25.0.0
+   // (https://github.com/ros2/rclcpp/pull/2209)
+-#if RCLCPP_VERSION_GTE(25, 0, 0)
++// Hardcoding this to false as we are in humble, hardcode to true on other distros
++#if false
+   _requestTypeSupportHdl =
+     rclcpp::get_message_typesupport_handle(requestTypeName, TYPESUPPORT_LIB_NAME, *_typeSupportLib);
+   _responseTypeSupportHdl = rclcpp::get_message_typesupport_handle(
 diff --git a/ros2_foxglove_bridge/src/message_definition_cache.cpp b/ros2_foxglove_bridge/src/message_definition_cache.cpp
 index 262c482a..5598182d 100644
 --- a/ros2_foxglove_bridge/src/message_definition_cache.cpp
