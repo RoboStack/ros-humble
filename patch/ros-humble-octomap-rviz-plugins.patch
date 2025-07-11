@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2bdfa4d..c16ebcc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -33,7 +33,7 @@ ament_auto_add_library(${PROJECT_NAME} SHARED
+ 
+ target_link_libraries(${PROJECT_NAME}
+   Qt5::Widgets
+-  ${OCTOMAP_LIBRARIES}
++  octomap
+ )
+ 
+ target_include_directories(${PROJECT_NAME} PUBLIC
