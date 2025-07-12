@@ -1,0 +1,16 @@
+diff --git a/cmake/autoware_package.cmake b/cmake/autoware_package.cmake
+index 2f46006..3d63a70 100644
+--- a/cmake/autoware_package.cmake
++++ b/cmake/autoware_package.cmake
+@@ -78,6 +78,11 @@ macro(autoware_package)
+     )
+   endif()
+ 
++  if(MSVC)
++    add_compile_definitions(_USE_MATH_DEFINES)
++    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++  endif()
++
+   # Find test dependencies
+   if(BUILD_TESTING)
+     find_package(ament_lint_auto REQUIRED)

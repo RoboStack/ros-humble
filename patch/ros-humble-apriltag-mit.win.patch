@@ -1,0 +1,33 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 31c98e5..5ac04e1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,6 +9,10 @@ project(apriltag_mit VERSION 1.0.0 LANGUAGES CXX)
+ include(CMakePackageConfigHelpers)
+ include(GNUInstallDirs)
+ 
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++
++add_compile_definitions(_USE_MATH_DEFINES)
++
+ # set(CMAKE_CXX_CLANG_TIDY clang-tidy)
+ 
+ find_package(Eigen3 REQUIRED)
+diff --git a/src/TagFamily.cc b/src/TagFamily.cc
+index 023094b..0226a43 100644
+--- a/src/TagFamily.cc
++++ b/src/TagFamily.cc
+@@ -102,6 +102,13 @@ code_t Rotate90DegCwise(code_t w, int d) {
+   return wr;
+ }
+ 
++#ifdef _MSC_VER
++#  include <intrin.h> 
++unsigned __builtin_popcountll( unsigned long long data){
++  return __popcnt(data) + __popcnt(data >> 32);
++}
++#endif
++
+ unsigned HammingDistance(code_t a, code_t b) {
+   // Because code_t is unsigned long long
+   return __builtin_popcountll(a ^ b);

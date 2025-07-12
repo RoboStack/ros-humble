@@ -18,7 +18,7 @@ for %%X in (%CURRENT_RECIPES%) do (
     cd %FEEDSTOCK_ROOT%\recipes\%%X\
     pixi run -v rattler-build build --recipe %FEEDSTOCK_ROOT%\recipes\%%X\ ^
         -m %FEEDSTOCK_ROOT%\conda_build_config.yaml ^
-        -c robostack-staging -c conda-forge ^
+        -c conda-forge -c robostack-staging ^
         --output-dir %CONDA_BLD_PATH%
 
     if errorlevel 1 exit 1

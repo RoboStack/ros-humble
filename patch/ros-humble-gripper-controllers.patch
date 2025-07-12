@@ -1,10 +1,19 @@
+From 4cad4d9d3d03d17f0782f03de5827dfe1be9ec38 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Sun, 6 Jul 2025 22:50:54 +0200
+Subject: [PATCH] Remove skip on Windows and macOS
+
+---
+ gripper_controllers/CMakeLists.txt | 5 -----
+ 1 file changed, 5 deletions(-)
+
 diff --git a/gripper_controllers/CMakeLists.txt b/gripper_controllers/CMakeLists.txt
-index 4ffdc76168..05174402d0 100644
+index 8edaaf6386..9198c6f6d9 100644
 --- a/gripper_controllers/CMakeLists.txt
 +++ b/gripper_controllers/CMakeLists.txt
 @@ -1,11 +1,6 @@
  cmake_minimum_required(VERSION 3.16)
- project(gripper_controllers)
+ project(gripper_controllers LANGUAGES CXX)
  
 -if(APPLE OR WIN32)
 -  message(WARNING "gripper controllers are not available on OSX or Windows")
@@ -12,5 +21,5 @@ index 4ffdc76168..05174402d0 100644
 -endif()
 -
  if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
-   add_compile_options(-Wall -Wextra -Wpedantic -Werror=conversion -Werror=unused-but-set-variable
-                       -Werror=return-type -Werror=shadow -Werror=format -Werror=range-loop-construct
+   add_compile_options(-Wall -Wextra -Wconversion)
+ endif()
