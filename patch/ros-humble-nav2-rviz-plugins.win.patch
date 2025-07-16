@@ -1,0 +1,34 @@
+diff --git a/nav2_rviz_plugins/include/nav2_rviz_plugins/goal_tool.hpp b/nav2_rviz_plugins/include/nav2_rviz_plugins/goal_tool.hpp
+index 8451fe5294..0d94b8c7f0 100644
+--- a/nav2_rviz_plugins/include/nav2_rviz_plugins/goal_tool.hpp
++++ b/nav2_rviz_plugins/include/nav2_rviz_plugins/goal_tool.hpp
+@@ -20,7 +20,6 @@
+ #include <memory>
+ 
+ #include "rviz_default_plugins/tools/pose/pose_tool.hpp"
+-#include "rviz_default_plugins/visibility_control.hpp"
+ 
+ namespace rviz_common
+ {
+@@ -36,7 +35,7 @@ class StringProperty;
+ namespace nav2_rviz_plugins
+ {
+ 
+-class RVIZ_DEFAULT_PLUGINS_PUBLIC GoalTool : public rviz_default_plugins::tools::PoseTool
++class GoalTool : public rviz_default_plugins::tools::PoseTool
+ {
+   Q_OBJECT
+ 
+diff --git a/nav2_rviz_plugins/include/nav2_rviz_plugins/costmap_cost_tool.hpp b/nav2_rviz_plugins/include/nav2_rviz_plugins/costmap_cost_tool.hpp
+index a14a9f98b5..6ad61996ac 100644
+--- a/nav2_rviz_plugins/include/nav2_rviz_plugins/costmap_cost_tool.hpp
++++ b/nav2_rviz_plugins/include/nav2_rviz_plugins/costmap_cost_tool.hpp
+@@ -20,7 +20,8 @@
+ #include <nav2_msgs/srv/get_costs.hpp>
+ #include <rviz_common/ros_integration/ros_node_abstraction_iface.hpp>
+ #include <rviz_common/tool.hpp>
+-#include <rviz_default_plugins/tools/point/point_tool.hpp>
++#include <rviz_common/properties/bool_property.hpp>
++#include <rviz_common/properties/qos_profile_property.hpp>
+ #include <rclcpp/rclcpp.hpp>
+
