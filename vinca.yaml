@@ -286,7 +286,6 @@ packages_select_by_deps:
       # requested in https://github.com/RoboStack/ros-humble/issues/256
       - rqt_controller_manager
       - open3d_conversions
-      - grid_map
       - lanelet2
       # autoware
       - autoware_common_msgs
@@ -409,3 +408,5 @@ packages_select_by_deps:
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/pull/320
       - ros_gz
+      # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
+      - grid_map

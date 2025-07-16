@@ -104,12 +104,6 @@ jobs:
       run: |
         rm -rf ${{ matrix.folder_cache }}/*
 
-    - name: Delete outdated packages on Windows
-      if: contains(matrix.os, 'win')
-      shell: bash -l {0}
-      run: |
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-octomap-ros*
-
     - name: See packages restored by cache
       shell: bash -l {0}
       run: |
