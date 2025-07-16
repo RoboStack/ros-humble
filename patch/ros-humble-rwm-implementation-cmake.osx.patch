@@ -1,0 +1,27 @@
+From 055f102e3158d55132021b78280332b976f93c88 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Wed, 16 Jul 2025 08:43:04 +0200
+Subject: [PATCH] Use CycloneDDS as default
+
+Signed-off-by: Silvio Traversaro <silvio@traversaro.it>
+---
+ .../cmake/get_default_rmw_implementation.cmake              | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/get_default_rmw_implementation.cmake b/cmake/get_default_rmw_implementation.cmake
+index cef9a940..1d2921e2 100644
+--- a/cmake/get_default_rmw_implementation.cmake
++++ b/cmake/get_default_rmw_implementation.cmake
+@@ -32,8 +32,10 @@ macro(get_default_rmw_implementation var)
+   if("${RMW_IMPLEMENTATION}" STREQUAL "" AND
+     "$ENV{RMW_IMPLEMENTATION}" STREQUAL ""
+   )
+-    # prefer FastDDS, otherwise first in alphabetical order
+-    list(FIND _middleware_implementations "rmw_fastrtps_cpp" _index)
++    # prefer CycloneDDS, otherwise first in alphabetical order
++    # note that this a macOS/RoboStack specific aspects, as fastrtsp (the default rmw on other platforms)
++    # does not work on macOS with RoboStack
++    list(FIND _middleware_implementations "rmw_cyclonedds_cpp" _index)
+     if(NOT _index EQUAL -1)
+       list(GET _middleware_implementations ${_index} _middleware_implementation)
+     else()

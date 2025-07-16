@@ -98,6 +98,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-${{ matrix.platform }}-pr-${{ github.event.pull_request.number }}-
 
+    - name: Do a full rebuild on macOS
+      if: contains(matrix.os, 'macos')
+      shell: bash -l {0}
+      run: |
+        rm -rf ${{ matrix.folder_cache }}/*
+
     - name: See packages restored by cache
       shell: bash -l {0}
       run: |
