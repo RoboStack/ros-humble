@@ -310,12 +310,6 @@ packages_select_by_deps:
       - ament_cmake_black
       - behaviortree_cpp
       - py-binding-tools
-      # Microstrain IMU Packages + dependencies
-      - microstrain_inertial_description
-      - microstrain_inertial_driver
-      - microstrain_inertial_examples
-      - microstrain_inertial_msgs
-      - microstrain_inertial_rqt
       - nmea_msgs
       - rtcm_msgs
       # cascade lifecycle packages
@@ -417,3 +411,10 @@ packages_select_by_deps:
       - libg2o
       # Windows error: error C3861: '__builtin_unreachable': identifier not found 
       - moveit-hybrid-planning
+      # Microstrain IMU Packages + dependencies
+      # Fail on windows with FileTracker : error FTK1011: could not create the new file tracking log file: %SRC_DIR%
+      - microstrain_inertial_description
+      - microstrain_inertial_driver
+      - microstrain_inertial_examples
+      - microstrain_inertial_msgs
+      - microstrain_inertial_rqt
