@@ -11,3 +11,19 @@ index af2e6bf42..cf24fde81 100644
  find_package(ament_cmake REQUIRED)
  find_package(nav2_common REQUIRED)
  find_package(rclcpp REQUIRED)
+
+diff --git a/nav2_amcl/src/pf/CMakeLists.txt b/nav2_amcl/src/pf/CMakeLists.txt
+index 3b4b2fa5ca1..8dc2ccb5719 100644
+--- a/nav2_amcl/src/pf/CMakeLists.txt
++++ b/nav2_amcl/src/pf/CMakeLists.txt
+@@ -15,7 +15,9 @@ target_include_directories(pf_lib PRIVATE ../include)
+ if(HAVE_DRAND48)
+   target_compile_definitions(pf_lib PRIVATE "HAVE_DRAND48")
+ endif()
+-target_link_libraries(pf_lib m)
++if(NOT WIN32)
++  target_link_libraries(pf_lib m)
++endif()
+ 
+ install(TARGETS
+   pf_lib
