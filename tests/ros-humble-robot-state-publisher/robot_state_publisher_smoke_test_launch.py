@@ -45,6 +45,8 @@ class TestRobotStatePublisher(unittest.TestCase):
             expected_output="got segment", timeout=0.5, stream='stderr'
         )
 
+# See https://github.com/RoboStack/ros-humble/pull/320#issuecomment-3078288316
+@unittest.skipIf(sys.platform == "darwin", "Post‑shutdown exit‑code is either -6 or -9 on macOS, do not check it.")
 @launch_testing.post_shutdown_test()
 class TestRobotStatePublisherPostShutdown(unittest.TestCase):
 

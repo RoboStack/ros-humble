@@ -272,7 +272,6 @@ packages_select_by_deps:
       - system_modes        # Micro-ROS
       - tf_transformations  # DLu
       - marker-msgs         # TUW Robotics
-      - libg2o
       - motion_capture_tracking # IMRC Lab
       - moveit_resources
       # requested in https://github.com/RoboStack/ros-humble/pull/205
@@ -410,3 +409,6 @@ packages_select_by_deps:
       - ros_gz
       # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
       - grid_map
+      # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator 
+      # to be an unsigned type that is at least 32-bit.' [%SRC_DIR%\build\g2o\examples\sphere\create_sphere.vcxproj]
+      - libg2o
