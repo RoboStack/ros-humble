@@ -275,7 +275,6 @@ packages_select_by_deps:
       - system_modes        # Micro-ROS
       - tf_transformations  # DLu
       - marker-msgs         # TUW Robotics
-      - motion_capture_tracking # IMRC Lab
       - moveit_resources
       # requested in https://github.com/RoboStack/ros-humble/pull/205
       - plotjuggler_msgs
@@ -418,3 +417,7 @@ packages_select_by_deps:
       - microstrain_inertial_examples
       - microstrain_inertial_msgs
       - microstrain_inertial_rqt
+      # IMRC Lab
+      # Windows is failing with error C1083: Cannot open compiler generated file: ''
+      - motion_capture_tracking
+
