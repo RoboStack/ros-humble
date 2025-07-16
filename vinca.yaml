@@ -205,6 +205,9 @@ packages_select_by_deps:
       - moveit2_tutorials
       - moveit_planners_chomp
       - moveit_ros_occupancy_map_monitor
+      # Requested in https://www.linkedin.com/feed/update/urn:li:activity:7346559234177703938/
+      - moveit-chomp-optimizer-adapter
+      - moveit-ros-control-interface
       - rqt-moveit
       - pilz-industrial-motion-planner
       - topic_tools
@@ -412,3 +415,5 @@ packages_select_by_deps:
       # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator 
       # to be an unsigned type that is at least 32-bit.' [%SRC_DIR%\build\g2o\examples\sphere\create_sphere.vcxproj]
       - libg2o
+      # Windows error: error C3861: '__builtin_unreachable': identifier not found 
+      - moveit-hybrid-planning
