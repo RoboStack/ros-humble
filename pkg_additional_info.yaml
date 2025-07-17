@@ -142,3 +142,6 @@ diagnostic_updater:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
 octomap_ros:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
+# Remove once https://github.com/PickNikRobotics/data_tamer/pull/58 is merged and released
+data_tamer_cpp:
+  additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
