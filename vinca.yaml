@@ -192,7 +192,6 @@ packages_select_by_deps:
       - robot_localization
       - rosbridge_suite
       - vision-msgs
-      - slam-toolbox
       - ros2_control
       - vision-msgs-rviz-plugins
       - navigation2
@@ -422,4 +421,5 @@ packages_select_by_deps:
       # IMRC Lab
       # Windows is failing with error C1083: Cannot open compiler generated file: ''
       - motion_capture_tracking
-
+      # Available on Windows in Jazzy and Kilted, making it work on Humble just requires backporting the patches
+      - slam_toolbox
