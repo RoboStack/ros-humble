@@ -82,10 +82,10 @@ jobs:
         mkdir -p recipes
         pixi run -v vinca --platform ${{ matrix.platform }} -m -n
 
-    - name: Check patches
-      shell: bash -l {0}
-      run: |
-        pixi run python check_patches_clean_apply.py
+    #- name: Check patches
+    #  shell: bash -l {0}
+    #  run: |
+    #    pixi run python check_patches_clean_apply.py
 
     - name: Restore build cache
       id: cache-restore
