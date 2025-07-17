@@ -204,3 +204,123 @@ index ebdb8b071..ebd0b28a0 100644
    }
  
    rclcpp::NodeOptions options;
+
+diff --git a/src/experimental/slam_toolbox_lifelong_node.cpp b/src/experimental/slam_toolbox_lifelong_node.cpp
+index 2bdd81878..9925d3c73 100644
+--- a/src/experimental/slam_toolbox_lifelong_node.cpp
++++ b/src/experimental/slam_toolbox_lifelong_node.cpp
+@@ -29,6 +29,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER);
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -37,6 +42,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
+ 
+diff --git a/src/experimental/slam_toolbox_map_and_localization_node.cpp b/src/experimental/slam_toolbox_map_and_localization_node.cpp
+index 57024fd5d..2fb29d2d7 100644
+--- a/src/experimental/slam_toolbox_map_and_localization_node.cpp
++++ b/src/experimental/slam_toolbox_map_and_localization_node.cpp
+@@ -26,6 +26,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use", rclcpp::ParameterType::PARAMETER_INTEGER);
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -34,6 +39,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
+ 
+diff --git a/src/slam_toolbox_async_node.cpp b/src/slam_toolbox_async_node.cpp
+index 227f58283..82d310c72 100644
+--- a/src/slam_toolbox_async_node.cpp
++++ b/src/slam_toolbox_async_node.cpp
+@@ -29,6 +29,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER );
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -37,6 +42,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
+ 
+diff --git a/src/slam_toolbox_localization_node.cpp b/src/slam_toolbox_localization_node.cpp
+index ebdb8b071..90c398e29 100644
+--- a/src/slam_toolbox_localization_node.cpp
++++ b/src/slam_toolbox_localization_node.cpp
+@@ -29,6 +29,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER );
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -37,6 +42,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
+ 
+diff --git a/src/slam_toolbox_sync_node.cpp b/src/slam_toolbox_sync_node.cpp
+index b4ed141fc..b9d06a164 100644
+--- a/src/slam_toolbox_sync_node.cpp
++++ b/src/slam_toolbox_sync_node.cpp
+@@ -29,6 +29,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER);
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -37,6 +42,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
