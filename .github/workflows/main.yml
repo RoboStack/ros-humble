@@ -102,7 +102,8 @@ jobs:
         vinca --multiple --platform win-64
     - name: Generate azure pipelines for win-64
       run: |
-        vinca-gha --platform win-64 --trigger-branch buildbranch_win -d ./recipes
+        # --batch_size 10 is a workaround for https://github.com/RoboStack/robostack.github.io/issues/105
+        vinca-gha --platform win-64 --trigger-branch buildbranch_win -d ./recipes  --batch_size 10
     - name: Commit files for win-64
       run: |
         if [[ -f "win.yml" ]]; then

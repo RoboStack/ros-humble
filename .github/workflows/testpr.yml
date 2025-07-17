@@ -114,7 +114,7 @@ jobs:
       shell: bash -l {0}
       if: contains(matrix.os, 'win')
       run: |
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-angles*
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-tf2-geometry-msgs*
 
     - name: Build recipes [non emscripten]
       shell: bash -l {0}
