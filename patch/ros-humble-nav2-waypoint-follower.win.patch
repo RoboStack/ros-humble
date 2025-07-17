@@ -31,3 +31,18 @@ index 45a0e813331..3c8bd7597f9 100644
 +target_link_libraries(input_at_waypoint opencv_core)
  
  rclcpp_components_register_nodes(${library_name} "nav2_waypoint_follower::WaypointFollower")
+
+diff --git a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+index 628bc1836fd..332a552c0b9 100644
+--- a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
++++ b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+@@ -32,8 +32,8 @@
+ 
+ #include "sensor_msgs/msg/image.hpp"
+ #include "nav2_core/waypoint_task_executor.hpp"
+-#include "opencv4/opencv2/core.hpp"
+-#include "opencv4/opencv2/opencv.hpp"
++#include "opencv2/core.hpp"
++#include "opencv2/opencv.hpp"
+ #include "cv_bridge/cv_bridge.h"
+ #include "image_transport/image_transport.hpp"
