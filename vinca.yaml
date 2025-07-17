@@ -222,7 +222,6 @@ packages_select_by_deps:
       # - joystick_drivers
       - joy
       - sdl2_vendor
-      - spacenav
       # - wiimote          # needs bluetooth and is not in conda-forge
       # - wiimote_msgs
       # other control
@@ -425,3 +424,5 @@ packages_select_by_deps:
       - sick_safetyscanners_base
       - sick_safetyscanners2_interfaces
       - sick_safetyscanners2
+      # https://github.com/conda-forge/libspnav-feedstock is not available on Windows
+      - spacenav
