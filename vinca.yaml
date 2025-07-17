@@ -174,7 +174,6 @@ packages_select_by_deps:
       # rqt
       - rqt
       - rqt-gui
-      - rqt_image_overlay
       - rqt-robot-dashboard
       - rqt-robot-monitor
       - rqt-robot-steering
@@ -423,3 +422,5 @@ packages_select_by_deps:
       - ublox_dgnss         # Aussie Robots
       - ublox_dgnss_node
       - ublox_ubx_interfaces
+      # error C1083: Cannot open include file: 'rqt_gui_cpp/plugin.h'
+      - rqt_image_overlay
