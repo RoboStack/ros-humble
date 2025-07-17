@@ -1,0 +1,56 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 05b59e628..78a197a44 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,9 +9,12 @@ option(
+   OFF
+ )
+ 
+-add_compile_options(-Wall)
+-add_compile_options(-Wextra)
+-add_compile_options(-Wno-unused-parameter)
++if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
++  add_compile_options(-Wall)
++  add_compile_options(-Wextra)
++  add_compile_options(-Wno-unused-parameter)
++endif()
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 
+ if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+   message("${PROJECT_NAME}: You did not request a specific build type: selecting 'RelWithDebInfo'.")
+
+diff --git a/src/hardware_interface.cpp b/src/hardware_interface.cpp
+index 216d7d462..b500aadc7 100644
+--- a/src/hardware_interface.cpp
++++ b/src/hardware_interface.cpp
+@@ -45,3 +45,4 @@
++#include "ur_robot_driver/hardware_interface.hpp"
+ #include "ur_client_library/exceptions.h"
+ #include "ur_client_library/ur/tool_communication.h"
+ #include "ur_client_library/ur/version_information.h"
+
+diff --git a/include/ur_robot_driver/hardware_interface.hpp b/include/ur_robot_driver/hardware_interface.hpp
+index 14bdd29ea..330e4161e 100644
+--- a/include/ur_robot_driver/hardware_interface.hpp
++++ b/include/ur_robot_driver/hardware_interface.hpp
+@@ -66,3 +66,5 @@
++typedef unsigned int uint;
++
+ namespace ur_robot_driver
+ {
+ enum class PausingState
+
+ diff --git a/src/robot_state_helper.cpp b/src/robot_state_helper.cpp
+index c422ae951..0a57ae75d 100755
+--- a/src/robot_state_helper.cpp
++++ b/src/robot_state_helper.cpp
+@@ -366,7 +366,7 @@ void RobotStateHelper::setModeExecute(const std::shared_ptr<RobotStateHelper::Se
+           result_->message = "Play program service not available on this robot.";
+         } else {
+           // The dashboard denies playing immediately after switching the mode to RUNNING
+-          sleep(1);
++          std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+           result_->success = safeDashboardTrigger(this->play_program_srv_);
+         }
+       }
+
