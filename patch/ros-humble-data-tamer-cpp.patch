@@ -1,0 +1,22 @@
+From b5e7813649f064af27b6a9fd70a9acefaf99438c Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Thu, 17 Jul 2025 11:04:14 +0200
+Subject: [PATCH] Remove Werror
+
+---
+ data_tamer_cpp/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/data_tamer_cpp/CMakeLists.txt b/data_tamer_cpp/CMakeLists.txt
+index 6bba159..a943ddf 100644
+--- a/data_tamer_cpp/CMakeLists.txt
++++ b/data_tamer_cpp/CMakeLists.txt
+@@ -80,7 +80,7 @@ add_library(data_tamer ${LIB_TYPE}
+ if (MSVC)
+     target_compile_options(data_tamer PRIVATE /W4 /WX)
+ else()
+-    target_compile_options(data_tamer PRIVATE -Wall -Wconversion -Wextra -Wsign-conversion -Werror -Wpedantic -Wno-sign-conversion)
++    target_compile_options(data_tamer PRIVATE -Wall -Wconversion -Wextra -Wsign-conversion -Wpedantic -Wno-sign-conversion)
+ endif()
+ 
+ target_compile_features(data_tamer PUBLIC cxx_std_17)
