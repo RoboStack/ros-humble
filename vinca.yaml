@@ -328,7 +328,9 @@ packages_select_by_deps:
       # requested in https://github.com/RoboStack/ros-humble/issues/304
       - rosbag2-performance-benchmarking
       - cartographer_ros
-
+      # Requested in https://github.com/RoboStack/ros-humble/issues/325
+      - data_tamer_cpp
+  
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
     then:
