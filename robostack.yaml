@@ -974,7 +974,7 @@ sshpass:
 subversion:
   robostack: [subversion]
 suitesparse:
-  robostack: [suitesparse]
+  robostack: [suitesparse, blas-devel]
 sqlite3:
   robostack: [sqlite 3.*]
 swig:

@@ -195,6 +195,8 @@ packages_select_by_deps:
       - ros2_control
       - vision-msgs-rviz-plugins
       - navigation2
+      - slam_toolbox
+      - nav2_bringup
       - rviz2
       - behaviortree_cpp_v3
       - moveit
@@ -420,7 +422,5 @@ packages_select_by_deps:
       # IMRC Lab
       # Windows is failing with error C1083: Cannot open compiler generated file: ''
       - motion_capture_tracking
-      # Available on Windows in Jazzy and Kilted, making it work on Humble just requires backporting the patches
-      - slam_toolbox
-      - nav2_bringup
+
 
