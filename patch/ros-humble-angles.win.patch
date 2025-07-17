@@ -1,0 +1,11 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f909972..5b6b6e8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -19,3 +19,6 @@ find_package(ament_cmake REQUIRED)
++if(WIN32)
++  target_compile_definitions(angles INTERFACE _USE_MATH_DEFINES)
++endif()
+ 
+ if(BUILD_TESTING)
+   find_package(ament_cmake_gtest REQUIRED)
