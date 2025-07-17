@@ -179,3 +179,28 @@ index bd0ce0fa9..31b2a8991 100644
  
    nav_msgs::srv::GetMap::Response map;
    nav_msgs::msg::OccupancyGrid & og = map.map;
+
+diff --git a/src/slam_toolbox_localization_node.cpp b/src/slam_toolbox_localization_node.cpp
+index ebdb8b071..ebd0b28a0 100644
+--- a/src/slam_toolbox_localization_node.cpp
++++ b/src/slam_toolbox_localization_node.cpp
+@@ -28,6 +28,11 @@ int main(int argc, char ** argv)
+   {
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER );
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+@@ -38,6 +43,7 @@ int main(int argc, char ** argv)
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
+     }
++#endif
+   }
+ 
+   rclcpp::NodeOptions options;
