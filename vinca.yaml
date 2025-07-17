@@ -192,7 +192,6 @@ packages_select_by_deps:
       - rosbridge_suite
       - vision-msgs
       - ros2_control
-      - vision-msgs-rviz-plugins
       - navigation2
       - slam_toolbox
       - nav2_bringup
@@ -427,5 +426,6 @@ packages_select_by_deps:
       - sick_safetyscanners2
       # https://github.com/conda-forge/libspnav-feedstock is not available on Windows
       - spacenav
-
+      # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
+      - vision-msgs-rviz-plugins
 
