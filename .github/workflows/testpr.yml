@@ -103,19 +103,6 @@ jobs:
       run: |
         ls ${{ matrix.folder_cache }}
 
-    - name: Do a clean build on unix to see if everything still works
-      shell: bash -l {0}
-      if: contains(matrix.os, 'ubuntu') || contains(matrix.os, 'macos')
-      run: |
-        rm -rf ${{ matrix.folder_cache }}
-
-
-    - name: Clean outdated patches on Windows
-      shell: bash -l {0}
-      if: contains(matrix.os, 'win')
-      run: |
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-tf2-geometry-msgs*
-
     - name: Build recipes [non emscripten]
       shell: bash -l {0}
       if: matrix.platform != 'emscripten-wasm32'
