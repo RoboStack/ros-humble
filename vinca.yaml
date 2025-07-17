@@ -260,7 +260,6 @@ packages_select_by_deps:
       - serial_driver
       - udp_driver
       - apex_test_tools
-      - velodyne_simulator  # Dataspeed Inc.
       - visp
       - bno055              # flynneva
       - aws_robomaker_small_warehouse_world # AWS Robotics
@@ -376,6 +375,8 @@ packages_select_by_deps:
       # Windows can be easily fixed by backporting https://github.com/RoboStack/ros-jazzy/blob/main/patch/ros-jazzy-foxglove-bridge.win.patch
       - foxglove_bridge
       - velodyne
+      # error C1189: #error:  WinSock.h has already been included
+      - velodyne_simulator  # Dataspeed Inc.
       - moveit_py
       # TODO on windows: fix iconv link issue
       - ffmpeg_image_transport
@@ -426,3 +427,5 @@ packages_select_by_deps:
       - sick_safetyscanners2
       # https://github.com/conda-forge/libspnav-feedstock is not available on Windows
       - spacenav
+
+
