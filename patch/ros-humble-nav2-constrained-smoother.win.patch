@@ -1,0 +1,78 @@
+diff --git a/nav2_constrained_smoother/include/nav2_constrained_smoother/smoother.hpp b/nav2_constrained_smoother/include/nav2_constrained_smoother/smoother.hpp
+index a0d5dfa115e..af9801d8995 100644
+--- a/nav2_constrained_smoother/include/nav2_constrained_smoother/smoother.hpp
++++ b/nav2_constrained_smoother/include/nav2_constrained_smoother/smoother.hpp
+@@ -142,9 +142,9 @@ class Smoother
+     std::vector<bool> & optimized)
+   {
+     // Create costmap grid
+-    costmap_grid_ = std::make_shared<ceres::Grid2D<u_char>>(
++    costmap_grid_ = std::make_shared<ceres::Grid2D<unsigned char>>(
+       costmap->getCharMap(), 0, costmap->getSizeInCellsY(), 0, costmap->getSizeInCellsX());
+-    auto costmap_interpolator = std::make_shared<ceres::BiCubicInterpolator<ceres::Grid2D<u_char>>>(
++    auto costmap_interpolator = std::make_shared<ceres::BiCubicInterpolator<ceres::Grid2D<unsigned char>>>(
+       *costmap_grid_);
+ 
+     // Create residual blocks
+@@ -394,7 +394,7 @@ class Smoother
+ 
+   bool debug_;
+   ceres::Solver::Options options_;
+-  std::shared_ptr<ceres::Grid2D<u_char>> costmap_grid_;
++  std::shared_ptr<ceres::Grid2D<unsigned char>> costmap_grid_;
+ };
+ 
+ }  // namespace nav2_constrained_smoother
+diff --git a/nav2_constrained_smoother/include/nav2_constrained_smoother/smoother_cost_function.hpp b/nav2_constrained_smoother/include/nav2_constrained_smoother/smoother_cost_function.hpp
+index 7253119721c..2cdd691cfab 100644
+--- a/nav2_constrained_smoother/include/nav2_constrained_smoother/smoother_cost_function.hpp
++++ b/nav2_constrained_smoother/include/nav2_constrained_smoother/smoother_cost_function.hpp
+@@ -57,7 +57,7 @@ class SmootherCostFunction
+     double next_to_last_length_ratio,
+     bool reversing,
+     const nav2_costmap_2d::Costmap2D * costmap,
+-    const std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<u_char>>> & costmap_interpolator,
++    const std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<unsigned char>>> & costmap_interpolator,
+     const SmootherParams & params,
+     double costmap_weight)
+   : original_pos_(original_pos),
+@@ -244,7 +244,7 @@ class SmootherCostFunction
+   double costmap_weight_;
+   Eigen::Vector2d costmap_origin_;
+   double costmap_resolution_;
+-  std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<u_char>>> costmap_interpolator_;
++  std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<unsigned char>>> costmap_interpolator_;
+ };
+ 
+ }  // namespace nav2_constrained_smoother
+diff --git a/nav2_constrained_smoother/test/test_smoother_cost_function.cpp b/nav2_constrained_smoother/test/test_smoother_cost_function.cpp
+index 104b949c4be..79c9b064a16 100644
+--- a/nav2_constrained_smoother/test/test_smoother_cost_function.cpp
++++ b/nav2_constrained_smoother/test/test_smoother_cost_function.cpp
+@@ -33,7 +33,7 @@ class TestableSmootherCostFunction : nav2_constrained_smoother::SmootherCostFunc
+     double next_to_last_length_ratio,
+     bool reversing,
+     const nav2_costmap_2d::Costmap2D * costmap,
+-    const std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<u_char>>> & costmap_interpolator,
++    const std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<unsigned char>>> & costmap_interpolator,
+     const nav2_constrained_smoother::SmootherParams & params,
+     double costmap_weight)
+   : SmootherCostFunction(
+@@ -68,7 +68,7 @@ TEST_F(Test, testingCurvatureResidual)
+   nav2_costmap_2d::Costmap2D costmap;
+   TestableSmootherCostFunction fn(
+     Eigen::Vector2d(1.0, 0.0), 1.0, false,
+-    &costmap, std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<u_char>>>(),
++    &costmap, std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<unsigned char>>>(),
+     nav2_constrained_smoother::SmootherParams(), 0.0
+   );
+ 
+@@ -81,7 +81,7 @@ TEST_F(Test, testingCurvatureResidual)
+   params_no_min_turning_radius.max_curvature = 1.0f / 0.0;
+   TestableSmootherCostFunction fn_no_min_turning_radius(
+     Eigen::Vector2d(1.0, 0.0), 1.0, false,
+-    &costmap, std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<u_char>>>(),
++    &costmap, std::shared_ptr<ceres::BiCubicInterpolator<ceres::Grid2D<unsigned char>>>(),
+     params_no_min_turning_radius, 0.0
+   );
+   EXPECT_EQ(fn_no_min_turning_radius.getCurvatureResidual(1.0, pt, pt_other, pt_other), 0.0);

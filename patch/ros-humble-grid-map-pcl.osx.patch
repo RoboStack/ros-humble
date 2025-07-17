@@ -1,0 +1,16 @@
+diff --git a/include/grid_map_pcl/helpers.hpp b/include/grid_map_pcl/helpers.hpp
+index f3d9f38..fc94637 100644
+--- a/include/grid_map_pcl/helpers.hpp
++++ b/include/grid_map_pcl/helpers.hpp
+@@ -42,7 +42,11 @@ void saveGridMap(
+   const std::string & mapTopic);
+ 
+ inline void printTimeElapsedToRosInfoStream(
++#if defined(__APPLE__)
++  const std::chrono::steady_clock::time_point & start,
++#else
+   const std::chrono::system_clock::time_point & start,
++#endif
+   const std::string & prefix,
+   const rclcpp::Logger & node_logger)
+ {

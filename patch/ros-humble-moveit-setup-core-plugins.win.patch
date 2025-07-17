@@ -1,0 +1,13 @@
+diff --git a/src/start_screen_widget.cpp b/src/start_screen_widget.cpp
+index edd73eb3c..d88a90eaa 100644
+--- a/src/start_screen_widget.cpp
++++ b/src/start_screen_widget.cpp
+@@ -79,7 +79,7 @@ void StartScreenWidget::onInit()
+   right_image_label_ = new QLabel(this);
+   auto image_path = getSharePath("moveit_setup_assistant") / "resources/MoveIt_Setup_Assistant2.png";
+ 
+-  if (right_image_->load(image_path.c_str()))
++  if (right_image_->load(QString::fromStdString(image_path.string())))
+   {
+     right_image_label_->setPixmap(QPixmap::fromImage(*right_image_));
+     right_image_label_->setMinimumHeight(384);  // size of right_image_label_

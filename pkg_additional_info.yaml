@@ -1,8 +1,147 @@
-lanelet2_io:
-  build_number: 9
-ros_workspace:
-  build_number: 9
-rosidl_cli:
-  build_number: 9
-ros2cli:
-  build_number: 9
+libcamera:
+  generate_dummy_package_with_run_deps:
+    dep_name: libcamera
+    # see https://git.libcamera.org/libcamera/libcamera.git/tree/meson.build?h=v0.5.1#n65
+    max_pin: 'x.x'
+    # humble is on 0.1.0, but we stick to 0.5.0 for compat
+    override_version: '0.5.0'
+octomap:
+  generate_dummy_package_with_run_deps:
+    dep_name: octomap
+    max_pin: 'x.x'
+    # humble is on 1.9.8, but we stick to 1.10.0 for compat
+    override_version: '1.10.0'
+ompl:
+  generate_dummy_package_with_run_deps:
+    dep_name: ompl
+    max_pin: 'x.x'
+urdfdom_py:
+  generate_dummy_package_with_run_deps:
+    dep_name: urdfdom-py
+    max_pin: 'x.x'
+urdfdom_headers:
+  generate_dummy_package_with_run_deps:
+    dep_name: urdfdom_headers
+    max_pin: 'x.x'
+urdfdom:
+  generate_dummy_package_with_run_deps:
+    dep_name: urdfdom
+    max_pin: 'x.x'
+    # humble is on 3.0.0, but we stick to 4 for compat
+    # with the rest of conda-forge
+    override_version: '4.0.1'
+cartographer:
+  generate_dummy_package_with_run_deps:
+    dep_name: cartographer
+    max_pin: 'x.x'
+    # ROS uses a custom versioning scheme currently at 2.0.9004
+    override_version: '2.0.0'
+hpp_fcl:
+  generate_dummy_package_with_run_deps:
+    dep_name: hpp-fcl
+    max_pin: 'x.x.x'
+    # the version on ros is outdated w.r.t. to the conda-forge one
+    override_version: '3.0.1'
+coal:
+  generate_dummy_package_with_run_deps:
+    dep_name: coal
+    max_pin: 'x.x.x'
+eigenpy:
+  generate_dummy_package_with_run_deps:
+    dep_name: eigenpy
+    max_pin: 'x.x.x'
+    # the version in ros is not compatible with conda-forge's coal and hpp_fcl builds
+    override_version: '3.10.3'
+pinocchio:
+  generate_dummy_package_with_run_deps:
+    dep_name: pinocchio
+    max_pin: 'x.x.x'
+    # the version on ros is outdated w.r.t. to the conda-forge one
+    override_version: '3.7.0'
+gtsam:
+  generate_dummy_package_with_run_deps:
+    dep_name: gtsam
+    max_pin: 'x.x'
+librealsense2:
+  generate_dummy_package_with_run_deps:
+    dep_name: librealsense
+    max_pin: 'x.x'
+ignition_cmake2_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+ignition_math6_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+libcurl_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_cmake_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_common_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_dartsim_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_fuel_tools_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_gui_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_math_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_msgs_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_ogre_next_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_physics_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_plugin_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_rendering_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_sensors_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_sim_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_transport_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+gz_utils_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+sdformat_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+spdlog_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+console_bridge_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+uncrustify_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+zenoh_cpp_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+openvdb_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+sqlite3_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+liblz4_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+aws_sdk_cpp_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+orocos_kdl_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+pybind11_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
+pybind11_json_vendor:
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
+visp:
+  generate_dummy_package_with_run_deps:
+    dep_name: visp
+    max_pin: 'x.x'
+    # the version on ros is outdated w.r.t. to the conda-forge one
+    override_version: '3.6.0'
+pcl_ros:
+  additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
+cartographer_ros:
+  additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
+diagnostic_aggregator:
+  additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
+diagnostic_updater:
+  additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
+octomap_ros:
+  additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
+# Remove once https://github.com/PickNikRobotics/data_tamer/pull/58 is merged and released
+data_tamer_cpp:
+  additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"

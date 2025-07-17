@@ -1,0 +1,22 @@
+From c8ecd5a131c22922da177d7e5fd2d97ba1f894a0 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Wed, 16 Jul 2025 09:01:12 +0200
+Subject: [PATCH] Update CMakeLists.txt
+
+---
+ CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c16ebcc..d850f7e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,6 +9,8 @@ endif()
+ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   add_compile_options(-Wall -Wextra -Wpedantic)
+ endif()
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++find_package(octomap REQUIRED)
+ 
+ find_package(ament_cmake_auto REQUIRED)
+ ament_auto_find_build_dependencies()

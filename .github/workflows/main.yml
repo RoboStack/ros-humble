@@ -24,11 +24,10 @@ jobs:
     - name: Generate recipes for linux-64
       run: |
         git clean -fdx
-        cp vinca_linux_64.yaml vinca.yaml
         vinca --multiple --platform linux-64
     - name: Generate azure pipelines for linux-64
       run: |
-        vinca-gha --platform linux-64 --trigger-branch buildbranch_linux -d ./recipes --additional-recipes
+        vinca-gha --platform linux-64 --trigger-branch buildbranch_linux -d ./recipes
     - name: Commit files for linux-64
       run: |
         if [[ -f "linux.yml" ]]; then
@@ -50,11 +49,10 @@ jobs:
     - name: Generate recipes for osx-64
       run: |
         git clean -fdx
-        cp vinca_osx.yaml vinca.yaml
         vinca --multiple --platform osx-64
     - name: Generate azure pipelines for osx-64
       run: |
-        vinca-gha --platform osx-64 --trigger-branch buildbranch_osx -d ./recipes --additional-recipes
+        vinca-gha --platform osx-64 --trigger-branch buildbranch_osx -d ./recipes
     - name: Commit files for osx-64
       run: |
         if [[ -f "osx.yml" ]]; then
@@ -76,11 +74,10 @@ jobs:
     - name: Generate recipes for osx-arm64
       run: |
         git clean -fdx
-        cp vinca_osx_arm64.yaml vinca.yaml
         vinca --multiple --platform osx-arm64
     - name: Generate azure pipelines for osx-arm64
       run: |
-        vinca-gha --platform osx-arm64 --trigger-branch buildbranch_osx_arm64 -d ./recipes --additional-recipes
+        vinca-gha --platform osx-arm64 --trigger-branch buildbranch_osx_arm64 -d ./recipes
     - name: Commit files for osx-arm64
       run: |
         if [[ -f "osx_arm64.yml" ]]; then
@@ -102,11 +99,11 @@ jobs:
     - name: Generate recipes for win-64
       run: |
         git clean -fdx
-        cp vinca_win.yaml vinca.yaml
         vinca --multiple --platform win-64
     - name: Generate azure pipelines for win-64
       run: |
-        vinca-gha --platform win-64 --trigger-branch buildbranch_win -d ./recipes --additional-recipes
+        # --batch_size 10 is a workaround for https://github.com/RoboStack/robostack.github.io/issues/105
+        vinca-gha --platform win-64 --trigger-branch buildbranch_win -d ./recipes  --batch_size 10
     - name: Commit files for win-64
       run: |
         if [[ -f "win.yml" ]]; then
@@ -128,11 +125,10 @@ jobs:
     - name: Generate recipes for linux-aarch64
       run: |
         git clean -fdx
-        cp vinca_linux_aarch64.yaml vinca.yaml
         vinca --multiple --platform linux-aarch64
     - name: Generate azure pipelines for linux-aarch64
       run: |
-        vinca-gha --platform linux-aarch64 --trigger-branch buildbranch_linux_aarch64 -d ./recipes --additional-recipes
+        vinca-gha --platform linux-aarch64 --trigger-branch buildbranch_linux_aarch64 -d ./recipes
     - name: Commit files for linux-aarch64
       run: |
         if [[ -f "linux_aarch64.yml" ]]; then
@@ -154,13 +150,11 @@ jobs:
     - name: Generate recipes for emscripten-wasm32
       run: |
         git clean -fdx
-        cp vinca_emscripten32.yaml vinca.yaml
         vinca --multiple --platform emscripten-wasm32
-        sh -c 'find additional_recipes/* -maxdepth 0 -type d -exec ln -s ../{} recipes/ \;'
         
     - name: Generate azure pipelines for emscripten-wasm32
       run: |
-        vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten -d ./recipes --additional-recipes --batch_size 1
+        vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten -d ./recipes --batch_size 1
     - name: Commit files for emscripten-wasm32
       run: |
         if [[ -f "emscripten_wasm32.yml" ]]; then

@@ -2,11 +2,10 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index f7f476296..0725a05d5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -50,6 +50,16 @@ find_package(urdf REQUIRED)
+@@ -50,6 +50,15 @@ find_package(urdf REQUIRED)
  find_package(urdfdom_headers REQUIRED)
  find_package(visualization_msgs REQUIRED)
 
-+find_package(Protobuf REQUIRED CONFIG)
 +# glog is not linked, however we look for it to detect the glog version
 +# and use a different code path if glog >= 0.7.0 is detected
 +find_package(glog CONFIG QUIET)

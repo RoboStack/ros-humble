@@ -1,0 +1,24 @@
+diff --git a/apriltag_draw/CMakeLists.txt b/apriltag_draw/CMakeLists.txt
+index 8c6bd79..b163dbc 100644
+--- a/apriltag_draw/CMakeLists.txt
++++ b/apriltag_draw/CMakeLists.txt
+@@ -16,7 +16,10 @@
+ cmake_minimum_required(VERSION 3.16)
+ project(apriltag_draw)
+ 
+-add_compile_options(-Wall -Wextra -Wpedantic -Werror)
++if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
++  add_compile_options(-Wall -Wextra -Wpedantic -Werror)
++endif()
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 
+ # find dependencies
+ find_package(ament_cmake REQUIRED)
+@@ -83,7 +86,6 @@ install(TARGETS
+ install(
+   TARGETS ${PROJECT_NAME}
+   EXPORT ${PROJECT_NAME}_export
+-  DESTINATION lib
+ )
+ 
+ install(

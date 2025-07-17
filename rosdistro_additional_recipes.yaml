@@ -1,0 +1,28 @@
+# This file is used to add additional recipes to the ROS 2 distribution, not contained in the
+# upstream rosdistro. Differently from rosdistro_snapshot.yaml, this file is not
+# automatically generated, but manually maintained.
+dynmsg:
+  # rosdistro_snapshot.yaml tipically uses tag, but here we use a commit hash
+  # so we use the rev key to ensure that it is propagated to the v1 recipe generated
+  rev: 50277e341f61455c42a6015b5718804a4f8588f6
+  url: https://github.com/osrf/dynamic_message_introspection.git
+  version: 0.1.0
+  # This is an attribute that is not found in rosdistro_snapshot.yaml,
+  # but it is used in rosdistro_additional_recipes.yaml to indicate if the
+  # package to build is not in the root of the repository, but in a subfolder.
+  additional_folder: dynmsg
+rmw_wasm_cpp:
+  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
+  url: https://github.com/ros2wasm/rmw_wasm.git
+  version: 0.0.2
+  additional_folder: rmw_wasm_cpp
+test_wasm:
+  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
+  url: https://github.com/ros2wasm/rmw_wasm.git
+  version: 0.0.2
+  additional_folder: test_wasm
+wasm_cpp:
+  rev: 15bc309ffd5ba2a2451cbe22864a8356da251e65
+  url: https://github.com/ros2wasm/rmw_wasm.git
+  version: 1.0.0
+  additional_folder: wasm_cpp

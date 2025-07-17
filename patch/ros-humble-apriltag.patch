@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9b2935a..8a8f9ea 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -47,7 +47,6 @@ endif()
+ 
+ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
+     add_compile_options(-Wall -Wextra -Werror)
+-    add_compile_options(-Wpedantic)
+     if(CMAKE_C_COMPILER_ID MATCHES "Clang")
+         add_compile_options(
+             -Wno-gnu-zero-variadic-macro-arguments

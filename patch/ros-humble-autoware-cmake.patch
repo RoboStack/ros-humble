@@ -1,0 +1,29 @@
+From 45858ed5bef2cb8327d3fd6ac2f5eab6c7d8f3a6 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Sat, 5 Jul 2025 14:17:06 +0200
+Subject: [PATCH 1/2] When using CMake >= 3.24 use
+ CMAKE_COMPILE_WARNING_AS_ERROR variable instead of setting -Werror directly
+
+---
+ cmake/autoware_package.cmake | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/cmake/autoware_package.cmake b/cmake/autoware_package.cmake
+index 2f46006..d4c421c 100644
+--- a/cmake/autoware_package.cmake
++++ b/cmake/autoware_package.cmake
+@@ -20,7 +20,13 @@ macro(autoware_package)
+     set(CMAKE_CXX_EXTENSIONS OFF)
+   endif()
+   if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+-    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
++    add_compile_options(-Wall -Wextra -Wpedantic)
++    if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
++      option(CMAKE_COMPILE_WARNING_AS_ERROR "Treat compiler warnings as errors." ON)
++      mark_as_advanced(CMAKE_COMPILE_WARNING_AS_ERROR)
++    else()
++      add_compile_options(-Werror)
++    endif()
+   endif()
+ 
+   # Ignore PCL errors in Clang

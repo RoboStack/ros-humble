@@ -1,0 +1,12 @@
+diff --git a/3rdparty/qwt/src/CMakeLists.txt b/3rdparty/qwt/src/CMakeLists.txt
+index 51e6f088..8971ecab 100644
+--- a/3rdparty/qwt/src/CMakeLists.txt
++++ b/3rdparty/qwt/src/CMakeLists.txt
+@@ -201,6 +201,7 @@ target_link_libraries(plotjuggler_qwt
+     Qt5::Widgets
+     Qt5::Concurrent
+     Qt5::Svg
++    Qt5::Xml
+     )
+ 
+ target_compile_definitions(plotjuggler_qwt PUBLIC QWT_MOC_INCLUDE)
