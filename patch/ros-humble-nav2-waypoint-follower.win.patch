@@ -11,3 +11,17 @@ index ff878f4d39..77ff7f20aa 100644
      RCLCPP_INFO(
        logger_,
        "Photo has been taken successfully at waypoint %i", curr_waypoint_index);
+
+diff --git a/nav2_waypoint_follower/CMakeLists.txt b/nav2_waypoint_follower/CMakeLists.txt
+index 45a0e813331..47968713a05 100644
+--- a/nav2_waypoint_follower/CMakeLists.txt
++++ b/nav2_waypoint_follower/CMakeLists.txt
+@@ -54,7 +54,7 @@ set(dependencies
+   pluginlib
+   image_transport
+   cv_bridge
+-  OpenCV
++  opencv_core
+ )
+ 
+ ament_target_dependencies(${executable_name}
