@@ -309,10 +309,6 @@ packages_select_by_deps:
       # cascade lifecycle packages
       - cascade-lifecycle-msgs
       - rclcpp-cascade-lifecycle
-      # Sick safety scanner packages
-      - sick_safetyscanners_base
-      - sick_safetyscanners2_interfaces
-      - sick_safetyscanners2
       # Demo nodes
       - demo_nodes_py
       - demo_nodes_cpp
@@ -424,3 +420,8 @@ packages_select_by_deps:
       - ublox_ubx_interfaces
       # error C1083: Cannot open include file: 'rqt_gui_cpp/plugin.h'
       - rqt_image_overlay
+      # Sick safety scanner packages
+      # Werror passed on Windows
+      - sick_safetyscanners_base
+      - sick_safetyscanners2_interfaces
+      - sick_safetyscanners2
