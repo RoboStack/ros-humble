@@ -1,8 +1,5 @@
-vinca.yaml
 recipes/
-*.bat
-*.sh
-*.ps1
+recipes_only_patch/
 *.json
 .DS_Store
 # pixi environments

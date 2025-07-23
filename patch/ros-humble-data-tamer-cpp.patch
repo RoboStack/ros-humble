@@ -1,0 +1,19 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5d1c744..49c58f3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,13 +17,13 @@ endif()
+ option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+ 
+ if (MSVC)
+-    add_compile_options(/W4 /WX)
++    add_compile_options(/W4)
+ else()
+     add_compile_options(-Wall -Wcast-align -Wconversion -Wdouble-promotion -Wextra -Wimplicit-fallthrough
+         -Wno-deprecated-declarations -Wno-ignored-attributes -Wno-unused-parameter
+         -Wnon-virtual-dtor -Wno-unused-variable -Wnull-dereference -Wold-style-cast
+         -Woverloaded-virtual -Wshadow -Wsign-conversion
+-        -Werror -Wpedantic)
++        -Wpedantic)
+ endif()
+ 

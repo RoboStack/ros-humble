@@ -1,0 +1,425 @@
+ros_distro: humble
+
+# mapping for package keys
+conda_index:
+  - robostack.yaml
+  - packages-ignore.yaml
+
+# Reminder for next full rebuild, the next build number should be 14
+build_number: 13
+
+# Specify that exactly the build_number used vinca*.yaml or pkg_additional_info.yaml
+# should be used, not some build number obtained by checking the maximum
+# of all build numbers used in the target channel
+use_explicit_build_number: true
+
+mutex_package:
+  name: "ros2-distro-mutex"
+  version: "0.7.0"
+  upper_bound: "x.x"
+  run_constraints:
+    - libboost 1.86.*
+    - libboost-devel 1.86.*
+    - pcl 1.15.0.*
+    - gazebo 11.*
+    - libprotobuf 5.29.3.*
+
+patch_dir: patch
+rosdistro_snapshot: rosdistro_snapshot.yaml
+rosdistro_additional_recipes: rosdistro_additional_recipes.yaml
+
+skip_existing:
+  - https://conda.anaconda.org/robostack-staging/
+
+packages_skip_by_deps:
+  - if: not linux
+    then:
+      - pendulum_control
+      - rttest
+      - tlsf
+      - tlsf_cpp
+  - if: wasm32
+    then:
+      - rmw_fastrtps_cpp
+      - rosidl_typesupport_fastrtps_c
+      - rosidl_typesupport_fastrtps_cpp
+      - rmw_cyclonedds_cpp
+      - rmw_connextdds
+      - rmw_fastrtps_shared_cpp
+      - rmw_fastrtps_dynamic_cpp
+      - rmw_fastrtps_dds_common
+      - mimick_vendor
+      - ament_xmllint
+      - ament_cmake_xmllint
+      - performance_test_fixture
+      - rmw_connextdds
+      - rmw_cyclonedds_cpp
+      - osrf_testing_tools_cpp
+  - if: win
+    then:
+      # Modern gz-sim integration is not supported on Humble on Windows, please
+      # look to Jazzy or Kilted if you are interested in it, see
+      # https://github.com/RoboStack/ros-humble/issues/68
+      - ros_gz
+      - ros_gz_bridge
+      - ros_gz_image 
+      - ros_gz_sim 
+      - ros_gz_sim_demos
+      - test_ros_gz_bridge
+      - ros_ign 
+      - ros_ign_bridge 
+      - ros_ign_gazebo 
+      - ros_ign_gazebo_demos 
+      - ros_ign_image
+
+packages_remove_from_deps:
+  - if: not linux
+    then:
+      - pendulum_control
+      - rttest
+      - tlsf
+      - tlsf_cpp
+  - if: wasm32
+    then:
+      - rmw_fastrtps_cpp
+      - rosidl_typesupport_fastrtps_c
+      - rosidl_typesupport_fastrtps_cpp
+      - rmw_cyclonedds_cpp
+      - rmw_connextdds
+      - rmw_fastrtps_shared_cpp
+      - rmw_fastrtps_dynamic_cpp
+      - rmw_fastrtps_dds_common
+      - mimick_vendor
+      - ament_xmllint
+      - ament_cmake_xmllint
+      - performance_test_fixture
+      - rmw_connextdds
+      - rmw_cyclonedds_cpp
+      - osrf_testing_tools_cpp
+  - if: win
+    then:
+      # Modern gz-sim integration is not supported on Humble on Windows, please
+      # look to Jazzy or Kilted if you are interested in it, see
+      # https://github.com/RoboStack/ros-humble/issues/68
+      - ros_gz
+      - ros_gz_bridge
+      - ros_gz_image 
+      - ros_gz_sim 
+      - ros_gz_sim_demos
+      - test_ros_gz_bridge
+      - ros_ign 
+      - ros_ign_bridge 
+      - ros_ign_gazebo 
+      - ros_ign_gazebo_demos 
+      - ros_ign_image
+
+packages_select_by_deps:
+  # These are the packages that are build on all platforms, including wasm32
+    # only subset of packages to reduce maintainer load
+  - rclpy
+  - ros_workspace
+  - ros_environment
+  - ament_cmake
+  - ament_pep257
+  - ament_flake8
+  - ament_lint
+  - ament_lint_common
+  - ament_pycodestyle
+  - rmw
+  - rclc
+  - rclcpp
+  - builtin_interfaces
+  - rcutils
+  - rcpputils
+  - rosidl_runtime_c
+  - rosidl_runtime_cpp
+  - rosidl_typesupport_introspection_c
+  - rosidl_typesupport_introspection_cpp
+  - yaml_cpp_vendor
+  - osrf_testing_tools_cpp
+
+  # These are emscripten-wasm32 specific packages
+  - if: wasm32
+    then:
+      - dynmsg
+      - rmw_wasm_cpp
+      - test_wasm
+      - wasm_cpp
+
+  # these are the packages that are not build on wasm32, but are built on
+  # all the other platforms (so the majority)
+  - if: not wasm32
+    then:
+      - ros2-controllers
+      - diff-drive-controller
+      - libcamera
+      - ros_workspace
+      - ros_core
+      - ros_environment
+      - ament_cmake
+      - ament_cmake_nose
+      - ros_base
+      - perception
+      - rosidl-generator-dds-idl
+      - simulation
+      - desktop
+      - desktop_full
+      - rosbag2_storage_mcap
+      # rqt
+      - rqt
+      - rqt-gui
+      - rqt-robot-dashboard
+      - rqt-robot-monitor
+      - rqt-robot-steering
+      # gazebo
+      - gazebo_msgs
+      - gazebo_dev
+      - gazebo_ros
+      - gazebo_plugins
+      - gazebo_ros2_control
+      - gazebo_ros_pkgs
+      - ackermann-msgs
+      - geodesy
+      - geographic_info
+      - tf-transformations
+      - robot_localization
+      - rosbridge_suite
+      - vision-msgs
+      - ros2_control
+      - navigation2
+      - slam_toolbox
+      - nav2_bringup
+      - rviz2
+      - behaviortree_cpp_v3
+      - moveit
+      - moveit_visual_tools
+      - moveit_servo
+      - moveit2_tutorials
+      - moveit_planners_chomp
+      - moveit_ros_occupancy_map_monitor
+      # Requested in https://www.linkedin.com/feed/update/urn:li:activity:7346559234177703938/
+      - moveit-chomp-optimizer-adapter
+      - moveit-ros-control-interface
+      - rqt-moveit
+      - pilz-industrial-motion-planner
+      - topic_tools
+      - ur
+      # ros control
+      - joint-state-publisher # probably this should not be here as there is some strange porting to ros2
+      - control-toolbox
+      - realtime_tools
+      - control_msgs
+      - teleop_tools
+      - gazebo_ros2_control_demos
+      - ros2_controllers
+      # - joystick_drivers
+      - joy
+      - sdl2_vendor
+      # - wiimote          # needs bluetooth and is not in conda-forge
+      # - wiimote_msgs
+      # other control
+      - robot_controllers
+      - bond_core
+      # Modern gz-sim integration is not supported on Humble on Windows, please
+      # look to Jazzy or Kilted if you are interested in it, see
+      # https://github.com/RoboStack/ros-humble/issues/68, we just include ros_gz_interfaces
+      # to interfaced with simulations working on Linux or macOS
+      - ros_gz_interfaces
+      - ros_ign_interfaces
+      - gtsam
+      # *** learning and tutorials ***
+      - turtlebot3
+      - turtlebot3_simulations
+      - turtlebot3_gazebo
+      # requested in https://github.com/RoboStack/ros-humble/issues/307
+      - urdf_tutorial
+      - geometry_tutorials
+      # gazebo
+      - gazebo-ros-pkgs
+      - ros_ign
+      # *** Vendor packages ***
+      - graph_msgs          # PickNik Robotics
+      - apriltag            # AprilRobotics
+      - apriltag_ros        # Christian Rauch
+      - ur_robot_driver     # Universal Robots
+      - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
+      - stubborn_buddies    # Open RMF
+      - ament_cmake_catch2  # Open RMF
+      - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+      - ament_cmake_mypy
+      # - transport_drivers
+      - asio_cmake_module
+      - io_context
+      - serial_driver
+      - udp_driver
+      - apex_test_tools
+      - visp
+      - bno055              # flynneva
+      - aws_robomaker_small_warehouse_world # AWS Robotics
+      # Only msgs as avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
+      - avt_vimba_camera_msgs    #  Allied Vision Technologies
+      - system_modes        # Micro-ROS
+      - tf_transformations  # DLu
+      - marker-msgs         # TUW Robotics
+      - moveit_resources
+      # requested in https://github.com/RoboStack/ros-humble/pull/205
+      - plotjuggler_msgs
+      - turtle_tf2_py
+      - turtle_tf2_cpp
+      # requested in https://github.com/RoboStack/ros-humble/issues/249
+      - twist_mux
+      # requested in https://github.com/RoboStack/ros-humble/issues/252
+      - rmw_zenoh_cpp
+      # requested in https://github.com/RoboStack/ros-humble/issues/256
+      - rqt_controller_manager
+      - open3d_conversions
+      - lanelet2
+      # autoware
+      - autoware_common_msgs
+      - autoware_control_msgs
+      - autoware_localization_msgs
+      - autoware_map_msgs
+      - autoware_perception_msgs
+      - autoware_planning_msgs
+      - autoware_sensing_msgs
+      - autoware_system_msgs
+      - autoware_v2x_msgs
+      - autoware_vehicle_msgs
+      - autoware_utils
+      - flex_sync
+      - apriltag_draw
+      - apriltag_tools
+      - apriltag_detector_umich
+      - apriltag_detector_mit
+      - apriltag_detector
+      - ament_cmake_black
+      - behaviortree_cpp
+      - py-binding-tools
+      - nmea_msgs
+      - rtcm_msgs
+      # cascade lifecycle packages
+      - cascade-lifecycle-msgs
+      - rclcpp-cascade-lifecycle
+      # Demo nodes
+      - demo_nodes_py
+      - demo_nodes_cpp
+      # requested in https://github.com/RoboStack/ros-humble/issues/302
+      - urg-node
+      # requested in https://github.com/RoboStack/ros-humble/issues/305
+      - turtle-tf2-py
+      # requested in https://github.com/RoboStack/ros-humble/issues/304
+      - rosbag2-performance-benchmarking
+      - cartographer_ros
+      # Requested in https://github.com/RoboStack/ros-humble/issues/325
+      - data_tamer_cpp
+  
+  # These packages are only built on Linux as they depend on Linux-specific API
+  - if: linux
+    then:
+      # Depends on socketcan
+      - ros2_socketcan
+      # Depends on v4l
+      - usb_cam
+      - libcamera
+        # Depends on libcamera that is only available on linux
+      - camera_ros
+      # Depends on v4l that is only available on linux
+      - v4l2_camera
+      #  avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
+      - avt_vimba_camera
+      # Require Linux-specific joystick interfaces
+      - joy_linux
+
+  # These packages are currently only build on Linux,
+  # as trying to build them in the past on macos or Windows resulted in errors,
+  # but probably they can work on all platform with some work
+  - if: linux
+    then:
+      - py_binding_tools
+      - livox_ros_driver2
+      # requested in https://github.com/RoboStack/ros-humble/issues/228,
+      # event_camera_codecs uses endian.h so it only builds on Linux,
+      # while event_camera_renderer does not support Windows shared library,
+      # both can probably work on all platform with some work
+      - event_camera_codecs
+      - event_camera_renderer
+      # Uses linux-specific flags in  https://github.com/SteveMacenski/spatio_temporal_voxel_layer/blob/e23d730d35407bd8e2bf9c33d10388a6a07c735d/spatio_temporal_voxel_layer/CMakeLists.txt#L124,
+      # but should be easy to fix
+      - spatio_temporal_voxel_layer
+      # Some missing support for macOS, see https://github.com/cyberbotics/webots_ros2/pull/733
+      - webots_ros2         # Cyberbotics
+      # Linking problems on macOS, probably a missing link to draco library or similar
+      - point_cloud_transport_plugins
+      # librealsense is not available on Windows in conda-forge, see https://github.com/conda-forge/librealsense-feedstock/issues/3
+      # and on macos there are some CMake failures
+      - librealsense2       # IntelRealSense
+      - realsense2-camera   # IntelRealSense
+      - realsense2-description # IntelRealSense
+       # removed in jazzy, never supported windows or macos, no packages depend on it
+      - apex_containers
+      # CMake errors related to OpenCV on macos, probably fixable
+      - moveit_ros_perception
+      - moveit_runtime
+
+  # These packages are currently not build on Windows, but they may with some work
+  - if: not wasm32 and not win
+    then:
+      - foxglove_compressed_video_transport
+      # Windows can be easily fixed by backporting https://github.com/RoboStack/ros-jazzy/blob/main/patch/ros-jazzy-foxglove-bridge.win.patch
+      - foxglove_bridge
+      - velodyne
+      # error C1189: #error:  WinSock.h has already been included
+      - velodyne_simulator  # Dataspeed Inc.
+      - moveit_py
+      # TODO on windows: fix iconv link issue
+      - ffmpeg_image_transport
+      - dual_laser_merger
+      - pointcloud_to_laserscan
+      - laser_segmentation
+      - rqt_tf_tree
+      - rviz_satellite
+      - odom_to_tf_ros2
+      # TODO on windows: cannot open pcl_io.lib
+      - ouster_ros
+      # A few compilation errors, solvable as the upstream project as a CI on Windows
+      # requested in https://github.com/RoboStack/ros-humble/pull/205
+      - plotjuggler
+      - plotjuggler_ros
+      # Modern gz-sim integration is not supported on Humble on Windows, please
+      # look to Jazzy or Kilted if you are interested in it, see
+      # https://github.com/RoboStack/ros-humble/pull/320
+      - ros_gz
+      # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
+      - grid_map
+      # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator 
+      # to be an unsigned type that is at least 32-bit.' [%SRC_DIR%\build\g2o\examples\sphere\create_sphere.vcxproj]
+      - libg2o
+      # Windows error: error C3861: '__builtin_unreachable': identifier not found 
+      - moveit-hybrid-planning
+      # Microstrain IMU Packages + dependencies
+      # Fail on windows with FileTracker : error FTK1011: could not create the new file tracking log file: %SRC_DIR%
+      - microstrain_inertial_description
+      - microstrain_inertial_driver
+      - microstrain_inertial_examples
+      - microstrain_inertial_msgs
+      - microstrain_inertial_rqt
+      # IMRC Lab
+      # Windows is failing with error C1083: Cannot open compiler generated file: ''
+      - motion_capture_tracking
+      # ublox compilation fails on Windows
+      - ublox               # Kumar Robotics
+      - ublox_dgnss         # Aussie Robots
+      - ublox_dgnss_node
+      - ublox_ubx_interfaces
+      # error C1083: Cannot open include file: 'rqt_gui_cpp/plugin.h'
+      - rqt_image_overlay
+      # Sick safety scanner packages
+      # Werror passed on Windows
+      - sick_safetyscanners_base
+      - sick_safetyscanners2_interfaces
+      - sick_safetyscanners2
+      # https://github.com/conda-forge/libspnav-feedstock is not available on Windows
+      - spacenav
+      # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
+      - vision-msgs-rviz-plugins
+

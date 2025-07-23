@@ -1,42 +1,36 @@
+From 67a1b3ba0f30c9302bd20893a806d9ecaabe80e6 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Thu, 3 Jul 2025 11:37:44 +0200
+Subject: [PATCH 1/2] zenoh_cpp_vendor: Do not call
+ externalproject_add_stepdependencies if projects are not vendored
+
+Signed-off-by: Silvio Traversaro <silvio@traversaro.it>
+---
+ zenoh_cpp_vendor/CMakeLists.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
 diff --git a/zenoh_cpp_vendor/CMakeLists.txt b/zenoh_cpp_vendor/CMakeLists.txt
-index 2d3ae046..de971841 100644
+index 18c92be1..ec6c054b 100644
 --- a/zenoh_cpp_vendor/CMakeLists.txt
 +++ b/zenoh_cpp_vendor/CMakeLists.txt
-@@ -10,35 +10,10 @@ endif()
- find_package(ament_cmake REQUIRED)
- find_package(ament_cmake_vendor_package REQUIRED)
+@@ -37,6 +37,7 @@ ament_vendor(zenoh_c_vendor
+     "-DZENOHC_BUILD_WITH_UNSTABLE_API=TRUE"
+     "-DZENOHC_CUSTOM_TARGET=${ZENOHC_CUSTOM_TARGET}"
+   PATCHES ${CMAKE_CURRENT_SOURCE_DIR}/pin-rust-1.75.0.patch
++  IS_VENDORED_OUTPUT_VARIABLE_NAME ZENOH_C_IS_VENDORED
+ )
  
--# Disable default features and enable only the most useful ones. This reduces build time and footprint.
--# For a complete list of features see: https://github.com/eclipse-zenoh/zenoh/blob/main/zenoh/Cargo.toml
--# Note: We separate the two args needed for cargo with "$<SEMICOLON>" and not ";" as the
--# latter is a list separater in cmake and hence the string will be split into two
--# when expanded.
--set(ZENOHC_CARGO_FLAGS "--no-default-features$<SEMICOLON>--features=shared-memory zenoh/transport_compression zenoh/transport_tcp zenoh/transport_tls")
--
--ament_vendor(zenoh_c_vendor
--  VCS_URL https://github.com/eclipse-zenoh/zenoh-c.git
--  VCS_VERSION 57d5e4d31d9b38fef34d7bcad3d3e54869c4ce73
--  CMAKE_ARGS
--    "-DZENOHC_CARGO_FLAGS=${ZENOHC_CARGO_FLAGS}"
--    "-DZENOHC_BUILD_WITH_UNSTABLE_API=TRUE"
--    "-DZENOHC_CUSTOM_TARGET=${ZENOHC_CUSTOM_TARGET}"
--)
--
-+find_package(zenohc REQUIRED)
  ament_export_dependencies(zenohc)
+@@ -46,9 +47,12 @@ ament_vendor(zenoh_cpp_vendor
+   VCS_VERSION 7379592436398079934f4296d2fa90217f8eddf9
+   CMAKE_ARGS
+     -DZENOHCXX_ZENOHC=OFF
++  IS_VENDORED_OUTPUT_VARIABLE_NAME ZENOH_CPP_IS_VENDORED
+ )
  
--# Set VCS_VERSION to include latest changes from zenoh-c to benefit from :
--# - https://github.com/eclipse-zenoh/zenoh-cpp/pull/342 (Fix include what you use)
--ament_vendor(zenoh_cpp_vendor
--  VCS_URL https://github.com/eclipse-zenoh/zenoh-cpp
--  VCS_VERSION 964b64dc8b935a43147287199e7bb12da7b141e6
--  CMAKE_ARGS
--    -DZENOHCXX_ZENOHC=OFF
--)
--
 -externalproject_add_stepdependencies(zenoh_cpp_vendor configure zenoh_c_vendor)
--
-+find_package(zenohcxx REQUIRED)
++if(ZENOH_C_IS_VENDORED AND ZENOH_CPP_IS_VENDORED)
++  externalproject_add_stepdependencies(zenoh_cpp_vendor configure zenoh_c_vendor)
++endif()
+
  ament_export_dependencies(zenohcxx)
- 
- ament_package()

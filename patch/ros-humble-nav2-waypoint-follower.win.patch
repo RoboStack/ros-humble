@@ -1,0 +1,48 @@
+diff --git a/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp b/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
+index ff878f4d39..77ff7f20aa 100644
+--- a/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
++++ b/nav2_waypoint_follower/plugins/photo_at_waypoint.cpp
+@@ -119,7 +119,7 @@ bool PhotoAtWaypoint::processAtWaypoint(
+     std::lock_guard<std::mutex> guard(global_mutex_);
+     cv::Mat curr_frame_mat;
+     deepCopyMsg2Mat(curr_frame_msg_, curr_frame_mat);
+-    cv::imwrite(full_path_image_path.c_str(), curr_frame_mat);
++    cv::imwrite(full_path_image_path.string().c_str(), curr_frame_mat);
+     RCLCPP_INFO(
+       logger_,
+       "Photo has been taken successfully at waypoint %i", curr_waypoint_index);
+
+diff --git a/nav2_waypoint_follower/CMakeLists.txt b/nav2_waypoint_follower/CMakeLists.txt
+index 45a0e813331..3c8bd7597f9 100644
+--- a/nav2_waypoint_follower/CMakeLists.txt
++++ b/nav2_waypoint_follower/CMakeLists.txt
+@@ -69,12 +69,15 @@ ament_target_dependencies(${library_name}
+ 
+ add_library(wait_at_waypoint SHARED plugins/wait_at_waypoint.cpp)
+ ament_target_dependencies(wait_at_waypoint ${dependencies})
++target_link_libraries(wait_at_waypoint opencv_core)
+ 
+ add_library(photo_at_waypoint SHARED plugins/photo_at_waypoint.cpp)
+ ament_target_dependencies(photo_at_waypoint ${dependencies})
++target_link_libraries(photo_at_waypoint opencv_core)
+ 
+ add_library(input_at_waypoint SHARED plugins/input_at_waypoint.cpp)
+ ament_target_dependencies(input_at_waypoint ${dependencies})
++target_link_libraries(input_at_waypoint opencv_core)
+ 
+ rclcpp_components_register_nodes(${library_name} "nav2_waypoint_follower::WaypointFollower")
+
+diff --git a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+index 628bc1836fd..332a552c0b9 100644
+--- a/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
++++ b/nav2_waypoint_follower/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+@@ -32,8 +32,8 @@
+ 
+ #include "sensor_msgs/msg/image.hpp"
+ #include "nav2_core/waypoint_task_executor.hpp"
+-#include "opencv4/opencv2/core.hpp"
+-#include "opencv4/opencv2/opencv.hpp"
++#include "opencv2/core.hpp"
++#include "opencv2/opencv.hpp"
+ #include "cv_bridge/cv_bridge.h"
+ #include "image_transport/image_transport.hpp"

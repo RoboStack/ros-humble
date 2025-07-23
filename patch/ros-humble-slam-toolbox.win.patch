@@ -1,0 +1,301 @@
+diff --git a/lib/karto_sdk/CMakeLists.txt b/lib/karto_sdk/CMakeLists.txt
+index a620bfd2e..196aab5d7 100644
+--- a/lib/karto_sdk/CMakeLists.txt
++++ b/lib/karto_sdk/CMakeLists.txt
+@@ -5,7 +5,9 @@ if(NOT CMAKE_CXX_STANDARD)
+   set(CMAKE_CXX_STANDARD 17)
+ endif()
+ set(CMAKE_BUILD_TYPE Release) #None, Debug, Release, RelWithDebInfo, MinSizeRel
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-backtrace-limit=0")
++if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
++  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-backtrace-limit=0")
++endif()
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+ 
+ find_package(ament_cmake REQUIRED)
+@@ -29,6 +31,7 @@ add_definitions(${EIGEN3_DEFINITIONS})
+ 
+ include_directories(include ${EIGEN3_INCLUDE_DIRS} ${TBB_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+ add_library(kartoSlamToolbox SHARED src/Karto.cpp src/Mapper.cpp)
++target_compile_definitions(kartoSlamToolbox PRIVATE KARTO_DYNAMIC)
+ ament_target_dependencies(kartoSlamToolbox ${dependencies})
+ target_link_libraries(kartoSlamToolbox ${Boost_LIBRARIES} TBB::tbb)
+ 
+diff --git a/lib/karto_sdk/src/Mapper.cpp b/lib/karto_sdk/src/Mapper.cpp
+index 83e2af2ca..19d056dfb 100644
+--- a/lib/karto_sdk/src/Mapper.cpp
++++ b/lib/karto_sdk/src/Mapper.cpp
+@@ -405,7 +405,7 @@ void MapperSensorManager::SetRunningScanBufferSize(kt_int32u rScanBufferSize)
+   m_RunningBufferMaximumSize = rScanBufferSize;
+ 
+   std::vector<Name> names = GetSensorNames();
+-  for (uint i = 0; i != names.size(); i++) {
++  for (unsigned int i = 0; i != names.size(); i++) {
+     GetScanManager(names[i])->SetRunningScanBufferSize(rScanBufferSize);
+   }
+ }
+@@ -415,7 +415,7 @@ void MapperSensorManager::SetRunningScanBufferMaximumDistance(kt_double rScanBuf
+   m_RunningBufferMaximumDistance = rScanBufferMaxDistance;
+ 
+   std::vector<Name> names = GetSensorNames();
+-  for (uint i = 0; i != names.size(); i++) {
++  for (unsigned int i = 0; i != names.size(); i++) {
+     GetScanManager(names[i])->SetRunningScanBufferMaximumDistance(rScanBufferMaxDistance);
+   }
+ }
+@@ -1868,7 +1868,7 @@ std::vector<Vertex<LocalizedRangeScan> *> MapperGraph::FindNearByVertices(
+ 
+   std::vector<Vertex<LocalizedRangeScan> *> rtn_vertices;
+   rtn_vertices.reserve(ret_matches.size());
+-  for (uint i = 0; i != ret_matches.size(); i++) {
++  for (unsigned int i = 0; i != ret_matches.size(); i++) {
+     rtn_vertices.push_back(vertices_to_search[ret_matches[i].first]);
+   }
+   return rtn_vertices;
+@@ -2952,7 +2952,7 @@ void Mapper::ClearLocalizationBuffer()
+   }
+ 
+   std::vector<Name> names = m_pMapperSensorManager->GetSensorNames();
+-  for (uint i = 0; i != names.size(); i++)
++  for (unsigned int i = 0; i != names.size(); i++)
+   {
+     m_pMapperSensorManager->ClearRunningScans(names[i]);
+     m_pMapperSensorManager->ClearLastScan(names[i]);
+
+diff --git a/rviz_plugin/slam_toolbox_rviz_plugin.hpp b/rviz_plugin/slam_toolbox_rviz_plugin.hpp
+index dafa5d0b7..905d515d6 100644
+--- a/rviz_plugin/slam_toolbox_rviz_plugin.hpp
++++ b/rviz_plugin/slam_toolbox_rviz_plugin.hpp
+@@ -32,6 +32,7 @@
+ #include <QLabel>
+ #include <QFrame>
+ #include <QRadioButton>
++#undef NO_ERROR
+ // STL
+ #include <thread>
+ #include <chrono>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3880aa742..9157ce35e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -147,6 +147,11 @@ rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typ
+ target_link_libraries(ceres_solver_plugin "${cpp_typesupport_target}")
+ pluginlib_export_plugin_description_file(slam_toolbox solver_plugins.xml)
+ 
++if(MSVC)
++  add_compile_definitions(_USE_MATH_DEFINES)
++  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++endif()
++
+ #### Tool lib for mapping
+ add_library(toolbox_common src/slam_toolbox_common.cpp src/map_saver.cpp src/loop_closure_assistant.cpp src/laser_utils.cpp src/slam_mapper.cpp)
+ ament_target_dependencies(toolbox_common
+@@ -155,26 +159,43 @@ ament_target_dependencies(toolbox_common
+ target_link_libraries(toolbox_common kartoSlamToolbox ${Boost_LIBRARIES})
+ rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
+ target_link_libraries(toolbox_common "${cpp_typesupport_target}")
++set_target_properties(toolbox_common PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 
+ #### Mapping executibles
+ add_library(async_slam_toolbox src/slam_toolbox_async.cpp)
++set_target_properties(async_slam_toolbox PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ target_link_libraries(async_slam_toolbox toolbox_common kartoSlamToolbox ${Boost_LIBRARIES})
+ add_executable(async_slam_toolbox_node src/slam_toolbox_async_node.cpp)
++if(MSVC)
++  target_compile_options(async_slam_toolbox_node PRIVATE "/F 40000000")
++endif()
+ target_link_libraries(async_slam_toolbox_node async_slam_toolbox)
+ 
+ add_library(sync_slam_toolbox src/slam_toolbox_sync.cpp)
++set_target_properties(sync_slam_toolbox PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ target_link_libraries(sync_slam_toolbox toolbox_common kartoSlamToolbox ${Boost_LIBRARIES})
+ add_executable(sync_slam_toolbox_node src/slam_toolbox_sync_node.cpp)
++if(MSVC)
++  target_compile_options(sync_slam_toolbox_node PRIVATE "/F 40000000")
++endif()
+ target_link_libraries(sync_slam_toolbox_node sync_slam_toolbox)
+ 
+ add_library(localization_slam_toolbox src/slam_toolbox_localization.cpp)
++set_target_properties(localization_slam_toolbox PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ target_link_libraries(localization_slam_toolbox toolbox_common kartoSlamToolbox ${Boost_LIBRARIES})
+ add_executable(localization_slam_toolbox_node src/slam_toolbox_localization_node.cpp)
++if(MSVC)
++  target_compile_options(localization_slam_toolbox_node PRIVATE "/F 40000000")
++endif()
+ target_link_libraries(localization_slam_toolbox_node localization_slam_toolbox)
+ 
+ add_library(lifelong_slam_toolbox src/experimental/slam_toolbox_lifelong.cpp)
++set_target_properties(lifelong_slam_toolbox PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ target_link_libraries(lifelong_slam_toolbox toolbox_common kartoSlamToolbox ${Boost_LIBRARIES})
+ add_executable(lifelong_slam_toolbox_node src/experimental/slam_toolbox_lifelong_node.cpp)
++if(MSVC)
++  target_compile_options(lifelong_slam_toolbox_node PRIVATE "/F 40000000")
++endif()
+ target_link_libraries(lifelong_slam_toolbox_node lifelong_slam_toolbox)
+ 
+ add_library(map_and_localization_slam_toolbox src/experimental/slam_toolbox_map_and_localization.cpp)
+diff --git a/include/slam_toolbox/slam_toolbox_common.hpp b/include/slam_toolbox/slam_toolbox_common.hpp
+index 96bd049d9..521a0830c 100644
+--- a/include/slam_toolbox/slam_toolbox_common.hpp
++++ b/include/slam_toolbox/slam_toolbox_common.hpp
+@@ -19,7 +19,9 @@
+ #ifndef SLAM_TOOLBOX__SLAM_TOOLBOX_COMMON_HPP_
+ #define SLAM_TOOLBOX__SLAM_TOOLBOX_COMMON_HPP_
+ 
++#ifndef _WIN32
+ #include <sys/resource.h>
++#endif
+ #include <boost/thread.hpp>
+ #include <string>
+ #include <map>
+diff --git a/include/slam_toolbox/merge_maps_kinematic.hpp b/include/slam_toolbox/merge_maps_kinematic.hpp
+index 92102e499..680ef1927 100644
+--- a/include/slam_toolbox/merge_maps_kinematic.hpp
++++ b/include/slam_toolbox/merge_maps_kinematic.hpp
+@@ -21,7 +21,9 @@
+ 
+ #include <thread>
+ #include <sys/stat.h>
++#ifndef _WIN32
+ #include <unistd.h>
++#endif
+ #include <string>
+ #include <map>
+ #include <memory>
+diff --git a/src/merge_maps_kinematic.cpp b/src/merge_maps_kinematic.cpp
+index bd0ce0fa9..31b2a8991 100644
+--- a/src/merge_maps_kinematic.cpp
++++ b/src/merge_maps_kinematic.cpp
+@@ -101,7 +101,11 @@ bool MergeMapsKinematic::addSubmapCallback(
+       "/map_" + std::to_string(num_submaps_), rclcpp::QoS(1)));
+   sstmS_.push_back(this->create_publisher<nav_msgs::msg::MapMetaData>(
+       "/map_metadata_" + std::to_string(num_submaps_), rclcpp::QoS(1)));
++#ifdef _WIN32
++  Sleep(1000);
++#else
+   sleep(1.0);
++#endif
+ 
+   nav_msgs::srv::GetMap::Response map;
+   nav_msgs::msg::OccupancyGrid & og = map.map;
+
+diff --git a/src/experimental/slam_toolbox_lifelong_node.cpp b/src/experimental/slam_toolbox_lifelong_node.cpp
+index 2bdd81878..9925d3c73 100644
+--- a/src/experimental/slam_toolbox_lifelong_node.cpp
++++ b/src/experimental/slam_toolbox_lifelong_node.cpp
+@@ -29,6 +29,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER);
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -37,6 +42,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
+ 
+diff --git a/src/experimental/slam_toolbox_map_and_localization_node.cpp b/src/experimental/slam_toolbox_map_and_localization_node.cpp
+index 57024fd5d..2fb29d2d7 100644
+--- a/src/experimental/slam_toolbox_map_and_localization_node.cpp
++++ b/src/experimental/slam_toolbox_map_and_localization_node.cpp
+@@ -26,6 +26,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use", rclcpp::ParameterType::PARAMETER_INTEGER);
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -34,6 +39,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
+ 
+diff --git a/src/slam_toolbox_async_node.cpp b/src/slam_toolbox_async_node.cpp
+index 227f58283..82d310c72 100644
+--- a/src/slam_toolbox_async_node.cpp
++++ b/src/slam_toolbox_async_node.cpp
+@@ -29,6 +29,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER );
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -37,6 +42,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
+ 
+diff --git a/src/slam_toolbox_localization_node.cpp b/src/slam_toolbox_localization_node.cpp
+index ebdb8b071..90c398e29 100644
+--- a/src/slam_toolbox_localization_node.cpp
++++ b/src/slam_toolbox_localization_node.cpp
+@@ -29,6 +29,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER );
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -37,6 +42,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }
+ 
+diff --git a/src/slam_toolbox_sync_node.cpp b/src/slam_toolbox_sync_node.cpp
+index b4ed141fc..b9d06a164 100644
+--- a/src/slam_toolbox_sync_node.cpp
++++ b/src/slam_toolbox_sync_node.cpp
+@@ -29,6 +29,11 @@ int main(int argc, char ** argv)
+     auto temp_node = std::make_shared<rclcpp::Node>("slam_toolbox");
+     temp_node->declare_parameter("stack_size_to_use",rclcpp::ParameterType::PARAMETER_INTEGER);
+     if (temp_node->get_parameter("stack_size_to_use", stack_size)) {
++#ifdef _WIN32
++     if (stack_size != 40'000'000) {
++        RCLCPP_WARN(temp_node->get_logger(), "Can't dynamically change stack size on Windows to %i. Node using stack size 40000000", (int)stack_size);
++      }
++#else
+       RCLCPP_INFO(temp_node->get_logger(), "Node using stack size %i", (int)stack_size);
+       const rlim_t max_stack_size = stack_size;
+       struct rlimit stack_limit;
+@@ -37,6 +42,7 @@ int main(int argc, char ** argv)
+         stack_limit.rlim_cur = stack_size;
+       }
+       setrlimit(RLIMIT_STACK, &stack_limit);
++#endif
+     }
+   }

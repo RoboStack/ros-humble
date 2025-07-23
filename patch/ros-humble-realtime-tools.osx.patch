@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5a9be70..9141953 100644
+index a42ab22..05753cd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -40,7 +40,7 @@ target_include_directories(realtime_tools PUBLIC
+@@ -48,7 +48,7 @@ target_include_directories(realtime_tools PUBLIC
    $<INSTALL_INTERFACE:include/realtime_tools>
  )
  ament_target_dependencies(realtime_tools PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
@@ -11,7 +11,7 @@ index 5a9be70..9141953 100644
    target_link_libraries(realtime_tools PUBLIC cap)
  endif()
  
-@@ -54,7 +54,7 @@ target_include_directories(thread_priority PUBLIC
+@@ -62,7 +62,7 @@ target_include_directories(thread_priority PUBLIC
    $<INSTALL_INTERFACE:include/realtime_tools>
  )
  ament_target_dependencies(thread_priority PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
@@ -21,15 +21,16 @@ index 5a9be70..9141953 100644
  endif()
  
 diff --git a/src/realtime_helpers.cpp b/src/realtime_helpers.cpp
-index e55894c..e75e4c8 100644
+index 9dbbfdf..10c3066 100644
 --- a/src/realtime_helpers.cpp
 +++ b/src/realtime_helpers.cpp
-@@ -30,12 +30,15 @@
- 
- #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+@@ -32,13 +32,16 @@
+ #include <windows.h>
+ #else
  #include <sched.h>
 -#include <sys/capability.h>
  #include <sys/mman.h>
+ #include <sys/utsname.h>
  
  #include <unistd.h>
  #endif
@@ -40,8 +41,8 @@ index e55894c..e75e4c8 100644
 +
  #include <cstring>
  #include <fstream>
- 
-@@ -56,6 +59,19 @@ bool configure_sched_fifo(int priority)
+ #include <iostream>
+@@ -75,6 +78,19 @@ bool configure_sched_fifo(int priority)
  #ifdef _WIN32
    HANDLE thread = GetCurrentThread();
    return SetThreadPriority(thread, priority);
@@ -61,7 +62,7 @@ index e55894c..e75e4c8 100644
  #else
    struct sched_param schedp;
    memset(&schedp, 0, sizeof(schedp));
-@@ -75,6 +91,8 @@ std::pair<bool, std::string> lock_memory()
+@@ -94,6 +110,8 @@ std::pair<bool, std::string> lock_memory()
  {
  #ifdef _WIN32
    return {false, "Memory locking is not supported on Windows."};
@@ -70,7 +71,7 @@ index e55894c..e75e4c8 100644
  #else
    auto is_capable = [](cap_value_t v) -> bool {
      bool rc = false;
-@@ -127,6 +145,9 @@ std::pair<bool, std::string> set_thread_affinity(
+@@ -146,6 +164,9 @@ std::pair<bool, std::string> set_thread_affinity(
  #ifdef _WIN32
    message = "Thread affinity is not supported on Windows.";
    return std::make_pair(false, message);
