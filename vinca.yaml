@@ -24,15 +24,12 @@ mutex_package:
     - gazebo 11.*
     - libprotobuf 5.29.3.*
 
-skip_all_deps: false
-
-# If full rebuild, the build number of the existing package has
-# to match the selected build number for skipping
-full_rebuild: true
-
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
 rosdistro_additional_recipes: rosdistro_additional_recipes.yaml
+
+skip_existing:
+  - https://conda.anaconda.org/robostack-staging/
 
 packages_skip_by_deps:
   - if: not linux
@@ -115,9 +112,6 @@ packages_remove_from_deps:
       - ros_ign_gazebo 
       - ros_ign_gazebo_demos 
       - ros_ign_image
-
-skip_existing:
-  - https://conda.anaconda.org/robostack-staging/
 
 packages_select_by_deps:
   # These are the packages that are build on all platforms, including wasm32
