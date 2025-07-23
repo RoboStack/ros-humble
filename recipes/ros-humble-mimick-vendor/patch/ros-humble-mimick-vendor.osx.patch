@@ -1,0 +1,33 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e0632bc..4465708 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -65,6 +65,7 @@ macro(build_mimick)
+     GIT_CONFIG advice.detachedHead=false
+     # Suppress git update due to https://gitlab.kitware.com/cmake/cmake/-/issues/16419
+     UPDATE_COMMAND ""
++    PATCH_COMMAND git apply ${CMAKE_CURRENT_LIST_DIR}/crosscompile.patch
+     TIMEOUT 6000
+     ${cmake_commands}
+     CMAKE_ARGS
+diff --git a/crosscompile.patch b/crosscompile.patch
+new file mode 100644
+index 0000000..cc33b63
+--- /dev/null
++++ b/crosscompile.patch
+@@ -0,0 +1,15 @@
++diff --git a/CMakeLists.txt b/CMakeLists.txt
++index a0ff848..34c95ff 100644
++--- a/CMakeLists.txt
+++++ b/CMakeLists.txt
++@@ -32,6 +32,10 @@ else ()
++   set (_ARCH "${CMAKE_SYSTEM_PROCESSOR}")
++ endif ()
++ 
+++if(APPLE AND "$ENV{CONDA_BUILD_CROSS_COMPILATION}" EQUAL "1")
+++  set (_ARCH "arm64")
+++endif()
+++
++ set (MMK_MANGLING "none")
++ 
++ if (MSVC)

@@ -1,0 +1,83 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a42ab22..05753cd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -48,7 +48,7 @@ target_include_directories(realtime_tools PUBLIC
+   $<INSTALL_INTERFACE:include/realtime_tools>
+ )
+ ament_target_dependencies(realtime_tools PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
+-if(UNIX)
++if(UNIX AND NOT APPLE)
+   target_link_libraries(realtime_tools PUBLIC cap)
+ endif()
+ 
+@@ -62,7 +62,7 @@ target_include_directories(thread_priority PUBLIC
+   $<INSTALL_INTERFACE:include/realtime_tools>
+ )
+ ament_target_dependencies(thread_priority PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
+-if(UNIX)
++if(UNIX AND NOT APPLE)
+   target_link_libraries(thread_priority PUBLIC cap)
+ endif()
+ 
+diff --git a/src/realtime_helpers.cpp b/src/realtime_helpers.cpp
+index 9dbbfdf..10c3066 100644
+--- a/src/realtime_helpers.cpp
++++ b/src/realtime_helpers.cpp
+@@ -32,13 +32,16 @@
+ #include <windows.h>
+ #else
+ #include <sched.h>
+-#include <sys/capability.h>
+ #include <sys/mman.h>
+ #include <sys/utsname.h>
+ 
+ #include <unistd.h>
+ #endif
+ 
++#if defined(__unix__)
++#include <sys/capability.h>
++#endif
++
+ #include <cstring>
+ #include <fstream>
+ #include <iostream>
+@@ -75,6 +78,19 @@ bool configure_sched_fifo(int priority)
+ #ifdef _WIN32
+   HANDLE thread = GetCurrentThread();
+   return SetThreadPriority(thread, priority);
++#elif defined(__APPLE__)
++    pthread_t thread = pthread_self();
++    struct sched_param schedp;
++    memset(&schedp, 0, sizeof(schedp));
++    schedp.sched_priority = priority;
++
++    int policy = SCHED_FIFO;
++    if (pthread_setschedparam(thread, policy, &schedp) == 0) {
++        return true;
++    } else {
++        // Optionally log strerror(errno) for debugging
++        return false;
++    }
+ #else
+   struct sched_param schedp;
+   memset(&schedp, 0, sizeof(schedp));
+@@ -94,6 +110,8 @@ std::pair<bool, std::string> lock_memory()
+ {
+ #ifdef _WIN32
+   return {false, "Memory locking is not supported on Windows."};
++#elif defined(__APPLE__)
++  return {false, "Memory locking is not supported on MacOS."};
+ #else
+   auto is_capable = [](cap_value_t v) -> bool {
+     bool rc = false;
+@@ -146,6 +164,9 @@ std::pair<bool, std::string> set_thread_affinity(
+ #ifdef _WIN32
+   message = "Thread affinity is not supported on Windows.";
+   return std::make_pair(false, message);
++#elif defined(__APPLE__)
++  message = "Memory locking is not supported on MacOS.";
++  return std::make_pair(false, message);
+ #else
+   auto set_affinity_result_message = [](int result, std::string & msg) -> bool {
+     if (result == 0) {

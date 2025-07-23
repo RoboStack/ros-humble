@@ -1,0 +1,15 @@
+diff --git a/rclcpp_lifecycle/include/rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp b/rclcpp_lifecycle/include/rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp
+index 9f2459e296..214a82cc8b 100644
+--- a/rclcpp_lifecycle/include/rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp
++++ b/rclcpp_lifecycle/include/rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp
+@@ -22,6 +22,10 @@
+ #include "rclcpp_lifecycle/state.hpp"
+ #include "rclcpp_lifecycle/visibility_control.h"
+ 
++#ifdef ERROR
++#undef ERROR
++#endif
++
+ namespace rclcpp_lifecycle
+ {
+ namespace node_interfaces

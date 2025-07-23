@@ -1,0 +1,27 @@
+diff --git a/src/BenchmarkExecutor.cpp b/src/BenchmarkExecutor.cpp
+index cd0033d368..50760073fd 100644
+--- a/src/BenchmarkExecutor.cpp
++++ b/src/BenchmarkExecutor.cpp
+@@ -43,13 +43,10 @@
+ #include <tf2_eigen/tf2_eigen.hpp>
+ #include <moveit/utils/logger.hpp>
+ 
+-// TODO(henningkayser): Switch to boost/timer/progress_display.hpp with Boost 1.72
+-// boost/progress.hpp is deprecated and will be replaced by boost/timer/progress_display.hpp in Boost 1.72.
+-// Until then we need to suppress the deprecation warning.
+ #define BOOST_ALLOW_DEPRECATED_HEADERS
+ #include <boost/regex.hpp>
+-#include <boost/progress.hpp>
+ #undef BOOST_ALLOW_DEPRECATED_HEADERS
++#include <boost/timer/progress_display.hpp>
+ #include <boost/date_time/posix_time/posix_time.hpp>
+ #include <math.h>
+ #include <limits>
+@@ -784,7 +784,7 @@ void BenchmarkExecutor::runBenchmark(moveit_msgs::msg::MotionPlanRequest request
+   for (const std::pair<const std::string, std::vector<std::string>>& pipeline_entry : pipeline_map)
+     num_planners += pipeline_entry.second.size();
+ 
+-  boost::progress_display progress(num_planners * runs, std::cout);
++  boost::timer::progress_display progress(num_planners * runs, std::cout);
+ 
+   // Iterate through all planning pipelines

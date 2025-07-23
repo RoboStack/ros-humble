@@ -1,0 +1,14 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ca0f133..9c0ebc3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -88,6 +88,9 @@ else()
+     set(need_local_build TRUE)
+   endif()
+ endif()
++if(EMSCRIPTEN)
++  set(need_local_build FALSE)
++endif()
+ if(FORCE_BUILD_VENDOR_PKG OR need_local_build)
+   build_uncrustify()
+ endif()
