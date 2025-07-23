@@ -1,0 +1,17 @@
+diff --git a/include/rviz_default_plugins/displays/map/palette_builder.hpp b/include/rviz_default_plugins/displays/map/palette_builder.hpp
+index 923bd3079..3f6f4172f 100644
+--- a/include/rviz_default_plugins/displays/map/palette_builder.hpp
++++ b/include/rviz_default_plugins/displays/map/palette_builder.hpp
+@@ -40,9 +40,9 @@ namespace rviz_default_plugins
+ namespace displays
+ {
+ 
+-std::vector<unsigned char> makeRawPalette();
+-std::vector<unsigned char> makeMapPalette();
+-std::vector<unsigned char> makeCostmapPalette();
++RVIZ_DEFAULT_PLUGINS_PUBLIC std::vector<unsigned char> makeRawPalette();
++RVIZ_DEFAULT_PLUGINS_PUBLIC std::vector<unsigned char> makeMapPalette();
++RVIZ_DEFAULT_PLUGINS_PUBLIC std::vector<unsigned char> makeCostmapPalette();
+ 
+ class PaletteBuilder : public
+   std::enable_shared_from_this<PaletteBuilder>

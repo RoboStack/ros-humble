@@ -1,0 +1,170 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 67612f0..355d45e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -23,10 +23,10 @@ find_package(std_msgs REQUIRED)
+ 
+ find_package(OpenCV REQUIRED imgproc)
+ find_package(PkgConfig)
+-pkg_check_modules(PC_OGG REQUIRED ogg)
+-pkg_check_modules(PC_THEORA REQUIRED theora)
+-pkg_check_modules(PC_THEORAENC REQUIRED theoraenc)
+-pkg_check_modules(PC_THEORADEC REQUIRED theoradec)
++list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
++
++find_package(OGG REQUIRED)
++find_package(THEORA REQUIRED)
+ 
+ rosidl_generate_interfaces(${PROJECT_NAME}
+   "msg/Packet.msg"
+@@ -55,13 +55,13 @@ target_compile_definitions(${LIBRARY_NAME} PRIVATE
+ target_include_directories(${LIBRARY_NAME} PRIVATE
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+-)
++  ${THEORA_INCLUDE_DIRS}
++  ${OGG_INCLUDE_DIRS})
++
+ target_link_libraries(${LIBRARY_NAME}
+   opencv_imgproc
+-  ${PC_OGG_LIBRARIES}
+-  ${PC_THEORA_LIBRARIES}
+-  ${PC_THEORAENC_LIBRARIES}
+-  ${PC_THEORADEC_LIBRARIES}
++  ${OGG_LIBRARIES}
++  ${THEORA_LIBRARIES}
+   "${cpp_typesupport_target}"
+   ${sensor_msgs_TARGETS}
+   cv_bridge::cv_bridge
+@@ -71,20 +71,13 @@ target_link_libraries(${LIBRARY_NAME}
+ )
+ 
+ add_executable(ogg_saver src/ogg_saver.cpp)
+-target_compile_definitions(ogg_saver PRIVATE
+-  ${PC_OGG_CFLAGS_OTHER}
+-  ${PC_THEORA_CFLAGS_OTHER}
+-  ${PC_THEORAENC_CFLAGS_OTHER}
+-  ${PC_THEORADEC_CFLAGS_OTHER}
+-)
+-target_link_libraries(ogg_saver
+-  ${PC_THEORA_LIBRARY}
+-  ${PC_OGG_LIBRARY}
+-  ${PC_THEORAENC_LIBRARIES}
+-  ${PC_THEORADEC_LIBRARIES}
+-  "${cpp_typesupport_target}"
+-  rclcpp::rclcpp
+-  rcutils::rcutils
++
++target_link_libraries(ogg_saver ${THEORA_LIBRARIES}
++                                ${OGG_LIBRARIES}
++                                ${OpenCV_LIBRARIES}
++                                "${cpp_typesupport_target}"
++                                rclcpp::rclcpp
++                                rcutils::rcutils
+ )
+ 
+ ament_export_dependencies(
+diff --git a/cmake/FindOGG.cmake b/cmake/FindOGG.cmake
+new file mode 100644
+index 0000000..3121d17
+--- /dev/null
++++ b/cmake/FindOGG.cmake
+@@ -0,0 +1,26 @@
++find_path(OGG_INCLUDE_DIR
++  NAMES
++    ogg/ogg.h
++  DOC "ogg include directory")
++mark_as_advanced(OGG_INCLUDE_DIR)
++
++find_library(OGG_LIBRARY
++  NAMES
++    ogg
++  DOC "ogg library")
++mark_as_advanced(OGG_LIBRARY)
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(OGG REQUIRED_VARS OGG_LIBRARY OGG_INCLUDE_DIR)
++
++if (OGG_FOUND)
++  set(OGG_LIBRARIES "${OGG_LIBRARY}")
++  set(OGG_INCLUDE_DIRS "${OGG_INCLUDE_DIR}")
++
++  if (NOT TARGET OGG::OGG)
++    add_library(OGG::OGG UNKNOWN IMPORTED)
++    set_target_properties(OGG::OGG PROPERTIES
++      IMPORTED_LOCATION "${OGG_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES "${OGG_INCLUDE_DIR}")
++  endif ()
++endif ()
+diff --git a/cmake/FindTHEORA.cmake b/cmake/FindTHEORA.cmake
+new file mode 100644
+index 0000000..b69dd2c
+--- /dev/null
++++ b/cmake/FindTHEORA.cmake
+@@ -0,0 +1,66 @@
++include(CMakeFindDependencyMacro)
++
++find_path(THEORA_INCLUDE_DIR
++  NAMES
++    theora/theora.h
++  DOC "theora include directory")
++mark_as_advanced(THEORA_INCLUDE_DIR)
++
++get_filename_component(computed_theora_root "${THEORA_INCLUDE_DIR}" DIRECTORY)
++
++find_library(THEORA_LIBRARY
++  NAMES
++    theora
++  HINTS
++    "${computed_theora_root}/lib"
++    "${computed_theora_root}/lib64"
++  DOC "theora library")
++mark_as_advanced(THEORA_LIBRARY)
++
++find_library(THEORA_enc_LIBRARY
++  NAMES
++    theoraenc
++  HINTS
++    "${computed_theora_root}/lib"
++    "${computed_theora_root}/lib64"
++  DOC "theora encoding library")
++mark_as_advanced(THEORA_enc_LIBRARY)
++
++find_library(THEORA_dec_LIBRARY
++  NAMES
++    theoradec
++  HINTS
++    "${computed_theora_root}/lib"
++    "${computed_theora_root}/lib64"
++  DOC "theora decoding library")
++mark_as_advanced(THEORA_dec_LIBRARY)
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(THEORA
++  REQUIRED_VARS THEORA_LIBRARY THEORA_enc_LIBRARY THEORA_dec_LIBRARY THEORA_INCLUDE_DIR)
++
++if (THEORA_FOUND)
++  set(THEORA_LIBRARIES "${THEORA_LIBRARY}" "${THEORA_enc_LIBRARY}" "${THEORA_dec_LIBRARY}")
++  set(THEORA_INCLUDE_DIRS "${THEORA_INCLUDE_DIR}")
++
++  if (NOT TARGET THEORA::THEORA)
++    add_library(THEORA::THEORA UNKNOWN IMPORTED)
++    set_target_properties(THEORA::THEORA PROPERTIES
++      IMPORTED_LOCATION "${THEORA_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES ${THEORA_INCLUDE_DIR})
++  endif ()
++
++  if (NOT TARGET THEORA::ENC)
++    add_library(THEORA::ENC UNKNOWN IMPORTED)
++    set_target_properties(THEORA::ENC PROPERTIES
++      IMPORTED_LOCATION "${THEORA_enc_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES ${THEORA_INCLUDE_DIR})
++  endif()
++
++  if (NOT TARGET THEORA::DEC)
++    add_library(THEORA::DEC UNKNOWN IMPORTED)
++    set_target_properties(THEORA::DEC PROPERTIES
++      IMPORTED_LOCATION "${THEORA_dec_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES ${THEORA_INCLUDE_DIR})
++  endif()
++endif ()

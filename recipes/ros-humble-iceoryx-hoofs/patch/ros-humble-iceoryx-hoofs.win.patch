@@ -1,0 +1,25 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f7cb43b..115964a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -26,6 +26,8 @@ include("${CMAKE_CURRENT_LIST_DIR}/cmake/IceoryxPlatform.cmake")
+ 
+ if(CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME MATCHES Darwin)
+     option(BUILD_SHARED_LIBS "Create shared libraries by default" ON)
++else()
++    set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+ endif()
+ 
+ set(PREFIX iceoryx/v${CMAKE_PROJECT_VERSION})
+diff --git a/platform/win/source/time.cpp b/platform/win/source/time.cpp
+index 4c2ab2d..4a7074b 100644
+--- a/platform/win/source/time.cpp
++++ b/platform/win/source/time.cpp
+@@ -16,6 +16,7 @@
+ // SPDX-License-Identifier: Apache-2.0
+ 
+ #include "iceoryx_hoofs/platform/time.hpp"
++#include <chrono>
+ 
+ static std::chrono::nanoseconds getNanoSeconds(const timespec& value)
+ {

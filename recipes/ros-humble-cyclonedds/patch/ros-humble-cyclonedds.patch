@@ -1,0 +1,14 @@
+diff --git a/src/ddsrt/include/dds/ddsrt/threads/posix.h b/src/ddsrt/include/dds/ddsrt/threads/posix.h
+index af3b7f6..6feb67b 100644
+--- a/src/ddsrt/include/dds/ddsrt/threads/posix.h
++++ b/src/ddsrt/include/dds/ddsrt/threads/posix.h
+@@ -39,8 +39,7 @@ typedef long int ddsrt_thread_list_id_t;
+ typedef int ddsrt_tid_t;
+ #define PRIdTID "d"
+ /* __FreeBSD__ */
+-#elif defined(__APPLE__) && !(defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && \
+-                                      __MAC_OS_X_VERSION_MIN_REQUIRED < 1060)
++#elif defined(__APPLE__)
+ /* macOS X >= 10.6 */
+ typedef uint64_t ddsrt_tid_t;
+ #define PRIdTID PRIu64

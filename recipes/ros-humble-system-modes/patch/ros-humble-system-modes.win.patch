@@ -1,0 +1,9 @@
+diff --git a/system_modes/CMakeLists.txt b/system_modes/CMakeLists.txt
+index 2c0bf30..ab07f68 100644
+--- a/system_modes/CMakeLists.txt
++++ b/system_modes/CMakeLists.txt
+@@ -17,3 +17,4 @@ endif()
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 
+ # find dependencies
+ find_package(ament_cmake REQUIRED)

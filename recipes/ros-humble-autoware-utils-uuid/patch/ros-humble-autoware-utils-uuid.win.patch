@@ -1,0 +1,20 @@
+From bcf5cad907f5cb70fa761603ac69b000d9176be9 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Sat, 5 Jul 2025 09:24:22 +0200
+Subject: [PATCH] autoware_utils_uuid: Include cstdint as uint8_t is used
+
+---
+ include/autoware_utils_uuid/uuid_helper.hpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/autoware_utils_uuid/uuid_helper.hpp b/include/autoware_utils_uuid/uuid_helper.hpp
+index 2b7ec62..b2420b9 100644
+--- a/include/autoware_utils_uuid/uuid_helper.hpp
++++ b/include/autoware_utils_uuid/uuid_helper.hpp
+@@ -20,6 +20,7 @@
+ #include <boost/uuid/uuid.hpp>
+ 
+ #include <algorithm>
++#include <cstdint>
+ #include <random>
+ #include <string>

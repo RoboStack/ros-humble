@@ -1,0 +1,82 @@
+From 9cbdacd6e9d4ad145713247c232af2740e93f610 Mon Sep 17 00:00:00 2001
+From: "mergify[bot]" <37929162+mergify[bot]@users.noreply.github.com>
+Date: Wed, 25 Jun 2025 09:09:17 +0200
+Subject: [PATCH] ur_robot_driver: Fix compilation on Windows (backport of
+ #1421) (#1431)
+
+Co-authored-by: Silvio Traversaro <silvio@traversaro.it>
+---
+ ur_robot_driver/CMakeLists.txt                           | 9 ++++++---
+ .../include/ur_robot_driver/hardware_interface.hpp       | 2 +-
+ ur_robot_driver/src/hardware_interface.cpp               | 4 ++--
+ ur_robot_driver/src/robot_state_helper.cpp               | 2 +-
+ 4 files changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/ur_robot_driver/CMakeLists.txt b/ur_robot_driver/CMakeLists.txt
+index adb8f7119..43a653cc9 100644
+--- a/ur_robot_driver/CMakeLists.txt
++++ b/ur_robot_driver/CMakeLists.txt
+@@ -9,9 +9,12 @@ option(
+   OFF
+ )
+ 
+-add_compile_options(-Wall)
+-add_compile_options(-Wextra)
+-add_compile_options(-Wno-unused-parameter)
++if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
++  add_compile_options(-Wall)
++  add_compile_options(-Wextra)
++  add_compile_options(-Wno-unused-parameter)
++endif()
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 
+ if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+   message("${PROJECT_NAME}: You did not request a specific build type: selecting 'RelWithDebInfo'.")
+diff --git a/ur_robot_driver/include/ur_robot_driver/hardware_interface.hpp b/ur_robot_driver/include/ur_robot_driver/hardware_interface.hpp
+index e9ea08129..e6cc00c86 100644
+--- a/ur_robot_driver/include/ur_robot_driver/hardware_interface.hpp
++++ b/ur_robot_driver/include/ur_robot_driver/hardware_interface.hpp
+@@ -301,7 +301,7 @@ class URPositionHardwareInterface : public hardware_interface::SystemInterface
+   double pausing_ramp_up_increment_;
+ 
+   // resources switching aux vars
+-  std::vector<std::vector<uint>> stop_modes_;
++  std::vector<std::vector<uint32_t>> stop_modes_;
+   std::vector<std::vector<std::string>> start_modes_;
+   bool position_controller_running_;
+   bool velocity_controller_running_;
+diff --git a/ur_robot_driver/src/hardware_interface.cpp b/ur_robot_driver/src/hardware_interface.cpp
+index dcb930304..a051148b8 100644
+--- a/ur_robot_driver/src/hardware_interface.cpp
++++ b/ur_robot_driver/src/hardware_interface.cpp
+@@ -220,7 +220,7 @@ std::vector<hardware_interface::StateInterface> URPositionHardwareInterface::exp
+       const std::vector<std::string> fts_names = {
+         "force.x", "force.y", "force.z", "torque.x", "torque.y", "torque.z"
+       };
+-      for (uint j = 0; j < 6; ++j) {
++      for (uint32_t j = 0; j < 6; ++j) {
+         state_interfaces.emplace_back(
+             hardware_interface::StateInterface(sensor.name, fts_names[j], &urcl_ft_sensor_measurements_[j]));
+       }
+@@ -1107,7 +1107,7 @@ hardware_interface::return_type URPositionHardwareInterface::prepare_command_mod
+   hardware_interface::return_type ret_val = hardware_interface::return_type::OK;
+ 
+   start_modes_ = std::vector<std::vector<std::string>>(info_.joints.size());
+-  stop_modes_ = std::vector<std::vector<uint>>(info_.joints.size());
++  stop_modes_ = std::vector<std::vector<uint32_t>>(info_.joints.size());
+   std::vector<std::vector<std::string>> control_modes(info_.joints.size());
+   const std::string tf_prefix = info_.hardware_parameters.at("tf_prefix");
+ 
+diff --git a/ur_robot_driver/src/robot_state_helper.cpp b/ur_robot_driver/src/robot_state_helper.cpp
+index 5adefe2a1..4caad6f0e 100644
+--- a/ur_robot_driver/src/robot_state_helper.cpp
++++ b/ur_robot_driver/src/robot_state_helper.cpp
+@@ -361,7 +361,7 @@ void RobotStateHelper::setModeExecute(const std::shared_ptr<RobotStateHelper::Se
+           result_->message = "Play program service not available on this robot.";
+         } else {
+           // The dashboard denies playing immediately after switching the mode to RUNNING
+-          sleep(1);
++          std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+           result_->success = safeDashboardTrigger(this->play_program_srv_);
+         }
+       }

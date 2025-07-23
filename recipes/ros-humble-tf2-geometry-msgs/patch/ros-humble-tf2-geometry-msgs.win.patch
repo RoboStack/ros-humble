@@ -1,0 +1,13 @@
+diff --git a/tf2_geometry_msgs/include/tf2_geometry_msgs/tf2_geometry_msgs.h b/tf2_geometry_msgs/include/tf2_geometry_msgs/tf2_geometry_msgs.h
+index 01ad16152..15665f7f9 100644
+--- a/tf2_geometry_msgs/include/tf2_geometry_msgs/tf2_geometry_msgs.h
++++ b/tf2_geometry_msgs/include/tf2_geometry_msgs/tf2_geometry_msgs.h
+@@ -32,8 +32,6 @@
+ #ifndef TF2_GEOMETRY_MSGS__TF2_GEOMETRY_MSGS_H_
+ #define TF2_GEOMETRY_MSGS__TF2_GEOMETRY_MSGS_H_
+ 
+-#warning This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead
+-
+ #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
+ 
+ #endif  // TF2_GEOMETRY_MSGS__TF2_GEOMETRY_MSGS_H_

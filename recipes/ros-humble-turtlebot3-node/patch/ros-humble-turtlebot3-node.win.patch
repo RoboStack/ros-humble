@@ -1,0 +1,9 @@
+diff --git a/turtlebot3_node/CMakeLists.txt b/turtlebot3_node/CMakeLists.txt
+index d81d8127..3c464b42 100644
+--- a/turtlebot3_node/CMakeLists.txt
++++ b/turtlebot3_node/CMakeLists.txt
+@@ -14,3 +14,4 @@ endif()
++set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+ 
+ ################################################################################
+ # Find ament packages and libraries for ament and system dependencies

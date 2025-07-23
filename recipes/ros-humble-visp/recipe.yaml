@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+
+package:
+  name: ros-humble-visp
+  version: 3.6.0
+
+build:
+  number: 13
+  script: ''
+  post_process:
+    - files:
+        - '*.pc'
+      regex: (?:-L|-I)?"?([^;\s]+/sysroot/)
+      replacement: $$(CONDA_BUILD_SYSROOT_S)
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/sysroot)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/MacOSX\d*\.?\d*\.sdk)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+about:
+  homepage: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - if: build_platform != target_platform
+      then:
+        - doxygen
+  host:
+    - bzip2
+    - eigen
+    - graphviz
+    - libjpeg-turbo
+    - liblapack
+    - libopencv
+    - libpng
+    - libxml2
+    - py-opencv
+    - python
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros2-distro-mutex 0.7.* humble_*
+    - xorg-libx11
+    - xorg-xorgproto
+    - if: build_platform == target_platform
+      then:
+        - doxygen
+    - if: linux
+      then:
+        - libgl-devel
+        - libopengl-devel
+    - if: unix
+      then:
+        - xorg-libx11
+        - xorg-libxext
+  run:
+    - eigen
+    - libjpeg-turbo
+    - liblapack
+    - libopencv
+    - libpng
+    - libxml2
+    - py-opencv
+    - python
+    - ros-humble-ros-workspace
+    - ros2-distro-mutex 0.7.* humble_*
+    - visp >=3.6.0, <3.7.0a0
+    - xorg-libx11
+    - xorg-xorgproto
+    - if: osx and x86_64
+      then:
+        - __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
+    - if: unix
+      then:
+        - xorg-libx11
+        - xorg-libxext

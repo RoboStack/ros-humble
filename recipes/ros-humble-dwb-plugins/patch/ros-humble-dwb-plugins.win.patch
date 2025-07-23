@@ -1,0 +1,13 @@
+diff --git a/nav2_dwb_controller/dwb_plugins/CMakeLists.txt b/nav2_dwb_controller/dwb_plugins/CMakeLists.txt
+index a1806c524..c5ce526e5 100644
+--- a/nav2_dwb_controller/dwb_plugins/CMakeLists.txt
++++ b/nav2_dwb_controller/dwb_plugins/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(dwb_plugins)
+ 
++add_definitions(-DNOMINMAX)
++
+ find_package(ament_cmake REQUIRED)
+ find_package(nav2_common REQUIRED)
+ find_package(angles REQUIRED)

@@ -1,0 +1,15 @@
+diff --git a/apriltag_tools/CMakeLists.txt b/apriltag_tools/CMakeLists.txt
+index e1bed4d..b984144 100644
+--- a/apriltag_tools/CMakeLists.txt
++++ b/apriltag_tools/CMakeLists.txt
+@@ -16,7 +16,9 @@
+ cmake_minimum_required(VERSION 3.16)
+ project(apriltag_tools)
+ 
+-add_compile_options(-Wall -Wextra -Wpedantic -Werror)
++if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
++  add_compile_options(-Wall -Wextra -Wpedantic -Werror)
++endif()
+ 
+ # find dependencies
+ find_package(ament_cmake REQUIRED)
