@@ -1,0 +1,153 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+
+package:
+  name: ros-humble-rviz-default-plugins
+  version: 11.2.18
+source:
+  git: https://github.com/ros2-gbp/rviz-release.git
+  tag: release/humble/rviz_default_plugins/11.2.18-1
+  target_directory: ros-humble-rviz-default-plugins/src/work
+  patches:
+    - patch/ros-humble-rviz-default-plugins.patch
+
+build:
+  script: ${{ '$RECIPE_DIR/build_ament_cmake.sh' if unix or wasm32 else '%RECIPE_DIR%\\bld_ament_cmake.bat' }}
+  number: 13
+  post_process:
+    - files:
+        - '*.pc'
+      regex: (?:-L|-I)?"?([^;\s]+/sysroot/)
+      replacement: $$(CONDA_BUILD_SYSROOT_S)
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/sysroot)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/MacOSX\d*\.?\d*\.sdk)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+about:
+  homepage: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('c') }}
+    - if: target_platform!='emscripten-wasm32'
+      then:
+        - ${{ stdlib('c') }}
+    - ninja
+    - python
+    - setuptools
+    - git
+    - git-lfs
+    - if: unix
+      then:
+        - patch
+        - make
+        - coreutils
+    - if: win
+      then:
+        - m2-patch
+    - if: osx
+      then:
+        - tapi
+    - if: build_platform != target_platform
+      then:
+        - pkg-config
+    - cmake
+    - cython
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - numpy
+    - if: build_platform != target_platform
+      then:
+        - qt-main
+  host:
+    - if: build_platform == target_platform
+      then:
+        - pkg-config
+    - numpy
+    - pip
+    - python
+    - qt-main
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-cppcheck
+    - ros-humble-ament-cmake-cpplint
+    - ros-humble-ament-cmake-gmock
+    - ros-humble-ament-cmake-gtest
+    - ros-humble-ament-cmake-lint-cmake
+    - ros-humble-ament-cmake-uncrustify
+    - ros-humble-ament-cmake-xmllint
+    - ros-humble-ament-index-cpp
+    - ros-humble-ament-lint-auto
+    - ros-humble-geometry-msgs
+    - ros-humble-ignition-math6-vendor
+    - ros-humble-image-transport
+    - ros-humble-interactive-markers
+    - ros-humble-laser-geometry
+    - ros-humble-map-msgs
+    - ros-humble-nav-msgs
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-resource-retriever
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-rviz-common
+    - ros-humble-rviz-ogre-vendor
+    - ros-humble-rviz-rendering
+    - ros-humble-rviz-rendering-tests
+    - ros-humble-rviz-visual-testing-framework
+    - ros-humble-tf2
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-ros
+    - ros-humble-urdf
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.7.* humble_*
+    - if: linux
+      then:
+        - libgl-devel
+        - libopengl-devel
+    - if: unix
+      then:
+        - xorg-libx11
+        - xorg-libxext
+  run:
+    - python
+    - qt-main
+    - ros-humble-geometry-msgs
+    - ros-humble-ignition-math6-vendor
+    - ros-humble-image-transport
+    - ros-humble-interactive-markers
+    - ros-humble-laser-geometry
+    - ros-humble-map-msgs
+    - ros-humble-nav-msgs
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-resource-retriever
+    - ros-humble-ros-workspace
+    - ros-humble-rviz-common
+    - ros-humble-rviz-ogre-vendor
+    - ros-humble-rviz-rendering
+    - ros-humble-tf2
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-ros
+    - ros-humble-urdf
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.7.* humble_*
+    - if: osx and x86_64
+      then:
+        - __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
+    - if: unix
+      then:
+        - xorg-libx11
+        - xorg-libxext

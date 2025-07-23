@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e940609..bd03185 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,7 +17,7 @@ target_include_directories(${PROJECT_NAME}
+   PUBLIC
+     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+     $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+-ament_target_dependencies(${PROJECT_NAME} rclcpp geometry_msgs pybind11)
++target_link_libraries(${PROJECT_NAME} PUBLIC rclcpp::rclcpp ${geometry_msgs_TARGETS} pybind11::module)
+ 
+ ament_export_targets(${PROJECT_NAME}Targets HAS_LIBRARY_TARGET)

@@ -1,0 +1,18 @@
+diff --git a/cmake/package_templates/templates_2_cmake.py b/cmake/package_templates/templates_2_cmake.py
+index b7c0faf..328cc38 100644
+--- a/cmake/package_templates/templates_2_cmake.py
++++ b/cmake/package_templates/templates_2_cmake.py
+@@ -68,12 +68,7 @@ def generate_cmake_code():
+     """
+     variables = []
+ 
+-    if not IS_WINDOWS:
+-        variables.append((
+-            'ENVIRONMENT_HOOK_LIBRARY_PATH',
+-            '"%s"' % get_environment_hook_template_path('library_path.sh')))
+-    else:
+-        variables.append(('ENVIRONMENT_HOOK_LIBRARY_PATH', ''))
++    variables.append(('ENVIRONMENT_HOOK_LIBRARY_PATH', ''))
+ 
+     ext = '.bat.in' if IS_WINDOWS else '.sh.in'
+     variables.append((

@@ -1,0 +1,24 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8856bcb90..bfefbd625 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.10)
++cmake_minimum_required(VERSION 3.16)
+ project(webots_ros2_driver)
+
+ set(CMAKE_CXX_STANDARD 17)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8856bcb90..0834db8ab 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -31,7 +31,7 @@ find_package(TinyXML2 REQUIRED)
+ find_package(yaml-cpp REQUIRED)
+ 
+ if($ENV{ROS_DISTRO} MATCHES "humble")
+-  find_package(Python 3.10 EXACT REQUIRED COMPONENTS Development)
++  find_package(Python REQUIRED COMPONENTS Development)
+ elseif($ENV{ROS_DISTRO} MATCHES "jazzy")
+   find_package(Python 3.12 EXACT REQUIRED COMPONENTS Development)
+ elseif($ENV{ROS_DISTRO} MATCHES "rolling")

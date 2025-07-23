@@ -1,0 +1,31 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a1f08032..2b3291c3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,6 +3,10 @@ set(MRT_PKG_VERSION 4.0.0)
+ cmake_minimum_required(VERSION 3.5.1)
+ project(lanelet2_routing)
+ 
++if(WIN32 AND MSVC)
++  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++endif()
++
+ ###################
+ ## Find packages ##
+ ###################
+diff --git a/src/RouteBuilder.cpp b/src/RouteBuilder.cpp
+index 9eee0943..4ad61cbc 100644
+--- a/src/RouteBuilder.cpp
++++ b/src/RouteBuilder.cpp
+@@ -237,9 +237,9 @@ class PathsOutOfRouteFinder {
+       constexpr auto Adjacent =
+           RelationType::Left | RelationType::Right | RelationType::AdjacentLeft | RelationType::AdjacentRight;
+       return std::any_of(inEdges.first, inEdges.second,
+-                         [&](auto e) { return hasRelation<Adjacent>(g, e) && has(*llts_, boost::source(e, g)); }) ||
++                         [&](auto e) { return hasRelation<RelationType::Left | RelationType::Right | RelationType::AdjacentLeft | RelationType::AdjacentRight>(g, e) && has(*llts_, boost::source(e, g)); }) ||
+              std::any_of(outEdges.first, outEdges.second,
+-                         [&](auto e) { return hasRelation<Adjacent>(g, e) && has(*llts_, boost::target(e, g)); });
++                         [&](auto e) { return hasRelation<RelationType::Left | RelationType::Right | RelationType::AdjacentLeft | RelationType::AdjacentRight>(g, e) && has(*llts_, boost::target(e, g)); });
+     };
+     return std::all_of(path.begin(), path.end(), isAdjacentToRoute);
+   }

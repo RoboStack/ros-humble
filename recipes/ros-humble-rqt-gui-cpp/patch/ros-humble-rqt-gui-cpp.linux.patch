@@ -1,0 +1,25 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c364616..ad9ec7b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -28,6 +28,20 @@ find_package(rclcpp REQUIRED)
+ find_package(qt_gui REQUIRED)
+ find_package(qt_gui_cpp REQUIRED)
+ 
++# A dumb change to remove the last item from Qt5Widgets include directories as it
++# points to the `_build_env/...` Gl. This folder doesn't stay constant across builds!
++foreach(ICDIR ${Qt5Widgets_INCLUDE_DIRS})
++  if (ICDIR MATCHES _build_env/x86_64-conda-linux-gnu/sysroot/usr/include OR
++      ICDIR MATCHES _build_env/aarch64-conda-linux-gnu/sysroot/usr/include)
++    message("REMOVING ${ICDIR}")
++    list(REMOVE_ITEM Qt5Widgets_INCLUDE_DIRS ${ICDIR})
++    break()
++  endif()
++endforeach()
++message(${Qt5Widgets_INCLUDE_DIRS})
++# find_path(GL_PATH GL/gl.h)
++# list(REMOVE_ITEM Qt5Widgets_INCLUDE_DIRS GL_PATH)
++
+ ament_export_dependencies(
+   Qt5Widgets
+   pluginlib

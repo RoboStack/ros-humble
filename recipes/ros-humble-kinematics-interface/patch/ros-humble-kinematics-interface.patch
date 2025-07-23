@@ -1,0 +1,11 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 27a6269..06549d9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -45,5 +45,5 @@ install(
+ )
+ 
+ ament_export_targets(export_kinematics_interface HAS_LIBRARY_TARGET)
+-ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
++ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS} Eigen3)
+ ament_package()

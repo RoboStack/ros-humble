@@ -1,0 +1,20 @@
+diff --git a/src/TopicPublisherROS2/generic_publisher.h b/src/TopicPublisherROS2/generic_publisher.h
+index ddd45be..1135fd9 100644
+--- a/src/TopicPublisherROS2/generic_publisher.h
++++ b/src/TopicPublisherROS2/generic_publisher.h
+@@ -26,11 +26,11 @@ public:
+   GenericPublisher(rclcpp::node_interfaces::NodeBaseInterface* node_base,
+                    const std::string& topic_name,
+                    const rosidl_message_type_support_t& type_support)
+-#ifdef ROS_HUMBLE
++//#ifdef ROS_HUMBLE
+   : rclcpp::PublisherBase(node_base, topic_name, type_support, rcl_publisher_get_default_options())
+-#else
+-  : rclcpp::PublisherBase(node_base, topic_name, type_support, rcl_publisher_get_default_options(), callbacks_, true)
+-#endif
++//#else
++//  : rclcpp::PublisherBase(node_base, topic_name, type_support, rcl_publisher_get_default_options(), callbacks_, true)
++//#endif
+   {}
+ 
+   virtual ~GenericPublisher() = default;

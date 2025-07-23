@@ -1,0 +1,4670 @@
+jobs:
+  stage_0_job_0:
+    name: mutex ament-package ament-cmake-core
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros2-distro-mutex ros-humble-ament-package ros-humble-ament-cmake-core
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-distro-mutex ros-humble-ament-package ros-humble-ament-cmake-core
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_1_job_1:
+    name: ros-workspace ros-environment
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros-workspace ros-humble-ros-environment
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-workspace ros-humble-ros-environment
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_2_job_2:
+    name: ament-lint ament-cmake-python gtest-vendor ament-cmake-libraries ament-cmake-include-directories
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-lint ros-humble-ament-cmake-python ros-humble-gtest-vendor
+        ros-humble-ament-cmake-libraries ros-humble-ament-cmake-include-directories
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-lint ros-humble-ament-cmake-python ros-humble-gtest-vendor
+          ros-humble-ament-cmake-libraries ros-humble-ament-cmake-include-directories
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_2_job_3:
+    name: ament-cmake-export-libraries ament-cmake-version ament-cmake-export-link-flags
+      ament-cmake-export-include-directories ament-cmake-export-definitions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-cmake-export-libraries ros-humble-ament-cmake-version
+        ros-humble-ament-cmake-export-link-flags ros-humble-ament-cmake-export-include-directories
+        ros-humble-ament-cmake-export-definitions
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-cmake-export-libraries ros-humble-ament-cmake-version
+          ros-humble-ament-cmake-export-link-flags ros-humble-ament-cmake-export-include-directories
+          ros-humble-ament-cmake-export-definitions
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_2_job_4:
+    name: ament-pycodestyle ament-cppcheck osrf-pycommon google-benchmark-vendor osrf-testing-tools-cpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-pycodestyle ros-humble-ament-cppcheck ros-humble-osrf-pycommon
+        ros-humble-google-benchmark-vendor ros-humble-osrf-testing-tools-cpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-pycodestyle ros-humble-ament-cppcheck ros-humble-osrf-pycommon
+          ros-humble-google-benchmark-vendor ros-humble-osrf-testing-tools-cpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_2_job_5:
+    name: test-interface-files fastcdr iceoryx-hoofs urdfdom-headers ruckig
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-test-interface-files ros-humble-fastcdr ros-humble-iceoryx-hoofs
+        ros-humble-urdfdom-headers ros-humble-ruckig
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-test-interface-files ros-humble-fastcdr ros-humble-iceoryx-hoofs
+          ros-humble-urdfdom-headers ros-humble-ruckig
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_2_job_6:
+    name: octomap ompl grid-map-cmake-helpers gtsam sdformat-test-files
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-octomap ros-humble-ompl ros-humble-grid-map-cmake-helpers
+        ros-humble-gtsam ros-humble-sdformat-test-files
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-octomap ros-humble-ompl ros-humble-grid-map-cmake-helpers
+          ros-humble-gtsam ros-humble-sdformat-test-files
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_2_job_7:
+    name: cartographer librealsense2 sick-safetyscanners-base libcamera apriltag
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-cartographer ros-humble-librealsense2 ros-humble-sick-safetyscanners-base
+        ros-humble-libcamera ros-humble-apriltag
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-cartographer ros-humble-librealsense2 ros-humble-sick-safetyscanners-base
+          ros-humble-libcamera ros-humble-apriltag
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_2_job_8:
+    name: apriltag-mit visp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-apriltag-mit ros-humble-visp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-apriltag-mit ros-humble-visp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_3_job_9:
+    name: ament-flake8 ament-cmake-test ament-cmake-target-dependencies ament-cmake-export-targets
+      ament-cmake-export-interfaces
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_2
+    - stage_2_job_3
+    - stage_2_job_4
+    - stage_2_job_5
+    - stage_2_job_6
+    - stage_2_job_7
+    - stage_2_job_8
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-flake8 ros-humble-ament-cmake-test ros-humble-ament-cmake-target-dependencies
+        ros-humble-ament-cmake-export-targets ros-humble-ament-cmake-export-interfaces
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-flake8 ros-humble-ament-cmake-test ros-humble-ament-cmake-target-dependencies
+          ros-humble-ament-cmake-export-targets ros-humble-ament-cmake-export-interfaces
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_3_job_10:
+    name: ament-cmake-export-dependencies gmock-vendor iceoryx-posh backward-ros mrt-cmake-modules
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_2
+    - stage_2_job_3
+    - stage_2_job_4
+    - stage_2_job_5
+    - stage_2_job_6
+    - stage_2_job_7
+    - stage_2_job_8
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-cmake-export-dependencies ros-humble-gmock-vendor
+        ros-humble-iceoryx-posh ros-humble-backward-ros ros-humble-mrt-cmake-modules
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-cmake-export-dependencies ros-humble-gmock-vendor
+          ros-humble-iceoryx-posh ros-humble-backward-ros ros-humble-mrt-cmake-modules
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_3_job_11:
+    name: ament-pyflakes
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_2
+    - stage_2_job_3
+    - stage_2_job_4
+    - stage_2_job_5
+    - stage_2_job_6
+    - stage_2_job_7
+    - stage_2_job_8
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-pyflakes
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-pyflakes
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_4_job_12:
+    name: ament-pep257 ament-cmake-gtest ament-lint-auto ament-cmake-google-benchmark
+      ament-cmake-pytest
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_9
+    - stage_3_job_10
+    - stage_3_job_11
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-pep257 ros-humble-ament-cmake-gtest ros-humble-ament-lint-auto
+        ros-humble-ament-cmake-google-benchmark ros-humble-ament-cmake-pytest
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-pep257 ros-humble-ament-cmake-gtest ros-humble-ament-lint-auto
+          ros-humble-ament-cmake-google-benchmark ros-humble-ament-cmake-pytest
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_4_job_13:
+    name: iceoryx-binding-c ament-cmake-catch2 lanelet2-core ament-mypy ament-cmake-vendor-package
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_9
+    - stage_3_job_10
+    - stage_3_job_11
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-iceoryx-binding-c ros-humble-ament-cmake-catch2 ros-humble-lanelet2-core
+        ros-humble-ament-mypy ros-humble-ament-cmake-vendor-package
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-iceoryx-binding-c ros-humble-ament-cmake-catch2
+          ros-humble-lanelet2-core ros-humble-ament-mypy ros-humble-ament-cmake-vendor-package
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_4_job_14:
+    name: ament-cmake-nose
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_9
+    - stage_3_job_10
+    - stage_3_job_11
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-cmake-nose
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-cmake-nose
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_5_job_15:
+    name: ament-copyright ament-cmake-gen-version-h ament-cmake-gmock cyclonedds lanelet2-io
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_12
+    - stage_4_job_13
+    - stage_4_job_14
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-copyright ros-humble-ament-cmake-gen-version-h
+        ros-humble-ament-cmake-gmock ros-humble-cyclonedds ros-humble-lanelet2-io
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-copyright ros-humble-ament-cmake-gen-version-h
+          ros-humble-ament-cmake-gmock ros-humble-cyclonedds ros-humble-lanelet2-io
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_5_job_16:
+    name: lanelet2-traffic-rules lanelet2-maps tf-transformations
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_12
+    - stage_4_job_13
+    - stage_4_job_14
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-lanelet2-traffic-rules ros-humble-lanelet2-maps ros-humble-tf-transformations
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-lanelet2-traffic-rules ros-humble-lanelet2-maps
+          ros-humble-tf-transformations
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_6_job_17:
+    name: ament-lint-cmake ament-cmake ament-xmllint ament-cpplint ament-index-python
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_5_job_15
+    - stage_5_job_16
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-lint-cmake ros-humble-ament-cmake ros-humble-ament-xmllint
+        ros-humble-ament-cpplint ros-humble-ament-index-python
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-lint-cmake ros-humble-ament-cmake ros-humble-ament-xmllint
+          ros-humble-ament-cpplint ros-humble-ament-index-python
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_6_job_18:
+    name: domain-coordinator generate-parameter-library-py ament-clang-format lanelet2-projection
+      ament-pclint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_5_job_15
+    - stage_5_job_16
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-domain-coordinator ros-humble-generate-parameter-library-py
+        ros-humble-ament-clang-format ros-humble-lanelet2-projection ros-humble-ament-pclint
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-domain-coordinator ros-humble-generate-parameter-library-py
+          ros-humble-ament-clang-format ros-humble-lanelet2-projection ros-humble-ament-pclint
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_6_job_19:
+    name: lanelet2-routing
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_5_job_15
+    - stage_5_job_16
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-lanelet2-routing
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-lanelet2-routing
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_7_job_20:
+    name: ament-cmake-lint-cmake uncrustify-vendor launch rosidl-cli rpyutils
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_17
+    - stage_6_job_18
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-cmake-lint-cmake ros-humble-uncrustify-vendor ros-humble-launch
+        ros-humble-rosidl-cli ros-humble-rpyutils
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-cmake-lint-cmake ros-humble-uncrustify-vendor
+          ros-humble-launch ros-humble-rosidl-cli ros-humble-rpyutils
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_7_job_21:
+    name: yaml-cpp-vendor pybind11-vendor tinyxml-vendor tinyxml2-vendor tl-expected
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_17
+    - stage_6_job_18
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-yaml-cpp-vendor ros-humble-pybind11-vendor ros-humble-tinyxml-vendor
+        ros-humble-tinyxml2-vendor ros-humble-tl-expected
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-yaml-cpp-vendor ros-humble-pybind11-vendor ros-humble-tinyxml-vendor
+          ros-humble-tinyxml2-vendor ros-humble-tl-expected
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_7_job_22:
+    name: tcb-span libcurl-vendor xacro moveit-resources-panda-description random-numbers
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_17
+    - stage_6_job_18
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-tcb-span ros-humble-libcurl-vendor ros-humble-xacro ros-humble-moveit-resources-panda-description
+        ros-humble-random-numbers
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-tcb-span ros-humble-libcurl-vendor ros-humble-xacro
+          ros-humble-moveit-resources-panda-description ros-humble-random-numbers
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_7_job_23:
+    name: eigen-stl-containers moveit-resources-pr2-description angles zstd-vendor
+      moveit-resources-fanuc-description
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_17
+    - stage_6_job_18
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-eigen-stl-containers ros-humble-moveit-resources-pr2-description
+        ros-humble-angles ros-humble-zstd-vendor ros-humble-moveit-resources-fanuc-description
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-eigen-stl-containers ros-humble-moveit-resources-pr2-description
+          ros-humble-angles ros-humble-zstd-vendor ros-humble-moveit-resources-fanuc-description
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_7_job_24:
+    name: sqlite3-vendor shared-queues-vendor ament-cmake-auto ros2-control-test-assets
+      gazebo-dev
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_17
+    - stage_6_job_18
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-sqlite3-vendor ros-humble-shared-queues-vendor ros-humble-ament-cmake-auto
+        ros-humble-ros2-control-test-assets ros-humble-gazebo-dev
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-sqlite3-vendor ros-humble-shared-queues-vendor
+          ros-humble-ament-cmake-auto ros-humble-ros2-control-test-assets ros-humble-gazebo-dev
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_7_job_25:
+    name: sdl2-vendor libg2o urg-c ament-black ur-client-library
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_17
+    - stage_6_job_18
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-sdl2-vendor ros-humble-libg2o ros-humble-urg-c ros-humble-ament-black
+        ros-humble-ur-client-library
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-sdl2-vendor ros-humble-libg2o ros-humble-urg-c
+          ros-humble-ament-black ros-humble-ur-client-library
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_7_job_26:
+    name: ublox-serialization dynamixel-sdk lanelet2-matching lanelet2-validation
+      zenoh-cpp-vendor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_17
+    - stage_6_job_18
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ublox-serialization ros-humble-dynamixel-sdk ros-humble-lanelet2-matching
+        ros-humble-lanelet2-validation ros-humble-zenoh-cpp-vendor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ublox-serialization ros-humble-dynamixel-sdk ros-humble-lanelet2-matching
+          ros-humble-lanelet2-validation ros-humble-zenoh-cpp-vendor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_7_job_27:
+    name: openvdb-vendor geometry-tutorials
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_6_job_17
+    - stage_6_job_18
+    - stage_6_job_19
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-openvdb-vendor ros-humble-geometry-tutorials
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-openvdb-vendor ros-humble-geometry-tutorials
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_8_job_28:
+    name: ament-cmake-copyright ament-uncrustify launch-yaml launch-xml mcap-vendor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_7_job_20
+    - stage_7_job_21
+    - stage_7_job_22
+    - stage_7_job_23
+    - stage_7_job_24
+    - stage_7_job_25
+    - stage_7_job_26
+    - stage_7_job_27
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-cmake-copyright ros-humble-ament-uncrustify ros-humble-launch-yaml
+        ros-humble-launch-xml ros-humble-mcap-vendor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-cmake-copyright ros-humble-ament-uncrustify
+          ros-humble-launch-yaml ros-humble-launch-xml ros-humble-mcap-vendor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_8_job_29:
+    name: moveit-resources-prbt-support microstrain-inertial-description lanelet2-python
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_7_job_20
+    - stage_7_job_21
+    - stage_7_job_22
+    - stage_7_job_23
+    - stage_7_job_24
+    - stage_7_job_25
+    - stage_7_job_26
+    - stage_7_job_27
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-resources-prbt-support ros-humble-microstrain-inertial-description
+        ros-humble-lanelet2-python
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-resources-prbt-support ros-humble-microstrain-inertial-description
+          ros-humble-lanelet2-python
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_9_job_30:
+    name: ament-cmake-xmllint ament-cmake-uncrustify ament-cmake-pep257 ament-cmake-flake8
+      ament-cmake-cpplint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_8_job_28
+    - stage_8_job_29
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-cmake-xmllint ros-humble-ament-cmake-uncrustify
+        ros-humble-ament-cmake-pep257 ros-humble-ament-cmake-flake8 ros-humble-ament-cmake-cpplint
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-cmake-xmllint ros-humble-ament-cmake-uncrustify
+          ros-humble-ament-cmake-pep257 ros-humble-ament-cmake-flake8 ros-humble-ament-cmake-cpplint
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_9_job_31:
+    name: ament-cmake-cppcheck launch-testing eigen3-cmake-module ament-cmake-clang-format
+      ament-cmake-mypy
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_8_job_28
+    - stage_8_job_29
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-cmake-cppcheck ros-humble-launch-testing ros-humble-eigen3-cmake-module
+        ros-humble-ament-cmake-clang-format ros-humble-ament-cmake-mypy
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-cmake-cppcheck ros-humble-launch-testing
+          ros-humble-eigen3-cmake-module ros-humble-ament-cmake-clang-format ros-humble-ament-cmake-mypy
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_9_job_32:
+    name: ament-cmake-pclint ament-cmake-pyflakes
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_8_job_28
+    - stage_8_job_29
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-cmake-pclint ros-humble-ament-cmake-pyflakes
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-cmake-pclint ros-humble-ament-cmake-pyflakes
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_10_job_33:
+    name: ament-lint-common foonathan-memory-vendor rviz-ogre-vendor rviz-assimp-vendor
+      ignition-cmake2-vendor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_9_job_30
+    - stage_9_job_31
+    - stage_9_job_32
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ament-lint-common ros-humble-foonathan-memory-vendor
+        ros-humble-rviz-ogre-vendor ros-humble-rviz-assimp-vendor ros-humble-ignition-cmake2-vendor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ament-lint-common ros-humble-foonathan-memory-vendor
+          ros-humble-rviz-ogre-vendor ros-humble-rviz-assimp-vendor ros-humble-ignition-cmake2-vendor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_10_job_34:
+    name: autoware-lint-common launch-pytest ament-cmake-black
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_9_job_30
+    - stage_9_job_31
+    - stage_9_job_32
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-autoware-lint-common ros-humble-launch-pytest ros-humble-ament-cmake-black
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-autoware-lint-common ros-humble-launch-pytest
+          ros-humble-ament-cmake-black
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_11_job_35:
+    name: python-cmake-module performance-test-fixture ament-cmake-ros rosidl-adapter
+      rosidl-typesupport-interface
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_10_job_33
+    - stage_10_job_34
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-python-cmake-module ros-humble-performance-test-fixture
+        ros-humble-ament-cmake-ros ros-humble-rosidl-adapter ros-humble-rosidl-typesupport-interface
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-python-cmake-module ros-humble-performance-test-fixture
+          ros-humble-ament-cmake-ros ros-humble-rosidl-adapter ros-humble-rosidl-typesupport-interface
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_11_job_36:
+    name: fastrtps-cmake-module fastrtps rti-connext-dds-cmake-module rmw-implementation-cmake
+      ament-index-cpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_10_job_33
+    - stage_10_job_34
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-fastrtps-cmake-module ros-humble-fastrtps ros-humble-rti-connext-dds-cmake-module
+        ros-humble-rmw-implementation-cmake ros-humble-ament-index-cpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-fastrtps-cmake-module ros-humble-fastrtps ros-humble-rti-connext-dds-cmake-module
+          ros-humble-rmw-implementation-cmake ros-humble-ament-index-cpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_11_job_37:
+    name: spdlog-vendor orocos-kdl-vendor python-qt-binding moveit-common smclib
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_10_job_33
+    - stage_10_job_34
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-spdlog-vendor ros-humble-orocos-kdl-vendor ros-humble-python-qt-binding
+        ros-humble-moveit-common ros-humble-smclib
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-spdlog-vendor ros-humble-orocos-kdl-vendor ros-humble-python-qt-binding
+          ros-humble-moveit-common ros-humble-smclib
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_11_job_38:
+    name: ignition-math6-vendor tango-icons-vendor keyboard-handler grid-map-core
+      autoware-cmake
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_10_job_33
+    - stage_10_job_34
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ignition-math6-vendor ros-humble-tango-icons-vendor ros-humble-keyboard-handler
+        ros-humble-grid-map-core ros-humble-autoware-cmake
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ignition-math6-vendor ros-humble-tango-icons-vendor
+          ros-humble-keyboard-handler ros-humble-grid-map-core ros-humble-autoware-cmake
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_11_job_39:
+    name: tlsf asio-cmake-module rttest apex-test-tools mimick-vendor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_10_job_33
+    - stage_10_job_34
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-tlsf ros-humble-asio-cmake-module ros-humble-rttest ros-humble-apex-test-tools
+        ros-humble-mimick-vendor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-tlsf ros-humble-asio-cmake-module ros-humble-rttest
+          ros-humble-apex-test-tools ros-humble-mimick-vendor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_12_job_40:
+    name: launch-testing-ament-cmake rosidl-parser tracetools console-bridge-vendor
+      urdf-parser-plugin
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_11_job_35
+    - stage_11_job_36
+    - stage_11_job_37
+    - stage_11_job_38
+    - stage_11_job_39
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-launch-testing-ament-cmake ros-humble-rosidl-parser ros-humble-tracetools
+        ros-humble-console-bridge-vendor ros-humble-urdf-parser-plugin
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-launch-testing-ament-cmake ros-humble-rosidl-parser
+          ros-humble-tracetools ros-humble-console-bridge-vendor ros-humble-urdf-parser-plugin
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_12_job_41:
+    name: python-orocos-kdl-vendor resource-retriever qt-gui tracetools-image-pipeline
+      qt-gui-py-common
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_11_job_35
+    - stage_11_job_36
+    - stage_11_job_37
+    - stage_11_job_38
+    - stage_11_job_39
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-python-orocos-kdl-vendor ros-humble-resource-retriever
+        ros-humble-qt-gui ros-humble-tracetools-image-pipeline ros-humble-qt-gui-py-common
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-python-orocos-kdl-vendor ros-humble-resource-retriever
+          ros-humble-qt-gui ros-humble-tracetools-image-pipeline ros-humble-qt-gui-py-common
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_12_job_42:
+    name: qt-dotgraph autoware-utils-math grid-map-octomap grid-map-sdf apex-containers
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_11_job_35
+    - stage_11_job_36
+    - stage_11_job_37
+    - stage_11_job_38
+    - stage_11_job_39
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-qt-dotgraph ros-humble-autoware-utils-math ros-humble-grid-map-octomap
+        ros-humble-grid-map-sdf ros-humble-apex-containers
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-qt-dotgraph ros-humble-autoware-utils-math ros-humble-grid-map-octomap
+          ros-humble-grid-map-sdf ros-humble-apex-containers
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_13_job_43:
+    name: rcutils rosidl-cmake urdfdom rviz-rendering
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_12_job_40
+    - stage_12_job_41
+    - stage_12_job_42
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rcutils ros-humble-rosidl-cmake ros-humble-urdfdom ros-humble-rviz-rendering
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rcutils ros-humble-rosidl-cmake ros-humble-urdfdom
+          ros-humble-rviz-rendering
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_14_job_44:
+    name: rosidl-runtime-c rcpputils rviz-rendering-tests rosidl-generator-dds-idl
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_13_job_43
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosidl-runtime-c ros-humble-rcpputils ros-humble-rviz-rendering-tests
+        ros-humble-rosidl-generator-dds-idl
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosidl-runtime-c ros-humble-rcpputils ros-humble-rviz-rendering-tests
+          ros-humble-rosidl-generator-dds-idl
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_15_job_45:
+    name: rosidl-runtime-cpp rosidl-generator-c rmw rosidl-typesupport-introspection-c
+      libyaml-vendor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_14_job_44
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosidl-runtime-cpp ros-humble-rosidl-generator-c ros-humble-rmw
+        ros-humble-rosidl-typesupport-introspection-c ros-humble-libyaml-vendor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosidl-runtime-cpp ros-humble-rosidl-generator-c
+          ros-humble-rmw ros-humble-rosidl-typesupport-introspection-c ros-humble-libyaml-vendor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_15_job_46:
+    name: rcl-logging-interface class-loader
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_14_job_44
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rcl-logging-interface ros-humble-class-loader
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rcl-logging-interface ros-humble-class-loader
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_16_job_47:
+    name: rosidl-generator-cpp rosidl-typesupport-introspection-cpp rcl-yaml-param-parser
+      rcl-logging-spdlog pluginlib
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_15_job_45
+    - stage_15_job_46
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosidl-generator-cpp ros-humble-rosidl-typesupport-introspection-cpp
+        ros-humble-rcl-yaml-param-parser ros-humble-rcl-logging-spdlog ros-humble-pluginlib
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosidl-generator-cpp ros-humble-rosidl-typesupport-introspection-cpp
+          ros-humble-rcl-yaml-param-parser ros-humble-rcl-logging-spdlog ros-humble-pluginlib
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_17_job_48:
+    name: rosidl-typesupport-fastrtps-cpp urdf qt-gui-cpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_16_job_47
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosidl-typesupport-fastrtps-cpp ros-humble-urdf ros-humble-qt-gui-cpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosidl-typesupport-fastrtps-cpp ros-humble-urdf
+          ros-humble-qt-gui-cpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_18_job_49:
+    name: rosidl-typesupport-fastrtps-c kdl-parser velodyne-description sdformat-urdf
+      turtlebot3-description
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_17_job_48
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosidl-typesupport-fastrtps-c ros-humble-kdl-parser ros-humble-velodyne-description
+        ros-humble-sdformat-urdf ros-humble-turtlebot3-description
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosidl-typesupport-fastrtps-c ros-humble-kdl-parser
+          ros-humble-velodyne-description ros-humble-sdformat-urdf ros-humble-turtlebot3-description
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_19_job_50:
+    name: rosidl-typesupport-c rmw-zenoh-cpp rosidl-typesupport-cpp rosidl-generator-py
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_18_job_49
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosidl-typesupport-c ros-humble-rmw-zenoh-cpp ros-humble-rosidl-typesupport-cpp
+        ros-humble-rosidl-generator-py
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosidl-typesupport-c ros-humble-rmw-zenoh-cpp
+          ros-humble-rosidl-typesupport-cpp ros-humble-rosidl-generator-py
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_20_job_51:
+    name: rosidl-default-runtime rosidl-default-generators
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_19_job_50
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosidl-default-runtime ros-humble-rosidl-default-generators
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosidl-default-runtime ros-humble-rosidl-default-generators
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_21_job_52:
+    name: unique-identifier-msgs builtin-interfaces rmw-dds-common lifecycle-msgs
+      std-srvs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_20_job_51
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-unique-identifier-msgs ros-humble-builtin-interfaces
+        ros-humble-rmw-dds-common ros-humble-lifecycle-msgs ros-humble-std-srvs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-unique-identifier-msgs ros-humble-builtin-interfaces
+          ros-humble-rmw-dds-common ros-humble-lifecycle-msgs ros-humble-std-srvs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_21_job_53:
+    name: autoware-common-msgs ublox-ubx-interfaces system-modes-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_20_job_51
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-autoware-common-msgs ros-humble-ublox-ubx-interfaces
+        ros-humble-system-modes-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-autoware-common-msgs ros-humble-ublox-ubx-interfaces
+          ros-humble-system-modes-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_22_job_54:
+    name: action-msgs rmw-fastrtps-shared-cpp rmw-connextdds-common rmw-cyclonedds-cpp
+      rcl-interfaces
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_21_job_52
+    - stage_21_job_53
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-action-msgs ros-humble-rmw-fastrtps-shared-cpp ros-humble-rmw-connextdds-common
+        ros-humble-rmw-cyclonedds-cpp ros-humble-rcl-interfaces
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-action-msgs ros-humble-rmw-fastrtps-shared-cpp
+          ros-humble-rmw-connextdds-common ros-humble-rmw-cyclonedds-cpp ros-humble-rcl-interfaces
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_22_job_55:
+    name: std-msgs statistics-msgs rosgraph-msgs controller-manager-msgs rosbag2-interfaces
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_21_job_52
+    - stage_21_job_53
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-std-msgs ros-humble-statistics-msgs ros-humble-rosgraph-msgs
+        ros-humble-controller-manager-msgs ros-humble-rosbag2-interfaces
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-std-msgs ros-humble-statistics-msgs ros-humble-rosgraph-msgs
+          ros-humble-controller-manager-msgs ros-humble-rosbag2-interfaces
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_22_job_56:
+    name: topic-tools-interfaces webots-ros2-importer rosbridge-msgs pendulum-msgs
+      autoware-internal-metric-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_21_job_52
+    - stage_21_job_53
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-topic-tools-interfaces ros-humble-webots-ros2-importer
+        ros-humble-rosbridge-msgs ros-humble-pendulum-msgs ros-humble-autoware-internal-metric-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-topic-tools-interfaces ros-humble-webots-ros2-importer
+          ros-humble-rosbridge-msgs ros-humble-pendulum-msgs ros-humble-autoware-internal-metric-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_22_job_57:
+    name: robot-controllers-msgs data-tamer-msgs autoware-utils-uuid autoware-control-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_21_job_52
+    - stage_21_job_53
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-robot-controllers-msgs ros-humble-data-tamer-msgs ros-humble-autoware-utils-uuid
+        ros-humble-autoware-control-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-robot-controllers-msgs ros-humble-data-tamer-msgs
+          ros-humble-autoware-utils-uuid ros-humble-autoware-control-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_23_job_58:
+    name: test-msgs rmw-connextdds composition-interfaces geometry-msgs actionlib-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_54
+    - stage_22_job_55
+    - stage_22_job_56
+    - stage_22_job_57
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-test-msgs ros-humble-rmw-connextdds ros-humble-composition-interfaces
+        ros-humble-geometry-msgs ros-humble-actionlib-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-test-msgs ros-humble-rmw-connextdds ros-humble-composition-interfaces
+          ros-humble-geometry-msgs ros-humble-actionlib-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_23_job_59:
+    name: bond rosbag2-storage-mcap-testdata example-interfaces ackermann-msgs gps-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_54
+    - stage_22_job_55
+    - stage_22_job_56
+    - stage_22_job_57
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-bond ros-humble-rosbag2-storage-mcap-testdata ros-humble-example-interfaces
+        ros-humble-ackermann-msgs ros-humble-gps-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-bond ros-humble-rosbag2-storage-mcap-testdata
+          ros-humble-example-interfaces ros-humble-ackermann-msgs ros-humble-gps-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_23_job_60:
+    name: actuator-msgs ros2cli-test-interfaces ros2-socketcan-msgs can-msgs twist-mux-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_54
+    - stage_22_job_55
+    - stage_22_job_56
+    - stage_22_job_57
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-actuator-msgs ros-humble-ros2cli-test-interfaces ros-humble-ros2-socketcan-msgs
+        ros-humble-can-msgs ros-humble-twist-mux-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-actuator-msgs ros-humble-ros2cli-test-interfaces
+          ros-humble-ros2-socketcan-msgs ros-humble-can-msgs ros-humble-twist-mux-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_23_job_61:
+    name: ffmpeg-image-transport-msgs ur-dashboard-msgs teleop-tools-msgs velodyne-msgs
+      urg-node-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_54
+    - stage_22_job_55
+    - stage_22_job_56
+    - stage_22_job_57
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ffmpeg-image-transport-msgs ros-humble-ur-dashboard-msgs
+        ros-humble-teleop-tools-msgs ros-humble-velodyne-msgs ros-humble-urg-node-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ffmpeg-image-transport-msgs ros-humble-ur-dashboard-msgs
+          ros-humble-teleop-tools-msgs ros-humble-velodyne-msgs ros-humble-urg-node-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_23_job_62:
+    name: rosapi-msgs apriltag-msgs udp-msgs action-tutorials-interfaces autoware-internal-debug-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_54
+    - stage_22_job_55
+    - stage_22_job_56
+    - stage_22_job_57
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosapi-msgs ros-humble-apriltag-msgs ros-humble-udp-msgs
+        ros-humble-action-tutorials-interfaces ros-humble-autoware-internal-debug-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosapi-msgs ros-humble-apriltag-msgs ros-humble-udp-msgs
+          ros-humble-action-tutorials-interfaces ros-humble-autoware-internal-debug-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_23_job_63:
+    name: ublox-ubx-msgs rtcm-msgs nmea-msgs event-camera-msgs stubborn-buddies-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_54
+    - stage_22_job_55
+    - stage_22_job_56
+    - stage_22_job_57
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ublox-ubx-msgs ros-humble-rtcm-msgs ros-humble-nmea-msgs
+        ros-humble-event-camera-msgs ros-humble-stubborn-buddies-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ublox-ubx-msgs ros-humble-rtcm-msgs ros-humble-nmea-msgs
+          ros-humble-event-camera-msgs ros-humble-stubborn-buddies-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_23_job_64:
+    name: plotjuggler-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_54
+    - stage_22_job_55
+    - stage_22_job_56
+    - stage_22_job_57
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-plotjuggler-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-plotjuggler-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_24_job_65:
+    name: rmw-fastrtps-dynamic-cpp rmw-fastrtps-cpp sensor-msgs rosidl-runtime-py
+      tf2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_23_job_58
+    - stage_23_job_59
+    - stage_23_job_60
+    - stage_23_job_61
+    - stage_23_job_62
+    - stage_23_job_63
+    - stage_23_job_64
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rmw-fastrtps-dynamic-cpp ros-humble-rmw-fastrtps-cpp
+        ros-humble-sensor-msgs ros-humble-rosidl-runtime-py ros-humble-tf2
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rmw-fastrtps-dynamic-cpp ros-humble-rmw-fastrtps-cpp
+          ros-humble-sensor-msgs ros-humble-rosidl-runtime-py ros-humble-tf2
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_24_job_66:
+    name: tf2-msgs shape-msgs trajectory-msgs octomap-msgs nav-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_23_job_58
+    - stage_23_job_59
+    - stage_23_job_60
+    - stage_23_job_61
+    - stage_23_job_62
+    - stage_23_job_63
+    - stage_23_job_64
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-tf2-msgs ros-humble-shape-msgs ros-humble-trajectory-msgs
+        ros-humble-octomap-msgs ros-humble-nav-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-tf2-msgs ros-humble-shape-msgs ros-humble-trajectory-msgs
+          ros-humble-octomap-msgs ros-humble-nav-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_24_job_67:
+    name: diagnostic-msgs nav-2d-msgs vision-msgs ros-gz-interfaces geographic-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_23_job_58
+    - stage_23_job_59
+    - stage_23_job_60
+    - stage_23_job_61
+    - stage_23_job_62
+    - stage_23_job_63
+    - stage_23_job_64
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-diagnostic-msgs ros-humble-nav-2d-msgs ros-humble-vision-msgs
+        ros-humble-ros-gz-interfaces ros-humble-geographic-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-diagnostic-msgs ros-humble-nav-2d-msgs ros-humble-vision-msgs
+          ros-humble-ros-gz-interfaces ros-humble-geographic-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_24_job_68:
+    name: autoware-perception-msgs ur-msgs cartographer-ros-msgs turtlebot3-msgs graph-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_23_job_58
+    - stage_23_job_59
+    - stage_23_job_60
+    - stage_23_job_61
+    - stage_23_job_62
+    - stage_23_job_63
+    - stage_23_job_64
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-autoware-perception-msgs ros-humble-ur-msgs ros-humble-cartographer-ros-msgs
+        ros-humble-turtlebot3-msgs ros-humble-graph-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-autoware-perception-msgs ros-humble-ur-msgs ros-humble-cartographer-ros-msgs
+          ros-humble-turtlebot3-msgs ros-humble-graph-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_24_job_69:
+    name: microstrain-inertial-msgs motion-capture-tracking-interfaces slg-msgs autoware-v2x-msgs
+      autoware-sensing-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_23_job_58
+    - stage_23_job_59
+    - stage_23_job_60
+    - stage_23_job_61
+    - stage_23_job_62
+    - stage_23_job_63
+    - stage_23_job_64
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-microstrain-inertial-msgs ros-humble-motion-capture-tracking-interfaces
+        ros-humble-slg-msgs ros-humble-autoware-v2x-msgs ros-humble-autoware-sensing-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-microstrain-inertial-msgs ros-humble-motion-capture-tracking-interfaces
+          ros-humble-slg-msgs ros-humble-autoware-v2x-msgs ros-humble-autoware-sensing-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_24_job_70:
+    name: autoware-localization-msgs marker-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_23_job_58
+    - stage_23_job_59
+    - stage_23_job_60
+    - stage_23_job_61
+    - stage_23_job_62
+    - stage_23_job_63
+    - stage_23_job_64
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-autoware-localization-msgs ros-humble-marker-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-autoware-localization-msgs ros-humble-marker-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_25_job_71:
+    name: rmw-implementation object-recognition-msgs visualization-msgs stereo-msgs
+      sensor-msgs-py
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_24_job_65
+    - stage_24_job_66
+    - stage_24_job_67
+    - stage_24_job_68
+    - stage_24_job_69
+    - stage_24_job_70
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rmw-implementation ros-humble-object-recognition-msgs
+        ros-humble-visualization-msgs ros-humble-stereo-msgs ros-humble-sensor-msgs-py
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rmw-implementation ros-humble-object-recognition-msgs
+          ros-humble-visualization-msgs ros-humble-stereo-msgs ros-humble-sensor-msgs-py
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_25_job_72:
+    name: map-msgs control-msgs cv-bridge tf2-eigen-kdl dwb-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_24_job_65
+    - stage_24_job_66
+    - stage_24_job_67
+    - stage_24_job_68
+    - stage_24_job_69
+    - stage_24_job_70
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-map-msgs ros-humble-control-msgs ros-humble-cv-bridge
+        ros-humble-tf2-eigen-kdl ros-humble-dwb-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-map-msgs ros-humble-control-msgs ros-humble-cv-bridge
+          ros-humble-tf2-eigen-kdl ros-humble-dwb-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_25_job_73:
+    name: gazebo-msgs realsense2-camera-msgs image-geometry pcl-msgs webots-ros2-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_24_job_65
+    - stage_24_job_66
+    - stage_24_job_67
+    - stage_24_job_68
+    - stage_24_job_69
+    - stage_24_job_70
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-gazebo-msgs ros-humble-realsense2-camera-msgs ros-humble-image-geometry
+        ros-humble-pcl-msgs ros-humble-webots-ros2-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-gazebo-msgs ros-humble-realsense2-camera-msgs
+          ros-humble-image-geometry ros-humble-pcl-msgs ros-humble-webots-ros2-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_25_job_74:
+    name: autoware-planning-msgs ros-ign-interfaces octomap-ros autoware-internal-perception-msgs
+      ublox-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_24_job_65
+    - stage_24_job_66
+    - stage_24_job_67
+    - stage_24_job_68
+    - stage_24_job_69
+    - stage_24_job_70
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-autoware-planning-msgs ros-humble-ros-ign-interfaces
+        ros-humble-octomap-ros ros-humble-autoware-internal-perception-msgs ros-humble-ublox-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-autoware-planning-msgs ros-humble-ros-ign-interfaces
+          ros-humble-octomap-ros ros-humble-autoware-internal-perception-msgs ros-humble-ublox-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_25_job_75:
+    name: point-cloud-interfaces autoware-map-msgs sick-safetyscanners2-interfaces
+      geodesy autoware-system-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_24_job_65
+    - stage_24_job_66
+    - stage_24_job_67
+    - stage_24_job_68
+    - stage_24_job_69
+    - stage_24_job_70
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-point-cloud-interfaces ros-humble-autoware-map-msgs ros-humble-sick-safetyscanners2-interfaces
+        ros-humble-geodesy ros-humble-autoware-system-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-point-cloud-interfaces ros-humble-autoware-map-msgs
+          ros-humble-sick-safetyscanners2-interfaces ros-humble-geodesy ros-humble-autoware-system-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_26_job_76:
+    name: rcl moveit-msgs common-interfaces foxglove-msgs autoware-internal-planning-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_25_job_71
+    - stage_25_job_72
+    - stage_25_job_73
+    - stage_25_job_74
+    - stage_25_job_75
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rcl ros-humble-moveit-msgs ros-humble-common-interfaces
+        ros-humble-foxglove-msgs ros-humble-autoware-internal-planning-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rcl ros-humble-moveit-msgs ros-humble-common-interfaces
+          ros-humble-foxglove-msgs ros-humble-autoware-internal-planning-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_26_job_77:
+    name: vision-opencv ros-image-to-qimage autoware-vehicle-msgs geographic-info
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_25_job_71
+    - stage_25_job_72
+    - stage_25_job_73
+    - stage_25_job_74
+    - stage_25_job_75
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-vision-opencv ros-humble-ros-image-to-qimage ros-humble-autoware-vehicle-msgs
+        ros-humble-geographic-info
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-vision-opencv ros-humble-ros-image-to-qimage ros-humble-autoware-vehicle-msgs
+          ros-humble-geographic-info
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_27_job_78:
+    name: rcl-lifecycle rcl-action libstatistics-collector autoware-internal-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_26_job_76
+    - stage_26_job_77
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rcl-lifecycle ros-humble-rcl-action ros-humble-libstatistics-collector
+        ros-humble-autoware-internal-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rcl-lifecycle ros-humble-rcl-action ros-humble-libstatistics-collector
+          ros-humble-autoware-internal-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_28_job_79:
+    name: rclpy rclcpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_27_job_78
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rclpy ros-humble-rclcpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rclpy ros-humble-rclcpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_80:
+    name: launch-ros rclcpp-lifecycle ros2cli rclcpp-components rclcpp-action
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-launch-ros ros-humble-rclcpp-lifecycle ros-humble-ros2cli
+        ros-humble-rclcpp-components ros-humble-rclcpp-action
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-launch-ros ros-humble-rclcpp-lifecycle ros-humble-ros2cli
+          ros-humble-rclcpp-components ros-humble-rclcpp-action
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_81:
+    name: tf2-py rsl urdfdom-py geometric-shapes launch-param-builder
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-tf2-py ros-humble-rsl ros-humble-urdfdom-py ros-humble-geometric-shapes
+        ros-humble-launch-param-builder
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-tf2-py ros-humble-rsl ros-humble-urdfdom-py ros-humble-geometric-shapes
+          ros-humble-launch-param-builder
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_82:
+    name: rosbag2-test-common laser-geometry filters behaviortree-cpp-v3 rqt-gui
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosbag2-test-common ros-humble-laser-geometry ros-humble-filters
+        ros-humble-behaviortree-cpp-v3 ros-humble-rqt-gui
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosbag2-test-common ros-humble-laser-geometry
+          ros-humble-filters ros-humble-behaviortree-cpp-v3 ros-humble-rqt-gui
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_83:
+    name: camera-calibration-parsers rqt-py-common grid-map-msgs rqt-gui-cpp rosbridge-test-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-camera-calibration-parsers ros-humble-rqt-py-common ros-humble-grid-map-msgs
+        ros-humble-rqt-gui-cpp ros-humble-rosbridge-test-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-camera-calibration-parsers ros-humble-rqt-py-common
+          ros-humble-grid-map-msgs ros-humble-rqt-gui-cpp ros-humble-rosbridge-test-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_84:
+    name: ros-gz-sim hls-lfcd-lds-driver autoware-utils-system cascade-lifecycle-msgs
+      teleop-twist-keyboard
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros-gz-sim ros-humble-hls-lfcd-lds-driver ros-humble-autoware-utils-system
+        ros-humble-cascade-lifecycle-msgs ros-humble-teleop-twist-keyboard
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-gz-sim ros-humble-hls-lfcd-lds-driver ros-humble-autoware-utils-system
+          ros-humble-cascade-lifecycle-msgs ros-humble-teleop-twist-keyboard
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_85:
+    name: tlsf-cpp dummy-sensors dummy-map-server demo-nodes-py io-context
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-tlsf-cpp ros-humble-dummy-sensors ros-humble-dummy-map-server
+        ros-humble-demo-nodes-py ros-humble-io-context
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-tlsf-cpp ros-humble-dummy-sensors ros-humble-dummy-map-server
+          ros-humble-demo-nodes-py ros-humble-io-context
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_86:
+    name: quality-of-service-demo-py intra-process-demo examples-rclpy-minimal-subscriber
+      examples-rclpy-minimal-service examples-rclpy-minimal-publisher
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-quality-of-service-demo-py ros-humble-intra-process-demo
+        ros-humble-examples-rclpy-minimal-subscriber ros-humble-examples-rclpy-minimal-service
+        ros-humble-examples-rclpy-minimal-publisher
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-quality-of-service-demo-py ros-humble-intra-process-demo
+          ros-humble-examples-rclpy-minimal-subscriber ros-humble-examples-rclpy-minimal-service
+          ros-humble-examples-rclpy-minimal-publisher
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_87:
+    name: examples-rclpy-minimal-client examples-rclpy-minimal-action-server examples-rclpy-minimal-action-client
+      examples-rclpy-executors examples-rclcpp-multithreaded-executor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-examples-rclpy-minimal-client ros-humble-examples-rclpy-minimal-action-server
+        ros-humble-examples-rclpy-minimal-action-client ros-humble-examples-rclpy-executors
+        ros-humble-examples-rclcpp-multithreaded-executor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-examples-rclpy-minimal-client ros-humble-examples-rclpy-minimal-action-server
+          ros-humble-examples-rclpy-minimal-action-client ros-humble-examples-rclpy-executors
+          ros-humble-examples-rclcpp-multithreaded-executor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_88:
+    name: examples-rclcpp-minimal-timer examples-rclcpp-minimal-service examples-rclcpp-minimal-publisher
+      examples-rclcpp-minimal-client action-tutorials-py
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-examples-rclcpp-minimal-timer ros-humble-examples-rclcpp-minimal-service
+        ros-humble-examples-rclcpp-minimal-publisher ros-humble-examples-rclcpp-minimal-client
+        ros-humble-action-tutorials-py
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-examples-rclcpp-minimal-timer ros-humble-examples-rclcpp-minimal-service
+          ros-humble-examples-rclcpp-minimal-publisher ros-humble-examples-rclcpp-minimal-client
+          ros-humble-action-tutorials-py
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_89:
+    name: turtlebot3-teleop turtlebot3-example key-teleop plotjuggler ffmpeg-encoder-decoder
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-turtlebot3-teleop ros-humble-turtlebot3-example ros-humble-key-teleop
+        ros-humble-plotjuggler ros-humble-ffmpeg-encoder-decoder
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-turtlebot3-teleop ros-humble-turtlebot3-example
+          ros-humble-key-teleop ros-humble-plotjuggler ros-humble-ffmpeg-encoder-decoder
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_90:
+    name: autoware-utils-visualization autoware-utils-rclcpp autoware-utils-diagnostics
+      py-binding-tools open3d-conversions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-autoware-utils-visualization ros-humble-autoware-utils-rclcpp
+        ros-humble-autoware-utils-diagnostics ros-humble-py-binding-tools ros-humble-open3d-conversions
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-autoware-utils-visualization ros-humble-autoware-utils-rclcpp
+          ros-humble-autoware-utils-diagnostics ros-humble-py-binding-tools ros-humble-open3d-conversions
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_29_job_91:
+    name: data-tamer-cpp bno055 behaviortree-cpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_79
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-data-tamer-cpp ros-humble-bno055 ros-humble-behaviortree-cpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-data-tamer-cpp ros-humble-bno055 ros-humble-behaviortree-cpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_92:
+    name: launch-testing-ros message-filters tf2-ros-py parameter-traits srdfdom
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-launch-testing-ros ros-humble-message-filters ros-humble-tf2-ros-py
+        ros-humble-parameter-traits ros-humble-srdfdom
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-launch-testing-ros ros-humble-message-filters
+          ros-humble-tf2-ros-py ros-humble-parameter-traits ros-humble-srdfdom
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_93:
+    name: nav2-common rosbag2-storage bondcpp hardware-interface realtime-tools
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-nav2-common ros-humble-rosbag2-storage ros-humble-bondcpp
+        ros-humble-hardware-interface ros-humble-realtime-tools
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-nav2-common ros-humble-rosbag2-storage ros-humble-bondcpp
+          ros-humble-hardware-interface ros-humble-realtime-tools
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_94:
+    name: kinematics-interface ros2lifecycle-test-fixtures rqt-gui-py realsense2-description
+      joy
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-kinematics-interface ros-humble-ros2lifecycle-test-fixtures
+        ros-humble-rqt-gui-py ros-humble-realsense2-description ros-humble-joy
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-kinematics-interface ros-humble-ros2lifecycle-test-fixtures
+          ros-humble-rqt-gui-py ros-humble-realsense2-description ros-humble-joy
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_95:
+    name: camera-info-manager topic-tools grid-map-cv ros-gz-bridge ros2multicast
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-camera-info-manager ros-humble-topic-tools ros-humble-grid-map-cv
+        ros-humble-ros-gz-bridge ros-humble-ros2multicast
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-camera-info-manager ros-humble-topic-tools ros-humble-grid-map-cv
+          ros-humble-ros-gz-bridge ros-humble-ros2multicast
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_96:
+    name: ros2-socketcan joint-limits laser-proc rosbridge-library ros-ign-gazebo
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros2-socketcan ros-humble-joint-limits ros-humble-laser-proc
+        ros-humble-rosbridge-library ros-humble-ros-ign-gazebo
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros2-socketcan ros-humble-joint-limits ros-humble-laser-proc
+          ros-humble-rosbridge-library ros-humble-ros-ign-gazebo
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_97:
+    name: joy-teleop velodyne-laserscan rclc rclcpp-cascade-lifecycle turtlesim
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-joy-teleop ros-humble-velodyne-laserscan ros-humble-rclc
+        ros-humble-rclcpp-cascade-lifecycle ros-humble-turtlesim
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-joy-teleop ros-humble-velodyne-laserscan ros-humble-rclc
+          ros-humble-rclcpp-cascade-lifecycle ros-humble-turtlesim
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_98:
+    name: topic-monitor quality-of-service-demo-cpp examples-rclcpp-minimal-subscriber
+      examples-rclcpp-minimal-composition examples-rclcpp-minimal-action-server
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-topic-monitor ros-humble-quality-of-service-demo-cpp
+        ros-humble-examples-rclcpp-minimal-subscriber ros-humble-examples-rclcpp-minimal-composition
+        ros-humble-examples-rclcpp-minimal-action-server
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-topic-monitor ros-humble-quality-of-service-demo-cpp
+          ros-humble-examples-rclcpp-minimal-subscriber ros-humble-examples-rclcpp-minimal-composition
+          ros-humble-examples-rclcpp-minimal-action-server
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_99:
+    name: examples-rclcpp-minimal-action-client depthimage-to-laserscan action-tutorials-cpp
+      ublox-nav-sat-fix-hp-node ublox-dgnss-node
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-examples-rclcpp-minimal-action-client ros-humble-depthimage-to-laserscan
+        ros-humble-action-tutorials-cpp ros-humble-ublox-nav-sat-fix-hp-node ros-humble-ublox-dgnss-node
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-examples-rclcpp-minimal-action-client ros-humble-depthimage-to-laserscan
+          ros-humble-action-tutorials-cpp ros-humble-ublox-nav-sat-fix-hp-node ros-humble-ublox-dgnss-node
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_100:
+    name: ntrip-client-node serial-driver lanelet2-examples autoware-utils-debug udp-driver
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ntrip-client-node ros-humble-serial-driver ros-humble-lanelet2-examples
+        ros-humble-autoware-utils-debug ros-humble-udp-driver
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ntrip-client-node ros-humble-serial-driver ros-humble-lanelet2-examples
+          ros-humble-autoware-utils-debug ros-humble-udp-driver
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_30_job_101:
+    name: stubborn-buddies spacenav laser-segmentation flex-sync
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_80
+    - stage_29_job_81
+    - stage_29_job_82
+    - stage_29_job_83
+    - stage_29_job_84
+    - stage_29_job_85
+    - stage_29_job_86
+    - stage_29_job_87
+    - stage_29_job_88
+    - stage_29_job_89
+    - stage_29_job_90
+    - stage_29_job_91
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-stubborn-buddies ros-humble-spacenav ros-humble-laser-segmentation
+        ros-humble-flex-sync
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-stubborn-buddies ros-humble-spacenav ros-humble-laser-segmentation
+          ros-humble-flex-sync
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_102:
+    name: ros2topic tf2-ros generate-parameter-library ros2test moveit-configs-utils
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros2topic ros-humble-tf2-ros ros-humble-generate-parameter-library
+        ros-humble-ros2test ros-humble-moveit-configs-utils
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros2topic ros-humble-tf2-ros ros-humble-generate-parameter-library
+          ros-humble-ros2test ros-humble-moveit-configs-utils
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_103:
+    name: nav2-msgs image-transport rosbag2-storage-mcap rosbag2-storage-default-plugins
+      diagnostic-updater
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-nav2-msgs ros-humble-image-transport ros-humble-rosbag2-storage-mcap
+        ros-humble-rosbag2-storage-default-plugins ros-humble-diagnostic-updater
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-nav2-msgs ros-humble-image-transport ros-humble-rosbag2-storage-mcap
+          ros-humble-rosbag2-storage-default-plugins ros-humble-diagnostic-updater
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_104:
+    name: nav2-voxel-grid ros2pkg ros2service ros2node hardware-interface-testing
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-nav2-voxel-grid ros-humble-ros2pkg ros-humble-ros2service
+        ros-humble-ros2node ros-humble-hardware-interface-testing
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-nav2-voxel-grid ros-humble-ros2pkg ros-humble-ros2service
+          ros-humble-ros2node ros-humble-hardware-interface-testing
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_105:
+    name: controller-interface kinematics-interface-kdl pcl-conversions ros2interface
+      ros2doctor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-controller-interface ros-humble-kinematics-interface-kdl
+        ros-humble-pcl-conversions ros-humble-ros2interface ros-humble-ros2doctor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-controller-interface ros-humble-kinematics-interface-kdl
+          ros-humble-pcl-conversions ros-humble-ros2interface ros-humble-ros2doctor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_106:
+    name: ros2action rqt-console teleop-twist-joy camera-calibration transmission-interface
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros2action ros-humble-rqt-console ros-humble-teleop-twist-joy
+        ros-humble-camera-calibration ros-humble-transmission-interface
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros2action ros-humble-rqt-console ros-humble-teleop-twist-joy
+          ros-humble-camera-calibration ros-humble-transmission-interface
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_107:
+    name: rqt-topic rqt-plot tf2-tools ros2-controllers-test-nodes rqt-robot-monitor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rqt-topic ros-humble-rqt-plot ros-humble-tf2-tools ros-humble-ros2-controllers-test-nodes
+        ros-humble-rqt-robot-monitor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rqt-topic ros-humble-rqt-plot ros-humble-tf2-tools
+          ros-humble-ros2-controllers-test-nodes ros-humble-rqt-robot-monitor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_108:
+    name: ros-ign-bridge diagnostic-aggregator rqt-shell rqt-service-caller rqt-py-console
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros-ign-bridge ros-humble-diagnostic-aggregator ros-humble-rqt-shell
+        ros-humble-rqt-service-caller ros-humble-rqt-py-console
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-ign-bridge ros-humble-diagnostic-aggregator
+          ros-humble-rqt-shell ros-humble-rqt-service-caller ros-humble-rqt-py-console
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_109:
+    name: rqt-publisher rqt-graph point-cloud-transport logging-demo image-tools
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rqt-publisher ros-humble-rqt-graph ros-humble-point-cloud-transport
+        ros-humble-logging-demo ros-humble-image-tools
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rqt-publisher ros-humble-rqt-graph ros-humble-point-cloud-transport
+          ros-humble-logging-demo ros-humble-image-tools
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_110:
+    name: demo-nodes-cpp-native demo-nodes-cpp composition rqt-image-overlay-layer
+      rqt-robot-steering
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-demo-nodes-cpp-native ros-humble-demo-nodes-cpp ros-humble-composition
+        ros-humble-rqt-image-overlay-layer ros-humble-rqt-robot-steering
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-demo-nodes-cpp-native ros-humble-demo-nodes-cpp
+          ros-humble-composition ros-humble-rqt-image-overlay-layer ros-humble-rqt-robot-steering
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_111:
+    name: ublox-dgnss teleop-tools rqt microstrain-inertial-rqt lanelet2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ublox-dgnss ros-humble-teleop-tools ros-humble-rqt ros-humble-microstrain-inertial-rqt
+        ros-humble-lanelet2
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ublox-dgnss ros-humble-teleop-tools ros-humble-rqt
+          ros-humble-microstrain-inertial-rqt ros-humble-lanelet2
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_31_job_112:
+    name: bond-core
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_30_job_92
+    - stage_30_job_93
+    - stage_30_job_94
+    - stage_30_job_95
+    - stage_30_job_96
+    - stage_30_job_97
+    - stage_30_job_98
+    - stage_30_job_99
+    - stage_30_job_100
+    - stage_30_job_101
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-bond-core
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-bond-core
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_113:
+    name: joint-state-publisher robot-state-publisher tf2-kdl tf2-geometry-msgs tf2-eigen
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-joint-state-publisher ros-humble-robot-state-publisher
+        ros-humble-tf2-kdl ros-humble-tf2-geometry-msgs ros-humble-tf2-eigen
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-joint-state-publisher ros-humble-robot-state-publisher
+          ros-humble-tf2-kdl ros-humble-tf2-geometry-msgs ros-humble-tf2-eigen
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_114:
+    name: ros-testing rosbag2-cpp tf2-sensor-msgs ros2run ros2param
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros-testing ros-humble-rosbag2-cpp ros-humble-tf2-sensor-msgs
+        ros-humble-ros2run ros-humble-ros2param
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-testing ros-humble-rosbag2-cpp ros-humble-tf2-sensor-msgs
+          ros-humble-ros2run ros-humble-ros2param
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_115:
+    name: control-toolbox ros2launch theora-image-transport compressed-image-transport
+      compressed-depth-image-transport
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-control-toolbox ros-humble-ros2launch ros-humble-theora-image-transport
+        ros-humble-compressed-image-transport ros-humble-compressed-depth-image-transport
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-control-toolbox ros-humble-ros2launch ros-humble-theora-image-transport
+          ros-humble-compressed-image-transport ros-humble-compressed-depth-image-transport
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_116:
+    name: nav2-simple-commander image-proc ros2lifecycle twist-mux joy-linux
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-nav2-simple-commander ros-humble-image-proc ros-humble-ros2lifecycle
+        ros-humble-twist-mux ros-humble-joy-linux
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-nav2-simple-commander ros-humble-image-proc ros-humble-ros2lifecycle
+          ros-humble-twist-mux ros-humble-joy-linux
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_117:
+    name: image-view image-publisher rqt-image-view ros-gz-image tf2-bullet
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-image-view ros-humble-image-publisher ros-humble-rqt-image-view
+        ros-humble-ros-gz-image ros-humble-tf2-bullet
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-image-view ros-humble-image-publisher ros-humble-rqt-image-view
+          ros-humble-ros-gz-image ros-humble-tf2-bullet
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_118:
+    name: rqt-msg velodyne-pointcloud velodyne-driver urg-node rqt-reconfigure
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rqt-msg ros-humble-velodyne-pointcloud ros-humble-velodyne-driver
+        ros-humble-urg-node ros-humble-rqt-reconfigure
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rqt-msg ros-humble-velodyne-pointcloud ros-humble-velodyne-driver
+          ros-humble-urg-node ros-humble-rqt-reconfigure
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_119:
+    name: turtlebot3-node realsense2-camera v4l2-camera image-common ublox-gps
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-turtlebot3-node ros-humble-realsense2-camera ros-humble-v4l2-camera
+        ros-humble-image-common ros-humble-ublox-gps
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-turtlebot3-node ros-humble-realsense2-camera ros-humble-v4l2-camera
+          ros-humble-image-common ros-humble-ublox-gps
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_120:
+    name: robot-controllers-interface zstd-point-cloud-transport zlib-point-cloud-transport
+      draco-point-cloud-transport autoware-utils-logging
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-robot-controllers-interface ros-humble-zstd-point-cloud-transport
+        ros-humble-zlib-point-cloud-transport ros-humble-draco-point-cloud-transport
+        ros-humble-autoware-utils-logging
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-robot-controllers-interface ros-humble-zstd-point-cloud-transport
+          ros-humble-zlib-point-cloud-transport ros-humble-draco-point-cloud-transport
+          ros-humble-autoware-utils-logging
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_121:
+    name: apriltag-draw apriltag-detector turtle-tf2-py rqt-tf-tree rqt-robot-dashboard
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-apriltag-draw ros-humble-apriltag-detector ros-humble-turtle-tf2-py
+        ros-humble-rqt-tf-tree ros-humble-rqt-robot-dashboard
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-apriltag-draw ros-humble-apriltag-detector ros-humble-turtle-tf2-py
+          ros-humble-rqt-tf-tree ros-humble-rqt-robot-dashboard
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_32_job_122:
+    name: rqt-moveit motion-capture-tracking foxglove-compressed-video-transport ffmpeg-image-transport
+      apriltag-ros
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_102
+    - stage_31_job_103
+    - stage_31_job_104
+    - stage_31_job_105
+    - stage_31_job_106
+    - stage_31_job_107
+    - stage_31_job_108
+    - stage_31_job_109
+    - stage_31_job_110
+    - stage_31_job_111
+    - stage_31_job_112
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rqt-moveit ros-humble-motion-capture-tracking ros-humble-foxglove-compressed-video-transport
+        ros-humble-ffmpeg-image-transport ros-humble-apriltag-ros
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rqt-moveit ros-humble-motion-capture-tracking
+          ros-humble-foxglove-compressed-video-transport ros-humble-ffmpeg-image-transport
+          ros-humble-apriltag-ros
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_123:
+    name: joint-state-publisher-gui rviz-common interactive-markers moveit-resources-fanuc-moveit-config
+      nav2-util
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-joint-state-publisher-gui ros-humble-rviz-common ros-humble-interactive-markers
+        ros-humble-moveit-resources-fanuc-moveit-config ros-humble-nav2-util
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-joint-state-publisher-gui ros-humble-rviz-common
+          ros-humble-interactive-markers ros-humble-moveit-resources-fanuc-moveit-config
+          ros-humble-nav2-util
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_124:
+    name: warehouse-ros rosbag2-compression controller-manager gazebo-ros image-transport-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-warehouse-ros ros-humble-rosbag2-compression ros-humble-controller-manager
+        ros-humble-gazebo-ros ros-humble-image-transport-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-warehouse-ros ros-humble-rosbag2-compression ros-humble-controller-manager
+          ros-humble-gazebo-ros ros-humble-image-transport-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_125:
+    name: sros2 ros2component robot-localization webots-ros2-driver stereo-image-proc
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-sros2 ros-humble-ros2component ros-humble-robot-localization
+        ros-humble-webots-ros2-driver ros-humble-stereo-image-proc
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-sros2 ros-humble-ros2component ros-humble-robot-localization
+          ros-humble-webots-ros2-driver ros-humble-stereo-image-proc
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_126:
+    name: image-rotate depth-image-proc pcl-ros grid-map-ros laser-filters
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-image-rotate ros-humble-depth-image-proc ros-humble-pcl-ros
+        ros-humble-grid-map-ros ros-humble-laser-filters
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-image-rotate ros-humble-depth-image-proc ros-humble-pcl-ros
+          ros-humble-grid-map-ros ros-humble-laser-filters
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_127:
+    name: rosapi geometry2 rqt-srv rqt-action autoware-utils-geometry
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosapi ros-humble-geometry2 ros-humble-rqt-srv ros-humble-rqt-action
+        ros-humble-autoware-utils-geometry
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosapi ros-humble-geometry2 ros-humble-rqt-srv
+          ros-humble-rqt-action ros-humble-autoware-utils-geometry
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_128:
+    name: cartographer-ros velodyne ros-ign-image pendulum-control lifecycle
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-cartographer-ros ros-humble-velodyne ros-humble-ros-ign-image
+        ros-humble-pendulum-control ros-humble-lifecycle
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-cartographer-ros ros-humble-velodyne ros-humble-ros-ign-image
+          ros-humble-pendulum-control ros-humble-lifecycle
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_129:
+    name: dummy-robot-bringup pointcloud-to-laserscan turtlebot3-fake-node system-modes
+      microstrain-inertial-driver
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-dummy-robot-bringup ros-humble-pointcloud-to-laserscan
+        ros-humble-turtlebot3-fake-node ros-humble-system-modes ros-humble-microstrain-inertial-driver
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-dummy-robot-bringup ros-humble-pointcloud-to-laserscan
+          ros-humble-turtlebot3-fake-node ros-humble-system-modes ros-humble-microstrain-inertial-driver
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_130:
+    name: rosx-introspection event-camera-codecs ublox turtle-tf2-cpp rqt-image-overlay
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rosx-introspection ros-humble-event-camera-codecs ros-humble-ublox
+        ros-humble-turtle-tf2-cpp ros-humble-rqt-image-overlay
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rosx-introspection ros-humble-event-camera-codecs
+          ros-humble-ublox ros-humble-turtle-tf2-cpp ros-humble-rqt-image-overlay
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_131:
+    name: robot-controllers point-cloud-transport-plugins odom-to-tf-ros2 camera-ros
+      apriltag-detector-umich
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-robot-controllers ros-humble-point-cloud-transport-plugins
+        ros-humble-odom-to-tf-ros2 ros-humble-camera-ros ros-humble-apriltag-detector-umich
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-robot-controllers ros-humble-point-cloud-transport-plugins
+          ros-humble-odom-to-tf-ros2 ros-humble-camera-ros ros-humble-apriltag-detector-umich
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_33_job_132:
+    name: apriltag-detector-mit
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_32_job_113
+    - stage_32_job_114
+    - stage_32_job_115
+    - stage_32_job_116
+    - stage_32_job_117
+    - stage_32_job_118
+    - stage_32_job_119
+    - stage_32_job_120
+    - stage_32_job_121
+    - stage_32_job_122
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-apriltag-detector-mit
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-apriltag-detector-mit
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_133:
+    name: moveit-resources-panda-moveit-config rviz-visual-testing-framework nav2-map-server
+      nav2-lifecycle-manager rosbag2-compression-zstd
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-resources-panda-moveit-config ros-humble-rviz-visual-testing-framework
+        ros-humble-nav2-map-server ros-humble-nav2-lifecycle-manager ros-humble-rosbag2-compression-zstd
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-resources-panda-moveit-config ros-humble-rviz-visual-testing-framework
+          ros-humble-nav2-map-server ros-humble-nav2-lifecycle-manager ros-humble-rosbag2-compression-zstd
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_134:
+    name: nav-2d-utils forward-command-controller steering-controllers-library joint-trajectory-controller
+      nav2-behavior-tree
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-nav-2d-utils ros-humble-forward-command-controller ros-humble-steering-controllers-library
+        ros-humble-joint-trajectory-controller ros-humble-nav2-behavior-tree
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-nav-2d-utils ros-humble-forward-command-controller
+          ros-humble-steering-controllers-library ros-humble-joint-trajectory-controller
+          ros-humble-nav2-behavior-tree
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_135:
+    name: tricycle-controller range-sensor-broadcaster pose-broadcaster pid-controller
+      mecanum-drive-controller
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-tricycle-controller ros-humble-range-sensor-broadcaster
+        ros-humble-pose-broadcaster ros-humble-pid-controller ros-humble-mecanum-drive-controller
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-tricycle-controller ros-humble-range-sensor-broadcaster
+          ros-humble-pose-broadcaster ros-humble-pid-controller ros-humble-mecanum-drive-controller
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_136:
+    name: joint-state-broadcaster imu-sensor-broadcaster gripper-controllers gpio-controllers
+      force-torque-sensor-broadcaster
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-joint-state-broadcaster ros-humble-imu-sensor-broadcaster
+        ros-humble-gripper-controllers ros-humble-gpio-controllers ros-humble-force-torque-sensor-broadcaster
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-joint-state-broadcaster ros-humble-imu-sensor-broadcaster
+          ros-humble-gripper-controllers ros-humble-gpio-controllers ros-humble-force-torque-sensor-broadcaster
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_137:
+    name: diff-drive-controller admittance-controller nav2-velocity-smoother nav2-amcl
+      ros2controlcli
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-diff-drive-controller ros-humble-admittance-controller
+        ros-humble-nav2-velocity-smoother ros-humble-nav2-amcl ros-humble-ros2controlcli
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-diff-drive-controller ros-humble-admittance-controller
+          ros-humble-nav2-velocity-smoother ros-humble-nav2-amcl ros-humble-ros2controlcli
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_138:
+    name: rviz-imu-plugin usb-cam sros2-cmake ros2cli-common-extensions gazebo-ros2-control
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-rviz-imu-plugin ros-humble-usb-cam ros-humble-sros2-cmake
+        ros-humble-ros2cli-common-extensions ros-humble-gazebo-ros2-control
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-rviz-imu-plugin ros-humble-usb-cam ros-humble-sros2-cmake
+          ros-humble-ros2cli-common-extensions ros-humble-gazebo-ros2-control
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_139:
+    name: webots-ros2-control image-pipeline gazebo-plugins webots-ros2-tesla webots-ros2-mavic
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-webots-ros2-control ros-humble-image-pipeline ros-humble-gazebo-plugins
+        ros-humble-webots-ros2-tesla ros-humble-webots-ros2-mavic
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-webots-ros2-control ros-humble-image-pipeline
+          ros-humble-gazebo-plugins ros-humble-webots-ros2-tesla ros-humble-webots-ros2-mavic
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_140:
+    name: warehouse-ros-sqlite rosbridge-server octomap-server grid-map-visualization
+      grid-map-rviz-plugin
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-warehouse-ros-sqlite ros-humble-rosbridge-server ros-humble-octomap-server
+        ros-humble-grid-map-visualization ros-humble-grid-map-rviz-plugin
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-warehouse-ros-sqlite ros-humble-rosbridge-server
+          ros-humble-octomap-server ros-humble-grid-map-visualization ros-humble-grid-map-rviz-plugin
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_141:
+    name: grid-map-loader grid-map-filters perception-pcl autoware-utils-tf webots-ros2-crazyflie
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-grid-map-loader ros-humble-grid-map-filters ros-humble-perception-pcl
+        ros-humble-autoware-utils-tf ros-humble-webots-ros2-crazyflie
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-grid-map-loader ros-humble-grid-map-filters ros-humble-perception-pcl
+          ros-humble-autoware-utils-tf ros-humble-webots-ros2-crazyflie
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_142:
+    name: velodyne-gazebo-plugins turtlebot3-cartographer grid-map-pcl rqt-controller-manager
+      rosbag2-performance-benchmarking
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-velodyne-gazebo-plugins ros-humble-turtlebot3-cartographer
+        ros-humble-grid-map-pcl ros-humble-rqt-controller-manager ros-humble-rosbag2-performance-benchmarking
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-velodyne-gazebo-plugins ros-humble-turtlebot3-cartographer
+          ros-humble-grid-map-pcl ros-humble-rqt-controller-manager ros-humble-rosbag2-performance-benchmarking
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_34_job_143:
+    name: foxglove-bridge event-camera-renderer dual-laser-merger avt-vimba-camera
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_123
+    - stage_33_job_124
+    - stage_33_job_125
+    - stage_33_job_126
+    - stage_33_job_127
+    - stage_33_job_128
+    - stage_33_job_129
+    - stage_33_job_130
+    - stage_33_job_131
+    - stage_33_job_132
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-foxglove-bridge ros-humble-event-camera-renderer ros-humble-dual-laser-merger
+        ros-humble-avt-vimba-camera
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-foxglove-bridge ros-humble-event-camera-renderer
+          ros-humble-dual-laser-merger ros-humble-avt-vimba-camera
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_35_job_144:
+    name: moveit-core rviz-default-plugins nav2-costmap-2d rosbag2-transport velocity-controllers
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_34_job_133
+    - stage_34_job_134
+    - stage_34_job_135
+    - stage_34_job_136
+    - stage_34_job_137
+    - stage_34_job_138
+    - stage_34_job_139
+    - stage_34_job_140
+    - stage_34_job_141
+    - stage_34_job_142
+    - stage_34_job_143
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-core ros-humble-rviz-default-plugins ros-humble-nav2-costmap-2d
+        ros-humble-rosbag2-transport ros-humble-velocity-controllers
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-core ros-humble-rviz-default-plugins ros-humble-nav2-costmap-2d
+          ros-humble-rosbag2-transport ros-humble-velocity-controllers
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_35_job_145:
+    name: tricycle-steering-controller position-controllers effort-controllers bicycle-steering-controller
+      ackermann-steering-controller
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_34_job_133
+    - stage_34_job_134
+    - stage_34_job_135
+    - stage_34_job_136
+    - stage_34_job_137
+    - stage_34_job_138
+    - stage_34_job_139
+    - stage_34_job_140
+    - stage_34_job_141
+    - stage_34_job_142
+    - stage_34_job_143
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-tricycle-steering-controller ros-humble-position-controllers
+        ros-humble-effort-controllers ros-humble-bicycle-steering-controller ros-humble-ackermann-steering-controller
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-tricycle-steering-controller ros-humble-position-controllers
+          ros-humble-effort-controllers ros-humble-bicycle-steering-controller ros-humble-ackermann-steering-controller
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_35_job_146:
+    name: ur-controllers ros2-control ros-core webots-ros2-husarion gazebo-ros-pkgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_34_job_133
+    - stage_34_job_134
+    - stage_34_job_135
+    - stage_34_job_136
+    - stage_34_job_137
+    - stage_34_job_138
+    - stage_34_job_139
+    - stage_34_job_140
+    - stage_34_job_141
+    - stage_34_job_142
+    - stage_34_job_143
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ur-controllers ros-humble-ros2-control ros-humble-ros-core
+        ros-humble-webots-ros2-husarion ros-humble-gazebo-ros-pkgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ur-controllers ros-humble-ros2-control ros-humble-ros-core
+          ros-humble-webots-ros2-husarion ros-humble-gazebo-ros-pkgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_35_job_147:
+    name: autoware-utils-pcl velodyne-simulator rosbridge-suite moveit-resources aws-robomaker-small-warehouse-world
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_34_job_133
+    - stage_34_job_134
+    - stage_34_job_135
+    - stage_34_job_136
+    - stage_34_job_137
+    - stage_34_job_138
+    - stage_34_job_139
+    - stage_34_job_140
+    - stage_34_job_141
+    - stage_34_job_142
+    - stage_34_job_143
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-autoware-utils-pcl ros-humble-velodyne-simulator ros-humble-rosbridge-suite
+        ros-humble-moveit-resources ros-humble-aws-robomaker-small-warehouse-world
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-autoware-utils-pcl ros-humble-velodyne-simulator
+          ros-humble-rosbridge-suite ros-humble-moveit-resources ros-humble-aws-robomaker-small-warehouse-world
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_36_job_148:
+    name: moveit-ros-occupancy-map-monitor rviz2 moveit-simple-controller-manager
+      moveit-resources-prbt-ikfast-manipulator-plugin nav2-core
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_35_job_144
+    - stage_35_job_145
+    - stage_35_job_146
+    - stage_35_job_147
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-occupancy-map-monitor ros-humble-rviz2 ros-humble-moveit-simple-controller-manager
+        ros-humble-moveit-resources-prbt-ikfast-manipulator-plugin ros-humble-nav2-core
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-occupancy-map-monitor ros-humble-rviz2
+          ros-humble-moveit-simple-controller-manager ros-humble-moveit-resources-prbt-ikfast-manipulator-plugin
+          ros-humble-nav2-core
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_36_job_149:
+    name: costmap-queue pilz-industrial-motion-planner-testutils chomp-motion-planner
+      rosbag2-py nav2-rviz-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_35_job_144
+    - stage_35_job_145
+    - stage_35_job_146
+    - stage_35_job_147
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-costmap-queue ros-humble-pilz-industrial-motion-planner-testutils
+        ros-humble-chomp-motion-planner ros-humble-rosbag2-py ros-humble-nav2-rviz-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-costmap-queue ros-humble-pilz-industrial-motion-planner-testutils
+          ros-humble-chomp-motion-planner ros-humble-rosbag2-py ros-humble-nav2-rviz-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_36_job_150:
+    name: nav2-collision-monitor ros2-controllers slam-toolbox octomap-rviz-plugins
+      turtlebot3-gazebo
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_35_job_144
+    - stage_35_job_145
+    - stage_35_job_146
+    - stage_35_job_147
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-nav2-collision-monitor ros-humble-ros2-controllers ros-humble-slam-toolbox
+        ros-humble-octomap-rviz-plugins ros-humble-turtlebot3-gazebo
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-nav2-collision-monitor ros-humble-ros2-controllers
+          ros-humble-slam-toolbox ros-humble-octomap-rviz-plugins ros-humble-turtlebot3-gazebo
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_36_job_151:
+    name: grid-map-costmap-2d rviz-satellite spatio-temporal-voxel-layer plotjuggler-ros
+      gazebo-ros2-control-demos
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_35_job_144
+    - stage_35_job_145
+    - stage_35_job_146
+    - stage_35_job_147
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-grid-map-costmap-2d ros-humble-rviz-satellite ros-humble-spatio-temporal-voxel-layer
+        ros-humble-plotjuggler-ros ros-humble-gazebo-ros2-control-demos
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-grid-map-costmap-2d ros-humble-rviz-satellite
+          ros-humble-spatio-temporal-voxel-layer ros-humble-plotjuggler-ros ros-humble-gazebo-ros2-control-demos
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_36_job_152:
+    name: autoware-utils apriltag-tools
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_35_job_144
+    - stage_35_job_145
+    - stage_35_job_146
+    - stage_35_job_147
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-autoware-utils ros-humble-apriltag-tools
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-autoware-utils ros-humble-apriltag-tools
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_37_job_153:
+    name: moveit-ros-planning dwb-core nav2-regulated-pure-pursuit-controller nav2-controller
+      moveit-planners-chomp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_36_job_148
+    - stage_36_job_149
+    - stage_36_job_150
+    - stage_36_job_151
+    - stage_36_job_152
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-planning ros-humble-dwb-core ros-humble-nav2-regulated-pure-pursuit-controller
+        ros-humble-nav2-controller ros-humble-moveit-planners-chomp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-planning ros-humble-dwb-core ros-humble-nav2-regulated-pure-pursuit-controller
+          ros-humble-nav2-controller ros-humble-moveit-planners-chomp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_37_job_154:
+    name: ros2bag ur-description nav2-waypoint-follower nav2-theta-star-planner nav2-smoother
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_36_job_148
+    - stage_36_job_149
+    - stage_36_job_150
+    - stage_36_job_151
+    - stage_36_job_152
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros2bag ros-humble-ur-description ros-humble-nav2-waypoint-follower
+        ros-humble-nav2-theta-star-planner ros-humble-nav2-smoother
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros2bag ros-humble-ur-description ros-humble-nav2-waypoint-follower
+          ros-humble-nav2-theta-star-planner ros-humble-nav2-smoother
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_37_job_155:
+    name: nav2-smac-planner nav2-planner nav2-navfn-planner nav2-mppi-controller nav2-constrained-smoother
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_36_job_148
+    - stage_36_job_149
+    - stage_36_job_150
+    - stage_36_job_151
+    - stage_36_job_152
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-nav2-smac-planner ros-humble-nav2-planner ros-humble-nav2-navfn-planner
+        ros-humble-nav2-mppi-controller ros-humble-nav2-constrained-smoother
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-nav2-smac-planner ros-humble-nav2-planner ros-humble-nav2-navfn-planner
+          ros-humble-nav2-mppi-controller ros-humble-nav2-constrained-smoother
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_37_job_156:
+    name: nav2-bt-navigator nav2-behaviors moveit-plugins rqt-bag moveit-ros-control-interface
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_36_job_148
+    - stage_36_job_149
+    - stage_36_job_150
+    - stage_36_job_151
+    - stage_36_job_152
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-nav2-bt-navigator ros-humble-nav2-behaviors ros-humble-moveit-plugins
+        ros-humble-rqt-bag ros-humble-moveit-ros-control-interface
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-nav2-bt-navigator ros-humble-nav2-behaviors ros-humble-moveit-plugins
+          ros-humble-rqt-bag ros-humble-moveit-ros-control-interface
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_37_job_157:
+    name: ros-gz-sim-demos rviz-visual-tools webots-ros2-universal-robot webots-ros2-turtlebot
+      webots-ros2-tiago
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_36_job_148
+    - stage_36_job_149
+    - stage_36_job_150
+    - stage_36_job_151
+    - stage_36_job_152
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros-gz-sim-demos ros-humble-rviz-visual-tools ros-humble-webots-ros2-universal-robot
+        ros-humble-webots-ros2-turtlebot ros-humble-webots-ros2-tiago
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-gz-sim-demos ros-humble-rviz-visual-tools
+          ros-humble-webots-ros2-universal-robot ros-humble-webots-ros2-turtlebot
+          ros-humble-webots-ros2-tiago
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_37_job_158:
+    name: webots-ros2-epuck urdf-launch turtlebot3-manipulation-gazebo turtlebot3-bringup
+      grid-map-demos
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_36_job_148
+    - stage_36_job_149
+    - stage_36_job_150
+    - stage_36_job_151
+    - stage_36_job_152
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-webots-ros2-epuck ros-humble-urdf-launch ros-humble-turtlebot3-manipulation-gazebo
+        ros-humble-turtlebot3-bringup ros-humble-grid-map-demos
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-webots-ros2-epuck ros-humble-urdf-launch ros-humble-turtlebot3-manipulation-gazebo
+          ros-humble-turtlebot3-bringup ros-humble-grid-map-demos
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_37_job_159:
+    name: vision-msgs-rviz-plugins sick-safetyscanners2 moveit-chomp-optimizer-adapter
+      microstrain-inertial-examples
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_36_job_148
+    - stage_36_job_149
+    - stage_36_job_150
+    - stage_36_job_151
+    - stage_36_job_152
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-vision-msgs-rviz-plugins ros-humble-sick-safetyscanners2
+        ros-humble-moveit-chomp-optimizer-adapter ros-humble-microstrain-inertial-examples
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-vision-msgs-rviz-plugins ros-humble-sick-safetyscanners2
+          ros-humble-moveit-chomp-optimizer-adapter ros-humble-microstrain-inertial-examples
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_38_job_160:
+    name: moveit-kinematics moveit-ros-warehouse moveit-planners-ompl moveit-ros-robot-interaction
+      dwb-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_37_job_153
+    - stage_37_job_154
+    - stage_37_job_155
+    - stage_37_job_156
+    - stage_37_job_157
+    - stage_37_job_158
+    - stage_37_job_159
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-kinematics ros-humble-moveit-ros-warehouse ros-humble-moveit-planners-ompl
+        ros-humble-moveit-ros-robot-interaction ros-humble-dwb-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-kinematics ros-humble-moveit-ros-warehouse
+          ros-humble-moveit-planners-ompl ros-humble-moveit-ros-robot-interaction
+          ros-humble-dwb-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_38_job_161:
+    name: dwb-critics nav2-rotation-shim-controller rosbag2-tests moveit-ros-perception
+      ur-robot-driver
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_37_job_153
+    - stage_37_job_154
+    - stage_37_job_155
+    - stage_37_job_156
+    - stage_37_job_157
+    - stage_37_job_158
+    - stage_37_job_159
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-dwb-critics ros-humble-nav2-rotation-shim-controller
+        ros-humble-rosbag2-tests ros-humble-moveit-ros-perception ros-humble-ur-robot-driver
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-dwb-critics ros-humble-nav2-rotation-shim-controller
+          ros-humble-rosbag2-tests ros-humble-moveit-ros-perception ros-humble-ur-robot-driver
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_38_job_162:
+    name: ros-gz moveit-visual-tools webots-ros2-tests urdf-tutorial ros-ign-gazebo-demos
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_37_job_153
+    - stage_37_job_154
+    - stage_37_job_155
+    - stage_37_job_156
+    - stage_37_job_157
+    - stage_37_job_158
+    - stage_37_job_159
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ros-gz ros-humble-moveit-visual-tools ros-humble-webots-ros2-tests
+        ros-humble-urdf-tutorial ros-humble-ros-ign-gazebo-demos
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ros-gz ros-humble-moveit-visual-tools ros-humble-webots-ros2-tests
+          ros-humble-urdf-tutorial ros-humble-ros-ign-gazebo-demos
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_38_job_163:
+    name: turtlebot3-simulations grid-map
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_37_job_153
+    - stage_37_job_154
+    - stage_37_job_155
+    - stage_37_job_156
+    - stage_37_job_157
+    - stage_37_job_158
+    - stage_37_job_159
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-turtlebot3-simulations ros-humble-grid-map
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-turtlebot3-simulations ros-humble-grid-map
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_39_job_164:
+    name: moveit-ros-move-group moveit-ros-benchmarks nav2-dwb-controller rosbag2
+      ur-calibration
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_38_job_160
+    - stage_38_job_161
+    - stage_38_job_162
+    - stage_38_job_163
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-move-group ros-humble-moveit-ros-benchmarks
+        ros-humble-nav2-dwb-controller ros-humble-rosbag2 ros-humble-ur-calibration
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-move-group ros-humble-moveit-ros-benchmarks
+          ros-humble-nav2-dwb-controller ros-humble-rosbag2 ros-humble-ur-calibration
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_39_job_165:
+    name: webots-ros2 ros-ign
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_38_job_160
+    - stage_38_job_161
+    - stage_38_job_162
+    - stage_38_job_163
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-webots-ros2 ros-humble-ros-ign
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-webots-ros2 ros-humble-ros-ign
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_40_job_166:
+    name: moveit-ros-planning-interface moveit-resources-prbt-moveit-config navigation2
+      rqt-bag-plugins ros-base
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_39_job_164
+    - stage_39_job_165
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-planning-interface ros-humble-moveit-resources-prbt-moveit-config
+        ros-humble-navigation2 ros-humble-rqt-bag-plugins ros-humble-ros-base
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-planning-interface ros-humble-moveit-resources-prbt-moveit-config
+          ros-humble-navigation2 ros-humble-rqt-bag-plugins ros-humble-ros-base
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_41_job_167:
+    name: moveit-ros-visualization moveit-resources-prbt-pg70-support nav2-bringup
+      moveit-servo rqt-common-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_40_job_166
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-ros-visualization ros-humble-moveit-resources-prbt-pg70-support
+        ros-humble-nav2-bringup ros-humble-moveit-servo ros-humble-rqt-common-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-ros-visualization ros-humble-moveit-resources-prbt-pg70-support
+          ros-humble-nav2-bringup ros-humble-moveit-servo ros-humble-rqt-common-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_41_job_168:
+    name: simulation perception moveit-hybrid-planning
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_40_job_166
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-simulation ros-humble-perception ros-humble-moveit-hybrid-planning
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-simulation ros-humble-perception ros-humble-moveit-hybrid-planning
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_42_job_169:
+    name: moveit-setup-framework pilz-industrial-motion-planner moveit-ros ur-moveit-config
+      turtlebot3-navigation2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_41_job_167
+    - stage_41_job_168
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-framework ros-humble-pilz-industrial-motion-planner
+        ros-humble-moveit-ros ros-humble-ur-moveit-config ros-humble-turtlebot3-navigation2
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-framework ros-humble-pilz-industrial-motion-planner
+          ros-humble-moveit-ros ros-humble-ur-moveit-config ros-humble-turtlebot3-navigation2
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_42_job_170:
+    name: desktop
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_41_job_167
+    - stage_41_job_168
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-desktop
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-desktop
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_43_job_171:
+    name: moveit-setup-core-plugins moveit-setup-controllers moveit-setup-app-plugins
+      moveit-setup-srdf-plugins moveit-planners
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_42_job_169
+    - stage_42_job_170
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-core-plugins ros-humble-moveit-setup-controllers
+        ros-humble-moveit-setup-app-plugins ros-humble-moveit-setup-srdf-plugins ros-humble-moveit-planners
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-core-plugins ros-humble-moveit-setup-controllers
+          ros-humble-moveit-setup-app-plugins ros-humble-moveit-setup-srdf-plugins
+          ros-humble-moveit-planners
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_43_job_172:
+    name: ur turtlebot3 desktop-full
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_42_job_169
+    - stage_42_job_170
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-ur ros-humble-turtlebot3 ros-humble-desktop-full
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-ur ros-humble-turtlebot3 ros-humble-desktop-full
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_44_job_173:
+    name: moveit-setup-assistant moveit-runtime moveit
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_43_job_171
+    - stage_43_job_172
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-moveit-setup-assistant ros-humble-moveit-runtime ros-humble-moveit
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-moveit-setup-assistant ros-humble-moveit-runtime
+          ros-humble-moveit
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+name: build_unix
+on:
+  push:
+    branches:
+    - buildbranch_linux
