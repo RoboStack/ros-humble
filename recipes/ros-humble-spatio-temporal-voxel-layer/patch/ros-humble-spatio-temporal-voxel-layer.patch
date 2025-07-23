@@ -1,0 +1,30 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c0f52e7..378a082 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,9 +9,6 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   add_compile_options(-Wall -Wextra -Wpedantic)
+ endif()
+ 
+-# Get a linker error when there are undefined symbols
+-add_link_options(-Wl,--no-undefined)
+-
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/")
+ 
+ find_package(ament_cmake REQUIRED)
+@@ -111,6 +108,15 @@ target_link_libraries(${library_name}
+   OpenVDB::openvdb
+ )
+ 
++# Get a linker error when there are undefined symbols
++# target_link_options (https://cmake.org/cmake/help/latest/command/target_link_options.html)
++# is only available since CMake 3.13
++if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
++  target_link_options(${library_name} PRIVATE -Wl,--no-undefined)
++else()
++  add_link_options(-Wl,--no-undefined)
++endif()
++
+ ament_target_dependencies(${library_name} ${dependencies})
+ 
+ if(BUILD_TESTING)

@@ -1,0 +1,141 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+
+package:
+  name: ros-humble-spatio-temporal-voxel-layer
+  version: 2.3.4
+source:
+  git: https://github.com/SteveMacenski/spatio_temporal_voxel_layer-release.git
+  tag: release/humble/spatio_temporal_voxel_layer/2.3.4-1
+  target_directory: ros-humble-spatio-temporal-voxel-layer/src/work
+  patches:
+    - patch/ros-humble-spatio-temporal-voxel-layer.patch
+
+build:
+  script: ${{ '$RECIPE_DIR/build_ament_cmake.sh' if unix or wasm32 else '%RECIPE_DIR%\\bld_ament_cmake.bat' }}
+  number: 13
+  post_process:
+    - files:
+        - '*.pc'
+      regex: (?:-L|-I)?"?([^;\s]+/sysroot/)
+      replacement: $$(CONDA_BUILD_SYSROOT_S)
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/sysroot)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/MacOSX\d*\.?\d*\.sdk)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+about:
+  homepage: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('c') }}
+    - if: target_platform!='emscripten-wasm32'
+      then:
+        - ${{ stdlib('c') }}
+    - ninja
+    - python
+    - setuptools
+    - git
+    - git-lfs
+    - if: unix
+      then:
+        - patch
+        - make
+        - coreutils
+    - if: win
+      then:
+        - m2-patch
+    - if: osx
+      then:
+        - tapi
+    - if: build_platform != target_platform
+      then:
+        - pkg-config
+    - cmake
+    - cython
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - numpy
+    - if: target_platform == 'emscripten-wasm32'
+      then:
+        - ros-humble-rosidl-default-generators
+  host:
+    - if: build_platform == target_platform
+      then:
+        - pkg-config
+    - numpy
+    - pcl
+    - pip
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-lint-auto
+    - ros-humble-builtin-interfaces
+    - ros-humble-geometry-msgs
+    - ros-humble-laser-geometry
+    - ros-humble-message-filters
+    - ros-humble-nav2-costmap-2d
+    - ros-humble-openvdb-vendor
+    - ros-humble-pcl-conversions
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-rosidl-default-generators
+    - ros-humble-sensor-msgs
+    - ros-humble-std-msgs
+    - ros-humble-std-srvs
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-ros
+    - ros-humble-tf2-sensor-msgs
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.7.* humble_*
+    - if: linux
+      then:
+        - libgl-devel
+        - libopengl-devel
+    - if: unix
+      then:
+        - xorg-libx11
+        - xorg-libxext
+  run:
+    - pcl
+    - python
+    - ros-humble-builtin-interfaces
+    - ros-humble-geometry-msgs
+    - ros-humble-laser-geometry
+    - ros-humble-message-filters
+    - ros-humble-nav2-costmap-2d
+    - ros-humble-openvdb-vendor
+    - ros-humble-pcl-conversions
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-ros-workspace
+    - ros-humble-rosidl-default-runtime
+    - ros-humble-sensor-msgs
+    - ros-humble-std-msgs
+    - ros-humble-std-srvs
+    - ros-humble-tf2-geometry-msgs
+    - ros-humble-tf2-ros
+    - ros-humble-tf2-sensor-msgs
+    - ros-humble-visualization-msgs
+    - ros2-distro-mutex 0.7.* humble_*
+    - if: osx and x86_64
+      then:
+        - __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
+    - if: unix
+      then:
+        - xorg-libx11
+        - xorg-libxext

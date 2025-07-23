@@ -1,0 +1,17 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c906851..b48600f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,8 +5,10 @@ project(apriltag_ros)
+ set(CMAKE_CXX_STANDARD 14)
+ 
+ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+-  add_compile_options(-Werror -Wall -Wextra -Wpedantic)
+-  add_link_options("-Wl,-z,relro,-z,now,-z,defs")
++  if(NOT APPLE)
++    add_compile_options(-Werror -Wall -Wextra -Wpedantic)
++    add_link_options("-Wl,-z,relro,-z,now,-z,defs")
++  endif()
+ endif()
+ 
+ option(ASAN "use AddressSanitizer to detect memory issues" OFF)

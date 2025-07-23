@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+
+package:
+  name: ros-humble-librealsense2
+  version: 2.55.1
+
+build:
+  number: 13
+  script: ''
+  post_process:
+    - files:
+        - '*.pc'
+      regex: (?:-L|-I)?"?([^;\s]+/sysroot/)
+      replacement: $$(CONDA_BUILD_SYSROOT_S)
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/sysroot)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/MacOSX\d*\.?\d*\.sdk)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+about:
+  homepage: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - if: build_platform != target_platform
+      then:
+        - git
+  host:
+    - glfw 3.*
+    - libudev
+    - libusb
+    - openssl
+    - pkg-config
+    - python
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros2-distro-mutex 0.7.* humble_*
+    - xorg-libx11
+    - xorg-xorgproto
+    - if: build_platform == target_platform
+      then:
+        - git
+    - if: linux
+      then:
+        - libgl-devel
+        - libopengl-devel
+    - if: unix
+      then:
+        - xorg-libx11
+        - xorg-libxext
+  run:
+    - glfw
+    - librealsense >=2.55.1, <2.56.0a0
+    - python
+    - ros-humble-ros-workspace
+    - ros2-distro-mutex 0.7.* humble_*
+    - xorg-libx11
+    - xorg-xorgproto
+    - if: osx and x86_64
+      then:
+        - __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
+    - if: unix
+      then:
+        - xorg-libx11
+        - xorg-libxext
