@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1501e4321a..bd3597ece7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -93,7 +93,6 @@ add_library(mppi_critics SHARED
+ set(libraries mppi_controller mppi_critics)
+ 
+ foreach(lib IN LISTS libraries)
+-  target_compile_options(${lib} PUBLIC -fconcepts)
+   target_include_directories(${lib} PUBLIC ${xsimd_INCLUDE_DIRS})  #  ${OpenMP_INCLUDE_DIRS}
+   target_link_libraries(${lib} xtensor xtensor::optimize xtensor::use_xsimd)
+   ament_target_dependencies(${lib} ${dependencies_pkgs})

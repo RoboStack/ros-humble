@@ -1,0 +1,28 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 81cbe6f00..d7798b579 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -45,7 +45,7 @@ ament_target_dependencies(pid_controller PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
+ 
+ # Causes the visibility macros to use dllexport rather than dllimport,
+ # which is appropriate when building the dll but not consuming it.
+-target_compile_definitions(pid_controller PRIVATE "PID_CONTROLLER_BUILDING_DLL")
++target_compile_definitions(pid_controller PRIVATE "PID_CONTROLLER__VISIBILITY_BUILDING_DLL")
+ 
+ pluginlib_export_plugin_description_file(controller_interface pid_controller.xml)
+ 
+diff --git a/include/pid_controller/pid_controller.hpp b/include/pid_controller/pid_controller.hpp
+index 105a91544..4919a739c 100644
+--- a/include/pid_controller/pid_controller.hpp
++++ b/include/pid_controller/pid_controller.hpp
+@@ -119,8 +119,10 @@ protected:
+   std::unique_ptr<ControllerStatePublisher> state_publisher_;
+ 
+   // override methods from ChainableControllerInterface
++  PID_CONTROLLER__VISIBILITY_PUBLIC
+   std::vector<hardware_interface::CommandInterface> on_export_reference_interfaces() override;
+ 
++  PID_CONTROLLER__VISIBILITY_PUBLIC
+   bool on_set_chained_mode(bool chained_mode) override;
+ 
+   // internal methods

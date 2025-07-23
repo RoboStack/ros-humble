@@ -1,0 +1,33 @@
+diff --git a/ros2cli/completion/ros2-argcomplete.bash b/ros2cli/completion/ros2-argcomplete.bash
+index a5f2d67..ab9f656 100644
+--- a/ros2cli/completion/ros2-argcomplete.bash
++++ b/ros2cli/completion/ros2-argcomplete.bash
+@@ -12,8 +12,6 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-if type register-python-argcomplete3 > /dev/null 2>&1; then
+-  eval "$(register-python-argcomplete3 ros2)"
+-elif type register-python-argcomplete > /dev/null 2>&1; then
++if type register-python-argcomplete > /dev/null 2>&1; then
+   eval "$(register-python-argcomplete ros2)"
+ fi
+diff --git a/ros2cli/setup.py b/ros2cli/setup.py
+index 232c5bc..d774f33 100644
+--- a/ros2cli/setup.py
++++ b/ros2cli/setup.py
+@@ -20,6 +20,14 @@ setup(
+             'completion/ros2-argcomplete.bash',
+             'completion/ros2-argcomplete.zsh'
+         ]),
++
++        # [pixi] install autocompletion scripts
++        ('share/bash-completion/completions', [
++            'completion/ros2-argcomplete.bash',
++        ]),
++        ('share/zsh/site-functions', [
++            'completion/ros2-argcomplete.zsh'
++        ]),
+     ],
+     zip_safe=False,
+     author='Dirk Thomas',

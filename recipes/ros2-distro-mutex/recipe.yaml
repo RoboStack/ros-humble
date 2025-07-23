@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+
+package:
+  name: ros2-distro-mutex
+  version: 0.7.0
+
+build:
+  number: 13
+  string: humble_13
+  script: ''
+  post_process:
+    - files:
+        - '*.pc'
+      regex: (?:-L|-I)?"?([^;\s]+/sysroot/)
+      replacement: $$(CONDA_BUILD_SYSROOT_S)
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/sysroot)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/MacOSX\d*\.?\d*\.sdk)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+about:
+  homepage: https://github.com/robostack/ros-humble
+  license: BSD-3-Clause
+  summary: "The ROS2 distro mutex. To switch between ROS2 versions, you need to change the mutex.\nE.g. mamba install ros2-distro-mutex=*=humble to switch to humble."
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  run_constraints:
+    - libboost 1.86.*
+    - libboost-devel 1.86.*
+    - pcl 1.15.0.*
+    - gazebo 11.*
+    - libprotobuf 5.29.3.*
+  run_exports:
+    weak:
+      - ${{ pin_subpackage('ros2-distro-mutex', upper_bound='x.x') }}
