@@ -112,7 +112,7 @@ def prepare_patch_recipes() -> List[Path]:
             continue
         filtered = filter_sources(src_section)
         if not filtered:
-            # No patches → skip
+            # No patches -> skip
             continue
 
         pkg = recipe.get("package", {"name": recipe_file.parent.name, "version": "0"})
@@ -137,7 +137,7 @@ def run_rattler_build() -> None:
         "--recipe-dir",
         str(PATCH_RECIPES_DIR)
     ]
-    print("\n  Running:", " ".join(cmd), "\n", flush=True)
+    print("\n Running:", " ".join(cmd), "\n", flush=True)
     subprocess.run(cmd, check=True)
 
 

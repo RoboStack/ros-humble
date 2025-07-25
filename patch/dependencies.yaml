@@ -51,7 +51,7 @@ behaviortree_cpp:
   add_host: ["libboost-devel", "cppzmq", "zeromq", "sqlite"]
   add_run: ["libboost"]
 plotjuggler:
-  add_host: ["libxcb", "${{ 'elfutils' if linux }}", "ros-humble-ros-workspace"]
+  add_host: ["libxcb", "${{ 'elfutils' if linux }}", "ros-humble-ros-workspace", "git-lfs"]
 embree_vendor:
   add_host: ["REQUIRE_OPENGL", "libpng", "libjpeg-turbo", "openimageio", "tbb", "tbb-devel", "embree"]
 ign_rviz_common:
@@ -92,6 +92,8 @@ popf:
 rtabmap:
   add_host: ["REQUIRE_OPENGL", "ceres-solver", "libdc1394", "libusb", "vtk"]
 backward_ros:
+  # binutils is added only on linux to avoid the -liberty library not found in macos
+  # see https://github.com/RoboStack/ros-jazzy/pull/95#issuecomment-3113166166
   add_host: ["${{ 'binutils' if linux }}", "${{ 'elfutils' if linux }}", "ros-humble-ament-cmake-libraries"]
 nav2_smac_planner:
   add_build: ["${{ 'llvm-openmp' if osx }}"]
