@@ -313,6 +313,7 @@ packages_select_by_deps:
       # Requested in https://github.com/RoboStack/ros-humble/issues/325
       - data_tamer_cpp
       - imu_tools
+      - rplidar_ros
   
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
