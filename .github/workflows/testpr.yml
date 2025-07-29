@@ -101,7 +101,7 @@ jobs:
     - name: See packages restored by cache
       shell: bash -l {0}
       run: |
-        ls ${{ matrix.folder_cache }}
+        ls ${{ matrix.folder_cache }} || true
 
     - name: Build recipes [non emscripten]
       shell: bash -l {0}
@@ -119,7 +119,7 @@ jobs:
       shell: bash -l {0}
       if: always()
       run: |
-        ls ${{ matrix.folder_cache }}
+        ls ${{ matrix.folder_cache }} || true
 
     - name: Save build cache
       uses: actions/cache/save@v4
