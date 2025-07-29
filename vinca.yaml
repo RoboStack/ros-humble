@@ -314,6 +314,7 @@ packages_select_by_deps:
       - data_tamer_cpp
       - imu_tools
       - rplidar_ros
+      - vector_pursuit_controller
   
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
