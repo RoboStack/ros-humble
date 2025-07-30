@@ -319,6 +319,7 @@ packages_select_by_deps:
       - imu_calib
       - polygon_msgs
       - polygon_utils
+      - color_util
   
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
