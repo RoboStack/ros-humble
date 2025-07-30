@@ -268,4 +268,4 @@ polygon_rviz_plugins:
   add_host: ["libgl-devel"]
   add_run: ["libgl-devel"]
 py_trees:
-  add_build: ["poetry-core"]
+  add_host: ["poetry-core"]
