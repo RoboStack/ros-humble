@@ -320,8 +320,7 @@ packages_select_by_deps:
       - polygon_msgs
       - polygon_utils
       - color_util
-      - polygon_demos
-  
+
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
     then:
