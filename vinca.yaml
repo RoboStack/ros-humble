@@ -315,6 +315,17 @@ packages_select_by_deps:
       - imu_tools
       - rplidar_ros
       - vector_pursuit_controller
+      - imu_transformer
+      - imu_calib
+      - polygon_msgs
+      - polygon_utils
+      - color_util
+      - polygon_demos
+      - rclc_parameter
+      - ros_humble_rclc_lifecycle
+      - ros_humble_rclc_examples
+      - ptz_action_server_msgs
+      - py_trees
   
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux

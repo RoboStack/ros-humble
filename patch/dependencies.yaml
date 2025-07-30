@@ -264,3 +264,6 @@ wasm_cpp:
 aws_sdk_cpp_vendor:
   add_host: ["aws-sdk-cpp"]
   add_run: ["aws-sdk-cpp"]
+polygon_rviz_plugins:
+  add_host: ["libgl-devel"]
+  add_run: ["libgl-devel"]
