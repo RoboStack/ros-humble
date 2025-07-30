@@ -320,7 +320,6 @@ packages_select_by_deps:
       - polygon_msgs
       - polygon_utils
       - color_util
-      - polygon_demos
       - rclc_parameter
       - ros_humble_rclc_lifecycle
       - ros_humble_rclc_examples
