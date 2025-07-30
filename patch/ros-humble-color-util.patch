@@ -1,0 +1,14 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bc98189..71ce465 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -19,6 +19,9 @@ find_package(ament_cmake REQUIRED)
+ find_package(std_msgs REQUIRED)
+ 
+ add_library(color_util src/convert.cpp)
++if(WIN32 AND MSVC)
++  set_target_properties(color_util PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
++endif()
+ target_include_directories(color_util PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
