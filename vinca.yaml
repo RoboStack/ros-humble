@@ -315,6 +315,7 @@ packages_select_by_deps:
       - imu_tools
       - rplidar_ros
       - vector_pursuit_controller
+      - imu_transformer
   
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
