@@ -1,0 +1,22 @@
+From 0eba7a396c5fce06f220f023608715bd119ec5d9 Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Sat, 2 Aug 2025 15:12:14 +0200
+Subject: [PATCH] Fix compilation with Poco >= 1.12
+
+---
+ test/mock_server.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/mock_server.cpp b/test/mock_server.cpp
+index 1cc7edac..6f4fb3c6 100644
+--- a/test/mock_server.cpp
++++ b/test/mock_server.cpp
+@@ -116,7 +116,7 @@ void MockServer<C>::serverThread() {
+                            : typename C::Connect::Response(C::Connect::Status::kSuccess);
+       });
+ 
+-  Poco::Net::DatagramSocket udp_socket({kHostname, 0});
++  Poco::Net::DatagramSocket udp_socket({kHostname, 0}, /*reuseAddress*/ false);
+   udp_socket.setBlocking(true);
+   Socket udp_socket_wrapper;
+   udp_socket_wrapper.sendBytes = [&](const void* data, size_t size) {

@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+
+package:
+  name: ros-humble-eigenpy
+  version: 3.10.3
+
+build:
+  number: 13
+  script: ''
+  post_process:
+    - files:
+        - '*.pc'
+      regex: (?:-L|-I)?"?([^;\s]+/sysroot/)
+      replacement: $$(CONDA_BUILD_SYSROOT_S)
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/sysroot)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/MacOSX\d*\.?\d*\.sdk)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+about:
+  homepage: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - if: build_platform != target_platform
+      then:
+        - git
+    - if: build_platform != target_platform
+      then:
+        - doxygen
+  host:
+    - eigen
+    - graphviz
+    - libboost-devel
+    - libboost-python-devel
+    - numpy
+    - python
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros2-distro-mutex 0.7.* humble_*
+    - scipy
+    - if: build_platform == target_platform
+      then:
+        - git
+    - if: build_platform == target_platform
+      then:
+        - doxygen
+  run:
+    - eigen
+    - eigenpy >=3.10.3, <3.10.4a0
+    - libboost-devel
+    - libboost-python-devel
+    - numpy
+    - python
+    - ros-humble-ros-workspace
+    - ros2-distro-mutex 0.7.* humble_*
+    - scipy
+    - if: osx and x86_64
+      then:
+        - __osx >=${{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}

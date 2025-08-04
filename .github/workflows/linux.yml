@@ -1,0 +1,134 @@
+jobs:
+  stage_0_job_0:
+    name: eigenpy ament-clang-tidy franka-description franka-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-eigenpy ros-humble-ament-clang-tidy ros-humble-franka-description
+        ros-humble-franka-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-eigenpy ros-humble-ament-clang-tidy ros-humble-franka-description
+          ros-humble-franka-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_1_job_1:
+    name: hpp-fcl ament-cmake-clang-tidy pinocchio libfranka
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-hpp-fcl ros-humble-ament-cmake-clang-tidy ros-humble-pinocchio
+        ros-humble-libfranka
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-hpp-fcl ros-humble-ament-cmake-clang-tidy ros-humble-pinocchio
+          ros-humble-libfranka
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_2_job_2:
+    name: franka-hardware franka-gripper
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-franka-hardware ros-humble-franka-gripper
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-franka-hardware ros-humble-franka-gripper
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_3_job_3:
+    name: franka-semantic-components franka-ign-ros2-control franka-fr3-moveit-config
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_2_job_2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-franka-semantic-components ros-humble-franka-ign-ros2-control
+        ros-humble-franka-fr3-moveit-config
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-franka-semantic-components ros-humble-franka-ign-ros2-control
+          ros-humble-franka-fr3-moveit-config
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_4_job_4:
+    name: franka-robot-state-broadcaster franka-gazebo-bringup franka-example-controllers
+      franka-bringup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-franka-robot-state-broadcaster ros-humble-franka-gazebo-bringup
+        ros-humble-franka-example-controllers ros-humble-franka-bringup
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-franka-robot-state-broadcaster ros-humble-franka-gazebo-bringup
+          ros-humble-franka-example-controllers ros-humble-franka-bringup
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_5_job_5:
+    name: franka-ros2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-franka-ros2
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-franka-ros2
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+name: build_unix
+on:
+  push:
+    branches:
+    - buildbranch_linux
