@@ -363,6 +363,9 @@ packages_select_by_deps:
       # CMake errors related to OpenCV on macos, probably fixable
       - moveit_ros_perception
       - moveit_runtime
+      # Franka robots suppot
+      # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
+      - franka_ros2
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
