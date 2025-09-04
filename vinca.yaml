@@ -147,7 +147,6 @@ packages_select_by_deps:
     then:
       - ros2-controllers
       - diff-drive-controller
-      - libcamera
       - ros_workspace
       - ros_core
       - ros_environment
@@ -235,7 +234,6 @@ packages_select_by_deps:
       # *** Vendor packages ***
       - graph_msgs          # PickNik Robotics
       - apriltag            # AprilRobotics
-      - apriltag_ros        # Christian Rauch
       - ur_robot_driver     # Universal Robots
       - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
       - stubborn_buddies    # Open RMF
@@ -319,8 +317,10 @@ packages_select_by_deps:
       # Depends on v4l
       - usb_cam
       - libcamera
-        # Depends on libcamera that is only available on linux
+      # Depends on libcamera that is only available on linux
       - camera_ros
+      # Depends on camera_ros that is only available on linux
+      - apriltag_ros        # Christian Rauch
       # Depends on v4l that is only available on linux
       - v4l2_camera
       #  avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
