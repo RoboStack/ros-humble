@@ -166,8 +166,6 @@ ignition-gazebo3:
 ignition-gazebo5:
   robostack: [libignition-gazebo5]
 ignition-gazebo6:
-  robostack: [libignition-gazebo6]
-ignition-gazebo6:
   robostack:
     linux: [libignition-gazebo6, libgl-devel]
     osx: [libignition-gazebo6]
