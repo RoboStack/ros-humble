@@ -166,7 +166,10 @@ ignition-gazebo3:
 ignition-gazebo5:
   robostack: [libignition-gazebo5]
 ignition-gazebo6:
-  robostack: [libignition-gazebo6]
+  robostack:
+    linux: [libignition-gazebo6, libgl-devel]
+    osx: [libignition-gazebo6]
+    win64: [libignition-gazebo6]
 ignition-gui5:
   robostack: [libignition-gui5]
 ignition-math6:
