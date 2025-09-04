@@ -1,0 +1,47 @@
+jobs:
+  stage_0_job_0:
+    name: gz-ros2-control ament-pyflakes ign-ros2-control ament-cmake-pyflakes
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-gz-ros2-control ros-humble-ament-pyflakes ros-humble-ign-ros2-control
+        ros-humble-ament-cmake-pyflakes
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-gz-ros2-control ros-humble-ament-pyflakes ros-humble-ign-ros2-control
+          ros-humble-ament-cmake-pyflakes
+        BUILD_TARGET: osx-arm64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+  stage_1_job_1:
+    name: camera-ros
+    runs-on: macos-14
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build ros-humble-camera-ros
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros-humble-camera-ros
+        BUILD_TARGET: osx-arm64
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+name: build_osx_arm64
+on:
+  push:
+    branches:
+    - buildbranch_osx_arm64
