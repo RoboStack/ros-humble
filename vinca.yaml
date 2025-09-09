@@ -236,6 +236,7 @@ packages_select_by_deps:
       - apriltag            # AprilRobotics
       - ur_robot_driver     # Universal Robots
       - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
+      - ur_simulation_gz
       - stubborn_buddies    # Open RMF
       - ament_cmake_catch2  # Open RMF
       - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
