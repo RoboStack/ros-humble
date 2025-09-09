@@ -361,6 +361,9 @@ packages_select_by_deps:
       # Franka robots suppot
       # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
       - franka_ros2
+      # Building on macOS it should be doable, but currently it failed due to https://github.com/RoboStack/ros-humble/pull/343#issuecomment-3253547513 
+      - ign_ros2_control
+      - gz_ros2_control
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
@@ -390,8 +393,6 @@ packages_select_by_deps:
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/pull/320
       - ros_gz
-      - ign_ros2_control
-      - gz_ros2_control
       # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
       - grid_map
       # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator 
