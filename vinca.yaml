@@ -236,7 +236,6 @@ packages_select_by_deps:
       - apriltag            # AprilRobotics
       - ur_robot_driver     # Universal Robots
       - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
-      - ur_simulation_gz
       - stubborn_buddies    # Open RMF
       - ament_cmake_catch2  # Open RMF
       - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
@@ -365,6 +364,8 @@ packages_select_by_deps:
       # Building on macOS it should be doable, but currently it failed due to https://github.com/RoboStack/ros-humble/pull/343#issuecomment-3253547513 
       - ign_ros2_control
       - gz_ros2_control
+      # ur manipulator simulation
+      - ur_simulation_gz
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
