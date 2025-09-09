@@ -5,7 +5,7 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-# Reminder for next full rebuild, the next build number should be 14
+# Reminder for next full rebuild, the next build number should be 15
 build_number: 13
 
 mutex_package:
@@ -147,7 +147,6 @@ packages_select_by_deps:
     then:
       - ros2-controllers
       - diff-drive-controller
-      - libcamera
       - ros_workspace
       - ros_core
       - ros_environment
@@ -235,7 +234,6 @@ packages_select_by_deps:
       # *** Vendor packages ***
       - graph_msgs          # PickNik Robotics
       - apriltag            # AprilRobotics
-      - apriltag_ros        # Christian Rauch
       - ur_robot_driver     # Universal Robots
       - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
       - stubborn_buddies    # Open RMF
@@ -319,8 +317,10 @@ packages_select_by_deps:
       # Depends on v4l
       - usb_cam
       - libcamera
-        # Depends on libcamera that is only available on linux
+      # Depends on libcamera that is only available on linux
       - camera_ros
+      # Depends on camera_ros that is only available on linux
+      - apriltag_ros        # Christian Rauch
       # Depends on v4l that is only available on linux
       - v4l2_camera
       #  avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
@@ -361,6 +361,9 @@ packages_select_by_deps:
       # Franka robots suppot
       # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
       - franka_ros2
+      # Building on macOS it should be doable, but currently it failed due to https://github.com/RoboStack/ros-humble/pull/343#issuecomment-3253547513 
+      - ign_ros2_control
+      - gz_ros2_control
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
@@ -390,8 +393,6 @@ packages_select_by_deps:
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/pull/320
       - ros_gz
-      - ign_ros2_control
-      - gz_ros2_control
       # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
       - grid_map
       # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator 
