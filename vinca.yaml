@@ -308,7 +308,9 @@ packages_select_by_deps:
       - imu_tools
       - rplidar_ros
       - vector_pursuit_controller
-  
+      # Requested in https://github.com/RoboStack/ros-humble/issues/345
+      - topic_based_ros2_control
+
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
     then:
