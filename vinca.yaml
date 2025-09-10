@@ -308,6 +308,8 @@ packages_select_by_deps:
       - imu_tools
       - rplidar_ros
       - vector_pursuit_controller
+      # Requested in https://github.com/RoboStack/ros-humble/issues/345
+      - topic_based_ros2_control
 
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
@@ -364,8 +366,6 @@ packages_select_by_deps:
       # Building on macOS it should be doable, but currently it failed due to https://github.com/RoboStack/ros-humble/pull/343#issuecomment-3253547513 
       - ign_ros2_control
       - gz_ros2_control
-      # Requested in https://github.com/RoboStack/ros-humble/issues/345/. Build failing on MacOS. Details https://github.com/RoboStack/ros-humble/pull/346
-      - topic_based_ros2_control
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
