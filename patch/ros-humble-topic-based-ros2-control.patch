@@ -1,0 +1,23 @@
+From 546fa2b161d178b1cdb896ba90887419b1b702de Mon Sep 17 00:00:00 2001
+From: Bence Magyar <bence.magyar.robotics@gmail.com>
+Date: Sat, 16 Aug 2025 07:10:52 +0100
+Subject: [PATCH] Deprecation notices should be seen. Do not convert warnings
+ into errors.
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3a8e525..7b8bb21 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
+ project(topic_based_ros2_control CXX)
+ 
+ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+-  add_compile_options(-Werror -Wall -Wextra -Wpedantic -Wshadow
++  add_compile_options(-Wall -Wextra -Wpedantic -Wshadow
+     -Wsign-conversion -Winit-self -Wredundant-decls)
+ endif()
+ 
