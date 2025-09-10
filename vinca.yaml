@@ -366,6 +366,8 @@ packages_select_by_deps:
       # Building on macOS it should be doable, but currently it failed due to https://github.com/RoboStack/ros-humble/pull/343#issuecomment-3253547513 
       - ign_ros2_control
       - gz_ros2_control
+      # ur manipulator simulation
+      - ur_simulation_gz
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
