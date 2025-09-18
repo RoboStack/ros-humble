@@ -147,3 +147,7 @@ data_tamer_cpp:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
 tinyxml2_vendor:
   build_number: 14
+rosidl_generator_cpp:
+  build_number: 14
+rosidl_runtime_cpp:
+  build_number: 14
