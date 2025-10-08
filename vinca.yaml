@@ -310,9 +310,7 @@ packages_select_by_deps:
       - vector_pursuit_controller
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
-      - ign_ros2_control
-      - gz_ros2_control
-      - ur_simulation_gz
+
 
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
@@ -429,4 +427,8 @@ packages_select_by_deps:
       - spacenav
       # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
       - vision-msgs-rviz-plugins
+      
+      - ign_ros2_control
+      - gz_ros2_control
+      - ur_simulation_gz
 
