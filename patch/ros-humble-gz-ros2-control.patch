@@ -1,0 +1,28 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5e4ce57..b2f3a8d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,6 +1,23 @@
+ cmake_minimum_required(VERSION 3.5)
+ project(gz_ros2_control)
+ 
++# Fix for macOS case sensitivity issue with TinyXML2 targets
++# ignition-gui6 from conda-forge expects TINYXML2::TINYXML2 but macOS provides tinyxml2::tinyxml2
++# We need to create the uppercase target before any ignition packages are loaded
++find_package(TinyXML2 REQUIRED)
++if(TARGET tinyxml2::tinyxml2 AND NOT TARGET TINYXML2::TINYXML2)
++  # Create an INTERFACE IMPORTED target with the expected name
++  add_library(TINYXML2::TINYXML2 INTERFACE IMPORTED GLOBAL)
++  # Link it to the actual lowercase target
++  set_property(TARGET TINYXML2::TINYXML2 PROPERTY INTERFACE_LINK_LIBRARIES tinyxml2::tinyxml2)
++  # Copy include directories if they exist
++  get_target_property(tinyxml2_includes tinyxml2::tinyxml2 INTERFACE_INCLUDE_DIRECTORIES)
++  if(tinyxml2_includes)
++    set_property(TARGET TINYXML2::TINYXML2 PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${tinyxml2_includes})
++  endif()
++  message(STATUS "Created TINYXML2::TINYXML2 compatibility target for ignition packages")
++endif()
++
+ # Default to C++14
+ if(NOT CMAKE_CXX_STANDARD)
+   set(CMAKE_CXX_STANDARD 14)

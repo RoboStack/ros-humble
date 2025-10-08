@@ -311,6 +311,12 @@ packages_select_by_deps:
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
 
+      # Building on macOS it should be doable, but currently it failed due to https://github.com/RoboStack/ros-humble/pull/343#issuecomment-3253547513 
+      - ign_ros2_control
+      - gz_ros2_control
+      # ur manipulator simulation
+      - ur_simulation_gz
+
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
     then:
@@ -363,11 +369,7 @@ packages_select_by_deps:
       # Franka robots suppot
       # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
       - franka_ros2
-      # Building on macOS it should be doable, but currently it failed due to https://github.com/RoboStack/ros-humble/pull/343#issuecomment-3253547513 
-      - ign_ros2_control
-      - gz_ros2_control
-      # ur manipulator simulation
-      - ur_simulation_gz
+
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
