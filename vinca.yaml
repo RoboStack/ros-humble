@@ -310,11 +310,8 @@ packages_select_by_deps:
       - vector_pursuit_controller
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
-
-      # Building on macOS it should be doable, but currently it failed due to https://github.com/RoboStack/ros-humble/pull/343#issuecomment-3253547513 
       - ign_ros2_control
       - gz_ros2_control
-      # ur manipulator simulation
       - ur_simulation_gz
 
   # These packages are only built on Linux as they depend on Linux-specific API
