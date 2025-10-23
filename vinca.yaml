@@ -9,9 +9,9 @@ conda_index:
 build_number: 13
 
 mutex_package:
-  name: 'ros2-distro-mutex'
-  version: '0.7.0'
-  upper_bound: 'x.x'
+  name: "ros2-distro-mutex"
+  version: "0.7.0"
+  upper_bound: "x.x"
   run_constraints:
     - libboost 1.86.*
     - libboost-devel 1.86.*
@@ -57,14 +57,14 @@ packages_skip_by_deps:
       # https://github.com/RoboStack/ros-humble/issues/68
       - ros_gz
       - ros_gz_bridge
-      - ros_gz_image
-      - ros_gz_sim
+      - ros_gz_image 
+      - ros_gz_sim 
       - ros_gz_sim_demos
       - test_ros_gz_bridge
-      - ros_ign
-      - ros_ign_bridge
-      - ros_ign_gazebo
-      - ros_ign_gazebo_demos
+      - ros_ign 
+      - ros_ign_bridge 
+      - ros_ign_gazebo 
+      - ros_ign_gazebo_demos 
       - ros_ign_image
 
 packages_remove_from_deps:
@@ -98,19 +98,19 @@ packages_remove_from_deps:
       # https://github.com/RoboStack/ros-humble/issues/68
       - ros_gz
       - ros_gz_bridge
-      - ros_gz_image
-      - ros_gz_sim
+      - ros_gz_image 
+      - ros_gz_sim 
       - ros_gz_sim_demos
       - test_ros_gz_bridge
-      - ros_ign
-      - ros_ign_bridge
-      - ros_ign_gazebo
-      - ros_ign_gazebo_demos
+      - ros_ign 
+      - ros_ign_bridge 
+      - ros_ign_gazebo 
+      - ros_ign_gazebo_demos 
       - ros_ign_image
 
 packages_select_by_deps:
   # These are the packages that are build on all platforms, including wasm32
-  # only subset of packages to reduce maintainer load
+    # only subset of packages to reduce maintainer load
   - rclpy
   - ros_workspace
   - ros_environment
@@ -232,12 +232,12 @@ packages_select_by_deps:
       - gazebo-ros-pkgs
       - ros_ign
       # *** Vendor packages ***
-      - graph_msgs # PickNik Robotics
-      - apriltag # AprilRobotics
-      - ur_robot_driver # Universal Robots
-      - ur_calibration # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
-      - stubborn_buddies # Open RMF
-      - ament_cmake_catch2 # Open RMF
+      - graph_msgs          # PickNik Robotics
+      - apriltag            # AprilRobotics
+      - ur_robot_driver     # Universal Robots
+      - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
+      - stubborn_buddies    # Open RMF
+      - ament_cmake_catch2  # Open RMF
       - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
       - ament_cmake_mypy
       # - transport_drivers
@@ -247,13 +247,13 @@ packages_select_by_deps:
       - udp_driver
       - apex_test_tools
       - visp
-      - bno055 # flynneva
+      - bno055              # flynneva
       - aws_robomaker_small_warehouse_world # AWS Robotics
       # Only msgs as avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
-      - avt_vimba_camera_msgs #  Allied Vision Technologies
-      - system_modes # Micro-ROS
-      - tf_transformations # DLu
-      - marker-msgs # TUW Robotics
+      - avt_vimba_camera_msgs    #  Allied Vision Technologies
+      - system_modes        # Micro-ROS
+      - tf_transformations  # DLu
+      - marker-msgs         # TUW Robotics
       - moveit_resources
       # requested in https://github.com/RoboStack/ros-humble/pull/205
       - plotjuggler_msgs
@@ -313,6 +313,7 @@ packages_select_by_deps:
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
 
+
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
     then:
@@ -324,7 +325,7 @@ packages_select_by_deps:
       # Depends on libcamera that is only available on linux
       - camera_ros
       # Depends on camera_ros that is only available on linux
-      - apriltag_ros # Christian Rauch
+      - apriltag_ros        # Christian Rauch
       # Depends on v4l that is only available on linux
       - v4l2_camera
       #  avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
@@ -349,15 +350,15 @@ packages_select_by_deps:
       # but should be easy to fix
       - spatio_temporal_voxel_layer
       # Some missing support for macOS, see https://github.com/cyberbotics/webots_ros2/pull/733
-      - webots_ros2 # Cyberbotics
+      - webots_ros2         # Cyberbotics
       # Linking problems on macOS, probably a missing link to draco library or similar
       - point_cloud_transport_plugins
       # librealsense is not available on Windows in conda-forge, see https://github.com/conda-forge/librealsense-feedstock/issues/3
       # and on macos there are some CMake failures
-      - librealsense2 # IntelRealSense
-      - realsense2-camera # IntelRealSense
+      - librealsense2       # IntelRealSense
+      - realsense2-camera   # IntelRealSense
       - realsense2-description # IntelRealSense
-        # removed in jazzy, never supported windows or macos, no packages depend on it
+       # removed in jazzy, never supported windows or macos, no packages depend on it
       - apex_containers
       # CMake errors related to OpenCV on macos, probably fixable
       - moveit_ros_perception
@@ -365,6 +366,7 @@ packages_select_by_deps:
       # Franka robots suppot
       # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
       - franka_ros2
+
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
@@ -374,7 +376,7 @@ packages_select_by_deps:
       - foxglove_bridge
       - velodyne
       # error C1189: #error:  WinSock.h has already been included
-      - velodyne_simulator # Dataspeed Inc.
+      - velodyne_simulator  # Dataspeed Inc.
       - moveit_py
       # TODO on windows: fix iconv link issue
       - ffmpeg_image_transport
@@ -396,10 +398,10 @@ packages_select_by_deps:
       - ros_gz
       # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
       - grid_map
-      # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator
+      # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator 
       # to be an unsigned type that is at least 32-bit.' [%SRC_DIR%\build\g2o\examples\sphere\create_sphere.vcxproj]
       - libg2o
-      # Windows error: error C3861: '__builtin_unreachable': identifier not found
+      # Windows error: error C3861: '__builtin_unreachable': identifier not found 
       - moveit-hybrid-planning
       # Microstrain IMU Packages + dependencies
       # Fail on windows with FileTracker : error FTK1011: could not create the new file tracking log file: %SRC_DIR%
@@ -412,8 +414,8 @@ packages_select_by_deps:
       # Windows is failing with error C1083: Cannot open compiler generated file: ''
       - motion_capture_tracking
       # ublox compilation fails on Windows
-      - ublox # Kumar Robotics
-      - ublox_dgnss # Aussie Robots
+      - ublox               # Kumar Robotics
+      - ublox_dgnss         # Aussie Robots
       - ublox_dgnss_node
       - ublox_ubx_interfaces
       # error C1083: Cannot open include file: 'rqt_gui_cpp/plugin.h'
@@ -427,7 +429,7 @@ packages_select_by_deps:
       - spacenav
       # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
       - vision-msgs-rviz-plugins
-
+      
       - ign_ros2_control
       - gz_ros2_control
       - ur_simulation_gz
