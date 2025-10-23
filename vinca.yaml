@@ -279,6 +279,8 @@ packages_select_by_deps:
       - autoware_v2x_msgs
       - autoware_vehicle_msgs
       - autoware_utils
+      - automatika_ros_sugar
+      - automatika_embodied_agents
       - flex_sync
       - apriltag_draw
       - apriltag_tools
@@ -431,4 +433,3 @@ packages_select_by_deps:
       - ign_ros2_control
       - gz_ros2_control
       - ur_simulation_gz
-
