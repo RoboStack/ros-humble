@@ -145,6 +145,7 @@ packages_select_by_deps:
   # all the other platforms (so the majority)
   - if: not wasm32
     then:
+      - mocap4r2_msgs
       - ros2-controllers
       - diff-drive-controller
       - ros_workspace
