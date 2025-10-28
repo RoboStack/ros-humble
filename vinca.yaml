@@ -314,7 +314,6 @@ packages_select_by_deps:
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
 
-
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
     then:
@@ -430,7 +429,9 @@ packages_select_by_deps:
       - spacenav
       # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
       - vision-msgs-rviz-plugins
-      
+      # aerostack2
+      - as2_cli
+
       - ign_ros2_control
       - gz_ros2_control
       - ur_simulation_gz
