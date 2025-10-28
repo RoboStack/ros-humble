@@ -431,6 +431,7 @@ packages_select_by_deps:
       - vision-msgs-rviz-plugins
       # aerostack2
       - as2_cli
+      - as2_msgs
 
       - ign_ros2_control
       - gz_ros2_control
