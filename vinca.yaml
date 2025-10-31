@@ -313,6 +313,8 @@ packages_select_by_deps:
       - vector_pursuit_controller
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
+      # IntelRealSense
+      - librealsense2
 
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
@@ -353,9 +355,6 @@ packages_select_by_deps:
       - webots_ros2         # Cyberbotics
       # Linking problems on macOS, probably a missing link to draco library or similar
       - point_cloud_transport_plugins
-      # librealsense is not available on Windows in conda-forge, see https://github.com/conda-forge/librealsense-feedstock/issues/3
-      # and on macos there are some CMake failures
-      - librealsense2       # IntelRealSense
       - realsense2-camera   # IntelRealSense
       - realsense2-description # IntelRealSense
        # removed in jazzy, never supported windows or macos, no packages depend on it
