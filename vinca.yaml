@@ -57,14 +57,14 @@ packages_skip_by_deps:
       # https://github.com/RoboStack/ros-humble/issues/68
       - ros_gz
       - ros_gz_bridge
-      - ros_gz_image 
-      - ros_gz_sim 
+      - ros_gz_image
+      - ros_gz_sim
       - ros_gz_sim_demos
       - test_ros_gz_bridge
-      - ros_ign 
-      - ros_ign_bridge 
-      - ros_ign_gazebo 
-      - ros_ign_gazebo_demos 
+      - ros_ign
+      - ros_ign_bridge
+      - ros_ign_gazebo
+      - ros_ign_gazebo_demos
       - ros_ign_image
 
 packages_remove_from_deps:
@@ -98,14 +98,14 @@ packages_remove_from_deps:
       # https://github.com/RoboStack/ros-humble/issues/68
       - ros_gz
       - ros_gz_bridge
-      - ros_gz_image 
-      - ros_gz_sim 
+      - ros_gz_image
+      - ros_gz_sim
       - ros_gz_sim_demos
       - test_ros_gz_bridge
-      - ros_ign 
-      - ros_ign_bridge 
-      - ros_ign_gazebo 
-      - ros_ign_gazebo_demos 
+      - ros_ign
+      - ros_ign_bridge
+      - ros_ign_gazebo
+      - ros_ign_gazebo_demos
       - ros_ign_image
 
 packages_select_by_deps:
@@ -147,6 +147,7 @@ packages_select_by_deps:
     then:
       - mocap4r2_msgs
       - ros2-controllers
+      - pal_statistics
       - diff-drive-controller
       - ros_workspace
       - ros_core
@@ -401,10 +402,10 @@ packages_select_by_deps:
       - ros_gz
       # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
       - grid_map
-      # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator 
+      # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator
       # to be an unsigned type that is at least 32-bit.' [%SRC_DIR%\build\g2o\examples\sphere\create_sphere.vcxproj]
       - libg2o
-      # Windows error: error C3861: '__builtin_unreachable': identifier not found 
+      # Windows error: error C3861: '__builtin_unreachable': identifier not found
       - moveit-hybrid-planning
       # Microstrain IMU Packages + dependencies
       # Fail on windows with FileTracker : error FTK1011: could not create the new file tracking log file: %SRC_DIR%
