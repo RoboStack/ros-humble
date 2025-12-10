@@ -5507,6 +5507,10 @@ ros2_control:
   tag: release/humble/ros2_control/2.51.0-1
   url: https://github.com/ros2-gbp/ros2_control-release.git
   version: 2.51.0
+ros2_control_cmake:
+  tag: release/humble/ros2_control_cmake/0.2.1-1
+  url: https://github.com/ros2-gbp/ros2_control_cmake-release.git
+  version: 0.2.1
 ros2_control_test_assets:
   tag: release/humble/ros2_control_test_assets/2.51.0-1
   url: https://github.com/ros2-gbp/ros2_control-release.git

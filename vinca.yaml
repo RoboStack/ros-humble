@@ -148,6 +148,7 @@ packages_select_by_deps:
       - mocap4r2_msgs
       - ros2-controllers
       - pal_statistics
+      - ros2-control-cmake
       - diff-drive-controller
       - ros_workspace
       - ros_core
