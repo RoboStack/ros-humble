@@ -280,6 +280,7 @@ packages_select_by_deps:
       - autoware_v2x_msgs
       - autoware_vehicle_msgs
       - autoware_utils
+      - autoware_core
       - automatika_ros_sugar
       - automatika_embodied_agents
       - flex_sync
