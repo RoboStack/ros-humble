@@ -190,7 +190,6 @@ packages_select_by_deps:
       - moveit
       - moveit_visual_tools
       - moveit_servo
-      - moveit2_tutorials
       - moveit_planners_chomp
       - moveit_ros_occupancy_map_monitor
       # Requested in https://www.linkedin.com/feed/update/urn:li:activity:7346559234177703938/
@@ -251,8 +250,6 @@ packages_select_by_deps:
       - visp
       - bno055              # flynneva
       - aws_robomaker_small_warehouse_world # AWS Robotics
-      # Only msgs as avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
-      - avt_vimba_camera_msgs    #  Allied Vision Technologies
       - system_modes        # Micro-ROS
       - tf_transformations  # DLu
       - marker-msgs         # TUW Robotics
@@ -347,7 +344,6 @@ packages_select_by_deps:
   - if: linux
     then:
       - py_binding_tools
-      - livox_ros_driver2
       # requested in https://github.com/RoboStack/ros-humble/issues/228,
       # event_camera_codecs uses endian.h so it only builds on Linux,
       # while event_camera_renderer does not support Windows shared library,
@@ -382,7 +378,6 @@ packages_select_by_deps:
       - velodyne
       # error C1189: #error:  WinSock.h has already been included
       - velodyne_simulator  # Dataspeed Inc.
-      - moveit_py
       # TODO on windows: fix iconv link issue
       - ffmpeg_image_transport
       - dual_laser_merger
