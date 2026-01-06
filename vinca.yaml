@@ -223,6 +223,8 @@ packages_select_by_deps:
       # to interfaced with simulations working on Linux or macOS
       - ros_gz_interfaces
       - ros_ign_interfaces
+      # generic sim interfaces
+      - simulation_interfaces
       - gtsam
       # *** learning and tutorials ***
       - turtlebot3
