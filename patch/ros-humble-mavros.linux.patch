@@ -1,0 +1,17 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 00e5f70fc..3a8b2e1d5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -36,10 +36,9 @@ find_package(Eigen3 REQUIRED)
+
+ ## Find GeographicLib
+-# Append to CMAKE_MODULE_PATH since debian/ubuntu installs
+-# FindGeographicLib.cmake in a nonstand location
+-set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/share/cmake/geographiclib")
+-find_package(GeographicLib REQUIRED)
++# Use CONFIG mode to find GeographicLib from conda package
++# (libmavconn already sets CMAKE_MODULE_PATH for CheckGeographicLibDatasets)
++find_package(GeographicLib REQUIRED CONFIG)
+
+ find_package(angles REQUIRED)
+ find_package(eigen_stl_containers REQUIRED)
