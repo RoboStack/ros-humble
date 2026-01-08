@@ -297,6 +297,7 @@ packages_select_by_deps:
       - behaviortree_cpp
       - py-binding-tools
       - nmea_msgs
+      - radar_msgs
       - rtcm_msgs
       # cascade lifecycle packages
       - cascade-lifecycle-msgs
