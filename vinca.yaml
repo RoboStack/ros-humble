@@ -5,13 +5,8 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-# Reminder for next full rebuild, the next build number should be 14
+# Reminder for next full rebuild, the next build number should be 15
 build_number: 13
-
-# Specify that exactly the build_number used vinca*.yaml or pkg_additional_info.yaml
-# should be used, not some build number obtained by checking the maximum
-# of all build numbers used in the target channel
-use_explicit_build_number: true
 
 mutex_package:
   name: "ros2-distro-mutex"
@@ -62,14 +57,14 @@ packages_skip_by_deps:
       # https://github.com/RoboStack/ros-humble/issues/68
       - ros_gz
       - ros_gz_bridge
-      - ros_gz_image 
-      - ros_gz_sim 
+      - ros_gz_image
+      - ros_gz_sim
       - ros_gz_sim_demos
       - test_ros_gz_bridge
-      - ros_ign 
-      - ros_ign_bridge 
-      - ros_ign_gazebo 
-      - ros_ign_gazebo_demos 
+      - ros_ign
+      - ros_ign_bridge
+      - ros_ign_gazebo
+      - ros_ign_gazebo_demos
       - ros_ign_image
 
 packages_remove_from_deps:
@@ -103,14 +98,14 @@ packages_remove_from_deps:
       # https://github.com/RoboStack/ros-humble/issues/68
       - ros_gz
       - ros_gz_bridge
-      - ros_gz_image 
-      - ros_gz_sim 
+      - ros_gz_image
+      - ros_gz_sim
       - ros_gz_sim_demos
       - test_ros_gz_bridge
-      - ros_ign 
-      - ros_ign_bridge 
-      - ros_ign_gazebo 
-      - ros_ign_gazebo_demos 
+      - ros_ign
+      - ros_ign_bridge
+      - ros_ign_gazebo
+      - ros_ign_gazebo_demos
       - ros_ign_image
 
 packages_select_by_deps:
@@ -150,9 +145,11 @@ packages_select_by_deps:
   # all the other platforms (so the majority)
   - if: not wasm32
     then:
+      - mocap4r2_msgs
       - ros2-controllers
+      - pal_statistics
+      - ros2-control-cmake
       - diff-drive-controller
-      - libcamera
       - ros_workspace
       - ros_core
       - ros_environment
@@ -226,6 +223,8 @@ packages_select_by_deps:
       # to interfaced with simulations working on Linux or macOS
       - ros_gz_interfaces
       - ros_ign_interfaces
+      # generic sim interfaces
+      - simulation_interfaces
       - gtsam
       # *** learning and tutorials ***
       - turtlebot3
@@ -240,7 +239,6 @@ packages_select_by_deps:
       # *** Vendor packages ***
       - graph_msgs          # PickNik Robotics
       - apriltag            # AprilRobotics
-      - apriltag_ros        # Christian Rauch
       - ur_robot_driver     # Universal Robots
       - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
       - stubborn_buddies    # Open RMF
@@ -286,6 +284,9 @@ packages_select_by_deps:
       - autoware_v2x_msgs
       - autoware_vehicle_msgs
       - autoware_utils
+      - autoware_core
+      - automatika_ros_sugar
+      - automatika_embodied_agents
       - flex_sync
       - apriltag_draw
       - apriltag_tools
@@ -296,6 +297,7 @@ packages_select_by_deps:
       - behaviortree_cpp
       - py-binding-tools
       - nmea_msgs
+      - radar_msgs
       - rtcm_msgs
       # cascade lifecycle packages
       - cascade-lifecycle-msgs
@@ -326,6 +328,11 @@ packages_select_by_deps:
       - ptz_action_server_msgs
       - py_trees
   
+      # Requested in https://github.com/RoboStack/ros-humble/issues/345
+      - topic_based_ros2_control
+      # IntelRealSense
+      - librealsense2
+
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
     then:
@@ -334,14 +341,20 @@ packages_select_by_deps:
       # Depends on v4l
       - usb_cam
       - libcamera
-        # Depends on libcamera that is only available on linux
+      # Depends on libcamera that is only available on linux
       - camera_ros
+      # Depends on camera_ros that is only available on linux
+      - apriltag_ros        # Christian Rauch
       # Depends on v4l that is only available on linux
       - v4l2_camera
       #  avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
       - avt_vimba_camera
       # Require Linux-specific joystick interfaces
       - joy_linux
+
+      # mavros and mavlink (currently Linux only)
+      - mavlink
+      - mavros
 
   # These packages are currently only build on Linux,
   # as trying to build them in the past on macos or Windows resulted in errors,
@@ -363,9 +376,6 @@ packages_select_by_deps:
       - webots_ros2         # Cyberbotics
       # Linking problems on macOS, probably a missing link to draco library or similar
       - point_cloud_transport_plugins
-      # librealsense is not available on Windows in conda-forge, see https://github.com/conda-forge/librealsense-feedstock/issues/3
-      # and on macos there are some CMake failures
-      - librealsense2       # IntelRealSense
       - realsense2-camera   # IntelRealSense
       - realsense2-description # IntelRealSense
        # removed in jazzy, never supported windows or macos, no packages depend on it
@@ -373,6 +383,10 @@ packages_select_by_deps:
       # CMake errors related to OpenCV on macos, probably fixable
       - moveit_ros_perception
       - moveit_runtime
+      # Franka robots suppot
+      # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
+      - franka_ros2
+
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
@@ -404,10 +418,10 @@ packages_select_by_deps:
       - ros_gz
       # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
       - grid_map
-      # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator 
+      # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator
       # to be an unsigned type that is at least 32-bit.' [%SRC_DIR%\build\g2o\examples\sphere\create_sphere.vcxproj]
       - libg2o
-      # Windows error: error C3861: '__builtin_unreachable': identifier not found 
+      # Windows error: error C3861: '__builtin_unreachable': identifier not found
       - moveit-hybrid-planning
       # Microstrain IMU Packages + dependencies
       # Fail on windows with FileTracker : error FTK1011: could not create the new file tracking log file: %SRC_DIR%
@@ -435,4 +449,10 @@ packages_select_by_deps:
       - spacenav
       # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
       - vision-msgs-rviz-plugins
+      # aerostack2
+      - as2_cli
+      - as2_msgs
 
+      - ign_ros2_control
+      - gz_ros2_control
+      - ur_simulation_gz

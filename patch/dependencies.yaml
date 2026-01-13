@@ -269,3 +269,19 @@ polygon_rviz_plugins:
   add_run: ["libgl-devel"]
 py_trees:
   add_host: ["poetry-core"]
+# Workaround for https://github.com/frankarobotics/franka_ros2/pull/169
+franka_hardware:
+  add_host: ["ros-humble-rclcpp-action", "ros-humble-rclcpp-components"]
+  add_run: ["ros-humble-rclcpp-action",  "ros-humble-rclcpp-components"]
+franka_semantic_components:
+  add_host: ["ros-humble-urdf", "ros-humble-controller-interface"]
+  add_run: ["ros-humble-urdf", "ros-humble-controller-interface"]
+franka_robot_state_broadcaster:
+  add_host: ["ros-humble-visualization-msgs"]
+  add_run: ["ros-humble-visualization-msgs"]
+franka_example_controllers:
+  add_host: ["ros-humble-moveit-core"]
+  add_run: ["ros-humble-moveit-core"]
+franka_ign_ros2_control:
+  add_host: ["ros-humble-urdf", "ros-humble-kdl-parser", "ros-humble-tf2-geometry-msgs", "ros-humble-tf2-eigen", "${{ 'libgl-devel' if linux }}"]
+  add_run: ["ros-humble-urdf", "ros-humble-kdl-parser", "ros-humble-tf2-geometry-msgs", "ros-humble-tf2-eigen"]
