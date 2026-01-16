@@ -341,10 +341,6 @@ packages_select_by_deps:
       # Require Linux-specific joystick interfaces
       - joy_linux
 
-      # mavros and mavlink (currently Linux only)
-      - mavlink
-      - mavros
-
   # These packages are currently only build on Linux,
   # as trying to build them in the past on macos or Windows resulted in errors,
   # but probably they can work on all platform with some work
@@ -445,3 +441,6 @@ packages_select_by_deps:
       - ign_ros2_control
       - gz_ros2_control
       - ur_simulation_gz
+      # mavros and mavlink (enabled on macOS for testing)
+      - mavlink
+      - mavros

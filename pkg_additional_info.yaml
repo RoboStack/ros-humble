@@ -151,5 +151,11 @@ rosidl_generator_cpp:
   build_number: 14
 rosidl_runtime_cpp:
   build_number: 14
+mavlink:
+  build_number: 14
+libmavconn:
+  build_number: 14
 mavros:
+  build_number: 14
+mavros_msgs:
   build_number: 14
