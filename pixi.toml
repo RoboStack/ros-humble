@@ -1,7 +1,5 @@
-[project]
+[workspace]
 name = "ros-humble"
-# Just a convention, this is the same as the mutex package
-version = "0.7.0"
 description = "RoboStack repo to package ros-humble packages as conda packages"
 authors = ["Tobias Fischer <tobias.fischer@qut.edu.au>", "Wolf Vollprecht <w.vollprecht@gmail.com>", "Silvio Traversaro <silvio@traversaro.it>"]
 channels = ["https://repo.prefix.dev/conda-forge"]
