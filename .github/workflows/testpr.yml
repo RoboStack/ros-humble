@@ -77,15 +77,7 @@ jobs:
       shell: bash -l {0}
       run: |
         pixi run anaconda --version
-
-    - name: Long paths workarounds for win-64
-      shell: bash -l {0}
-      if: matrix.platform == 'win-64'
-      run: |
-        # Workaround for problem related to long paths
-        echo "CONDA_BLD_PATH=C:\\bld\\" >> $GITHUB_ENV
-        mkdir /c/bld
-
+  
     - name: Generate recipes
       shell: bash -l {0}
       run: |
