@@ -444,3 +444,4 @@ packages_select_by_deps:
       # mavros and mavlink (enabled on macOS for testing)
       - mavlink
       - mavros
+      - mavros_extras
