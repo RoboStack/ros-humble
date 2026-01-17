@@ -30,8 +30,8 @@ jobs:
         vinca-gha --platform linux-64 --trigger-branch buildbranch_linux -d ./recipes
     - name: Commit files for linux-64
       run: |
-        if [[ -f "linux.yml" ]]; then
-            mv linux.yml .github/workflows/
+        if [[ -f "linux64.yml" ]]; then
+            mv linux64.yml .github/workflows/
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
             git add . -f
