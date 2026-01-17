@@ -1,0 +1,36 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5cb1fae47..cd5eee700 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -156,6 +156,9 @@ ament_target_dependencies(mavros_extras_plugins
+   yaml_cpp_vendor
+ )
+ pluginlib_export_plugin_description_file(mavros mavros_plugins.xml)
++# Link GeographicLib - not handled by ament_target_dependencies
++target_link_libraries(mavros_extras_plugins ${GeographicLib_LIBRARIES})
++
+ 
+ add_library(mavros_extras SHARED
+   # [[[cog:
+diff --git a/src/plugins/fake_gps.cpp b/src/plugins/fake_gps.cpp
+index 2a5b99fb4..451e8832c 100644
+--- a/src/plugins/fake_gps.cpp
++++ b/src/plugins/fake_gps.cpp
+@@ -401,7 +401,7 @@ private:
+   /* -*- callbacks -*- */
+   void mocap_tf_cb(const geometry_msgs::msg::TransformStamped::SharedPtr trans)
+   {
+-    Eigen::Affine3d pos_enu; tf2::fromMsg(trans->transform, pos_enu);
++    Eigen::Affine3d pos_enu(tf2::transformToEigen(trans->transform));
+ 
+     send_fake_gps(
+       trans->header.stamp,
+@@ -439,7 +439,7 @@ private:
+ 
+   void transform_cb(const geometry_msgs::msg::TransformStamped & trans)
+   {
+-    Eigen::Affine3d pos_enu; tf2::fromMsg(trans.transform, pos_enu);
++    Eigen::Affine3d pos_enu(tf2::transformToEigen(trans.transform));
+ 
+     send_fake_gps(
+       trans.header.stamp,
