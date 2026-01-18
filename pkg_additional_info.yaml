@@ -159,3 +159,5 @@ mavros:
   build_number: 14
 mavros_msgs:
   build_number: 14
+mavros_extras:
+  build_number: 14
