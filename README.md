@@ -1,7 +1,6 @@
 # RoboStack (for ROS humble)
 
 [![Conda](https://img.shields.io/conda/dn/robostack-humble/ros-humble-desktop?style=flat-square)](https://anaconda.org/robostack/)
-[![Gitter](https://img.shields.io/gitter/room/RoboStack/Lobby?style=flat-square)](https://gitter.im/RoboStack/Lobby)
 [![GitHub Repo stars](https://img.shields.io/github/stars/robostack/ros-humble?style=flat-square)](https://github.com/RoboStack/ros-humble/)
 [![QUT Centre for Robotics](https://img.shields.io/badge/collection-QUT%20Robotics-%23043d71?style=flat-square)](https://qcr.github.io/)
 
