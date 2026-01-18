@@ -1,0 +1,51 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5cb1fae47..cd5eee700 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -34,11 +34,10 @@ find_package(eigen3_cmake_module REQUIRED)
+ find_package(Eigen3 REQUIRED)
+ find_package(yaml_cpp_vendor REQUIRED)
+
+-## Find GeographicLib
+-# Append to CMAKE_MODULE_PATH since debian/ubuntu installs
+-# FindGeographicLib.cmake in a nonstand location
+-set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/share/cmake/geographiclib")
+-find_package(GeographicLib REQUIRED)
++# Find GeographicLib
++# Use CONFIG mode to find GeographicLib from conda package
++# (libmavconn already sets CMAKE_MODULE_PATH for CheckGeographicLibDatasets)
++find_package(GeographicLib REQUIRED CONFIG)
+
+ find_package(angles REQUIRED)
+ find_package(eigen_stl_containers REQUIRED)
+@@ -156,6 +155,8 @@ ament_target_dependencies(mavros_extras_plugins
+   yaml_cpp_vendor
+ )
+ pluginlib_export_plugin_description_file(mavros mavros_plugins.xml)
++# Link GeographicLib - not handled by ament_target_dependencies
++target_link_libraries(mavros_extras_plugins ${GeographicLib_LIBRARIES})
+
+ add_library(mavros_extras SHARED
+   # [[[cog:
+diff --git a/src/plugins/fake_gps.cpp b/src/plugins/fake_gps.cpp
+index 2a5b99fb4..451e8832c 100644
+--- a/src/plugins/fake_gps.cpp
++++ b/src/plugins/fake_gps.cpp
+@@ -401,7 +401,7 @@ private:
+   /* -*- callbacks -*- */
+   void mocap_tf_cb(const geometry_msgs::msg::TransformStamped::SharedPtr trans)
+   {
+-    Eigen::Affine3d pos_enu; tf2::fromMsg(trans->transform, pos_enu);
++    Eigen::Affine3d pos_enu(tf2::transformToEigen(trans->transform));
+
+     send_fake_gps(
+       trans->header.stamp,
+@@ -439,7 +439,7 @@ private:
+
+   void transform_cb(const geometry_msgs::msg::TransformStamped & trans)
+   {
+-    Eigen::Affine3d pos_enu; tf2::fromMsg(trans.transform, pos_enu);
++    Eigen::Affine3d pos_enu(tf2::transformToEigen(trans.transform));
+
+     send_fake_gps(
+       trans.header.stamp,
