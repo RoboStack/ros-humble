@@ -1,0 +1,6 @@
+[anaconda_cli.subcommand]
+org = binstar_client.plugins:app
+
+[console_scripts]
+binstar = binstar_client.scripts.cli:main
+conda-server = binstar_client.scripts.cli:main

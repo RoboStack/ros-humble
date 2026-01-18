@@ -1,0 +1,11 @@
+prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+exec_prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+libdir=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default/lib
+includedir=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default/include
+
+Name: uuid
+Description: Universally unique id library
+Version: 2.38.1
+Requires:
+Cflags: -I${includedir}/uuid
+Libs: -L${libdir} -luuid

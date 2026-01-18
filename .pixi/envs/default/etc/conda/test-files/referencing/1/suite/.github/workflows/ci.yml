@@ -1,0 +1,27 @@
+name: Test Suite Sanity Checking
+
+on:
+  push:
+    branches-ignore:
+      - "wip*"
+    tags:
+      - "v*"
+  pull_request:
+  schedule:
+    # Daily at 3:42, arbitrarily as a time that's possibly non-busy
+    - cron: "42 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Run nox
+        run: uvx nox

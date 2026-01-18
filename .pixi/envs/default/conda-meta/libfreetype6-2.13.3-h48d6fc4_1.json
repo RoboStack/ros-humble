@@ -1,0 +1,55 @@
+{
+  "arch": "x86_64",
+  "build": "h48d6fc4_1",
+  "build_number": 1,
+  "constrains": [
+    "freetype >=2.13.3"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libpng >=1.6.47,<1.7.0a0",
+    "libzlib >=1.3.1,<2.0a0"
+  ],
+  "license": "GPL-2.0-only OR FTL",
+  "md5": "3c255be50a506c50765a93a6644f32fe",
+  "name": "libfreetype6",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "7759bd5c31efe5fbc36a7a1f8ca5244c2eabdbeb8fc1bee4b99cf989f35c7d81",
+  "size": 380134,
+  "subdir": "linux-64",
+  "timestamp": 1745369987697,
+  "version": "2.13.3",
+  "fn": "libfreetype6-2.13.3-h48d6fc4_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/libfreetype6-2.13.3-h48d6fc4_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/libfreetype6-2.13.3-h48d6fc4_1",
+  "requested_specs": [],
+  "files": [
+    "lib/libfreetype.so.6",
+    "lib/libfreetype.so.6.20.2"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/libfreetype.so.6",
+        "path_type": "softlink",
+        "sha256": "e3a01f4115b7048a027d9782c16021e7b3a1d6d519cf8b208b1af9bc76175691",
+        "sha256_in_prefix": "fba48db754e6eb5f0c51c303b5678164c2d48f2f1234c3e246005d617529e878",
+        "size_in_bytes": 850160
+      },
+      {
+        "_path": "lib/libfreetype.so.6.20.2",
+        "path_type": "hardlink",
+        "sha256": "e3a01f4115b7048a027d9782c16021e7b3a1d6d519cf8b208b1af9bc76175691",
+        "size_in_bytes": 850160
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/libfreetype6-2.13.3-h48d6fc4_1",
+    "type": 1
+  }
+}

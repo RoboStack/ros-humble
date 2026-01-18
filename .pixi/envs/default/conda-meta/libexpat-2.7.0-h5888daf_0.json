@@ -1,0 +1,54 @@
+{
+  "arch": "x86_64",
+  "build": "h5888daf_0",
+  "build_number": 0,
+  "constrains": [
+    "expat 2.7.0.*"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "db0bfbe7dd197b68ad5f30333bae6ce0",
+  "name": "libexpat",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "33ab03438aee65d6aa667cf7d90c91e5e7d734c19a67aa4c7040742c0a13d505",
+  "size": 74427,
+  "subdir": "linux-64",
+  "timestamp": 1743431794976,
+  "version": "2.7.0",
+  "fn": "libexpat-2.7.0-h5888daf_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/libexpat-2.7.0-h5888daf_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/libexpat-2.7.0-h5888daf_0",
+  "requested_specs": [],
+  "files": [
+    "lib/libexpat.so.1",
+    "lib/libexpat.so.1.10.1"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/libexpat.so.1",
+        "path_type": "softlink",
+        "sha256": "92046a515bf0dd79ef9b9cc361b66b949cb3042a6a6af7f827eee9bff49e562e",
+        "sha256_in_prefix": "499de7296dfd287028b03264c8f6dcb2497cf273f85beb7316e24cabf0b20845",
+        "size_in_bytes": 190928
+      },
+      {
+        "_path": "lib/libexpat.so.1.10.1",
+        "path_type": "hardlink",
+        "sha256": "92046a515bf0dd79ef9b9cc361b66b949cb3042a6a6af7f827eee9bff49e562e",
+        "size_in_bytes": 190928
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/libexpat-2.7.0-h5888daf_0",
+    "type": 1
+  }
+}

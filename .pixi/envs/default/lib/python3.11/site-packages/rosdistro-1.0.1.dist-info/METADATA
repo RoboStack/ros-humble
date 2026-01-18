@@ -1,0 +1,27 @@
+Metadata-Version: 2.1
+Name: rosdistro
+Version: 1.0.1
+Summary: A tool to work with rosdistro files
+Home-page: http://wiki.ros.org/rosdistro
+Author: Wim Meeussen, Dirk Thomas
+Author-email: wim@hidof.com, dthomas@osrfoundation.org
+Maintainer: ROS Infrastructure Team
+License: BSD, MIT
+Project-URL: Source code, https://github.com/ros-infrastructure/rosdistro
+Project-URL: Issue tracker, https://github.com/ros-infrastructure/rosdistro/issues
+Keywords: ROS
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: License :: OSI Approved :: BSD License
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.6
+License-File: LICENSE.txt
+Requires-Dist: PyYAML
+Requires-Dist: setuptools
+Requires-Dist: catkin-pkg
+Requires-Dist: rospkg
+Provides-Extra: test
+Requires-Dist: pytest ; extra == 'test'
+
+A tool to work with rosdistro files
+

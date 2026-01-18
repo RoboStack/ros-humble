@@ -1,0 +1,32 @@
+{
+  "arch": "x86_64",
+  "build": "ha770c72_1",
+  "build_number": 1,
+  "depends": [
+    "libfreetype6 >=2.13.3"
+  ],
+  "license": "GPL-2.0-only OR FTL",
+  "md5": "51f5be229d83ecd401fb369ab96ae669",
+  "name": "libfreetype",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "7be9b3dac469fe3c6146ff24398b685804dfc7a1de37607b84abd076f57cc115",
+  "size": 7693,
+  "subdir": "linux-64",
+  "timestamp": 1745369988361,
+  "version": "2.13.3",
+  "fn": "libfreetype-2.13.3-ha770c72_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/libfreetype-2.13.3-ha770c72_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/libfreetype-2.13.3-ha770c72_1",
+  "requested_specs": [],
+  "files": [],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": []
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/libfreetype-2.13.3-ha770c72_1",
+    "type": 1
+  }
+}

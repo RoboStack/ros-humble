@@ -1,0 +1,12 @@
+prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libtiff
+Description:  Tag Image File Format (TIFF) library.
+Version: 4.7.0
+Libs: -L${libdir} -ltiff
+Libs.private: -lwebp -lzstd -llzma -lLerc -ljpeg -ldeflate -lz -lm 
+Cflags: -I${includedir}
+Requires.private: libwebp libzstd liblzma Lerc libjpeg libdeflate zlib 

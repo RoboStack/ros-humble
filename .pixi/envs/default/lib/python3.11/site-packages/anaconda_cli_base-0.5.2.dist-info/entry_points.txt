@@ -1,0 +1,5 @@
+[console_scripts]
+anaconda = anaconda_cli_base.cli:app
+
+[anaconda_cli.main]
+anaconda = anaconda_cli_base.cli:app
