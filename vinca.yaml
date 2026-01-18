@@ -110,7 +110,7 @@ packages_remove_from_deps:
 
 packages_select_by_deps:
   # These are the packages that are build on all platforms, including wasm32
-    # only subset of packages to reduce maintainer load
+  # only subset of packages to reduce maintainer load
   - rclpy
   - ros_workspace
   - ros_environment
@@ -237,12 +237,12 @@ packages_select_by_deps:
       - gazebo-ros-pkgs
       - ros_ign
       # *** Vendor packages ***
-      - graph_msgs          # PickNik Robotics
-      - apriltag            # AprilRobotics
-      - ur_robot_driver     # Universal Robots
-      - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
-      - stubborn_buddies    # Open RMF
-      - ament_cmake_catch2  # Open RMF
+      - graph_msgs # PickNik Robotics
+      - apriltag # AprilRobotics
+      - ur_robot_driver # Universal Robots
+      - ur_calibration # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
+      - stubborn_buddies # Open RMF
+      - ament_cmake_catch2 # Open RMF
       - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
       - ament_cmake_mypy
       # - transport_drivers
@@ -252,13 +252,13 @@ packages_select_by_deps:
       - udp_driver
       - apex_test_tools
       - visp
-      - bno055              # flynneva
+      - bno055 # flynneva
       - aws_robomaker_small_warehouse_world # AWS Robotics
       # Only msgs as avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
-      - avt_vimba_camera_msgs    #  Allied Vision Technologies
-      - system_modes        # Micro-ROS
-      - tf_transformations  # DLu
-      - marker-msgs         # TUW Robotics
+      - avt_vimba_camera_msgs #  Allied Vision Technologies
+      - system_modes # Micro-ROS
+      - tf_transformations # DLu
+      - marker-msgs # TUW Robotics
       - moveit_resources
       # requested in https://github.com/RoboStack/ros-humble/pull/205
       - plotjuggler_msgs
@@ -333,7 +333,7 @@ packages_select_by_deps:
       # Depends on libcamera that is only available on linux
       - camera_ros
       # Depends on camera_ros that is only available on linux
-      - apriltag_ros        # Christian Rauch
+      - apriltag_ros # Christian Rauch
       # Depends on v4l that is only available on linux
       - v4l2_camera
       #  avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
@@ -358,12 +358,12 @@ packages_select_by_deps:
       # but should be easy to fix
       - spatio_temporal_voxel_layer
       # Some missing support for macOS, see https://github.com/cyberbotics/webots_ros2/pull/733
-      - webots_ros2         # Cyberbotics
+      - webots_ros2 # Cyberbotics
       # Linking problems on macOS, probably a missing link to draco library or similar
       - point_cloud_transport_plugins
-      - realsense2-camera   # IntelRealSense
+      - realsense2-camera # IntelRealSense
       - realsense2-description # IntelRealSense
-       # removed in jazzy, never supported windows or macos, no packages depend on it
+        # removed in jazzy, never supported windows or macos, no packages depend on it
       - apex_containers
       # CMake errors related to OpenCV on macos, probably fixable
       - moveit_ros_perception
@@ -371,7 +371,6 @@ packages_select_by_deps:
       # Franka robots suppot
       # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
       - franka_ros2
-
 
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
@@ -381,7 +380,7 @@ packages_select_by_deps:
       - foxglove_bridge
       - velodyne
       # error C1189: #error:  WinSock.h has already been included
-      - velodyne_simulator  # Dataspeed Inc.
+      - velodyne_simulator # Dataspeed Inc.
       - moveit_py
       # TODO on windows: fix iconv link issue
       - ffmpeg_image_transport
@@ -419,8 +418,8 @@ packages_select_by_deps:
       # Windows is failing with error C1083: Cannot open compiler generated file: ''
       - motion_capture_tracking
       # ublox compilation fails on Windows
-      - ublox               # Kumar Robotics
-      - ublox_dgnss         # Aussie Robots
+      - ublox # Kumar Robotics
+      - ublox_dgnss # Aussie Robots
       - ublox_dgnss_node
       - ublox_ubx_interfaces
       # error C1083: Cannot open include file: 'rqt_gui_cpp/plugin.h'
@@ -434,9 +433,17 @@ packages_select_by_deps:
       - spacenav
       # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
       - vision-msgs-rviz-plugins
-      # aerostack2
+      # aerostack2 packages (as2_core patched for GeographicLib)
       - as2_cli
       - as2_msgs
+      - as2_platform_mavlink
+      - as2_behavior
+      - as2_behavior_tree
+      - as2_motion_controller
+      - as2_state_estimator
+      - as2_python_api
+      - as2_alphanumeric_viewer
+      - as2_motion_reference_handlers
 
       - ign_ros2_control
       - gz_ros2_control

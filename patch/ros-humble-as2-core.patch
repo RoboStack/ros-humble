@@ -1,0 +1,35 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1234567..abcdefg 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -21,9 +21,6 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+ # add -Wall -Wextra -pedantic
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
+
+-# https://stackoverflow.com/a/73279950/9553849
+-set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/share/cmake/geographiclib")
+-
+ # set a define with the system env variable ROS_DISTRO
+ set(ROS_DISTRO $ENV{ROS_DISTRO})
+ message(STATUS "Detected ROS_DISTRO: ${ROS_DISTRO}")
+@@ -57,7 +54,8 @@ foreach(DEPENDENCY ${PROJECT_DEPENDENCIES})
+   find_package(${DEPENDENCY} REQUIRED)
+ endforeach()
+
+-find_package(GeographicLib REQUIRED)
++# Use CONFIG mode to find GeographicLib from conda package
++find_package(GeographicLib REQUIRED CONFIG)
+
+ # Pybind11
+ find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+@@ -92,7 +90,8 @@ target_include_directories(
+   $<INSTALL_INTERFACE:include>)
+
+ ament_target_dependencies(${PROJECT_NAME} ${PROJECT_DEPENDENCIES})
+ ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
+-ament_export_dependencies(${PROJECT_DEPENDENCIES})
++# Export GeographicLib so downstream packages can find the target
++ament_export_dependencies(${PROJECT_DEPENDENCIES} GeographicLib)
+
+ ament_export_include_directories(include)
+ ament_export_libraries(${PROJECT_NAME})
