@@ -149,11 +149,11 @@ jobs:
     - name: Generate recipes for emscripten-wasm32
       run: |
         git clean -fdx
-        vinca --multiple --platform emscripten-wasm32
+        pixi run -v vinca --multiple --platform emscripten-wasm32
         
     - name: Generate azure pipelines for emscripten-wasm32
       run: |
-        vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten -d ./recipes --batch_size 1
+        pixi run -v vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten -d ./recipes --batch_size 1
     - name: Commit files for emscripten-wasm32
       run: |
         if [[ -f "emscripten_wasm32.yml" ]]; then
