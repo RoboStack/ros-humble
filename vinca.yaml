@@ -340,7 +340,12 @@ packages_select_by_deps:
       - avt_vimba_camera
       # Require Linux-specific joystick interfaces
       - joy_linux
-
+      - odom-to-tf-ros2
+      - quaternion_operation
+      - random-numbers
+      - rot-conv
+      - slider-publisher
+      - twist-stamper
   # These packages are currently only build on Linux,
   # as trying to build them in the past on macos or Windows resulted in errors,
   # but probably they can work on all platform with some work
