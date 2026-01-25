@@ -445,3 +445,7 @@ packages_select_by_deps:
       - mavlink
       - mavros
       - mavros_extras
+
+      # robotique grippers
+      - robotiq_description
+      - robotiq_controllers
