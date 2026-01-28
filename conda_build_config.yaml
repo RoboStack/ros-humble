@@ -1,19 +1,35 @@
 numpy:
-  - 1.26
+  - 2
+assimp:
+  - 5
 libprotobuf:
-  - 5.29.3
+  - 6.31.1
 protobuf:
-  - 5.29.3
+  - 6.31.1
 spdlog:
-  - 1.15
+  - 1.17
 pugixml:
   - '1.15'
 libopencv:
-  - 4.11.0
+  - 4.12.0
 libxml2:
-  - 2.13.*
+  - 2.14.*
 graphviz:
-  - 12.*
+  - 14.*
+# Mitigation for
+# https://github.com/RoboStack/ros-jazzy/pull/126#issuecomment-3515455380
+libcap:
+  - 2.77
+fmt:
+  - 12.1
+lua:
+  - 5.4
+tbb:
+  - '2022'
+tbb_devel:
+  - '2022'
+
+# Workaround for https://github.com/RoboStack/ros-jazzy/pull/40#issuecomment-2782226697
 cmake:
   - 3.*
 
@@ -21,7 +37,7 @@ cdt_name:  # [linux]
   - conda  # [linux]
 
 python:
-  - 3.11.* *_cpython
+  - 3.12.* *_cpython
 python_impl:
   - cpython
 
@@ -36,7 +52,7 @@ c_compiler:
   - vs2022                     # [win]
   - emscripten                 # [emscripten]
 c_compiler_version:            # [unix]
-  - 13                         # [linux]
+  - 14                         # [linux]
   - 18                         # [osx]
 c_stdlib:
   - sysroot                    # [linux]
@@ -52,12 +68,13 @@ cxx_compiler:
   - vs2022                     # [win]
   - emscripten                 # [emscripten]
 cxx_compiler_version:          # [unix]
-  - 13                         # [linux]
+  - 14                         # [linux]
   - 18                         # [osx]
 
 libzenohc:
-  - 1.4.0
+  - 1.7.2
 libzenohcxx:
-  - 1.4.0
-libcap:
-  - 2.71
+  - 1.7.2
+
+libhwloc:
+  - 2.12.2
