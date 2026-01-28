@@ -1,7 +1,5 @@
-[project]
+[workspace]
 name = "ros-humble"
-# Just a convention, this is the same as the mutex package
-version = "0.7.0"
 description = "RoboStack repo to package ros-humble packages as conda packages"
 authors = ["Tobias Fischer <tobias.fischer@qut.edu.au>", "Wolf Vollprecht <w.vollprecht@gmail.com>", "Silvio Traversaro <silvio@traversaro.it>"]
 channels = ["https://repo.prefix.dev/conda-forge"]
@@ -24,7 +22,7 @@ git = "*"
 
 [pypi-dependencies]
 # This is tipically the latest commit on main branch
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "8ba3ab635ac62af35a52d363ababf67aa2ec7d48" }
+vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "85b4da615739af14750d759ccb4e997f83342629" }
 # Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
 # (and regenerate the pixi.lock) once you push the modified commit to the repo
 #vinca = { path = "../vinca", editable = true }

@@ -148,6 +148,7 @@ packages_select_by_deps:
       - mocap4r2_msgs
       - ros2-controllers
       - pal_statistics
+      - ros2-control-cmake
       - diff-drive-controller
       - ros_workspace
       - ros_core
@@ -221,6 +222,8 @@ packages_select_by_deps:
       # to interfaced with simulations working on Linux or macOS
       - ros_gz_interfaces
       - ros_ign_interfaces
+      # generic sim interfaces
+      - simulation_interfaces
       - gtsam
       # *** learning and tutorials ***
       - turtlebot3
@@ -291,6 +294,7 @@ packages_select_by_deps:
       - behaviortree_cpp
       - py-binding-tools
       - nmea_msgs
+      - radar_msgs
       - rtcm_msgs
       # cascade lifecycle packages
       - cascade-lifecycle-msgs
@@ -333,11 +337,12 @@ packages_select_by_deps:
       - avt_vimba_camera
       # Require Linux-specific joystick interfaces
       - joy_linux
-
-      # mavros and mavlink (currently Linux only)
-      - mavlink
-      - mavros
-
+      - odom-to-tf-ros2
+      - quaternion_operation
+      - random-numbers
+      - rot-conv
+      - slider-publisher
+      - twist-stamper
   # These packages are currently only build on Linux,
   # as trying to build them in the past on macos or Windows resulted in errors,
   # but probably they can work on all platform with some work
@@ -436,3 +441,11 @@ packages_select_by_deps:
       - ign_ros2_control
       - gz_ros2_control
       - ur_simulation_gz
+      # mavros and mavlink (enabled on macOS for testing)
+      - mavlink
+      - mavros
+      - mavros_extras
+
+      # robotique grippers
+      - robotiq_description
+      - robotiq_controllers

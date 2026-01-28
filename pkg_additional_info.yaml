@@ -66,6 +66,11 @@ librealsense2:
   generate_dummy_package_with_run_deps:
     dep_name: librealsense
     max_pin: 'x.x'
+libfranka:
+  generate_dummy_package_with_run_deps:
+    dep_name: libfranka
+    max_pin: 'x.x.x'
+  build_number: 14
 ignition_cmake2_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 ignition_math6_vendor:
@@ -150,4 +155,14 @@ tinyxml2_vendor:
 rosidl_generator_cpp:
   build_number: 14
 rosidl_runtime_cpp:
+  build_number: 14
+mavlink:
+  build_number: 14
+libmavconn:
+  build_number: 14
+mavros:
+  build_number: 14
+mavros_msgs:
+  build_number: 14
+mavros_extras:
   build_number: 14
