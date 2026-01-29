@@ -1,0 +1,2465 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.9"
+  ],
+  "license": "BSD-2-Clause",
+  "license_family": "BSD",
+  "md5": "232fb4577b6687b2d503ef8e254270c9",
+  "name": "pygments",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/pygments?source=hash-mapping"
+  ],
+  "sha256": "28a3e3161390a9d23bc02b4419448f8d27679d9e2c250e29849e37749c8de86b",
+  "size": 888600,
+  "subdir": "noarch",
+  "timestamp": 1736243563082,
+  "version": "2.19.1",
+  "fn": "pygments-2.19.1-pyhd8ed1ab_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/pygments-2.19.1-pyhd8ed1ab_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/pygments-2.19.1-pyhd8ed1ab_0",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/licenses/AUTHORS",
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/pygments/__init__.py",
+    "lib/python3.11/site-packages/pygments/__main__.py",
+    "lib/python3.11/site-packages/pygments/cmdline.py",
+    "lib/python3.11/site-packages/pygments/console.py",
+    "lib/python3.11/site-packages/pygments/filter.py",
+    "lib/python3.11/site-packages/pygments/formatter.py",
+    "lib/python3.11/site-packages/pygments/lexer.py",
+    "lib/python3.11/site-packages/pygments/modeline.py",
+    "lib/python3.11/site-packages/pygments/plugin.py",
+    "lib/python3.11/site-packages/pygments/regexopt.py",
+    "lib/python3.11/site-packages/pygments/scanner.py",
+    "lib/python3.11/site-packages/pygments/sphinxext.py",
+    "lib/python3.11/site-packages/pygments/style.py",
+    "lib/python3.11/site-packages/pygments/token.py",
+    "lib/python3.11/site-packages/pygments/unistring.py",
+    "lib/python3.11/site-packages/pygments/util.py",
+    "lib/python3.11/site-packages/pygments/formatters/__init__.py",
+    "lib/python3.11/site-packages/pygments/formatters/_mapping.py",
+    "lib/python3.11/site-packages/pygments/formatters/bbcode.py",
+    "lib/python3.11/site-packages/pygments/formatters/groff.py",
+    "lib/python3.11/site-packages/pygments/formatters/html.py",
+    "lib/python3.11/site-packages/pygments/formatters/img.py",
+    "lib/python3.11/site-packages/pygments/formatters/irc.py",
+    "lib/python3.11/site-packages/pygments/formatters/latex.py",
+    "lib/python3.11/site-packages/pygments/formatters/other.py",
+    "lib/python3.11/site-packages/pygments/formatters/pangomarkup.py",
+    "lib/python3.11/site-packages/pygments/formatters/rtf.py",
+    "lib/python3.11/site-packages/pygments/formatters/svg.py",
+    "lib/python3.11/site-packages/pygments/formatters/terminal.py",
+    "lib/python3.11/site-packages/pygments/formatters/terminal256.py",
+    "lib/python3.11/site-packages/pygments/filters/__init__.py",
+    "lib/python3.11/site-packages/pygments/lexers/__init__.py",
+    "lib/python3.11/site-packages/pygments/lexers/_ada_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_asy_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_cl_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_cocoa_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_csound_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_css_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_googlesql_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_julia_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_lasso_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_lilypond_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_lua_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_luau_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_mapping.py",
+    "lib/python3.11/site-packages/pygments/lexers/_mql_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_mysql_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_openedge_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_php_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_postgres_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_qlik_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_scheme_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_scilab_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_sourcemod_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_stan_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_stata_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_tsql_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_usd_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_vbscript_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/_vim_builtins.py",
+    "lib/python3.11/site-packages/pygments/lexers/actionscript.py",
+    "lib/python3.11/site-packages/pygments/lexers/ada.py",
+    "lib/python3.11/site-packages/pygments/lexers/agile.py",
+    "lib/python3.11/site-packages/pygments/lexers/algebra.py",
+    "lib/python3.11/site-packages/pygments/lexers/ambient.py",
+    "lib/python3.11/site-packages/pygments/lexers/amdgpu.py",
+    "lib/python3.11/site-packages/pygments/lexers/ampl.py",
+    "lib/python3.11/site-packages/pygments/lexers/apdlexer.py",
+    "lib/python3.11/site-packages/pygments/lexers/apl.py",
+    "lib/python3.11/site-packages/pygments/lexers/archetype.py",
+    "lib/python3.11/site-packages/pygments/lexers/arrow.py",
+    "lib/python3.11/site-packages/pygments/lexers/arturo.py",
+    "lib/python3.11/site-packages/pygments/lexers/asc.py",
+    "lib/python3.11/site-packages/pygments/lexers/asm.py",
+    "lib/python3.11/site-packages/pygments/lexers/asn1.py",
+    "lib/python3.11/site-packages/pygments/lexers/automation.py",
+    "lib/python3.11/site-packages/pygments/lexers/bare.py",
+    "lib/python3.11/site-packages/pygments/lexers/basic.py",
+    "lib/python3.11/site-packages/pygments/lexers/bdd.py",
+    "lib/python3.11/site-packages/pygments/lexers/berry.py",
+    "lib/python3.11/site-packages/pygments/lexers/bibtex.py",
+    "lib/python3.11/site-packages/pygments/lexers/blueprint.py",
+    "lib/python3.11/site-packages/pygments/lexers/boa.py",
+    "lib/python3.11/site-packages/pygments/lexers/bqn.py",
+    "lib/python3.11/site-packages/pygments/lexers/business.py",
+    "lib/python3.11/site-packages/pygments/lexers/c_cpp.py",
+    "lib/python3.11/site-packages/pygments/lexers/c_like.py",
+    "lib/python3.11/site-packages/pygments/lexers/capnproto.py",
+    "lib/python3.11/site-packages/pygments/lexers/carbon.py",
+    "lib/python3.11/site-packages/pygments/lexers/cddl.py",
+    "lib/python3.11/site-packages/pygments/lexers/chapel.py",
+    "lib/python3.11/site-packages/pygments/lexers/clean.py",
+    "lib/python3.11/site-packages/pygments/lexers/codeql.py",
+    "lib/python3.11/site-packages/pygments/lexers/comal.py",
+    "lib/python3.11/site-packages/pygments/lexers/compiled.py",
+    "lib/python3.11/site-packages/pygments/lexers/configs.py",
+    "lib/python3.11/site-packages/pygments/lexers/console.py",
+    "lib/python3.11/site-packages/pygments/lexers/cplint.py",
+    "lib/python3.11/site-packages/pygments/lexers/crystal.py",
+    "lib/python3.11/site-packages/pygments/lexers/csound.py",
+    "lib/python3.11/site-packages/pygments/lexers/css.py",
+    "lib/python3.11/site-packages/pygments/lexers/d.py",
+    "lib/python3.11/site-packages/pygments/lexers/dalvik.py",
+    "lib/python3.11/site-packages/pygments/lexers/data.py",
+    "lib/python3.11/site-packages/pygments/lexers/dax.py",
+    "lib/python3.11/site-packages/pygments/lexers/devicetree.py",
+    "lib/python3.11/site-packages/pygments/lexers/diff.py",
+    "lib/python3.11/site-packages/pygments/lexers/dns.py",
+    "lib/python3.11/site-packages/pygments/lexers/dotnet.py",
+    "lib/python3.11/site-packages/pygments/lexers/dsls.py",
+    "lib/python3.11/site-packages/pygments/lexers/dylan.py",
+    "lib/python3.11/site-packages/pygments/lexers/ecl.py",
+    "lib/python3.11/site-packages/pygments/lexers/eiffel.py",
+    "lib/python3.11/site-packages/pygments/lexers/elm.py",
+    "lib/python3.11/site-packages/pygments/lexers/elpi.py",
+    "lib/python3.11/site-packages/pygments/lexers/email.py",
+    "lib/python3.11/site-packages/pygments/lexers/erlang.py",
+    "lib/python3.11/site-packages/pygments/lexers/esoteric.py",
+    "lib/python3.11/site-packages/pygments/lexers/ezhil.py",
+    "lib/python3.11/site-packages/pygments/lexers/factor.py",
+    "lib/python3.11/site-packages/pygments/lexers/fantom.py",
+    "lib/python3.11/site-packages/pygments/lexers/felix.py",
+    "lib/python3.11/site-packages/pygments/lexers/fift.py",
+    "lib/python3.11/site-packages/pygments/lexers/floscript.py",
+    "lib/python3.11/site-packages/pygments/lexers/forth.py",
+    "lib/python3.11/site-packages/pygments/lexers/fortran.py",
+    "lib/python3.11/site-packages/pygments/lexers/foxpro.py",
+    "lib/python3.11/site-packages/pygments/lexers/freefem.py",
+    "lib/python3.11/site-packages/pygments/lexers/func.py",
+    "lib/python3.11/site-packages/pygments/lexers/functional.py",
+    "lib/python3.11/site-packages/pygments/lexers/futhark.py",
+    "lib/python3.11/site-packages/pygments/lexers/gcodelexer.py",
+    "lib/python3.11/site-packages/pygments/lexers/gdscript.py",
+    "lib/python3.11/site-packages/pygments/lexers/gleam.py",
+    "lib/python3.11/site-packages/pygments/lexers/go.py",
+    "lib/python3.11/site-packages/pygments/lexers/grammar_notation.py",
+    "lib/python3.11/site-packages/pygments/lexers/graph.py",
+    "lib/python3.11/site-packages/pygments/lexers/graphics.py",
+    "lib/python3.11/site-packages/pygments/lexers/graphql.py",
+    "lib/python3.11/site-packages/pygments/lexers/graphviz.py",
+    "lib/python3.11/site-packages/pygments/lexers/gsql.py",
+    "lib/python3.11/site-packages/pygments/lexers/hare.py",
+    "lib/python3.11/site-packages/pygments/lexers/haskell.py",
+    "lib/python3.11/site-packages/pygments/lexers/haxe.py",
+    "lib/python3.11/site-packages/pygments/lexers/hdl.py",
+    "lib/python3.11/site-packages/pygments/lexers/hexdump.py",
+    "lib/python3.11/site-packages/pygments/lexers/html.py",
+    "lib/python3.11/site-packages/pygments/lexers/idl.py",
+    "lib/python3.11/site-packages/pygments/lexers/igor.py",
+    "lib/python3.11/site-packages/pygments/lexers/inferno.py",
+    "lib/python3.11/site-packages/pygments/lexers/installers.py",
+    "lib/python3.11/site-packages/pygments/lexers/int_fiction.py",
+    "lib/python3.11/site-packages/pygments/lexers/iolang.py",
+    "lib/python3.11/site-packages/pygments/lexers/j.py",
+    "lib/python3.11/site-packages/pygments/lexers/javascript.py",
+    "lib/python3.11/site-packages/pygments/lexers/jmespath.py",
+    "lib/python3.11/site-packages/pygments/lexers/jslt.py",
+    "lib/python3.11/site-packages/pygments/lexers/json5.py",
+    "lib/python3.11/site-packages/pygments/lexers/jsonnet.py",
+    "lib/python3.11/site-packages/pygments/lexers/jsx.py",
+    "lib/python3.11/site-packages/pygments/lexers/julia.py",
+    "lib/python3.11/site-packages/pygments/lexers/jvm.py",
+    "lib/python3.11/site-packages/pygments/lexers/kuin.py",
+    "lib/python3.11/site-packages/pygments/lexers/kusto.py",
+    "lib/python3.11/site-packages/pygments/lexers/ldap.py",
+    "lib/python3.11/site-packages/pygments/lexers/lean.py",
+    "lib/python3.11/site-packages/pygments/lexers/lilypond.py",
+    "lib/python3.11/site-packages/pygments/lexers/lisp.py",
+    "lib/python3.11/site-packages/pygments/lexers/macaulay2.py",
+    "lib/python3.11/site-packages/pygments/lexers/make.py",
+    "lib/python3.11/site-packages/pygments/lexers/maple.py",
+    "lib/python3.11/site-packages/pygments/lexers/markup.py",
+    "lib/python3.11/site-packages/pygments/lexers/math.py",
+    "lib/python3.11/site-packages/pygments/lexers/matlab.py",
+    "lib/python3.11/site-packages/pygments/lexers/maxima.py",
+    "lib/python3.11/site-packages/pygments/lexers/meson.py",
+    "lib/python3.11/site-packages/pygments/lexers/mime.py",
+    "lib/python3.11/site-packages/pygments/lexers/minecraft.py",
+    "lib/python3.11/site-packages/pygments/lexers/mips.py",
+    "lib/python3.11/site-packages/pygments/lexers/ml.py",
+    "lib/python3.11/site-packages/pygments/lexers/modeling.py",
+    "lib/python3.11/site-packages/pygments/lexers/modula2.py",
+    "lib/python3.11/site-packages/pygments/lexers/mojo.py",
+    "lib/python3.11/site-packages/pygments/lexers/monte.py",
+    "lib/python3.11/site-packages/pygments/lexers/mosel.py",
+    "lib/python3.11/site-packages/pygments/lexers/ncl.py",
+    "lib/python3.11/site-packages/pygments/lexers/nimrod.py",
+    "lib/python3.11/site-packages/pygments/lexers/nit.py",
+    "lib/python3.11/site-packages/pygments/lexers/nix.py",
+    "lib/python3.11/site-packages/pygments/lexers/numbair.py",
+    "lib/python3.11/site-packages/pygments/lexers/oberon.py",
+    "lib/python3.11/site-packages/pygments/lexers/objective.py",
+    "lib/python3.11/site-packages/pygments/lexers/ooc.py",
+    "lib/python3.11/site-packages/pygments/lexers/openscad.py",
+    "lib/python3.11/site-packages/pygments/lexers/other.py",
+    "lib/python3.11/site-packages/pygments/lexers/parasail.py",
+    "lib/python3.11/site-packages/pygments/lexers/parsers.py",
+    "lib/python3.11/site-packages/pygments/lexers/pascal.py",
+    "lib/python3.11/site-packages/pygments/lexers/pawn.py",
+    "lib/python3.11/site-packages/pygments/lexers/pddl.py",
+    "lib/python3.11/site-packages/pygments/lexers/perl.py",
+    "lib/python3.11/site-packages/pygments/lexers/phix.py",
+    "lib/python3.11/site-packages/pygments/lexers/php.py",
+    "lib/python3.11/site-packages/pygments/lexers/pointless.py",
+    "lib/python3.11/site-packages/pygments/lexers/pony.py",
+    "lib/python3.11/site-packages/pygments/lexers/praat.py",
+    "lib/python3.11/site-packages/pygments/lexers/procfile.py",
+    "lib/python3.11/site-packages/pygments/lexers/prolog.py",
+    "lib/python3.11/site-packages/pygments/lexers/promql.py",
+    "lib/python3.11/site-packages/pygments/lexers/prql.py",
+    "lib/python3.11/site-packages/pygments/lexers/ptx.py",
+    "lib/python3.11/site-packages/pygments/lexers/python.py",
+    "lib/python3.11/site-packages/pygments/lexers/q.py",
+    "lib/python3.11/site-packages/pygments/lexers/qlik.py",
+    "lib/python3.11/site-packages/pygments/lexers/qvt.py",
+    "lib/python3.11/site-packages/pygments/lexers/r.py",
+    "lib/python3.11/site-packages/pygments/lexers/rdf.py",
+    "lib/python3.11/site-packages/pygments/lexers/rebol.py",
+    "lib/python3.11/site-packages/pygments/lexers/rego.py",
+    "lib/python3.11/site-packages/pygments/lexers/resource.py",
+    "lib/python3.11/site-packages/pygments/lexers/ride.py",
+    "lib/python3.11/site-packages/pygments/lexers/rita.py",
+    "lib/python3.11/site-packages/pygments/lexers/rnc.py",
+    "lib/python3.11/site-packages/pygments/lexers/roboconf.py",
+    "lib/python3.11/site-packages/pygments/lexers/robotframework.py",
+    "lib/python3.11/site-packages/pygments/lexers/ruby.py",
+    "lib/python3.11/site-packages/pygments/lexers/rust.py",
+    "lib/python3.11/site-packages/pygments/lexers/sas.py",
+    "lib/python3.11/site-packages/pygments/lexers/savi.py",
+    "lib/python3.11/site-packages/pygments/lexers/scdoc.py",
+    "lib/python3.11/site-packages/pygments/lexers/scripting.py",
+    "lib/python3.11/site-packages/pygments/lexers/sgf.py",
+    "lib/python3.11/site-packages/pygments/lexers/shell.py",
+    "lib/python3.11/site-packages/pygments/lexers/sieve.py",
+    "lib/python3.11/site-packages/pygments/lexers/slash.py",
+    "lib/python3.11/site-packages/pygments/lexers/smalltalk.py",
+    "lib/python3.11/site-packages/pygments/lexers/smithy.py",
+    "lib/python3.11/site-packages/pygments/lexers/smv.py",
+    "lib/python3.11/site-packages/pygments/lexers/snobol.py",
+    "lib/python3.11/site-packages/pygments/lexers/solidity.py",
+    "lib/python3.11/site-packages/pygments/lexers/soong.py",
+    "lib/python3.11/site-packages/pygments/lexers/sophia.py",
+    "lib/python3.11/site-packages/pygments/lexers/special.py",
+    "lib/python3.11/site-packages/pygments/lexers/spice.py",
+    "lib/python3.11/site-packages/pygments/lexers/sql.py",
+    "lib/python3.11/site-packages/pygments/lexers/srcinfo.py",
+    "lib/python3.11/site-packages/pygments/lexers/stata.py",
+    "lib/python3.11/site-packages/pygments/lexers/supercollider.py",
+    "lib/python3.11/site-packages/pygments/lexers/tablegen.py",
+    "lib/python3.11/site-packages/pygments/lexers/tact.py",
+    "lib/python3.11/site-packages/pygments/lexers/tal.py",
+    "lib/python3.11/site-packages/pygments/lexers/tcl.py",
+    "lib/python3.11/site-packages/pygments/lexers/teal.py",
+    "lib/python3.11/site-packages/pygments/lexers/templates.py",
+    "lib/python3.11/site-packages/pygments/lexers/teraterm.py",
+    "lib/python3.11/site-packages/pygments/lexers/testing.py",
+    "lib/python3.11/site-packages/pygments/lexers/text.py",
+    "lib/python3.11/site-packages/pygments/lexers/textedit.py",
+    "lib/python3.11/site-packages/pygments/lexers/textfmts.py",
+    "lib/python3.11/site-packages/pygments/lexers/theorem.py",
+    "lib/python3.11/site-packages/pygments/lexers/thingsdb.py",
+    "lib/python3.11/site-packages/pygments/lexers/tlb.py",
+    "lib/python3.11/site-packages/pygments/lexers/tls.py",
+    "lib/python3.11/site-packages/pygments/lexers/tnt.py",
+    "lib/python3.11/site-packages/pygments/lexers/trafficscript.py",
+    "lib/python3.11/site-packages/pygments/lexers/typoscript.py",
+    "lib/python3.11/site-packages/pygments/lexers/typst.py",
+    "lib/python3.11/site-packages/pygments/lexers/ul4.py",
+    "lib/python3.11/site-packages/pygments/lexers/unicon.py",
+    "lib/python3.11/site-packages/pygments/lexers/urbi.py",
+    "lib/python3.11/site-packages/pygments/lexers/usd.py",
+    "lib/python3.11/site-packages/pygments/lexers/varnish.py",
+    "lib/python3.11/site-packages/pygments/lexers/verification.py",
+    "lib/python3.11/site-packages/pygments/lexers/verifpal.py",
+    "lib/python3.11/site-packages/pygments/lexers/vip.py",
+    "lib/python3.11/site-packages/pygments/lexers/vyper.py",
+    "lib/python3.11/site-packages/pygments/lexers/web.py",
+    "lib/python3.11/site-packages/pygments/lexers/webassembly.py",
+    "lib/python3.11/site-packages/pygments/lexers/webidl.py",
+    "lib/python3.11/site-packages/pygments/lexers/webmisc.py",
+    "lib/python3.11/site-packages/pygments/lexers/wgsl.py",
+    "lib/python3.11/site-packages/pygments/lexers/whiley.py",
+    "lib/python3.11/site-packages/pygments/lexers/wowtoc.py",
+    "lib/python3.11/site-packages/pygments/lexers/wren.py",
+    "lib/python3.11/site-packages/pygments/lexers/x10.py",
+    "lib/python3.11/site-packages/pygments/lexers/xorg.py",
+    "lib/python3.11/site-packages/pygments/lexers/yang.py",
+    "lib/python3.11/site-packages/pygments/lexers/yara.py",
+    "lib/python3.11/site-packages/pygments/lexers/zig.py",
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/METADATA",
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/RECORD",
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/WHEEL",
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/pygments-2.19.1.dist-info/entry_points.txt",
+    "lib/python3.11/site-packages/pygments/styles/__init__.py",
+    "lib/python3.11/site-packages/pygments/styles/_mapping.py",
+    "lib/python3.11/site-packages/pygments/styles/abap.py",
+    "lib/python3.11/site-packages/pygments/styles/algol.py",
+    "lib/python3.11/site-packages/pygments/styles/algol_nu.py",
+    "lib/python3.11/site-packages/pygments/styles/arduino.py",
+    "lib/python3.11/site-packages/pygments/styles/autumn.py",
+    "lib/python3.11/site-packages/pygments/styles/borland.py",
+    "lib/python3.11/site-packages/pygments/styles/bw.py",
+    "lib/python3.11/site-packages/pygments/styles/coffee.py",
+    "lib/python3.11/site-packages/pygments/styles/colorful.py",
+    "lib/python3.11/site-packages/pygments/styles/default.py",
+    "lib/python3.11/site-packages/pygments/styles/dracula.py",
+    "lib/python3.11/site-packages/pygments/styles/emacs.py",
+    "lib/python3.11/site-packages/pygments/styles/friendly.py",
+    "lib/python3.11/site-packages/pygments/styles/friendly_grayscale.py",
+    "lib/python3.11/site-packages/pygments/styles/fruity.py",
+    "lib/python3.11/site-packages/pygments/styles/gh_dark.py",
+    "lib/python3.11/site-packages/pygments/styles/gruvbox.py",
+    "lib/python3.11/site-packages/pygments/styles/igor.py",
+    "lib/python3.11/site-packages/pygments/styles/inkpot.py",
+    "lib/python3.11/site-packages/pygments/styles/lightbulb.py",
+    "lib/python3.11/site-packages/pygments/styles/lilypond.py",
+    "lib/python3.11/site-packages/pygments/styles/lovelace.py",
+    "lib/python3.11/site-packages/pygments/styles/manni.py",
+    "lib/python3.11/site-packages/pygments/styles/material.py",
+    "lib/python3.11/site-packages/pygments/styles/monokai.py",
+    "lib/python3.11/site-packages/pygments/styles/murphy.py",
+    "lib/python3.11/site-packages/pygments/styles/native.py",
+    "lib/python3.11/site-packages/pygments/styles/nord.py",
+    "lib/python3.11/site-packages/pygments/styles/onedark.py",
+    "lib/python3.11/site-packages/pygments/styles/paraiso_dark.py",
+    "lib/python3.11/site-packages/pygments/styles/paraiso_light.py",
+    "lib/python3.11/site-packages/pygments/styles/pastie.py",
+    "lib/python3.11/site-packages/pygments/styles/perldoc.py",
+    "lib/python3.11/site-packages/pygments/styles/rainbow_dash.py",
+    "lib/python3.11/site-packages/pygments/styles/rrt.py",
+    "lib/python3.11/site-packages/pygments/styles/sas.py",
+    "lib/python3.11/site-packages/pygments/styles/solarized.py",
+    "lib/python3.11/site-packages/pygments/styles/staroffice.py",
+    "lib/python3.11/site-packages/pygments/styles/stata_dark.py",
+    "lib/python3.11/site-packages/pygments/styles/stata_light.py",
+    "lib/python3.11/site-packages/pygments/styles/tango.py",
+    "lib/python3.11/site-packages/pygments/styles/trac.py",
+    "lib/python3.11/site-packages/pygments/styles/vim.py",
+    "lib/python3.11/site-packages/pygments/styles/vs.py",
+    "lib/python3.11/site-packages/pygments/styles/xcode.py",
+    "lib/python3.11/site-packages/pygments/styles/zenburn.py",
+    "bin/pygmentize"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/licenses/AUTHORS",
+        "path_type": "hardlink",
+        "sha256": "0660e318a6f215802adc8731ab85d0c65ff27cfcca3f5d28597f306476195bd9",
+        "size_in_bytes": 10824
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
+        "size_in_bytes": 1331
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "1f45e6549d457bda92103054d63d7064b4fe4dfbbb6e515b0e21527e9c14eb77",
+        "size_in_bytes": 2959
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "a7c009ca8c8238c606bf3587767ab4fc0f6a69a56a6a3d369c8bb7c61269d7fe",
+        "size_in_bytes": 348
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/cmdline.py",
+        "path_type": "hardlink",
+        "sha256": "e292fd2a99f63d410a3e86e0aec42083ebc2c76363b2b6a92b343a2f1411ed0d",
+        "size_in_bytes": 23536
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/console.py",
+        "path_type": "hardlink",
+        "sha256": "01a8035aac1e6b6c8159fd74282f69b4180ca4c8f12a9f3200102687e3503959",
+        "size_in_bytes": 1718
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/filter.py",
+        "path_type": "hardlink",
+        "sha256": "60bb694e7662bb4ee7637a0af677d1e84f58d4504784fe4f5fc82f90959c7da8",
+        "size_in_bytes": 1910
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatter.py",
+        "path_type": "hardlink",
+        "sha256": "1ffe09fa6a0a90a7d1594396f49d2eee1870ea7d4b88efb65eed6ad81d2c139c",
+        "size_in_bytes": 4366
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexer.py",
+        "path_type": "hardlink",
+        "sha256": "89bf85ff41b11e4c06a5beaf58fd0378b30b73b118823a3785614a3792203aad",
+        "size_in_bytes": 35109
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/modeline.py",
+        "path_type": "hardlink",
+        "sha256": "2b9792911f064b5af93a45d74c739c57468cffac6993d7963442005be38e2768",
+        "size_in_bytes": 1005
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/plugin.py",
+        "path_type": "hardlink",
+        "sha256": "b4fc74ac9093219f62a1180b3581b8a627c26c0c1345465d76f2f0f8d7c0936c",
+        "size_in_bytes": 1891
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/regexopt.py",
+        "path_type": "hardlink",
+        "sha256": "c1768ff468e9fe1280767202aa80e447100e40949ce2fdd7ea6731c77cfe4cdb",
+        "size_in_bytes": 3072
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/scanner.py",
+        "path_type": "hardlink",
+        "sha256": "9cd7044d1475b51ba24da1e61d24d310255814f70b7fa98366ed5ee2ef7503d1",
+        "size_in_bytes": 3092
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/sphinxext.py",
+        "path_type": "hardlink",
+        "sha256": "5447bfa073602e810630773644e7db79eda61763cf44417213afe6fc937916f4",
+        "size_in_bytes": 7898
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/style.py",
+        "path_type": "hardlink",
+        "sha256": "0a9c3d7420325b7fc90301515ce2579ad29be59c0edbfe4a4a696aeaae1f670e",
+        "size_in_bytes": 6408
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/token.py",
+        "path_type": "hardlink",
+        "sha256": "59b7561a1626fd5a2c6f40c3c56f651cd3e02135df593b10987b7a732f516dc3",
+        "size_in_bytes": 6226
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/unistring.py",
+        "path_type": "hardlink",
+        "sha256": "6a5fbfac17a646e1af8a7b2b33a6ad36c1d3989e8351bc36e2ad8ed91bb57017",
+        "size_in_bytes": 63208
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/util.py",
+        "path_type": "hardlink",
+        "sha256": "a11b52a62028e6333dba59ed92f55b81751d8805b9ee39ee60607bb7d7d8ba17",
+        "size_in_bytes": 10031
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "ecebaf9a860bca83f3a0e415fdbac71bc19229807fc2315290042783ac76cbd8",
+        "size_in_bytes": 5349
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/_mapping.py",
+        "path_type": "hardlink",
+        "sha256": "d42c37ec5b9094d69c9f144a9ad94f5f89f22e85fdfedb64a39670b1c354659e",
+        "size_in_bytes": 4176
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/bbcode.py",
+        "path_type": "hardlink",
+        "sha256": "b3429adf938ab88721a128040067faae3d2b9766bdca6f4bdf525535245b6454",
+        "size_in_bytes": 3296
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/groff.py",
+        "path_type": "hardlink",
+        "sha256": "a4b7081e3e23252fe54405459f224e0ca0eed5797297dfc010874eb5b9770d3d",
+        "size_in_bytes": 5082
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/html.py",
+        "path_type": "hardlink",
+        "sha256": "16b1c9ebd1549621323d8d334df69bd02d603dfecb5ec2a0791961c249e2a88b",
+        "size_in_bytes": 35953
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/img.py",
+        "path_type": "hardlink",
+        "sha256": "691a45a3c9819964cbdec0548d109691e4b7adce8566b4850b8124b03ae5e778",
+        "size_in_bytes": 23301
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/irc.py",
+        "path_type": "hardlink",
+        "sha256": "47426cd13616c92948db213db16ead3787785fec7793d666b9db228c63e72e65",
+        "size_in_bytes": 4945
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/latex.py",
+        "path_type": "hardlink",
+        "sha256": "05162d6cb796fd80f59308619c522784920aca5bab9eb8bc085d653f4ebd2961",
+        "size_in_bytes": 19258
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/other.py",
+        "path_type": "hardlink",
+        "sha256": "f29616dbbb14ffb5e270b52a384b76c9648ed21d481143374c8bf7e0a3832f0a",
+        "size_in_bytes": 4986
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/pangomarkup.py",
+        "path_type": "hardlink",
+        "sha256": "a5c16f102ecad4c7b412319e399b61e280a7118f396dfa9cefb5f36404843e96",
+        "size_in_bytes": 2206
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/rtf.py",
+        "path_type": "hardlink",
+        "sha256": "91c28c0b14d7bbedbe8698047ed9462519bb4acfb203f4b2f0eb071ffab3ca40",
+        "size_in_bytes": 11921
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/svg.py",
+        "path_type": "hardlink",
+        "sha256": "47a036304e89b0c416162ca7f3070ac0550e0fabecbbe1cbc22233b4bbbeefb1",
+        "size_in_bytes": 7138
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/terminal.py",
+        "path_type": "hardlink",
+        "sha256": "27f17f7455f047d2c75af6ad2039f0a91609ca35664a8d59c7c2bf5c387a4b23",
+        "size_in_bytes": 4626
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/formatters/terminal256.py",
+        "path_type": "hardlink",
+        "sha256": "ec64052c4e5c7e67aee77080cc034eef8fa4064d811645df9f9a619998d89213",
+        "size_in_bytes": 11717
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/filters/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "074d0aa8f0908791345e1cda0caef841ad44e1f0d24e50fa6f43efaf5bfebc44",
+        "size_in_bytes": 40344
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e98873c462a55a4dfc3fa269209510d6b56f5740c4663126758b1d310e7c8529",
+        "size_in_bytes": 12067
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_ada_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "080fce9d286d75cef05a1f6861c46572b903010c1850a97ac3bb5d49b00b41de",
+        "size_in_bytes": 1543
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_asy_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "71df4cd34607d7dc3964bedaaae7260b79f0a491934b4e14fb4d4d2f2e44dbfe",
+        "size_in_bytes": 27287
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_cl_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "9107942326633f8917d1fae42020dc2b10584022eacc80d76b9595e5c7af843a",
+        "size_in_bytes": 13994
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_cocoa_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "29ad652c97bb25f5ad761a38205201f365fdc81beb6df1c20a6106fa97975e14",
+        "size_in_bytes": 105173
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_csound_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "aa741829e236e991e29b7d7abaacbf843891882a07a364478c3dec60100bc97b",
+        "size_in_bytes": 18414
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_css_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "683f9d84b15755dd40b67fdb65dee011d427ecc85eeb4fd51e9bd9df8d16cc32",
+        "size_in_bytes": 12446
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_googlesql_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "224ace93e4f6bf5cb36c6cd4104421e7f09fe2e0bf7262ffbae8700e96654ee8",
+        "size_in_bytes": 16132
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_julia_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "37659d4b0e73808d9f8436adfe2e18795aaead14c2fcff31ef57b3d3448237a5",
+        "size_in_bytes": 11883
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_lasso_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "f2ad606ecacc25e69e521c4860a85a3b10bd8ff07e341a6afd7163d997b8d57d",
+        "size_in_bytes": 134510
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_lilypond_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "5d36c62f5cf5a0a328a962c492d1b7de3c7919d19323d0a978ee4d85e122e18d",
+        "size_in_bytes": 108094
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_lua_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "3e115d655e7e4f3cf68ffab896f1bd96bf3810b19f2f8d41867ad20cd353686e",
+        "size_in_bytes": 8108
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_luau_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "f880eb534e245157e35f0490ccc3295e631884db10c59555664f1cb800342e8d",
+        "size_in_bytes": 955
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_mapping.py",
+        "path_type": "hardlink",
+        "sha256": "f5fbfbc5839400eafa2f37dd152e0c0db3eeefca38390407fb69ec2356cd65fe",
+        "size_in_bytes": 70438
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_mql_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "c9b4508e56fb0ae974b03b2d9f3c49977874a92e887aab2bf35d5faabc72ba65",
+        "size_in_bytes": 24713
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_mysql_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "cb4900599540b34cf6753149255e36399a482e046777c4f7cd294116ffa0fe80",
+        "size_in_bytes": 25838
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_openedge_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "4b3e23f7e08f5886b131afb67d9818eba8fb8a072ed686f5191d94b48f330248",
+        "size_in_bytes": 49398
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_php_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "25de016698cc0c42cf8b8115a12c4ad7ef0115373adc753061f9b5acbac68f43",
+        "size_in_bytes": 107922
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_postgres_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "3ea878cf444145b9d6eab090b5651dcd6089c4dcaaa49effd073a4b711c3c64e",
+        "size_in_bytes": 13343
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_qlik_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "c6e272f5cf6e6435efea1f33e7cd8fe4faf1aa4c5367f9d2f203e5f4e0fd54df",
+        "size_in_bytes": 12595
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_scheme_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "da136d24e2663f6d6552c8a4a6a309da00262d3dd1c27fca11eaa15f00a381f9",
+        "size_in_bytes": 32564
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_scilab_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "a1960f0755cf748133de9208d75a450dee9ec6d451c96180ee9634e97f0a67cc",
+        "size_in_bytes": 52411
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_sourcemod_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "1fc0052ec343744a7298858ea43c1b0c91823f5c3ec7ed604a5ccf0e2a0c178a",
+        "size_in_bytes": 26777
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_stan_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "7708b586594cfcdb1a0aff9a5c9cbb9448b9ed7e478798120fdeda090c93f4a3",
+        "size_in_bytes": 13445
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_stata_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "1eaaebea3efbcd65377061a904fa21c1ec59722e37600e3fb15604e04d6c368c",
+        "size_in_bytes": 27227
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_tsql_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "3e2d918535dc2c4de0948f68c4d87256c38c9fe7caff54d1c49f84b183f92dc2",
+        "size_in_bytes": 15460
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_usd_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "73d85b535730a8150214884d7eefc3a1bf32c2fd6b94f862f70d8e4e3de447cb",
+        "size_in_bytes": 1658
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_vbscript_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "32a276001cb00f6d5a491b56619446eb80826c6b2d0b591fb221c6266673c62c",
+        "size_in_bytes": 4225
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/_vim_builtins.py",
+        "path_type": "hardlink",
+        "sha256": "6c0e261fcb7598f3d07c489408a12a44ed4ed2b2f60d41b4531d41b7c652bb41",
+        "size_in_bytes": 57066
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/actionscript.py",
+        "path_type": "hardlink",
+        "sha256": "2419e009ee548584ffd1d2c3da3ecf9cf3b4c51449866ca912e43e0b98a7f296",
+        "size_in_bytes": 11727
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ada.py",
+        "path_type": "hardlink",
+        "sha256": "e7c939adad6f192e222e95b787522d63d7edcc5dd67af69e0005f30184e26244",
+        "size_in_bytes": 5353
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/agile.py",
+        "path_type": "hardlink",
+        "sha256": "0cdfbb01522ab46d4cb2103de2bb5219823ff3ce21547833ab8d39c03d3f765f",
+        "size_in_bytes": 896
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/algebra.py",
+        "path_type": "hardlink",
+        "sha256": "c864eef53b7e710cc0212418202e4c4b96b7cf84262feb467179ddfe991619b9",
+        "size_in_bytes": 9952
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ambient.py",
+        "path_type": "hardlink",
+        "sha256": "527ccaa4895f4a6de28ad1ef31ded74cc498f138d961884a382dc0880452fdc1",
+        "size_in_bytes": 2605
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/amdgpu.py",
+        "path_type": "hardlink",
+        "sha256": "4bcaa39f650c2e10459b7627fdcd3a5c019ff1c979c7f65e96e7a5586ffe240c",
+        "size_in_bytes": 1723
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ampl.py",
+        "path_type": "hardlink",
+        "sha256": "64145f0d79bbeb4811d5ad60a88b67b07ba83b725d51c4c18c9e6d158f54b4f0",
+        "size_in_bytes": 4176
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/apdlexer.py",
+        "path_type": "hardlink",
+        "sha256": "66be7e8e08f10bc3cacd194479c95a9195cf1dc8bb14705982143ac308ae4fb0",
+        "size_in_bytes": 30800
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/apl.py",
+        "path_type": "hardlink",
+        "sha256": "3d340ca7e6f14f93fe0dbac4bc585ad741c14dcb03279b2b2f7235b3d963cf9f",
+        "size_in_bytes": 3404
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/archetype.py",
+        "path_type": "hardlink",
+        "sha256": "a505653f515be4e03c9e7ed0c2615a69a392befa6822c415c38dc5542402bdee",
+        "size_in_bytes": 11538
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/arrow.py",
+        "path_type": "hardlink",
+        "sha256": "d8f29d6d6ab7c502c5d4aa036d6bd2c698f0291af39e70e202b4df951199cc1a",
+        "size_in_bytes": 3564
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/arturo.py",
+        "path_type": "hardlink",
+        "sha256": "53932d44d1c9b67067e1939e5a65ba30a955446ed25fa2a14d16a60eace7f6d0",
+        "size_in_bytes": 11414
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/asc.py",
+        "path_type": "hardlink",
+        "sha256": "f8381997d8dc7010c73e50e68c2b2b12ac74f90edaa7b5d574d2adc4b3561b5c",
+        "size_in_bytes": 1693
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/asm.py",
+        "path_type": "hardlink",
+        "sha256": "c66d98e66713fac177a10bda8abe125acf44593ca7768694a12b03cb9bfab212",
+        "size_in_bytes": 41967
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/asn1.py",
+        "path_type": "hardlink",
+        "sha256": "065725a085f66eee90ec1c46724b2e8581471ac5cb54ac81e01f6615de0f8fa1",
+        "size_in_bytes": 4262
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/automation.py",
+        "path_type": "hardlink",
+        "sha256": "43ad6aa27f04c297da90c87fd8c4b6136cd4513d7aac6dd434828f623213793b",
+        "size_in_bytes": 19831
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/bare.py",
+        "path_type": "hardlink",
+        "sha256": "b56a1e8bce89257d64f800e16977794e05fa22d0d389c8bdc855a99133e19df3",
+        "size_in_bytes": 3020
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/basic.py",
+        "path_type": "hardlink",
+        "sha256": "aa955ee61f056bb349a3512284dfb847f519a473ba9b2d92b2091bf8192d90ab",
+        "size_in_bytes": 27989
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/bdd.py",
+        "path_type": "hardlink",
+        "sha256": "cb2b1e7dc385004ca4f64276cb81179b325379c80b6141e55a2c6dff76333cc5",
+        "size_in_bytes": 1641
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/berry.py",
+        "path_type": "hardlink",
+        "sha256": "cf11a8c056fc1cc232375e7e9bc9e65a75ba6cf451e1eb0ab52115ba073db973",
+        "size_in_bytes": 3209
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/bibtex.py",
+        "path_type": "hardlink",
+        "sha256": "cae3683f1c2b25ff43086513d7b8717c3cdbabf1ed08b9109116c1b624d599e4",
+        "size_in_bytes": 4811
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/blueprint.py",
+        "path_type": "hardlink",
+        "sha256": "373bd61ccc422c35adf2173a801e63a2496dc5526035aec9c21e1ceb59e0dfcf",
+        "size_in_bytes": 6188
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/boa.py",
+        "path_type": "hardlink",
+        "sha256": "74ea2dd5758d65384f222a36532017ebb2ba1292128d2442163a2d0fb75c9f01",
+        "size_in_bytes": 3921
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/bqn.py",
+        "path_type": "hardlink",
+        "sha256": "9c98b0acf28a6d117ea9d6a2e6d7ea8a9c01924928d8fdf07a26408c750c8a66",
+        "size_in_bytes": 3671
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/business.py",
+        "path_type": "hardlink",
+        "sha256": "951b5e90e25fb0391bd760066eecf5d3e1baece26b54980206d8a14d0f3f6a86",
+        "size_in_bytes": 28345
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/c_cpp.py",
+        "path_type": "hardlink",
+        "sha256": "0fb648b30687012946060a139709d2a934077fcfc9cafbd2b762f6ab55be17a8",
+        "size_in_bytes": 18059
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/c_like.py",
+        "path_type": "hardlink",
+        "sha256": "1531a9d7b76ce97dab0d9387ba9da11fa0449f780a2b89cb9bda7274d1219b41",
+        "size_in_bytes": 32021
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/capnproto.py",
+        "path_type": "hardlink",
+        "sha256": "5d0240875592fb4ba5a9b4e7f5377347a8048162dcb81a9be2c8f78cdb2b86c6",
+        "size_in_bytes": 2174
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/carbon.py",
+        "path_type": "hardlink",
+        "sha256": "6afd7662e4c6646a4e6b50a6c69de5a69c772df4895166ef3aed22c66515965d",
+        "size_in_bytes": 3211
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/cddl.py",
+        "path_type": "hardlink",
+        "sha256": "30a6bbd08c000608c18d8bb5e7f43dbfcaecbb6b2bd5afa2da392268f4c8eac3",
+        "size_in_bytes": 5076
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/chapel.py",
+        "path_type": "hardlink",
+        "sha256": "d27fdf2f77a12c2e29c3860a9e6abd8f121738973118f91ad56af5b75cec5cf7",
+        "size_in_bytes": 5156
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/clean.py",
+        "path_type": "hardlink",
+        "sha256": "7640cf03017905300b3deb8a16844a3920f745fb0a70659b691a3afc6f0b1e78",
+        "size_in_bytes": 6418
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/codeql.py",
+        "path_type": "hardlink",
+        "sha256": "79bbe0867db36eb9c44d5e1bb95a3330399109529274688837cc9c2e51e91ac1",
+        "size_in_bytes": 2576
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/comal.py",
+        "path_type": "hardlink",
+        "sha256": "4c2dcdcdc279f1ec398f0eeac0ad2427ea244c0e3ba6c6637b4c80212dfd1d1e",
+        "size_in_bytes": 3179
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/compiled.py",
+        "path_type": "hardlink",
+        "sha256": "4a57e8d6c8d6a9c3dac14c1fd1d20864b0422f9a64388a005f64bc2f1b34d8c7",
+        "size_in_bytes": 1426
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/configs.py",
+        "path_type": "hardlink",
+        "sha256": "c16f2963449ae5ad74a6701e4cb19fe3c1e18b141355a81e2321c47f56983027",
+        "size_in_bytes": 50913
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/console.py",
+        "path_type": "hardlink",
+        "sha256": "fa3006d76d1dba9bd5de41b7cc2ef46eb2c9bd22f04c5a8cb9b050ba3fc65675",
+        "size_in_bytes": 4180
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/cplint.py",
+        "path_type": "hardlink",
+        "sha256": "0e46f213910ac9d2e07fa051af516142b2be21e40f2fb6668e4d0355d9511674",
+        "size_in_bytes": 1389
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/crystal.py",
+        "path_type": "hardlink",
+        "sha256": "c54f919e9224a63aeaba8c6d3ae39c3fc7dc7ac489978c6153b90ef66e362d96",
+        "size_in_bytes": 15754
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/csound.py",
+        "path_type": "hardlink",
+        "sha256": "8a84b0e10d38c1dc235006e74d9d6a2e152ad6fc5d585c6187742d125e510097",
+        "size_in_bytes": 16998
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/css.py",
+        "path_type": "hardlink",
+        "sha256": "24dd51058b1e7be8eba475ab4a684ddd329ce1390e067fbf0441a98130b372a1",
+        "size_in_bytes": 25376
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/d.py",
+        "path_type": "hardlink",
+        "sha256": "a623b2d0425e880c0f1ee822337815bf4cfb1cd877bb68194280944804916d8e",
+        "size_in_bytes": 9920
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/dalvik.py",
+        "path_type": "hardlink",
+        "sha256": "75e160d893c192d27d98419bf4483136499deaf68c8c9150573507a3c34a21af",
+        "size_in_bytes": 4606
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/data.py",
+        "path_type": "hardlink",
+        "sha256": "a34c744a60799acfc23d43e58c41047a738e3782105a7f3a0e4c058e425808e8",
+        "size_in_bytes": 27026
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/dax.py",
+        "path_type": "hardlink",
+        "sha256": "0128bbdea9abece03b715657176193606b74d4bcb5bd8f02803fcf9e99bc93ee",
+        "size_in_bytes": 8098
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/devicetree.py",
+        "path_type": "hardlink",
+        "sha256": "45e71240289db7c0d113540508f51bc3047486246536db058a174695d7949f79",
+        "size_in_bytes": 4019
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/diff.py",
+        "path_type": "hardlink",
+        "sha256": "17abf167ae309b935a83ff7b75ed47ff717bd346700959d88cabed4f98e2970c",
+        "size_in_bytes": 5382
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/dns.py",
+        "path_type": "hardlink",
+        "sha256": "1e1e6127b3177ebab7e8a81fc884702b75fca352dd47df0828445c578799ec76",
+        "size_in_bytes": 3891
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/dotnet.py",
+        "path_type": "hardlink",
+        "sha256": "34313490e9a97bde862cefb3c0d2dace68fbec4f4e44698aa5ae193025c35f14",
+        "size_in_bytes": 39441
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/dsls.py",
+        "path_type": "hardlink",
+        "sha256": "1a71ca8462f91b1b11167a82efeeb93533d92ce65d9a796536b18ff3ac7f7d01",
+        "size_in_bytes": 36746
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/dylan.py",
+        "path_type": "hardlink",
+        "sha256": "ef367511b1d65de547a930f7e80ab290aaa8ddf86e221e2c33ec2173151a1ff6",
+        "size_in_bytes": 10409
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ecl.py",
+        "path_type": "hardlink",
+        "sha256": "be19a96b62c1ac7c6c3e461c7f790f67522d55a2d10d379b8b5f3ac18d311990",
+        "size_in_bytes": 6371
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/eiffel.py",
+        "path_type": "hardlink",
+        "sha256": "e7275820415c81c328123e0194adf5859d1a25bf0e5f445d02fb8235d971c2ac",
+        "size_in_bytes": 2690
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/elm.py",
+        "path_type": "hardlink",
+        "sha256": "b9109d754f232b9bd5907e98ebacbc28eb03269ac87eb3a0798ab786fd4fc403",
+        "size_in_bytes": 3152
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/elpi.py",
+        "path_type": "hardlink",
+        "sha256": "3bd8ff58a04fcaf3458c246e3dc895a56e1eb554a720b9bf4fbf418423d9626a",
+        "size_in_bytes": 6877
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/email.py",
+        "path_type": "hardlink",
+        "sha256": "6592facafc02465d42110cb2b2e3aed256da6e9e6d8ccbad4bb7f779f14a191e",
+        "size_in_bytes": 4804
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/erlang.py",
+        "path_type": "hardlink",
+        "sha256": "6d4d757951efa282f0995927ccde9791bd83324ec76de9ea74d9584b38538433",
+        "size_in_bytes": 19147
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/esoteric.py",
+        "path_type": "hardlink",
+        "sha256": "25fa7c5142b2298b2a2daa974594f719233d773905eb9cddbb07e71f51a81a15",
+        "size_in_bytes": 10500
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ezhil.py",
+        "path_type": "hardlink",
+        "sha256": "db6afec63bef055a44c53a8223e1f2700c2e9c36f5a79818e2d21f0e6334bc3c",
+        "size_in_bytes": 3272
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/factor.py",
+        "path_type": "hardlink",
+        "sha256": "bab678127e2e28508b5dd1245cb5a0f446141461d04d30c2c0d5edcaafa78289",
+        "size_in_bytes": 19530
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/fantom.py",
+        "path_type": "hardlink",
+        "sha256": "249d77f8dc32903fa22044a7bb309e7c261e4033bde5c1cc240f136ac1788070",
+        "size_in_bytes": 10231
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/felix.py",
+        "path_type": "hardlink",
+        "sha256": "17ebf4b22e333ed45e96acc34165c8d7eb5aac213e06f6b0ce2383c5153bdfbf",
+        "size_in_bytes": 9655
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/fift.py",
+        "path_type": "hardlink",
+        "sha256": "ace0b0a77bf9a1c2b960e5afb7b4dddcc77efbdefff1efbb4a89f1e76b92f260",
+        "size_in_bytes": 1644
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/floscript.py",
+        "path_type": "hardlink",
+        "sha256": "68787cda4e768ccb83bb397d2dab6b71200d2625d30b28c653748ee776f06dbd",
+        "size_in_bytes": 2667
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/forth.py",
+        "path_type": "hardlink",
+        "sha256": "64cb6c1dd35b9d2ff421d49895f0257d348f12bd0c12c468f9866b89036e7934",
+        "size_in_bytes": 7193
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/fortran.py",
+        "path_type": "hardlink",
+        "sha256": "d4f139753c5fe037fa2d479715c98db727975ac0bcb5288ae5d6303c720979e4",
+        "size_in_bytes": 10382
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/foxpro.py",
+        "path_type": "hardlink",
+        "sha256": "081916eb616e89bcf7c9fc9e95909a10ef0619d1495acb9186ac2db12781c0b3",
+        "size_in_bytes": 26295
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/freefem.py",
+        "path_type": "hardlink",
+        "sha256": "2c505093e9b5fa734282b97e5431f74309d55aeaef6fb5b6f62d3a2e84f6d3b0",
+        "size_in_bytes": 26913
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/func.py",
+        "path_type": "hardlink",
+        "sha256": "391dab90cee07fd7cabda77959c150967fbf53fa5bf9150233d7906ad4e81780",
+        "size_in_bytes": 3700
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/functional.py",
+        "path_type": "hardlink",
+        "sha256": "7d84f600667ae36711908008774ae75c506cc7573c2cb10344dfd5b821245323",
+        "size_in_bytes": 693
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/futhark.py",
+        "path_type": "hardlink",
+        "sha256": "55fd62e2dfad477cea6a4b558e14f314d83fb6cffd09cc80e190df0e2cdb0a69",
+        "size_in_bytes": 3743
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/gcodelexer.py",
+        "path_type": "hardlink",
+        "sha256": "e17b3d6b1e3e2591aea56fea4a71e89f7f70406a5bfad340df1a2b30a83ce351",
+        "size_in_bytes": 874
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/gdscript.py",
+        "path_type": "hardlink",
+        "sha256": "5acec92b1cb433423267fd6231f46f24fae2cc4c2678234b0e878c20568cf825",
+        "size_in_bytes": 7566
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/gleam.py",
+        "path_type": "hardlink",
+        "sha256": "5c895372ae9c07be37a42a9b358a3c3e87129236720cf47a84781d689349d557",
+        "size_in_bytes": 2392
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/go.py",
+        "path_type": "hardlink",
+        "sha256": "e0b7b379f832baa6561f32d91e279490a4e2facb18e9a1c9c71ed9f8b15a2cad",
+        "size_in_bytes": 3783
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/grammar_notation.py",
+        "path_type": "hardlink",
+        "sha256": "2efce14501e0c19ceaf6871eba4652fe1c2728ae7c79eed9e5dd1cc17391ef7e",
+        "size_in_bytes": 8043
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/graph.py",
+        "path_type": "hardlink",
+        "sha256": "585aa83c0d5cfe11d8ad5d22fc5efe794c370a8e3f1e6658dc627e4f20ebebbd",
+        "size_in_bytes": 4108
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/graphics.py",
+        "path_type": "hardlink",
+        "sha256": "b6617d34d00b9ef3e76b1f32c180b7a4b3a56b8e585eda7d500d07fb91224d06",
+        "size_in_bytes": 39145
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/graphql.py",
+        "path_type": "hardlink",
+        "sha256": "3bfcdcac6ac168368a4e552824646bbb1aa4ec2262f8d47dd98d02b3e2a40afc",
+        "size_in_bytes": 5601
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/graphviz.py",
+        "path_type": "hardlink",
+        "sha256": "9b375738ca70cfdfd5f9b7b579300cca190a08197a5310885eeaba0b6cabb6cc",
+        "size_in_bytes": 1934
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/gsql.py",
+        "path_type": "hardlink",
+        "sha256": "54f664f6c6f6ebe0ee9919167c46924dea1cd25c79c6de67fba7830cb7b332d7",
+        "size_in_bytes": 3990
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/hare.py",
+        "path_type": "hardlink",
+        "sha256": "3c608eb882e4b49b26b53a426592a4305b4e6df26e0697a2f0733c1c7baad53c",
+        "size_in_bytes": 2649
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/haskell.py",
+        "path_type": "hardlink",
+        "sha256": "318afbe3e3c00bc9062515fe7599af66c1d373b6b6bbac854b6075f4b7c30fb8",
+        "size_in_bytes": 33262
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/haxe.py",
+        "path_type": "hardlink",
+        "sha256": "5870b2fe7ad71e77cb2137db769dc98b796a414e0702c4d4a57b0b0a9dbfe2c9",
+        "size_in_bytes": 30974
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/hdl.py",
+        "path_type": "hardlink",
+        "sha256": "30e5b186602e138122d02283aaa68e37b4fcb65e3781e6a772b358335dfa6745",
+        "size_in_bytes": 22738
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/hexdump.py",
+        "path_type": "hardlink",
+        "sha256": "d658fda09f8a8995d2558bd331f1a61004333445b4f1694c702d88e5a62f1cae",
+        "size_in_bytes": 3653
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/html.py",
+        "path_type": "hardlink",
+        "sha256": "33161323811e4fb431a0695e080c90abef27fd2825cbab43f791f9cda9c23669",
+        "size_in_bytes": 21977
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/idl.py",
+        "path_type": "hardlink",
+        "sha256": "adc8a15001a17ee1846925baa6016ae8dce9953fe9bf40da814a1e7e0e330269",
+        "size_in_bytes": 15449
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/igor.py",
+        "path_type": "hardlink",
+        "sha256": "c1579f6d48dbddfb5a5b72c2286b57d4980b822638126468af98153a7f2f400f",
+        "size_in_bytes": 31633
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/inferno.py",
+        "path_type": "hardlink",
+        "sha256": "0a113fe72e522c7ffbe54bfb0f674a590324d9d94deb3d606352038e5259f2b5",
+        "size_in_bytes": 3135
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/installers.py",
+        "path_type": "hardlink",
+        "sha256": "6479628ade0fc73d6d60a3888ca9035c8e5d8d3929cd850c5483d1d71bd4acbf",
+        "size_in_bytes": 14435
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/int_fiction.py",
+        "path_type": "hardlink",
+        "sha256": "d19cc86b5b190d442c96d775a07b92f81a0d88e17ccca41f715b83c8ad53b6ff",
+        "size_in_bytes": 56544
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/iolang.py",
+        "path_type": "hardlink",
+        "sha256": "2fa74d0c22c7d24c642148b4d1f238675e109d1bbbf5470d0eb82fd36739670f",
+        "size_in_bytes": 1905
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/j.py",
+        "path_type": "hardlink",
+        "sha256": "0ea35dc101852e2656de608d2d183cd60a66b32e0781c6a2ffd34fdcb6d684d5",
+        "size_in_bytes": 4853
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/javascript.py",
+        "path_type": "hardlink",
+        "sha256": "4c62902d2ac2a6b08a7e12cb180abfd0439dbeabc9297f6939d2a8eed091bab4",
+        "size_in_bytes": 63243
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/jmespath.py",
+        "path_type": "hardlink",
+        "sha256": "479c80e4b2769d321a0f09c522948d1804e1774b0060571cc1ac00f71069b658",
+        "size_in_bytes": 2082
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/jslt.py",
+        "path_type": "hardlink",
+        "sha256": "39e6107fc3b6ffd14269ff56e90ddaeeb3dd0052ed85e3c2b554a00ab393725f",
+        "size_in_bytes": 3700
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/json5.py",
+        "path_type": "hardlink",
+        "sha256": "f0965b73c1224c465d29a21d420de15c4874987592ccf970778ef76b49d4b93d",
+        "size_in_bytes": 2502
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/jsonnet.py",
+        "path_type": "hardlink",
+        "sha256": "6f1d86e89e2d26a1ab255d4fc99ac85b35875dca1e7c25fee25231c6d6e7da0c",
+        "size_in_bytes": 5636
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/jsx.py",
+        "path_type": "hardlink",
+        "sha256": "c06b28192078d2a009ad57d7c113ed6a7ece70ad0ef3b455b071e4d26ea0a209",
+        "size_in_bytes": 2693
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/julia.py",
+        "path_type": "hardlink",
+        "sha256": "d190c9f57f375791aa27303a4faa744d337c587cb62408efbbe152057bdf5dd7",
+        "size_in_bytes": 11710
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/jvm.py",
+        "path_type": "hardlink",
+        "sha256": "62dd62437428757458fb1fc750e19e761cae0411e7e63607f88f0dccecc74e51",
+        "size_in_bytes": 72667
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/kuin.py",
+        "path_type": "hardlink",
+        "sha256": "ddd28a255265b2482bbcc2afdad63d34eb057c38f2a3edcc2dc27594529d5d28",
+        "size_in_bytes": 11405
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/kusto.py",
+        "path_type": "hardlink",
+        "sha256": "91ac64a0fa44043b014c2bc23a4659c7ba067efd2393f50d2112116df540b011",
+        "size_in_bytes": 3477
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ldap.py",
+        "path_type": "hardlink",
+        "sha256": "efbbc5e2dff5f71f55e76d9cc5108ce5ddc75bc35ede0898b05b0c3d5618070e",
+        "size_in_bytes": 6551
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/lean.py",
+        "path_type": "hardlink",
+        "sha256": "ec759183116cc52d4df572aac34bdf2b06b1976eece5889562d65e454a131c5a",
+        "size_in_bytes": 8570
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/lilypond.py",
+        "path_type": "hardlink",
+        "sha256": "c9dd93bafebbba6e84c8222bf95c019e53e14c7c4c690b012789c680ee5f8c89",
+        "size_in_bytes": 9752
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/lisp.py",
+        "path_type": "hardlink",
+        "sha256": "107532d60e29cc4b183c4fb31a3dab0179b76004c4d63f5d0903abe7e24f4a45",
+        "size_in_bytes": 157668
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/macaulay2.py",
+        "path_type": "hardlink",
+        "sha256": "ce457ebf18d061ad098fd4c67c53f588c8294d9e00a50b8000874954659bda2b",
+        "size_in_bytes": 33366
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/make.py",
+        "path_type": "hardlink",
+        "sha256": "60c2390c10abc5671afa9cfd7155dcc9fb872dc8a43f1f51ff7a56ffdf0ccaaa",
+        "size_in_bytes": 7831
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/maple.py",
+        "path_type": "hardlink",
+        "sha256": "46cd1d12638c0f70b56103ddd269ed37ebf345eab85df1de807eb157896f256a",
+        "size_in_bytes": 7960
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/markup.py",
+        "path_type": "hardlink",
+        "sha256": "cd6b71b32231ff53b14334bac0b7bc6c4aa095e3efe11aaf2636e26bc02f5797",
+        "size_in_bytes": 65088
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/math.py",
+        "path_type": "hardlink",
+        "sha256": "3f764ad5e3ddf199cb7659877b3a368ab080f13dbe9e51c1a12681a13e661152",
+        "size_in_bytes": 695
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/matlab.py",
+        "path_type": "hardlink",
+        "sha256": "17d28ee2aa302217cff2856109147313fd6caa0e339906ec0763591f5f773e23",
+        "size_in_bytes": 133027
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/maxima.py",
+        "path_type": "hardlink",
+        "sha256": "6b487d1a0b3d244a2f4ebcdb253f812d56cea88dbdc8f9da3199645397ff15e6",
+        "size_in_bytes": 2715
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/meson.py",
+        "path_type": "hardlink",
+        "sha256": "04caec0e8e811f69734c5c3b243c10f520cd313ad191708d44355fe1a14776c2",
+        "size_in_bytes": 4336
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/mime.py",
+        "path_type": "hardlink",
+        "sha256": "c86adfde1dfb2cae1be84441a4588bfeace7dc980e7c647928b6a09db58597a7",
+        "size_in_bytes": 7582
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/minecraft.py",
+        "path_type": "hardlink",
+        "sha256": "36ef3cb270c33f33340feef8d9f15d52b89cccbf8413dd75a40778fc8e3ea40c",
+        "size_in_bytes": 13696
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/mips.py",
+        "path_type": "hardlink",
+        "sha256": "4932a2653ebb6f74044575e7ed7295c653c1bbbbf06cf0b91320a9b9fdc97dbc",
+        "size_in_bytes": 4656
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ml.py",
+        "path_type": "hardlink",
+        "sha256": "b7cb02bf8063bee06ae808a128a5304ad10e34881d5c20b644cb4ed11a2935b3",
+        "size_in_bytes": 35390
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/modeling.py",
+        "path_type": "hardlink",
+        "sha256": "33b079f1b181f99c1dd4498fc4aaad46f83b4e0342c9e9b7315507bf4fc7d924",
+        "size_in_bytes": 13683
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/modula2.py",
+        "path_type": "hardlink",
+        "sha256": "36da57051a1409e1df7e5801dfd2e49d2902c2104704abf612bfe98a78d5b0d1",
+        "size_in_bytes": 53072
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/mojo.py",
+        "path_type": "hardlink",
+        "sha256": "f09455a1fb4dd44f96db0a06d0afb89fc3d05d350cf6263a4a5e6c59bdae18d8",
+        "size_in_bytes": 24233
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/monte.py",
+        "path_type": "hardlink",
+        "sha256": "6da594eb39579687a7c3d30ed4cb4454613d8b709f89701886a53adb53088d19",
+        "size_in_bytes": 6289
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/mosel.py",
+        "path_type": "hardlink",
+        "sha256": "82345d79d840d634e3a18a0cd46a5aa2883f23da3b4d16d830793decdd535f08",
+        "size_in_bytes": 9297
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ncl.py",
+        "path_type": "hardlink",
+        "sha256": "cc9e9a8658ad8ade12d2905773b5aef7a3c1ef13a7e7d3307d1d87758e7f0bad",
+        "size_in_bytes": 63999
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/nimrod.py",
+        "path_type": "hardlink",
+        "sha256": "435352a8490b0b9c16b7bc49c8a0bebf35b0fc8c3649f0cd3ffa7230506e21f0",
+        "size_in_bytes": 6413
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/nit.py",
+        "path_type": "hardlink",
+        "sha256": "a7f8550fc1b3311977080055287b588275c55109348b917615b58503a5979bab",
+        "size_in_bytes": 2725
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/nix.py",
+        "path_type": "hardlink",
+        "sha256": "34eaefdb481dabed80ede67a73680494f1efd57c76a6fbf6d3ea8eca62fd18c8",
+        "size_in_bytes": 4421
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/numbair.py",
+        "path_type": "hardlink",
+        "sha256": "7f1929d825de5d628131ec1f8b51f82526249a6e24539f306764a1f410d80164",
+        "size_in_bytes": 1758
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/oberon.py",
+        "path_type": "hardlink",
+        "sha256": "8f0e34dea514b3bce94c702ce426cb8dbf2a8aec2dc4b934b290c862a199c00c",
+        "size_in_bytes": 4210
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/objective.py",
+        "path_type": "hardlink",
+        "sha256": "168d5607724c8fcb0d7989ef07ce07e3fab084eb7858d26d2568d510ec2b2469",
+        "size_in_bytes": 23297
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ooc.py",
+        "path_type": "hardlink",
+        "sha256": "903d5768965a8a10c5fecf95caed41c7af12ffdcc5b76ae1a31ecd17c2e93993",
+        "size_in_bytes": 3002
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/openscad.py",
+        "path_type": "hardlink",
+        "sha256": "87d23593c922b909a15f9bd99ba5434abd9f6b91629f2d2c37c643204fa3c757",
+        "size_in_bytes": 3700
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/other.py",
+        "path_type": "hardlink",
+        "sha256": "58b572a8fb2f9bda125c86d9c1b7f2265a12e871a0a055b99d54da535b90a53c",
+        "size_in_bytes": 1763
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/parasail.py",
+        "path_type": "hardlink",
+        "sha256": "0d630686dc908064d76c881097f9880fa08aaa2f8385bbecfdd4e49afad95df1",
+        "size_in_bytes": 2719
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/parsers.py",
+        "path_type": "hardlink",
+        "sha256": "7de360c6ba0fa1645fd0d12c38dda6b6628351fb25210a69ba4c3a9dd12c4373",
+        "size_in_bytes": 26596
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/pascal.py",
+        "path_type": "hardlink",
+        "sha256": "376b510239579d3c60800cf3936b4e380573782d8c073ad7cbdeff1d09799f8e",
+        "size_in_bytes": 30989
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/pawn.py",
+        "path_type": "hardlink",
+        "sha256": "2d6518418b1e6cc32dd9de68c57d47616bc1a9b6a447587b02fff3f15c3de168",
+        "size_in_bytes": 8253
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/pddl.py",
+        "path_type": "hardlink",
+        "sha256": "324e3f07395138909dd3147828a4514ab6e3d05ecb2d07014639ac9ad5a6ac28",
+        "size_in_bytes": 2989
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/perl.py",
+        "path_type": "hardlink",
+        "sha256": "f415e7dedc87300e3d36fcdb33d1367334821e3794edbbda3cb51ca19ae1cfee",
+        "size_in_bytes": 39192
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/phix.py",
+        "path_type": "hardlink",
+        "sha256": "859ab2721aa8e6c14c043112cc33d78350d81d07bff6c9f6f7851f6e38a16859",
+        "size_in_bytes": 23249
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/php.py",
+        "path_type": "hardlink",
+        "sha256": "97887342b966d39db98b9752c3d5668dc6a2dd3cdb3d3e83923cf13e0f65e997",
+        "size_in_bytes": 13061
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/pointless.py",
+        "path_type": "hardlink",
+        "sha256": "5920e3a90c86acd20699309d68cc65e3393b3994e5240333794674da47e07132",
+        "size_in_bytes": 1974
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/pony.py",
+        "path_type": "hardlink",
+        "sha256": "117acc91a72a3196e523bbf802f05141efb73f2f3ffdbc7914e82308b75f5f14",
+        "size_in_bytes": 3279
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/praat.py",
+        "path_type": "hardlink",
+        "sha256": "e1414afa76c2e96919061260710a841aaabd0a8709916ec0993fce2506e35b39",
+        "size_in_bytes": 12676
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/procfile.py",
+        "path_type": "hardlink",
+        "sha256": "d395b67f2a1f2d33fe15b11d4970f57a57acf8f3ea54d7c5e915978d0756daeb",
+        "size_in_bytes": 1155
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/prolog.py",
+        "path_type": "hardlink",
+        "sha256": "f4a73960d505aa47d6bb6b18a32cc2dd15fae5a6dfd5b9bba07afceb3d6ce244",
+        "size_in_bytes": 12866
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/promql.py",
+        "path_type": "hardlink",
+        "sha256": "9fed2fa3ea3cf996aca8fdd56b8ba3b39eb651f6522df645f91cd3ef5c8bd139",
+        "size_in_bytes": 4738
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/prql.py",
+        "path_type": "hardlink",
+        "sha256": "3c545ebaf85bbf82b969ebba96f0dfc389bede150b901debe376ca032f78f28b",
+        "size_in_bytes": 8747
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ptx.py",
+        "path_type": "hardlink",
+        "sha256": "2921c0bdb88d5549ed2a2950e843d8a0b16872626946c072ffb7d6ebf36bb356",
+        "size_in_bytes": 4501
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/python.py",
+        "path_type": "hardlink",
+        "sha256": "5997bb7c1007299fc1c4f83ca88536e941a193cab0518c84349dc8c8f5bae267",
+        "size_in_bytes": 53805
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/q.py",
+        "path_type": "hardlink",
+        "sha256": "59015487726ba4ada3f95196fd8b67dee2797eb50d9902059cbb4c546440f432",
+        "size_in_bytes": 6936
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/qlik.py",
+        "path_type": "hardlink",
+        "sha256": "db0ab075f223ac0cfa44d06c3f833278b5fc67b429206cf1b5fd42bda3a5aff8",
+        "size_in_bytes": 3693
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/qvt.py",
+        "path_type": "hardlink",
+        "sha256": "5cc067b1646bbc20dff7cf4eb8379bf8aa6ccc091e1138800b26a085978bd67b",
+        "size_in_bytes": 6103
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/r.py",
+        "path_type": "hardlink",
+        "sha256": "07a5a0ac3f52635513095d5f4014a565b7b33dfa58b00467dc54081dc1583a23",
+        "size_in_bytes": 6474
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/rdf.py",
+        "path_type": "hardlink",
+        "sha256": "a94cf12e76bdbf4ef56c785902376c062f1d29a24d93f87d8356515006027e8a",
+        "size_in_bytes": 16056
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/rebol.py",
+        "path_type": "hardlink",
+        "sha256": "e2edcde24cee8b9e476a9a295c3bb72add23733c436786eecf047b32de2d4223",
+        "size_in_bytes": 18259
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/rego.py",
+        "path_type": "hardlink",
+        "sha256": "471e46a616e4b6bf688e0e436ea972c47790aaab45ee0f16fa8174ae69680cd6",
+        "size_in_bytes": 1748
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/resource.py",
+        "path_type": "hardlink",
+        "sha256": "8a813381692c0791c28e8cfce5736440f49dee7e642f44998ae3e424fd61ba74",
+        "size_in_bytes": 2927
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ride.py",
+        "path_type": "hardlink",
+        "sha256": "90259dc6e4773dc9558b8c22034b94c78098105c2e4eaa0cb0a8e1496e17df28",
+        "size_in_bytes": 5035
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/rita.py",
+        "path_type": "hardlink",
+        "sha256": "323d50371c75b16019602d36930f298957246a2c3d07432a42d888883147d290",
+        "size_in_bytes": 1127
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/rnc.py",
+        "path_type": "hardlink",
+        "sha256": "83b643df7e0f30652acbf223eb895a48dd6f25eaf01ea5647a07cc09adc4fb2f",
+        "size_in_bytes": 1972
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/roboconf.py",
+        "path_type": "hardlink",
+        "sha256": "1db62e2b90aa99075deb74916369e57b4d6befea7b9a29744a7a1ab980e610e6",
+        "size_in_bytes": 2074
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/robotframework.py",
+        "path_type": "hardlink",
+        "sha256": "73853507d43d2130424e886a25364ebe47f27956de9cde31873496228661e5e5",
+        "size_in_bytes": 18448
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ruby.py",
+        "path_type": "hardlink",
+        "sha256": "b86eb5ec4e5a6c165c102442aa48487dcf886d97116f9706b9466aff1a5ac7dd",
+        "size_in_bytes": 22753
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/rust.py",
+        "path_type": "hardlink",
+        "sha256": "658fbdbedb2b7813f435f0ddd160a8b8b4a9ffd3028402fc53c01b7be9bd3c1f",
+        "size_in_bytes": 8260
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/sas.py",
+        "path_type": "hardlink",
+        "sha256": "0b5533dacf4353afecda42fe701fcf0063eda722b94c796684d982ba60b5978f",
+        "size_in_bytes": 9456
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/savi.py",
+        "path_type": "hardlink",
+        "sha256": "8eb9abb8ad069d792d8014d65d6de83774d7b687e7dc705b90c9479d1f38724a",
+        "size_in_bytes": 4878
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/scdoc.py",
+        "path_type": "hardlink",
+        "sha256": "0d7466143998b9cee1de03c001585f70bd4e11b3412b945d3e926a4331776539",
+        "size_in_bytes": 2524
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/scripting.py",
+        "path_type": "hardlink",
+        "sha256": "8e726ffc0143c83ae9cc43c635ab792bac73501b0402206be8ddbfc8b32df0b4",
+        "size_in_bytes": 81724
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/sgf.py",
+        "path_type": "hardlink",
+        "sha256": "c3a0b9d7710d68ed980a7aab76e2bb934dcd68c0dffa983282f7f3ab635a4919",
+        "size_in_bytes": 1985
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/shell.py",
+        "path_type": "hardlink",
+        "sha256": "7424b5cf091fe4ac13a20e3ffcc9cc0bb8775e6c2fe3f7777e7115dbdb52c172",
+        "size_in_bytes": 36381
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/sieve.py",
+        "path_type": "hardlink",
+        "sha256": "7a86fe2fce327f68e685d3726195256d4268cdd71de865dc1d6ebc96601ef161",
+        "size_in_bytes": 2514
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/slash.py",
+        "path_type": "hardlink",
+        "sha256": "23e7117a999ac612f54a062f0f58475f780d04523c34fb33754ee19f5a392650",
+        "size_in_bytes": 8484
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/smalltalk.py",
+        "path_type": "hardlink",
+        "sha256": "b9ed8f9aa0cadacc348fbe5676c7a288434905d6753b0cac1f63a9d50375af6e",
+        "size_in_bytes": 7204
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/smithy.py",
+        "path_type": "hardlink",
+        "sha256": "551116a1ebb3ec035aa7f522a299fbaecd139ec7dcfb1062b0324a446418ff2f",
+        "size_in_bytes": 2659
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/smv.py",
+        "path_type": "hardlink",
+        "sha256": "1defd505231b58e34c5999a4ac1e51611d1c7c75673322885f3ebc205625f9af",
+        "size_in_bytes": 2805
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/snobol.py",
+        "path_type": "hardlink",
+        "sha256": "a83cdbe35c5041630d9a307632d66cdb7a45a05819da06d16612bf22bd37afb2",
+        "size_in_bytes": 2778
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/solidity.py",
+        "path_type": "hardlink",
+        "sha256": "4e2c5f9f092ee187b38fa9cd9bcc556b0ec4755d6a80081dc1a85d4c53f44adf",
+        "size_in_bytes": 3163
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/soong.py",
+        "path_type": "hardlink",
+        "sha256": "566d7cbd5e20e93f143e08e3636c93465497183a59a309aea9050115f9b803d0",
+        "size_in_bytes": 2339
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/sophia.py",
+        "path_type": "hardlink",
+        "sha256": "d98b58213f22c00a16d01ed366eba81bf6482e1255fb603ba0119ab7ef7c9da1",
+        "size_in_bytes": 3376
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/special.py",
+        "path_type": "hardlink",
+        "sha256": "f09b91d957b1f17f915a70b7e92d075d31d6a76aa665c95cf74f93acb516c9a6",
+        "size_in_bytes": 3585
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/spice.py",
+        "path_type": "hardlink",
+        "sha256": "9b89cad2ae12abf38541ecfb90659f922d0da38655db862b38d7c7563d4f8aab",
+        "size_in_bytes": 2790
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/sql.py",
+        "path_type": "hardlink",
+        "sha256": "d90bdac0cd38c58f7a9ef59a7661e01cf0e13856c719a14043fd35adb357fe67",
+        "size_in_bytes": 48919
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/srcinfo.py",
+        "path_type": "hardlink",
+        "sha256": "07cbc3b3eb09a201b79966b91e9ffb25f1c750cc984701af2afe9c29b1505cb3",
+        "size_in_bytes": 1746
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/stata.py",
+        "path_type": "hardlink",
+        "sha256": "66bf410b9d83e4eff705b756d0dfadce8526cb435382e2f6b02fac69745533e7",
+        "size_in_bytes": 6415
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/supercollider.py",
+        "path_type": "hardlink",
+        "sha256": "fc7e700eb9f40e21a796107f733e91b7f968d93bea8d29b4a3a34f4ddf51e0aa",
+        "size_in_bytes": 3697
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/tablegen.py",
+        "path_type": "hardlink",
+        "sha256": "d498de757618d7c04d898f49b4d18b3ad19f8b076e34366940b0464de43a8c0c",
+        "size_in_bytes": 3987
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/tact.py",
+        "path_type": "hardlink",
+        "sha256": "5ff96cc6315431a0b54e6632b1726af6d9801a27d19e297cdc1b75cc0f3a5dda",
+        "size_in_bytes": 10809
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/tal.py",
+        "path_type": "hardlink",
+        "sha256": "c52f4f95a59038f8fc315af9e9f50dab7d6f5102915a82d39725a3f591e6f003",
+        "size_in_bytes": 2904
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/tcl.py",
+        "path_type": "hardlink",
+        "sha256": "94af7b8eee278a492dfa818ecc87b214433df32ab8759488f2e12662cab447a7",
+        "size_in_bytes": 5512
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/teal.py",
+        "path_type": "hardlink",
+        "sha256": "b7776acbf02bc2ff3fc84c5b5ffc62171bf54ea24b3efe2f8753152a32b04b86",
+        "size_in_bytes": 3522
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/templates.py",
+        "path_type": "hardlink",
+        "sha256": "05576361ea1a70852e1721d31b7f63e0fc5e3427b9135a145118c7d6b213ac8e",
+        "size_in_bytes": 75731
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/teraterm.py",
+        "path_type": "hardlink",
+        "sha256": "722c33b5a816e43ae0da0af5ed0ca4ae1e86c0cb0acbb7b8c5d42c857f791b24",
+        "size_in_bytes": 9718
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/testing.py",
+        "path_type": "hardlink",
+        "sha256": "61980381411a2c460a48a12aa43b148b7067f836ff0f8d88972892b2bd685fc5",
+        "size_in_bytes": 10810
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/text.py",
+        "path_type": "hardlink",
+        "sha256": "9ce0903ecb0894a755594dcf2b166204f91ffca14cd95e3c20eb2c4b2aa1158f",
+        "size_in_bytes": 1068
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/textedit.py",
+        "path_type": "hardlink",
+        "sha256": "b6d4f83e1fa121d8052c6ea6691cbf1ac924ce24c52b459c836f32534b3a95e9",
+        "size_in_bytes": 7760
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/textfmts.py",
+        "path_type": "hardlink",
+        "sha256": "9a2f4a2c4ab89abcc325b11cf06dd533e992922fd3ca5933a1dbb8ef21facfce",
+        "size_in_bytes": 15524
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/theorem.py",
+        "path_type": "hardlink",
+        "sha256": "e75a6904011d8499b053f942f75eb33328c4a0a2d7a9ff3d54013f2ebd0f3427",
+        "size_in_bytes": 17855
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/thingsdb.py",
+        "path_type": "hardlink",
+        "sha256": "c7f7c73642c0fa1209c9e22ceab83f5fc9f938b62f16a692bb51612376a92396",
+        "size_in_bytes": 6017
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/tlb.py",
+        "path_type": "hardlink",
+        "sha256": "b9eda0aa6e39048e75da5335dcef2c900932f7301bee92ccaf167ca5bb79cd15",
+        "size_in_bytes": 1450
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/tls.py",
+        "path_type": "hardlink",
+        "sha256": "fee41456e3110ce84df97532191e432255429350946757c8392378fd64183ca9",
+        "size_in_bytes": 1540
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/tnt.py",
+        "path_type": "hardlink",
+        "sha256": "a4ae0b82828e37bbb5c45eba2581677003d26c3f0365a788fd64d9f47a841656",
+        "size_in_bytes": 10456
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/trafficscript.py",
+        "path_type": "hardlink",
+        "sha256": "5f707c920c52e7879cba893d89ce87929f94327e43bce9822b4a7bd13cf6ec2c",
+        "size_in_bytes": 1506
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/typoscript.py",
+        "path_type": "hardlink",
+        "sha256": "981b9e3e255952800e44f2ac1f0af1e9f0568b2ddf008a86fb63baed098c8852",
+        "size_in_bytes": 8332
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/typst.py",
+        "path_type": "hardlink",
+        "sha256": "cc8241121517b56a793a2c809af140e66f1dd44406fa8730ac9ebbeddbd35009",
+        "size_in_bytes": 7167
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/ul4.py",
+        "path_type": "hardlink",
+        "sha256": "ac26b0d09f63ddc76a97d957fc74e2960eb993dfbd4b5d7ccce03a4c061fc5a3",
+        "size_in_bytes": 10499
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/unicon.py",
+        "path_type": "hardlink",
+        "sha256": "440aa80a700024160e006751f2783483a16d077f5b19e98b46522abf999c83d1",
+        "size_in_bytes": 18625
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/urbi.py",
+        "path_type": "hardlink",
+        "sha256": "6a334fef4349837da336714366c2efafffb84d3a121aa446905c803c824b7c25",
+        "size_in_bytes": 6082
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/usd.py",
+        "path_type": "hardlink",
+        "sha256": "d9e106a2ea25a1d612e34d8ffe0b41ae7e252f3a60d73f2e1f03c22aa8d46ff9",
+        "size_in_bytes": 3304
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/varnish.py",
+        "path_type": "hardlink",
+        "sha256": "7528742aef52ae39a5076f458bf9967566af37b33470c29e7a94786b7e2c3b22",
+        "size_in_bytes": 7473
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/verification.py",
+        "path_type": "hardlink",
+        "sha256": "42ee37dd0fe1dc42b7b92e1b2682d11592b4908570cd7e4014ab1ae19faa9f10",
+        "size_in_bytes": 3934
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/verifpal.py",
+        "path_type": "hardlink",
+        "sha256": "6eec8e3b30a8fdd1a7a02e34874b6d872947555a600edf2a5eee2894bbd8cbfe",
+        "size_in_bytes": 2661
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/vip.py",
+        "path_type": "hardlink",
+        "sha256": "da5115e1c2d5f69e04dfbc1cb412fbce4678654e29dc756c88b245cc1d5b89ed",
+        "size_in_bytes": 5711
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/vyper.py",
+        "path_type": "hardlink",
+        "sha256": "66aeac40850193a98176980e560bb703ab301a80677b4903951ca36739e6d816",
+        "size_in_bytes": 5615
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/web.py",
+        "path_type": "hardlink",
+        "sha256": "e16f5aeef72c92b1899f1b782a6a04dd2672756075a8babb94fd974bce49fe6f",
+        "size_in_bytes": 913
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/webassembly.py",
+        "path_type": "hardlink",
+        "sha256": "ce070ca2eccb6b071b785afac3f48ebc6a1447af19b6a9e7b1b39c58456578b9",
+        "size_in_bytes": 5698
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/webidl.py",
+        "path_type": "hardlink",
+        "sha256": "383b559b0e2057323c1d05b1b847243fa28cc26f163f61b69526448da8035edb",
+        "size_in_bytes": 10516
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/webmisc.py",
+        "path_type": "hardlink",
+        "sha256": "fbff8834355d938ededa3963fbd6c572e2ed9eda95a2b06a223967c0f7d915d2",
+        "size_in_bytes": 40564
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/wgsl.py",
+        "path_type": "hardlink",
+        "sha256": "f6281df5dce2c4622035ec2bbaff663e7166b3e73d05a86465c082ad9ca0bfce",
+        "size_in_bytes": 11880
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/whiley.py",
+        "path_type": "hardlink",
+        "sha256": "94cafbe74940e0c66c078c6acd5b0846d54c2480b7fdd02b8456131ef38fc2f0",
+        "size_in_bytes": 4017
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/wowtoc.py",
+        "path_type": "hardlink",
+        "sha256": "f31c6f7f4c46798b5fe0f13b2ad90767f972f7163f5d71eba428ad74a138d91a",
+        "size_in_bytes": 4076
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/wren.py",
+        "path_type": "hardlink",
+        "sha256": "8281979c030a29ad772cb2f8d326d3dda3063eb937802470650158024281ff0d",
+        "size_in_bytes": 3229
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/x10.py",
+        "path_type": "hardlink",
+        "sha256": "43e02681d17613e37b9ad38fa59d3b0acc6b4d59e2932a82e2e451bfa1fbe6c9",
+        "size_in_bytes": 1943
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/xorg.py",
+        "path_type": "hardlink",
+        "sha256": "f6db6b05ddff6369d700db2ab4ca68b1281b95898c62a59743e233e511fd46c5",
+        "size_in_bytes": 925
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/yang.py",
+        "path_type": "hardlink",
+        "sha256": "d770966d268dafd822387cf8a344974a4961d1b7d6b746a1d788c91a94ef727d",
+        "size_in_bytes": 4499
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/yara.py",
+        "path_type": "hardlink",
+        "sha256": "8d44afefc2930df82e0a802801929b633404464932c41056bf97489d5ae40f1a",
+        "size_in_bytes": 2427
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/lexers/zig.py",
+        "path_type": "hardlink",
+        "sha256": "7fef34315392a752a773300ca2440b54cfbfc0010e0f5e84706167682365b0dd",
+        "size_in_bytes": 3976
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "4068e1464b2b7e9fc8f9e40dbdd34a562a91e77f07ff497ec78ef71ea3beaf13",
+        "size_in_bytes": 2512
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "1d38dd772d6a5dfd78ec351a047fafdf90cdb3ab41f03ac7c2676f56d6d2d51c",
+        "size_in_bytes": 47128
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "aad0b0a12256807936d52d4a6f88a1773236ae527564a688bab4e3fe780e8724",
+        "size_in_bytes": 87
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "bc8c193ba3656a2bf3cc89006ae3e8fb84ba85276218ad7e6be4ee62159558e5",
+        "size_in_bytes": 104
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments-2.19.1.dist-info/entry_points.txt",
+        "path_type": "hardlink",
+        "sha256": "b945f0f9784c281117e2959c0ada6e4d39cf84bde1ece104da35a2e75550b1af",
+        "size_in_bytes": 53
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "7fd282417378b8a6def1a23cf8bdea4c2fbf5cf7d3e7adc5c1383a5531957f02",
+        "size_in_bytes": 2006
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/_mapping.py",
+        "path_type": "hardlink",
+        "sha256": "ea5a2f154136f6dcfa12c5775d8638860a3327bab524bedc7cedd43a58274bcc",
+        "size_in_bytes": 3312
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/abap.py",
+        "path_type": "hardlink",
+        "sha256": "eb8530afcb8f74475c4feb44f98d95bde4d77c7dd292a1fda9d320638f581d02",
+        "size_in_bytes": 749
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/algol.py",
+        "path_type": "hardlink",
+        "sha256": "7c2ba4f084d37a1bdb252b9f89a2a582716c29b97ec45c7147cdb1865b5cf9c4",
+        "size_in_bytes": 2262
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/algol_nu.py",
+        "path_type": "hardlink",
+        "sha256": "1aff567c726f61e806714935cdcb9f420b1d5cf363094364f2c007cab4861a1e",
+        "size_in_bytes": 2283
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/arduino.py",
+        "path_type": "hardlink",
+        "sha256": "368501f3193b3351c63e82dfbb248e2d4d2c570a13b8b719aa595797610efe21",
+        "size_in_bytes": 4557
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/autumn.py",
+        "path_type": "hardlink",
+        "sha256": "7cb2df8c75e3c4297a72b040c44b012c7dfbd802cc90569c0366c6e8a15b262e",
+        "size_in_bytes": 2195
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/borland.py",
+        "path_type": "hardlink",
+        "sha256": "ff4c922a9e0a1824a0b588cf7bcbb30fa810865980211e13e378be16845834e3",
+        "size_in_bytes": 1611
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/bw.py",
+        "path_type": "hardlink",
+        "sha256": "be193c5e88fae1f2cf740f48414ea6515b1831e976e798d1f850d4ec18c81ed2",
+        "size_in_bytes": 1406
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/coffee.py",
+        "path_type": "hardlink",
+        "sha256": "36a2edf9f73b2ce3666b50468206dc795458f6e0c4ef4581b995ea2b8cf069ca",
+        "size_in_bytes": 2308
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/colorful.py",
+        "path_type": "hardlink",
+        "sha256": "9987126de86d1fb8ad1ff415f4da89a785a76b55f896bc25db09155d2daefb90",
+        "size_in_bytes": 2832
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/default.py",
+        "path_type": "hardlink",
+        "sha256": "453806db3296594c4f4c3085c614e7c9923f599048560bb95ec52936f162b020",
+        "size_in_bytes": 2588
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/dracula.py",
+        "path_type": "hardlink",
+        "sha256": "bd12668b106848a57da3c3554215c656242a72184862e81f8a42e6bd7d03a01c",
+        "size_in_bytes": 2182
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/emacs.py",
+        "path_type": "hardlink",
+        "sha256": "4e2386f6873cdea4e830244c9c9ad7b5662a9f302a632711cffe743a808ab717",
+        "size_in_bytes": 2535
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/friendly.py",
+        "path_type": "hardlink",
+        "sha256": "a008be97d6a7413b3d4930e65335c60e539e81ab44387e21a43d23ea8e9d6463",
+        "size_in_bytes": 2604
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/friendly_grayscale.py",
+        "path_type": "hardlink",
+        "sha256": "6bb0aa933b7afae4e25ef8fa1a86015f346f5f9ff3be20a38d1074e0a7fff90d",
+        "size_in_bytes": 2828
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/fruity.py",
+        "path_type": "hardlink",
+        "sha256": "19f4944c6d2cb6526be4ec3fb1a09ac5b236201e3edf80e9d93b914e97d4241b",
+        "size_in_bytes": 1324
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/gh_dark.py",
+        "path_type": "hardlink",
+        "sha256": "aee357ddde2b7f6dabc7ef079f0bc66cd6d7450a5708d7075351cdaba378b8d8",
+        "size_in_bytes": 3590
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/gruvbox.py",
+        "path_type": "hardlink",
+        "sha256": "2ab1681c4a159d95ba5ccf6e7725e770fa26786c998080ec356387de40abc454",
+        "size_in_bytes": 3387
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/igor.py",
+        "path_type": "hardlink",
+        "sha256": "7d860f84cd1d442bdc0d3315acc54ee6814a9d89bef18565b2e541a1ccc52ed6",
+        "size_in_bytes": 737
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/inkpot.py",
+        "path_type": "hardlink",
+        "sha256": "8e0812797f4d575e5e38bda825a56667abe657b2d64735c941152a71612a191b",
+        "size_in_bytes": 2404
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/lightbulb.py",
+        "path_type": "hardlink",
+        "sha256": "63cbb5a9dbe51df06a2368c97b1e794a4bd56ad568fc58c453313a87e5fb9bed",
+        "size_in_bytes": 3172
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/lilypond.py",
+        "path_type": "hardlink",
+        "sha256": "63a7e9fec10bfb31129b101a331ce3b6b2a4f7472e0c2fc36a535d0bcc23d27c",
+        "size_in_bytes": 2066
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/lovelace.py",
+        "path_type": "hardlink",
+        "sha256": "700f6e8666e7cd8d3831c72c8984a0318edfbdbe163116de816054ac6bd78753",
+        "size_in_bytes": 3178
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/manni.py",
+        "path_type": "hardlink",
+        "sha256": "83d1723bba654f07cc9b6714e2288a81d964325bd02c6ea5d8bc24833e484d2e",
+        "size_in_bytes": 2443
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/material.py",
+        "path_type": "hardlink",
+        "sha256": "2c39a0a2601b82d2436616efe38ebfcc8c20621e74500a8412d8183549ecd6b4",
+        "size_in_bytes": 4201
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/monokai.py",
+        "path_type": "hardlink",
+        "sha256": "96bc532699016ab57d8132e4050af267aa0d4a37a401585e26e78a24fe621180",
+        "size_in_bytes": 5184
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/murphy.py",
+        "path_type": "hardlink",
+        "sha256": "f8029988b9298967a3fa8b631ccb18084f88fbf23308e2c963efc605d291651c",
+        "size_in_bytes": 2805
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/native.py",
+        "path_type": "hardlink",
+        "sha256": "97ab5ecc64904c1f29fd2c8e5c9d0f588ecacc278476db0f995738627e3f0b05",
+        "size_in_bytes": 2043
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/nord.py",
+        "path_type": "hardlink",
+        "sha256": "183b775806aa696b2209eaa92013f177c4c4517ef4f1f19fc1a03b4b4c34a32d",
+        "size_in_bytes": 5391
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/onedark.py",
+        "path_type": "hardlink",
+        "sha256": "93cd1c644a6908417e1cba31cbf1440344264036737baf271d530d1b25156b6f",
+        "size_in_bytes": 1719
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/paraiso_dark.py",
+        "path_type": "hardlink",
+        "sha256": "264ae0e2750a215345f14e1f3cd57f4a6abf83d3456dbf5e894ae36295604198",
+        "size_in_bytes": 5662
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/paraiso_light.py",
+        "path_type": "hardlink",
+        "sha256": "33137deb8644a737b7c05d2cb3e8a069ad88ec4ebce0c1def99ab4ad63c7df0a",
+        "size_in_bytes": 5668
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/pastie.py",
+        "path_type": "hardlink",
+        "sha256": "66f02cf54a41358142fb93c5ac24466279b71683ca6fe78a47ea336d664ffb88",
+        "size_in_bytes": 2525
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/perldoc.py",
+        "path_type": "hardlink",
+        "sha256": "1d2c41f777b852942466ca51790df815e25b67ee7d92c1af75a1fe853a1e862f",
+        "size_in_bytes": 2230
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/rainbow_dash.py",
+        "path_type": "hardlink",
+        "sha256": "e2e80bd7c3abeda36d68b7cf7c22c5462172d06bb6440e1af46d8b41413d4ab3",
+        "size_in_bytes": 2390
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/rrt.py",
+        "path_type": "hardlink",
+        "sha256": "7e0cdfa42d0f0bf48270b38c08d1084138cf50c3a77117bb491d7419f4916d76",
+        "size_in_bytes": 1006
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/sas.py",
+        "path_type": "hardlink",
+        "sha256": "cb3a1799b7d0d8d0f5596abdddbe2f5466244126473ea6f8ca67acf586114f7c",
+        "size_in_bytes": 1440
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/solarized.py",
+        "path_type": "hardlink",
+        "sha256": "aaea482c5667d365aca67005e523d86fe5bc82ea3dc6752d8dbd4778bc375e01",
+        "size_in_bytes": 4247
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/staroffice.py",
+        "path_type": "hardlink",
+        "sha256": "08b6c178ca316b2db55f2bb701fda9e31517c86d7feb27426efb394492987b9c",
+        "size_in_bytes": 831
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/stata_dark.py",
+        "path_type": "hardlink",
+        "sha256": "bd7f12c0757ffec1bdd85e022ab89b1b4f0c25f495abdf1d82cee0100fe7f727",
+        "size_in_bytes": 1257
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/stata_light.py",
+        "path_type": "hardlink",
+        "sha256": "b95dc613eca5bdf7d0d32377a72d58015a81079c1f9482996dc7b22b52eabeb7",
+        "size_in_bytes": 1289
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/tango.py",
+        "path_type": "hardlink",
+        "sha256": "3b6c1c338847b94d58b74ef533d08aec93ed8a2482ab2c6d4fdb5b890202576f",
+        "size_in_bytes": 7137
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/trac.py",
+        "path_type": "hardlink",
+        "sha256": "f6432fd5967230a0025a5c767d056344fd08da981c45808daddee2186660f6a9",
+        "size_in_bytes": 1981
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/vim.py",
+        "path_type": "hardlink",
+        "sha256": "27bfd3aafac69135ff5ee4c75b4227e70a8f2c050f456cabd75db65ee7995a63",
+        "size_in_bytes": 2019
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/vs.py",
+        "path_type": "hardlink",
+        "sha256": "b3b627cdb20fb855372c891edbb99ce250104a7d91def6db1dcd5b68c19253f5",
+        "size_in_bytes": 1130
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/xcode.py",
+        "path_type": "hardlink",
+        "sha256": "3db41dce019a0386bd2c05358b9f1a958f643382059505f98c743039899ffd19",
+        "size_in_bytes": 1504
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pygments/styles/zenburn.py",
+        "path_type": "hardlink",
+        "sha256": "b2e6442b30530987617f6731370718ed401324ad6dab979884674171775fe8c5",
+        "size_in_bytes": 2203
+      },
+      {
+        "_path": "bin/pygmentize",
+        "path_type": "unix_python_entry_point",
+        "sha256": "0b261a079295b88cb1f77f4e350be5e9b3b53f72a7e2e4ad835f6c52b98bdd99",
+        "size_in_bytes": 269
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/pygments-2.19.1-pyhd8ed1ab_0",
+    "type": 1
+  }
+}

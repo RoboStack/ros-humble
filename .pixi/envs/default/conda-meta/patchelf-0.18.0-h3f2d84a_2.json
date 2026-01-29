@@ -1,0 +1,69 @@
+{
+  "arch": "x86_64",
+  "build": "h3f2d84a_2",
+  "build_number": 2,
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libstdcxx >=13",
+    "libgcc >=13"
+  ],
+  "license": "GPL-3.0-or-later",
+  "license_family": "GPL",
+  "md5": "5a6bde274af5252392b446ead19047d0",
+  "name": "patchelf",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "2f1caf273c7816fcff6e8438138c29d08264f8371dc0e23f86e993ccc7e978dc",
+  "size": 136130,
+  "subdir": "linux-64",
+  "timestamp": 1745559387060,
+  "version": "0.18.0",
+  "fn": "patchelf-0.18.0-h3f2d84a_2.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/patchelf-0.18.0-h3f2d84a_2.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/patchelf-0.18.0-h3f2d84a_2",
+  "requested_specs": [],
+  "files": [
+    "share/man/man1/patchelf.1",
+    "share/doc/patchelf/README.md",
+    "share/zsh/site-functions/_patchelf",
+    "bin/patchelf"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "share/man/man1/patchelf.1",
+        "path_type": "hardlink",
+        "sha256": "f9b86328ea77ab36310c156ac72db3c681901e70f22f96498abc9323922337d0",
+        "size_in_bytes": 5152
+      },
+      {
+        "_path": "share/doc/patchelf/README.md",
+        "path_type": "hardlink",
+        "sha256": "ea103a890991bc00a3f7879ac2296a7fe558893585e59c65038ad6599ac0ddd7",
+        "size_in_bytes": 3196
+      },
+      {
+        "_path": "share/zsh/site-functions/_patchelf",
+        "path_type": "hardlink",
+        "sha256": "3aba1f3e4339f2f623fb4b88d00ef99ba621deb4ec2a3834e8dc643dd10de92c",
+        "size_in_bytes": 2600
+      },
+      {
+        "_path": "bin/patchelf",
+        "path_type": "hardlink",
+        "sha256": "159bb4cf19bc35b1452b390cb9ce93b87f15b980831ef46d5ff9bd245784afb0",
+        "sha256_in_prefix": "2ab0839875e4fc8752fe13161d165b6b3de56cb4212604047ddbe70d46406272",
+        "size_in_bytes": 309136,
+        "file_mode": "binary",
+        "prefix_placeholder": "/home/conda/feedstock_root/build_artifacts/bld/rattler-build_patchelf_1745559387/host_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_place"
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/patchelf-0.18.0-h3f2d84a_2",
+    "type": 1
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "build": "pyhd8ed1ab_1",
+  "build_number": 1,
+  "depends": [
+    "python >=3.8"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "03476f20cbb666a090074d37e4c3faa9",
+  "name": "readchar",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/readchar?source=hash-mapping"
+  ],
+  "sha256": "370bb44b7e9bb446f163e3c096378385509900878865a7ab11f40d18cb0c5470",
+  "size": 14551,
+  "subdir": "noarch",
+  "timestamp": 1730725499093,
+  "version": "4.2.0",
+  "fn": "readchar-4.2.0-pyhd8ed1ab_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/readchar-4.2.0-pyhd8ed1ab_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/readchar-4.2.0-pyhd8ed1ab_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/readchar-4.2.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/readchar-4.2.0.dist-info/LICENCE",
+    "lib/python3.11/site-packages/readchar-4.2.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/readchar-4.2.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/readchar-4.2.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/readchar-4.2.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/readchar-4.2.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/readchar-4.2.0.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/readchar/__init__.py",
+    "lib/python3.11/site-packages/readchar/_base_key.py",
+    "lib/python3.11/site-packages/readchar/_config.py",
+    "lib/python3.11/site-packages/readchar/_posix_key.py",
+    "lib/python3.11/site-packages/readchar/_posix_read.py",
+    "lib/python3.11/site-packages/readchar/_win_key.py",
+    "lib/python3.11/site-packages/readchar/_win_read.py",
+    "lib/python3.11/site-packages/readchar/key.py",
+    "lib/python3.11/site-packages/readchar/py.typed"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/readchar-4.2.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar-4.2.0.dist-info/LICENCE",
+        "path_type": "hardlink",
+        "sha256": "ed3b3d1c3be232c6760d19f53e714913264fbbc355d73652112516893df8a255",
+        "size_in_bytes": 1076
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar-4.2.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "0d39973dd8518e139cf2f2b2cf8fae9d594540177e74275e81db9b80104b166d",
+        "size_in_bytes": 7474
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar-4.2.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "cc0927f35a1e7c3468182eb6bb7cdae762a979f5a89be11dd45b9f3e58c73f11",
+        "size_in_bytes": 1755
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar-4.2.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar-4.2.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "3fd8f0fa01237bc07207bfe15e82029c7b550ab13031087eeb7d2d2af4167a17",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar-4.2.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "c9c56043d7a9525d1d8e4c5943237f3ad38dc3df1cc251febd9b30b5ad364024",
+        "size_in_bytes": 104
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar-4.2.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "5b2230f3ceb457dce4f1a63f251c305277c519160199818da838f9a2ba3760dd",
+        "size_in_bytes": 9
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "f4bde248930f4fcd03d399530c5525815693e52d44236ca8cf39836c57b25200",
+        "size_in_bytes": 611
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/_base_key.py",
+        "path_type": "hardlink",
+        "sha256": "be0d5afcd67fb86adc866f5577ab74a1da2068c878d50a3dcb4cddb34340d983",
+        "size_in_bytes": 487
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/_config.py",
+        "path_type": "hardlink",
+        "sha256": "c4dc6f6560d0cf28a0e1926c60da858f1d5f3413598aee74df28d61415d73744",
+        "size_in_bytes": 365
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/_posix_key.py",
+        "path_type": "hardlink",
+        "sha256": "b7bf5ae50e333bf63c9ef6b00bc64765287b511133252b4cf4cd22f58d7cb7b0",
+        "size_in_bytes": 838
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/_posix_read.py",
+        "path_type": "hardlink",
+        "sha256": "6ec5a483412a27193e348110aa249abcc356af52b144c353be06064f886e1a70",
+        "size_in_bytes": 1370
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/_win_key.py",
+        "path_type": "hardlink",
+        "sha256": "d4f1e578369d9cea23aaea59d194e9f48c6064f08ab230037b196d3fe14de689",
+        "size_in_bytes": 1063
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/_win_read.py",
+        "path_type": "hardlink",
+        "sha256": "e37ff5385f532d63c4f56fd45436449bfba8fbf13264c591c01e5ff0076063cf",
+        "size_in_bytes": 1311
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/key.py",
+        "path_type": "hardlink",
+        "sha256": "92c47d338dcf025134e0a7e76be2fd32b6a22e97b15144ca90bc1021134c9c13",
+        "size_in_bytes": 282
+      },
+      {
+        "_path": "lib/python3.11/site-packages/readchar/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/readchar-4.2.0-pyhd8ed1ab_1",
+    "type": 1
+  }
+}

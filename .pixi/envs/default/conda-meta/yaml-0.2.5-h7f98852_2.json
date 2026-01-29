@@ -1,0 +1,82 @@
+{
+  "arch": "x86_64",
+  "build": "h7f98852_2",
+  "build_number": 2,
+  "depends": [
+    "libgcc-ng >=9.4.0"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "4cb3ad778ec2d5a7acbdf254eb1c42ae",
+  "name": "yaml",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "a4e34c710eeb26945bdbdaba82d3d74f60a78f54a874ec10d373811a5d217535",
+  "size": 89141,
+  "subdir": "linux-64",
+  "timestamp": 1641346969816,
+  "version": "0.2.5",
+  "fn": "yaml-0.2.5-h7f98852_2.tar.bz2",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/yaml-0.2.5-h7f98852_2.tar.bz2",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/yaml-0.2.5-h7f98852_2",
+  "requested_specs": [],
+  "files": [
+    "lib/pkgconfig/yaml-0.1.pc",
+    "include/yaml.h",
+    "lib/libyaml-0.so.2",
+    "lib/libyaml-0.so.2.0.9",
+    "lib/libyaml.a",
+    "lib/libyaml.so"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/pkgconfig/yaml-0.1.pc",
+        "path_type": "hardlink",
+        "sha256": "3f04f271a11b9bbf72a568d0fce22ffe03cb843c0e207dc52cc0d2ba3234a038",
+        "sha256_in_prefix": "4371d7aef42c130ac2d11bf7d8d0fe900e9c3d18babfa41ee1bd7a2cb0c3c6bc",
+        "size_in_bytes": 266,
+        "file_mode": "text",
+        "prefix_placeholder": "/home/conda/feedstock_root/build_artifacts/yaml_1641346873921/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeh"
+      },
+      {
+        "_path": "include/yaml.h",
+        "path_type": "hardlink",
+        "sha256": "de39c9fc2b2c8584775e6d0dc0f13c8e778ceba47d419cff9d85465ca35d6954",
+        "size_in_bytes": 54439
+      },
+      {
+        "_path": "lib/libyaml-0.so.2",
+        "path_type": "softlink",
+        "sha256": "018da4b1c1a03897083b5d63933b0726be34add338ccb38f29ca121c4f20e540",
+        "sha256_in_prefix": "b15381e9505238fee2b03ac1eb3c7385055486c4302603491822840d7c42e5eb",
+        "size_in_bytes": 132648
+      },
+      {
+        "_path": "lib/libyaml-0.so.2.0.9",
+        "path_type": "hardlink",
+        "sha256": "018da4b1c1a03897083b5d63933b0726be34add338ccb38f29ca121c4f20e540",
+        "size_in_bytes": 132648
+      },
+      {
+        "_path": "lib/libyaml.a",
+        "path_type": "hardlink",
+        "sha256": "72c0b175d9cb0d89b5fad17e834fa36e91c393b34f68a093573f94059ba155bd",
+        "size_in_bytes": 187192
+      },
+      {
+        "_path": "lib/libyaml.so",
+        "path_type": "softlink",
+        "sha256": "018da4b1c1a03897083b5d63933b0726be34add338ccb38f29ca121c4f20e540",
+        "sha256_in_prefix": "b15381e9505238fee2b03ac1eb3c7385055486c4302603491822840d7c42e5eb",
+        "size_in_bytes": 132648
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/yaml-0.2.5-h7f98852_2",
+    "type": 1
+  }
+}

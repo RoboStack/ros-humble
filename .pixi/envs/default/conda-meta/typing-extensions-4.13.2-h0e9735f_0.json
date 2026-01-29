@@ -1,0 +1,55 @@
+{
+  "build": "h0e9735f_0",
+  "build_number": 0,
+  "depends": [
+    "typing_extensions ==4.13.2 pyh29332c3_0"
+  ],
+  "license": "PSF-2.0",
+  "license_family": "PSF",
+  "md5": "568ed1300869dca0ba09fb750cda5dbb",
+  "name": "typing-extensions",
+  "noarch": "generic",
+  "purls": [],
+  "sha256": "4865fce0897d3cb0ffc8998219157a8325f6011c136e6fd740a9a6b169419296",
+  "size": 89900,
+  "subdir": "noarch",
+  "timestamp": 1744302253997,
+  "version": "4.13.2",
+  "fn": "typing-extensions-4.13.2-h0e9735f_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/typing-extensions-4.13.2-h0e9735f_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/typing-extensions-4.13.2-h0e9735f_0",
+  "requested_specs": [],
+  "files": [
+    "etc/conda/test-files/typing-extensions/1/src/_typed_dict_test_helper.py",
+    "etc/conda/test-files/typing-extensions/1/src/test_typing_extensions.py",
+    "etc/conda/test-files/typing-extensions/1/src/typing_extensions.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "etc/conda/test-files/typing-extensions/1/src/_typed_dict_test_helper.py",
+        "path_type": "hardlink",
+        "sha256": "d522d5308180d08c7775347f5cc7c842c52f3791d5b2d3c2ff7664ebc64015e9",
+        "size_in_bytes": 564
+      },
+      {
+        "_path": "etc/conda/test-files/typing-extensions/1/src/test_typing_extensions.py",
+        "path_type": "hardlink",
+        "sha256": "95b5e740cfd6f2304671134d51b31bfa97ccb78c90f5b6ca199de7bddbbbeda0",
+        "size_in_bytes": 318065
+      },
+      {
+        "_path": "etc/conda/test-files/typing-extensions/1/src/typing_extensions.py",
+        "path_type": "hardlink",
+        "sha256": "a38f2a7004e54faa907112f33af6b34a33d71d4d2709bc392d28709748ebb5a8",
+        "size_in_bytes": 172654
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/typing-extensions-4.13.2-h0e9735f_0",
+    "type": 1
+  }
+}

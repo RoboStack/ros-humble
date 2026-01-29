@@ -1,0 +1,76 @@
+{
+  "arch": "x86_64",
+  "build": "hb9d3cd8_0",
+  "build_number": 0,
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "8035c64cb77ed555e3f150b7b3972480",
+  "name": "xorg-libxdmcp",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "6b250f3e59db07c2514057944a3ea2044d6a8cdde8a47b6497c254520fade1ee",
+  "size": 19901,
+  "subdir": "linux-64",
+  "timestamp": 1727794976192,
+  "version": "1.1.5",
+  "fn": "xorg-libxdmcp-1.1.5-hb9d3cd8_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/xorg-libxdmcp-1.1.5-hb9d3cd8_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/xorg-libxdmcp-1.1.5-hb9d3cd8_0",
+  "requested_specs": [],
+  "files": [
+    "lib/pkgconfig/xdmcp.pc",
+    "include/X11/Xdmcp.h",
+    "lib/libXdmcp.so",
+    "lib/libXdmcp.so.6",
+    "lib/libXdmcp.so.6.0.0"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/pkgconfig/xdmcp.pc",
+        "path_type": "hardlink",
+        "sha256": "5720adef86a2a88c7a2222134a64bdc4ec141c7b214e6ff409a5aeddd82c15a4",
+        "sha256_in_prefix": "181f1002ca7626b4a7ccb11b4675584b80c7c2e8fef069efdfa79a97b19d5ef5",
+        "size_in_bytes": 294,
+        "file_mode": "text",
+        "prefix_placeholder": "/home/conda/feedstock_root/build_artifacts/xorg-libxdmcp_1727794797734/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho"
+      },
+      {
+        "_path": "include/X11/Xdmcp.h",
+        "path_type": "hardlink",
+        "sha256": "7fd3eb99f92b1c566c87cab744ccbb85a4530152eeace73dbb493952a4f40477",
+        "size_in_bytes": 8535
+      },
+      {
+        "_path": "lib/libXdmcp.so",
+        "path_type": "softlink",
+        "sha256": "980a8a497c13f57effa478187396cd48f23eaff15dca4278fbf93eac7159e7e9",
+        "sha256_in_prefix": "92261ef9779c0b6c2894e8322a19664a881f4104763a86cf5aea272e249078d2",
+        "size_in_bytes": 30144
+      },
+      {
+        "_path": "lib/libXdmcp.so.6",
+        "path_type": "softlink",
+        "sha256": "980a8a497c13f57effa478187396cd48f23eaff15dca4278fbf93eac7159e7e9",
+        "sha256_in_prefix": "92261ef9779c0b6c2894e8322a19664a881f4104763a86cf5aea272e249078d2",
+        "size_in_bytes": 30144
+      },
+      {
+        "_path": "lib/libXdmcp.so.6.0.0",
+        "path_type": "hardlink",
+        "sha256": "980a8a497c13f57effa478187396cd48f23eaff15dca4278fbf93eac7159e7e9",
+        "size_in_bytes": 30144
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/xorg-libxdmcp-1.1.5-hb9d3cd8_0",
+    "type": 1
+  }
+}

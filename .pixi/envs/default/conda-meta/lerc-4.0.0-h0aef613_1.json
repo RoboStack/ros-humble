@@ -1,0 +1,76 @@
+{
+  "arch": "x86_64",
+  "build": "h0aef613_1",
+  "build_number": 1,
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13",
+    "libstdcxx >=13"
+  ],
+  "license": "Apache-2.0",
+  "license_family": "Apache",
+  "md5": "9344155d33912347b37f0ae6c410a835",
+  "name": "lerc",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "412381a43d5ff9bbed82cd52a0bbca5b90623f62e41007c9c42d3870c60945ff",
+  "size": 264243,
+  "subdir": "linux-64",
+  "timestamp": 1745264221534,
+  "version": "4.0.0",
+  "fn": "lerc-4.0.0-h0aef613_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/lerc-4.0.0-h0aef613_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/lerc-4.0.0-h0aef613_1",
+  "requested_specs": [],
+  "files": [
+    "lib/pkgconfig/Lerc.pc",
+    "include/Lerc_c_api.h",
+    "include/Lerc_types.h",
+    "lib/libLerc.so",
+    "lib/libLerc.so.4"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/pkgconfig/Lerc.pc",
+        "path_type": "hardlink",
+        "sha256": "6985b25baaddafbced43fb44323aaed84373758d387436e03d57b430afe543b3",
+        "sha256_in_prefix": "1a5d6005fb15cc89123f8147839e6489cb07d70480f5743e22348033d3670edc",
+        "size_in_bytes": 329,
+        "file_mode": "text",
+        "prefix_placeholder": "/home/conda/feedstock_root/build_artifacts/lerc_1745264014218/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeh"
+      },
+      {
+        "_path": "include/Lerc_c_api.h",
+        "path_type": "hardlink",
+        "sha256": "51c3d4c683eac91beb16e521a7ae38516ac06b867dc12e5555961cb7d1975e65",
+        "size_in_bytes": 22507
+      },
+      {
+        "_path": "include/Lerc_types.h",
+        "path_type": "hardlink",
+        "sha256": "4887c98b138f7cebaa4f26699e9a8647d612058892b261c37395728b3695b038",
+        "size_in_bytes": 1285
+      },
+      {
+        "_path": "lib/libLerc.so",
+        "path_type": "softlink",
+        "sha256": "72b478d063fd6dcc2ea52731400332c784209c38f12be2b961d0c8ff949603c8",
+        "sha256_in_prefix": "4de23fb86103411795bba13598558077b1c6b53495998d255234b09a462a209d",
+        "size_in_bytes": 884568
+      },
+      {
+        "_path": "lib/libLerc.so.4",
+        "path_type": "hardlink",
+        "sha256": "72b478d063fd6dcc2ea52731400332c784209c38f12be2b961d0c8ff949603c8",
+        "size_in_bytes": 884568
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/lerc-4.0.0-h0aef613_1",
+    "type": 1
+  }
+}

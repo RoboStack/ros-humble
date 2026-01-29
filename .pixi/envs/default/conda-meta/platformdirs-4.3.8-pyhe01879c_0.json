@@ -1,0 +1,149 @@
+{
+  "build": "pyhe01879c_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.9",
+    "python"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "424844562f5d337077b445ec6b1398a7",
+  "name": "platformdirs",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/platformdirs?source=compressed-mapping"
+  ],
+  "sha256": "0f48999a28019c329cd3f6fd2f01f09fc32cc832f7d6bbe38087ddac858feaa3",
+  "size": 23531,
+  "subdir": "noarch",
+  "timestamp": 1746710438805,
+  "version": "4.3.8",
+  "fn": "platformdirs-4.3.8-pyhe01879c_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/platformdirs-4.3.8-pyhe01879c_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/platformdirs-4.3.8-pyhe01879c_0",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/METADATA",
+    "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/RECORD",
+    "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/WHEEL",
+    "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/platformdirs/__init__.py",
+    "lib/python3.11/site-packages/platformdirs/__main__.py",
+    "lib/python3.11/site-packages/platformdirs/android.py",
+    "lib/python3.11/site-packages/platformdirs/api.py",
+    "lib/python3.11/site-packages/platformdirs/macos.py",
+    "lib/python3.11/site-packages/platformdirs/py.typed",
+    "lib/python3.11/site-packages/platformdirs/unix.py",
+    "lib/python3.11/site-packages/platformdirs/version.py",
+    "lib/python3.11/site-packages/platformdirs/windows.py",
+    "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/licenses/LICENSE"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "1168c7cab15fd6a6aeaf7aabb9e5d69531e67fef6c3f544e02266cb9a63d8d00",
+        "size_in_bytes": 12831
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "192c03ee773d3a575cead9c7086a3932e4e6da54e06b88bef9e5040cc578b174",
+        "size_in_bytes": 1735
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "aad0b0a12256807936d52d4a6f88a1773236ae527564a688bab4e3fe780e8724",
+        "size_in_bytes": 87
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "2af09043409a929eca277ef3fe122a5854cc333ae6a1e93e16dd9799a5f17e3f",
+        "size_in_bytes": 123
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "88e451cbafe567db572ef3b45ba7c93e7f1057b179df68af97e7f658699a6c17",
+        "size_in_bytes": 22284
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "1e7b14407a6205a893c70726c15c3e9c568f755359b5021d8b57960ed23e3332",
+        "size_in_bytes": 1493
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/android.py",
+        "path_type": "hardlink",
+        "sha256": "af40ec85505ff913b58d72465fc0b84e297b1755d6b7e6e47563209af1226988",
+        "size_in_bytes": 9013
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/api.py",
+        "path_type": "hardlink",
+        "sha256": "53d133237118c5c5d6502b48191965aab70df7d8b62d26359aadbe1adb14c044",
+        "size_in_bytes": 9277
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/macos.py",
+        "path_type": "hardlink",
+        "sha256": "5256f2159f11ceedf19dd0aa4041eb7ec613787c187456a9d48a33fb2c6f793e",
+        "size_in_bytes": 6154
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/unix.py",
+        "path_type": "hardlink",
+        "sha256": "5999a4500fbe2f724d4469b3df6b37e587e80f789c6bac4a20f74257f1e12dcb",
+        "size_in_bytes": 10458
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/version.py",
+        "path_type": "hardlink",
+        "sha256": "75d37711c50f7deafb09baa6c85366834dd1deefaa0e7df64ff7cbb31db9f829",
+        "size_in_bytes": 511
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs/windows.py",
+        "path_type": "hardlink",
+        "sha256": "205a62a21501c313ed0b39722b036dc725b8264f2169ae96f28e7d99fac35d5a",
+        "size_in_bytes": 10125
+      },
+      {
+        "_path": "lib/python3.11/site-packages/platformdirs-4.3.8.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
+        "size_in_bytes": 1089
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/platformdirs-4.3.8-pyhe01879c_0",
+    "type": 1
+  }
+}
