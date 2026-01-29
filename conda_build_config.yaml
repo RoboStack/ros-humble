@@ -62,7 +62,7 @@ libzenohcxx:
 libcap:
   - 2.71
 
-lbr-fri-client-sdk:
+lbr_fri_client_sdk:
   - '1.11'
   - '1.14'
   - '1.15'
