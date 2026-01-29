@@ -1,0 +1,6 @@
+
+[:platform_python_implementation == "PyPy"]
+cffi>=1.11
+
+[cffi]
+cffi>=1.11
