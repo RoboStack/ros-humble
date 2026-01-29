@@ -1,7 +1,7 @@
-diff --git a/hardware_interface/include/hardware_interface/lexical_casts.hpp b/hardware_interface/include/hardware_interface/lexical_casts.hpp
+diff --git a/include/hardware_interface/lexical_casts.hpp b/include/hardware_interface/lexical_casts.hpp
 index 846d9f757c..042361e392 100644
---- a/hardware_interface/include/hardware_interface/lexical_casts.hpp
-+++ b/hardware_interface/include/hardware_interface/lexical_casts.hpp
+--- a/include/hardware_interface/lexical_casts.hpp
++++ b/include/hardware_interface/lexical_casts.hpp
 @@ -21,6 +21,8 @@
  #include <stdexcept>
  #include <string>
@@ -22,10 +22,10 @@ index 846d9f757c..042361e392 100644
  bool parse_bool(const std::string & bool_string);
  
  }  // namespace hardware_interface
-diff --git a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
+diff --git a/include/hardware_interface/types/hardware_interface_return_values.hpp b/include/hardware_interface/types/hardware_interface_return_values.hpp
 index 5c3ea22ca0..271dc29faf 100644
---- a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
-+++ b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
+--- a/include/hardware_interface/types/hardware_interface_return_values.hpp
++++ b/include/hardware_interface/types/hardware_interface_return_values.hpp
 @@ -17,6 +17,10 @@
  
  #include <cstdint>
