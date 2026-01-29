@@ -1,0 +1,148 @@
+{
+  "build": "pyhd8ed1ab_1",
+  "build_number": 1,
+  "depends": [
+    "python >=3.9"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "7c3c2a0f3ebdea2bbc35538d162b43bf",
+  "name": "shellingham",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/shellingham?source=compressed-mapping"
+  ],
+  "sha256": "0557c090913aa63cdbe821dbdfa038a321b488e22bc80196c4b3b1aace4914ef",
+  "size": 14462,
+  "subdir": "noarch",
+  "timestamp": 1733301007770,
+  "version": "1.5.4",
+  "fn": "shellingham-1.5.4-pyhd8ed1ab_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/shellingham-1.5.4-pyhd8ed1ab_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/shellingham-1.5.4-pyhd8ed1ab_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/shellingham/__init__.py",
+    "lib/python3.11/site-packages/shellingham/_core.py",
+    "lib/python3.11/site-packages/shellingham/nt.py",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/LICENSE",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/METADATA",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/RECORD",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/WHEEL",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/zip-safe",
+    "lib/python3.11/site-packages/shellingham/posix/__init__.py",
+    "lib/python3.11/site-packages/shellingham/posix/_core.py",
+    "lib/python3.11/site-packages/shellingham/posix/proc.py",
+    "lib/python3.11/site-packages/shellingham/posix/ps.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/shellingham/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "a4029750f294770c84ac2d198d2fb9c3e7d17526e675c7ef9e9b7fc75c96aad0",
+        "size_in_bytes": 635
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham/_core.py",
+        "path_type": "hardlink",
+        "sha256": "bfe093affec5edc240b4d9f3a5ad4dfc797c69f918e728830388e81a6b1406ed",
+        "size_in_bytes": 300
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham/nt.py",
+        "path_type": "hardlink",
+        "sha256": "9ba27a4aec32a95565c574fd05cfbd17fd71f93e6ed2008516b4401762c891e8",
+        "size_in_bytes": 4516
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d",
+        "size_in_bytes": 751
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "183d80220a37493262795739dd357cc5bb3f49bd390cc9198d5180e5451a07fa",
+        "size_in_bytes": 3461
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "49329479764adb8c00e7f011d76d4b0a2b713d7853f2a795d2360aecc18c32ad",
+        "size_in_bytes": 1710
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "a7178d5f925db427b9f0f51260ff6ea6673b8dd44f82f4f41a6f646f5487955c",
+        "size_in_bytes": 109
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "66dded80187b831e6b771e3350b65b939504d3d3cbaf2042f2b8687848fea0ba",
+        "size_in_bytes": 107
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "b8a3102f900ac4f8b83bdfd16ddf37f10784b38226a4640a35b103658aa00609",
+        "size_in_bytes": 12
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham-1.5.4.dist-info/zip-safe",
+        "path_type": "hardlink",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "size_in_bytes": 1
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham/posix/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "a41ebdaadbd927fc887f8f27978f997d2df02f0c2e5ee9275ce6610670b64f5a",
+        "size_in_bytes": 3129
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham/posix/_core.py",
+        "path_type": "hardlink",
+        "sha256": "fefd7c51a5dbcebe26b8d86bdfe987d4575276367f74e5d0aed532a2621b2984",
+        "size_in_bytes": 81
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham/posix/proc.py",
+        "path_type": "hardlink",
+        "sha256": "9d253122e412a2dbda0d6efa8b4a1340033d699f4f5c12c500492d5a58d2282a",
+        "size_in_bytes": 2659
+      },
+      {
+        "_path": "lib/python3.11/site-packages/shellingham/posix/ps.py",
+        "path_type": "hardlink",
+        "sha256": "346983282ba484da7495a87060268c5e984161a55b85b891f41b44d0e913f2a5",
+        "size_in_bytes": 1770
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/shellingham-1.5.4-pyhd8ed1ab_1",
+    "type": 1
+  }
+}

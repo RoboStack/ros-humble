@@ -1,0 +1,2357 @@
+{
+  "build": "pyh29332c3_0",
+  "build_number": 0,
+  "depends": [
+    "attrs >=22.2.0",
+    "python >=3.9",
+    "rpds-py >=0.7.0",
+    "typing_extensions >=4.4.0",
+    "python"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "9140f1c09dd5489549c6a33931b943c7",
+  "name": "referencing",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/referencing?source=hash-mapping"
+  ],
+  "sha256": "e20909f474a6cece176dfc0dc1addac265deb5fa92ea90e975fbca48085b20c3",
+  "size": 51668,
+  "subdir": "noarch",
+  "timestamp": 1737836872415,
+  "version": "0.36.2",
+  "fn": "referencing-0.36.2-pyh29332c3_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/referencing-0.36.2-pyh29332c3_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/referencing-0.36.2-pyh29332c3_0",
+  "requested_specs": [],
+  "files": [
+    "etc/conda/test-files/referencing/1/suite/.git",
+    "etc/conda/test-files/referencing/1/suite/.markdownlint.jsonc",
+    "etc/conda/test-files/referencing/1/suite/.pre-commit-config.yaml",
+    "etc/conda/test-files/referencing/1/suite/LICENSE",
+    "etc/conda/test-files/referencing/1/suite/README.md",
+    "etc/conda/test-files/referencing/1/suite/noxfile.py",
+    "etc/conda/test-files/referencing/1/suite/pyproject.toml",
+    "etc/conda/test-files/referencing/1/suite/test-schema.json",
+    "etc/conda/test-files/referencing/1/suite/test_sanity.py",
+    "etc/conda/test-files/referencing/1/suite/.github/dependabot.yml",
+    "etc/conda/test-files/referencing/1/suite/.github/release.yml",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/boolean-schemas.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-urn-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-urn.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-uri-with-nested-relative-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/ignored-siblings.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/invalid-anchor-with-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-additionalItems.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-additionalProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-allOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-anyOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-contains.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-definitions.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-dependencies-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-dependencies-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-not.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-oneOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-patternProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-properties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-propertyNames.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/multiple-lookup-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/multiple-lookup-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/multiple-lookup.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nested-absolute-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nested-relative-id-only-retrieval-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nested-relative-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nonreferencing-keywords-const.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nonreferencing-keywords-default.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nonreferencing-keywords-enum.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nonreferencing-keywords-examples.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-id-in-dependencies-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-id-in-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-id-in-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-non-keyword-id-in-subvalue.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-non-keyword-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/relative-pointer-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/relative-pointer-escapes.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/relative-pointer-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/rfc3986-normalization-on-insertion.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/rfc3986-normalization-on-retrieval.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/tag-uris.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/unknown-keyword.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/bad-future-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/boolean-schemas.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-urn-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-urn.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-uri-with-nested-relative-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/ignored-siblings.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/invalid-anchor-with-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-additionalItems.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-additionalProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-allOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-anyOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-contains.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-definitions.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-dependencies-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-dependencies-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-else.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-if.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-not.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-oneOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-patternProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-properties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-propertyNames.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-then.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/multiple-lookup-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/multiple-lookup-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/multiple-lookup.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nested-absolute-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nested-relative-id-only-retrieval-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nested-relative-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nonreferencing-keywords-const.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nonreferencing-keywords-default.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nonreferencing-keywords-enum.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nonreferencing-keywords-examples.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-id-in-dependencies-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-id-in-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-id-in-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-non-keyword-id-in-subvalue.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-non-keyword-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/relative-pointer-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/relative-pointer-escapes.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/relative-pointer-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/rfc3986-normalization-on-insertion.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/rfc3986-normalization-on-retrieval.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/tag-uris.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/unknown-keyword.json",
+    "lib/python3.11/site-packages/referencing/tests/__init__.py",
+    "lib/python3.11/site-packages/referencing/tests/test_core.py",
+    "lib/python3.11/site-packages/referencing/tests/test_exceptions.py",
+    "lib/python3.11/site-packages/referencing/tests/test_jsonschema.py",
+    "lib/python3.11/site-packages/referencing/tests/test_referencing_suite.py",
+    "lib/python3.11/site-packages/referencing/tests/test_retrieval.py",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/bad-future-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/bad-future-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/external-absolute-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/ignored-siblings.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-additionalItems-boolean.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-additionalItems-schema.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-additionalProperties-boolean.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-additionalProperties-schema.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-dependencies-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-dependencies-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-extends.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-patternProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-properties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/multiple-lookup-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/multiple-lookup.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/nonreferencing-keywords-default.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/nonreferencing-keywords-enum.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-id-in-dependencies-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-id-in-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-id-in-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-non-keyword-id-in-subvalue.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-non-keyword-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/relative-pointer-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/relative-pointer-escapes.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/relative-pointer-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/rfc3986-normalization-on-insertion.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/rfc3986-normalization-on-retrieval.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/unknown-keyword.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/bad-future-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/bad-future-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-urn-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-urn.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-uri-with-nested-relative-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/ignored-siblings.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/invalid-anchor-with-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-additionalItems-boolean.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-additionalItems-schema.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-additionalProperties-boolean.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-additionalProperties-schema.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-allOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-anyOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-definitions.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-dependencies-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-dependencies-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-not.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-oneOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-patternProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-properties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/multiple-lookup-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/multiple-lookup-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/multiple-lookup.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nested-absolute-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nested-relative-id-only-retrieval-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nested-relative-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nonreferencing-keywords-default.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nonreferencing-keywords-enum.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-id-in-dependencies-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-id-in-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-id-in-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-non-keyword-id-in-subvalue.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-non-keyword-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/relative-pointer-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/relative-pointer-escapes.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/relative-pointer-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/rfc3986-normalization-on-insertion.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/rfc3986-normalization-on-retrieval.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/tag-uris.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/unknown-keyword.json",
+    "etc/conda/test-files/referencing/1/suite/tests/specifications.json",
+    "etc/conda/test-files/referencing/1/suite/.github/workflows/ci.yml",
+    "lib/python3.11/site-packages/referencing-0.36.2.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/referencing-0.36.2.dist-info/METADATA",
+    "lib/python3.11/site-packages/referencing-0.36.2.dist-info/RECORD",
+    "lib/python3.11/site-packages/referencing-0.36.2.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/referencing-0.36.2.dist-info/WHEEL",
+    "lib/python3.11/site-packages/referencing-0.36.2.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/referencing-0.36.2.dist-info/licenses/COPYING",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/boolean-schemas.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-urn-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-urn.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-uri-with-nested-relative-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/invalid-anchor-with-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-additionalItems.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-additionalProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-allOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-anyOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-contains.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-contentSchema.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-definitions.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-defs.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-dependentSchemas.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-else.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-if.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-not.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-oneOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-patternProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-properties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-propertyNames.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-then.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-unevaluatedItems.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-unevaluatedProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/multiple-lookup-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/multiple-lookup-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/multiple-lookup.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nested-absolute-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nested-relative-id-only-retrieval-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nested-relative-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nonreferencing-keywords-const.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nonreferencing-keywords-default.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nonreferencing-keywords-enum.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nonreferencing-keywords-examples.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/pointer-crossing-id-in-items-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/pointer-crossing-id-in-items-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/pointer-crossing-non-keyword-id-in-subvalue.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/pointer-crossing-non-keyword-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/relative-pointer-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/relative-pointer-escapes.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/relative-pointer-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/rfc3986-normalization-on-insertion.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/rfc3986-normalization-on-retrieval.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/tag-uris.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/unignored-siblings.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/unknown-keyword.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/boolean-schemas.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-uri-empty-fragment.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-urn.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-uri-with-nested-relative-uri-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-urn-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/invalid-anchor-with-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-additionalProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-allOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-anyOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-contains.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-contentSchema.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-definitions.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-defs.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-dependentSchemas.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-else.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-if.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-items.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-not.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-oneOf.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-patternProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-prefixItems.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-properties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-propertyNames.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-then.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-unevaluatedItems.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-unevaluatedProperties.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/multiple-lookup-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/multiple-lookup-pointer.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/multiple-lookup.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nested-absolute-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nested-relative-id-only-retrieval-uri.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nested-relative-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nonreferencing-keywords-const.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nonreferencing-keywords-default.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nonreferencing-keywords-enum.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nonreferencing-keywords-examples.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/pointer-crossing-non-keyword-id-in-subvalue.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/pointer-crossing-non-keyword-id.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/relative-pointer-array.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/relative-pointer-escapes.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/relative-pointer-object.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/rfc3986-normalization-on-insertion.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/rfc3986-normalization-on-retrieval.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/tag-uris.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/unignored-siblings.json",
+    "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/unknown-keyword.json",
+    "lib/python3.11/site-packages/referencing/__init__.py",
+    "lib/python3.11/site-packages/referencing/_attrs.py",
+    "lib/python3.11/site-packages/referencing/_attrs.pyi",
+    "lib/python3.11/site-packages/referencing/_core.py",
+    "lib/python3.11/site-packages/referencing/exceptions.py",
+    "lib/python3.11/site-packages/referencing/jsonschema.py",
+    "lib/python3.11/site-packages/referencing/py.typed",
+    "lib/python3.11/site-packages/referencing/retrieval.py",
+    "lib/python3.11/site-packages/referencing/typing.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/.git",
+        "path_type": "hardlink",
+        "sha256": "f84dcd4d4573c431d1db25db9a3cc188850e81a7a46a5c5983db56f528d2101f",
+        "size_in_bytes": 30
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/.markdownlint.jsonc",
+        "path_type": "hardlink",
+        "sha256": "1bfa297453ca6a73f890085db8fd585e510afca8c4a2b1dad072a2b324921847",
+        "size_in_bytes": 166
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/.pre-commit-config.yaml",
+        "path_type": "hardlink",
+        "sha256": "3cf103a913c9e68456859111518c44b5b887104e0a745e0d394db88ecb19193b",
+        "size_in_bytes": 953
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
+        "size_in_bytes": 1057
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/README.md",
+        "path_type": "hardlink",
+        "sha256": "bb16d8773ed303a024e02cc05c1caf61c2d0c5d8f0a527af06ac32317a645b65",
+        "size_in_bytes": 2754
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/noxfile.py",
+        "path_type": "hardlink",
+        "sha256": "f5bf3fe3799341080a60dcc25d59b7251dc0fe5d149aa9a03642776d2cf5678f",
+        "size_in_bytes": 806
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/pyproject.toml",
+        "path_type": "hardlink",
+        "sha256": "fc9a1b66e64247b2a69726ea298e5503f82284bf8b6f1b6632545791102a91e4",
+        "size_in_bytes": 2458
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/test-schema.json",
+        "path_type": "hardlink",
+        "sha256": "170a7f3c3e5e79352e021b9579a6e3b850ec2dee202fbbd92befe652dea6f651",
+        "size_in_bytes": 2770
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/test_sanity.py",
+        "path_type": "hardlink",
+        "sha256": "519fef2b4bf683c5b51b02f7266dde5a88ced642c92542bef910debf8e382b49",
+        "size_in_bytes": 1152
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/.github/dependabot.yml",
+        "path_type": "hardlink",
+        "sha256": "883b95e3be554fbadd92b315e4a8c6ea6ca688b64924e22dd61222b07f683507",
+        "size_in_bytes": 118
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/.github/release.yml",
+        "path_type": "hardlink",
+        "sha256": "e9bbbe31c635d5e7ed4dc0a8d4a020a6899718e97b001944a0c38ad163285ee7",
+        "size_in_bytes": 76
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "d2288809e8f38ab2600090d18e5227ac4ad42ee57fc5b08ce0afd5868dc1e6f5",
+        "size_in_bytes": 315
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/anchor.json",
+        "path_type": "hardlink",
+        "sha256": "2decfa0b67103708bf9afb6c71d7f0e4c9f93fd6be62bd81bb95630fdbf04d96",
+        "size_in_bytes": 366
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/boolean-schemas.json",
+        "path_type": "hardlink",
+        "sha256": "c04af2cbd3562e98d41dbd2a9954f3b89e5489f151423364503268c458a7d836",
+        "size_in_bytes": 656
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "9910669731e96bcbc07ee495988ca034cc6a0ca4421783edd142f5f528112ec6",
+        "size_in_bytes": 235
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "3fb914510de05dcb8ca25a5e2e5a5af90ce85bf99199dc91eaf5631a3937a2e4",
+        "size_in_bytes": 344
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "81aa10dfbe62e3a9bae66bf86d443a13f8a4ad9f5c653b1f69a7d7d3d5abfb2d",
+        "size_in_bytes": 213
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "87e9e6f4a9b56616ac0718bb26c0e2226c8def3f4dc3ee527fa8613fa5d30453",
+        "size_in_bytes": 388
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-uri.json",
+        "path_type": "hardlink",
+        "sha256": "19b6b35660ed8ab44e97e42470f92abc71d69195cef50b99e579a4db194d155b",
+        "size_in_bytes": 212
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-urn-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "ae8c7d089bcdb6a6848a446d558e2de2d82478b1c3b328f23ac0c43782edb55f",
+        "size_in_bytes": 342
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-absolute-urn.json",
+        "path_type": "hardlink",
+        "sha256": "db63afa2001ded31e06a1754bfb38cb945a5fc594d45eb2b028433d44e3a7459",
+        "size_in_bytes": 204
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/external-uri-with-nested-relative-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "218a8eb7281fc7e9a107e2552b5b8f6bc72c5e78ea9a94b912f2114d80c927da",
+        "size_in_bytes": 456
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/ignored-siblings.json",
+        "path_type": "hardlink",
+        "sha256": "94ceab573ba6918546bf34d8dfae6359733a1413b1f901e68f8ec15f443302fc",
+        "size_in_bytes": 423
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/invalid-anchor-with-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "70b332bfc7067ef8fd35d19fe8e1f74dc10e686b856911ea0d0de2c68ff2d740",
+        "size_in_bytes": 674
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-additionalItems.json",
+        "path_type": "hardlink",
+        "sha256": "6e1eb7e68980a7ab7a791e4ed6d2beb73db46ed0cdfed41e19e40ea00550d7f9",
+        "size_in_bytes": 414
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-additionalProperties.json",
+        "path_type": "hardlink",
+        "sha256": "b4dcd42579d8605d903a6e6bb331fd1d53696c1c04fe48978c57f006c6e607f6",
+        "size_in_bytes": 434
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-allOf.json",
+        "path_type": "hardlink",
+        "sha256": "3acaebaeeba730699ed60733500cca66d796a909f54bc44cddfb0af791dedb71",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-anyOf.json",
+        "path_type": "hardlink",
+        "sha256": "4eaab6d7fb60fa9b06e0f546c27164636a9c02fa38e13a1921f98c6d21ceb9fc",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-contains.json",
+        "path_type": "hardlink",
+        "sha256": "243a626ac9cd02f0860fdc131f723ec2113316566d48a132fd7c0e3e1aa6fa14",
+        "size_in_bytes": 383
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-definitions.json",
+        "path_type": "hardlink",
+        "sha256": "392ac48816f129b4c431ed38f9a46db027de7a28f4739ae869c0b23c14c9d637",
+        "size_in_bytes": 420
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-dependencies-array.json",
+        "path_type": "hardlink",
+        "sha256": "598f59667aaf2ef99d715d86d3d3ceb18034c93f9aefb78a88d670a532ecf8a7",
+        "size_in_bytes": 243
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-dependencies-object.json",
+        "path_type": "hardlink",
+        "sha256": "818788d43a3543972b44bab2915d71c15896ad59dbdb7d2e818290c534c01c26",
+        "size_in_bytes": 421
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "5243b6fc581d137948695fcb1ffc7ed2f910cf4f61a75bdf1887b92ac66ba171",
+        "size_in_bytes": 567
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "0bcc02b653f8d22e3ae0b21bd2f96c810cfea371cfa84a4765c650a9c2258869",
+        "size_in_bytes": 374
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-not.json",
+        "path_type": "hardlink",
+        "sha256": "7fd845694b708616a5daadbd28c4729e33851caf411cd000c9c1678f775a1bc6",
+        "size_in_bytes": 363
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-oneOf.json",
+        "path_type": "hardlink",
+        "sha256": "e0943cf3e9562bbbf9155543745e50128315684af902a20d551ba2970120261c",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-patternProperties.json",
+        "path_type": "hardlink",
+        "sha256": "7ec84ae01bc4879924c7bf55a9ca943a08590759f1677a152da9af9427a05ad1",
+        "size_in_bytes": 426
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-properties.json",
+        "path_type": "hardlink",
+        "sha256": "a20c237507725999933278a721b182ae94ef7ff99ce50c73e4cd2936499cb086",
+        "size_in_bytes": 419
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/keywords-propertyNames.json",
+        "path_type": "hardlink",
+        "sha256": "4ed8192cfe8de5dd8cd92bd93382430a97bb305d6228396d72aabf0e13f80af6",
+        "size_in_bytes": 403
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/multiple-lookup-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "ec1a7865e4041f8c4b3326ae5b526b37fe37cbdf6af7aebd04b6090867ebac32",
+        "size_in_bytes": 418
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "5f0deb3e354c2d4c85b644a4b00ef8ebc0bd36768c31b70652a490eea4ccdaba",
+        "size_in_bytes": 972
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/multiple-lookup-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "2d485180982fc8accf639291636faf1ac49aa0f43ee8476718dea988d4f4a0c0",
+        "size_in_bytes": 318
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/multiple-lookup.json",
+        "path_type": "hardlink",
+        "sha256": "6e981fc94bd35249ea436d92fb18352153f3bc4535c664266785db1546cd19da",
+        "size_in_bytes": 454
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nested-absolute-id.json",
+        "path_type": "hardlink",
+        "sha256": "7196ee2c438c723c55f890b801240b2e234329ce092c17ada3bf634b90eca276",
+        "size_in_bytes": 679
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nested-relative-id-only-retrieval-uri.json",
+        "path_type": "hardlink",
+        "sha256": "fac47322c31f142e0345c3636db474a3fd992574be7efa0121d49023dd9ac735",
+        "size_in_bytes": 347
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nested-relative-id.json",
+        "path_type": "hardlink",
+        "sha256": "b15f55e363ffd9cde60b567a1626765750e8499beb7bb220ee1a790f823b38b9",
+        "size_in_bytes": 383
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nonreferencing-keywords-const.json",
+        "path_type": "hardlink",
+        "sha256": "42e1aa15a693dc2297f9d292cbc9fdcec451b8aadbd090fa04ff76677c0ff4fa",
+        "size_in_bytes": 264
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nonreferencing-keywords-default.json",
+        "path_type": "hardlink",
+        "sha256": "5ae0bac141d11b34e9d9c8ea118780b3bb616d0ba62bc65c12599e217d15d18c",
+        "size_in_bytes": 266
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nonreferencing-keywords-enum.json",
+        "path_type": "hardlink",
+        "sha256": "f53119f837d58ac6867f3c313d100215741ff361a46742bfbfe82ddb18b6278d",
+        "size_in_bytes": 265
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/nonreferencing-keywords-examples.json",
+        "path_type": "hardlink",
+        "sha256": "1b6ec76d3eaa502272bdd592f41df949a53ed2d040fa8c647a5e5a992def56fe",
+        "size_in_bytes": 269
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-id-in-dependencies-object.json",
+        "path_type": "hardlink",
+        "sha256": "d82fcdfcc44495514103816fb225403e3b5281a2f016536630f5d26098a75e53",
+        "size_in_bytes": 608
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-id-in-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "ae180edf360bc245b9ae2364100d08c05c5cc57b3a0c814f3c723d02da89f5d5",
+        "size_in_bytes": 582
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-id-in-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "4a12a3140091349b7aeac0a5329ebe8e4cfc70b4327b54bc2b86dba69a86a586",
+        "size_in_bytes": 544
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-non-keyword-id-in-subvalue.json",
+        "path_type": "hardlink",
+        "sha256": "af8a15cfc033e4d1269394b2715d101f26fb3616a563ebdf0ef67c881d760452",
+        "size_in_bytes": 314
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/pointer-crossing-non-keyword-id.json",
+        "path_type": "hardlink",
+        "sha256": "4369d9bb846a886272d53cafa5d4cf746e721ed6fea80f8fef0d3cc2661a8c2d",
+        "size_in_bytes": 383
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/relative-pointer-array.json",
+        "path_type": "hardlink",
+        "sha256": "3446c2f6be8f462fd17a7494043e5cc44ac7d39205bbae761b9affc53a9194be",
+        "size_in_bytes": 230
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/relative-pointer-escapes.json",
+        "path_type": "hardlink",
+        "sha256": "1393911ccf5e85b354c27073f8be59b443dd65db6539c82b84e37277de2caa20",
+        "size_in_bytes": 579
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/relative-pointer-object.json",
+        "path_type": "hardlink",
+        "sha256": "c09516c0581da462121034781304e19c6c06eb54a9f614f0f3d555680644e80e",
+        "size_in_bytes": 259
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/rfc3986-normalization-on-insertion.json",
+        "path_type": "hardlink",
+        "sha256": "654d2ccb05b4c84127c5c9e89356646b0d056fa2a771ff2cf3d4983351de1883",
+        "size_in_bytes": 2767
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/rfc3986-normalization-on-retrieval.json",
+        "path_type": "hardlink",
+        "sha256": "38cd17e110bb54a458a62d0aba9a5f1baece2d4ebf5319f2deedd017c40f7f90",
+        "size_in_bytes": 2762
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/tag-uris.json",
+        "path_type": "hardlink",
+        "sha256": "6cd659763d71b2a0a69c1b48c027986dbce4499ccc6ac9d27eeae122dd3a08f9",
+        "size_in_bytes": 1731
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-06/unknown-keyword.json",
+        "path_type": "hardlink",
+        "sha256": "240561363154103bdaae5aa13f3eb299e3ee9921651c4bf389279b65ae192890",
+        "size_in_bytes": 327
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "d2288809e8f38ab2600090d18e5227ac4ad42ee57fc5b08ce0afd5868dc1e6f5",
+        "size_in_bytes": 315
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/anchor.json",
+        "path_type": "hardlink",
+        "sha256": "2decfa0b67103708bf9afb6c71d7f0e4c9f93fd6be62bd81bb95630fdbf04d96",
+        "size_in_bytes": 366
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/bad-future-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "40f46f9807688aee10a7852cdbc89f1fa26a394a15092cafa2466eb72bc4c634",
+        "size_in_bytes": 319
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/boolean-schemas.json",
+        "path_type": "hardlink",
+        "sha256": "52d2e702e1b404df88d9ac1c0cf43979173fe772f0da4d0bf8f65ff3064c72a8",
+        "size_in_bytes": 714
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "9910669731e96bcbc07ee495988ca034cc6a0ca4421783edd142f5f528112ec6",
+        "size_in_bytes": 235
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "3fb914510de05dcb8ca25a5e2e5a5af90ce85bf99199dc91eaf5631a3937a2e4",
+        "size_in_bytes": 344
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "81aa10dfbe62e3a9bae66bf86d443a13f8a4ad9f5c653b1f69a7d7d3d5abfb2d",
+        "size_in_bytes": 213
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "87e9e6f4a9b56616ac0718bb26c0e2226c8def3f4dc3ee527fa8613fa5d30453",
+        "size_in_bytes": 388
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-uri.json",
+        "path_type": "hardlink",
+        "sha256": "19b6b35660ed8ab44e97e42470f92abc71d69195cef50b99e579a4db194d155b",
+        "size_in_bytes": 212
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-urn-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "ae8c7d089bcdb6a6848a446d558e2de2d82478b1c3b328f23ac0c43782edb55f",
+        "size_in_bytes": 342
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-absolute-urn.json",
+        "path_type": "hardlink",
+        "sha256": "db63afa2001ded31e06a1754bfb38cb945a5fc594d45eb2b028433d44e3a7459",
+        "size_in_bytes": 204
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/external-uri-with-nested-relative-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "218a8eb7281fc7e9a107e2552b5b8f6bc72c5e78ea9a94b912f2114d80c927da",
+        "size_in_bytes": 456
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/ignored-siblings.json",
+        "path_type": "hardlink",
+        "sha256": "94ceab573ba6918546bf34d8dfae6359733a1413b1f901e68f8ec15f443302fc",
+        "size_in_bytes": 423
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/invalid-anchor-with-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "70b332bfc7067ef8fd35d19fe8e1f74dc10e686b856911ea0d0de2c68ff2d740",
+        "size_in_bytes": 674
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-additionalItems.json",
+        "path_type": "hardlink",
+        "sha256": "6e1eb7e68980a7ab7a791e4ed6d2beb73db46ed0cdfed41e19e40ea00550d7f9",
+        "size_in_bytes": 414
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-additionalProperties.json",
+        "path_type": "hardlink",
+        "sha256": "b4dcd42579d8605d903a6e6bb331fd1d53696c1c04fe48978c57f006c6e607f6",
+        "size_in_bytes": 434
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-allOf.json",
+        "path_type": "hardlink",
+        "sha256": "3acaebaeeba730699ed60733500cca66d796a909f54bc44cddfb0af791dedb71",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-anyOf.json",
+        "path_type": "hardlink",
+        "sha256": "4eaab6d7fb60fa9b06e0f546c27164636a9c02fa38e13a1921f98c6d21ceb9fc",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-contains.json",
+        "path_type": "hardlink",
+        "sha256": "243a626ac9cd02f0860fdc131f723ec2113316566d48a132fd7c0e3e1aa6fa14",
+        "size_in_bytes": 383
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-definitions.json",
+        "path_type": "hardlink",
+        "sha256": "392ac48816f129b4c431ed38f9a46db027de7a28f4739ae869c0b23c14c9d637",
+        "size_in_bytes": 420
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-dependencies-array.json",
+        "path_type": "hardlink",
+        "sha256": "598f59667aaf2ef99d715d86d3d3ceb18034c93f9aefb78a88d670a532ecf8a7",
+        "size_in_bytes": 243
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-dependencies-object.json",
+        "path_type": "hardlink",
+        "sha256": "818788d43a3543972b44bab2915d71c15896ad59dbdb7d2e818290c534c01c26",
+        "size_in_bytes": 421
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-else.json",
+        "path_type": "hardlink",
+        "sha256": "f4e0c91f861f3888ee852749d131b2acdb3365034351639eb96ed4a37a17dfc6",
+        "size_in_bytes": 370
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-if.json",
+        "path_type": "hardlink",
+        "sha256": "717f9ca62181e5191857e358b83e0b4514772369d6d5c196e5f3f99fbdfc55ff",
+        "size_in_bytes": 362
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "5243b6fc581d137948695fcb1ffc7ed2f910cf4f61a75bdf1887b92ac66ba171",
+        "size_in_bytes": 567
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "0bcc02b653f8d22e3ae0b21bd2f96c810cfea371cfa84a4765c650a9c2258869",
+        "size_in_bytes": 374
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-not.json",
+        "path_type": "hardlink",
+        "sha256": "7fd845694b708616a5daadbd28c4729e33851caf411cd000c9c1678f775a1bc6",
+        "size_in_bytes": 363
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-oneOf.json",
+        "path_type": "hardlink",
+        "sha256": "e0943cf3e9562bbbf9155543745e50128315684af902a20d551ba2970120261c",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-patternProperties.json",
+        "path_type": "hardlink",
+        "sha256": "7ec84ae01bc4879924c7bf55a9ca943a08590759f1677a152da9af9427a05ad1",
+        "size_in_bytes": 426
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-properties.json",
+        "path_type": "hardlink",
+        "sha256": "a20c237507725999933278a721b182ae94ef7ff99ce50c73e4cd2936499cb086",
+        "size_in_bytes": 419
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-propertyNames.json",
+        "path_type": "hardlink",
+        "sha256": "4ed8192cfe8de5dd8cd92bd93382430a97bb305d6228396d72aabf0e13f80af6",
+        "size_in_bytes": 403
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/keywords-then.json",
+        "path_type": "hardlink",
+        "sha256": "9c824b6492dc12656173b617bb9510334627fa4e30b9c88becf97434839e9db4",
+        "size_in_bytes": 367
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/multiple-lookup-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "ec1a7865e4041f8c4b3326ae5b526b37fe37cbdf6af7aebd04b6090867ebac32",
+        "size_in_bytes": 418
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "5f0deb3e354c2d4c85b644a4b00ef8ebc0bd36768c31b70652a490eea4ccdaba",
+        "size_in_bytes": 972
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/multiple-lookup-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "2d485180982fc8accf639291636faf1ac49aa0f43ee8476718dea988d4f4a0c0",
+        "size_in_bytes": 318
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/multiple-lookup.json",
+        "path_type": "hardlink",
+        "sha256": "6e981fc94bd35249ea436d92fb18352153f3bc4535c664266785db1546cd19da",
+        "size_in_bytes": 454
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nested-absolute-id.json",
+        "path_type": "hardlink",
+        "sha256": "7196ee2c438c723c55f890b801240b2e234329ce092c17ada3bf634b90eca276",
+        "size_in_bytes": 679
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nested-relative-id-only-retrieval-uri.json",
+        "path_type": "hardlink",
+        "sha256": "fac47322c31f142e0345c3636db474a3fd992574be7efa0121d49023dd9ac735",
+        "size_in_bytes": 347
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nested-relative-id.json",
+        "path_type": "hardlink",
+        "sha256": "b15f55e363ffd9cde60b567a1626765750e8499beb7bb220ee1a790f823b38b9",
+        "size_in_bytes": 383
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nonreferencing-keywords-const.json",
+        "path_type": "hardlink",
+        "sha256": "42e1aa15a693dc2297f9d292cbc9fdcec451b8aadbd090fa04ff76677c0ff4fa",
+        "size_in_bytes": 264
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nonreferencing-keywords-default.json",
+        "path_type": "hardlink",
+        "sha256": "5ae0bac141d11b34e9d9c8ea118780b3bb616d0ba62bc65c12599e217d15d18c",
+        "size_in_bytes": 266
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nonreferencing-keywords-enum.json",
+        "path_type": "hardlink",
+        "sha256": "f53119f837d58ac6867f3c313d100215741ff361a46742bfbfe82ddb18b6278d",
+        "size_in_bytes": 265
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/nonreferencing-keywords-examples.json",
+        "path_type": "hardlink",
+        "sha256": "1b6ec76d3eaa502272bdd592f41df949a53ed2d040fa8c647a5e5a992def56fe",
+        "size_in_bytes": 269
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-id-in-dependencies-object.json",
+        "path_type": "hardlink",
+        "sha256": "d82fcdfcc44495514103816fb225403e3b5281a2f016536630f5d26098a75e53",
+        "size_in_bytes": 608
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-id-in-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "ae180edf360bc245b9ae2364100d08c05c5cc57b3a0c814f3c723d02da89f5d5",
+        "size_in_bytes": 582
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-id-in-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "4a12a3140091349b7aeac0a5329ebe8e4cfc70b4327b54bc2b86dba69a86a586",
+        "size_in_bytes": 544
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-non-keyword-id-in-subvalue.json",
+        "path_type": "hardlink",
+        "sha256": "af8a15cfc033e4d1269394b2715d101f26fb3616a563ebdf0ef67c881d760452",
+        "size_in_bytes": 314
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/pointer-crossing-non-keyword-id.json",
+        "path_type": "hardlink",
+        "sha256": "4369d9bb846a886272d53cafa5d4cf746e721ed6fea80f8fef0d3cc2661a8c2d",
+        "size_in_bytes": 383
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/relative-pointer-array.json",
+        "path_type": "hardlink",
+        "sha256": "3446c2f6be8f462fd17a7494043e5cc44ac7d39205bbae761b9affc53a9194be",
+        "size_in_bytes": 230
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/relative-pointer-escapes.json",
+        "path_type": "hardlink",
+        "sha256": "1393911ccf5e85b354c27073f8be59b443dd65db6539c82b84e37277de2caa20",
+        "size_in_bytes": 579
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/relative-pointer-object.json",
+        "path_type": "hardlink",
+        "sha256": "c09516c0581da462121034781304e19c6c06eb54a9f614f0f3d555680644e80e",
+        "size_in_bytes": 259
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/rfc3986-normalization-on-insertion.json",
+        "path_type": "hardlink",
+        "sha256": "654d2ccb05b4c84127c5c9e89356646b0d056fa2a771ff2cf3d4983351de1883",
+        "size_in_bytes": 2767
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/rfc3986-normalization-on-retrieval.json",
+        "path_type": "hardlink",
+        "sha256": "38cd17e110bb54a458a62d0aba9a5f1baece2d4ebf5319f2deedd017c40f7f90",
+        "size_in_bytes": 2762
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/tag-uris.json",
+        "path_type": "hardlink",
+        "sha256": "6cd659763d71b2a0a69c1b48c027986dbce4499ccc6ac9d27eeae122dd3a08f9",
+        "size_in_bytes": 1731
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-07/unknown-keyword.json",
+        "path_type": "hardlink",
+        "sha256": "240561363154103bdaae5aa13f3eb299e3ee9921651c4bf389279b65ae192890",
+        "size_in_bytes": 327
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/tests/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/tests/test_core.py",
+        "path_type": "hardlink",
+        "sha256": "79aa74080688db7be33086d5c848fddaa2dd769de21c7dc0c42e7908a50de0b5",
+        "size_in_bytes": 37854
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/tests/test_exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "ede39d1f2a1b5ccb7bfa1e409e71fbbbc8b0dae1cf687ed4e01b3d2612e08d6a",
+        "size_in_bytes": 934
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/tests/test_jsonschema.py",
+        "path_type": "hardlink",
+        "sha256": "e109e35163803009f9c9e03c66d95d264848e78bf02962560742c3ccd771e717",
+        "size_in_bytes": 11687
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/tests/test_referencing_suite.py",
+        "path_type": "hardlink",
+        "sha256": "c03eaf78c7cbb14bb4b3830b8e6ee94bc720e1c21f2fb14c044367824ef7cc22",
+        "size_in_bytes": 2335
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/tests/test_retrieval.py",
+        "path_type": "hardlink",
+        "sha256": "bdc6e77c0e13a957aa5335b4ef7c0efa72dea9522fd2b41958d5afd33f649b8f",
+        "size_in_bytes": 3719
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/bad-future-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "55dae668132e03c206fc81492af89306204cad2adc22f2151c15a74492ceed24",
+        "size_in_bytes": 318
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/bad-future-id.json",
+        "path_type": "hardlink",
+        "sha256": "6b2daee5a93e74bca18ce751e4849ea5c18234931e000543dc920756f690d3e4",
+        "size_in_bytes": 326
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "9910669731e96bcbc07ee495988ca034cc6a0ca4421783edd142f5f528112ec6",
+        "size_in_bytes": 235
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/external-absolute-uri.json",
+        "path_type": "hardlink",
+        "sha256": "19b6b35660ed8ab44e97e42470f92abc71d69195cef50b99e579a4db194d155b",
+        "size_in_bytes": 212
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/ignored-siblings.json",
+        "path_type": "hardlink",
+        "sha256": "bfbc86d59fb5f30d924ef92c290901254bb346b4efbc47ee5a44c86abdb123b9",
+        "size_in_bytes": 301
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-additionalItems-boolean.json",
+        "path_type": "hardlink",
+        "sha256": "a095ebbf3f1afed96f12cb2bbf56976d9a16681d76fffda03b6b9661959c79b1",
+        "size_in_bytes": 309
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-additionalItems-schema.json",
+        "path_type": "hardlink",
+        "sha256": "66ad932106caa021f8e4e5c1033e0bd01c28c62924f81b99e2f8d09291ddef13",
+        "size_in_bytes": 412
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-additionalProperties-boolean.json",
+        "path_type": "hardlink",
+        "sha256": "8fc20eb433d87d9c6e3189b782b5277817742f5166f296e177be60324bac2b8b",
+        "size_in_bytes": 314
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-additionalProperties-schema.json",
+        "path_type": "hardlink",
+        "sha256": "f251160ce4bf6c047f187c9685a0b6deb670b27267594c74f2588496f37561b5",
+        "size_in_bytes": 432
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-dependencies-array.json",
+        "path_type": "hardlink",
+        "sha256": "598f59667aaf2ef99d715d86d3d3ceb18034c93f9aefb78a88d670a532ecf8a7",
+        "size_in_bytes": 243
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-dependencies-object.json",
+        "path_type": "hardlink",
+        "sha256": "1c1a52f67f1bd531b7e8674e28f434249e3078c9daadcc03cde52becb64db10c",
+        "size_in_bytes": 419
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-extends.json",
+        "path_type": "hardlink",
+        "sha256": "f706c206f104925236357f5a7f56d842b0e71206b7033f242e2555772253534d",
+        "size_in_bytes": 304
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "13bacd42e588638d16e582ab28067fd24dbe25fbf231a082a550b00322d767ff",
+        "size_in_bytes": 563
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "5186c0fbb29b117cdbf61dca1ced71e30645961142bf1d6134cacf945f9b7140",
+        "size_in_bytes": 372
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-patternProperties.json",
+        "path_type": "hardlink",
+        "sha256": "fff8313844aa668ca6957a1d216c319f73b3c7d14ada805989dc90b7844d7e86",
+        "size_in_bytes": 424
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/keywords-properties.json",
+        "path_type": "hardlink",
+        "sha256": "16b4bd574dc4c5d65d8936d239d924c6d45f5bfa2e4ba9deaec5aa53cb29ff09",
+        "size_in_bytes": 417
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/multiple-lookup-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "2d485180982fc8accf639291636faf1ac49aa0f43ee8476718dea988d4f4a0c0",
+        "size_in_bytes": 318
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/multiple-lookup.json",
+        "path_type": "hardlink",
+        "sha256": "6e981fc94bd35249ea436d92fb18352153f3bc4535c664266785db1546cd19da",
+        "size_in_bytes": 454
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/nonreferencing-keywords-default.json",
+        "path_type": "hardlink",
+        "sha256": "3c310b59840d59fa9104e899e76ec1423576902dfd5b38650995ac52acb3d65e",
+        "size_in_bytes": 265
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/nonreferencing-keywords-enum.json",
+        "path_type": "hardlink",
+        "sha256": "7ca8d9407be5a7385a84a18e730bded18ff525ffbb77abaddf80593526abef0a",
+        "size_in_bytes": 264
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-id-in-dependencies-object.json",
+        "path_type": "hardlink",
+        "sha256": "c15507920897d3810d4edefcf44299ff4096e748d3d14d80bb0b0b6068ff56aa",
+        "size_in_bytes": 601
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-id-in-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "8d36787c716dd8c3ff9c6ac1f582436e314be9aa991337bb9a034f44eedca1d5",
+        "size_in_bytes": 575
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-id-in-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "d342f94a392b8994ac4bbc09e6409dd8c4d7df68aed053e2dca69e26aeaa0d49",
+        "size_in_bytes": 537
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-non-keyword-id-in-subvalue.json",
+        "path_type": "hardlink",
+        "sha256": "a13248d74ef1c9c126e4d9f27df2580be44ed24e67cdfb49384809ea4c63770a",
+        "size_in_bytes": 311
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/pointer-crossing-non-keyword-id.json",
+        "path_type": "hardlink",
+        "sha256": "03d6c0b61780bab415405b4bc10f6b753c3afb4e29597406d31f4322b8fd7e3d",
+        "size_in_bytes": 380
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/relative-pointer-array.json",
+        "path_type": "hardlink",
+        "sha256": "3446c2f6be8f462fd17a7494043e5cc44ac7d39205bbae761b9affc53a9194be",
+        "size_in_bytes": 230
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/relative-pointer-escapes.json",
+        "path_type": "hardlink",
+        "sha256": "1393911ccf5e85b354c27073f8be59b443dd65db6539c82b84e37277de2caa20",
+        "size_in_bytes": 579
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/relative-pointer-object.json",
+        "path_type": "hardlink",
+        "sha256": "c09516c0581da462121034781304e19c6c06eb54a9f614f0f3d555680644e80e",
+        "size_in_bytes": 259
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/rfc3986-normalization-on-insertion.json",
+        "path_type": "hardlink",
+        "sha256": "9d7c9d66793e4e29f0dc137115d9b28cb30ff5c92a42c51b988418311402a8f9",
+        "size_in_bytes": 1041
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/rfc3986-normalization-on-retrieval.json",
+        "path_type": "hardlink",
+        "sha256": "6f06c156e220991123a5e7a587731bd2c74b254f2f107d6cfb765ddd9f29c058",
+        "size_in_bytes": 1041
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-03/unknown-keyword.json",
+        "path_type": "hardlink",
+        "sha256": "f9e2585073c3c3b1544462c51a9e019b15df9c011bd87c6d854d8315349f7f1d",
+        "size_in_bytes": 326
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "a274ee720c42e7c9111bcda0ac42ca7dea509ddeaa886651e5387fcfd03271f4",
+        "size_in_bytes": 313
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/anchor.json",
+        "path_type": "hardlink",
+        "sha256": "17013fb86c6ebe6b15d423ceb8b15ab8990f808f76c8931fa18e37e76779c1a0",
+        "size_in_bytes": 364
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/bad-future-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "40f46f9807688aee10a7852cdbc89f1fa26a394a15092cafa2466eb72bc4c634",
+        "size_in_bytes": 319
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/bad-future-id.json",
+        "path_type": "hardlink",
+        "sha256": "696ab3fc1542c89186415992d44791526d78e0aa05425327e276f8b104776bdd",
+        "size_in_bytes": 327
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "9910669731e96bcbc07ee495988ca034cc6a0ca4421783edd142f5f528112ec6",
+        "size_in_bytes": 235
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "efe5d85df0ffb2737bf5277903b00d351aaea1c79eddde12a182157a23c25710",
+        "size_in_bytes": 342
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "81aa10dfbe62e3a9bae66bf86d443a13f8a4ad9f5c653b1f69a7d7d3d5abfb2d",
+        "size_in_bytes": 213
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "de08466c5002fa2df6b13b4907eee3f222a0e374078ee8f0ae5943fe2c48806e",
+        "size_in_bytes": 385
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-uri.json",
+        "path_type": "hardlink",
+        "sha256": "19b6b35660ed8ab44e97e42470f92abc71d69195cef50b99e579a4db194d155b",
+        "size_in_bytes": 212
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-urn-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "29f72704f6fb5547e7f18a2e37803efbbefdfcb892ffb8100d1c469f308ed8b5",
+        "size_in_bytes": 340
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-absolute-urn.json",
+        "path_type": "hardlink",
+        "sha256": "db63afa2001ded31e06a1754bfb38cb945a5fc594d45eb2b028433d44e3a7459",
+        "size_in_bytes": 204
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/external-uri-with-nested-relative-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "9cf5f75c0f5eb474c142b7337b1f64d1a3a5b3455cd504d212a18540bc5ed0a2",
+        "size_in_bytes": 453
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/ignored-siblings.json",
+        "path_type": "hardlink",
+        "sha256": "2236b63f02b246d4a4283f7a3a2e945662c78b3e388ca6dd10b90713c7293cd0",
+        "size_in_bytes": 419
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/invalid-anchor-with-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "f0c1e29e7f2441b55a0bfc296f8e84a08d8529f054cbd6f90a97f16b79526538",
+        "size_in_bytes": 673
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-additionalItems-boolean.json",
+        "path_type": "hardlink",
+        "sha256": "971418e3ff2be83535b1ebdf3f2ee44c39ccd3faf74cb325166ea828f8d34d56",
+        "size_in_bytes": 310
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-additionalItems-schema.json",
+        "path_type": "hardlink",
+        "sha256": "66ad932106caa021f8e4e5c1033e0bd01c28c62924f81b99e2f8d09291ddef13",
+        "size_in_bytes": 412
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-additionalProperties-boolean.json",
+        "path_type": "hardlink",
+        "sha256": "d481277cc18e68d53ee5131656896425a41f721dfd0331340a72a2da5f5165de",
+        "size_in_bytes": 315
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-additionalProperties-schema.json",
+        "path_type": "hardlink",
+        "sha256": "f251160ce4bf6c047f187c9685a0b6deb670b27267594c74f2588496f37561b5",
+        "size_in_bytes": 432
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-allOf.json",
+        "path_type": "hardlink",
+        "sha256": "48d513ab94c594178abfb7a56ea0b828dd7f1c93571fab25c5bef4fe557a340a",
+        "size_in_bytes": 499
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-anyOf.json",
+        "path_type": "hardlink",
+        "sha256": "ba7da536ad189497fa3adee3c9e6fab30e8d6fffe569d2a4a053ef859c887c71",
+        "size_in_bytes": 499
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-definitions.json",
+        "path_type": "hardlink",
+        "sha256": "250c54acc21b537462cde9c12fae4f6f9a1800e530eeb2056b1fd73ef20986be",
+        "size_in_bytes": 418
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-dependencies-array.json",
+        "path_type": "hardlink",
+        "sha256": "598f59667aaf2ef99d715d86d3d3ceb18034c93f9aefb78a88d670a532ecf8a7",
+        "size_in_bytes": 243
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-dependencies-object.json",
+        "path_type": "hardlink",
+        "sha256": "1c1a52f67f1bd531b7e8674e28f434249e3078c9daadcc03cde52becb64db10c",
+        "size_in_bytes": 419
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "13bacd42e588638d16e582ab28067fd24dbe25fbf231a082a550b00322d767ff",
+        "size_in_bytes": 563
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "5186c0fbb29b117cdbf61dca1ced71e30645961142bf1d6134cacf945f9b7140",
+        "size_in_bytes": 372
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-not.json",
+        "path_type": "hardlink",
+        "sha256": "65aafee99dd2612909dc5543a98a418a052aded8e1b332211028b22f29e22f5e",
+        "size_in_bytes": 361
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-oneOf.json",
+        "path_type": "hardlink",
+        "sha256": "8e1be264e59f7368046f61937f1445da49920516705ddf06ac532a7185e46856",
+        "size_in_bytes": 499
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-patternProperties.json",
+        "path_type": "hardlink",
+        "sha256": "fff8313844aa668ca6957a1d216c319f73b3c7d14ada805989dc90b7844d7e86",
+        "size_in_bytes": 424
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/keywords-properties.json",
+        "path_type": "hardlink",
+        "sha256": "16b4bd574dc4c5d65d8936d239d924c6d45f5bfa2e4ba9deaec5aa53cb29ff09",
+        "size_in_bytes": 417
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/multiple-lookup-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "0cd1bdbf6b06e56b6341254f70451c13f5eb5e6081b3b8de75d6ddf145c02e08",
+        "size_in_bytes": 415
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "8b95acf7fc7ab47d01adff17ef77e95920ed324537d09d2832e7d8b3bb435ed8",
+        "size_in_bytes": 964
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/multiple-lookup-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "2d485180982fc8accf639291636faf1ac49aa0f43ee8476718dea988d4f4a0c0",
+        "size_in_bytes": 318
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/multiple-lookup.json",
+        "path_type": "hardlink",
+        "sha256": "6e981fc94bd35249ea436d92fb18352153f3bc4535c664266785db1546cd19da",
+        "size_in_bytes": 454
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nested-absolute-id.json",
+        "path_type": "hardlink",
+        "sha256": "8a93439919ca10935a5da244c83d7c47dcf39c2624d58c28fcd9ed0d0e62bac6",
+        "size_in_bytes": 676
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nested-relative-id-only-retrieval-uri.json",
+        "path_type": "hardlink",
+        "sha256": "ec24d416e714db5657065da6cc3430ccf1472f4b92361068220554b914da6c79",
+        "size_in_bytes": 345
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nested-relative-id.json",
+        "path_type": "hardlink",
+        "sha256": "8393e65d2e0ea5625c38ea7140c26d236627cb2d4b6f5cef3fdac4beff7926d6",
+        "size_in_bytes": 380
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nonreferencing-keywords-default.json",
+        "path_type": "hardlink",
+        "sha256": "3c310b59840d59fa9104e899e76ec1423576902dfd5b38650995ac52acb3d65e",
+        "size_in_bytes": 265
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/nonreferencing-keywords-enum.json",
+        "path_type": "hardlink",
+        "sha256": "7ca8d9407be5a7385a84a18e730bded18ff525ffbb77abaddf80593526abef0a",
+        "size_in_bytes": 264
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-id-in-dependencies-object.json",
+        "path_type": "hardlink",
+        "sha256": "decbd46184515591998b0c3074c66697d355cc0e92a950b6150fbd4fb54f3a47",
+        "size_in_bytes": 603
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-id-in-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "59e75f3ddd2bc4b3874608c1ba64bd2a687523f565a01e50a56b3457132a3286",
+        "size_in_bytes": 577
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-id-in-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "25f3ea01e2dcf063078482205deffe9fb4408ff3ad5c30c6a779aeaad723b8df",
+        "size_in_bytes": 539
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-non-keyword-id-in-subvalue.json",
+        "path_type": "hardlink",
+        "sha256": "789b19025cac8912942f3a3cc22e67041dd1b88467f43827fc21712a5108efb9",
+        "size_in_bytes": 313
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/pointer-crossing-non-keyword-id.json",
+        "path_type": "hardlink",
+        "sha256": "51f7e97a14b49e7b5f20aadf4aec06ca263ae20a3c2a31bee8eb156c4accb83b",
+        "size_in_bytes": 382
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/relative-pointer-array.json",
+        "path_type": "hardlink",
+        "sha256": "3446c2f6be8f462fd17a7494043e5cc44ac7d39205bbae761b9affc53a9194be",
+        "size_in_bytes": 230
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/relative-pointer-escapes.json",
+        "path_type": "hardlink",
+        "sha256": "1393911ccf5e85b354c27073f8be59b443dd65db6539c82b84e37277de2caa20",
+        "size_in_bytes": 579
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/relative-pointer-object.json",
+        "path_type": "hardlink",
+        "sha256": "c09516c0581da462121034781304e19c6c06eb54a9f614f0f3d555680644e80e",
+        "size_in_bytes": 259
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/rfc3986-normalization-on-insertion.json",
+        "path_type": "hardlink",
+        "sha256": "fdfbb29b8a9c02bb47e8be00f896ab9ac4e25ea854eea10acc552fcd581c8508",
+        "size_in_bytes": 2756
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/rfc3986-normalization-on-retrieval.json",
+        "path_type": "hardlink",
+        "sha256": "fb6a2ad63e68ab056e94a38a7ae01c92c8bcf9e4a5cabe022cc200f87bdf5526",
+        "size_in_bytes": 2751
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/tag-uris.json",
+        "path_type": "hardlink",
+        "sha256": "5e9b5fb2751cd1827cd7182f6c0540408c2037d9e8bdbd67fe2fa83602e32513",
+        "size_in_bytes": 1726
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-04/unknown-keyword.json",
+        "path_type": "hardlink",
+        "sha256": "f9e2585073c3c3b1544462c51a9e019b15df9c011bd87c6d854d8315349f7f1d",
+        "size_in_bytes": 326
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/specifications.json",
+        "path_type": "hardlink",
+        "sha256": "81c3ac3ec39f71150901d327d16c5c0e33d6094c873dfd5a4b9036b58581723e",
+        "size_in_bytes": 437
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/.github/workflows/ci.yml",
+        "path_type": "hardlink",
+        "sha256": "408f02dd0c4d56c91823167581ace33af7c30b0256dffb29d76deddf3d7252b8",
+        "size_in_bytes": 480
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing-0.36.2.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing-0.36.2.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "f1ec8cf77a53d149e03e4370d19c5281753c77f24abc3468d27c614b05bd7206",
+        "size_in_bytes": 2843
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing-0.36.2.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "a3ecbb6b6b59d279bdf0beb53018d48a91fee1508c5fcb99b2674c041202ffac",
+        "size_in_bytes": 2620
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing-0.36.2.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing-0.36.2.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "aad0b0a12256807936d52d4a6f88a1773236ae527564a688bab4e3fe780e8724",
+        "size_in_bytes": 87
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing-0.36.2.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "8ed53e2c43ad38d45ed6293a180601ab03b9064a9f1d3647e01f2cece64cfd9e",
+        "size_in_bytes": 122
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing-0.36.2.dist-info/licenses/COPYING",
+        "path_type": "hardlink",
+        "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
+        "size_in_bytes": 1057
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "d2288809e8f38ab2600090d18e5227ac4ad42ee57fc5b08ce0afd5868dc1e6f5",
+        "size_in_bytes": 315
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/anchor.json",
+        "path_type": "hardlink",
+        "sha256": "f74ea6b8079fae8d2bd5cbf65f4680a9a386995974dfa5a8b1d3731a977793da",
+        "size_in_bytes": 366
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/boolean-schemas.json",
+        "path_type": "hardlink",
+        "sha256": "eeeb6947f484cdf57fdafe54337abf54d68f9eb25bda92db6d6762c261efc05c",
+        "size_in_bytes": 810
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "9910669731e96bcbc07ee495988ca034cc6a0ca4421783edd142f5f528112ec6",
+        "size_in_bytes": 235
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "f2cd5a46b1cc1c28b56d5e09f6f7250eae427872adc9e68f74d18040ceee9597",
+        "size_in_bytes": 344
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "81aa10dfbe62e3a9bae66bf86d443a13f8a4ad9f5c653b1f69a7d7d3d5abfb2d",
+        "size_in_bytes": 213
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "01798221181417f190b4dbac9c119a7aef098bc65cb4ca56fb52f8df9d56c501",
+        "size_in_bytes": 388
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-uri.json",
+        "path_type": "hardlink",
+        "sha256": "19b6b35660ed8ab44e97e42470f92abc71d69195cef50b99e579a4db194d155b",
+        "size_in_bytes": 212
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-urn-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "2fdaae6618eb651d2f2417ff21cb83e396c99869b1765c0e039e83624c7e8e0b",
+        "size_in_bytes": 342
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-absolute-urn.json",
+        "path_type": "hardlink",
+        "sha256": "db63afa2001ded31e06a1754bfb38cb945a5fc594d45eb2b028433d44e3a7459",
+        "size_in_bytes": 204
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/external-uri-with-nested-relative-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "e30c0ac57ddd0a060e0ce470a6af7cf81e5f02baa8cf913d7ff2a83c9adeb96e",
+        "size_in_bytes": 450
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/invalid-anchor-with-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "4c5ba33af55ed9e90bfb3253e929abc8054e8cd13177d1c1322028af9eeda99b",
+        "size_in_bytes": 641
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-additionalItems.json",
+        "path_type": "hardlink",
+        "sha256": "6e1eb7e68980a7ab7a791e4ed6d2beb73db46ed0cdfed41e19e40ea00550d7f9",
+        "size_in_bytes": 414
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-additionalProperties.json",
+        "path_type": "hardlink",
+        "sha256": "b4dcd42579d8605d903a6e6bb331fd1d53696c1c04fe48978c57f006c6e607f6",
+        "size_in_bytes": 434
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-allOf.json",
+        "path_type": "hardlink",
+        "sha256": "3acaebaeeba730699ed60733500cca66d796a909f54bc44cddfb0af791dedb71",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-anyOf.json",
+        "path_type": "hardlink",
+        "sha256": "4eaab6d7fb60fa9b06e0f546c27164636a9c02fa38e13a1921f98c6d21ceb9fc",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-contains.json",
+        "path_type": "hardlink",
+        "sha256": "243a626ac9cd02f0860fdc131f723ec2113316566d48a132fd7c0e3e1aa6fa14",
+        "size_in_bytes": 383
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-contentSchema.json",
+        "path_type": "hardlink",
+        "sha256": "282f0ec1a58ccbca44fae844f576d8eabe637466c2e23f5be23f4f5252d1187a",
+        "size_in_bytes": 442
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-definitions.json",
+        "path_type": "hardlink",
+        "sha256": "392ac48816f129b4c431ed38f9a46db027de7a28f4739ae869c0b23c14c9d637",
+        "size_in_bytes": 420
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-defs.json",
+        "path_type": "hardlink",
+        "sha256": "58fe1b1e344b0404332db1dd48657c0717cfcafb68491a825742b96f2ea39c25",
+        "size_in_bytes": 414
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-dependentSchemas.json",
+        "path_type": "hardlink",
+        "sha256": "4e1da2c766156a2cc12395a44b3286a87cd8e6a37186bced470d4268bb3471aa",
+        "size_in_bytes": 425
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-else.json",
+        "path_type": "hardlink",
+        "sha256": "f4e0c91f861f3888ee852749d131b2acdb3365034351639eb96ed4a37a17dfc6",
+        "size_in_bytes": 370
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-if.json",
+        "path_type": "hardlink",
+        "sha256": "717f9ca62181e5191857e358b83e0b4514772369d6d5c196e5f3f99fbdfc55ff",
+        "size_in_bytes": 362
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "5243b6fc581d137948695fcb1ffc7ed2f910cf4f61a75bdf1887b92ac66ba171",
+        "size_in_bytes": 567
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "0bcc02b653f8d22e3ae0b21bd2f96c810cfea371cfa84a4765c650a9c2258869",
+        "size_in_bytes": 374
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-not.json",
+        "path_type": "hardlink",
+        "sha256": "7fd845694b708616a5daadbd28c4729e33851caf411cd000c9c1678f775a1bc6",
+        "size_in_bytes": 363
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-oneOf.json",
+        "path_type": "hardlink",
+        "sha256": "e0943cf3e9562bbbf9155543745e50128315684af902a20d551ba2970120261c",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-patternProperties.json",
+        "path_type": "hardlink",
+        "sha256": "7ec84ae01bc4879924c7bf55a9ca943a08590759f1677a152da9af9427a05ad1",
+        "size_in_bytes": 426
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-properties.json",
+        "path_type": "hardlink",
+        "sha256": "a20c237507725999933278a721b182ae94ef7ff99ce50c73e4cd2936499cb086",
+        "size_in_bytes": 419
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-propertyNames.json",
+        "path_type": "hardlink",
+        "sha256": "4ed8192cfe8de5dd8cd92bd93382430a97bb305d6228396d72aabf0e13f80af6",
+        "size_in_bytes": 403
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-then.json",
+        "path_type": "hardlink",
+        "sha256": "9c824b6492dc12656173b617bb9510334627fa4e30b9c88becf97434839e9db4",
+        "size_in_bytes": 367
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-unevaluatedItems.json",
+        "path_type": "hardlink",
+        "sha256": "b40c1dfc47b91fd6ca80bde476e25bee1768351af0f5470552c535550c79f244",
+        "size_in_bytes": 418
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/keywords-unevaluatedProperties.json",
+        "path_type": "hardlink",
+        "sha256": "14f3942e366020e7a77f2bd87b256d21dde88016d9e59f266b94ab5c1a10f40a",
+        "size_in_bytes": 438
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/multiple-lookup-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "8581f072f6e9e6a0e6738b70c1ef5ecbe55ed58e698f70db26c2a318174804b8",
+        "size_in_bytes": 415
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "896273322c6ffd281edd6069317bf8c5737463b328fc93e40f65bdaa22477cd0",
+        "size_in_bytes": 1024
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/multiple-lookup-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "2d485180982fc8accf639291636faf1ac49aa0f43ee8476718dea988d4f4a0c0",
+        "size_in_bytes": 318
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/multiple-lookup.json",
+        "path_type": "hardlink",
+        "sha256": "6e981fc94bd35249ea436d92fb18352153f3bc4535c664266785db1546cd19da",
+        "size_in_bytes": 454
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nested-absolute-id.json",
+        "path_type": "hardlink",
+        "sha256": "dbc1f3026c2a6473e98550d6b399a1f90764a048953f171b2b38dbce866d4e0c",
+        "size_in_bytes": 655
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nested-relative-id-only-retrieval-uri.json",
+        "path_type": "hardlink",
+        "sha256": "ca396056f10bfb41fe3341b5e3fcdaeed2650aaa4ba06969709c52ab20ec6dc8",
+        "size_in_bytes": 341
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nested-relative-id.json",
+        "path_type": "hardlink",
+        "sha256": "083e08800b2f8a47f72c9d4ef4a8360fbc50bc2e782a702a373db150ee6b7714",
+        "size_in_bytes": 377
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nonreferencing-keywords-const.json",
+        "path_type": "hardlink",
+        "sha256": "42e1aa15a693dc2297f9d292cbc9fdcec451b8aadbd090fa04ff76677c0ff4fa",
+        "size_in_bytes": 264
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nonreferencing-keywords-default.json",
+        "path_type": "hardlink",
+        "sha256": "5ae0bac141d11b34e9d9c8ea118780b3bb616d0ba62bc65c12599e217d15d18c",
+        "size_in_bytes": 266
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nonreferencing-keywords-enum.json",
+        "path_type": "hardlink",
+        "sha256": "f53119f837d58ac6867f3c313d100215741ff361a46742bfbfe82ddb18b6278d",
+        "size_in_bytes": 265
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/nonreferencing-keywords-examples.json",
+        "path_type": "hardlink",
+        "sha256": "1b6ec76d3eaa502272bdd592f41df949a53ed2d040fa8c647a5e5a992def56fe",
+        "size_in_bytes": 269
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/pointer-crossing-id-in-items-array.json",
+        "path_type": "hardlink",
+        "sha256": "99cc33d8017589de6228bd7ea1eb960d6dbe9b2d3090321e18a624337095280d",
+        "size_in_bytes": 570
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/pointer-crossing-id-in-items-object.json",
+        "path_type": "hardlink",
+        "sha256": "0ae57f45949f51f5505e4b92b164fd23eb24bc7292ddec384e463dbb3870dc1f",
+        "size_in_bytes": 532
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/pointer-crossing-non-keyword-id-in-subvalue.json",
+        "path_type": "hardlink",
+        "sha256": "9ad29897b09ee6e12fa4bea43a4a4aefd54e4c0c3e681decab9385f380fde932",
+        "size_in_bytes": 302
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/pointer-crossing-non-keyword-id.json",
+        "path_type": "hardlink",
+        "sha256": "04353e4572314709bc0f7eefbe6f304eddc66a541b71958a3039278879ba427f",
+        "size_in_bytes": 371
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/relative-pointer-array.json",
+        "path_type": "hardlink",
+        "sha256": "3446c2f6be8f462fd17a7494043e5cc44ac7d39205bbae761b9affc53a9194be",
+        "size_in_bytes": 230
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/relative-pointer-escapes.json",
+        "path_type": "hardlink",
+        "sha256": "1393911ccf5e85b354c27073f8be59b443dd65db6539c82b84e37277de2caa20",
+        "size_in_bytes": 579
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/relative-pointer-object.json",
+        "path_type": "hardlink",
+        "sha256": "c09516c0581da462121034781304e19c6c06eb54a9f614f0f3d555680644e80e",
+        "size_in_bytes": 259
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/rfc3986-normalization-on-insertion.json",
+        "path_type": "hardlink",
+        "sha256": "3b519b61d60936388a03b80c428350cb2a1c57c9d31e6c773ae6ee1480b181c1",
+        "size_in_bytes": 2761
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/rfc3986-normalization-on-retrieval.json",
+        "path_type": "hardlink",
+        "sha256": "7bacdb721c676b664578b69a7303de9db97665c7528d8d11f9c77d10aa6172bf",
+        "size_in_bytes": 2756
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/tag-uris.json",
+        "path_type": "hardlink",
+        "sha256": "3d3cc05e871c78c2503d2627a22721c8d924ac56e22acc261ef4842fc822499c",
+        "size_in_bytes": 1722
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/unignored-siblings.json",
+        "path_type": "hardlink",
+        "sha256": "915ccfd03466f06ce7e9505495d2638c9c98fe0a2b66c8c88094331a013bda70",
+        "size_in_bytes": 484
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2019-09/unknown-keyword.json",
+        "path_type": "hardlink",
+        "sha256": "240561363154103bdaae5aa13f3eb299e3ee9921651c4bf389279b65ae192890",
+        "size_in_bytes": 327
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "d2288809e8f38ab2600090d18e5227ac4ad42ee57fc5b08ce0afd5868dc1e6f5",
+        "size_in_bytes": 315
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/anchor.json",
+        "path_type": "hardlink",
+        "sha256": "f74ea6b8079fae8d2bd5cbf65f4680a9a386995974dfa5a8b1d3731a977793da",
+        "size_in_bytes": 366
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/boolean-schemas.json",
+        "path_type": "hardlink",
+        "sha256": "89034a49674e7c93d4052832237121552e1e614ac9155e603d9bdd21b3fff6b5",
+        "size_in_bytes": 808
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "9910669731e96bcbc07ee495988ca034cc6a0ca4421783edd142f5f528112ec6",
+        "size_in_bytes": 235
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "f2cd5a46b1cc1c28b56d5e09f6f7250eae427872adc9e68f74d18040ceee9597",
+        "size_in_bytes": 344
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-uri-empty-fragment.json",
+        "path_type": "hardlink",
+        "sha256": "81aa10dfbe62e3a9bae66bf86d443a13f8a4ad9f5c653b1f69a7d7d3d5abfb2d",
+        "size_in_bytes": 213
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "01798221181417f190b4dbac9c119a7aef098bc65cb4ca56fb52f8df9d56c501",
+        "size_in_bytes": 388
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-uri.json",
+        "path_type": "hardlink",
+        "sha256": "19b6b35660ed8ab44e97e42470f92abc71d69195cef50b99e579a4db194d155b",
+        "size_in_bytes": 212
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-absolute-urn.json",
+        "path_type": "hardlink",
+        "sha256": "db63afa2001ded31e06a1754bfb38cb945a5fc594d45eb2b028433d44e3a7459",
+        "size_in_bytes": 204
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-uri-with-nested-relative-uri-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "e30c0ac57ddd0a060e0ce470a6af7cf81e5f02baa8cf913d7ff2a83c9adeb96e",
+        "size_in_bytes": 450
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/external-urn-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "2fdaae6618eb651d2f2417ff21cb83e396c99869b1765c0e039e83624c7e8e0b",
+        "size_in_bytes": 342
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/invalid-anchor-with-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "4c5ba33af55ed9e90bfb3253e929abc8054e8cd13177d1c1322028af9eeda99b",
+        "size_in_bytes": 641
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-additionalProperties.json",
+        "path_type": "hardlink",
+        "sha256": "b4dcd42579d8605d903a6e6bb331fd1d53696c1c04fe48978c57f006c6e607f6",
+        "size_in_bytes": 434
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-allOf.json",
+        "path_type": "hardlink",
+        "sha256": "3acaebaeeba730699ed60733500cca66d796a909f54bc44cddfb0af791dedb71",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-anyOf.json",
+        "path_type": "hardlink",
+        "sha256": "4eaab6d7fb60fa9b06e0f546c27164636a9c02fa38e13a1921f98c6d21ceb9fc",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-contains.json",
+        "path_type": "hardlink",
+        "sha256": "243a626ac9cd02f0860fdc131f723ec2113316566d48a132fd7c0e3e1aa6fa14",
+        "size_in_bytes": 383
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-contentSchema.json",
+        "path_type": "hardlink",
+        "sha256": "282f0ec1a58ccbca44fae844f576d8eabe637466c2e23f5be23f4f5252d1187a",
+        "size_in_bytes": 442
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-definitions.json",
+        "path_type": "hardlink",
+        "sha256": "392ac48816f129b4c431ed38f9a46db027de7a28f4739ae869c0b23c14c9d637",
+        "size_in_bytes": 420
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-defs.json",
+        "path_type": "hardlink",
+        "sha256": "58fe1b1e344b0404332db1dd48657c0717cfcafb68491a825742b96f2ea39c25",
+        "size_in_bytes": 414
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-dependentSchemas.json",
+        "path_type": "hardlink",
+        "sha256": "4e1da2c766156a2cc12395a44b3286a87cd8e6a37186bced470d4268bb3471aa",
+        "size_in_bytes": 425
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-else.json",
+        "path_type": "hardlink",
+        "sha256": "f4e0c91f861f3888ee852749d131b2acdb3365034351639eb96ed4a37a17dfc6",
+        "size_in_bytes": 370
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-if.json",
+        "path_type": "hardlink",
+        "sha256": "717f9ca62181e5191857e358b83e0b4514772369d6d5c196e5f3f99fbdfc55ff",
+        "size_in_bytes": 362
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-items.json",
+        "path_type": "hardlink",
+        "sha256": "0bcc02b653f8d22e3ae0b21bd2f96c810cfea371cfa84a4765c650a9c2258869",
+        "size_in_bytes": 374
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-not.json",
+        "path_type": "hardlink",
+        "sha256": "7fd845694b708616a5daadbd28c4729e33851caf411cd000c9c1678f775a1bc6",
+        "size_in_bytes": 363
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-oneOf.json",
+        "path_type": "hardlink",
+        "sha256": "e0943cf3e9562bbbf9155543745e50128315684af902a20d551ba2970120261c",
+        "size_in_bytes": 503
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-patternProperties.json",
+        "path_type": "hardlink",
+        "sha256": "7ec84ae01bc4879924c7bf55a9ca943a08590759f1677a152da9af9427a05ad1",
+        "size_in_bytes": 426
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-prefixItems.json",
+        "path_type": "hardlink",
+        "sha256": "13ebf897144ac1fdf922f02a98671206c90e5041d70f258ee83c108c5ae15147",
+        "size_in_bytes": 573
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-properties.json",
+        "path_type": "hardlink",
+        "sha256": "a20c237507725999933278a721b182ae94ef7ff99ce50c73e4cd2936499cb086",
+        "size_in_bytes": 419
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-propertyNames.json",
+        "path_type": "hardlink",
+        "sha256": "4ed8192cfe8de5dd8cd92bd93382430a97bb305d6228396d72aabf0e13f80af6",
+        "size_in_bytes": 403
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-then.json",
+        "path_type": "hardlink",
+        "sha256": "9c824b6492dc12656173b617bb9510334627fa4e30b9c88becf97434839e9db4",
+        "size_in_bytes": 367
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-unevaluatedItems.json",
+        "path_type": "hardlink",
+        "sha256": "b40c1dfc47b91fd6ca80bde476e25bee1768351af0f5470552c535550c79f244",
+        "size_in_bytes": 418
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/keywords-unevaluatedProperties.json",
+        "path_type": "hardlink",
+        "sha256": "14f3942e366020e7a77f2bd87b256d21dde88016d9e59f266b94ab5c1a10f40a",
+        "size_in_bytes": 438
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/multiple-lookup-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "8581f072f6e9e6a0e6738b70c1ef5ecbe55ed58e698f70db26c2a318174804b8",
+        "size_in_bytes": 415
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/multiple-lookup-external-absolute-uri-with-different-id-anchor.json",
+        "path_type": "hardlink",
+        "sha256": "896273322c6ffd281edd6069317bf8c5737463b328fc93e40f65bdaa22477cd0",
+        "size_in_bytes": 1024
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/multiple-lookup-pointer.json",
+        "path_type": "hardlink",
+        "sha256": "2d485180982fc8accf639291636faf1ac49aa0f43ee8476718dea988d4f4a0c0",
+        "size_in_bytes": 318
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/multiple-lookup.json",
+        "path_type": "hardlink",
+        "sha256": "6e981fc94bd35249ea436d92fb18352153f3bc4535c664266785db1546cd19da",
+        "size_in_bytes": 454
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nested-absolute-id.json",
+        "path_type": "hardlink",
+        "sha256": "dbc1f3026c2a6473e98550d6b399a1f90764a048953f171b2b38dbce866d4e0c",
+        "size_in_bytes": 655
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nested-relative-id-only-retrieval-uri.json",
+        "path_type": "hardlink",
+        "sha256": "ca396056f10bfb41fe3341b5e3fcdaeed2650aaa4ba06969709c52ab20ec6dc8",
+        "size_in_bytes": 341
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nested-relative-id.json",
+        "path_type": "hardlink",
+        "sha256": "083e08800b2f8a47f72c9d4ef4a8360fbc50bc2e782a702a373db150ee6b7714",
+        "size_in_bytes": 377
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nonreferencing-keywords-const.json",
+        "path_type": "hardlink",
+        "sha256": "42e1aa15a693dc2297f9d292cbc9fdcec451b8aadbd090fa04ff76677c0ff4fa",
+        "size_in_bytes": 264
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nonreferencing-keywords-default.json",
+        "path_type": "hardlink",
+        "sha256": "5ae0bac141d11b34e9d9c8ea118780b3bb616d0ba62bc65c12599e217d15d18c",
+        "size_in_bytes": 266
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nonreferencing-keywords-enum.json",
+        "path_type": "hardlink",
+        "sha256": "f53119f837d58ac6867f3c313d100215741ff361a46742bfbfe82ddb18b6278d",
+        "size_in_bytes": 265
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/nonreferencing-keywords-examples.json",
+        "path_type": "hardlink",
+        "sha256": "1b6ec76d3eaa502272bdd592f41df949a53ed2d040fa8c647a5e5a992def56fe",
+        "size_in_bytes": 269
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/pointer-crossing-non-keyword-id-in-subvalue.json",
+        "path_type": "hardlink",
+        "sha256": "9ad29897b09ee6e12fa4bea43a4a4aefd54e4c0c3e681decab9385f380fde932",
+        "size_in_bytes": 302
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/pointer-crossing-non-keyword-id.json",
+        "path_type": "hardlink",
+        "sha256": "04353e4572314709bc0f7eefbe6f304eddc66a541b71958a3039278879ba427f",
+        "size_in_bytes": 371
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/relative-pointer-array.json",
+        "path_type": "hardlink",
+        "sha256": "3446c2f6be8f462fd17a7494043e5cc44ac7d39205bbae761b9affc53a9194be",
+        "size_in_bytes": 230
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/relative-pointer-escapes.json",
+        "path_type": "hardlink",
+        "sha256": "1393911ccf5e85b354c27073f8be59b443dd65db6539c82b84e37277de2caa20",
+        "size_in_bytes": 579
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/relative-pointer-object.json",
+        "path_type": "hardlink",
+        "sha256": "c09516c0581da462121034781304e19c6c06eb54a9f614f0f3d555680644e80e",
+        "size_in_bytes": 259
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/rfc3986-normalization-on-insertion.json",
+        "path_type": "hardlink",
+        "sha256": "3b519b61d60936388a03b80c428350cb2a1c57c9d31e6c773ae6ee1480b181c1",
+        "size_in_bytes": 2761
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/rfc3986-normalization-on-retrieval.json",
+        "path_type": "hardlink",
+        "sha256": "7bacdb721c676b664578b69a7303de9db97665c7528d8d11f9c77d10aa6172bf",
+        "size_in_bytes": 2756
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/tag-uris.json",
+        "path_type": "hardlink",
+        "sha256": "3d3cc05e871c78c2503d2627a22721c8d924ac56e22acc261ef4842fc822499c",
+        "size_in_bytes": 1722
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/unignored-siblings.json",
+        "path_type": "hardlink",
+        "sha256": "915ccfd03466f06ce7e9505495d2638c9c98fe0a2b66c8c88094331a013bda70",
+        "size_in_bytes": 484
+      },
+      {
+        "_path": "etc/conda/test-files/referencing/1/suite/tests/json-schema-draft-2020-12/unknown-keyword.json",
+        "path_type": "hardlink",
+        "sha256": "240561363154103bdaae5aa13f3eb299e3ee9921651c4bf389279b65ae192890",
+        "size_in_bytes": 327
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e4864a5da007fc55b20894646939f55dca6d2df83d72f78b6fdbb99d853124ab",
+        "size_in_bytes": 207
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/_attrs.py",
+        "path_type": "hardlink",
+        "sha256": "6e04fe28c84354b786b56c4cfd218a61e2da6411734f691454574090e7178bc8",
+        "size_in_bytes": 791
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/_attrs.pyi",
+        "path_type": "hardlink",
+        "sha256": "27a4ad3142aa8b13b81fb1228bdf935cd7c239f4bc6879bed5ec2298e03ef28a",
+        "size_in_bytes": 559
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/_core.py",
+        "path_type": "hardlink",
+        "sha256": "d1225f656ebc74eacb31a15d84ccaec98cdbd018bd77405c3e31b08a37ac7fd1",
+        "size_in_bytes": 24830
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "cc581a120e9688a793e7c310b8a36c8060e71ecce9dba738a11782eac17d8073",
+        "size_in_bytes": 4176
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/jsonschema.py",
+        "path_type": "hardlink",
+        "sha256": "8c55112053a7bb1b44e1da0f2f5c520deb90e0e85dc4dcd29fc31145b4de5729",
+        "size_in_bytes": 18628
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/retrieval.py",
+        "path_type": "hardlink",
+        "sha256": "41894ebe1890783235d972b07b3859dd7394cea053144f1be53a5f0136a603b2",
+        "size_in_bytes": 2697
+      },
+      {
+        "_path": "lib/python3.11/site-packages/referencing/typing.py",
+        "path_type": "hardlink",
+        "sha256": "5a351b9d9ea33c0777d5c9c214069e588544373c87b47749c8e95e96fd4663bd",
+        "size_in_bytes": 1445
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/referencing-0.36.2-pyh29332c3_0",
+    "type": 1
+  }
+}

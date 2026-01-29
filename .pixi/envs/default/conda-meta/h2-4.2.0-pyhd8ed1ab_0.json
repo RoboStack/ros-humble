@@ -1,0 +1,178 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "depends": [
+    "hpack >=4.1,<5",
+    "hyperframe >=6.1,<7",
+    "python >=3.9"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "b4754fb1bdcb70c8fd54f918301582c6",
+  "name": "h2",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/h2?source=hash-mapping"
+  ],
+  "sha256": "0aa1cdc67a9fe75ea95b5644b734a756200d6ec9d0dff66530aec3d1c1e9df75",
+  "size": 53888,
+  "subdir": "noarch",
+  "timestamp": 1738578623567,
+  "version": "4.2.0",
+  "fn": "h2-4.2.0-pyhd8ed1ab_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/h2-4.2.0-pyhd8ed1ab_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/h2-4.2.0-pyhd8ed1ab_0",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/h2-4.2.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/h2-4.2.0.dist-info/LICENSE",
+    "lib/python3.11/site-packages/h2-4.2.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/h2-4.2.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/h2-4.2.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/h2-4.2.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/h2-4.2.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/h2-4.2.0.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/h2/__init__.py",
+    "lib/python3.11/site-packages/h2/config.py",
+    "lib/python3.11/site-packages/h2/connection.py",
+    "lib/python3.11/site-packages/h2/errors.py",
+    "lib/python3.11/site-packages/h2/events.py",
+    "lib/python3.11/site-packages/h2/exceptions.py",
+    "lib/python3.11/site-packages/h2/frame_buffer.py",
+    "lib/python3.11/site-packages/h2/py.typed",
+    "lib/python3.11/site-packages/h2/settings.py",
+    "lib/python3.11/site-packages/h2/stream.py",
+    "lib/python3.11/site-packages/h2/utilities.py",
+    "lib/python3.11/site-packages/h2/windows.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.2.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.2.0.dist-info/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "7a65a5af0cbabf1c16251c7c6b2b7cb46d16a7222e79975b9b61fcd66a2e3f28",
+        "size_in_bytes": 1102
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.2.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "a592fbba8ee389ec334547f22455df3208bd6620891ef3ad9fa57f9241800d81",
+        "size_in_bytes": 5116
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.2.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "6190f6f0fef428c48daa3c411e104659be4ed4698d08a39311110429165fc11d",
+        "size_in_bytes": 1945
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.2.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.2.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "227f454cdc5e3fad0a9d3906c3bc24ea624f61dfdd4128c46665dd05d30223ef",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.2.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "30c54ec0a98e9e4ce4caed689d6bae16c7132ebb61cceefd02301507193d40ba",
+        "size_in_bytes": 98
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.2.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "1e2ba5c7c2b12368c550cd5d1bbf8265e4643b78f9d0c07008b1b7e95aeafa42",
+        "size_in_bytes": 3
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "1cdc56ff673ea01e2ed8d194b39158294c27a6a47dccb0ca5b192d9af55a4f3b",
+        "size_in_bytes": 109
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/config.py",
+        "path_type": "hardlink",
+        "sha256": "67ec2be6b162cdc076f964d5582b86b5ef32fbc71e6f9076fab95c5742f9b6e5",
+        "size_in_bytes": 8344
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/connection.py",
+        "path_type": "hardlink",
+        "sha256": "686c99aa6fef871a1368b64e834716f98957847cbcab5cf3876aa520184ad209",
+        "size_in_bytes": 86816
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/errors.py",
+        "path_type": "hardlink",
+        "sha256": "4be4dd61a25f3ff8709458f6b90189190e12e3fc96894ffd138e1a3f174009b1",
+        "size_in_bytes": 1581
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/events.py",
+        "path_type": "hardlink",
+        "sha256": "b09be8f4a129274d5c820c76b64d33d8520481dc49df63430a8bb01ad24cdbe2",
+        "size_in_bytes": 22764
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "dc49b798b310047c58a4e2a868f74a0861469fc03dadef4006d51d2a56376d93",
+        "size_in_bytes": 5308
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/frame_buffer.py",
+        "path_type": "hardlink",
+        "sha256": "d1a3a3ab1ca07c631490f56ba123a571a63258c0bc6dc7998db44fe9ad903ff8",
+        "size_in_bytes": 6537
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/settings.py",
+        "path_type": "hardlink",
+        "sha256": "8d10648219e222250642fd7ad90de6cd64139a2d05e395269b32078dbe0cbb55",
+        "size_in_bytes": 12323
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/stream.py",
+        "path_type": "hardlink",
+        "sha256": "74e3d472f68ef21b6663973e06ccbec83a83d29ba8e8d672ffe451d96e1c674f",
+        "size_in_bytes": 57963
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/utilities.py",
+        "path_type": "hardlink",
+        "sha256": "8307f096a47fce8d02fc4201b095444c9be8b4ff2cb291de4cf4c3e1ff22fcbb",
+        "size_in_bytes": 25988
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/windows.py",
+        "path_type": "hardlink",
+        "sha256": "26958d843bfec782798c85d25a9d0834792af482203cfdbbc6bf455d8bdacc51",
+        "size_in_bytes": 5492
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/h2-4.2.0-pyhd8ed1ab_0",
+    "type": 1
+  }
+}

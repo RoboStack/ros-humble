@@ -1,0 +1,7 @@
+[console_scripts]
+rosdistro_build_cache = rosdistro.cli.rosdistro_build_cache:main
+rosdistro_freeze_source = rosdistro.cli.rosdistro_freeze_source:main
+rosdistro_migrate_to_rep_141 = rosdistro.cli.rosdistro_migrate_to_rep_141:main
+rosdistro_migrate_to_rep_143 = rosdistro.cli.rosdistro_migrate_to_rep_143:main
+rosdistro_reformat = rosdistro.cli.rosdistro_reformat:main
+

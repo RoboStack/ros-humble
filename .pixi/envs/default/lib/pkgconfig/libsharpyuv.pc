@@ -1,0 +1,11 @@
+prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/webp
+
+Name: libsharpyuv
+Description: Library for sharp RGB to YUV conversion
+Version: 1.5.0
+Cflags: -I${includedir}
+Libs: -L${libdir} -lsharpyuv
+Libs.private: -lm  -lpthread

@@ -1,0 +1,10 @@
+prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+exec_prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+libdir=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default/lib
+includedir=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default/include
+
+Name: libturbojpeg
+Description: A SIMD-accelerated JPEG codec that provides the TurboJPEG API
+Version: 3.1.0
+Libs: -L${libdir} -lturbojpeg
+Cflags: -I${includedir}

@@ -1,0 +1,169 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.9"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "38e34d2d1d9dca4fb2b9a0a04f604e2c",
+  "name": "python-fastjsonschema",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/fastjsonschema?source=hash-mapping"
+  ],
+  "sha256": "1b09a28093071c1874862422696429d0d35bd0b8420698003ac004746c5e82a2",
+  "size": 226259,
+  "subdir": "noarch",
+  "timestamp": 1733236073335,
+  "version": "2.21.1",
+  "fn": "python-fastjsonschema-2.21.1-pyhd8ed1ab_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/python-fastjsonschema-2.21.1-pyhd8ed1ab_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/python-fastjsonschema-2.21.1-pyhd8ed1ab_0",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/AUTHORS",
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/LICENSE",
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/METADATA",
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/RECORD",
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/WHEEL",
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/fastjsonschema/__init__.py",
+    "lib/python3.11/site-packages/fastjsonschema/__main__.py",
+    "lib/python3.11/site-packages/fastjsonschema/draft04.py",
+    "lib/python3.11/site-packages/fastjsonschema/draft06.py",
+    "lib/python3.11/site-packages/fastjsonschema/draft07.py",
+    "lib/python3.11/site-packages/fastjsonschema/exceptions.py",
+    "lib/python3.11/site-packages/fastjsonschema/generator.py",
+    "lib/python3.11/site-packages/fastjsonschema/indent.py",
+    "lib/python3.11/site-packages/fastjsonschema/ref_resolver.py",
+    "lib/python3.11/site-packages/fastjsonschema/version.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/AUTHORS",
+        "path_type": "hardlink",
+        "sha256": "0cb1a03754c498cd95a013387119fe82495ce0703c8cb2cf0c309e043d641a15",
+        "size_in_bytes": 350
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "9ccddf69eb3998a60148debe85b94c5afed53691b6474692e78abcc0a0e544f1",
+        "size_in_bytes": 1518
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "04205f3c65f31f89c2bbfd0d7b227ccb7ec616143dea2266fc0699b80f12ac02",
+        "size_in_bytes": 2152
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "7e3cc8f23d57856d08e7bb58404e171d15b50e3a0ef259ded452309cd1ba0c78",
+        "size_in_bytes": 2204
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "3d9504c5d7fbd548bfb28ebb417a724ae1ed0a2dfe277c2f1783912ba93f4bc5",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "7b4e9870dc551d27dbac84dbb000711d7e9e24a1967864304f8a800d183b4cf6",
+        "size_in_bytes": 122
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema-2.21.1.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "f1141c3c31575c764a76e4e3833ba0a4f356df3223c454f46b14e1e14b13ea01",
+        "size_in_bytes": 15
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "1b30b2c1695a9dd8d042c24b5da6641d8767c9d35c21317aaf6e00bf98106205",
+        "size_in_bytes": 10347
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "e217dddb7a6bcf199073c5632f47d4b1bb2bbef03bde02761c334f80b2c57402",
+        "size_in_bytes": 312
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/draft04.py",
+        "path_type": "hardlink",
+        "sha256": "685866629d518f1ea60d9a219c19c27ddde03aa514ca5a505c2902940bd628f7",
+        "size_in_bytes": 30808
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/draft06.py",
+        "path_type": "hardlink",
+        "sha256": "7123e77e5ab276be84578a74d93fe08785455fb99555da0a0b19cdc270bf3cf0",
+        "size_in_bytes": 7892
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/draft07.py",
+        "path_type": "hardlink",
+        "sha256": "0f8a8d36159c8e0d13ac4887434049370be5cafd51a7c832101620441995d9bf",
+        "size_in_bytes": 4449
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "c3be3d260a8a8bc72504570e6dd71b655aac985e2827f401ca16754866d414dc",
+        "size_in_bytes": 1612
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/generator.py",
+        "path_type": "hardlink",
+        "sha256": "6d866dfd07eb087fefeeb24304cb5e789c78503ca0115ed76633ad14bde2925b",
+        "size_in_bytes": 13059
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/indent.py",
+        "path_type": "hardlink",
+        "sha256": "8ee6455bd2d2be60c96cf148526dc63ea74fa89a149eabccf27787379ae4bf35",
+        "size_in_bytes": 920
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/ref_resolver.py",
+        "path_type": "hardlink",
+        "sha256": "3d69eefb6319cd61f9732983bdd72f5dfc7788e5bf32be9cfb15cc626f450fb4",
+        "size_in_bytes": 5577
+      },
+      {
+        "_path": "lib/python3.11/site-packages/fastjsonschema/version.py",
+        "path_type": "hardlink",
+        "sha256": "74d030c8a613a39f1d840f79ef5d352574d49d7cb59d1aaa7b0cad030c529843",
+        "size_in_bytes": 19
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/python-fastjsonschema-2.21.1-pyhd8ed1ab_0",
+    "type": 1
+  }
+}

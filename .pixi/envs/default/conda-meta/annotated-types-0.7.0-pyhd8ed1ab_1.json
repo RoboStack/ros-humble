@@ -1,0 +1,107 @@
+{
+  "build": "pyhd8ed1ab_1",
+  "build_number": 1,
+  "depends": [
+    "python >=3.9",
+    "typing-extensions >=4.0.0"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "2934f256a8acfe48f6ebb4fce6cde29c",
+  "name": "annotated-types",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/annotated-types?source=hash-mapping"
+  ],
+  "sha256": "e0ea1ba78fbb64f17062601edda82097fcf815012cf52bb704150a2668110d48",
+  "size": 18074,
+  "subdir": "noarch",
+  "timestamp": 1733247158254,
+  "version": "0.7.0",
+  "fn": "annotated-types-0.7.0-pyhd8ed1ab_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/annotated-types-0.7.0-pyhd8ed1ab_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/annotated-types-0.7.0-pyhd8ed1ab_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/annotated_types/__init__.py",
+    "lib/python3.11/site-packages/annotated_types/py.typed",
+    "lib/python3.11/site-packages/annotated_types/test_cases.py",
+    "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/direct_url.json"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "fe1049884b1a0d9342901e88e07f32925d24b3121d9972b6a6805fb9824b095d",
+        "size_in_bytes": 1083
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "4729cbb112941062342a2997c9d943d5f6447c4cd6c03a345289f7cce2a11b54",
+        "size_in_bytes": 13819
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types/test_cases.py",
+        "path_type": "hardlink",
+        "sha256": "cc7157e84a5c31b189f05cc16036cee7a6cfc31fc360855229b64cfb8077fe58",
+        "size_in_bytes": 6421
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "08bfa8ae88ea5803308022e0c40c805e1ba39c4f1aa57a68cabbf922237627ea",
+        "size_in_bytes": 15024
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "e48e943335086240228348095ae1106bc28f501293684425a64cab80b9cd9d73",
+        "size_in_bytes": 1000
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "0b615483066088b6f39d1fa4d1bff9937022ff568048e5c3b2cde5cc252c52e8",
+        "size_in_bytes": 87
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_types-0.7.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "ec9c47c268b9d5f960fa57e583a9b5544a3d5c625ecbd98b4443d8fd9eb1bebb",
+        "size_in_bytes": 111
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/annotated-types-0.7.0-pyhd8ed1ab_1",
+    "type": 1
+  }
+}

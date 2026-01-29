@@ -1,0 +1,121 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.9",
+    "typing_extensions >=4.12.0"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "c5c76894b6b7bacc888ba25753bc8677",
+  "name": "typing-inspection",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/typing-inspection?source=hash-mapping"
+  ],
+  "sha256": "172f971d70e1dbb978f6061d3f72be463d0f629155338603450d8ffe87cbf89d",
+  "size": 18070,
+  "subdir": "noarch",
+  "timestamp": 1741438157162,
+  "version": "0.4.0",
+  "fn": "typing-inspection-0.4.0-pyhd8ed1ab_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/typing-inspection-0.4.0-pyhd8ed1ab_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/typing-inspection-0.4.0-pyhd8ed1ab_0",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/typing_inspection/__init__.py",
+    "lib/python3.11/site-packages/typing_inspection/introspection.py",
+    "lib/python3.11/site-packages/typing_inspection/py.typed",
+    "lib/python3.11/site-packages/typing_inspection/typing_objects.py",
+    "lib/python3.11/site-packages/typing_inspection/typing_objects.pyi"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "4e40cba793a388dd456577b8657175bbe95e4ded2970534b3c59cccc2661a708",
+        "size_in_bytes": 1066
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "9f071ef4757fb9c798c1380a66ab86e1bd0f566d820d7e4fb3806d643bb0f0a4",
+        "size_in_bytes": 2579
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "0dfbe2c90e2ae656b777f77c9aec2b646ff65a93bd0d600586a09b008514b8fa",
+        "size_in_bytes": 1277
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "aad0b0a12256807936d52d4a6f88a1773236ae527564a688bab4e3fe780e8724",
+        "size_in_bytes": 87
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection-0.4.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "949bb2ae2735b51672e3fb26d9d6fe256b89cf34731252342b3af9acce029594",
+        "size_in_bytes": 113
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection/introspection.py",
+        "path_type": "hardlink",
+        "sha256": "96abd2ef3cf697f60aef05821f5fb787df92ceb9580e5791c1cbec1563d7ec14",
+        "size_in_bytes": 20951
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection/typing_objects.py",
+        "path_type": "hardlink",
+        "sha256": "d7451ee9e0700f4d61aa57f0baf7521a40a1918e7c753891064572edecec88f7",
+        "size_in_bytes": 16412
+      },
+      {
+        "_path": "lib/python3.11/site-packages/typing_inspection/typing_objects.pyi",
+        "path_type": "hardlink",
+        "sha256": "29954a91d5f008f077296515063d70bf6f3a1dc68ecc7def8bbdc08b1ccbdcde",
+        "size_in_bytes": 8941
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/typing-inspection-0.4.0-pyhd8ed1ab_0",
+    "type": 1
+  }
+}
