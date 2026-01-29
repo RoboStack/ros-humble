@@ -454,3 +454,8 @@ packages_select_by_deps:
       # robotique grippers
       - robotiq_description
       - robotiq_controllers
+
+      # mocap4r2
+      - mocap4r2_control
+      - mocap4r2_control_msgs
+
