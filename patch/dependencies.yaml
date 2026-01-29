@@ -280,3 +280,6 @@ franka_example_controllers:
 franka_ign_ros2_control:
   add_host: ["ros-humble-urdf", "ros-humble-kdl-parser", "ros-humble-tf2-geometry-msgs", "ros-humble-tf2-eigen", "${{ 'libgl-devel' if linux }}"]
   add_run: ["ros-humble-urdf", "ros-humble-kdl-parser", "ros-humble-tf2-geometry-msgs", "ros-humble-tf2-eigen"]
+lbr_ros2_control:
+  add_host: ["ros-humble-kinematics-interface"]
+  add_run: ["ros-humble-kinematics-interface"]

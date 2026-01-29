@@ -166,3 +166,7 @@ mavros_msgs:
   build_number: 14
 mavros_extras:
   build_number: 14
+kinematics_interface:
+  build_number: 14
+kinematics_interface_kdl:
+  build_number: 14
