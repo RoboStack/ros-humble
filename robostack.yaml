@@ -106,6 +106,8 @@ flex:
   robostack: [flex]
 fmt:
   robostack: [fmt]
+fri_client_sdk:
+  robostack: [lbr-fri-client-sdk]
 g++-static:
   robostack: []
 gawk:
