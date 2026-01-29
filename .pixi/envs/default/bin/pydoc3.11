@@ -1,0 +1,5 @@
+#!/home/runner/work/ros-humble/ros-humble/.pixi/envs/default/bin/python3.11
+
+import pydoc
+if __name__ == '__main__':
+    pydoc.cli()

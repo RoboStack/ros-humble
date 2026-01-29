@@ -1,0 +1,72 @@
+{
+  "arch": "x86_64",
+  "build": "h712a8e2_4",
+  "build_number": 4,
+  "constrains": [
+    "binutils_impl_linux-64 2.43"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0"
+  ],
+  "license": "GPL-3.0-only",
+  "license_family": "GPL",
+  "md5": "01f8d123c96816249efd255a31ad7712",
+  "name": "ld_impl_linux-64",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "db73f38155d901a610b2320525b9dd3b31e4949215c870685fd92ea61b5ce472",
+  "size": 671240,
+  "subdir": "linux-64",
+  "timestamp": 1740155456116,
+  "version": "2.43",
+  "fn": "ld_impl_linux-64-2.43-h712a8e2_4.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/ld_impl_linux-64-2.43-h712a8e2_4.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/ld_impl_linux-64-2.43-h712a8e2_4",
+  "requested_specs": [],
+  "files": [
+    "x86_64-conda-linux-gnu/bin/ld",
+    "bin/x86_64-conda-linux-gnu-ld",
+    "bin/x86_64-conda_cos6-linux-gnu-ld",
+    "x86_64-conda_cos6-linux-gnu/bin/ld"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "x86_64-conda-linux-gnu/bin/ld",
+        "path_type": "softlink",
+        "sha256": "85bf92fd4fdf81156489ed29d80e0f0472afb5676969abfa394f45b07970c42a",
+        "sha256_in_prefix": "200559a49e2afbc18f6bd07fb1fb921d332d76a49776a317cd657d7cbf424300",
+        "size_in_bytes": 3318336
+      },
+      {
+        "_path": "bin/x86_64-conda-linux-gnu-ld",
+        "path_type": "hardlink",
+        "sha256": "85bf92fd4fdf81156489ed29d80e0f0472afb5676969abfa394f45b07970c42a",
+        "sha256_in_prefix": "89730010f27228bfd42d21726b09e70c7d6b319872064ac600779cb369c1db8c",
+        "size_in_bytes": 3318336,
+        "file_mode": "binary",
+        "prefix_placeholder": "/home/conda/feedstock_root/build_artifacts/binutils_split_1740155005093/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeh"
+      },
+      {
+        "_path": "bin/x86_64-conda_cos6-linux-gnu-ld",
+        "path_type": "softlink",
+        "sha256": "85bf92fd4fdf81156489ed29d80e0f0472afb5676969abfa394f45b07970c42a",
+        "sha256_in_prefix": "8f8f6cb5d26b508b8a2ff5a226a6ce9209347cdd303f81e28442f818583e93c8",
+        "size_in_bytes": 3318336
+      },
+      {
+        "_path": "x86_64-conda_cos6-linux-gnu/bin/ld",
+        "path_type": "softlink",
+        "sha256": "85bf92fd4fdf81156489ed29d80e0f0472afb5676969abfa394f45b07970c42a",
+        "sha256_in_prefix": "200559a49e2afbc18f6bd07fb1fb921d332d76a49776a317cd657d7cbf424300",
+        "size_in_bytes": 3318336
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/ld_impl_linux-64-2.43-h712a8e2_4",
+    "type": 1
+  }
+}
