@@ -317,6 +317,17 @@ packages_select_by_deps:
       - imu_tools
       - rplidar_ros
       - vector_pursuit_controller
+      - imu_transformer
+      - imu_calib
+      - polygon_msgs
+      - polygon_utils
+      - color_util
+      - rclc_parameter
+      - rclc_lifecycle
+      - rclc_examples
+      - ptz_action_server_msgs
+      - py_trees
+  
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
       # IntelRealSense
