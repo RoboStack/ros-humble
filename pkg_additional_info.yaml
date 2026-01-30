@@ -41,7 +41,7 @@ hpp_fcl:
     dep_name: hpp-fcl
     max_pin: 'x.x.x'
     # the version on ros is outdated w.r.t. to the conda-forge one
-    override_version: '3.0.1'
+    override_version: '3.0.2'
 coal:
   generate_dummy_package_with_run_deps:
     dep_name: coal
@@ -51,13 +51,13 @@ eigenpy:
     dep_name: eigenpy
     max_pin: 'x.x.x'
     # the version in ros is not compatible with conda-forge's coal and hpp_fcl builds
-    override_version: '3.10.3'
+    override_version: '3.12.0'
 pinocchio:
   generate_dummy_package_with_run_deps:
     dep_name: pinocchio
     max_pin: 'x.x.x'
     # the version on ros is outdated w.r.t. to the conda-forge one
-    override_version: '3.7.0'
+    override_version: '3.9.0'
 gtsam:
   generate_dummy_package_with_run_deps:
     dep_name: gtsam
@@ -70,7 +70,6 @@ libfranka:
   generate_dummy_package_with_run_deps:
     dep_name: libfranka
     max_pin: 'x.x.x'
-  build_number: 14
 ignition_cmake2_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 ignition_math6_vendor:
@@ -150,19 +149,8 @@ octomap_ros:
 # Remove once https://github.com/PickNikRobotics/data_tamer/pull/58 is merged and released
 data_tamer_cpp:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
-tinyxml2_vendor:
-  build_number: 14
-rosidl_generator_cpp:
-  build_number: 14
-rosidl_runtime_cpp:
-  build_number: 14
-mavlink:
-  build_number: 14
-libmavconn:
-  build_number: 14
-mavros:
-  build_number: 14
-mavros_msgs:
-  build_number: 14
-mavros_extras:
-  build_number: 14
+proxsuite:
+  generate_dummy_package_with_run_deps:
+    dep_name: proxsuite
+    max_pin: 'x.x'
+    override_version: '0.7.2'

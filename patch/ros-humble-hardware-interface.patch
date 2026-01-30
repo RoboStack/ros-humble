@@ -1,7 +1,7 @@
-diff --git a/hardware_interface/include/hardware_interface/lexical_casts.hpp b/hardware_interface/include/hardware_interface/lexical_casts.hpp
+diff --git a/include/hardware_interface/lexical_casts.hpp b/include/hardware_interface/lexical_casts.hpp
 index 846d9f757c..042361e392 100644
---- a/hardware_interface/include/hardware_interface/lexical_casts.hpp
-+++ b/hardware_interface/include/hardware_interface/lexical_casts.hpp
+--- a/include/hardware_interface/lexical_casts.hpp
++++ b/include/hardware_interface/lexical_casts.hpp
 @@ -21,6 +21,8 @@
  #include <stdexcept>
  #include <string>
@@ -22,10 +22,10 @@ index 846d9f757c..042361e392 100644
  bool parse_bool(const std::string & bool_string);
  
  }  // namespace hardware_interface
-diff --git a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
+diff --git a/include/hardware_interface/types/hardware_interface_return_values.hpp b/include/hardware_interface/types/hardware_interface_return_values.hpp
 index 5c3ea22ca0..271dc29faf 100644
---- a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
-+++ b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
+--- a/include/hardware_interface/types/hardware_interface_return_values.hpp
++++ b/include/hardware_interface/types/hardware_interface_return_values.hpp
 @@ -17,6 +17,10 @@
  
  #include <cstdint>
@@ -37,3 +37,42 @@ index 5c3ea22ca0..271dc29faf 100644
  namespace hardware_interface
  {
  enum class return_type : std::uint8_t
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c66d6faf60..83b7b38ebd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -34,7 +34,15 @@ target_include_directories(hardware_interface PUBLIC
+   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include/hardware_interface>
+ )
+-ament_target_dependencies(hardware_interface PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
++target_link_libraries(hardware_interface PUBLIC
++                      rclcpp::rclcpp
++                      rclcpp_lifecycle::rclcpp_lifecycle
++                      pluginlib::pluginlib
++                      rcutils::rcutils
++                      rcpputils::rcpputils
++                      ${TinyXML2_LIBRARIES}
++                      ${control_msgs_TARGETS}
++                      ${lifecycle_msgs_TARGETS})
+ # Causes the visibility macros to use dllexport rather than dllimport,
+ # which is appropriate when building the dll but not consuming it.
+ target_compile_definitions(hardware_interface PRIVATE "HARDWARE_INTERFACE_BUILDING_DLL")
+@@ -47,7 +55,7 @@ target_include_directories(mock_components PUBLIC
+   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include/hardware_interface>
+ )
+-ament_target_dependencies(mock_components PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
++target_link_libraries(mock_components PUBLIC hardware_interface)
+ # Causes the visibility macros to use dllexport rather than dllimport,
+ # which is appropriate when building the dll but not consuming it.
+ target_compile_definitions(mock_components PRIVATE "HARDWARE_INTERFACE_BUILDING_DLL")
+@@ -64,7 +72,7 @@ target_include_directories(fake_components PUBLIC
+   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include/hardware_interface>
+ )
+-ament_target_dependencies(fake_components PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
++target_link_libraries(fake_components PUBLIC hardware_interface)
+ # Causes the visibility macros to use dllexport rather than dllimport,
+ # which is appropriate when building the dll but not consuming it.
+ target_compile_definitions(fake_components PRIVATE "HARDWARE_INTERFACE_BUILDING_DLL")

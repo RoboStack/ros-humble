@@ -33,6 +33,8 @@ binutils:
     win64: []
 bison:
   robostack: [bison]
+black:
+  robostack: [black]
 boost:
   robostack: [libboost-devel, libboost-python-devel]
 bullet:
@@ -215,6 +217,10 @@ libboost:
   robostack: [libboost]
 libboost-chrono-dev:
   robostack: [libboost-devel]
+libboost-coroutine:
+  robostack: [libboost]
+libboost-coroutine-dev:
+  robostack: [libboost-devel]
 libboost-date-time:
   robostack: [libboost]
 libboost-date-time-dev:
@@ -283,6 +289,8 @@ libdw-dev:
     linux: [elfutils]
     osx: []
     win64: []
+libfcl:
+  robostack: [fcl]
 libfcl-dev:
   robostack: [fcl]
 libffi-dev:
@@ -419,6 +427,18 @@ libpcl-all-dev:
     linux: [pcl, libboost-devel, vtk-base, libopengl-devel, libgl-devel]
     osx: [pcl, libboost-devel, vtk-base]
     win64: [pcl, libboost-devel, vtk-base]
+libpcl-common:
+  robostack: [pcl]
+libpcl-features:
+  robostack: [pcl]
+libpcl-filters:
+  robostack: [pcl]
+libpcl-io:
+  robostack: [pcl]
+libpcl-segmentation:
+  robostack: [pcl]
+libpcl-surface:
+  robostack: [pcl]
 libpng-dev:
   robostack: [libpng]
 libpoco-dev:
@@ -599,6 +619,8 @@ lz4:
   robostack: [lz4]
 maven:
   robostack: [maven]
+meson:
+  robostack: [meson]
 mongodb:
   robostack: [mongodb]
 mosquitto:
@@ -764,6 +786,8 @@ python3:
   robostack: [python]
 python3-argcomplete:
   robostack: [argcomplete]
+python3-attrs:
+  robostack: [attrs]
 python3-autobahn:
   robostack: [autobahn]
 python3-bson:
@@ -828,6 +852,8 @@ python3-grpcio:
   robostack: [grpcio]
 python3-h5py:
   robostack: [h5py]
+python3-httpx:
+  robostack: [httpx]
 python3-ifcfg:
   robostack: [ifcfg]
 python3-imageio:
@@ -881,6 +907,8 @@ python3-pip:
   robostack: [pip]
 python3-pkg-resources:
   robostack: []
+python3-platformdirs:
+  robostack: [platformdirs]
 python3-protobuf:
   robostack: [protobuf]
 python3-psutil:
@@ -941,8 +969,12 @@ python3-scipy:
   robostack: [scipy]
 python3-serial:
   robostack: [pyserial]
+python3-setproctitle:
+  robostack: [setproctitle]
 python3-setuptools:
   robostack: [setuptools]
+python3-semver:
+  robostack: [semver]
 python3-simplejson:
   robostack: [simplejson]
 python3-six:
@@ -963,6 +995,12 @@ python3-tk:
   robostack: [tk]
 python3-tornado:
   robostack: [tornado]
+python3-toml:
+  robostack: [toml]
+python3-tqdm:
+  robostack: [tqdm]
+python3-transforms3d:
+  robostack: [transforms3d]
 python3-twisted:
   robostack: [twisted]
 python3-typeguard:
@@ -971,6 +1009,8 @@ python3-unidiff:
   robostack: [unidiff]
 python3-usb:
   robostack: [pyusb]
+python3-ujson:
+  robostack: [ujson]
 python3-vcstool:
   robostack: [vcstool]
 python3-flake8-docstrings:
@@ -981,10 +1021,14 @@ python3-flake8-builtins:
   robostack: [flake8-builtins]
 python3-flake8-quotes:
   robostack: [flake8-quotes]
+python3-uvloop:
+  robostack: [uvloop]
 python3-venv:
   robostack: [virtualenv, pip, pip-tools, setuptools]
 python3-websocket:
   robostack: [websocket-client]
+python3-websockets:
+  robostack: [websockets]
 python3-yaml:
   robostack: [pyyaml]
 python3-zmq:
@@ -1014,6 +1058,8 @@ rsync:
   robostack: [rsync]
 rti-connext-dds-5.3.1:
   robostack: []
+rti-connext-dds-6.0.1:
+  robostack: []
 ruby:
   robostack: [ruby]
 sbcl:
@@ -1033,6 +1079,8 @@ sdl-image:
   robostack: [sdl_image]
 sdl2:
   robostack: [sdl2]
+simde:
+  robostack: [simde]
 socat:
   robostack:
     linux: [socat]
@@ -1041,7 +1089,7 @@ socat:
 spacenavd:
   robostack: [libspnav]
 spdlog:
-  robostack: [spdlog]
+  robostack: [spdlog, fmt]
 sshpass:
   robostack: [sshpass]
 subversion:
