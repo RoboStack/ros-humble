@@ -281,29 +281,20 @@ franka_ign_ros2_control:
   add_host: ["ros-humble-urdf", "ros-humble-kdl-parser", "ros-humble-tf2-geometry-msgs", "ros-humble-tf2-eigen", "${{ 'libgl-devel' if linux }}"]
   add_run: ["ros-humble-urdf", "ros-humble-kdl-parser", "ros-humble-tf2-geometry-msgs", "ros-humble-tf2-eigen"]
 lbr_ros2_control:
-  remove_host: ["lbr-fri-client-sdk"]
-  remove_run: ["lbr-fri-client-sdk"]
   add_host:
     - ros-humble-kinematics-interface
-    - lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*
+    - lbr-fri-client-sdk
   add_run:
     - ros-humble-kinematics-interface
-    - lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*
+    - lbr-fri-client-sdk
 lbr_fri_idl:
-  remove_host: ["lbr-fri-client-sdk"]
-  add_host: ["lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*"]
+  add_host: ["lbr-fri-client-sdk"]
 lbr_fri_ros2:
-  remove_host: ["lbr-fri-client-sdk"]
-  remove_run: ["lbr-fri-client-sdk"]
-  add_host: ["lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*"]
-  add_run: ["lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*"]
+  add_host: ["lbr-fri-client-sdk"]
+  add_run: ["lbr-fri-client-sdk"]
 lbr_demos_cpp:
-  remove_host: ["lbr-fri-client-sdk"]
-  remove_run: ["lbr-fri-client-sdk"]
-  add_host: ["lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*"]
-  add_run: ["lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*"]
+  add_host: ["lbr-fri-client-sdk"]
+  add_run: ["lbr-fri-client-sdk"]
 lbr_demos_advanced_cpp:
-  remove_host: ["lbr-fri-client-sdk"]
-  remove_run: ["lbr-fri-client-sdk"]
-  add_host: ["lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*"]
-  add_run: ["lbr-fri-client-sdk ${{ lbr_fri_client_sdk }}.*"]
+  add_host: ["lbr-fri-client-sdk"]
+  add_run: ["lbr-fri-client-sdk"]
