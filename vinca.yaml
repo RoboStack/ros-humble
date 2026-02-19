@@ -374,6 +374,11 @@ packages_select_by_deps:
       # CMake errors related to OpenCV on macos, probably fixable
       - moveit_ros_perception
       - moveit_runtime
+      # ublox compilation fails on Windows and osx
+      - ublox               # Kumar Robotics
+      - ublox_dgnss         # Aussie Robots
+      - ublox_dgnss_node
+      - ublox_ubx_interfaces
 
   - if: linux and not aarch64
     then:
@@ -427,11 +432,6 @@ packages_select_by_deps:
       # IMRC Lab
       # Windows is failing with error C1083: Cannot open compiler generated file: ''
       - motion_capture_tracking
-      # ublox compilation fails on Windows
-      - ublox               # Kumar Robotics
-      - ublox_dgnss         # Aussie Robots
-      - ublox_dgnss_node
-      - ublox_ubx_interfaces
       # error C1083: Cannot open include file: 'rqt_gui_cpp/plugin.h'
       - rqt_image_overlay
       # Sick safety scanner packages
