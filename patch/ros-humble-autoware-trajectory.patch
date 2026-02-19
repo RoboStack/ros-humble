@@ -1,0 +1,12 @@
+diff --git a/common/autoware_trajectory/include/autoware/trajectory/interpolator/detail/interpolator_common_interface.hpp b/common/autoware_trajectory/include/autoware/trajectory/interpolator/detail/interpolator_common_interface.hpp
+index e339508816..c010fa633a 100644
+--- a/common/autoware_trajectory/include/autoware/trajectory/interpolator/detail/interpolator_common_interface.hpp
++++ b/common/autoware_trajectory/include/autoware/trajectory/interpolator/detail/interpolator_common_interface.hpp
+@@ -19,6 +19,7 @@
+ 
+ #include <rclcpp/logging.hpp>
+ 
++#include <algorithm>
+ #include <utility>
+ #include <vector>
+ 
