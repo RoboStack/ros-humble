@@ -1,0 +1,100 @@
+From 38e59831f23b38a6584512c3c4cad00eae768e2e Mon Sep 17 00:00:00 2001
+From: Olivier Roussel <olivier.roussel@inria.fr>
+Date: Fri, 20 Feb 2026 15:11:01 +0100
+Subject: [PATCH] [PATCH] Fix changed autoware utils to utils_geometry package
+
+---
+ include/autoware/vehicle_info_utils/vehicle_info.hpp |  8 ++++----
+ package.xml                                          |  2 +-
+ src/vehicle_info.cpp                                 | 10 +++++-----
+ 3 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/include/autoware/vehicle_info_utils/vehicle_info.hpp b/include/autoware/vehicle_info_utils/vehicle_info.hpp
+index e3422760..95fe95ef 100644
+--- a/include/autoware/vehicle_info_utils/vehicle_info.hpp
++++ b/include/autoware/vehicle_info_utils/vehicle_info.hpp
+@@ -15,7 +15,7 @@
+ #ifndef AUTOWARE__VEHICLE_INFO_UTILS__VEHICLE_INFO_HPP_
+ #define AUTOWARE__VEHICLE_INFO_UTILS__VEHICLE_INFO_HPP_
+ 
+-#include "autoware_utils/geometry/boost_geometry.hpp"
++#include "autoware_utils_geometry/boost_geometry.hpp"
+ 
+ namespace autoware::vehicle_info_utils
+ {
+@@ -58,7 +58,7 @@ struct VehicleInfo
+    * polygon
+    * @param margin the longitudinal and lateral inflation margin
+    */
+-  [[nodiscard]] autoware_utils::LinearRing2d createFootprint(const double margin = 0.0) const;
++  [[nodiscard]] autoware_utils_geometry::LinearRing2d createFootprint(const double margin = 0.0) const;
+ 
+   /**
+    * @brief calculate the vehicle footprint in clockwise manner starting from the front-left edge,
+@@ -66,7 +66,7 @@ struct VehicleInfo
+    * polygon
+    * @param margin the longitudinal and lateral inflation margin
+    */
+-  [[nodiscard]] autoware_utils::LinearRing2d createFootprint(
++  [[nodiscard]] autoware_utils_geometry::LinearRing2d createFootprint(
+     const double lat_margin, const double lon_margin) const;
+ 
+   /**
+@@ -82,7 +82,7 @@ struct VehicleInfo
+    * @param center_at_base_link if true, center point is aligned at base_link (x=0), otherwise
+    * placed at wheelbase center
+    */
+-  [[nodiscard]] autoware_utils::LinearRing2d createFootprint(
++  [[nodiscard]] autoware_utils_geometry::LinearRing2d createFootprint(
+     const double front_lat_margin, const double center_lat_margin, const double rear_lat_margin,
+     const double front_lon_margin, const double rear_lon_margin,
+     const bool center_at_base_link = false) const;
+diff --git a/package.xml b/package.xml
+index 56225184..ca7a0b6c 100644
+--- a/package.xml
++++ b/package.xml
+@@ -18,7 +18,7 @@
+   <buildtool_depend>ament_cmake_auto</buildtool_depend>
+   <buildtool_depend>autoware_cmake</buildtool_depend>
+ 
+-  <depend>autoware_utils</depend>
++  <depend>autoware_utils_geometry</depend>
+   <depend>rclcpp</depend>
+ 
+   <test_depend>ament_cmake_ros</test_depend>
+diff --git a/src/vehicle_info.cpp b/src/vehicle_info.cpp
+index 25dae289..2764c9f1 100644
+--- a/src/vehicle_info.cpp
++++ b/src/vehicle_info.cpp
+@@ -20,23 +20,23 @@
+ 
+ namespace autoware::vehicle_info_utils
+ {
+-autoware_utils::LinearRing2d VehicleInfo::createFootprint(const double margin) const
++autoware_utils_geometry::LinearRing2d VehicleInfo::createFootprint(const double margin) const
+ {
+   return createFootprint(margin, margin);
+ }
+ 
+-autoware_utils::LinearRing2d VehicleInfo::createFootprint(
++autoware_utils_geometry::LinearRing2d VehicleInfo::createFootprint(
+   const double lat_margin, const double lon_margin) const
+ {
+   return createFootprint(lat_margin, lat_margin, lat_margin, lon_margin, lon_margin);
+ }
+ 
+-autoware_utils::LinearRing2d VehicleInfo::createFootprint(
++autoware_utils_geometry::LinearRing2d VehicleInfo::createFootprint(
+   const double front_lat_margin, const double center_lat_margin, const double rear_lat_margin,
+   const double front_lon_margin, const double rear_lon_margin, const bool center_at_base_link) const
+ {
+-  using autoware_utils::LinearRing2d;
+-  using autoware_utils::Point2d;
++  using autoware_utils_geometry::LinearRing2d;
++  using autoware_utils_geometry::Point2d;
+ 
+   // Longitudinal positions
+   const double x_front = front_overhang_m + wheel_base_m + front_lon_margin;
+-- 
+2.43.0
+
