@@ -1022,7 +1022,10 @@ python3-flake8-builtins:
 python3-flake8-quotes:
   robostack: [flake8-quotes]
 python3-uvloop:
-  robostack: [uvloop]
+  robostack:
+    linux: [uvloop]
+    osx: [uvloop]
+    win64: []
 python3-venv:
   robostack: [virtualenv, pip, pip-tools, setuptools]
 python3-websocket:
