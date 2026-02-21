@@ -23,6 +23,7 @@ urdfdom_headers:
   generate_dummy_package_with_run_deps:
     dep_name: urdfdom_headers
     max_pin: 'x.x'
+    override_version: '2.1.0'
 urdfdom:
   generate_dummy_package_with_run_deps:
     dep_name: urdfdom
