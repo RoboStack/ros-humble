@@ -28,9 +28,9 @@ urdfdom:
   generate_dummy_package_with_run_deps:
     dep_name: urdfdom
     max_pin: 'x.x'
-    # humble is on 3.0.0, but we stick to 4 for compat
+    # humble is on 3.0.0, but we stick to 5 for compat
     # with the rest of conda-forge
-    override_version: '4.0.1'
+    override_version: '5.1.0'
 cartographer:
   generate_dummy_package_with_run_deps:
     dep_name: cartographer
