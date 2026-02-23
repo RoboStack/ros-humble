@@ -280,6 +280,12 @@ franka_example_controllers:
 franka_ign_ros2_control:
   add_host: ["ros-humble-urdf", "ros-humble-kdl-parser", "ros-humble-tf2-geometry-msgs", "ros-humble-tf2-eigen", "${{ 'libgl-devel' if linux }}"]
   add_run: ["ros-humble-urdf", "ros-humble-kdl-parser", "ros-humble-tf2-geometry-msgs", "ros-humble-tf2-eigen"]
+gz_ros2_control:
+  remove_host: ["${{ 'libignition-gazebo6' if win }}"]
+  add_host: ["${{ 'libgz-sim7' if win }}"]
+ign_ros2_control:
+  remove_host: ["${{ 'libignition-gazebo6' if win }}"]
+  add_host: ["${{ 'libgz-sim7' if win }}"]
 lbr_ros2_control:
   add_host: ["ros-humble-kinematics-interface"]
   add_run: ["ros-humble-kinematics-interface"]
