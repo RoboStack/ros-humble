@@ -1,11 +1,41 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5e4ce57..b2f3a8d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1,6 +1,23 @@
+@@ -1,6 +1,51 @@
  cmake_minimum_required(VERSION 3.5)
  project(gz_ros2_control)
  
++# Avoid Windows min/max macros and provide tiny compatibility headers for MSVC.
++if(WIN32)
++  add_compile_definitions(NOMINMAX)
++  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/unistd.h" "#pragma once\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/unistd.h" "#include <io.h>\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/unistd.h" "#ifndef access\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/unistd.h" "#define access _access\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/unistd.h" "#endif\n")
++
++  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#pragma once\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#ifndef NOMINMAX\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#define NOMINMAX\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#endif\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#include <windows.h>\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#ifdef interface\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#undef interface\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#endif\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#ifdef STRICT\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#undef STRICT\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#endif\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#ifdef min\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#undef min\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#endif\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#ifdef max\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#undef max\n")
++  file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h" "#endif\n")
++
++  include_directories(BEFORE "${CMAKE_CURRENT_BINARY_DIR}")
++  add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/FI${CMAKE_CURRENT_BINARY_DIR}/windows_macro_fix.h>)
++endif()
++
 +# Fix for macOS case sensitivity issue with TinyXML2 targets
 +# ignition-gui6 from conda-forge expects TINYXML2::TINYXML2 but macOS provides tinyxml2::tinyxml2
 +# We need to create the uppercase target before any ignition packages are loaded
@@ -26,7 +56,7 @@ index 5e4ce57..b2f3a8d 100644
  # Default to C++14
  if(NOT CMAKE_CXX_STANDARD)
    set(CMAKE_CXX_STANDARD 14)
-@@ -57,13 +74,26 @@ if("$ENV{GZ_VERSION}" STREQUAL "harmonic")
+@@ -57,14 +102,25 @@ if("$ENV{GZ_VERSION}" STREQUAL "harmonic")
    set(GZ_PLUGIN gz-plugin${GZ_PLUGIN_VER}::register)
    set(GZ_SIM gz-sim${GZ_SIM_VER}::core)
    add_definitions(-DGZ_HEADERS)
