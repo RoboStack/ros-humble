@@ -28,8 +28,6 @@ tbb:
   - '2022'
 tbb_devel:
   - '2022'
-poco:
-  - 1.14.2
 
 # Workaround for https://github.com/RoboStack/ros-jazzy/pull/40#issuecomment-2782226697
 cmake:
