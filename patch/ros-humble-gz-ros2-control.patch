@@ -1,7 +1,7 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1,6 +1,51 @@
+@@ -1,5 +1,50 @@
  cmake_minimum_required(VERSION 3.5)
  project(gz_ros2_control)
  
@@ -53,10 +53,9 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 +  message(STATUS "Created TINYXML2::TINYXML2 compatibility target for ignition packages")
 +endif()
 +
- # Default to C++14
- if(NOT CMAKE_CXX_STANDARD)
-   set(CMAKE_CXX_STANDARD 14)
-@@ -57,14 +102,25 @@ if("$ENV{GZ_VERSION}" STREQUAL "harmonic")
+ # Default to C11
+ if(NOT CMAKE_C_STANDARD)
+@@ -29,14 +74,25 @@ if("$ENV{GZ_VERSION}" STREQUAL "harmonic")
    set(GZ_PLUGIN gz-plugin${GZ_PLUGIN_VER}::register)
    set(GZ_SIM gz-sim${GZ_SIM_VER}::core)
    add_definitions(-DGZ_HEADERS)
@@ -87,5 +86,3 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 +    set(GZ_SIM ignition-gazebo${GZ_SIM_VER}::core)
 +  endif()
  endif()
- 
- include_directories(
