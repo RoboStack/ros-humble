@@ -1,0 +1,37 @@
+diff --git a/detect_aruco_markers_behavior/src/detect_aruco_markers_behavior.cpp b/detect_aruco_markers_behavior/src/detect_aruco_markers_behavior.cpp
+index ce4a7522..640e5a3a 100644
+--- a/detect_aruco_markers_behavior/src/detect_aruco_markers_behavior.cpp
++++ b/detect_aruco_markers_behavior/src/detect_aruco_markers_behavior.cpp
+@@ -85,8 +85,9 @@ void DetectArucoMarkersBehavior::loadParameters()
+   RCLCPP_INFO(get_logger(), "Params: aruco_size: %.3f m", aruco_size_);
+ 
+   // TODO(david): Load dictionary from param
+-  aruco_dict_ = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
++  //aruco_dict_ = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+   // aruco_dict_ = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_5X5_1000);
++  aruco_dict_ = cv::makePtr<cv::aruco::Dictionary>(cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250));
+ }
+ 
+ // SIMULATION
+@@ -161,7 +162,8 @@ void DetectArucoMarkersBehavior::imageCallback(const sensor_msgs::msg::Image::Sh
+   // init ArUco detection
+   std::vector<int> marker_ids;
+   std::vector<std::vector<cv::Point2f>> marker_corners, rejected_candidates;
+-  cv::Ptr<cv::aruco::DetectorParameters> detector_params = cv::aruco::DetectorParameters::create();
++  //cv::Ptr<cv::aruco::DetectorParameters> detector_params = cv::aruco::DetectorParameters::create();
++  cv::Ptr<cv::aruco::DetectorParameters> detector_params = cv::makePtr<cv::aruco::DetectorParameters>();
+ 
+   // detect markers on the fisheye, it's no worth it to detect over the rectified image
+   cv::aruco::detectMarkers(
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 643ca101..612f51c3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -35,6 +35,7 @@ set(PROJECT_DEPENDENCIES
+ foreach(DEPENDENCY ${PROJECT_DEPENDENCIES})
+   find_package(${DEPENDENCY} REQUIRED)
+ endforeach()
++find_package(GeographicLib REQUIRED)
+ 
+ # List of behaviors
+ set(BEHAVIORS_LIST
