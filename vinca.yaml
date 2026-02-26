@@ -52,6 +52,7 @@ packages_skip_by_deps:
       - osrf_testing_tools_cpp
   - if: win
     then:
+      - rclc_examples
       # Modern gz-sim integration is not supported on Humble on Windows, please
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/issues/68
@@ -93,6 +94,7 @@ packages_remove_from_deps:
       - osrf_testing_tools_cpp
   - if: win
     then:
+      - rclc_examples
       # Modern gz-sim integration is not supported on Humble on Windows, please
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/issues/68
