@@ -77,7 +77,7 @@ index a6d8263e..552d7acf 100644
 -  message(STATUS "Using numpy include directory: ${_output}")
 -  target_include_directories(${_target_name_lib} PUBLIC "${_output}")
 +if(APPLE OR EMSCRIPTEN)
-+  set_target_properties(${_target_name_lib} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
++  target_link_libraries(${_target_name_lib} PRIVATE Python::Module)
 +  target_include_directories(${_target_name_lib} PUBLIC ${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
 +else()
 +  target_link_libraries(${_target_name_lib} PRIVATE Python::NumPy Python::Python)
