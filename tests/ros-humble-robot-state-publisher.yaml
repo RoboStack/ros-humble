@@ -6,7 +6,7 @@ tests:
       else: launch_test robot_state_publisher_smoke_test_launch.py
     requirements:
       run:
-        - ros-jazzy-launch-testing-ros 
+        - ros-humble-launch-testing-ros 
     files:
       recipe:
         - robot_state_publisher_smoke_test_launch.py
