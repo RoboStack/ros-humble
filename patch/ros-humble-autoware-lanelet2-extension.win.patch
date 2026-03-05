@@ -1,0 +1,46 @@
+diff --git a/src/check_right_of_way.cpp b/src/check_right_of_way.cpp
+index d59ec14..e62be74 100644
+--- a/src/check_right_of_way.cpp
++++ b/src/check_right_of_way.cpp
+@@ -15,13 +15,6 @@
+ #include <autoware_lanelet2_extension/projection/mgrs_projector.hpp>
+ #include <autoware_lanelet2_extension/utility/query.hpp>
+ #include <autoware_lanelet2_extension/utility/utilities.hpp>
+-#include <range/v3/algorithm/move.hpp>
+-#include <range/v3/core.hpp>
+-#include <range/v3/functional/overload.hpp>
+-#include <range/v3/utility/copy.hpp>
+-#include <range/v3/view/filter.hpp>
+-#include <range/v3/view/transform.hpp>
+-#include <range/v3/view/unique.hpp>
+ 
+ #include <lanelet2_core/LaneletMap.h>
+ #include <lanelet2_io/Io.h>
+@@ -57,16 +50,17 @@ int main(int argc, char ** argv)
+   lanelet::routing::RoutingGraphPtr routing_graph_ptr =
+     lanelet::routing::RoutingGraph::build(*map, *traffic_rules);
+ 
+-  auto rows = map->regulatoryElementLayer  // filter elem whose Subtype is RightOfWay
+-              |
+-              ranges::views::filter([](auto && elem) {
+-                const auto & attrs = elem->attributes();
+-                auto it = attrs.find(lanelet::AttributeName::Subtype);
+-                return it != attrs.end() && it->second == lanelet::AttributeValueString::RightOfWay;
+-              })  // transform to lanelet::RightOfWay
+-              | ranges::views::transform([](auto && elem) {
+-                  return std::dynamic_pointer_cast<lanelet::RightOfWay>(elem);
+-                });
++  std::vector<std::shared_ptr<lanelet::RightOfWay>> rows;
++  for (const auto & elem : map->regulatoryElementLayer) {
++    const auto & attrs = elem->attributes();
++    auto it = attrs.find(lanelet::AttributeName::Subtype);
++    if (it != attrs.end() && it->second == lanelet::AttributeValueString::RightOfWay) {
++      auto row = std::dynamic_pointer_cast<lanelet::RightOfWay>(elem);
++      if (row) {
++        rows.push_back(row);
++      }
++    }
++  }
+ 
+   for (auto && row : rows) {
+     const auto & right_of_ways = row->rightOfWayLanelets();
