@@ -451,9 +451,10 @@ packages_select_by_deps:
       - gz_ros2_control
       - ur_simulation_gz
       # mavros and mavlink (enabled on macOS for testing)
-      - mavlink
-      - mavros
-      - mavros_extras
+      # need updates for boost 1.88
+      # - mavlink
+      # - mavros
+      # - mavros_extras
 
       # robotique grippers
       - robotiq_description
