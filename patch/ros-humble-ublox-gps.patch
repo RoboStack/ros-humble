@@ -1,0 +1,300 @@
+From d373ab81f2da9ee4dbe125ba957b901f84a31f0d Mon Sep 17 00:00:00 2001
+From: Olivier Roussel <olivier.roussel@inria.fr>
+Date: Fri, 6 Mar 2026 18:49:34 +0100
+Subject: [PATCH 1/2] adapt for boost io_context
+
+---
+ src/gps.cpp | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/src/gps.cpp b/src/gps.cpp
+index e71377d..e590caa 100644
+--- a/src/gps.cpp
++++ b/src/gps.cpp
+@@ -33,7 +33,7 @@
+ #include <stdexcept>
+ #include <thread>
+ 
+-#include <asio/io_service.hpp>
++#include <asio/io_context.hpp>
+ #include <asio/serial_port.hpp>
+ #include <asio/serial_port_base.hpp>
+ #include <asio/ip/tcp.hpp>
+@@ -125,8 +125,8 @@ void Gps::processUpdSosAck(const ublox_msgs::msg::UpdSOSAck &m) {
+ void Gps::initializeSerial(const std::string & port, unsigned int baudrate,
+                            uint16_t uart_in, uint16_t uart_out) {
+   port_ = port;
+-  auto io_service = std::make_shared<asio::io_service>();
+-  auto serial = std::make_shared<asio::serial_port>(*io_service);
++  auto io_context = std::make_shared<asio::io_context>();
++  auto serial = std::make_shared<asio::serial_port>(*io_context);
+ 
+   // open serial port
+   try {
+@@ -148,7 +148,7 @@ void Gps::initializeSerial(const std::string & port, unsigned int baudrate,
+   if (worker_) {
+     return;
+   }
+-  setWorker(std::make_shared<AsyncWorker<asio::serial_port>>(serial, io_service, 8192, debug_, logger_));
++  setWorker(std::make_shared<AsyncWorker<asio::serial_port>>(serial, io_context, 8192, debug_, logger_));
+ 
+   configured_ = false;
+ 
+@@ -181,8 +181,8 @@ void Gps::initializeSerial(const std::string & port, unsigned int baudrate,
+ }
+ 
+ void Gps::resetSerial(const std::string & port) {
+-  auto io_service = std::make_shared<asio::io_service>();
+-  auto serial = std::make_shared<asio::serial_port>(*io_service);
++  auto io_context = std::make_shared<asio::io_context>();
++  auto serial = std::make_shared<asio::serial_port>(*io_context);
+ 
+   // open serial port
+   try {
+@@ -198,7 +198,7 @@ void Gps::resetSerial(const std::string & port) {
+   if (worker_) {
+     return;
+   }
+-  setWorker(std::make_shared<AsyncWorker<asio::serial_port>>(serial, io_service, 8192, debug_, logger_));
++  setWorker(std::make_shared<AsyncWorker<asio::serial_port>>(serial, io_context, 8192, debug_, logger_));
+   configured_ = false;
+ 
+   // Poll UART PRT Config
+@@ -223,11 +223,11 @@ void Gps::resetSerial(const std::string & port) {
+ void Gps::initializeTcp(const std::string & host, const std::string & port) {
+   host_ = host;
+   port_ = port;
+-  auto io_service = std::make_shared<asio::io_service>();
++  auto io_context = std::make_shared<asio::io_context>();
+   asio::ip::tcp::resolver::iterator endpoint;
+ 
+   try {
+-    asio::ip::tcp::resolver resolver(*io_service);
++    asio::ip::tcp::resolver resolver(*io_context);
+     endpoint =
+         resolver.resolve(asio::ip::tcp::resolver::query(host, port));
+   } catch (const std::runtime_error& e) {
+@@ -235,7 +235,7 @@ void Gps::initializeTcp(const std::string & host, const std::string & port) {
+                              port + " " + e.what());
+   }
+ 
+-  auto socket = std::make_shared<asio::ip::tcp::socket>(*io_service);
++  auto socket = std::make_shared<asio::ip::tcp::socket>(*io_context);
+ 
+   try {
+     socket->connect(*endpoint);
+@@ -251,17 +251,17 @@ void Gps::initializeTcp(const std::string & host, const std::string & port) {
+   if (worker_) {
+     return;
+   }
+-  setWorker(std::make_shared<AsyncWorker<asio::ip::tcp::socket>>(socket, io_service, 8192, debug_, logger_));
++  setWorker(std::make_shared<AsyncWorker<asio::ip::tcp::socket>>(socket, io_context, 8192, debug_, logger_));
+ }
+ 
+ void Gps::initializeUdp(const std::string & host, const std::string & port) {
+   host_ = host;
+   port_ = port;
+-  auto io_service = std::make_shared<asio::io_service>();
++  auto io_context = std::make_shared<asio::io_context>();
+   asio::ip::udp::resolver::iterator endpoint;
+ 
+   try {
+-    asio::ip::udp::resolver resolver(*io_service);
++    asio::ip::udp::resolver resolver(*io_context);
+     endpoint =
+         resolver.resolve(asio::ip::udp::resolver::query(host, port));
+   } catch (const std::runtime_error& e) {
+@@ -269,7 +269,7 @@ void Gps::initializeUdp(const std::string & host, const std::string & port) {
+                              port + " " + e.what());
+   }
+ 
+-  auto socket = std::make_shared<asio::ip::udp::socket>(*io_service);
++  auto socket = std::make_shared<asio::ip::udp::socket>(*io_context);
+ 
+   try {
+     socket->connect(*endpoint);
+@@ -285,7 +285,7 @@ void Gps::initializeUdp(const std::string & host, const std::string & port) {
+   if (worker_) {
+     return;
+   }
+-  setWorker(std::make_shared<AsyncWorker<asio::ip::udp::socket>>(socket, io_service, 8192, debug_, logger_));
++  setWorker(std::make_shared<AsyncWorker<asio::ip::udp::socket>>(socket, io_context, 8192, debug_, logger_));
+ }
+ 
+ void Gps::close() {
+-- 
+2.43.0
+
+
+From 13db0c2cd6e2f70ffe03f3480a7c6b3654d00931 Mon Sep 17 00:00:00 2001
+From: Olivier Roussel <olivier.roussel@inria.fr>
+Date: Fri, 6 Mar 2026 19:06:26 +0100
+Subject: [PATCH 2/2] patch async_worker.hpp for asio io_context
+
+---
+ include/ublox_gps/async_worker.hpp | 23 ++++++++++++-----------
+ src/gps.cpp                        | 28 ++++++++++++++--------------
+ 2 files changed, 26 insertions(+), 25 deletions(-)
+
+diff --git a/include/ublox_gps/async_worker.hpp b/include/ublox_gps/async_worker.hpp
+index 2315163..5e7ca40 100644
+--- a/include/ublox_gps/async_worker.hpp
++++ b/include/ublox_gps/async_worker.hpp
+@@ -39,7 +39,7 @@
+ 
+ #include <asio/buffer.hpp>
+ #include <asio/error_code.hpp>
+-#include <asio/io_service.hpp>
++#include <asio/io_context.hpp>
+ #include <asio/placeholders.hpp>
+ #include <asio/write.hpp>
+ #include <asio/ip/udp.hpp>
+@@ -59,11 +59,11 @@ class AsyncWorker final : public Worker {
+   /**
+    * @brief Construct an Asynchronous I/O worker.
+    * @param stream the stream for th I/O service
+-   * @param io_service the I/O service
++   * @param io_context the I/O context
+    * @param buffer_size the size of the input and output buffers
+    */
+   explicit AsyncWorker(std::shared_ptr<StreamT> stream,
+-                       std::shared_ptr<asio::io_service> io_service,
++                       std::shared_ptr<asio::io_context> io_context,
+                        std::size_t buffer_size,
+                        int debug,
+                        const rclcpp::Logger& logger);
+@@ -124,7 +124,7 @@ class AsyncWorker final : public Worker {
+   void doClose();
+ 
+   std::shared_ptr<StreamT> stream_; //!< The I/O stream
+-  std::shared_ptr<asio::io_service> io_service_; //!< The I/O service
++  std::shared_ptr<asio::io_context> io_context_; //!< The I/O context
+ 
+   std::mutex read_mutex_; //!< Lock for the input buffer
+   std::condition_variable read_condition_;
+@@ -150,22 +150,23 @@ class AsyncWorker final : public Worker {
+ 
+ template <typename StreamT>
+ AsyncWorker<StreamT>::AsyncWorker(std::shared_ptr<StreamT> stream,
+-        std::shared_ptr<asio::io_service> io_service,
++        std::shared_ptr<asio::io_context> io_context,
+         std::size_t buffer_size,
+         int debug,
+         const rclcpp::Logger& logger)
+-    : stream_(stream), io_service_(io_service), in_buffer_size_(0), stopping_(false), debug_(debug), logger_(logger) {
++    : stream_(stream), io_context_(io_context), in_buffer_size_(0), stopping_(false), debug_(debug), logger_(logger) {
+   in_.resize(buffer_size);
+ 
+   out_.reserve(buffer_size);
+ 
+-  io_service_->post(std::bind(&AsyncWorker<StreamT>::doRead, this));
+-  background_thread_ = std::make_shared<std::thread>([this]{ io_service_->run(); });
++
++  asio::post(*io_context_, std::bind(&AsyncWorker<StreamT>::doRead, this));
++  background_thread_ = std::make_shared<std::thread>([this]{ io_context_->run(); });
+ }
+ 
+ template <typename StreamT>
+ AsyncWorker<StreamT>::~AsyncWorker() {
+-  io_service_->post(std::bind(&AsyncWorker<StreamT>::doClose, this));
++  asio::post(*io_context_, std::bind(&AsyncWorker<StreamT>::doClose, this));
+   background_thread_->join();
+   //io_service_->reset();
+ }
+@@ -185,7 +186,7 @@ bool AsyncWorker<StreamT>::send(const unsigned char* data,
+   }
+   out_.insert(out_.end(), data, data + size);
+ 
+-  io_service_->post(std::bind(&AsyncWorker<StreamT>::doWrite, this));
++  asio::post(*io_context_, std::bind(&AsyncWorker<StreamT>::doWrite, this));
+   return true;
+ }
+ 
+@@ -314,7 +315,7 @@ void AsyncWorker<StreamT>::readEnd(const asio::error_code& error,
+   }
+ 
+   if (!stopping_) {
+-    io_service_->post(std::bind(&AsyncWorker<StreamT>::doRead, this));
++    asio::post(*io_context_, std::bind(&AsyncWorker<StreamT>::doRead, this));
+   }
+ }
+ 
+diff --git a/src/gps.cpp b/src/gps.cpp
+index e590caa..e82fdc7 100644
+--- a/src/gps.cpp
++++ b/src/gps.cpp
+@@ -224,12 +224,12 @@ void Gps::initializeTcp(const std::string & host, const std::string & port) {
+   host_ = host;
+   port_ = port;
+   auto io_context = std::make_shared<asio::io_context>();
+-  asio::ip::tcp::resolver::iterator endpoint;
++  asio::ip::tcp::endpoint endpoint;
+ 
+   try {
+     asio::ip::tcp::resolver resolver(*io_context);
+     endpoint =
+-        resolver.resolve(asio::ip::tcp::resolver::query(host, port));
++        *resolver.resolve(host, port).begin();
+   } catch (const std::runtime_error& e) {
+     throw std::runtime_error("U-Blox: Could not resolve" + host + " " +
+                              port + " " + e.what());
+@@ -238,15 +238,15 @@ void Gps::initializeTcp(const std::string & host, const std::string & port) {
+   auto socket = std::make_shared<asio::ip::tcp::socket>(*io_context);
+ 
+   try {
+-    socket->connect(*endpoint);
++    socket->connect(endpoint);
+   } catch (const std::runtime_error& e) {
+     throw std::runtime_error("U-Blox: Could not connect to " +
+-                             endpoint->host_name() + ":" +
+-                             endpoint->service_name() + ": " + e.what());
++                             host + ":" +
++                             port + ": " + e.what());
+   }
+ 
+-  RCLCPP_INFO(logger_, "U-Blox: Connected to %s:%s.", endpoint->host_name().c_str(),
+-              endpoint->service_name().c_str());
++  RCLCPP_INFO(logger_, "U-Blox: Connected to %s:%s.", host.c_str(),
++              port.c_str());
+ 
+   if (worker_) {
+     return;
+@@ -258,12 +258,12 @@ void Gps::initializeUdp(const std::string & host, const std::string & port) {
+   host_ = host;
+   port_ = port;
+   auto io_context = std::make_shared<asio::io_context>();
+-  asio::ip::udp::resolver::iterator endpoint;
++  asio::ip::udp::endpoint endpoint;
+ 
+   try {
+     asio::ip::udp::resolver resolver(*io_context);
+     endpoint =
+-        resolver.resolve(asio::ip::udp::resolver::query(host, port));
++        *resolver.resolve(host, port).begin();
+   } catch (const std::runtime_error& e) {
+     throw std::runtime_error("U-Blox: Could not resolve" + host + " " +
+                              port + " " + e.what());
+@@ -272,15 +272,15 @@ void Gps::initializeUdp(const std::string & host, const std::string & port) {
+   auto socket = std::make_shared<asio::ip::udp::socket>(*io_context);
+ 
+   try {
+-    socket->connect(*endpoint);
++    socket->connect(endpoint);
+   } catch (const std::runtime_error& e) {
+     throw std::runtime_error("U-Blox: Could not connect to " +
+-                             endpoint->host_name() + ":" +
+-                             endpoint->service_name() + ": " + e.what());
++                             host + ":" +
++                             port + ": " + e.what());
+   }
+ 
+-  RCLCPP_INFO(logger_, "U-Blox: Connected to %s:%s.", endpoint->host_name().c_str(),
+-              endpoint->service_name().c_str());
++  RCLCPP_INFO(logger_, "U-Blox: Connected to %s:%s.", host.c_str(),
++              port.c_str());
+ 
+   if (worker_) {
+     return;
+-- 
+2.43.0
+
