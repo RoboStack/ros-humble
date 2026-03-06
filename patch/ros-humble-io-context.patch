@@ -1,0 +1,81 @@
+diff --git a/CHANGELOG.rst b/CHANGELOG.rst
+index 06ec8f7..1985f3b 100644
+--- a/CHANGELOG.rst
++++ b/CHANGELOG.rst
+@@ -63,7 +63,7 @@ Changelog for package io_context
+   * Added cmath header
+   * Fix linting warning
+   * Added ASIO_STANDALONE to more units
+-  * Call stop on io_service
++  * Call stop on io_context
+   * Fix dependency
+   * Export asio as a downstream dependency
+   * Remove more boost references
+diff --git a/include/io_context/io_context.hpp b/include/io_context/io_context.hpp
+index d2f5770..6d2fd31 100644
+--- a/include/io_context/io_context.hpp
++++ b/include/io_context/io_context.hpp
+@@ -66,7 +66,7 @@ public:
+   IoContext(const IoContext &) = delete;
+   IoContext & operator=(const IoContext &) = delete;
+ 
+-  asio::io_service & ios() const;
++  asio::io_context & ios() const;
+ 
+   bool isServiceStopped();
+   uint32_t serviceThreadCount();
+@@ -76,12 +76,14 @@ public:
+   template<class F>
+   void post(F f)
+   {
+-    ios().post(f);
++    asio::post(ios(), f);
+   }
+ 
+ private:
+-  std::shared_ptr<asio::io_service> m_ios;
+-  std::shared_ptr<asio::io_service::work> m_work;
++  std::shared_ptr<asio::io_context> m_ios;
++  std::shared_ptr<
++      asio::executor_work_guard<asio::io_context::executor_type>
++  > m_work;
+   std::shared_ptr<drivers::common::thread_group> m_ios_thread_workers;
+ };
+ 
+diff --git a/src/io_context.cpp b/src/io_context.cpp
+index 3ac151e..fc9d4fd 100644
+--- a/src/io_context.cpp
++++ b/src/io_context.cpp
+@@ -30,9 +30,11 @@ IoContext::IoContext()
+ : IoContext(std::thread::hardware_concurrency()) {}
+ 
+ IoContext::IoContext(size_t threads_count)
+-: m_ios(new asio::io_service()),
+-  m_work(new asio::io_service::work(ios())),
+-  m_ios_thread_workers(new drivers::common::thread_group())
++: m_ios(std::make_shared<asio::io_context>()),
++  m_work(std::make_shared<
++         asio::executor_work_guard<asio::io_context::executor_type>>(
++         asio::make_work_guard(*m_ios))),
++  m_ios_thread_workers(std::make_shared<drivers::common::thread_group>())
+ {
+   for (size_t i = 0; i < threads_count; ++i) {
+     m_ios_thread_workers->create_thread(
+@@ -51,7 +53,7 @@ IoContext::~IoContext()
+   waitForExit();
+ }
+ 
+-asio::io_service & IoContext::ios() const
++asio::io_context & IoContext::ios() const
+ {
+   return *m_ios;
+ }
+@@ -69,7 +71,7 @@ uint32_t IoContext::serviceThreadCount()
+ void IoContext::waitForExit()
+ {
+   if (!ios().stopped()) {
+-    ios().post([&]() {m_work.reset();});
++    asio::post(ios(), [&]() { m_work.reset(); });
+   }
+ 
+   ios().stop();
