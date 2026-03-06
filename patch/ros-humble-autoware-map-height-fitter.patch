@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4678d7e..b6a6e53 100644
+index e2a16f07..03058081 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -13,7 +13,12 @@ target_link_libraries(${PROJECT_NAME} ${PCL_LIBRARIES})
@@ -26,6 +26,6 @@ index 4678d7e..b6a6e53 100644
 +  )
 +endif()
 +
- ament_auto_package(
+ autoware_ament_auto_package(
    INSTALL_TO_SHARE
    launch
