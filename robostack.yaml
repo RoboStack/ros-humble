@@ -1155,7 +1155,12 @@ yaml:
 yaml-cpp:
   robostack: [yaml-cpp]
 zbar:
-  robostack: [zbar]
+  robostack:
+    linux-64: [zbar]
+    linux-aarch64: []
+    osx-64: [zbar]
+    osx-arm64: [zbar]
+    win64: []
 zlib:
   robostack: [zlib]
 zziplib:
