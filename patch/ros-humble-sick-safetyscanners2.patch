@@ -1,0 +1,42 @@
+diff --git a/include/sick_safetyscanners2/SickSafetyscanners.hpp b/include/sick_safetyscanners2/SickSafetyscanners.hpp
+index 36700a3..f4e34f4 100644
+--- a/include/sick_safetyscanners2/SickSafetyscanners.hpp
++++ b/include/sick_safetyscanners2/SickSafetyscanners.hpp
+@@ -148,20 +148,20 @@ class SickSafetyscanners {
+     std::string sensor_ip;
+     node.template get_parameter<std::string>("sensor_ip", sensor_ip);
+     RCLCPP_INFO(getLogger(), "sensor_ip: %s", sensor_ip.c_str());
+-    m_config.m_sensor_ip = boost::asio::ip::address_v4::from_string(sensor_ip);
++    m_config.m_sensor_ip = boost::asio::ip::make_address_v4(sensor_ip);
+ 
+     std::string interface_ip;
+     node.template get_parameter<std::string>("interface_ip", interface_ip);
+     RCLCPP_INFO(getLogger(), "interface_ip: %s", interface_ip.c_str());
+     m_config.m_interface_ip =
+-        boost::asio::ip::address_v4::from_string(interface_ip);
++        boost::asio::ip::make_address_v4(interface_ip);
+ 
+     std::string host_ip;
+     node.template get_parameter<std::string>("host_ip", host_ip);
+     RCLCPP_INFO(getLogger(), "host_ip: %s", host_ip.c_str());
+     // TODO check if valid IP?
+     m_config.m_communications_settings.host_ip =
+-        boost::asio::ip::address_v4::from_string(host_ip);
++        boost::asio::ip::make_address_v4(host_ip);
+ 
+     int host_udp_port;
+     node.template get_parameter<int>("host_udp_port", host_udp_port);
+diff --git a/src/SickSafetyscanners.cpp b/src/SickSafetyscanners.cpp
+index 73bf7fb..27c0388 100644
+--- a/src/SickSafetyscanners.cpp
++++ b/src/SickSafetyscanners.cpp
+@@ -54,7 +54,7 @@ rcl_interfaces::msg::SetParametersResult SickSafetyscanners::parametersCallback(
+       m_config.m_frame_id = param.value_to_string();
+     } else if (param.get_name() == "host_ip") {
+       m_config.m_communications_settings.host_ip =
+-          boost::asio::ip::address_v4::from_string(param.value_to_string());
++          boost::asio::ip::make_address_v4(param.value_to_string());
+       update_sensor_config = true;
+     } else if (param.get_name() == "host_udp_port") {
+       m_config.m_communications_settings.host_udp_port = param.as_int();
+

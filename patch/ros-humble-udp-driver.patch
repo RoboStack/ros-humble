@@ -1,0 +1,26 @@
+diff --git a/udp_driver/src/udp_socket.cpp b/udp_driver/src/udp_socket.cpp
+index 619c7be..0cefd68 100644
+--- a/udp_driver/src/udp_socket.cpp
++++ b/udp_driver/src/udp_socket.cpp
+@@ -38,15 +38,17 @@ UdpSocket::UdpSocket(
+   const uint16_t host_port)
+ : m_ctx(ctx),
+   m_udp_socket(ctx.ios()),
+-  m_remote_endpoint(address::from_string(remote_ip), remote_port),
+-  m_host_endpoint(address::from_string(host_ip), host_port)
++  m_remote_endpoint(asio::ip::make_address(remote_ip), remote_port),
++  m_host_endpoint(asio::ip::make_address(host_ip), host_port)
+ {
+   m_remote_endpoint = remote_ip.empty() ?
+     udp::endpoint{udp::v4(), remote_port} :
+-  udp::endpoint{address::from_string(remote_ip), remote_port};
++    udp::endpoint{asio::ip::make_address(remote_ip), remote_port};
++
+   m_host_endpoint = host_ip.empty() ?
+     udp::endpoint{udp::v4(), host_port} :
+-  udp::endpoint{address::from_string(host_ip), host_port};
++    udp::endpoint{asio::ip::make_address(host_ip), host_port};
++
+   m_recv_buffer.resize(m_recv_buffer_size);
+ }
+ 
