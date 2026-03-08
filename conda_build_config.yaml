@@ -1,5 +1,6 @@
 numpy:
-  - 2
+  - 2     # [not emscripten]
+  - 1.26  # [emscripten]
 assimp:
   - 6.0.3
 libprotobuf:
