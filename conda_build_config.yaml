@@ -37,7 +37,8 @@ cdt_name:  # [linux]
   - conda  # [linux]
 
 python:
-  - 3.12.* *_cpython
+  - 3.11.* *_cpython  # [emscripten]
+  - 3.12.* *_cpython  # [not emscripten]
 python_impl:
   - cpython
 
