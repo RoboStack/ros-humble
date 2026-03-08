@@ -8,7 +8,8 @@ libprotobuf:
 protobuf:
   - 6.33.5
 spdlog:
-  - 1.17
+  - 1.17  # [not emscripten]
+  - 1.15  # [emscripten]
 pugixml:
   - '1.15'
 libopencv:
@@ -22,7 +23,8 @@ graphviz:
 libcap:
   - 2.77
 fmt:
-  - 12.1
+  - 12.1  # [not emscripten]
+  - 11.1  # [emscripten]
 lua:
   - 5.4
 tbb:
