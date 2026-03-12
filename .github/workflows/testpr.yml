@@ -116,6 +116,7 @@ jobs:
       run: |
         if [ "${{ runner.os }}" = "Windows" ]; then
           cd /w/
+          export VINCA_CUSTOM_CMAKE_BUILD_DIR='C:\x\'
         fi
         pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
 
