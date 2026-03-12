@@ -53,6 +53,17 @@ jobs:
         echo "CONDA_BLD_PATH=C:\\bld\\" >> $GITHUB_ENV
         mkdir /c/bld
 
+    - name: Enable Win32 long paths
+      shell: powershell
+      if: matrix.platform == 'win-64'
+      run: |
+        New-ItemProperty `
+          -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
+          -Name "LongPathsEnabled" `
+          -Value 1 `
+          -PropertyType DWORD `
+          -Force
+
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
       if: contains(matrix.os, 'windows')
