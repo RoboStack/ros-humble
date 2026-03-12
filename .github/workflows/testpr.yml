@@ -104,6 +104,13 @@ jobs:
       shell: bash -l {0}
       run: |
         rm -rf ${{ matrix.folder_cache }}/*
+      
+    # temp delete all packages on osx-64 intel to force a full rebuild, as there are some problems with the current cache
+    - name: Temporary delete all packages on osx-64 intel to force a full rebuild
+      if: ${{ matrix.platform == 'osx-64' }}
+      shell: bash -l {0}
+      run: |
+        rm -rf ${{ matrix.folder_cache }}/*
 
     - name: See packages restored by cache
       shell: bash -l {0}
