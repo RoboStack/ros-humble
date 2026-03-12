@@ -19,6 +19,7 @@ mutex_package:
     - gazebo 11.*
     - libprotobuf 6.33.5.*
     - vtk 9.5.2.*
+    - krb5 1.21.*
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
