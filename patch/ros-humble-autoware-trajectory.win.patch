@@ -1,0 +1,284 @@
+diff --git a/common/autoware_trajectory/src/detail/util.cpp b/common/autoware_trajectory/src/detail/util.cpp
+--- a/common/autoware_trajectory/src/detail/util.cpp
++++ b/common/autoware_trajectory/src/detail/util.cpp
+@@ -14,6 +14,7 @@
+ #include "autoware/trajectory/detail/helpers.hpp"
+ 
+ #include <algorithm>
++#include <iterator>
+ #include <vector>
+ 
+ namespace autoware::experimental::trajectory::detail
+diff --git a/common/autoware_trajectory/include/autoware/trajectory/utils/pretty_build.hpp b/common/autoware_trajectory/include/autoware/trajectory/utils/pretty_build.hpp
+--- a/common/autoware_trajectory/include/autoware/trajectory/utils/pretty_build.hpp
++++ b/common/autoware_trajectory/include/autoware/trajectory/utils/pretty_build.hpp
+@@ -24,15 +24,12 @@
+ #include "autoware/trajectory/trajectory_point.hpp"
+ #include "autoware_utils_geometry/geometry.hpp"
+ 
+-#include <range/v3/to_container.hpp>
+-#include <range/v3/view/drop.hpp>
+-#include <range/v3/view/transform.hpp>
+-#include <range/v3/view/zip_with.hpp>
+ #include <tl_expected/expected.hpp>
+ 
+ #include <autoware_internal_planning_msgs/msg/path_with_lane_id.hpp>
+ #include <autoware_planning_msgs/msg/path.hpp>
+ #include <autoware_planning_msgs/msg/trajectory.hpp>
+ 
++#include <algorithm>
+ #include <optional>
+ #include <set>
+ #include <string>
+@@ -126,10 +123,12 @@ template <>
+ [[maybe_unused]] inline std::vector<double> insert_middle_into_largest_interval(
+   const std::vector<double> & bases)
+ {
+-  const auto base_diffs =
+-    ranges::views::zip_with(
+-      [](const double a, const double b) { return b - a; }, bases, bases | ranges::views::drop(1)) |
+-    ranges::to<std::vector>();
++  std::vector<double> base_diffs;
++  base_diffs.reserve(bases.size() > 1 ? bases.size() - 1 : 0);
++  for (size_t i = 0; i + 1 < bases.size(); ++i) {
++    base_diffs.push_back(bases[i + 1] - bases[i]);
++  }
++
+   const auto max_interval_start =
+     std::distance(base_diffs.begin(), std::max_element(base_diffs.begin(), base_diffs.end()));
+   const auto new_base = (bases.at(max_interval_start) + bases.at(max_interval_start + 1)) / 2.0;
+@@ -196,9 +195,13 @@ tl::expected<std::vector<PointType>, std::string> populate4(const std::vector<Poi
+   const auto & interpolation = input3_interpolation_result.value();
+ 
+   const auto new_bases = insert_middle_into_largest_interval(interpolation.get_underlying_bases());
+-  return new_bases |
+-         ranges::views::transform([&](const double s) { return interpolation.compute(s); }) |
+-         ranges::to<std::vector>();
++  std::vector<PointType> populated_points;
++  populated_points.reserve(new_bases.size());
++  for (const double s : new_bases) {
++    populated_points.push_back(interpolation.compute(s));
++  }
++
++  return populated_points;
+ }
+ 
+ extern template tl::expected<
+@@ -249,10 +252,13 @@ tl::expected<std::vector<PointType>, std::string> populate5(const std::vector<Poi
+   const auto & interpolation = input4_interpolation_result.value();
+ 
+   const auto new_bases = insert_middle_into_largest_interval(interpolation.get_underlying_bases());
+-  // assert(bases.size() == 4);
+-  return new_bases |
+-         ranges::views::transform([&](const double s) { return interpolation.compute(s); }) |
+-         ranges::to<std::vector>();
++  std::vector<PointType> populated_points;
++  populated_points.reserve(new_bases.size());
++  for (const double s : new_bases) {
++    populated_points.push_back(interpolation.compute(s));
++  }
++
++  return populated_points;
+ }
+ 
+ extern template tl::expected<
+@@ -267,13 +273,13 @@ extern template tl::expected<std::vector<autoware_planning_msgs::msg::TrajectoryP
+ extern template std::optional<Trajectory<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>
+ pretty_build(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const bool use_akima = false);
++  const bool use_akima);
+ 
+ extern template std::optional<Trajectory<autoware_planning_msgs::msg::PathPoint>> pretty_build(
+-  const std::vector<autoware_planning_msgs::msg::PathPoint> & points, const bool use_akima = false);
++  const std::vector<autoware_planning_msgs::msg::PathPoint> & points, const bool use_akima);
+ 
+ extern template std::optional<Trajectory<autoware_planning_msgs::msg::TrajectoryPoint>>
+ pretty_build(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const bool use_akima = false);
++  const bool use_akima);
+ 
+ }  // namespace autoware::experimental::trajectory
+diff --git a/common/autoware_trajectory/include/autoware/trajectory/utils/velocity.hpp b/common/autoware_trajectory/include/autoware/trajectory/utils/velocity.hpp
+--- a/common/autoware_trajectory/include/autoware/trajectory/utils/velocity.hpp
++++ b/common/autoware_trajectory/include/autoware/trajectory/utils/velocity.hpp
+@@ -18,8 +18,6 @@
+ #include "autoware/trajectory/forward.hpp"
+ #include "autoware/trajectory/threshold.hpp"
+ 
+-#include <range/v3/all.hpp>
+-
+ #include "autoware_internal_planning_msgs/msg/path_point_with_lane_id.hpp"
+ #include "autoware_planning_msgs/msg/path_point.hpp"
+ #include "autoware_planning_msgs/msg/trajectory_point.hpp"
+@@ -49,9 +47,11 @@ search_zero_velocity_position(
+   }
+ 
+   // Check pairs of consecutive points
+-  for (const auto [curr_distance, next_distance, curr_vel, next_vel] : ranges::views::zip(
+-         bases, bases | ranges::views::drop(1), velocities, velocities | ranges::views::drop(1))) {
++  for (size_t i = 0; i + 1 < bases.size() && i + 1 < velocities.size(); ++i) {
++    const double curr_distance = bases[i];
++    const double next_distance = bases[i + 1];
++    const double curr_vel = velocities[i];
++    const double next_vel = velocities[i + 1];
+     if (curr_distance < start_distance) {
+       continue;
+     }
+diff --git a/common/autoware_trajectory/include/autoware/trajectory/utils/shift.hpp b/common/autoware_trajectory/include/autoware/trajectory/utils/shift.hpp
+--- a/common/autoware_trajectory/include/autoware/trajectory/utils/shift.hpp
++++ b/common/autoware_trajectory/include/autoware/trajectory/utils/shift.hpp
+@@ -18,7 +18,6 @@
+ #include "autoware/trajectory/detail/types.hpp"
+ #include "autoware/trajectory/forward.hpp"
+ 
+-#include <range/v3/view/zip.hpp>
+ #include <tl_expected/expected.hpp>
+ 
+ #include <string>
+@@ -119,8 +118,9 @@ tl::expected<trajectory::Trajectory<PointType>, ShiftError> shift(
+   // Apply shift.
+   std::vector<PointType> shifted_points;
+   shifted_points.reserve(shift_element.lon_bases.size());
+-  for (const auto [base, shift_length] :
+-       ranges::views::zip(shift_element.lon_bases, shift_element.lat_shifts)) {
++  for (size_t i = 0; i < shift_element.lon_bases.size() && i < shift_element.lat_shifts.size();
++       ++i) {
++    const double base = shift_element.lon_bases[i];
++    const double shift_length = shift_element.lat_shifts[i];
+     shifted_points.emplace_back(reference_trajectory.compute(base));
+     const double azimuth = reference_trajectory.azimuth(base);
+     detail::to_point(shifted_points.back()).x += std::sin(azimuth) * shift_length;
+diff --git a/common/autoware_trajectory/src/utils/shift.cpp b/common/autoware_trajectory/src/utils/shift.cpp
+--- a/common/autoware_trajectory/src/utils/shift.cpp
++++ b/common/autoware_trajectory/src/utils/shift.cpp
+@@ -225,7 +225,10 @@ static std::pair<std::vector<double>, std::vector<double>> sanitize_same_base(
+   std::vector<double> base_lon;
+   std::vector<double> base_lat;
+   base_lon.push_back(lon_original.front());
+-  base_lat.push_back(lat_original.front());
+-  for (const auto [lon, lat] : ranges::views::zip(lon_original, lat_original)) {
++  base_lat.push_back(lat_original.front());
++  for (size_t i = 0; i < lon_original.size() && i < lat_original.size(); ++i) {
++    const double lon = lon_original[i];
++    const double lat = lat_original[i];
++
+     if (std::fabs(base_lon.back() - lon) < k_base_threshold) {
+       continue;
+     }
+diff --git a/common/autoware_trajectory/src/utils/reference_path.cpp b/common/autoware_trajectory/src/utils/reference_path.cpp
+--- a/common/autoware_trajectory/src/utils/reference_path.cpp
++++ b/common/autoware_trajectory/src/utils/reference_path.cpp
+@@ -18,8 +18,6 @@
+ 
+ #include <autoware/lanelet2_utils/conversion.hpp>
+ #include <autoware/lanelet2_utils/topology.hpp>
+-#include <range/v3/to_container.hpp>
+-#include <range/v3/view/transform.hpp>
+ 
+ #include <boost/geometry/algorithms/intersection.hpp>
+ #include <boost/scope_exit.hpp>
+@@ -31,6 +29,7 @@
+ 
+ #include <algorithm>
+ #include <set>
++#include <functional>
+ #include <string>
+ #include <tuple>
+ #include <utility>
+@@ -86,10 +85,12 @@ static std::optional<UserDefinedWaypoints> get_user_defined_waypoint(
+   if (waypoints_linestring.size() < 2) {
+     return std::nullopt;
+   }
+-  return waypoints_linestring | ranges::views::transform([&lanelet](const auto & p) {
+-           return UserDefinedWaypoint{p, lanelet.id()};
+-         }) |
+-         ranges::to<std::vector>();
++  UserDefinedWaypoints waypoints;
++  waypoints.reserve(waypoints_linestring.size());
++  for (const auto & p : waypoints_linestring) {
++    waypoints.push_back(UserDefinedWaypoint{p, lanelet.id()});
++  }
++  return waypoints;
+ }
+ 
+ bool is_waypoint_inside_lanelet(
+@@ -334,14 +335,15 @@ static ReferencePoints sanitize_and_crop(
+   const std::vector<std::pair<lanelet::ConstLanelet, double>> & lanelet_with_acc_dist_sequence,
+   const double s_start, const double s_end)
+ {
+-  auto s_with_ref =
+-    inputs |
+-    ranges::views::transform(
+-      [&](const auto & point) -> std::pair<double, std::reference_wrapper<const ReferencePoint>> {
+-        return std::make_pair(
+-          measure_point_s_no_check(lanelet_with_acc_dist_sequence, point), std::cref(point));
+-      }) |
+-    ranges::to<std::vector>();
++  std::vector<std::pair<double, std::reference_wrapper<const ReferencePoint>>> s_with_ref;
++  s_with_ref.reserve(inputs.size());
++  for (const auto & point : inputs) {
++    s_with_ref.emplace_back(
++      measure_point_s_no_check(lanelet_with_acc_dist_sequence, point), std::cref(point));
++  }
++
+   // sanitize invalid points so that s is monotonic
+   for (auto it = s_with_ref.begin(); it != s_with_ref.end();) {
+     if (it == s_with_ref.begin()) {
+@@ -366,23 +368,19 @@ static ReferencePoints sanitize_and_crop(
+ 
+   // now s_with_ref is monotonic, so take the element
+   auto s_start_it = std::lower_bound(
+-    s_with_ref.begin(), s_with_ref.end(),
+-    std::make_pair(s_start /*search for element >= this */, inputs.front() /*dummy*/),
+-    [](
+-      const std::pair<double, const ReferencePoint &> & a,
+-      const std::pair<double, const ReferencePoint &> & b) { return a.first < b.first; });
++    s_with_ref.begin(), s_with_ref.end(), s_start,
++    [](const auto & a, const double b) { return a.first < b; });
+   if (s_start_it != s_with_ref.begin()) {
+     s_start_it = std::prev(s_start_it);
+   }
+ 
+   auto s_end_it = std::lower_bound(
+-    s_with_ref.begin(), s_with_ref.end(),
+-    std::make_pair(s_end /* search for element >= this */, inputs.front() /*dummy*/),
+-    [](
+-      const std::pair<double, const ReferencePoint &> & a,
+-      const std::pair<double, const ReferencePoint &> & b) { return a.first < b.first; });
++    s_with_ref.begin(), s_with_ref.end(), s_end,
++    [](const auto & a, const double b) { return a.first < b; });
+ 
+   ReferencePoints monotonic_reference_points;
+   for (auto it = s_start_it; it != s_with_ref.end(); ++it) {
+-    monotonic_reference_points.push_back(it->second);
++    monotonic_reference_points.push_back(it->second.get());
+     if (it == s_end_it) {
+       break;
+     }
+@@ -855,9 +853,9 @@ tl::expected<Trajectory<autoware_internal_planning_msgs::msg::PathPointWithLaneId
+     consolidate_user_defined_waypoints_and_native_centerline(
+       reference_points_chunks, lanelet_sequence, s_start, s_end);
+   warning += warn;
+ 
+-  const auto path_points_with_lane_ids =
+-    reference_lanelet_points | ranges::views::transform([&](const auto & reference_point) {
++  std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> path_points_with_lane_ids;
++  path_points_with_lane_ids.reserve(reference_lanelet_points.size());
++  for (const auto & reference_point : reference_lanelet_points) {
+       autoware_internal_planning_msgs::msg::PathPointWithLaneId point;
+       {
+         // position
+@@ -881,8 +879,8 @@ tl::expected<Trajectory<autoware_internal_planning_msgs::msg::PathPointWithLaneId
+           point.lane_ids.push_back(reference_point.next_lanelet_id.value());
+         }
+       }
+-      return point;
+-    }) |
+-    ranges::to<std::vector>();
++      path_points_with_lane_ids.push_back(point);
++    }
+ 
+   if (auto trajectory = pretty_build(path_points_with_lane_ids); trajectory) {
+     trajectory->align_orientation_with_trajectory_direction();
