@@ -274,7 +274,9 @@ packages_select_by_deps:
       - rqt_controller_manager
       - open3d_conversions
       - lanelet2
+
       # autoware
+      - autoware_internal_msgs
       - autoware_common_msgs
       - autoware_control_msgs
       - autoware_localization_msgs
@@ -285,8 +287,19 @@ packages_select_by_deps:
       - autoware_system_msgs
       - autoware_v2x_msgs
       - autoware_vehicle_msgs
+      - autoware_cmake
       - autoware_utils
-      - autoware_core
+      - autoware_component_interface_specs
+      - autoware_geography_utils
+      - autoware_global_parameter_loader
+      - autoware_interpolation
+      - autoware_kalman_filter
+      - autoware_node
+      - autoware_object_recognition_utils
+      - autoware_point_types
+      - autoware_signal_processing
+      - autoware_vehicle_info_utils
+  
       - automatika_ros_sugar
       - automatika_embodied_agents
       - flex_sync
@@ -462,3 +475,19 @@ packages_select_by_deps:
       - robotiq_description
       - robotiq_controllers
 
+      # Windows error: error C2765: 'function' : an explicit specialization of a function template cannot have any default arguments
+      - autoware_motion_utils
+      # depends on autoware_motion_utils
+      - autoware_trajectory
+      - autoware_pose_initializer
+      - autoware_core_control
+      # Windows error: error C2338: static_assert failed: 'First argument to logging macros must be an rclcpp::Logger'
+      - autoware_ekf_localizer
+      # depends on autoware_ekf_localizer
+      - autoware_core_localization
+      # Windows error: error C3546: '...': there are no parameter packs available to expand
+      # Windows error: error C2678: binary '|': no operator found which takes a left-hand operand of type 'ranges::transform_view<ranges::ref_view<const T>,Arg>'
+      - autoware_lanlet2_utils
+      - autoware_osqp_interface
+      - autoware_qp_interface
+      - autoware_core
