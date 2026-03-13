@@ -118,6 +118,12 @@ jobs:
       run: |
         rm -rf ${{ matrix.folder_cache }}/*
 
+    - name: Delete specific outdated cache entries
+      shell: bash -l {0}
+      run: |
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-libcurl* || true
+        pixi run rattler-index fs output --force
+
     - name: See packages restored by cache
       shell: bash -l {0}
       run: |
