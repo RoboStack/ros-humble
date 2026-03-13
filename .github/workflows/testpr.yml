@@ -123,6 +123,7 @@ jobs:
       run: |
         # rm -rf ${{ matrix.folder_cache }}/ros2-distro-mutex* || true
         # rm -rf ${{ matrix.folder_cache }}/ros-humble-libcurl* || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-lanelet2-core* || true
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
     - name: See packages restored by cache
