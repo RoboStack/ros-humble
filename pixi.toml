@@ -14,6 +14,7 @@ python = ">=3.11.0,<3.12"
 rattler-build = ">=0.57.0,<0.58"
 anaconda-client = ">=1.12"
 setuptools = "<82.0"
+rattler-index = ">=0.27.16"
 
 [target.win-64.dependencies]
 # patch is required by rattler-build
