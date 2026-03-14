@@ -7,9 +7,9 @@ index b69426c..c57fe92 100644
  #include <vector>
  
 +#ifndef M_PIf
-+#define M_PIf  3.14159265358979324f
-+#define M_PI_2f 2 * M_PIf
-+#define M_PI_4f 4 * M_PIf
++#define M_PIf   3.14159265358979324f
++#define M_PI_2f (M_PIf / 2.0f)
++#define M_PI_4f (M_PIf / 4.0f)
 +#endif
 +
  namespace
