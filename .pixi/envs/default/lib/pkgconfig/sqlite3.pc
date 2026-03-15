@@ -1,0 +1,13 @@
+# Package Information for pkg-config
+
+prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: SQLite
+Description: SQL database engine
+Version: 3.51.2
+Libs: -L${libdir} -lsqlite3
+Libs.private: -lm -lz -ldl -lpthread -L/home/runner/work/ros-humble/ros-humble/.pixi/envs/default/lib -licui18n -licuuc -licudata
+Cflags: -I${includedir}

@@ -1,0 +1,217 @@
+Metadata-Version: 2.4
+Name: backports.zstd
+Version: 1.3.0
+Summary: Backport of compression.zstd
+Author-email: Rogdham <contact@rogdham.net>
+License-Expression: PSF-2.0
+Project-URL: Homepage, https://github.com/rogdham/backports.zstd
+Project-URL: Source, https://github.com/rogdham/backports.zstd
+Keywords: backport,backports,pep-784,zstd
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: System :: Archiving :: Compression
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Python: <3.14,>=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+License-File: LICENSE_zstd.txt
+Dynamic: license-file
+
+<div align="center" size="15px">
+
+# backports.zstd
+
+Backport of [PEP-784 “adding Zstandard to the standard library”][PEP-784]
+
+[![GitHub build status](https://img.shields.io/github/actions/workflow/status/rogdham/backports.zstd/build.yml?branch=master)](https://github.com/rogdham/backports.zstd/actions?query=branch:master)
+[![Release on PyPI](https://img.shields.io/pypi/v/backports.zstd)](https://pypi.org/project/backports.zstd/)
+
+---
+
+[📖 PEP-784][PEP-784]&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[📃 Changelog](./CHANGELOG.md)
+
+[PEP-784]: https://peps.python.org/pep-0784/
+
+</div>
+
+---
+
+## Install
+
+Add the following dependency to your project:
+
+```
+backports.zstd ; python_version<'3.14'
+```
+
+…or just run `pip install backports.zstd`.
+
+## Usage
+
+When importing a module needing Zstandard support, use a conditional import based on the
+version of Python. See below for examples.
+
+### zstd
+
+```python
+import sys
+
+if sys.version_info >= (3, 14):
+    from compression import zstd
+else:
+    from backports import zstd
+
+
+# use the zstd module, for example:
+zstd.compress(b"Hello, world!")
+```
+
+Refer to the [official Python documentation][doc-zstd] for usage of the module.
+
+[doc-zstd]: https://docs.python.org/3.14/library/compression.zstd.html
+
+### tarfile
+
+```python
+import sys
+
+if sys.version_info >= (3, 14):
+    import tarfile
+else:
+    from backports.zstd import tarfile
+
+
+# use the tarfile module, for example:
+with tarfile.open("archive.tar.zst") as tar:
+    tar.list()
+```
+
+This `tarfile` modules is backported from Python 3.14 and includes Zstandard-specific
+features such as: explicit modes for opening files (e.g. `r:zstd`), specific arguments
+(e.g. `zstd_dict`)… refer to the [official Python documentation][doc-tarfile] for more
+info.
+
+[doc-tarfile]: https://docs.python.org/3.14/library/tarfile.html
+
+Moreover, the CLI is available as well: `python -m backports.zstd.tarfile`.
+
+### zipfile
+
+```python
+import sys
+
+if sys.version_info >= (3, 14):
+    import zipfile
+else:
+    from backports.zstd import zipfile
+
+
+# use the zipfile module, for example:
+with zipfile.ZipFile("archive.zip", "w") as zf:
+    zf.writestr("hello.txt", "Hi!", zipfile.ZIP_ZSTANDARD)
+```
+
+This `zipfile` modules is backported from Python 3.14 and includes Zstandard-specific
+features such as the constant `ZIP_ZSTANDARD` to be used for `compress_type`… refer to
+the [official Python documentation][doc-zipfile] for more info.
+
+[doc-zipfile]: https://docs.python.org/3.14/library/zipfile.html
+
+Moreover, the CLI is available as well: `python -m backports.zstd.zipfile`.
+
+### shutil
+
+```python
+import shutil
+import sys
+
+if sys.version_info < (3, 14):
+    from backports.zstd import register_shutil
+    register_shutil()
+
+# use the shutil module, for example
+shutil.unpack_archive('archive.tar.zst')
+```
+
+Calling the `register_shutil` function allows to create zstd'ed tar files using the
+`"zstdtar"` format, as well as unpack them.
+
+It also overrides support for unpacking zip files, enabling the unpacking of zip
+archives that use Zstandard for compression.
+
+Alternatively, call `register_shutil(tar=False)` or `register_shutil(zip=False)` to
+choose which archiving support to register.
+
+## FAQ
+
+### Who are you?
+
+This project is created and maintained by [Rogdham](https://github.com/rogdham)
+(maintainer of [`pyzstd`](https://github.com/rogdham/pyzstd), who helped with [PEP-784]
+and integration of Zstandard into the standard library), with help from
+[Emma Smith](https://github.com/emmatyping) (author of [PEP-784], who did most of the
+work of porting `pyzstd` into the standard library).
+
+### How is this backport constructed?
+
+The aim is to be as close as possible to the upstream code of
+[CPython](https://github.com/python/cpython).
+
+The runtime code comes from CPython 3.14, with minor changes to support older versions
+of Python. For PyPy users, the C code has been ported to CFFI.
+
+During the build phase, the project uses [`zstd`](https://github.com/facebook/zstd)
+(canonical implementation of Zstandard) as well as
+[`pythoncapi-compat`](https://github.com/python/pythoncapi-compat) (which handles some
+of the compatibility with older Python versions).
+
+Tests come from CPython 3.14, with minor changes to support older versions of Python.
+Additional tests have been written specifically for `backports.zstd`.
+
+The type hints for the standard library have been contributed to
+[`typeshed`](https://github.com/python/typeshed) and also backported to
+`backports.zstd`.
+
+### Why can this library not be installed with Python 3.14?
+
+This is [on purpose](https://github.com/Rogdham/backports.zstd/issues/50). For Python
+3.14 and later, use the `compression.zstd` module from the standard library.
+
+If you want your code to be compatible with multiple Python versions, condition the
+usage of this library based on the Python version:
+
+- [During install](#install);
+- [When importing at runtime](#usage).
+
+### Can I use the libzstd version installed on my system?
+
+The wheels distributed on PyPI include a static version of `libzstd` for ease of
+installation and reproducibility.
+
+If you want to use `libzstd` installed on your system, pass the `--system-zstd` argument
+to the build backend. For example:
+
+```sh
+python -m pip install --config-settings=--build-option=--system-zstd ...
+python -m build --wheel --config-setting=--build-option=--system-zstd ...
+```
+
+If you run the test suite, set the environment variable
+`BACKPORTSZSTD_SKIP_EXTENSION_TEST=1` to skip tests that may fail when using the system
+library.
+
+### I found a bug
+
+If you encounter any issues, please open a
+[GitHub issue](https://github.com/Rogdham/backports.zstd/issues/new) with a minimal
+reproducible example.
+
+We will check if the issue is with `backports.zstd` or CPython. We have already reported
+and fixed a few issues in CPython this way!

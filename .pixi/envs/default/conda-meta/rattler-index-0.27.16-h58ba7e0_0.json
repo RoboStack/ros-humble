@@ -1,0 +1,48 @@
+{
+  "arch": "x86_64",
+  "build": "h58ba7e0_0",
+  "build_number": 0,
+  "constrains": [
+    "__glibc >=2.17"
+  ],
+  "depends": [
+    "libgcc >=14",
+    "__glibc >=2.17,<3.0.a0",
+    "openssl >=3.5.5,<4.0a0",
+    "libiconv >=1.18,<2.0a0"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "29cf856a6a093514e02f9b331827d13f",
+  "name": "rattler-index",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "6de5f6566398b4f916a30e80ffbd54912de0727febf0f24e49c42a5c97daad60",
+  "size": 6164992,
+  "subdir": "linux-64",
+  "timestamp": 1772122662622,
+  "version": "0.27.16",
+  "fn": "rattler-index-0.27.16-h58ba7e0_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/rattler-index-0.27.16-h58ba7e0_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/rattler-index-0.27.16-h58ba7e0_0",
+  "requested_specs": [],
+  "files": [
+    "bin/rattler-index"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "bin/rattler-index",
+        "path_type": "hardlink",
+        "sha256": "a214f3643f005f3522cda516075cca7ef13e05f0d68f79e1bbee64c7be2060a8",
+        "size_in_bytes": 16822632
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/rattler-index-0.27.16-h58ba7e0_0",
+    "type": 1
+  }
+}

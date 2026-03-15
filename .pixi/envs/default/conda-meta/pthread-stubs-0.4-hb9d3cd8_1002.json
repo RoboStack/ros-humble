@@ -1,0 +1,46 @@
+{
+  "arch": "x86_64",
+  "build": "hb9d3cd8_1002",
+  "build_number": 1002,
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=13"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "b3c17d95b5a10c6e64a21fa17573e70e",
+  "name": "pthread-stubs",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "9c88f8c64590e9567c6c80823f0328e58d3b1efb0e1c539c0315ceca764e0973",
+  "size": 8252,
+  "subdir": "linux-64",
+  "timestamp": 1726802366959,
+  "version": "0.4",
+  "fn": "pthread-stubs-0.4-hb9d3cd8_1002.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/pthread-stubs-0.4-hb9d3cd8_1002.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/pthread-stubs-0.4-hb9d3cd8_1002",
+  "requested_specs": [],
+  "files": [
+    "lib/pkgconfig/pthread-stubs.pc"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/pkgconfig/pthread-stubs.pc",
+        "path_type": "hardlink",
+        "sha256": "f0dc5b61b7d15ddfb383de8db8e06fe5dac62dffdb919a7bd8e34ae42a3924d2",
+        "sha256_in_prefix": "e55f15c966051dae49594a715bda06232c6cf846cc891a488c10f7a670c96b08",
+        "size_in_bytes": 293,
+        "file_mode": "text",
+        "prefix_placeholder": "/home/conda/feedstock_root/build_artifacts/pthread-stubs_1726802218710/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho"
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/pthread-stubs-0.4-hb9d3cd8_1002",
+    "type": 1
+  }
+}

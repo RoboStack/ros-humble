@@ -1,0 +1,25 @@
+Metadata-Version: 2.1
+Name: rospkg
+Version: 1.6.1
+Summary: ROS package library
+Home-page: http://wiki.ros.org/rospkg
+Author: Ken Conley
+Author-email: kwc@willowgarage.com
+Maintainer: ROS Infrastructure Team
+License: BSD
+Project-URL: Source code, https://github.com/ros-infrastructure/rospkg
+Project-URL: Issue tracker, https://github.com/ros-infrastructure/rospkg/issues
+Keywords: ROS
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: License :: OSI Approved :: BSD License
+Requires-Python: >=3.6
+Requires-Dist: catkin-pkg
+Requires-Dist: PyYAML
+Requires-Dist: distro (>=1.4.0) ; python_version >= "3.8"
+Provides-Extra: test
+Requires-Dist: pytest ; extra == 'test'
+
+        Library for retrieving information about ROS packages and stacks.
+        
+

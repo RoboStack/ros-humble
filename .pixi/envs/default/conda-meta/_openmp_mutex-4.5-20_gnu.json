@@ -1,0 +1,47 @@
+{
+  "arch": "x86_64",
+  "build": "20_gnu",
+  "build_number": 20,
+  "constrains": [
+    "openmp_impl <0.0a0"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgomp >=7.5.0"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "a9f577daf3de00bca7c3c76c0ecbd1de",
+  "name": "_openmp_mutex",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "1dd3fffd892081df9726d7eb7e0dea6198962ba775bd88842135a4ddb4deb3c9",
+  "size": 28948,
+  "subdir": "linux-64",
+  "timestamp": 1770939786096,
+  "version": "4.5",
+  "fn": "_openmp_mutex-4.5-20_gnu.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/_openmp_mutex-4.5-20_gnu",
+  "requested_specs": [],
+  "files": [
+    "lib/libgomp.so.1"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/libgomp.so.1",
+        "path_type": "softlink",
+        "sha256": "7f03470f3da57b4e659243588bda6c150f09882ee43f33fd72d895586fe95cf7",
+        "sha256_in_prefix": "83b4bd70546567c74bca5c44f4dbebf046e08053f98c26079f1a4b8f5ef07bc1",
+        "size_in_bytes": 1475480
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/_openmp_mutex-4.5-20_gnu",
+    "type": 1
+  }
+}

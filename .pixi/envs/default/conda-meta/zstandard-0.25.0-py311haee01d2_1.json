@@ -1,0 +1,134 @@
+{
+  "arch": "x86_64",
+  "build": "py311haee01d2_1",
+  "build_number": 1,
+  "depends": [
+    "python",
+    "cffi >=1.11",
+    "zstd >=1.5.7,<1.5.8.0a0",
+    "libgcc >=14",
+    "__glibc >=2.17,<3.0.a0",
+    "zstd >=1.5.7,<1.6.0a0",
+    "python_abi 3.11.* *_cp311"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "ca45bfd4871af957aaa5035593d5efd2",
+  "name": "zstandard",
+  "platform": "linux",
+  "purls": [
+    "pkg:pypi/zstandard?source=hash-mapping"
+  ],
+  "sha256": "d534a6518c2d8eccfa6579d75f665261484f0f2f7377b50402446a9433d46234",
+  "size": 466893,
+  "subdir": "linux-64",
+  "timestamp": 1762512695614,
+  "version": "0.25.0",
+  "fn": "zstandard-0.25.0-py311haee01d2_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/zstandard-0.25.0-py311haee01d2_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/zstandard-0.25.0-py311haee01d2_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/zstandard/__init__.py",
+    "lib/python3.11/site-packages/zstandard/__init__.pyi",
+    "lib/python3.11/site-packages/zstandard/_cffi.cpython-311-x86_64-linux-gnu.so",
+    "lib/python3.11/site-packages/zstandard/backend_c.cpython-311-x86_64-linux-gnu.so",
+    "lib/python3.11/site-packages/zstandard/backend_cffi.py",
+    "lib/python3.11/site-packages/zstandard/py.typed",
+    "lib/python3.11/site-packages/zstandard/__pycache__/__init__.cpython-311.pyc",
+    "lib/python3.11/site-packages/zstandard/__pycache__/backend_cffi.cpython-311.pyc",
+    "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/PKG-INFO",
+    "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/SOURCES.txt",
+    "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/dependency_links.txt",
+    "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/requires.txt",
+    "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/top_level.txt"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/zstandard/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "5dd909e0b60a946a0b08deaf57545d17dc044f5df4040beec55f7ef6c6fecd11",
+        "size_in_bytes": 7235
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard/__init__.pyi",
+        "path_type": "hardlink",
+        "sha256": "8f9f3d95bde368d7483c73a28c24fadc14df69673f145703346d3d327ac8a030",
+        "size_in_bytes": 13973
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard/_cffi.cpython-311-x86_64-linux-gnu.so",
+        "path_type": "hardlink",
+        "sha256": "aa256475abd19623faa62d4d00c4ecc666507a6bd9a9d6bff0deb36aaed8b380",
+        "size_in_bytes": 959928
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard/backend_c.cpython-311-x86_64-linux-gnu.so",
+        "path_type": "hardlink",
+        "sha256": "a438587172d9708bb48f7748e4904ba66f8bd345914c857848acd5ed8c4e55d1",
+        "size_in_bytes": 144800
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard/backend_cffi.py",
+        "path_type": "hardlink",
+        "sha256": "0b268ae515d511531f1c6e76068123efb8f725b4f62484aa11e887fadc1975ce",
+        "size_in_bytes": 152627
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard/__pycache__/__init__.cpython-311.pyc",
+        "path_type": "hardlink",
+        "sha256": "0a14b02732bebf99661f2b59af868171607828acef5790c4286e94111eb2577f",
+        "size_in_bytes": 7286
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard/__pycache__/backend_cffi.cpython-311.pyc",
+        "path_type": "hardlink",
+        "sha256": "8395caf4671ed162767f8fa6305b664e45ba3414bf85649ea6fa5f5b554bb773",
+        "size_in_bytes": 179579
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/PKG-INFO",
+        "path_type": "hardlink",
+        "sha256": "03d37736b26b9ae48451dd17026d93dffbd252fb708c1a2a9ae1be0c0966de92",
+        "size_in_bytes": 3275
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/SOURCES.txt",
+        "path_type": "hardlink",
+        "sha256": "2902c4078db8dc1081804d32ed07d8472efcde5971844f7a10624f60a8224299",
+        "size_in_bytes": 2739
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/dependency_links.txt",
+        "path_type": "hardlink",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "size_in_bytes": 1
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/requires.txt",
+        "path_type": "hardlink",
+        "sha256": "fe92236aa62893134f8bc2970b6fbb1bd3cf028a6975c87909d831b7a8a7ae06",
+        "size_in_bytes": 187
+      },
+      {
+        "_path": "lib/python3.11/site-packages/zstandard-0.25.0-py3.11.egg-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "27ec23f78a4f69d6388a915a6a7ad8065acc6e53927a01184bca3f2dda20ae95",
+        "size_in_bytes": 10
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/zstandard-0.25.0-py311haee01d2_1",
+    "type": 1
+  }
+}

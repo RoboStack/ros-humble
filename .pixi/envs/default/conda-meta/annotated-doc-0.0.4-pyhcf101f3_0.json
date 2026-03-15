@@ -1,0 +1,128 @@
+{
+  "build": "pyhcf101f3_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.10",
+    "python"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "52be5139047efadaeeb19c6a5103f92a",
+  "name": "annotated-doc",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/annotated-doc?source=hash-mapping"
+  ],
+  "sha256": "cc9fbc50d4ee7ee04e49ee119243e6f1765750f0fd0b4d270d5ef35461b643b1",
+  "size": 14222,
+  "subdir": "noarch",
+  "timestamp": 1762868213144,
+  "version": "0.0.4",
+  "fn": "annotated-doc-0.0.4-pyhcf101f3_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/annotated-doc-0.0.4-pyhcf101f3_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/annotated-doc-0.0.4-pyhcf101f3_0",
+  "requested_specs": [],
+  "files": [
+    "etc/conda/test-files/annotated-doc/1/tests/__init__.py",
+    "etc/conda/test-files/annotated-doc/1/tests/test_main.py",
+    "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/annotated_doc/__init__.py",
+    "lib/python3.11/site-packages/annotated_doc/main.py",
+    "lib/python3.11/site-packages/annotated_doc/py.typed",
+    "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/METADATA",
+    "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/RECORD",
+    "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/WHEEL",
+    "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/entry_points.txt"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "etc/conda/test-files/annotated-doc/1/tests/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "etc/conda/test-files/annotated-doc/1/tests/test_main.py",
+        "path_type": "hardlink",
+        "sha256": "b330690cb6566cf5334c213a5241dee5bd1baec7ae5e343db00c45542a18baa8",
+        "size_in_bytes": 1766
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "fff170779a6acbf65abdb405c087f1cee1786691e4a96a4034517e4a504a0cdf",
+        "size_in_bytes": 1086
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "56ecb1c547bcd247c4c969ceac2c7f064f21c9ba3768aa3a4580659010585bc9",
+        "size_in_bytes": 52
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc/main.py",
+        "path_type": "hardlink",
+        "sha256": "e597efc6ff344b0c0baa9456ef7019c99ca23386d699af505916e9fdc803db4b",
+        "size_in_bytes": 1075
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "22b9b9289b9adf7758daa28a02327e3a129a5415487f01467a3fdd49edd9d535",
+        "size_in_bytes": 6566
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "79964f1f8c72a63670f6360760d1e31361512e742df7c60ddf14f2c87a4bfafa",
+        "size_in_bytes": 1064
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "b6c52ffedec10de25e447692adccdb19eb8af93b43a46b168bf25fa730f6e792",
+        "size_in_bytes": 90
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "1373fe5a21d602dba1c3b222827f8695f6e3c0b4e4dd90249dc860f5a8421c7e",
+        "size_in_bytes": 124
+      },
+      {
+        "_path": "lib/python3.11/site-packages/annotated_doc-0.0.4.dist-info/entry_points.txt",
+        "path_type": "hardlink",
+        "sha256": "e8e62005c2f21425207aa2e09ef332389c4f096ce0cbbb1ee2b2cf2ad3689ccb",
+        "size_in_bytes": 34
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/annotated-doc-0.0.4-pyhcf101f3_0",
+    "type": 1
+  }
+}

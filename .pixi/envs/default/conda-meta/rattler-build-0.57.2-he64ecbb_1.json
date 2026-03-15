@@ -1,0 +1,76 @@
+{
+  "arch": "x86_64",
+  "build": "he64ecbb_1",
+  "build_number": 1,
+  "constrains": [
+    "__glibc >=2.17"
+  ],
+  "depends": [
+    "patchelf",
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=14",
+    "openssl >=3.5.5,<4.0a0"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "4d9aed902b2afb49657a4e85f493aedd",
+  "name": "rattler-build",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "7050df6859e1f3c1223dead79b1f4aa5b92f7519db7ad7cb5982d87fd2999852",
+  "size": 19271452,
+  "subdir": "linux-64",
+  "timestamp": 1770649397185,
+  "version": "0.57.2",
+  "fn": "rattler-build-0.57.2-he64ecbb_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/rattler-build-0.57.2-he64ecbb_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/rattler-build-0.57.2-he64ecbb_1",
+  "requested_specs": [],
+  "files": [
+    "etc/conda/test-files/rattler-build/0/test-recipe/check.yaml",
+    "share/zsh/site-functions/_rattler-build",
+    "bin/rattler-build",
+    "share/bash-completion/completions/rattler-build",
+    "share/fish/vendor_completions.d/rattler-build.fish"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "etc/conda/test-files/rattler-build/0/test-recipe/check.yaml",
+        "path_type": "hardlink",
+        "sha256": "0a8e8547d01aad2e4ee033d36d28e0d950dabc8719467f685fb71d1e644ef5c1",
+        "size_in_bytes": 199
+      },
+      {
+        "_path": "share/zsh/site-functions/_rattler-build",
+        "path_type": "hardlink",
+        "sha256": "b6c0a65124ad1ed3588ae040b2729c857a9a0e73ddf9cb2240840323dec01558",
+        "size_in_bytes": 86673
+      },
+      {
+        "_path": "bin/rattler-build",
+        "path_type": "hardlink",
+        "sha256": "eb988b308e72609444b23be2f1693ce8c564e2cbcca80bd3a07797098395c9ee",
+        "size_in_bytes": 72463160
+      },
+      {
+        "_path": "share/bash-completion/completions/rattler-build",
+        "path_type": "hardlink",
+        "sha256": "14996ba60c691bc3f2a3a9cec766125378fc347c37d9acd19eb9f628f8aa1b27",
+        "size_in_bytes": 92528
+      },
+      {
+        "_path": "share/fish/vendor_completions.d/rattler-build.fish",
+        "path_type": "hardlink",
+        "sha256": "261da6a09a17659b8e4d29cdeb79764be20a08331d2e9c9443469a234181d6bb",
+        "size_in_bytes": 100547
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/rattler-build-0.57.2-he64ecbb_1",
+    "type": 1
+  }
+}

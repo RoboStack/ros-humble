@@ -1,0 +1,1687 @@
+#compdef rattler-build
+
+autoload -U is-at-least
+
+_rattler-build() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" : \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_rattler-build_commands" \
+"*::: :->rattler-build" \
+&& ret=0
+    case $state in
+    (rattler-build)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-command-$line[1]:"
+        case $line[1] in
+            (build)
+_arguments "${_arguments_options[@]}" : \
+'(--recipe-dir)*-r+[The recipe file or directory containing \`recipe.yaml\`. Defaults to the current directory]:RECIPES:_files' \
+'(--recipe-dir)*--recipe=[The recipe file or directory containing \`recipe.yaml\`. Defaults to the current directory]:RECIPES:_files' \
+'(-r --recipe)--recipe-dir=[The directory that contains recipes]:RECIPE_DIR:_files' \
+'--up-to=[Build recipes up to the specified package]:UP_TO:_default' \
+'--build-platform=[The build platform to use for the build (e.g. for building with emulation, or rendering)]:BUILD_PLATFORM:_default' \
+'--target-platform=[The target platform for the build]:TARGET_PLATFORM:_default' \
+'--host-platform=[The host platform for the build. If set, it will be used to determine also the target_platform (as long as it is not noarch)]:HOST_PLATFORM:_default' \
+'*-c+[Add a channel to search for dependencies in]:CHANNELS:_default' \
+'*--channel=[Add a channel to search for dependencies in]:CHANNELS:_default' \
+'*-m+[Variant configuration files for the build]:VARIANT_CONFIG:_files' \
+'*--variant-config=[Variant configuration files for the build]:VARIANT_CONFIG:_files' \
+'*--variant=[Override specific variant values (e.g. --variant python=3.12 or --variant python=3.12,3.11). Multiple values separated by commas will create multiple build variants]:VARIANT_OVERRIDES:_default' \
+'--package-format=[The package format to use for the build. Can be one of \`tar-bz2\` or \`conda\`. You can also add a compression level to the package format, e.g. \`tar-bz2\:<number>\` (from 1 to 9) or \`conda\:<number>\` (from -7 to 22).]:PACKAGE_FORMAT:_default' \
+'--compression-threads=[The number of threads to use for compression (only relevant when also using \`--package-format conda\`)]:COMPRESSION_THREADS:_default' \
+'--io-concurrency-limit=[The maximum number of concurrent I/O operations to use when installing packages This can be controlled by the \`RATTLER_IO_CONCURRENCY_LIMIT\` environment variable Defaults to 8 times the number of CPUs]:IO_CONCURRENCY_LIMIT:_default' \
+'--test=[The strategy to use for running tests]:TEST:((skip\:"Skip the tests"
+native\:"Run the tests only if the build platform is the same as the host platform. Otherwise, skip the tests. If the target platform is noarch, the tests are always executed"
+native-and-emulated\:"Always run the tests"))' \
+'--output-dir=[Output directory for build artifacts.]:OUTPUT_DIR:_files' \
+'*--allow-insecure-host=[List of hosts for which SSL certificate verification should be skipped]:ALLOW_INSECURE_HOST:_default' \
+'--auth-file=[Path to an auth-file to read authentication information from]:AUTH_FILE:_files' \
+'--channel-priority=[Channel priority to use when solving]:CHANNEL_PRIORITY:_default' \
+'--skip-existing=[Whether to skip packages that already exist in any channel If set to \`none\`, do not skip any packages, default when not specified. If set to \`local\`, only skip packages that already exist locally, default when using \`--skip-existing. If set to \`all\`, skip packages that already exist in any channel]::SKIP_EXISTING:((none\:"Do not skip any packages"
+local\:"Skip packages that already exist locally"
+all\:"Skip packages that already exist in any channel"))' \
+'--noarch-build-platform=[Define a "noarch platform" for which the noarch packages will be built for. The noarch builds will be skipped on the other platforms]:NOARCH_BUILD_PLATFORM:_default' \
+'*--extra-meta=[Extra metadata to include in about.json]:EXTRA_META:_default' \
+'*--allow-read=[Allow read access to the specified paths]:ALLOW_READ:_files' \
+'*--allow-read-execute=[Allow read and execute access to the specified paths]:ALLOW_READ_EXECUTE:_files' \
+'*--allow-read-write=[Allow read and write access to the specified paths]:ALLOW_READ_WRITE:_files' \
+'--exclude-newer=[Exclude packages newer than this date from the solver, in RFC3339 format (e.g. 2024-03-15T12\:00\:00Z)]:EXCLUDE_NEWER:_default' \
+'--build-num=[Override the build number for all outputs (defaults to the build number in the recipe)]:BUILD_NUM:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--ignore-recipe-variants[Do not read the \`variants.yaml\` file next to a recipe]' \
+'--render-only[Render the recipe files without executing the build]' \
+'--with-solve[Render the recipe files with solving dependencies]' \
+'--keep-build[Keep intermediate build artifacts after the build]' \
+'--no-build-id[Don'\''t use build id(timestamp) when creating build directory name]' \
+'--no-include-recipe[Don'\''t store the recipe in the final package]' \
+'--no-test[Do not run tests after building (deprecated, use \`--test=skip\` instead)]' \
+'--color-build-log[Don'\''t force colors in the output of the build script]' \
+'--use-zstd[Enable support for repodata.json.zst]' \
+'--use-bz2[Enable support for repodata.json.bz2]' \
+'--use-sharded[Enable support for sharded repodata]' \
+'--use-jlap[Enable support for JLAP (JSON Lines Append Protocol)]' \
+'--experimental[Enable experimental features]' \
+'--tui[Launch the terminal user interface]' \
+'--sandbox[Enable the sandbox]' \
+'--allow-network[Allow network access during build (default\: false if sandbox is enabled)]' \
+'--overwrite-default-sandbox-config[Overwrite the default sandbox configuration]' \
+'--debug[Enable debug output in build scripts]' \
+'--continue-on-failure[Continue building even if (one) of the packages fails to build. This is useful when building many packages with \`--recipe-dir\`.\`]' \
+'--error-prefix-in-binary[Error if the host prefix is detected in any binary files]' \
+'--allow-symlinks-on-windows[Allow symlinks in packages on Windows (defaults to false - symlinks are forbidden on Windows)]' \
+'--allow-absolute-license-paths[Allow absolute paths in license_file entries (defaults to false)]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(publish)
+_arguments "${_arguments_options[@]}" : \
+'--to=[The channel or URL to publish the package to]:TO:_default' \
+'--build-number=[Override the build number for all outputs. Use an absolute value (e.g., \`--build-number=12\`) or a relative bump (e.g., \`--build-number=+1\`). When using a relative bump, the highest build number from the target channel is used as the base]:BUILD_NUMBER:_default' \
+'(--recipe-dir)*-r+[The recipe file or directory containing \`recipe.yaml\`. Defaults to the current directory]:RECIPES:_files' \
+'(--recipe-dir)*--recipe=[The recipe file or directory containing \`recipe.yaml\`. Defaults to the current directory]:RECIPES:_files' \
+'(-r --recipe)--recipe-dir=[The directory that contains recipes]:RECIPE_DIR:_files' \
+'--up-to=[Build recipes up to the specified package]:UP_TO:_default' \
+'--build-platform=[The build platform to use for the build (e.g. for building with emulation, or rendering)]:BUILD_PLATFORM:_default' \
+'--target-platform=[The target platform for the build]:TARGET_PLATFORM:_default' \
+'--host-platform=[The host platform for the build. If set, it will be used to determine also the target_platform (as long as it is not noarch)]:HOST_PLATFORM:_default' \
+'*-c+[Add a channel to search for dependencies in]:CHANNELS:_default' \
+'*--channel=[Add a channel to search for dependencies in]:CHANNELS:_default' \
+'*-m+[Variant configuration files for the build]:VARIANT_CONFIG:_files' \
+'*--variant-config=[Variant configuration files for the build]:VARIANT_CONFIG:_files' \
+'*--variant=[Override specific variant values (e.g. --variant python=3.12 or --variant python=3.12,3.11). Multiple values separated by commas will create multiple build variants]:VARIANT_OVERRIDES:_default' \
+'--package-format=[The package format to use for the build. Can be one of \`tar-bz2\` or \`conda\`. You can also add a compression level to the package format, e.g. \`tar-bz2\:<number>\` (from 1 to 9) or \`conda\:<number>\` (from -7 to 22).]:PACKAGE_FORMAT:_default' \
+'--compression-threads=[The number of threads to use for compression (only relevant when also using \`--package-format conda\`)]:COMPRESSION_THREADS:_default' \
+'--io-concurrency-limit=[The maximum number of concurrent I/O operations to use when installing packages This can be controlled by the \`RATTLER_IO_CONCURRENCY_LIMIT\` environment variable Defaults to 8 times the number of CPUs]:IO_CONCURRENCY_LIMIT:_default' \
+'--test=[The strategy to use for running tests]:TEST:((skip\:"Skip the tests"
+native\:"Run the tests only if the build platform is the same as the host platform. Otherwise, skip the tests. If the target platform is noarch, the tests are always executed"
+native-and-emulated\:"Always run the tests"))' \
+'--output-dir=[Output directory for build artifacts.]:OUTPUT_DIR:_files' \
+'*--allow-insecure-host=[List of hosts for which SSL certificate verification should be skipped]:ALLOW_INSECURE_HOST:_default' \
+'--auth-file=[Path to an auth-file to read authentication information from]:AUTH_FILE:_files' \
+'--channel-priority=[Channel priority to use when solving]:CHANNEL_PRIORITY:_default' \
+'--skip-existing=[Whether to skip packages that already exist in any channel If set to \`none\`, do not skip any packages, default when not specified. If set to \`local\`, only skip packages that already exist locally, default when using \`--skip-existing. If set to \`all\`, skip packages that already exist in any channel]::SKIP_EXISTING:((none\:"Do not skip any packages"
+local\:"Skip packages that already exist locally"
+all\:"Skip packages that already exist in any channel"))' \
+'--noarch-build-platform=[Define a "noarch platform" for which the noarch packages will be built for. The noarch builds will be skipped on the other platforms]:NOARCH_BUILD_PLATFORM:_default' \
+'*--extra-meta=[Extra metadata to include in about.json]:EXTRA_META:_default' \
+'*--allow-read=[Allow read access to the specified paths]:ALLOW_READ:_files' \
+'*--allow-read-execute=[Allow read and execute access to the specified paths]:ALLOW_READ_EXECUTE:_files' \
+'*--allow-read-write=[Allow read and write access to the specified paths]:ALLOW_READ_WRITE:_files' \
+'--exclude-newer=[Exclude packages newer than this date from the solver, in RFC3339 format (e.g. 2024-03-15T12\:00\:00Z)]:EXCLUDE_NEWER:_default' \
+'--build-num=[Override the build number for all outputs (defaults to the build number in the recipe)]:BUILD_NUM:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--force[Force upload even if the package already exists (not recommended - may break lockfiles). Only works with S3, filesystem, Anaconda.org, and prefix.dev channels]' \
+'--generate-attestation[Automatically generate attestations when uploading to prefix.dev channels. Only works when uploading to prefix.dev channels with trusted publishing enabled]' \
+'--ignore-recipe-variants[Do not read the \`variants.yaml\` file next to a recipe]' \
+'--render-only[Render the recipe files without executing the build]' \
+'--with-solve[Render the recipe files with solving dependencies]' \
+'--keep-build[Keep intermediate build artifacts after the build]' \
+'--no-build-id[Don'\''t use build id(timestamp) when creating build directory name]' \
+'--no-include-recipe[Don'\''t store the recipe in the final package]' \
+'--no-test[Do not run tests after building (deprecated, use \`--test=skip\` instead)]' \
+'--color-build-log[Don'\''t force colors in the output of the build script]' \
+'--use-zstd[Enable support for repodata.json.zst]' \
+'--use-bz2[Enable support for repodata.json.bz2]' \
+'--use-sharded[Enable support for sharded repodata]' \
+'--use-jlap[Enable support for JLAP (JSON Lines Append Protocol)]' \
+'--experimental[Enable experimental features]' \
+'--tui[Launch the terminal user interface]' \
+'--sandbox[Enable the sandbox]' \
+'--allow-network[Allow network access during build (default\: false if sandbox is enabled)]' \
+'--overwrite-default-sandbox-config[Overwrite the default sandbox configuration]' \
+'--debug[Enable debug output in build scripts]' \
+'--continue-on-failure[Continue building even if (one) of the packages fails to build. This is useful when building many packages with \`--recipe-dir\`.\`]' \
+'--error-prefix-in-binary[Error if the host prefix is detected in any binary files]' \
+'--allow-symlinks-on-windows[Allow symlinks in packages on Windows (defaults to false - symlinks are forbidden on Windows)]' \
+'--allow-absolute-license-paths[Allow absolute paths in license_file entries (defaults to false)]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::package_or_recipe -- Package files (*.conda, *.tar.bz2) to publish directly, or recipe files (*.yaml) to build and publish. If .conda or .tar.bz2 files are provided, they will be published directly without building. If .yaml files are provided, they will be built first, then published. Use --recipe-dir (from build options below) to scan a directory for recipes instead. Defaults to "recipe.yaml" in the current directory if not specified:_files' \
+&& ret=0
+;;
+(test)
+_arguments "${_arguments_options[@]}" : \
+'*-c+[Channels to use when testing]:CHANNELS:_default' \
+'*--channel=[Channels to use when testing]:CHANNELS:_default' \
+'-p+[The package file to test]:PACKAGE_FILE:_files' \
+'--package-file=[The package file to test]:PACKAGE_FILE:_files' \
+'--compression-threads=[The number of threads to use for compression]:COMPRESSION_THREADS:_default' \
+'--test-index=[The index of the test to run. This is used to run a specific test from the package]:TEST_INDEX:_default' \
+'--output-dir=[Output directory for build artifacts.]:OUTPUT_DIR:_files' \
+'*--allow-insecure-host=[List of hosts for which SSL certificate verification should be skipped]:ALLOW_INSECURE_HOST:_default' \
+'--auth-file=[Path to an auth-file to read authentication information from]:AUTH_FILE:_files' \
+'--channel-priority=[Channel priority to use when solving]:CHANNEL_PRIORITY:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--debug[Build test environment and output debug information for manual debugging]' \
+'--use-zstd[Enable support for repodata.json.zst]' \
+'--use-bz2[Enable support for repodata.json.bz2]' \
+'--use-sharded[Enable support for sharded repodata]' \
+'--use-jlap[Enable support for JLAP (JSON Lines Append Protocol)]' \
+'--experimental[Enable experimental features]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(rebuild)
+_arguments "${_arguments_options[@]}" : \
+'-p+[The package file to rebuild (can be a local path or URL)]:PACKAGE_FILE:_default' \
+'--package-file=[The package file to rebuild (can be a local path or URL)]:PACKAGE_FILE:_default' \
+'--test=[The strategy to use for running tests]:TEST:((skip\:"Skip the tests"
+native\:"Run the tests only if the build platform is the same as the host platform. Otherwise, skip the tests. If the target platform is noarch, the tests are always executed"
+native-and-emulated\:"Always run the tests"))' \
+'--compression-threads=[The number of threads to use for compression]:COMPRESSION_THREADS:_default' \
+'--io-concurrency-limit=[The number of threads to use for I/O operations when installing packages]:IO_CONCURRENCY_LIMIT:_default' \
+'--output-dir=[Output directory for build artifacts.]:OUTPUT_DIR:_files' \
+'*--allow-insecure-host=[List of hosts for which SSL certificate verification should be skipped]:ALLOW_INSECURE_HOST:_default' \
+'--auth-file=[Path to an auth-file to read authentication information from]:AUTH_FILE:_files' \
+'--channel-priority=[Channel priority to use when solving]:CHANNEL_PRIORITY:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--no-test[Do not run tests after building (deprecated, use \`--test=skip\` instead)]' \
+'--use-zstd[Enable support for repodata.json.zst]' \
+'--use-bz2[Enable support for repodata.json.bz2]' \
+'--use-sharded[Enable support for sharded repodata]' \
+'--use-jlap[Enable support for JLAP (JSON Lines Append Protocol)]' \
+'--experimental[Enable experimental features]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(upload)
+_arguments "${_arguments_options[@]}" : \
+'*--allow-insecure-host=[List of hosts for which SSL certificate verification should be skipped]:ALLOW_INSECURE_HOST:_default' \
+'--auth-file=[Path to an auth-file to read authentication information from]:AUTH_FILE:_files' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'::package_files -- The package file to upload:_files' \
+":: :_rattler-build__upload_commands" \
+"*::: :->upload" \
+&& ret=0
+
+    case $state in
+    (upload)
+        words=($line[2] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-upload-command-$line[2]:"
+        case $line[2] in
+            (quetz)
+_arguments "${_arguments_options[@]}" : \
+'-u+[The URL to your Quetz server]:URL:_default' \
+'--url=[The URL to your Quetz server]:URL:_default' \
+'-c+[The URL to your channel]:CHANNELS:_default' \
+'--channel=[The URL to your channel]:CHANNELS:_default' \
+'-a+[The Quetz API key, if none is provided, the token is read from the keychain / auth-file]:API_KEY:_default' \
+'--api-key=[The Quetz API key, if none is provided, the token is read from the keychain / auth-file]:API_KEY:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::package_files -- The package file to upload:_files' \
+&& ret=0
+;;
+(artifactory)
+_arguments "${_arguments_options[@]}" : \
+'-u+[The URL to your Artifactory server]:URL:_default' \
+'--url=[The URL to your Artifactory server]:URL:_default' \
+'-c+[The URL to your channel]:CHANNELS:_default' \
+'--channel=[The URL to your channel]:CHANNELS:_default' \
+'--username=[Your Artifactory username]:USERNAME:_default' \
+'--password=[Your Artifactory password]:PASSWORD:_default' \
+'-t+[Your Artifactory token]:TOKEN:_default' \
+'--token=[Your Artifactory token]:TOKEN:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::package_files -- The package file to upload:_files' \
+&& ret=0
+;;
+(prefix)
+_arguments "${_arguments_options[@]}" : \
+'-u+[The URL to the prefix.dev server (only necessary for self-hosted instances)]:URL:_default' \
+'--url=[The URL to the prefix.dev server (only necessary for self-hosted instances)]:URL:_default' \
+'-c+[The channel to upload the package to]:CHANNEL:_default' \
+'--channel=[The channel to upload the package to]:CHANNEL:_default' \
+'-a+[The prefix.dev API key, if none is provided, the token is read from the keychain / auth-file]:API_KEY:_default' \
+'--api-key=[The prefix.dev API key, if none is provided, the token is read from the keychain / auth-file]:API_KEY:_default' \
+'(--generate-attestation)--attestation=[Upload an attestation file alongside the package. Note\: if you add an attestation, you can _only_ upload a single package. Mutually exclusive with --generate-attestation]:ATTESTATION:_files' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'(--attestation)--generate-attestation[Automatically generate attestation using cosign in CI. Mutually exclusive with --attestation]' \
+'--store-github-attestation[Also store the generated attestation to GitHub'\''s attestation API. Requires \`GITHUB_TOKEN\` environment variable and only works in GitHub Actions. The attestation will be associated with the current repository]' \
+'-s[Skip upload if package already exists]' \
+'--skip-existing[Skip upload if package already exists]' \
+'--force[Force overwrite existing packages]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::package_files -- The package file to upload:_files' \
+&& ret=0
+;;
+(anaconda)
+_arguments "${_arguments_options[@]}" : \
+'-o+[The owner of the distribution (e.g. conda-forge or your username)]:OWNER:_default' \
+'--owner=[The owner of the distribution (e.g. conda-forge or your username)]:OWNER:_default' \
+'*-c+[The channel / label to upload the package to (e.g. main / rc)]:CHANNELS:_default' \
+'*--channel=[The channel / label to upload the package to (e.g. main / rc)]:CHANNELS:_default' \
+'-a+[The Anaconda API key, if none is provided, the token is read from the keychain / auth-file]:API_KEY:_default' \
+'--api-key=[The Anaconda API key, if none is provided, the token is read from the keychain / auth-file]:API_KEY:_default' \
+'-u+[The URL to the Anaconda server]:URL:_default' \
+'--url=[The URL to the Anaconda server]:URL:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'-f[Replace files on conflict]' \
+'--force[Replace files on conflict]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::package_files -- The package file to upload:_files' \
+&& ret=0
+;;
+(s3)
+_arguments "${_arguments_options[@]}" : \
+'-c+[The channel URL in the S3 bucket to upload the package to, e.g., \`s3\://my-bucket/my-channel\`]:CHANNEL:_default' \
+'--channel=[The channel URL in the S3 bucket to upload the package to, e.g., \`s3\://my-bucket/my-channel\`]:CHANNEL:_default' \
+'--endpoint-url=[The endpoint URL of the S3 backend]:ENDPOINT_URL:_default' \
+'--region=[The region of the S3 backend]:REGION:_default' \
+'--access-key-id=[The access key ID for the S3 bucket]:ACCESS_KEY_ID:_default' \
+'--secret-access-key=[The secret access key for the S3 bucket]:SECRET_ACCESS_KEY:_default' \
+'--session-token=[The session token for the S3 bucket]:SESSION_TOKEN:_default' \
+'(--force-path-style)--addressing-style=[How to address the bucket]:ADDRESSING_STYLE:(virtual-host path)' \
+'(--addressing-style)--force-path-style=[\[deprecated\] Whether to use path-style S3 URLs]:FORCE_PATH_STYLE:(true false)' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--force[Replace files if it already exists]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::package_files -- The package file to upload:_files' \
+&& ret=0
+;;
+(conda-forge)
+_arguments "${_arguments_options[@]}" : \
+'--staging-token=[The Anaconda API key]:STAGING_TOKEN:_default' \
+'--feedstock=[The feedstock name]:FEEDSTOCK:_default' \
+'--feedstock-token=[The feedstock token]:FEEDSTOCK_TOKEN:_default' \
+'--staging-channel=[The staging channel name]:STAGING_CHANNEL:_default' \
+'--anaconda-url=[The Anaconda Server URL]:ANACONDA_URL:_default' \
+'--validation-endpoint=[The validation endpoint url]:VALIDATION_ENDPOINT:_default' \
+'--provider=[The CI provider]:PROVIDER:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--dry-run[Dry run, don'\''t actually upload anything]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'*::package_files -- The package file to upload:_files' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__upload__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-upload-help-command-$line[1]:"
+        case $line[1] in
+            (quetz)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(artifactory)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(prefix)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(anaconda)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(s3)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(conda-forge)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(completion)
+_arguments "${_arguments_options[@]}" : \
+'-s+[Specifies the shell for which the completions should be generated]:SHELL:((bash\:"Bourne Again SHell (bash)"
+elvish\:"Elvish shell"
+fish\:"Friendly Interactive SHell (fish)"
+nushell\:"Nushell"
+powershell\:"PowerShell"
+zsh\:"Z SHell (zsh)"))' \
+'--shell=[Specifies the shell for which the completions should be generated]:SHELL:((bash\:"Bourne Again SHell (bash)"
+elvish\:"Elvish shell"
+fish\:"Friendly Interactive SHell (fish)"
+nushell\:"Nushell"
+powershell\:"PowerShell"
+zsh\:"Z SHell (zsh)"))' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(generate-recipe)
+_arguments "${_arguments_options[@]}" : \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+":: :_rattler-build__generate-recipe_commands" \
+"*::: :->generate-recipe" \
+&& ret=0
+
+    case $state in
+    (generate-recipe)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-generate-recipe-command-$line[1]:"
+        case $line[1] in
+            (pypi)
+_arguments "${_arguments_options[@]}" : \
+'--version=[Select a version of the package to generate (defaults to latest)]:VERSION:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'-w[Whether to write the recipe to a folder]' \
+'--write[Whether to write the recipe to a folder]' \
+'-u[Whether to use the conda-forge PyPI name mapping]' \
+'--use-mapping[Whether to use the conda-forge PyPI name mapping]' \
+'-t[Whether to generate recipes for all dependencies]' \
+'--tree[Whether to generate recipes for all dependencies]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':package -- Name of the package to generate:_default' \
+&& ret=0
+;;
+(cran)
+_arguments "${_arguments_options[@]}" : \
+'-u+[The R Universe to fetch the package from (defaults to \`cran\`)]:UNIVERSE:_default' \
+'--universe=[The R Universe to fetch the package from (defaults to \`cran\`)]:UNIVERSE:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'-t[Whether to create recipes for the whole dependency tree or not]' \
+'--tree[Whether to create recipes for the whole dependency tree or not]' \
+'-w[Whether to write the recipe to a folder]' \
+'--write[Whether to write the recipe to a folder]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':package -- Name of the package to generate:_default' \
+&& ret=0
+;;
+(cpan)
+_arguments "${_arguments_options[@]}" : \
+'--version=[Select a version of the package to generate (defaults to latest)]:VERSION:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'-w[Whether to write the recipe to a folder]' \
+'--write[Whether to write the recipe to a folder]' \
+'-t[Whether to generate recipes for all dependencies]' \
+'--tree[Whether to generate recipes for all dependencies]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':package -- Name of the package to generate:_default' \
+&& ret=0
+;;
+(luarocks)
+_arguments "${_arguments_options[@]}" : \
+'-w+[Where to write the recipe to]:WRITE_TO:_files' \
+'--write-to=[Where to write the recipe to]:WRITE_TO:_files' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':rock -- Luarocks package to generate recipe for. Can be specified as\: - module (fetches latest version) - module/version - author/module/version - Direct rockspec URL:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__generate-recipe__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-generate-recipe-help-command-$line[1]:"
+        case $line[1] in
+            (pypi)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(cran)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(cpan)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(luarocks)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(auth)
+_arguments "${_arguments_options[@]}" : \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+":: :_rattler-build__auth_commands" \
+"*::: :->auth" \
+&& ret=0
+
+    case $state in
+    (auth)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-auth-command-$line[1]:"
+        case $line[1] in
+            (login)
+_arguments "${_arguments_options[@]}" : \
+'--token=[The token to use (for authentication with prefix.dev)]:TOKEN:_default' \
+'--username=[The username to use (for basic HTTP authentication)]:USERNAME:_default' \
+'--password=[The password to use (for basic HTTP authentication)]:PASSWORD:_default' \
+'--conda-token=[The token to use on anaconda.org / quetz authentication]:CONDA_TOKEN:_default' \
+'(--token --username --password --conda-token)--s3-access-key-id=[The S3 access key ID]:S3_ACCESS_KEY_ID:_default' \
+'--s3-secret-access-key=[The S3 secret access key]:S3_SECRET_ACCESS_KEY:_default' \
+'--s3-session-token=[The S3 session token]:S3_SESSION_TOKEN:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':host -- The host to authenticate with (e.g. prefix.dev):_default' \
+&& ret=0
+;;
+(logout)
+_arguments "${_arguments_options[@]}" : \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':host -- The host to remove authentication for:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__auth__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-auth-help-command-$line[1]:"
+        case $line[1] in
+            (login)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(logout)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(debug)
+_arguments "${_arguments_options[@]}" : \
+'-r+[Recipe file to debug]:RECIPE:_files' \
+'--recipe=[Recipe file to debug]:RECIPE:_files' \
+'-o+[Output directory for build artifacts]:OUTPUT:_files' \
+'--output=[Output directory for build artifacts]:OUTPUT:_files' \
+'--target-platform=[The target platform to build for]:TARGET_PLATFORM:_default' \
+'--host-platform=[The host platform to build for (defaults to target_platform)]:HOST_PLATFORM:_default' \
+'--build-platform=[The build platform to build for (defaults to current platform)]:BUILD_PLATFORM:_default' \
+'*-c+[Channels to use when building]:CHANNELS:_default' \
+'*--channel=[Channels to use when building]:CHANNELS:_default' \
+'--output-dir=[Output directory for build artifacts.]:OUTPUT_DIR:_files' \
+'*--allow-insecure-host=[List of hosts for which SSL certificate verification should be skipped]:ALLOW_INSECURE_HOST:_default' \
+'--auth-file=[Path to an auth-file to read authentication information from]:AUTH_FILE:_files' \
+'--channel-priority=[Channel priority to use when solving]:CHANNEL_PRIORITY:_default' \
+'--output-name=[Name of the specific output to debug]:OUTPUT_NAME:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--use-zstd[Enable support for repodata.json.zst]' \
+'--use-bz2[Enable support for repodata.json.bz2]' \
+'--use-sharded[Enable support for sharded repodata]' \
+'--use-jlap[Enable support for JLAP (JSON Lines Append Protocol)]' \
+'--experimental[Enable experimental features]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(create-patch)
+_arguments "${_arguments_options[@]}" : \
+'-d+[Directory where we want to create the patch. Defaults to current directory if not specified]:DIRECTORY:_files' \
+'--directory=[Directory where we want to create the patch. Defaults to current directory if not specified]:DIRECTORY:_files' \
+'--name=[The name for the patch file to create]:NAME:_default' \
+'--patch-dir=[Optional directory where the patch file should be written. Defaults to the recipe directory determined from \`.source_info.json\` if not provided]:DIR:_files' \
+'*--exclude=[Comma-separated list of file names (or glob patterns) that should be excluded from the diff]:EXCLUDE:_default' \
+'*--add=[Include new files matching these glob patterns (e.g., "*.txt", "src/**/*.rs")]:ADD:_default' \
+'*--include=[Only include modified files matching these glob patterns (e.g., "*.c", "src/**/*.rs") If not specified, all modified files are included (subject to --exclude)]:INCLUDE:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--overwrite[Whether to overwrite the patch file if it already exists]' \
+'--dry-run[Perform a dry-run\: analyze changes and log the diff, but don'\''t write the patch file]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(debug-shell)
+_arguments "${_arguments_options[@]}" : \
+'--work-dir=[Work directory to use (reads from last build in rattler-build-log.txt if not specified)]:WORK_DIR:_files' \
+'-o+[Output directory containing rattler-build-log.txt]:OUTPUT_DIR:_files' \
+'--output-dir=[Output directory containing rattler-build-log.txt]:OUTPUT_DIR:_files' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(package)
+_arguments "${_arguments_options[@]}" : \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+":: :_rattler-build__package_commands" \
+"*::: :->package" \
+&& ret=0
+
+    case $state in
+    (package)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-package-command-$line[1]:"
+        case $line[1] in
+            (inspect)
+_arguments "${_arguments_options[@]}" : \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--paths[Show detailed file listing with hashes and sizes]' \
+'--about[Show extended about information]' \
+'--run-exports[Show run exports]' \
+'--all[Show all available information]' \
+'--json[Output as JSON]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':package_file -- Path to the package file (.conda, .tar.bz2):_files' \
+&& ret=0
+;;
+(extract)
+_arguments "${_arguments_options[@]}" : \
+'-d+[Destination directory for extraction (defaults to package name without extension)]:DEST:_files' \
+'--dest=[Destination directory for extraction (defaults to package name without extension)]:DEST:_files' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':package_file -- Path to the package file (.conda, .tar.bz2) or a URL to download from:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__package__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-package-help-command-$line[1]:"
+        case $line[1] in
+            (inspect)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(extract)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(bump-recipe)
+_arguments "${_arguments_options[@]}" : \
+'-r+[Path to the recipe file (recipe.yaml). Defaults to current directory]:RECIPE:_files' \
+'--recipe=[Path to the recipe file (recipe.yaml). Defaults to current directory]:RECIPE:_files' \
+'--version=[The new version to bump to. If not specified, will auto-detect the latest version from the source URL'\''s provider (GitHub, PyPI, crates.io)]:VERSION:_default' \
+'--log-style=[Logging style]:LOG_STYLE:((fancy\:"Use fancy logging output"
+json\:"Use JSON logging output"
+plain\:"Use plain logging output"))' \
+'--wrap-log-lines=[Wrap log lines at the terminal width. This is automatically disabled on CI (by detecting the \`CI\` environment variable)]::WRAP_LOG_LINES:(true false)' \
+'--config-file=[The rattler-build configuration file to use]:CONFIG_FILE:_files' \
+'--color=[Enable or disable colored output from rattler-build. Also honors the \`CLICOLOR\` and \`CLICOLOR_FORCE\` environment variable]:COLOR:((always\:"Always use colors"
+never\:"Never use colors"
+auto\:"Use colors when the output is a terminal"))' \
+'--include-prerelease[Include pre-release versions when auto-detecting (e.g., alpha, beta, rc)]' \
+'--check-only[Only check for updates without modifying the recipe]' \
+'--dry-run[Perform a dry-run\: show what would be changed without writing to the file]' \
+'--keep-build-number[Keep the current build number instead of resetting it to 0]' \
+'*-v[Increase logging verbosity]' \
+'*--verbose[Increase logging verbosity]' \
+'(-v --verbose)*-q[Decrease logging verbosity]' \
+'(-v --verbose)*--quiet[Decrease logging verbosity]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-help-command-$line[1]:"
+        case $line[1] in
+            (build)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(publish)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(test)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(rebuild)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(upload)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__help__upload_commands" \
+"*::: :->upload" \
+&& ret=0
+
+    case $state in
+    (upload)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-help-upload-command-$line[1]:"
+        case $line[1] in
+            (quetz)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(artifactory)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(prefix)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(anaconda)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(s3)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(conda-forge)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(completion)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(generate-recipe)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__help__generate-recipe_commands" \
+"*::: :->generate-recipe" \
+&& ret=0
+
+    case $state in
+    (generate-recipe)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-help-generate-recipe-command-$line[1]:"
+        case $line[1] in
+            (pypi)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(cran)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(cpan)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(luarocks)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(auth)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__help__auth_commands" \
+"*::: :->auth" \
+&& ret=0
+
+    case $state in
+    (auth)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-help-auth-command-$line[1]:"
+        case $line[1] in
+            (login)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(logout)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(debug)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(create-patch)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(debug-shell)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(package)
+_arguments "${_arguments_options[@]}" : \
+":: :_rattler-build__help__package_commands" \
+"*::: :->package" \
+&& ret=0
+
+    case $state in
+    (package)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:rattler-build-help-package-command-$line[1]:"
+        case $line[1] in
+            (inspect)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(extract)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(bump-recipe)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_rattler-build_commands] )) ||
+_rattler-build_commands() {
+    local commands; commands=(
+'build:Build a package from a recipe' \
+'publish:Publish packages to a channel. This command builds packages from recipes (or uses already built packages), uploads them to a channel, and runs indexing' \
+'test:Run a test for a single package' \
+'rebuild:Rebuild a package from a package file instead of a recipe' \
+'upload:Upload a package' \
+'completion:Generate shell completion script' \
+'generate-recipe:Generate a recipe from PyPI, CRAN, CPAN, or LuaRocks' \
+'auth:Handle authentication to external channels' \
+'debug:Debug a recipe by setting up the environment without running the build script' \
+'create-patch:Create a patch for a directory' \
+'debug-shell:Open a debug shell in the build environment' \
+'package:Package-related subcommands' \
+'bump-recipe:Bump a recipe to a new version' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build commands' commands "$@"
+}
+(( $+functions[_rattler-build__auth_commands] )) ||
+_rattler-build__auth_commands() {
+    local commands; commands=(
+'login:Store authentication information for a given host' \
+'logout:Remove authentication information for a given host' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build auth commands' commands "$@"
+}
+(( $+functions[_rattler-build__auth__help_commands] )) ||
+_rattler-build__auth__help_commands() {
+    local commands; commands=(
+'login:Store authentication information for a given host' \
+'logout:Remove authentication information for a given host' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build auth help commands' commands "$@"
+}
+(( $+functions[_rattler-build__auth__help__help_commands] )) ||
+_rattler-build__auth__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build auth help help commands' commands "$@"
+}
+(( $+functions[_rattler-build__auth__help__login_commands] )) ||
+_rattler-build__auth__help__login_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build auth help login commands' commands "$@"
+}
+(( $+functions[_rattler-build__auth__help__logout_commands] )) ||
+_rattler-build__auth__help__logout_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build auth help logout commands' commands "$@"
+}
+(( $+functions[_rattler-build__auth__login_commands] )) ||
+_rattler-build__auth__login_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build auth login commands' commands "$@"
+}
+(( $+functions[_rattler-build__auth__logout_commands] )) ||
+_rattler-build__auth__logout_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build auth logout commands' commands "$@"
+}
+(( $+functions[_rattler-build__build_commands] )) ||
+_rattler-build__build_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build build commands' commands "$@"
+}
+(( $+functions[_rattler-build__bump-recipe_commands] )) ||
+_rattler-build__bump-recipe_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build bump-recipe commands' commands "$@"
+}
+(( $+functions[_rattler-build__completion_commands] )) ||
+_rattler-build__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build completion commands' commands "$@"
+}
+(( $+functions[_rattler-build__create-patch_commands] )) ||
+_rattler-build__create-patch_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build create-patch commands' commands "$@"
+}
+(( $+functions[_rattler-build__debug_commands] )) ||
+_rattler-build__debug_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build debug commands' commands "$@"
+}
+(( $+functions[_rattler-build__debug-shell_commands] )) ||
+_rattler-build__debug-shell_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build debug-shell commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe_commands] )) ||
+_rattler-build__generate-recipe_commands() {
+    local commands; commands=(
+'pypi:Generate a recipe for a Python package from PyPI' \
+'cran:Generate a recipe for an R package from CRAN' \
+'cpan:Generate a recipe for a Perl package from CPAN' \
+'luarocks:Generate a recipe for a Lua package from LuaRocks' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build generate-recipe commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__cpan_commands] )) ||
+_rattler-build__generate-recipe__cpan_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe cpan commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__cran_commands] )) ||
+_rattler-build__generate-recipe__cran_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe cran commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__help_commands] )) ||
+_rattler-build__generate-recipe__help_commands() {
+    local commands; commands=(
+'pypi:Generate a recipe for a Python package from PyPI' \
+'cran:Generate a recipe for an R package from CRAN' \
+'cpan:Generate a recipe for a Perl package from CPAN' \
+'luarocks:Generate a recipe for a Lua package from LuaRocks' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build generate-recipe help commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__help__cpan_commands] )) ||
+_rattler-build__generate-recipe__help__cpan_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe help cpan commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__help__cran_commands] )) ||
+_rattler-build__generate-recipe__help__cran_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe help cran commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__help__help_commands] )) ||
+_rattler-build__generate-recipe__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe help help commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__help__luarocks_commands] )) ||
+_rattler-build__generate-recipe__help__luarocks_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe help luarocks commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__help__pypi_commands] )) ||
+_rattler-build__generate-recipe__help__pypi_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe help pypi commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__luarocks_commands] )) ||
+_rattler-build__generate-recipe__luarocks_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe luarocks commands' commands "$@"
+}
+(( $+functions[_rattler-build__generate-recipe__pypi_commands] )) ||
+_rattler-build__generate-recipe__pypi_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build generate-recipe pypi commands' commands "$@"
+}
+(( $+functions[_rattler-build__help_commands] )) ||
+_rattler-build__help_commands() {
+    local commands; commands=(
+'build:Build a package from a recipe' \
+'publish:Publish packages to a channel. This command builds packages from recipes (or uses already built packages), uploads them to a channel, and runs indexing' \
+'test:Run a test for a single package' \
+'rebuild:Rebuild a package from a package file instead of a recipe' \
+'upload:Upload a package' \
+'completion:Generate shell completion script' \
+'generate-recipe:Generate a recipe from PyPI, CRAN, CPAN, or LuaRocks' \
+'auth:Handle authentication to external channels' \
+'debug:Debug a recipe by setting up the environment without running the build script' \
+'create-patch:Create a patch for a directory' \
+'debug-shell:Open a debug shell in the build environment' \
+'package:Package-related subcommands' \
+'bump-recipe:Bump a recipe to a new version' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build help commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__auth_commands] )) ||
+_rattler-build__help__auth_commands() {
+    local commands; commands=(
+'login:Store authentication information for a given host' \
+'logout:Remove authentication information for a given host' \
+    )
+    _describe -t commands 'rattler-build help auth commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__auth__login_commands] )) ||
+_rattler-build__help__auth__login_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help auth login commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__auth__logout_commands] )) ||
+_rattler-build__help__auth__logout_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help auth logout commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__build_commands] )) ||
+_rattler-build__help__build_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help build commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__bump-recipe_commands] )) ||
+_rattler-build__help__bump-recipe_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help bump-recipe commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__completion_commands] )) ||
+_rattler-build__help__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help completion commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__create-patch_commands] )) ||
+_rattler-build__help__create-patch_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help create-patch commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__debug_commands] )) ||
+_rattler-build__help__debug_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help debug commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__debug-shell_commands] )) ||
+_rattler-build__help__debug-shell_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help debug-shell commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__generate-recipe_commands] )) ||
+_rattler-build__help__generate-recipe_commands() {
+    local commands; commands=(
+'pypi:Generate a recipe for a Python package from PyPI' \
+'cran:Generate a recipe for an R package from CRAN' \
+'cpan:Generate a recipe for a Perl package from CPAN' \
+'luarocks:Generate a recipe for a Lua package from LuaRocks' \
+    )
+    _describe -t commands 'rattler-build help generate-recipe commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__generate-recipe__cpan_commands] )) ||
+_rattler-build__help__generate-recipe__cpan_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help generate-recipe cpan commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__generate-recipe__cran_commands] )) ||
+_rattler-build__help__generate-recipe__cran_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help generate-recipe cran commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__generate-recipe__luarocks_commands] )) ||
+_rattler-build__help__generate-recipe__luarocks_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help generate-recipe luarocks commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__generate-recipe__pypi_commands] )) ||
+_rattler-build__help__generate-recipe__pypi_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help generate-recipe pypi commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__help_commands] )) ||
+_rattler-build__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help help commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__package_commands] )) ||
+_rattler-build__help__package_commands() {
+    local commands; commands=(
+'inspect:Inspect and display information about a built package' \
+'extract:Extract a conda package to a directory' \
+    )
+    _describe -t commands 'rattler-build help package commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__package__extract_commands] )) ||
+_rattler-build__help__package__extract_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help package extract commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__package__inspect_commands] )) ||
+_rattler-build__help__package__inspect_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help package inspect commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__publish_commands] )) ||
+_rattler-build__help__publish_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help publish commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__rebuild_commands] )) ||
+_rattler-build__help__rebuild_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help rebuild commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__test_commands] )) ||
+_rattler-build__help__test_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help test commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__upload_commands] )) ||
+_rattler-build__help__upload_commands() {
+    local commands; commands=(
+'quetz:Upload to a Quetz server. Authentication is used from the keychain / auth-file' \
+'artifactory:Options for uploading to a Artifactory channel. Authentication is used from the keychain / auth-file' \
+'prefix:Options for uploading to a prefix.dev server. Authentication is used from the keychain / auth-file' \
+'anaconda:Options for uploading to a Anaconda.org server' \
+'s3:Options for uploading to S3' \
+'conda-forge:Options for uploading to conda-forge' \
+    )
+    _describe -t commands 'rattler-build help upload commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__upload__anaconda_commands] )) ||
+_rattler-build__help__upload__anaconda_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help upload anaconda commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__upload__artifactory_commands] )) ||
+_rattler-build__help__upload__artifactory_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help upload artifactory commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__upload__conda-forge_commands] )) ||
+_rattler-build__help__upload__conda-forge_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help upload conda-forge commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__upload__prefix_commands] )) ||
+_rattler-build__help__upload__prefix_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help upload prefix commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__upload__quetz_commands] )) ||
+_rattler-build__help__upload__quetz_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help upload quetz commands' commands "$@"
+}
+(( $+functions[_rattler-build__help__upload__s3_commands] )) ||
+_rattler-build__help__upload__s3_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build help upload s3 commands' commands "$@"
+}
+(( $+functions[_rattler-build__package_commands] )) ||
+_rattler-build__package_commands() {
+    local commands; commands=(
+'inspect:Inspect and display information about a built package' \
+'extract:Extract a conda package to a directory' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build package commands' commands "$@"
+}
+(( $+functions[_rattler-build__package__extract_commands] )) ||
+_rattler-build__package__extract_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build package extract commands' commands "$@"
+}
+(( $+functions[_rattler-build__package__help_commands] )) ||
+_rattler-build__package__help_commands() {
+    local commands; commands=(
+'inspect:Inspect and display information about a built package' \
+'extract:Extract a conda package to a directory' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build package help commands' commands "$@"
+}
+(( $+functions[_rattler-build__package__help__extract_commands] )) ||
+_rattler-build__package__help__extract_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build package help extract commands' commands "$@"
+}
+(( $+functions[_rattler-build__package__help__help_commands] )) ||
+_rattler-build__package__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build package help help commands' commands "$@"
+}
+(( $+functions[_rattler-build__package__help__inspect_commands] )) ||
+_rattler-build__package__help__inspect_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build package help inspect commands' commands "$@"
+}
+(( $+functions[_rattler-build__package__inspect_commands] )) ||
+_rattler-build__package__inspect_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build package inspect commands' commands "$@"
+}
+(( $+functions[_rattler-build__publish_commands] )) ||
+_rattler-build__publish_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build publish commands' commands "$@"
+}
+(( $+functions[_rattler-build__rebuild_commands] )) ||
+_rattler-build__rebuild_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build rebuild commands' commands "$@"
+}
+(( $+functions[_rattler-build__test_commands] )) ||
+_rattler-build__test_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build test commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload_commands] )) ||
+_rattler-build__upload_commands() {
+    local commands; commands=(
+'quetz:Upload to a Quetz server. Authentication is used from the keychain / auth-file' \
+'artifactory:Options for uploading to a Artifactory channel. Authentication is used from the keychain / auth-file' \
+'prefix:Options for uploading to a prefix.dev server. Authentication is used from the keychain / auth-file' \
+'anaconda:Options for uploading to a Anaconda.org server' \
+'s3:Options for uploading to S3' \
+'conda-forge:Options for uploading to conda-forge' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build upload commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__anaconda_commands] )) ||
+_rattler-build__upload__anaconda_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload anaconda commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__artifactory_commands] )) ||
+_rattler-build__upload__artifactory_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload artifactory commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__conda-forge_commands] )) ||
+_rattler-build__upload__conda-forge_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload conda-forge commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__help_commands] )) ||
+_rattler-build__upload__help_commands() {
+    local commands; commands=(
+'quetz:Upload to a Quetz server. Authentication is used from the keychain / auth-file' \
+'artifactory:Options for uploading to a Artifactory channel. Authentication is used from the keychain / auth-file' \
+'prefix:Options for uploading to a prefix.dev server. Authentication is used from the keychain / auth-file' \
+'anaconda:Options for uploading to a Anaconda.org server' \
+'s3:Options for uploading to S3' \
+'conda-forge:Options for uploading to conda-forge' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'rattler-build upload help commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__help__anaconda_commands] )) ||
+_rattler-build__upload__help__anaconda_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload help anaconda commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__help__artifactory_commands] )) ||
+_rattler-build__upload__help__artifactory_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload help artifactory commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__help__conda-forge_commands] )) ||
+_rattler-build__upload__help__conda-forge_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload help conda-forge commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__help__help_commands] )) ||
+_rattler-build__upload__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload help help commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__help__prefix_commands] )) ||
+_rattler-build__upload__help__prefix_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload help prefix commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__help__quetz_commands] )) ||
+_rattler-build__upload__help__quetz_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload help quetz commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__help__s3_commands] )) ||
+_rattler-build__upload__help__s3_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload help s3 commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__prefix_commands] )) ||
+_rattler-build__upload__prefix_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload prefix commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__quetz_commands] )) ||
+_rattler-build__upload__quetz_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload quetz commands' commands "$@"
+}
+(( $+functions[_rattler-build__upload__s3_commands] )) ||
+_rattler-build__upload__s3_commands() {
+    local commands; commands=()
+    _describe -t commands 'rattler-build upload s3 commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_rattler-build" ]; then
+    _rattler-build "$@"
+else
+    compdef _rattler-build rattler-build
+fi

@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: pkce
+Version: 1.0.3
+Summary: PKCE Pyhton generator.
+Home-page: https://github.com/RomeoDespres/pkce
+Author: Roméo Després
+Author-email: despres.romeo@gmail.com
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Typing :: Typed
+Requires-Python: >=3
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# pkce (Proof Key for Code Exchange)
+
+Simple Python module to generate PKCE code verifier and code challenge.
+
+
+## Installation
+
+```bash
+pip install pkce
+```
+
+## Usage
+
+```python
+>>> import pkce
+>>> code_verifier, code_challenge = pkce.generate_pkce_pair()
+```
+
+```python
+>>> import pkce
+>>> code_verifier = pkce.generate_code_verifier(length=128)
+>>> code_challenge = pkce.get_code_challenge(code_verifier)
+```
+
+## Additional information
+
+Spec for the PKCE protocol can be found [here](https://tools.ietf.org/html/rfc7636).

@@ -1,0 +1,178 @@
+[build-system]
+requires = [
+    "setuptools >= 77",
+    "setuptools_scm >= 6.4"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "anyio"
+description = "High-level concurrency and networking framework on top of asyncio or Trio"
+readme = "README.rst"
+authors = [{name = "Alex Grönholm", email = "alex.gronholm@nextday.fi"}]
+license = "MIT"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Framework :: AnyIO",
+    "Typing :: Typed",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+requires-python = ">= 3.9"
+dependencies = [
+    "exceptiongroup >= 1.0.2; python_version < '3.11'",
+    "idna >= 2.8",
+    "typing_extensions >= 4.5; python_version < '3.13'",
+]
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://anyio.readthedocs.io/en/latest/"
+Changelog = "https://anyio.readthedocs.io/en/stable/versionhistory.html"
+"Source code" = "https://github.com/agronholm/anyio"
+"Issue tracker" = "https://github.com/agronholm/anyio/issues"
+
+[project.optional-dependencies]
+trio = [
+    "trio >= 0.32.0; python_version >= '3.10'",
+    "trio >= 0.31.0; python_version < '3.10'",
+]
+
+[project.entry-points]
+pytest11 = {anyio = "anyio.pytest_plugin"}
+
+[dependency-groups]
+test = [
+    "blockbuster >= 1.5.23",
+    "coverage[toml] >= 7",
+    "exceptiongroup >= 1.2.0",
+    "hypothesis >= 4.18.2",
+    "psutil >= 5.9",
+    "pytest >= 7.0",
+    "pytest-mock >= 3.14",
+    "trustme >= 1.0.0",
+    "truststore >= 0.9.1; python_version >= '3.10'",
+    """\
+    uvloop >= 0.22.1; platform_python_implementation == 'CPython' \
+    and platform_system != 'Windows' \
+    """,
+    """
+    winloop >= 0.2.3; platform_python_implementation == 'CPython' \
+    and platform_system == 'Windows' \
+    """
+]
+doc = [
+    "packaging >= 14.1",
+    "Sphinx ~= 8.2",
+    "sphinx_rtd_theme >= 2.0.0",
+    "sphinx-autodoc-typehints >= 1.2.0",
+    "sphinx-tabs >= 3.3.1",
+]
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "dirty-tag"
+
+[tool.ruff]
+src = ["src"]
+
+[tool.ruff.lint]
+extend-select = [
+    "ASYNC",        # flake8-async
+    "B",            # flake8-bugbear
+    "C4",           # flake8-comprehensions
+    "G",            # flake8-logging-format
+    "I",            # isort
+    "ISC",          # flake8-implicit-str-concat
+    "PERF",         # flake8-performance
+    "PGH",          # pygrep-hooks
+    "RUF100",       # unused noqa (yesqa)
+    "T201",         # print
+    "UP",           # pyupgrade
+    "W",            # pycodestyle warnings
+]
+ignore = ["B009", "PERF203"]
+
+[tool.ruff.lint.isort]
+"required-imports" = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_tempfile.py" = ["ASYNC230"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+disallow_any_generics = false
+warn_return_any = false
+disallow_untyped_decorators = false
+
+[tool.pytest.ini_options]
+addopts = "-rsfE --tb=short --strict-config --strict-markers -p anyio -p pytest_mock -p no:asyncio -p no:trio"
+testpaths = ["tests"]
+anyio_mode = "auto"
+xfail_strict = true
+filterwarnings = [
+    "error",
+    # Ignore resource warnings due to a CPython/Windows bug (https://bugs.python.org/issue44428)
+    "ignore:unclosed transport <_ProactorSocketTransport.*:ResourceWarning",
+    # Workaround for Python 3.9.7 (see https://bugs.python.org/issue45097)
+    "ignore:The loop argument is deprecated since Python 3\\.8, and scheduled for removal in Python 3\\.10\\.:DeprecationWarning:asyncio",
+]
+markers = [
+    "network: marks tests as requiring Internet access",
+]
+
+[tool.codespell]
+ignore-words-list = "asend,daa,hel"
+
+[tool.coverage.run]
+source = ["anyio"]
+relative_files = true
+
+[tool.coverage.report]
+show_missing = true
+exclude_also = [
+    "if TYPE_CHECKING:",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.tox]
+env_list = ["pre-commit", "py39", "py310", "py311", "py312", "py313", "py314", "pypy3", "only_asyncio"]
+skip_missing_interpreters = true
+requires = ["tox >= 4.22"]
+
+[tool.tox.env_run_base]
+depends = ["pre-commit"]
+package = "editable"
+commands = [["coverage", "run", "-m", "pytest", { replace = "posargs", extend = true }]]
+dependency_groups = ["test"]
+extras = ["trio"]
+set_env = { PYTEST_DISABLE_PLUGIN_AUTOLOAD = "1" }
+
+[tool.tox.env.pypy3]
+commands = [["pytest", { replace = "posargs", extend = true }]]
+
+[tool.tox.env.only_asyncio]
+extras = []
+
+[tool.tox.env.pre-commit]
+commands = [["pre-commit", "run", "--all-files"]]
+depends = []
+allowlist_externals = ["pre-commit"]
+package = "skip"
+
+[tool.tox.env.pyright]
+deps = ["pyright"]
+commands = [["pyright", "--ignoreexternal", "--verifytypes", "anyio"]]
+
+[tool.tox.env.docs]
+depends = []
+dependency_groups = ["doc"]
+commands = [["sphinx-build", "-n", "docs", "build/sphinx"]]

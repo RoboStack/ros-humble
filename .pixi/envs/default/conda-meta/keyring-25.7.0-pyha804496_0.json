@@ -1,0 +1,331 @@
+{
+  "build": "pyha804496_0",
+  "build_number": 0,
+  "depends": [
+    "__linux",
+    "importlib-metadata >=4.11.4",
+    "importlib_resources",
+    "jaraco.classes",
+    "jaraco.context",
+    "jaraco.functools",
+    "jeepney >=0.4.2",
+    "python >=3.10",
+    "secretstorage >=3.2"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "9eeb0eaf04fa934808d3e070eebbe630",
+  "name": "keyring",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/keyring?source=hash-mapping"
+  ],
+  "sha256": "010718b1b1a35ce72782d38e6d6b9495d8d7d0dbea9a3e42901d030ff2189545",
+  "size": 37717,
+  "subdir": "noarch",
+  "timestamp": 1763320674488,
+  "version": "25.7.0",
+  "fn": "keyring-25.7.0-pyha804496_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/keyring-25.7.0-pyha804496_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/keyring-25.7.0-pyha804496_0",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/keyring/backends/SecretService.py",
+    "lib/python3.11/site-packages/keyring/backends/Windows.py",
+    "lib/python3.11/site-packages/keyring/backends/__init__.py",
+    "lib/python3.11/site-packages/keyring/backends/chainer.py",
+    "lib/python3.11/site-packages/keyring/backends/fail.py",
+    "lib/python3.11/site-packages/keyring/backends/kwallet.py",
+    "lib/python3.11/site-packages/keyring/backends/libsecret.py",
+    "lib/python3.11/site-packages/keyring/backends/null.py",
+    "lib/python3.11/site-packages/keyring/testing/__init__.py",
+    "lib/python3.11/site-packages/keyring/testing/backend.py",
+    "lib/python3.11/site-packages/keyring/testing/util.py",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/entry_points.txt",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/keyring/__init__.py",
+    "lib/python3.11/site-packages/keyring/__main__.py",
+    "lib/python3.11/site-packages/keyring/backend.py",
+    "lib/python3.11/site-packages/keyring/backend_complete.bash",
+    "lib/python3.11/site-packages/keyring/backend_complete.zsh",
+    "lib/python3.11/site-packages/keyring/cli.py",
+    "lib/python3.11/site-packages/keyring/completion.py",
+    "lib/python3.11/site-packages/keyring/core.py",
+    "lib/python3.11/site-packages/keyring/credentials.py",
+    "lib/python3.11/site-packages/keyring/devpi_client.py",
+    "lib/python3.11/site-packages/keyring/errors.py",
+    "lib/python3.11/site-packages/keyring/http.py",
+    "lib/python3.11/site-packages/keyring/py.typed",
+    "lib/python3.11/site-packages/keyring/util/__init__.py",
+    "lib/python3.11/site-packages/keyring/util/platform_.py",
+    "lib/python3.11/site-packages/keyring-25.7.0.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/keyring/compat/__init__.py",
+    "lib/python3.11/site-packages/keyring/compat/properties.py",
+    "lib/python3.11/site-packages/keyring/compat/py312.py",
+    "lib/python3.11/site-packages/keyring/backends/macOS/__init__.py",
+    "lib/python3.11/site-packages/keyring/backends/macOS/api.py",
+    "bin/keyring"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/SecretService.py",
+        "path_type": "hardlink",
+        "sha256": "aadf654296bc87aac69e3cd3384f063080c7d9ed89e34448855df27354d74ac7",
+        "size_in_bytes": 4712
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/Windows.py",
+        "path_type": "hardlink",
+        "sha256": "da98b72d2576442c17acb61e3699485152603cb1f9b8c9f261c481828fba926c",
+        "size_in_bytes": 5727
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/chainer.py",
+        "path_type": "hardlink",
+        "sha256": "fa185ef9459b0a7d0f0142bed347168c7cff2493507ff3783b21d49fcf7208ec",
+        "size_in_bytes": 2175
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/fail.py",
+        "path_type": "hardlink",
+        "sha256": "79fe6e3f70dd8f66a9ab6a5ed3c2d723694b82992637452b29998ec79f141c85",
+        "size_in_bytes": 914
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/kwallet.py",
+        "path_type": "hardlink",
+        "sha256": "2def9bc1f25537b74d52230b60b13ae9ed07ccce609896695e798b4240e5084a",
+        "size_in_bytes": 5824
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/libsecret.py",
+        "path_type": "hardlink",
+        "sha256": "816794bde138e30647d23eeddb0d8bfa579832924e1075743aa494882fac1d01",
+        "size_in_bytes": 5942
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/null.py",
+        "path_type": "hardlink",
+        "sha256": "1d6f8ebf2821efc51e6cbf8808f4e296608e937ee1e5614fbd594c9cd3fc1250",
+        "size_in_bytes": 438
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/testing/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/testing/backend.py",
+        "path_type": "hardlink",
+        "sha256": "1ee084f0d2f5ad7308641ac510b71ed9a3be379a58dd412d40b0ec35d0a0bf20",
+        "size_in_bytes": 7551
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/testing/util.py",
+        "path_type": "hardlink",
+        "sha256": "3b5e49b1f70b201727b05d4ef0b7e76d691e12e8847dba2fcd0d61f2837b5d40",
+        "size_in_bytes": 1884
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "bd54de98fede6dc3e1f3cd89b4e37c95d8842a523bdbb9e52ab40edff1837163",
+        "size_in_bytes": 21447
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "2529c5ba76bc1084f3e643e3f255e457bb351b64fb423563a9623df8fbe5226a",
+        "size_in_bytes": 4852
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "bdd6e601d8aca660d141db8982e096606736e7c9218eac2553b179ef63a0f1bf",
+        "size_in_bytes": 103
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/entry_points.txt",
+        "path_type": "hardlink",
+        "sha256": "f226f273dcc7d924f52436475a54191c450fc7d9156977d5cbccf969fffa3949",
+        "size_in_bytes": 334
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "a218757647b6f3f35d48d919ea79154b020a90b2533b021f1309d72af6b7a648",
+        "size_in_bytes": 8
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e1b93aea1c4eb30e49461cb2e08f54f1cfd55cafa92eeb01f9807e692f3aa2dd",
+        "size_in_bytes": 271
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "bc1fef392938a4866b91ebc141e1d7cba198bfb35dd3fbe278a7b8e177f58bd8",
+        "size_in_bytes": 71
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backend.py",
+        "path_type": "hardlink",
+        "sha256": "860e6aaa52f2d8afca4a1dac67a04cfe715b8082a31618f3e62270c2c76a207b",
+        "size_in_bytes": 9069
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backend_complete.bash",
+        "path_type": "hardlink",
+        "sha256": "2376d10377c647f76eccbac9ca48bde026b1c677a58628976325cbbd49a56de7",
+        "size_in_bytes": 397
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backend_complete.zsh",
+        "path_type": "hardlink",
+        "sha256": "25ef50027d026c5f3ff2cb064a4ae86b81cc7090c1de0db4c8bf178615b9d1f2",
+        "size_in_bytes": 451
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/cli.py",
+        "path_type": "hardlink",
+        "sha256": "07dd3ce119a5b786ad7d00b0daaba0326a2f550cde16391e2d17fabd335c3132",
+        "size_in_bytes": 6605
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/completion.py",
+        "path_type": "hardlink",
+        "sha256": "3128f4a8fb4b02184df644a4df82d1cc64982214b5f5a1b4e7095897f4471bf4",
+        "size_in_bytes": 1450
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/core.py",
+        "path_type": "hardlink",
+        "sha256": "db310e54a8ad61aaddbea3c31f33050917c807cd7672e5cb6c8561f6e75bc5cd",
+        "size_in_bytes": 5848
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/credentials.py",
+        "path_type": "hardlink",
+        "sha256": "3d6154cde0045fd16a8d8a27488493e32e961ea43694a71e2dcbe270a49a8a96",
+        "size_in_bytes": 2092
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/devpi_client.py",
+        "path_type": "hardlink",
+        "sha256": "229932600b28d011fdb57a6c6772b5523246fce6ed8fa9137e5ae90dab4dce84",
+        "size_in_bytes": 603
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/errors.py",
+        "path_type": "hardlink",
+        "sha256": "8621d9c46dded56001303c3cd224f4620eaaadc71a56e554a533452bb8959a76",
+        "size_in_bytes": 1625
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/http.py",
+        "path_type": "hardlink",
+        "sha256": "b9d1fcdeae4122b7ca626fb800eb9e7d0dc0bdbf89f546e95c162ee3d224fe20",
+        "size_in_bytes": 1214
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/util/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "8a5101edccf871697b69c9abb9b185f75e3665e05eaf5985a9a2f453eed45c07",
+        "size_in_bytes": 302
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/util/platform_.py",
+        "path_type": "hardlink",
+        "sha256": "961b062966686c4becced34e928b54a0daa21d4849ec6e043427dd0f0a76c150",
+        "size_in_bytes": 1092
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring-25.7.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d",
+        "size_in_bytes": 1076
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/compat/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "59758ec49775c1d05dad33632aa8edf233a67c86a17088a90da85ba9d950ea0f",
+        "size_in_bytes": 169
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/compat/properties.py",
+        "path_type": "hardlink",
+        "sha256": "253951defec0e4080af7782b2369c85b5b23d1e7d878f816414443b161f0ce3e",
+        "size_in_bytes": 3886
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/compat/py312.py",
+        "path_type": "hardlink",
+        "sha256": "7ae333e5df75b5b76b1b6264a68a83bb76c18373e3cddde9132595c522b82240",
+        "size_in_bytes": 159
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/macOS/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "f8220e36fc2b2456deba3eb4a296c2319c38c16b621b21ee182b21a1c77835d8",
+        "size_in_bytes": 2589
+      },
+      {
+        "_path": "lib/python3.11/site-packages/keyring/backends/macOS/api.py",
+        "path_type": "hardlink",
+        "sha256": "7a292205a19c602429a83b0d74bcbcc0da01fe714161f638d63ff7f2fb0c2a9a",
+        "size_in_bytes": 4576
+      },
+      {
+        "_path": "bin/keyring",
+        "path_type": "unix_python_entry_point",
+        "sha256": "8ec6cb6f542c8a3f95af1fb90d5f2251b297b7e393b08a198214157e1598ca4f",
+        "size_in_bytes": 264
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/keyring-25.7.0-pyha804496_0",
+    "type": 1
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "build": "pyhd8ed1ab_5",
+  "build_number": 5,
+  "depends": [
+    "python >=3.9"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "767d508c1a67e02ae8f50e44cacfadb2",
+  "name": "backports",
+  "noarch": "python",
+  "purls": [],
+  "sha256": "e1c3dc8b5aa6e12145423fed262b4754d70fec601339896b9ccf483178f690a6",
+  "size": 7069,
+  "subdir": "noarch",
+  "timestamp": 1733218168786,
+  "version": "1.0",
+  "fn": "backports-1.0-pyhd8ed1ab_5.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/backports-1.0-pyhd8ed1ab_5.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/backports-1.0-pyhd8ed1ab_5",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/backports/__init__.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/backports/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "28db1c8cbca9b4151e534ecab70c1115d4c9a8055444c7f81a333d0aa5e7c4c2",
+        "size_in_bytes": 227
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/backports-1.0-pyhd8ed1ab_5",
+    "type": 1
+  }
+}

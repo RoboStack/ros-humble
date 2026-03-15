@@ -1,0 +1,129 @@
+{
+  "build": "pyhcf101f3_3",
+  "build_number": 3,
+  "depends": [
+    "python >=3.10",
+    "more-itertools",
+    "python"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "d59568bad316413c89831456e691de29",
+  "name": "jaraco.classes",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/jaraco-classes?source=hash-mapping"
+  ],
+  "sha256": "3cc991f0f09dfd00d2626e745ba68da03e4f1dcbb7b36dd20f7a7373643cd5d5",
+  "size": 14831,
+  "subdir": "noarch",
+  "timestamp": 1767294269456,
+  "version": "3.4.0",
+  "fn": "jaraco.classes-3.4.0-pyhcf101f3_3.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/jaraco.classes-3.4.0-pyhcf101f3_3.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/jaraco.classes-3.4.0-pyhcf101f3_3",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/jaraco/classes/__init__.py",
+    "lib/python3.11/site-packages/jaraco/classes/ancestry.py",
+    "lib/python3.11/site-packages/jaraco/classes/meta.py",
+    "lib/python3.11/site-packages/jaraco/classes/properties.py",
+    "lib/python3.11/site-packages/jaraco/classes/py.typed",
+    "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/licenses/LICENSE"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/jaraco/classes/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco/classes/ancestry.py",
+        "path_type": "hardlink",
+        "sha256": "16453b93238ef9338c830477a1b729a81f771edf9fd32c631a74f172f7c12c1d",
+        "size_in_bytes": 1787
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco/classes/meta.py",
+        "path_type": "hardlink",
+        "sha256": "bb3d739adb1eff49fb72cd8cda17f3f2222aa1edbfdaf648fbf26216f42e0f01",
+        "size_in_bytes": 2198
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco/classes/properties.py",
+        "path_type": "hardlink",
+        "sha256": "7fef3c28248179e0a58b0c5f5cec1eed4aa4f7f7a51268bd652c0e87aff206ae",
+        "size_in_bytes": 6191
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco/classes/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "7fab25d0e22cd246eb73c5ae35c4524ab5df2adc6c68b4a05a0d86cdb666bc24",
+        "size_in_bytes": 2625
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "2d96a902b20e68ea4d8c9266b9fca2c8a4258cf3d4d75ab6c3b726ff2aabeefa",
+        "size_in_bytes": 1354
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "1daef629db20d63d9e5b3810d853f9f550d2e86d4870cdce2a6297e7a332c975",
+        "size_in_bytes": 125
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "d099cddcb7d71f82c845f5cbf9014e18227341664edc42f1e11d5dfe5a2ea103",
+        "size_in_bytes": 7
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_classes-3.4.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
+        "size_in_bytes": 1023
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/jaraco.classes-3.4.0-pyhcf101f3_3",
+    "type": 1
+  }
+}

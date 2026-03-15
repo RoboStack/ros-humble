@@ -1,0 +1,8 @@
+
+[cffi]
+
+[cffi:platform_python_implementation != "PyPy" and python_version < "3.14"]
+cffi~=1.17
+
+[cffi:platform_python_implementation != "PyPy" and python_version >= "3.14"]
+cffi>=2.0.0b

@@ -1,0 +1,33 @@
+{
+  "build": "8_cp311",
+  "build_number": 8,
+  "constrains": [
+    "python 3.11.* *_cpython"
+  ],
+  "depends": [],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "8fcb6b0e2161850556231336dae58358",
+  "name": "python_abi",
+  "noarch": "generic",
+  "purls": [],
+  "sha256": "fddf123692aa4b1fc48f0471e346400d9852d96eeed77dbfdd746fa50a8ff894",
+  "size": 7003,
+  "subdir": "noarch",
+  "timestamp": 1752805919375,
+  "version": "3.11",
+  "fn": "python_abi-3.11-8_cp311.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/python_abi-3.11-8_cp311.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/python_abi-3.11-8_cp311",
+  "requested_specs": [],
+  "files": [],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": []
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/python_abi-3.11-8_cp311",
+    "type": 1
+  }
+}

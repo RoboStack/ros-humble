@@ -1,0 +1,121 @@
+{
+  "arch": "x86_64",
+  "build": "py311h66f275b_1",
+  "build_number": 1,
+  "constrains": [
+    "libbrotlicommon 1.2.0 hb03c661_1"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc >=14",
+    "libstdcxx >=14",
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "86daecb8e4ed1042d5dc6efbe0152590",
+  "name": "brotli-python",
+  "platform": "linux",
+  "purls": [
+    "pkg:pypi/brotli?source=hash-mapping"
+  ],
+  "sha256": "c36eb061d9ead85f97644cfb740d485dba9b8823357f35c17851078e95e975c1",
+  "size": 367573,
+  "subdir": "linux-64",
+  "timestamp": 1764017405384,
+  "version": "1.2.0",
+  "fn": "brotli-python-1.2.0-py311h66f275b_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/brotli-python-1.2.0-py311h66f275b_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/brotli-python-1.2.0-py311h66f275b_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/brotli-1.2.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/brotli-1.2.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/brotli-1.2.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/brotli-1.2.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/brotli-1.2.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/brotli-1.2.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/brotli-1.2.0.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/__pycache__/brotli.cpython-311.pyc",
+    "lib/python3.11/site-packages/brotli-1.2.0.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/_brotli.cpython-311-x86_64-linux-gnu.so",
+    "lib/python3.11/site-packages/brotli.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/brotli-1.2.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/brotli-1.2.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "2238dbee879e0d9ce4dd292643d96870e3e27a4ad55c438fbe2ee0f6f4652193",
+        "size_in_bytes": 6116
+      },
+      {
+        "_path": "lib/python3.11/site-packages/brotli-1.2.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "fd8a50d1321ad1ee5f9ba98482e9c0e0490e622be9c81c146a835b84e3b01200",
+        "size_in_bytes": 869
+      },
+      {
+        "_path": "lib/python3.11/site-packages/brotli-1.2.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/brotli-1.2.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "21355d6298931a7af2a886ce4748b5c1c7484a8f183c9ce5c7cac0ca871a6f33",
+        "size_in_bytes": 104
+      },
+      {
+        "_path": "lib/python3.11/site-packages/brotli-1.2.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "669e49800e808b90929762642b31575621af4bca6dbac95afafa3d2b1aec7dc9",
+        "size_in_bytes": 108
+      },
+      {
+        "_path": "lib/python3.11/site-packages/brotli-1.2.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "82c4b9e07ae13b766f785c5e32b2a8ffba87e129b84db43b8c62d5044a89e0d2",
+        "size_in_bytes": 15
+      },
+      {
+        "_path": "lib/python3.11/site-packages/__pycache__/brotli.cpython-311.pyc",
+        "path_type": "hardlink",
+        "sha256": "142e612d5e2adbef1551900accf14882defe985e93e35b72d1fa4f03c69e109f",
+        "size_in_bytes": 1961
+      },
+      {
+        "_path": "lib/python3.11/site-packages/brotli-1.2.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94",
+        "size_in_bytes": 1084
+      },
+      {
+        "_path": "lib/python3.11/site-packages/_brotli.cpython-311-x86_64-linux-gnu.so",
+        "path_type": "hardlink",
+        "sha256": "ba3cfbfb6d7491bf5ede8ed7d31839e5c30a765f0862e90ddc7064af8ebb36d9",
+        "size_in_bytes": 903984
+      },
+      {
+        "_path": "lib/python3.11/site-packages/brotli.py",
+        "path_type": "hardlink",
+        "sha256": "813610bf0d74a6998d7b47d912e8892c3896e6eac19cb7b22575e04fc294b63f",
+        "size_in_bytes": 1970
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/brotli-python-1.2.0-py311h66f275b_1",
+    "type": 1
+  }
+}

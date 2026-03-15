@@ -1,0 +1,100 @@
+{
+  "build": "pyhe01879c_1",
+  "build_number": 1,
+  "depends": [
+    "python >=3.9",
+    "python"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "3339e3b65d58accf4ca4fb8748ab16b3",
+  "name": "six",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/six?source=hash-mapping"
+  ],
+  "sha256": "458227f759d5e3fcec5d9b7acce54e10c9e1f4f4b7ec978f3bfd54ce4ee9853d",
+  "size": 18455,
+  "subdir": "noarch",
+  "timestamp": 1753199211006,
+  "version": "1.17.0",
+  "fn": "six-1.17.0-pyhe01879c_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/six-1.17.0-pyhe01879c_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/six-1.17.0-pyhe01879c_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/six.py",
+    "lib/python3.11/site-packages/six-1.17.0.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/six-1.17.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/six-1.17.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/six-1.17.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/six-1.17.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/six-1.17.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/six-1.17.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/six-1.17.0.dist-info/top_level.txt"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/six.py",
+        "path_type": "hardlink",
+        "sha256": "c51c91f703d3d4b3696c923cb5fec213e05e75d9215393befac7f2fa6a3904df",
+        "size_in_bytes": 34703
+      },
+      {
+        "_path": "lib/python3.11/site-packages/six-1.17.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "4375ba20e2b9c6c4e7cad2940a628fd90e95cc3d50ee92aae755715d8ba1fbd0",
+        "size_in_bytes": 1066
+      },
+      {
+        "_path": "lib/python3.11/site-packages/six-1.17.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/six-1.17.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "ac67d2c2d38c83f38e4928241fc1d4ffd7a139b8a87dcdfefa43178af4f2c0f5",
+        "size_in_bytes": 1837
+      },
+      {
+        "_path": "lib/python3.11/site-packages/six-1.17.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "3ecbb92df3cbea3257290cb6c3b4631cd20f20122d648fd5bcc19f03fbca6881",
+        "size_in_bytes": 747
+      },
+      {
+        "_path": "lib/python3.11/site-packages/six-1.17.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/six-1.17.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "24d5a1d459b551dc08415d3be609429f8315b8246cd2ca2d248abe27aadbc425",
+        "size_in_bytes": 109
+      },
+      {
+        "_path": "lib/python3.11/site-packages/six-1.17.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "9895ae6a3c2e8e92a5aa64c5304426dda213dd4945731d6baf8fea0b128035d9",
+        "size_in_bytes": 114
+      },
+      {
+        "_path": "lib/python3.11/site-packages/six-1.17.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "fe2547fe2604b445e70fc9d819062960552f9145bdb043b51986e478a4806a2b",
+        "size_in_bytes": 4
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/six-1.17.0-pyhe01879c_1",
+    "type": 1
+  }
+}

@@ -1,0 +1,375 @@
+{
+  "build": "pyhcf101f3_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.10",
+    "hyperframe >=6.1,<7",
+    "hpack >=4.1,<5",
+    "python"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "164fc43f0b53b6e3a7bc7dce5e4f1dc9",
+  "name": "h2",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/h2?source=hash-mapping"
+  ],
+  "sha256": "84c64443368f84b600bfecc529a1194a3b14c3656ee2e832d15a20e0329b6da3",
+  "size": 95967,
+  "subdir": "noarch",
+  "timestamp": 1756364871835,
+  "version": "4.3.0",
+  "fn": "h2-4.3.0-pyhcf101f3_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/h2-4.3.0-pyhcf101f3_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/h2-4.3.0-pyhcf101f3_0",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/h2/__init__.py",
+    "lib/python3.11/site-packages/h2/config.py",
+    "lib/python3.11/site-packages/h2/connection.py",
+    "lib/python3.11/site-packages/h2/errors.py",
+    "lib/python3.11/site-packages/h2/events.py",
+    "lib/python3.11/site-packages/h2/exceptions.py",
+    "lib/python3.11/site-packages/h2/frame_buffer.py",
+    "lib/python3.11/site-packages/h2/py.typed",
+    "lib/python3.11/site-packages/h2/settings.py",
+    "lib/python3.11/site-packages/h2/stream.py",
+    "lib/python3.11/site-packages/h2/utilities.py",
+    "lib/python3.11/site-packages/h2/windows.py",
+    "lib/python3.11/site-packages/h2-4.3.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/h2-4.3.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/h2-4.3.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/h2-4.3.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/h2-4.3.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/h2-4.3.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/h2-4.3.0.dist-info/top_level.txt",
+    "etc/conda/test-files/h2/1/tests/__init__.py",
+    "etc/conda/test-files/h2/1/tests/conftest.py",
+    "etc/conda/test-files/h2/1/tests/coroutine_tests.py",
+    "etc/conda/test-files/h2/1/tests/h2spectest.sh",
+    "etc/conda/test-files/h2/1/tests/helpers.py",
+    "etc/conda/test-files/h2/1/tests/test_basic_logic.py",
+    "etc/conda/test-files/h2/1/tests/test_closed_streams.py",
+    "etc/conda/test-files/h2/1/tests/test_complex_logic.py",
+    "etc/conda/test-files/h2/1/tests/test_config.py",
+    "etc/conda/test-files/h2/1/tests/test_events.py",
+    "etc/conda/test-files/h2/1/tests/test_exceptions.py",
+    "etc/conda/test-files/h2/1/tests/test_flow_control_window.py",
+    "etc/conda/test-files/h2/1/tests/test_h2_upgrade.py",
+    "etc/conda/test-files/h2/1/tests/test_head_request.py",
+    "etc/conda/test-files/h2/1/tests/test_header_indexing.py",
+    "etc/conda/test-files/h2/1/tests/test_informational_responses.py",
+    "etc/conda/test-files/h2/1/tests/test_interacting_stacks.py",
+    "etc/conda/test-files/h2/1/tests/test_invalid_content_lengths.py",
+    "etc/conda/test-files/h2/1/tests/test_invalid_frame_sequences.py",
+    "etc/conda/test-files/h2/1/tests/test_invalid_headers.py",
+    "etc/conda/test-files/h2/1/tests/test_priority.py",
+    "etc/conda/test-files/h2/1/tests/test_related_events.py",
+    "etc/conda/test-files/h2/1/tests/test_rfc7838.py",
+    "etc/conda/test-files/h2/1/tests/test_rfc8441.py",
+    "etc/conda/test-files/h2/1/tests/test_settings.py",
+    "etc/conda/test-files/h2/1/tests/test_state_machines.py",
+    "etc/conda/test-files/h2/1/tests/test_stream_reset.py",
+    "etc/conda/test-files/h2/1/tests/test_utility_functions.py",
+    "lib/python3.11/site-packages/h2-4.3.0.dist-info/licenses/LICENSE"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/h2/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "b3892c18f75413875495df6372e3f129b293a230392c3f1b42001fb92b973f5f",
+        "size_in_bytes": 109
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/config.py",
+        "path_type": "hardlink",
+        "sha256": "67ec2be6b162cdc076f964d5582b86b5ef32fbc71e6f9076fab95c5742f9b6e5",
+        "size_in_bytes": 8344
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/connection.py",
+        "path_type": "hardlink",
+        "sha256": "001ac10ddb176742575dbc6b1c77471113d885f0ce0860b65e56269adc0f9419",
+        "size_in_bytes": 86876
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/errors.py",
+        "path_type": "hardlink",
+        "sha256": "4be4dd61a25f3ff8709458f6b90189190e12e3fc96894ffd138e1a3f174009b1",
+        "size_in_bytes": 1581
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/events.py",
+        "path_type": "hardlink",
+        "sha256": "c30ec1788172d40cd35677cadf3e2ba315488a3175f79c5edc2459fb80d3ce0e",
+        "size_in_bytes": 22408
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "dc49b798b310047c58a4e2a868f74a0861469fc03dadef4006d51d2a56376d93",
+        "size_in_bytes": 5308
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/frame_buffer.py",
+        "path_type": "hardlink",
+        "sha256": "feff91238b08dbcea2ee81cbacb64b8d417809bfc9bfb3c48e552480be9710dd",
+        "size_in_bytes": 6553
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/settings.py",
+        "path_type": "hardlink",
+        "sha256": "8d10648219e222250642fd7ad90de6cd64139a2d05e395269b32078dbe0cbb55",
+        "size_in_bytes": 12323
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/stream.py",
+        "path_type": "hardlink",
+        "sha256": "ba8608152270ee91bb8467149ff727b3fc8bec1ad6bead3b418206a49eb82e5f",
+        "size_in_bytes": 58752
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/utilities.py",
+        "path_type": "hardlink",
+        "sha256": "00d12d74bf69d2b304aa415842c84a40a2fcc906f70bf27314a6ba305e52046e",
+        "size_in_bytes": 26531
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2/windows.py",
+        "path_type": "hardlink",
+        "sha256": "26958d843bfec782798c85d25a9d0834792af482203cfdbbc6bf455d8bdacc51",
+        "size_in_bytes": 5492
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.3.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.3.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "b2f47f8201491420642c229e5fcbcbd5576c7afd023264dcb59b5eb22dcbb265",
+        "size_in_bytes": 5139
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.3.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "aeee579c92cab2b5193969905df8f2d5a10a330f96b163395229ff5068e1e85d",
+        "size_in_bytes": 1966
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.3.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.3.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.3.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "6403d0a9a45e4805085cba8e3d36d0f1cde090213554a0a6921b62feb51d2969",
+        "size_in_bytes": 113
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.3.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "1e2ba5c7c2b12368c550cd5d1bbf8265e4643b78f9d0c07008b1b7e95aeafa42",
+        "size_in_bytes": 3
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/conftest.py",
+        "path_type": "hardlink",
+        "sha256": "ba204a39f4f5ee1194d03db879653cb262a14fff6c79700c4eaeb38590e61bf7",
+        "size_in_bytes": 146
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/coroutine_tests.py",
+        "path_type": "hardlink",
+        "sha256": "88c9b2cf5c579a882c623e063e607a0f6f54250d0a3ead9421d940bf9114fd09",
+        "size_in_bytes": 2670
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/h2spectest.sh",
+        "path_type": "hardlink",
+        "sha256": "8204df13f9121b9e1def27b04c2c906e99959598fc26f3e6e3fdbc0d642d0b44",
+        "size_in_bytes": 449
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/helpers.py",
+        "path_type": "hardlink",
+        "sha256": "9aed25a76a646b8259491bcebfa44d491bba9e850ab0ede79664855ed3ad7e77",
+        "size_in_bytes": 5056
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_basic_logic.py",
+        "path_type": "hardlink",
+        "sha256": "29db10782334217141c190db6a4800f3adb0c3a8d19b1490980ca40d634c7adb",
+        "size_in_bytes": 67410
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_closed_streams.py",
+        "path_type": "hardlink",
+        "sha256": "664893600d67840d24ab7536c6ac1de9ed8dee9172281488b933ca87500d401b",
+        "size_in_bytes": 19372
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_complex_logic.py",
+        "path_type": "hardlink",
+        "sha256": "cdb707151737883a5633bb9067ce1752dc19a39a25f780e3e8f22b5d7c072fec",
+        "size_in_bytes": 21477
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_config.py",
+        "path_type": "hardlink",
+        "sha256": "beda334e013e932e5b7dc48d1dfd94eea7274ebc6c5a624ad7217a1d19c04c4d",
+        "size_in_bytes": 5360
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_events.py",
+        "path_type": "hardlink",
+        "sha256": "c40cb6396bfc8d8e244ba675f60b6aed078b5833c9a0b86e95eacf095204cab9",
+        "size_in_bytes": 12934
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "ab17da5d11df42a4852db06e1cfab37779bee90fb346285753586d8a5ed2166e",
+        "size_in_bytes": 317
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_flow_control_window.py",
+        "path_type": "hardlink",
+        "sha256": "40fb8faa8d687ef3816e2c593b33a1093df00802739a131ba91e86d2e46235bb",
+        "size_in_bytes": 35999
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_h2_upgrade.py",
+        "path_type": "hardlink",
+        "sha256": "1a14c29660373b9b6e5c968944156070b575d806596f710d6ba7e5e6a7a5b95a",
+        "size_in_bytes": 10528
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_head_request.py",
+        "path_type": "hardlink",
+        "sha256": "31a6d7d94bdf8f95422850c75b08b9f7f919647f5a46ec70bb6e8df7449eb29b",
+        "size_in_bytes": 1851
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_header_indexing.py",
+        "path_type": "hardlink",
+        "sha256": "db2b6b7a39418b0ae2a331bd4a662652e1a639dd136c9831077627d81acaf8e9",
+        "size_in_bytes": 23647
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_informational_responses.py",
+        "path_type": "hardlink",
+        "sha256": "251c24bca5bc3c437dfa0ef4fd0487c142b458553005e971dd7f6b09930138f4",
+        "size_in_bytes": 15760
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_interacting_stacks.py",
+        "path_type": "hardlink",
+        "sha256": "9582a6e0d7e7cd879e8c804c3d97f383b978bf09242bd8adbd30a6dd71b96072",
+        "size_in_bytes": 4506
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_invalid_content_lengths.py",
+        "path_type": "hardlink",
+        "sha256": "aea3cfb2354587cc91af5cb5fb23de17a1fd22c3fcbec8af9ba8c991c51c8462",
+        "size_in_bytes": 5181
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_invalid_frame_sequences.py",
+        "path_type": "hardlink",
+        "sha256": "ed07b6fdb0420139249f4d0a2156ea0dc8638dcd51c0c39bfe21637a9c39f47b",
+        "size_in_bytes": 19535
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_invalid_headers.py",
+        "path_type": "hardlink",
+        "sha256": "86b4fd8a1b77387f4ae66538aabc9b8723f712b455f4fb028f6cf3463e8110c8",
+        "size_in_bytes": 35127
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_priority.py",
+        "path_type": "hardlink",
+        "sha256": "7ec354c1d3535c27018c906db17d4565c72109fd7893c8b8dac28ba31a71b34b",
+        "size_in_bytes": 12265
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_related_events.py",
+        "path_type": "hardlink",
+        "sha256": "1787c8158b1a582700d5f66a2b6c6a9fd65227da2893bd2cb91e738fc00dab91",
+        "size_in_bytes": 14196
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_rfc7838.py",
+        "path_type": "hardlink",
+        "sha256": "1c73ce558900391c3d98a3cb17eff77d180b1f43c7ec163177346b5536ecdbfa",
+        "size_in_bytes": 16777
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_rfc8441.py",
+        "path_type": "hardlink",
+        "sha256": "03af1689dd3ae7f7e0eeeff2d6d49ea50e64d0c09b50995991e662837f16c922",
+        "size_in_bytes": 1468
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_settings.py",
+        "path_type": "hardlink",
+        "sha256": "eccd5a000876baf8bac52c1ccd2f225f0de8a56576cd3016b64129e9c212d03f",
+        "size_in_bytes": 16807
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_state_machines.py",
+        "path_type": "hardlink",
+        "sha256": "943226bb91c2572325309975ba9ffafc0a8df31371b7093eb6580b2fe45d6cc7",
+        "size_in_bytes": 5717
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_stream_reset.py",
+        "path_type": "hardlink",
+        "sha256": "0bab8627cadd52a0460a5368f7777a6804401752ade170f0311f66d0b15add28",
+        "size_in_bytes": 4907
+      },
+      {
+        "_path": "etc/conda/test-files/h2/1/tests/test_utility_functions.py",
+        "path_type": "hardlink",
+        "sha256": "291bace7794d651cb5718e498ec17cc5c6f9866023eba8acad1ff46aee0794e9",
+        "size_in_bytes": 6421
+      },
+      {
+        "_path": "lib/python3.11/site-packages/h2-4.3.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "7a65a5af0cbabf1c16251c7c6b2b7cb46d16a7222e79975b9b61fcd66a2e3f28",
+        "size_in_bytes": 1102
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/h2-4.3.0-pyhcf101f3_0",
+    "type": 1
+  }
+}

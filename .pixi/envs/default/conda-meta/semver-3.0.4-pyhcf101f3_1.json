@@ -1,0 +1,163 @@
+{
+  "build": "pyhcf101f3_1",
+  "build_number": 1,
+  "depends": [
+    "python >=3.10",
+    "python"
+  ],
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "md5": "8e7be844ccb9706a999a337e056606ab",
+  "name": "semver",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/semver?source=hash-mapping"
+  ],
+  "sha256": "bea67173ed67c73cf16691ef72e58059492ac1ed1c880cfbeb6f1295c5add7d6",
+  "size": 22532,
+  "subdir": "noarch",
+  "timestamp": 1767294175877,
+  "version": "3.0.4",
+  "fn": "semver-3.0.4-pyhcf101f3_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/semver-3.0.4-pyhcf101f3_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/semver-3.0.4-pyhcf101f3_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/licenses/LICENSE.txt",
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/METADATA",
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/RECORD",
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/WHEEL",
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/entry_points.txt",
+    "lib/python3.11/site-packages/semver-3.0.4.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/semver/__about__.py",
+    "lib/python3.11/site-packages/semver/__init__.py",
+    "lib/python3.11/site-packages/semver/__main__.py",
+    "lib/python3.11/site-packages/semver/_deprecated.py",
+    "lib/python3.11/site-packages/semver/_types.py",
+    "lib/python3.11/site-packages/semver/cli.py",
+    "lib/python3.11/site-packages/semver/py.typed",
+    "lib/python3.11/site-packages/semver/version.py",
+    "bin/pysemver"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/licenses/LICENSE.txt",
+        "path_type": "hardlink",
+        "sha256": "cc10179de9ced8655d7765bd3a8ac46438a61e663de7cf1c48d502d2baf9f3d5",
+        "size_in_bytes": 1499
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "060c36186dfd35235352d62a8b94648c218fda7507f66ffb5c68e27820422ae1",
+        "size_in_bytes": 6850
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "4d630595e4cb7b0c309d9f99823ca1dbe582e0ab39f573675d46323f629c65f9",
+        "size_in_bytes": 1762
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "e46327b4e67be7f52c951e862c61fc845ecf045aa0ff7c4e4fb48adec7c430a5",
+        "size_in_bytes": 117
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/entry_points.txt",
+        "path_type": "hardlink",
+        "sha256": "42c580c1f130ab66dd26663c9661858e7bc0d608bcfed1ea411653cb1afd0888",
+        "size_in_bytes": 45
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver-3.0.4.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "a05275277349cec575c7e2fdd57cf8141958a55a8ef82af85047e3fa11afaaad",
+        "size_in_bytes": 7
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver/__about__.py",
+        "path_type": "hardlink",
+        "sha256": "a6b434cb74b7b13f41c8dd4240fae4ac016bf73affe496af60ca73b4f8ed51fd",
+        "size_in_bytes": 815
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "451063ea4bae61a098e41f602f1c04d21ee6781c2ead811b7d0667bfbb7590a3",
+        "size_in_bytes": 1269
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "9ac50bab82dbd0057c2b8aee9619b4173cc93bca0c0afe761a37131b6b7c8b0b",
+        "size_in_bytes": 593
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver/_deprecated.py",
+        "path_type": "hardlink",
+        "sha256": "38e5fe01e698f90a892b6810184f2974913187fd774cffbd012640920a829ade",
+        "size_in_bytes": 11273
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver/_types.py",
+        "path_type": "hardlink",
+        "sha256": "f807dacd98279a631eed6b614b1fccfb0d410a7ab674f166cac8e6b533a6d687",
+        "size_in_bytes": 422
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver/cli.py",
+        "path_type": "hardlink",
+        "sha256": "1f0be99ea70df791b7388354e1c2e0a2e4470ad5a146cb8a8217e13d6b4639ec",
+        "size_in_bytes": 5189
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/semver/version.py",
+        "path_type": "hardlink",
+        "sha256": "8e963809189c13aa43d07f9a7679c4a90fa68d1911b4c63d5d23edead9de68bf",
+        "size_in_bytes": 24041
+      },
+      {
+        "_path": "bin/pysemver",
+        "path_type": "unix_python_entry_point",
+        "sha256": "ebd7de7b7653315dfde4fba95332132158f6e65b9025a241a0943ecf0662ac1a",
+        "size_in_bytes": 263
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/semver-3.0.4-pyhcf101f3_1",
+    "type": 1
+  }
+}

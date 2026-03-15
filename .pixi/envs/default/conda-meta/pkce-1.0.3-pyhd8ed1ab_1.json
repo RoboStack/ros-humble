@@ -1,0 +1,106 @@
+{
+  "build": "pyhd8ed1ab_1",
+  "build_number": 1,
+  "depends": [
+    "python >=3.9"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "26080682305b698406b4086210b9c237",
+  "name": "pkce",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/pkce?source=hash-mapping"
+  ],
+  "sha256": "5bf8d0d2c8db333abcd8455f06dbc01d60ffe2aac5fe6ff3d31bab69a5185a1e",
+  "size": 9126,
+  "subdir": "noarch",
+  "timestamp": 1736219305828,
+  "version": "1.0.3",
+  "fn": "pkce-1.0.3-pyhd8ed1ab_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/pkce-1.0.3-pyhd8ed1ab_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/pkce-1.0.3-pyhd8ed1ab_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/pkce/__init__.py",
+    "lib/python3.11/site-packages/pkce/py.typed",
+    "lib/python3.11/site-packages/pkce-1.0.3.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/pkce-1.0.3.dist-info/LICENSE",
+    "lib/python3.11/site-packages/pkce-1.0.3.dist-info/METADATA",
+    "lib/python3.11/site-packages/pkce-1.0.3.dist-info/RECORD",
+    "lib/python3.11/site-packages/pkce-1.0.3.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/pkce-1.0.3.dist-info/WHEEL",
+    "lib/python3.11/site-packages/pkce-1.0.3.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/pkce-1.0.3.dist-info/top_level.txt"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/pkce/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "c6274195d91384cc5fe48831b648f2efcd83d371906b018b73a34afd04e92ef5",
+        "size_in_bytes": 2761
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce-1.0.3.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce-1.0.3.dist-info/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "103b5b0eb1f668e32238e43d70529b56782b50ca3fb3c15e22725b692fc707ea",
+        "size_in_bytes": 1093
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce-1.0.3.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "e925292499dc6b46e71fedd58978ffacaf4d65418dcc70d906adbf252e2db4a2",
+        "size_in_bytes": 986
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce-1.0.3.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "621db79764c0974d295630e4fc9d5a45aff83fc1c35c937532be71bccb286a37",
+        "size_in_bytes": 823
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce-1.0.3.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce-1.0.3.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "3d9504c5d7fbd548bfb28ebb417a724ae1ed0a2dfe277c2f1783912ba93f4bc5",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce-1.0.3.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "2ef807943f95a93dd79964b6463678ae7699a64e83864b7564da8579758c8cf1",
+        "size_in_bytes": 100
+      },
+      {
+        "_path": "lib/python3.11/site-packages/pkce-1.0.3.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "5c75817b6ecf59ec4e59e2cd0af1f69217e19c5afaece453b8a998ea33a98c71",
+        "size_in_bytes": 5
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/pkce-1.0.3-pyhd8ed1ab_1",
+    "type": 1
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "arch": "x86_64",
+  "build": "h934c35e_18",
+  "build_number": 18,
+  "constrains": [
+    "libstdcxx-ng ==15.2.0=*_18"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "libgcc 15.2.0 he0feb66_18"
+  ],
+  "license": "GPL-3.0-only WITH GCC-exception-3.1",
+  "license_family": "GPL",
+  "md5": "1b08cd684f34175e4514474793d44bcb",
+  "name": "libstdcxx",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "78668020064fdaa27e9ab65cd2997e2c837b564ab26ce3bf0e58a2ce1a525c6e",
+  "size": 5852330,
+  "subdir": "linux-64",
+  "timestamp": 1771378262446,
+  "version": "15.2.0",
+  "fn": "libstdcxx-15.2.0-h934c35e_18.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/libstdcxx-15.2.0-h934c35e_18.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/libstdcxx-15.2.0-h934c35e_18",
+  "requested_specs": [],
+  "files": [
+    "lib/libstdc++.so",
+    "lib/libstdc++.so.6",
+    "lib/libstdc++.so.6.0.34",
+    "share/licenses/libstdc++/RUNTIME.LIBRARY.EXCEPTION"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/libstdc++.so",
+        "path_type": "softlink",
+        "sha256": "38e5308c07cbb5f4858fda88461b336ddffc44caa227ee22bd2e0d8a09e51374",
+        "sha256_in_prefix": "aec28fad54960fb0bde1900723be926f286e404fce0b97f37467025dade34919",
+        "size_in_bytes": 21295144
+      },
+      {
+        "_path": "lib/libstdc++.so.6",
+        "path_type": "softlink",
+        "sha256": "38e5308c07cbb5f4858fda88461b336ddffc44caa227ee22bd2e0d8a09e51374",
+        "sha256_in_prefix": "aec28fad54960fb0bde1900723be926f286e404fce0b97f37467025dade34919",
+        "size_in_bytes": 21295144
+      },
+      {
+        "_path": "lib/libstdc++.so.6.0.34",
+        "path_type": "hardlink",
+        "sha256": "38e5308c07cbb5f4858fda88461b336ddffc44caa227ee22bd2e0d8a09e51374",
+        "size_in_bytes": 21295144
+      },
+      {
+        "_path": "share/licenses/libstdc++/RUNTIME.LIBRARY.EXCEPTION",
+        "path_type": "hardlink",
+        "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+        "size_in_bytes": 3324
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/libstdcxx-15.2.0-h934c35e_18",
+    "type": 1
+  }
+}

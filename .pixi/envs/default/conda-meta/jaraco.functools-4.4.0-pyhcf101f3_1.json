@@ -1,0 +1,115 @@
+{
+  "build": "pyhcf101f3_1",
+  "build_number": 1,
+  "depends": [
+    "python >=3.10",
+    "more-itertools",
+    "python"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "aa83cc08626bf6b613a3103942be8951",
+  "name": "jaraco.functools",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/jaraco-functools?source=hash-mapping"
+  ],
+  "sha256": "6a91447b3bb4d7ae94cc0d77ed12617796629aee11111efe7ea43cbd0e113bda",
+  "size": 18744,
+  "subdir": "noarch",
+  "timestamp": 1767294193246,
+  "version": "4.4.0",
+  "fn": "jaraco.functools-4.4.0-pyhcf101f3_1.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/jaraco.functools-4.4.0-pyhcf101f3_1.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/jaraco.functools-4.4.0-pyhcf101f3_1",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/jaraco/functools/__init__.py",
+    "lib/python3.11/site-packages/jaraco/functools/__init__.pyi",
+    "lib/python3.11/site-packages/jaraco/functools/py.typed",
+    "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/top_level.txt"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d",
+        "size_in_bytes": 1076
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco/functools/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "649c7d70cb3636f936c46525f0e8d51a4a6374e68d952cc9acde1d1a09605f68",
+        "size_in_bytes": 18599
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco/functools/__init__.pyi",
+        "path_type": "hardlink",
+        "sha256": "2b80dc6e76081c4e5094cc6a7fdf9c569f9687272b86e4daa3827b3bb4ccab86",
+        "size_in_bytes": 3907
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco/functools/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "2e79da8dc3469924abe3ac8b22a3feb5692a79bf9f47bbc86b6535d618641849",
+        "size_in_bytes": 2960
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "41ec785b1533a3225422585c9e5005b1b50b6fab1e2fcee6eb374d2e179112b5",
+        "size_in_bytes": 1054
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "c0e6e603d953ffad132b7221fbc8f88092f2f55965bc31903c6ac7bb4d74f896",
+        "size_in_bytes": 127
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jaraco_functools-4.4.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "d099cddcb7d71f82c845f5cbf9014e18227341664edc42f1e11d5dfe5a2ea103",
+        "size_in_bytes": 7
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/jaraco.functools-4.4.0-pyhcf101f3_1",
+    "type": 1
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "arch": "x86_64",
+  "build": "default_hbd61a6d_101",
+  "build_number": 101,
+  "constrains": [
+    "binutils_impl_linux-64 2.45.1"
+  ],
+  "depends": [
+    "__glibc >=2.17,<3.0.a0",
+    "zstd >=1.5.7,<1.6.0a0"
+  ],
+  "license": "GPL-3.0-only",
+  "license_family": "GPL",
+  "md5": "12bd9a3f089ee6c9266a37dab82afabd",
+  "name": "ld_impl_linux-64",
+  "platform": "linux",
+  "purls": [],
+  "sha256": "565941ac1f8b0d2f2e8f02827cbca648f4d18cd461afc31f15604cd291b5c5f3",
+  "size": 725507,
+  "subdir": "linux-64",
+  "timestamp": 1770267139900,
+  "version": "2.45.1",
+  "fn": "ld_impl_linux-64-2.45.1-default_hbd61a6d_101.conda",
+  "url": "https://repo.prefix.dev/conda-forge/linux-64/ld_impl_linux-64-2.45.1-default_hbd61a6d_101.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/ld_impl_linux-64-2.45.1-default_hbd61a6d_101",
+  "requested_specs": [],
+  "files": [
+    "x86_64-conda-linux-gnu/bin/ld",
+    "bin/x86_64-conda-linux-gnu-ld"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "x86_64-conda-linux-gnu/bin/ld",
+        "path_type": "softlink",
+        "sha256": "d3ce8fb8fa730c95090bc14c860dafdbeaa9d3bc71f98cf95823f7b878db7984",
+        "sha256_in_prefix": "200559a49e2afbc18f6bd07fb1fb921d332d76a49776a317cd657d7cbf424300",
+        "size_in_bytes": 2917192
+      },
+      {
+        "_path": "bin/x86_64-conda-linux-gnu-ld",
+        "path_type": "hardlink",
+        "sha256": "d3ce8fb8fa730c95090bc14c860dafdbeaa9d3bc71f98cf95823f7b878db7984",
+        "sha256_in_prefix": "74e9bbcc9ecc2d123b700c8470c106e2b413d1fce23b1712cde152715606fe85",
+        "size_in_bytes": 2917192,
+        "file_mode": "binary",
+        "prefix_placeholder": "/home/conda/feedstock_root/build_artifacts/binutils_split_1770266837005/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeh"
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/ld_impl_linux-64-2.45.1-default_hbd61a6d_101",
+    "type": 1
+  }
+}

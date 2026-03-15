@@ -1,0 +1,22 @@
+prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+original_prefix=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+datadir=${prefix}/share
+datarootdir=${prefix}/share
+sysconfdir=${prefix}/etc
+daemondir=${bindir}
+system_bus_default_address=unix:path=/home/runner/work/ros-humble/ros-humble/.pixi/envs/default/var/run/dbus/system_bus_socket
+session_bus_services_dir=${datadir}/dbus-1/services
+system_bus_services_dir=${datadir}/dbus-1/system-services
+interfaces_dir=${datadir}/dbus-1/interfaces
+
+Name: dbus
+Description: Free desktop message bus
+Version: 1.16.2
+Libs: -L${libdir} -ldbus-1
+Libs.private: -pthread
+Cflags: -I${includedir}/dbus-1.0 -I${libdir}/dbus-1.0/include

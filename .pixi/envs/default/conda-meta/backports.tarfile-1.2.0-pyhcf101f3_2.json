@@ -1,0 +1,122 @@
+{
+  "build": "pyhcf101f3_2",
+  "build_number": 2,
+  "depends": [
+    "python >=3.10",
+    "backports",
+    "python"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "bea46844deb274b2cc2a3a941745fa73",
+  "name": "backports.tarfile",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/backports-tarfile?source=hash-mapping"
+  ],
+  "sha256": "25abdb37e186f0d6ac3b774a63c81c5bc4bf554b5096b51343fa5e7c381193b1",
+  "size": 35739,
+  "subdir": "noarch",
+  "timestamp": 1767290467820,
+  "version": "1.2.0",
+  "fn": "backports.tarfile-1.2.0-pyhcf101f3_2.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/backports.tarfile-1.2.0-pyhcf101f3_2.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/backports.tarfile-1.2.0-pyhcf101f3_2",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/top_level.txt",
+    "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/backports/tarfile/__init__.py",
+    "lib/python3.11/site-packages/backports/tarfile/__main__.py",
+    "lib/python3.11/site-packages/backports/tarfile/compat/__init__.py",
+    "lib/python3.11/site-packages/backports/tarfile/compat/py38.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "bc33022edcb7639ff53355b4e91dade50a0bbf0299efeb6171d1ec0ba5029cfc",
+        "size_in_bytes": 6
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "4e73a2ecef5516f33d880af558251db75e09985ef0028e984283975a491f2ce3",
+        "size_in_bytes": 2024
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "804c1ef17a35fb55f41f667b4e5163daaf4d4642c6ea00af45457af5d06bdb07",
+        "size_in_bytes": 1475
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "3d33c37b7cc2a52e09f2a546ffa79eb77a7cf9c35d21eeae8484ba85dc24ac82",
+        "size_in_bytes": 128
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "7068da2cc3a8051d452b4029a23b73595995893b49ec91882bf1f05e212cbed5",
+        "size_in_bytes": 10
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports_tarfile-1.2.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
+        "size_in_bytes": 1023
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports/tarfile/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "3f07f6a9421f0744a89493c229cc77bf3dd412efda89db38838b007f1cbde2a8",
+        "size_in_bytes": 108491
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports/tarfile/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "630da8193d5a7ebcf6781b24cdd3d82fc45e07fde5880a6684590dd846c399ce",
+        "size_in_bytes": 59
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports/tarfile/compat/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/backports/tarfile/compat/py38.py",
+        "path_type": "hardlink",
+        "sha256": "898932b7f82f5a32f31944c90fd4ee4df30c8ce93e7abb17666465bd060ddaa1",
+        "size_in_bytes": 568
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/backports.tarfile-1.2.0-pyhcf101f3_2",
+    "type": 1
+  }
+}

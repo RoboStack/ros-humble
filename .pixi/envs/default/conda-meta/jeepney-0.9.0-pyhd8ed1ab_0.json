@@ -1,0 +1,295 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "depends": [
+    "python >=3.9"
+  ],
+  "license": "MIT",
+  "license_family": "MIT",
+  "md5": "b4b91eb14fbe2f850dd2c5fc20676c0d",
+  "name": "jeepney",
+  "noarch": "python",
+  "purls": [
+    "pkg:pypi/jeepney?source=hash-mapping"
+  ],
+  "sha256": "00d37d85ca856431c67c8f6e890251e7cc9e5ef3724a0302b8d4a101f22aa27f",
+  "size": 40015,
+  "subdir": "noarch",
+  "timestamp": 1740828380668,
+  "version": "0.9.0",
+  "fn": "jeepney-0.9.0-pyhd8ed1ab_0.conda",
+  "url": "https://repo.prefix.dev/conda-forge/noarch/jeepney-0.9.0-pyhd8ed1ab_0.conda",
+  "channel": "https://repo.prefix.dev/conda-forge/",
+  "extracted_package_dir": "/home/runner/.cache/rattler/cache/pkgs/jeepney-0.9.0-pyhd8ed1ab_0",
+  "requested_specs": [],
+  "files": [
+    "lib/python3.11/site-packages/jeepney/io/tests/__init__.py",
+    "lib/python3.11/site-packages/jeepney/io/tests/conftest.py",
+    "lib/python3.11/site-packages/jeepney/io/tests/test_asyncio.py",
+    "lib/python3.11/site-packages/jeepney/io/tests/test_blocking.py",
+    "lib/python3.11/site-packages/jeepney/io/tests/test_threading.py",
+    "lib/python3.11/site-packages/jeepney/io/tests/test_trio.py",
+    "lib/python3.11/site-packages/jeepney/io/tests/utils.py",
+    "lib/python3.11/site-packages/jeepney/__init__.py",
+    "lib/python3.11/site-packages/jeepney/auth.py",
+    "lib/python3.11/site-packages/jeepney/bindgen.py",
+    "lib/python3.11/site-packages/jeepney/bus.py",
+    "lib/python3.11/site-packages/jeepney/bus_messages.py",
+    "lib/python3.11/site-packages/jeepney/fds.py",
+    "lib/python3.11/site-packages/jeepney/low_level.py",
+    "lib/python3.11/site-packages/jeepney/wrappers.py",
+    "lib/python3.11/site-packages/jeepney/tests/__init__.py",
+    "lib/python3.11/site-packages/jeepney/tests/secrets_introspect.xml",
+    "lib/python3.11/site-packages/jeepney/tests/test_auth.py",
+    "lib/python3.11/site-packages/jeepney/tests/test_bindgen.py",
+    "lib/python3.11/site-packages/jeepney/tests/test_bus.py",
+    "lib/python3.11/site-packages/jeepney/tests/test_bus_messages.py",
+    "lib/python3.11/site-packages/jeepney/tests/test_fds.py",
+    "lib/python3.11/site-packages/jeepney/tests/test_low_level.py",
+    "lib/python3.11/site-packages/jeepney/tests/test_wrappers.py",
+    "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/INSTALLER",
+    "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/METADATA",
+    "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/RECORD",
+    "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/REQUESTED",
+    "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/WHEEL",
+    "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/direct_url.json",
+    "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/licenses/LICENSE",
+    "lib/python3.11/site-packages/jeepney/io/__init__.py",
+    "lib/python3.11/site-packages/jeepney/io/asyncio.py",
+    "lib/python3.11/site-packages/jeepney/io/blocking.py",
+    "lib/python3.11/site-packages/jeepney/io/common.py",
+    "lib/python3.11/site-packages/jeepney/io/threading.py",
+    "lib/python3.11/site-packages/jeepney/io/trio.py"
+  ],
+  "paths_data": {
+    "paths_version": 1,
+    "paths": [
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/tests/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/tests/conftest.py",
+        "path_type": "hardlink",
+        "sha256": "a3b26b632a5813ed2334552776c438124e5d358334a1f875b1870855e099323d",
+        "size_in_bytes": 2730
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/tests/test_asyncio.py",
+        "path_type": "hardlink",
+        "sha256": "249b675f91e24516638ee1880e823c2efcdf6da48d83e963897f79c94bddf719",
+        "size_in_bytes": 2720
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/tests/test_blocking.py",
+        "path_type": "hardlink",
+        "sha256": "1132e7a22bde9cdf03ce9d09078c0f39bf4f35ba52ba2a1cb8ffc80de351948e",
+        "size_in_bytes": 2804
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/tests/test_threading.py",
+        "path_type": "hardlink",
+        "sha256": "4402f0cbe688eb84c1a059819d253adc72dcc119d2b4b56d9dec0eb68681977a",
+        "size_in_bytes": 2699
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/tests/test_trio.py",
+        "path_type": "hardlink",
+        "sha256": "0cf63557f2b6a8b4f2053adbaf165e2d303976671add87b77baa73d3c5316cef",
+        "size_in_bytes": 3892
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/tests/utils.py",
+        "path_type": "hardlink",
+        "sha256": "8bb549613f9ac5e7f34bc99672fbfef43787101e8b74ff4cf361f71f1e9fc82e",
+        "size_in_bytes": 79
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "50b848af8e38b58f353d49041d158d9535e5a916c59aa3136d606c92d2a09a82",
+        "size_in_bytes": 408
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/auth.py",
+        "path_type": "hardlink",
+        "sha256": "656d07317e957f0c76f0ffa336bcd5560127d62a633be289acd276486f745775",
+        "size_in_bytes": 5409
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/bindgen.py",
+        "path_type": "hardlink",
+        "sha256": "c8f0c916dfd68caa05529d3cafefeea6caaed0bf119aff2034aafe300e13e1b2",
+        "size_in_bytes": 6085
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/bus.py",
+        "path_type": "hardlink",
+        "sha256": "294892af7102cdd6def92f6d34a9ba92f7f7a198b84589c95a46545caeed1369",
+        "size_in_bytes": 1817
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/bus_messages.py",
+        "path_type": "hardlink",
+        "sha256": "b9409cff55e5973b61e05f796a08690cb9a5bf91b3d1aaded85a4a83b0ff82a7",
+        "size_in_bytes": 8239
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/fds.py",
+        "path_type": "hardlink",
+        "sha256": "658ccdfdcffbae4053d3053b7585264118a3a52cc2bfe0c04c2604925a57c545",
+        "size_in_bytes": 5056
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/low_level.py",
+        "path_type": "hardlink",
+        "sha256": "9b8c0663eaae3e7cf29602a505d05c72692e39717f850d606ed4f6e6a3d7d863",
+        "size_in_bytes": 19949
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/wrappers.py",
+        "path_type": "hardlink",
+        "sha256": "e7333fbf58c5a8418349a3e1d1fd3a483c4217a2665958725e37d847a287ba6e",
+        "size_in_bytes": 9605
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/secrets_introspect.xml",
+        "path_type": "hardlink",
+        "sha256": "f5c7cdb356862ed200ca471056cc9cc08c022e611ea2b2a4163a8908b0249d14",
+        "size_in_bytes": 4575
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/test_auth.py",
+        "path_type": "hardlink",
+        "sha256": "11eefdbec79d0b0bdeba4b9d0194f0a984d71d65773d89d7926325d0c04c6441",
+        "size_in_bytes": 611
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/test_bindgen.py",
+        "path_type": "hardlink",
+        "sha256": "133f7dcebf53215de6959747fb603f773e0b6efc42ab358321a7613826db6a87",
+        "size_in_bytes": 1098
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/test_bus.py",
+        "path_type": "hardlink",
+        "sha256": "0293b177701c610075e06d57b22146058b50e3148ac39db2f58be63f3ef4d207",
+        "size_in_bytes": 847
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/test_bus_messages.py",
+        "path_type": "hardlink",
+        "sha256": "7a5c12ee8758f510ec8e0f632f8b4dd0eeee0b152a4981ec5928565e7fd63ce4",
+        "size_in_bytes": 3338
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/test_fds.py",
+        "path_type": "hardlink",
+        "sha256": "fa0caf4297ec5ed3da2047aa6f086b34f39c2003740ecad0ecc5d9bb89ccbef4",
+        "size_in_bytes": 1821
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/test_low_level.py",
+        "path_type": "hardlink",
+        "sha256": "d920bec0a286af4c9f120bacc1f1f30a88d24f0b1895354b3f2bb341b192dcbe",
+        "size_in_bytes": 3000
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/tests/test_wrappers.py",
+        "path_type": "hardlink",
+        "sha256": "35263a2db956794da44e82128e98bd60782b77f63a3d5c85c17aa76d8f77ca05",
+        "size_in_bytes": 2202
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "b8e6c353e9aaed0ed0144029556417fda23b64f344e718331907054ba05b8c62",
+        "size_in_bytes": 1230
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "bc4e72b0af3aec47d2244be6ef4ccbeb651db7c5f7a8664bd05bc8b9f24637b4",
+        "size_in_bytes": 4561
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "ff6a3334508b59cf776cae1628708ef9e0d410d0e5a3e76073d714deaa2460ee",
+        "size_in_bytes": 82
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "3da719704d708cfc636e7d9ed540e4f8cc40475db8b676ebecc78dc1c6c60c40",
+        "size_in_bytes": 103
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney-0.9.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154",
+        "size_in_bytes": 1081
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "8a7248ff553e013ca62dc01562cf8b0f6694c2097eb62856f3ea15154c584600",
+        "size_in_bytes": 33
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/asyncio.py",
+        "path_type": "hardlink",
+        "sha256": "a9f5a2ff5a5609748fd4b35169f1c1bafaf11f1e2d5fde9be762816b8b1414c7",
+        "size_in_bytes": 7622
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/blocking.py",
+        "path_type": "hardlink",
+        "sha256": "23faf0f74218fc47ac0599a47d4aa4ed49e2c95910027833ee3c909b38eeebcd",
+        "size_in_bytes": 11940
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/common.py",
+        "path_type": "hardlink",
+        "sha256": "97c95b154810981c5fa920be86a1d898f51809514c29b3860759396563ca5dfb",
+        "size_in_bytes": 2696
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/threading.py",
+        "path_type": "hardlink",
+        "sha256": "9b0182365ba7fdb697f18e1e89e9c218329d643e1229d4ccbc14e4204d0430aa",
+        "size_in_bytes": 9391
+      },
+      {
+        "_path": "lib/python3.11/site-packages/jeepney/io/trio.py",
+        "path_type": "hardlink",
+        "sha256": "21d64826741c3e354e040f4aa28167d274c1133dc1b810e4cf9eaa2d88464753",
+        "size_in_bytes": 15088
+      }
+    ]
+  },
+  "link": {
+    "source": "/home/runner/.cache/rattler/cache/pkgs/jeepney-0.9.0-pyhd8ed1ab_0",
+    "type": 1
+  }
+}

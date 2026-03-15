@@ -1,0 +1,234 @@
+[build-system]
+requires = ["hatchling>=1.4"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jupyter_core"
+description = "Jupyter core package. A base package on which Jupyter projects rely."
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+classifiers = [
+  "Framework :: Jupyter",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3"
+]
+requires-python = ">=3.10"
+dependencies = [
+  "platformdirs>=2.5",
+  "traitlets>=5.3",
+]
+dynamic = ["version"]
+
+[[project.authors]]
+name = "Jupyter Development Team"
+email = "jupyter@googlegroups.org"
+
+[project.readme]
+text = "Jupyter core package. A base package on which Jupyter projects rely."
+content-type = "text/plain"
+
+[project.urls]
+Homepage = "https://jupyter.org"
+Documentation = "https://jupyter-core.readthedocs.io/"
+Source = "https://github.com/jupyter/jupyter_core"
+Tracker = "https://github.com/jupyter/jupyter_core/issues"
+
+[project.optional-dependencies]
+test = [
+  "ipykernel",
+  "pre-commit",
+  "pytest<9",
+  "pytest-cov",
+  "pytest-timeout"
+]
+docs = [
+  "intersphinx_registry",
+  "myst-parser",
+  "pydata_sphinx_theme",
+  "sphinx-autodoc-typehints",
+  "sphinxcontrib_spelling",
+  "traitlets",
+]
+
+[project.scripts]
+jupyter = "jupyter_core.command:main"
+jupyter-migrate = "jupyter_core.migrate:main"
+jupyter-troubleshoot = "jupyter_core.troubleshoot:main"
+
+[tool.hatch.version]
+path = "jupyter_core/version.py"
+
+[tool.hatch.build.force-include]
+"./jupyter.py" = "jupyter.py"
+
+[tool.hatch.envs.docs]
+features = ["docs"]
+[tool.hatch.envs.docs.env-vars]
+SPHINXOPTS = "-W -n"
+[tool.hatch.envs.docs.scripts]
+build = "make -C docs html"
+api = "sphinx-apidoc -o docs/api -f -E jupyter_core jupyter_core/tests/*"
+
+[tool.hatch.envs.test]
+features = ["test"]
+[tool.hatch.envs.test.scripts]
+test = "python -m pytest -vv {args}"
+nowarn = "test -W default {args}"
+
+[tool.hatch.envs.cov]
+features = ["test"]
+dependencies = ["coverage", "pytest-cov"]
+[tool.hatch.envs.cov.scripts]
+test = "python -m pytest -vv --cov jupyter_core --cov-branch --cov-report term-missing:skip-covered {args}"
+nowarn = "test -W default {args}"
+
+[tool.hatch.envs.typing]
+dependencies = ["pre-commit"]
+detached = true
+[tool.hatch.envs.typing.scripts]
+test = "pre-commit run --all-files --hook-stage manual mypy"
+
+[tool.hatch.envs.lint]
+dependencies = ["pre-commit"]
+detached = true
+[tool.hatch.envs.lint.scripts]
+build = [
+  "pre-commit run --all-files ruff-check",
+  "pre-commit run --all-files ruff-format"
+]
+
+[tool.mypy]
+files = "jupyter_core"
+python_version = "3.14"
+strict = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+warn_unreachable = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+warn_redundant_casts = true
+disallow_untyped_calls = true
+# This is a workaround for a mypy bug which is incapable of treating sys.platform
+# correctly https://github.com/python/mypy/issues/10773
+# With pre-commit running on user platform and linux on CI you can't get the
+# types right, so we pin platform to linux
+platform = "linux"
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+xfail_strict = true
+log_cli_level = "info"
+addopts = [
+  "-raXs", "--durations=10", "--color=yes", "--doctest-modules",
+   "--showlocals", "--strict-markers", "--strict-config",
+   "--ignore-glob=tests/dotipython*"
+]
+testpaths = [
+    "tests/"
+]
+filterwarnings= [
+  # Fail on warnings
+  "error",
+  # Expected internal warnings
+  "module:Jupyter is migrating its paths to use standard platformdirs:DeprecationWarning",
+]
+
+[tool.coverage.run]
+relative_files = true
+source = ["jupyter_core"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "def __repr__",
+  "if self.debug:",
+  "if settings.DEBUG",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if 0:",
+  "if __name__ == .__main__.:",
+  "class .*\bProtocol\\):",
+"@(abc\\.)?abstractmethod",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+extend-select = [
+  "B",           # flake8-bugbear
+  "I",           # isort
+  "ARG",         # flake8-unused-arguments
+  "C4",          # flake8-comprehensions
+  "EM",          # flake8-errmsg
+  "ICN",         # flake8-import-conventions
+  "G",           # flake8-logging-format
+  "PGH",         # pygrep-hooks
+  "PIE",         # flake8-pie
+  "PL",          # pylint
+  "PT",          # flake8-pytest-style
+  "PTH",         # flake8-use-pathlib
+  "RET",         # flake8-return
+  "RUF",         # Ruff-specific
+  "SIM",         # flake8-simplify
+  "T20",         # flake8-print
+  "UP",          # pyupgrade
+  "YTT",         # flake8-2020
+  "EXE",         # flake8-executable
+  "NPY",         # NumPy specific rules
+  "PD",          # pandas-vet
+  "PYI",         # flake8-pyi
+  "S",           # flake8-bandit
+]
+ignore = [
+  "E501",   # Line too long (158 > 100 characters)
+  "PLR0912",# Too many branches
+  "PLR0915",# Too many statements
+  "PLR2004",# Magic value used in comparison, consider replacing `...` with a constant variable
+  "RUF012", # Mutable class attributes should be annotated
+  "S101",   # Use of assert
+  "SIM103", # Return the condition directly
+  "SIM105", # Use `contextlib.suppress(...)`
+  "SIM108", # Use ternary operator
+  "UP007",  # Use `X | Y` for type annotations"
+]
+isort.required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+# B011 Do not call assert False since python -O removes these calls
+# F841 local variable 'foo' is assigned to but never used
+# C408 Unnecessary `dict` call
+# E402 Module level import not at top of file
+# T201 `print` found
+# B007 Loop control variable `i` not used within the loop body.
+# N802 Function name `assertIn` should be lowercase
+# PLR2004 Magic value used in comparison, consider replacing b'WITNESS A' with a constant variable
+# S603 `subprocess` call: check for execution of untrusted input
+"tests/*" = ["B011", "F841", "C408", "E402", "T201", "B007", "N802", "S", "PTH", "ARG0"]
+# F821 Undefined name `get_config`
+"tests/**/profile_default/*_config.py" = ["F821"]
+# T201 `print` found
+"jupyter_core/application.py" = ["T201"]
+"jupyter_core/command.py" = ["T201"]
+"jupyter_core/troubleshoot.py" = ["T201"]
+# N802 Function name `SetFileSecurity` should be lowercase
+"jupyter_core/paths.py" = ["N802", "N803", "N806"]
+# C901 Function is too complex
+"jupyter_core/migrate.py" = ["C901"]  # `migrate_static_custom` is too complex (11 > 10)
+
+[tool.interrogate]
+ignore-init-module=true
+ignore-private=true
+ignore-semiprivate=true
+ignore-property-decorators=true
+ignore-nested-functions=true
+ignore-nested-classes=true
+ignore-overloaded-functions=true
+fail-under=100
+exclude = ["docs", "tests"]
+
+[tool.check-wheel-contents]
+toplevel = ["jupyter_core/", "jupyter.py"]
+ignore = ["W002"]
