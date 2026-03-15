@@ -1,0 +1,22 @@
+diff --git a/src/node.cpp b/src/node.cpp
+index 3530c79..9527336 100644
+--- a/src/node.cpp
++++ b/src/node.cpp
+@@ -256,7 +256,7 @@ std::optional<PathWithLaneId> PathGenerator::generate_path(
+     utils::get_lanelets_within_route_up_to(*current_lanelet_, planner_data_, backward_length);
+   if (!backward_lanelets_within_route) {
+     RCLCPP_ERROR(
+-      get_logger(), "Failed to get backward lanelets within route for current lanelet (id: %ld)",
++      get_logger(), "Failed to get backward lanelets within route for current lanelet (id: %lld)",
+       current_lanelet_->id());
+     return std::nullopt;
+   }
+@@ -284,7 +284,7 @@ std::optional<PathWithLaneId> PathGenerator::generate_path(
+     utils::get_lanelets_within_route_after(*current_lanelet_, planner_data_, forward_length);
+   if (!forward_lanelets_within_route) {
+     RCLCPP_ERROR(
+-      get_logger(), "Failed to get forward lanelets within route for current lanelet (id: %ld)",
++      get_logger(), "Failed to get forward lanelets within route for current lanelet (id: %lld)",
+       current_lanelet_->id());
+     return std::nullopt;
+   }

@@ -1,0 +1,17 @@
+diff --git a/include/autoware/ground_filter/grid.hpp b/include/autoware/ground_filter/grid.hpp
+index b69426c..c57fe92 100644
+--- a/include/autoware/ground_filter/grid.hpp
++++ b/include/autoware/ground_filter/grid.hpp
+@@ -25,6 +25,12 @@
+ #include <utility>
+ #include <vector>
+ 
++#ifndef M_PIf
++#define M_PIf   3.14159265358979324f
++#define M_PI_2f (M_PIf / 2.0f)
++#define M_PI_4f (M_PIf / 4.0f)
++#endif
++
+ namespace
+ {
+ 

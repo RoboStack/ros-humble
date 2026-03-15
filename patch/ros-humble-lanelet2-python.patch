@@ -1,8 +1,17 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 00e06d76..b5c9bba9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -52,6 +52,10 @@ mrt_add_library(${PROJECT_NAME}
+@@ -3,6 +3,10 @@
+ cmake_minimum_required(VERSION 3.5.1)
+ project(lanelet2_python)
+ 
++set(CMAKE_CXX_STANDARD 17)
++set(CMAKE_CXX_STANDARD_REQUIRED ON)
++set(CMAKE_CXX_EXTENSIONS OFF)
++
+ ###################
+ ## Find packages ##
+ ###################
+@@ -52,6 +56,10 @@
      SOURCES ${PROJECT_SOURCE_FILES_SRC}
      )
  

@@ -1,0 +1,47 @@
+From 6757f2e535f77905044c07d330e629eb29b371cc Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Wed, 29 Oct 2025 00:09:16 +0800
+Subject: [PATCH] Fix problem
+
+---
+ nav2_route/include/nav2_route/route_server.hpp | 6 +++++-
+ nav2_route/src/route_server.cpp                | 8 ++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/nav2_route/include/nav2_route/route_server.hpp b/nav2_route/include/nav2_route/route_server.hpp
+index e8a44c90190..19fb0950a5c 100644
+--- a/nav2_route/include/nav2_route/route_server.hpp
++++ b/nav2_route/include/nav2_route/route_server.hpp
+@@ -129,7 +129,11 @@ class RouteServer : public nav2_util::LifecycleNode
+   template<typename GoalT>
+   Route findRoute(
+     const std::shared_ptr<const GoalT> goal,
+-    ReroutingState & rerouting_info = ReroutingState());
++    ReroutingState & rerouting_info);
++
++  template<typename GoalT>
++  Route findRoute(
++    const std::shared_ptr<const GoalT> goal);
+ 
+   /**
+    * @brief Main processing called by both action server callbacks to centralize
+diff --git a/nav2_route/src/route_server.cpp b/nav2_route/src/route_server.cpp
+index ea457ce3c74..86d44536ebf 100644
+--- a/nav2_route/src/route_server.cpp
++++ b/nav2_route/src/route_server.cpp
+@@ -264,6 +264,14 @@ Route RouteServer::findRoute(
+   return goal_intent_extractor_->pruneStartandGoal(route, goal, rerouting_info);
+ }
+ 
++template<typename GoalT>
++Route RouteServer::findRoute(
++  const std::shared_ptr<const GoalT> goal)
++{
++  ReroutingState rerouting_info = ReroutingState();
++  return findRoute(goal, rerouting_info);
++}
++
+ template<typename ActionT>
+ void
+ RouteServer::processRouteRequest(
+

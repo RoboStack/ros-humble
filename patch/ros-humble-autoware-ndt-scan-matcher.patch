@@ -1,0 +1,24 @@
+diff --git a/include/autoware/ndt_scan_matcher/ndt_omp/multi_voxel_grid_covariance_omp.h b/include/autoware/ndt_scan_matcher/ndt_omp/multi_voxel_grid_covariance_omp.h
+index 35451ed..8f26137 100644
+--- a/include/autoware/ndt_scan_matcher/ndt_omp/multi_voxel_grid_covariance_omp.h
++++ b/include/autoware/ndt_scan_matcher/ndt_omp/multi_voxel_grid_covariance_omp.h
+@@ -61,7 +61,6 @@
+ // clang-format off
+ #include <pcl/pcl_macros.h>
+ // clang-format on
+-#include <pcl/filters/boost.h>
+ #include <pcl/filters/voxel_grid.h>
+ #include <pcl/kdtree/kdtree_flann.h>
+ #include <pcl/point_types.h>
+diff --git a/src/ndt_omp/multi_voxel_grid_covariance_omp_impl.hpp b/src/ndt_omp/multi_voxel_grid_covariance_omp_impl.hpp
+index 57c25aa..01eb4e7 100644
+--- a/src/ndt_omp/multi_voxel_grid_covariance_omp_impl.hpp
++++ b/src/ndt_omp/multi_voxel_grid_covariance_omp_impl.hpp
+@@ -56,7 +56,6 @@
+ 
+ #include <autoware/ndt_scan_matcher/ndt_omp/multi_voxel_grid_covariance_omp.h>
+ #include <pcl/common/common.h>
+-#include <pcl/filters/boost.h>
+ 
+ #include <limits>
+ #include <map>

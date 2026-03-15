@@ -12,7 +12,7 @@ Usage
     # From repository root
     python check_patches_clean_apply.py          # prepare + run
     python check_patches_clean_apply.py --dry    # prepare only
-    python check_patches_clean_apply.py --dry --recipe ros-humble-rviz2
+    python check_patches_clean_apply.py --dry --recipe ros-noetic-rviz
     python check_patches_clean_apply.py --clean  # delete output
 
 The script creates (or refreshes) a sibling folder named
@@ -238,7 +238,7 @@ def run_rattler_build_individually(recipes: List[Path]) -> None:
             print(r["stderr"].rstrip())
         print("\n----------------------------------------------------\n")
 
-    sys.exit(2)
+    sys.exit(2 if failed else 0)
 
 
 def main() -> None:

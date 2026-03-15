@@ -1,0 +1,39 @@
+From 078de2bd18dc9a204fc7f58588cd57d134eed0fd Mon Sep 17 00:00:00 2001
+From: Olivier Roussel <olivier.roussel@inria.fr>
+Date: Wed, 11 Mar 2026 15:43:29 +0100
+Subject: [PATCH] do not apply remove warnings compile options on msvc
+
+---
+ CMakeLists.txt | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d77946a..48749b6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -26,14 +26,14 @@ ament_auto_add_library(${PROJECT_NAME}_lib SHARED
+   lib/route_checker.cpp
+ )
+ 
+-# Suppress boost geometry uninitialized variable warnings
+-# This is a known issue in boost geometry library where internal template code
+-# may trigger maybe-uninitialized warnings that are false positives.
+-# The warnings occur in boost geometry's distance calculation algorithms
+-# and do not affect the actual functionality of the code.
+-# Related: https://www.boost.org/doc/libs/latest/libs/utility/doc/html/utility/utilities/value_init.html
+-# and https://www.boost.org/doc/libs/1_89_0/libs/optional/doc/html/boost_optional/design/gotchas/false_positive_with__wmaybe_uninitialized.html
+-target_compile_options(${PROJECT_NAME}_lib PRIVATE -Wno-error=maybe-uninitialized)
++
++if(NOT MSVC)
++  target_compile_options(${PROJECT_NAME}_lib
++    PUBLIC
++      -Wno-deprecated-declarations
++      -Wno-uninitialized
++  )
++endif()
+ 
+ ament_auto_add_executable(${PROJECT_NAME}_sample src/sample_code.cpp)
+ target_link_libraries(${PROJECT_NAME}_sample
+-- 
+2.40.1.windows.1
+

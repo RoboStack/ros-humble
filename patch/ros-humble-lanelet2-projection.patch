@@ -1,11 +1,22 @@
+From d9827adb45306991bc0db8311759252d632fbd65 Mon Sep 17 00:00:00 2001
+From: Olivier Roussel <olivier.roussel@inria.fr>
+Date: Wed, 11 Mar 2026 11:28:56 +0100
+Subject: [PATCH] enable c++17 with msvc
+
+---
+ CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 648ff82a..c3a3393d 100644
+index 648ff82a..ad191f9d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3,6 +3,10 @@ set(MRT_PKG_VERSION 4.0.0)
+@@ -3,6 +3,12 @@ set(MRT_PKG_VERSION 4.0.0)
  cmake_minimum_required(VERSION 3.5.1)
  project(lanelet2_projection)
  
++set(CMAKE_CXX_STANDARD_REQUIRED ON)
++set(CMAKE_CXX_STANDARD 17)
 +if(WIN32 AND MSVC)
 +  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 +endif()
@@ -13,3 +24,6 @@ index 648ff82a..c3a3393d 100644
  ###################
  ## Find packages ##
  ###################
+-- 
+2.40.1.windows.1
+

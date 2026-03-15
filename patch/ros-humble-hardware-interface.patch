@@ -1,17 +1,16 @@
-diff --git a/hardware_interface/include/hardware_interface/lexical_casts.hpp b/hardware_interface/include/hardware_interface/lexical_casts.hpp
-index 846d9f757c..042361e392 100644
---- a/hardware_interface/include/hardware_interface/lexical_casts.hpp
-+++ b/hardware_interface/include/hardware_interface/lexical_casts.hpp
-@@ -21,6 +21,8 @@
+diff --git a/include/hardware_interface/lexical_casts.hpp b/include/hardware_interface/lexical_casts.hpp
+index 1b9bad701..ab45b83ec 100644
+--- a/include/hardware_interface/lexical_casts.hpp
++++ b/include/hardware_interface/lexical_casts.hpp
+@@ -20,6 +20,7 @@
  #include <stdexcept>
  #include <string>
  
 +#include "hardware_interface/visibility_control.h"
-+
  namespace hardware_interface
  {
  
-@@ -29,8 +31,10 @@ namespace hardware_interface
+@@ -28,8 +29,10 @@ namespace hardware_interface
   * from
   https://github.com/ros-planning/srdfdom/blob/ad17b8d25812f752c397a6011cec64aeff090c46/src/model.cpp#L53
  */
@@ -22,18 +21,18 @@ index 846d9f757c..042361e392 100644
  bool parse_bool(const std::string & bool_string);
  
  }  // namespace hardware_interface
-diff --git a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
-index 5c3ea22ca0..271dc29faf 100644
---- a/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
-+++ b/hardware_interface/include/hardware_interface/types/hardware_interface_return_values.hpp
-@@ -17,6 +17,10 @@
+diff --git a/include/hardware_interface/types/hardware_interface_return_values.hpp b/include/hardware_interface/types/hardware_interface_return_values.hpp
+index 5c3ea22ca..4a4a20439 100644
+--- a/include/hardware_interface/types/hardware_interface_return_values.hpp
++++ b/include/hardware_interface/types/hardware_interface_return_values.hpp
+@@ -16,7 +16,9 @@
+ #define HARDWARE_INTERFACE__TYPES__HARDWARE_INTERFACE_RETURN_VALUES_HPP_
  
  #include <cstdint>
- 
+-
 +#ifdef ERROR
 +#undef ERROR
 +#endif
-+
  namespace hardware_interface
  {
  enum class return_type : std::uint8_t

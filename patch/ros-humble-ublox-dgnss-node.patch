@@ -1,0 +1,16 @@
+diff --git a/ublox_dgnss_node/CMakeLists.txt b/ublox_dgnss_node/CMakeLists.txt
+index d73f3ba..bb5ab6f 100644
+--- a/ublox_dgnss_node/CMakeLists.txt
++++ b/ublox_dgnss_node/CMakeLists.txt
+@@ -47,9 +47,11 @@ target_compile_definitions(ublox_dgnss_components
+   PRIVATE "UBLOX_DGNSS_NODE_BUILDING_DLL"
+ )
+ 
++if(NOT APPLE)
+ target_link_options(ublox_dgnss_components PRIVATE
+   "LINKER:--allow-multiple-definition"
+ )
++endif()
+ 
+ target_link_libraries(ublox_dgnss_components PUBLIC
+   ${rtcm_msgs_TARGETS}

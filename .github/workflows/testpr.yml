@@ -54,6 +54,17 @@ jobs:
         echo "CONDA_BLD_PATH=C:\\bld\\" >> $GITHUB_ENV
         mkdir /c/bld
 
+    - name: Enable Win32 long paths
+      shell: powershell
+      if: matrix.platform == 'win-64'
+      run: |
+        New-ItemProperty `
+          -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
+          -Name "LongPathsEnabled" `
+          -Value 1 `
+          -PropertyType DWORD `
+          -Force
+
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
       if: contains(matrix.os, 'windows')
@@ -104,9 +115,8 @@ jobs:
     - name: Delete specific outdated cache entries
       shell: bash -l {0}
       run: |
-        # rm -rf ${{ matrix.folder_cache }}/ros-humble-<package>* || true
-        pixi run rattler-index fs output --force
-        exit 0
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-autoware-trajectory* || true
+        pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
     - name: See packages restored by cache
       shell: bash -l {0}
@@ -117,6 +127,9 @@ jobs:
       shell: bash -l {0}
       if: matrix.platform != 'emscripten-wasm32'
       run: |
+        if [ "${{ runner.os }}" = "Windows" ]; then
+          export VINCA_CUSTOM_CMAKE_BUILD_DIR='C:\x\'
+        fi
         pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
 
     - name: Build recipes [emscripten]

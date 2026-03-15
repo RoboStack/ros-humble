@@ -11,8 +11,10 @@ libc = { family="glibc", version="2.17" }
 
 [dependencies]
 python = ">=3.11.0,<3.12"
-rattler-build = ">=0.44.0"
+rattler-build = ">=0.57.0,<0.58"
 anaconda-client = ">=1.12"
+setuptools = "<82.0"
+rattler-index = ">=0.27.16"
 
 [target.win-64.dependencies]
 # patch is required by rattler-build
@@ -22,7 +24,7 @@ git = "*"
 
 [pypi-dependencies]
 # This is tipically the latest commit on main branch
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "85b4da615739af14750d759ccb4e997f83342629" }
+vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "65f211c33316e98ccea6cd229c6b48acaf05e8a0" }
 # Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
 # (and regenerate the pixi.lock) once you push the modified commit to the repo
 #vinca = { path = "../vinca", editable = true }

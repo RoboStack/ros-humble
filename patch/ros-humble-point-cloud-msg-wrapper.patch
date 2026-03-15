@@ -1,0 +1,23 @@
+diff --git a/include/point_cloud_msg_wrapper/point_cloud_msg_wrapper.hpp b/include/point_cloud_msg_wrapper/point_cloud_msg_wrapper.hpp
+index 3768346..db9e048 100644
+--- a/include/point_cloud_msg_wrapper/point_cloud_msg_wrapper.hpp
++++ b/include/point_cloud_msg_wrapper/point_cloud_msg_wrapper.hpp
+@@ -24,7 +24,7 @@
+ #include <point_cloud_msg_wrapper/type_traits.hpp>
+ #include <sensor_msgs/msg/point_cloud2.hpp>
+ 
+-#include <experimental/optional>
++#include <optional>
+ #include <string>
+ 
+ #include <limits>
+@@ -223,7 +223,7 @@ public:
+   {
+     const auto find_missing_field = [](
+       const auto & query_fields,
+-      const auto & source_fields) -> std::experimental::optional<FieldNameT> {
++      const auto & source_fields) -> std::optional<FieldNameT> {
+         for (const auto & query_field : query_fields) {
+           // Note that we use find on a vector here. This is intended. The number of fields is
+           // usually very limited, so the O(n^2) complexity is ok here. This operation also only
+
