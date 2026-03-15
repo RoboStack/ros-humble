@@ -5,9 +5,12 @@ on:
 env:
   ROS_VERSION: 2
   # Change to 'true' to enable the cache upload as artifacts
-  SAVE_CACHE_AS_ARTIFACT: 'false'
+  SAVE_CACHE_AS_ARTIFACT: 'true'
   # Change to 'true' to ignore cache and force a full rebuild, but please restore to 'false' before merging
   IGNORE_CACHE_AND_DO_FULL_REBUILD: 'false'
+  # Retries for transient DNS/git-fetch failures in CI (see Could not resolve host: github.com)
+  CI_TRANSIENT_NET_MAX_RETRIES: '6'
+  CI_TRANSIENT_NET_BASE_DELAY_SEC: '20'
 jobs:
   build:
     strategy:
@@ -23,7 +26,7 @@ jobs:
           - os: macos-15-intel
             platform: osx-64
             folder_cache: 'output/osx-64'
-          - os: macos-14
+          - os: macos-15
             platform: osx-arm64
             folder_cache: 'output/osx-arm64'
           - os: windows-2022
@@ -36,12 +39,12 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-    - uses: prefix-dev/setup-pixi@v0.8.10
+    - uses: prefix-dev/setup-pixi@v0.9.4
       with:
         frozen: true
 
@@ -56,7 +59,7 @@ jobs:
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
       if: contains(matrix.os, 'windows')
-      uses: egor-tensin/cleanup-path@v4
+      uses: egor-tensin/cleanup-path@v5
       with:
         # cygpath in C:\Program Files\Git\usr\bin is used by install micromamba
         # git in C:\Program Files\Git\bin is used by pip install git+
@@ -72,12 +75,6 @@ jobs:
         rm -rf /c/Strawberry
         rm -rf "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17763.0/"
 
-    # Regression for https://github.com/RoboStack/ros-jazzy/issues/44
-    - name: Check that anaconda-client command works fine
-      shell: bash -l {0}
-      run: |
-        pixi run anaconda --version
-  
     - name: Generate recipes
       shell: bash -l {0}
       run: |
@@ -87,11 +84,11 @@ jobs:
     - name: Check patches
       shell: bash -l {0}
       run: |
-        pixi run python check_patches_clean_apply.py
+        pixi run check-patches
 
     - name: Restore build cache
       id: cache-restore
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@v5
       with:
         path: |
           ${{ matrix.folder_cache }}
@@ -130,7 +127,7 @@ jobs:
         ls ${{ matrix.folder_cache }} || true
 
     - name: Save build cache
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@v5
       if: always()
       with:
         path: |
@@ -144,7 +141,7 @@ jobs:
 
     - name: Upload build cache as artifact
       if: ${{ always() && env.SAVE_CACHE_AS_ARTIFACT == 'true' }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: cache-${{ matrix.platform }}-${{ github.run_id }}
         path: ${{ matrix.folder_cache }}
