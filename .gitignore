@@ -9,3 +9,5 @@ recipes_only_patch/
 .pixi
 *.egg-info
 output/
+__pycache__/
+*.pyc
