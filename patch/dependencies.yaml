@@ -186,6 +186,12 @@ rclcpp:
   add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
 rclcpp_action:
   add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+rsl:
+  add_host: [ "ros-humble-tl-expected"]
+  add_run: [ "ros-humble-tl-expected"]
+imu_calib:
+  add_host: [ "ros-humble-eigen3-cmake-module" ]
+  add_run: [ "ros-humble-eigen3-cmake-module" ]
 examples_rclcpp_minimal_subscriber:
   add_host:
     - if: (target_platform == 'emscripten-wasm32')
