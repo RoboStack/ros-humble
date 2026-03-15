@@ -1,0 +1,24 @@
+diff --git a/moveit_ros/move_group/CMakeLists.txt b/moveit_ros/move_group/CMakeLists.txt
+index 86bca8785d..6372691580 100644
+--- a/moveit_ros/move_group/CMakeLists.txt
++++ b/moveit_ros/move_group/CMakeLists.txt
+@@ -68,7 +68,18 @@ target_link_libraries(moveit_move_group_default_capabilities
+ add_executable(move_group src/move_group.cpp)
+ target_include_directories(move_group PUBLIC include)
+ ament_target_dependencies(move_group ${THIS_PACKAGE_INCLUDE_DEPENDS} Boost)
+-target_link_libraries(move_group moveit_move_group_capabilities_base)
++# macOS Fix: Explicitly link default capabilities to resolve RPath issues
++# and ensure plugin symbols are visible during pluginlib loading.
++if(APPLE)
++  target_link_libraries(move_group 
++    moveit_move_group_capabilities_base 
++    moveit_move_group_default_capabilities
++  )
++else()
++  target_link_libraries(move_group 
++    moveit_move_group_capabilities_base
++  )
++endif()
+ 
+ add_executable(list_move_group_capabilities src/list_capabilities.cpp)
+ ament_target_dependencies(list_move_group_capabilities

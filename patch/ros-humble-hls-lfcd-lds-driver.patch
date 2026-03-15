@@ -1,0 +1,137 @@
+From 36d542492a0395cefd28d29e87b2eccbd108a995 Mon Sep 17 00:00:00 2001
+From: Olivier Roussel <olivier.roussel@inria.fr>
+Date: Fri, 20 Feb 2026 13:31:24 +0100
+Subject: [PATCH] [PATCH] Replace boost::asio::io_service with
+ boost::asio::io_context for boost 1.88 compatibility
+
+---
+ applications/lds_driver/lds_driver.cpp                       | 4 ++--
+ applications/lds_driver/lds_driver.hpp                       | 2 +-
+ applications/lds_polar_graph/lds_polar_graph.hpp             | 2 +-
+ include/hls_lfcd_lds_driver/hlds_laser_segment_publisher.hpp | 2 +-
+ include/hls_lfcd_lds_driver/lfcd_laser.hpp                   | 2 +-
+ src/hlds_laser_publisher.cpp                                 | 4 ++--
+ src/hlds_laser_segment_publisher.cpp                         | 4 ++--
+ 7 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/applications/lds_driver/lds_driver.cpp b/applications/lds_driver/lds_driver.cpp
+index 30916fa..a0e7070 100644
+--- a/applications/lds_driver/lds_driver.cpp
++++ b/applications/lds_driver/lds_driver.cpp
+@@ -38,7 +38,7 @@
+ 
+ namespace lds
+ {
+-LFCDLaser::LFCDLaser(const std::string & port, uint32_t baud_rate, boost::asio::io_service & io)
++LFCDLaser::LFCDLaser(const std::string & port, uint32_t baud_rate, boost::asio::io_context & io)
+ : port_(port), baud_rate_(baud_rate), shutting_down_(false), serial_(io, port_)
+ {
+   serial_.set_option(boost::asio::serial_port_base::baud_rate(baud_rate_));
+@@ -136,7 +136,7 @@ int main(int argc, char ** argv)
+   uint16_t rpms;
+   port = "/dev/ttyUSB0";
+   baud_rate = 230400;
+-  boost::asio::io_service io;
++  boost::asio::io_context io;
+ 
+   try {
+     lds::LFCDLaser laser(port, baud_rate, io);
+diff --git a/applications/lds_driver/lds_driver.hpp b/applications/lds_driver/lds_driver.hpp
+index 041f757..47698db 100644
+--- a/applications/lds_driver/lds_driver.hpp
++++ b/applications/lds_driver/lds_driver.hpp
+@@ -54,7 +54,7 @@ public:
+   * @param io Boost ASIO IO Service to use when creating the serial port object
+   */
+ 
+-  LFCDLaser(const std::string & port, uint32_t baud_rate, boost::asio::io_service & io);
++  LFCDLaser(const std::string & port, uint32_t baud_rate, boost::asio::io_context & io);
+   /**
+   * @brief Default destructor
+   */
+diff --git a/applications/lds_polar_graph/lds_polar_graph.hpp b/applications/lds_polar_graph/lds_polar_graph.hpp
+index 8b94c06..83ceb75 100644
+--- a/applications/lds_polar_graph/lds_polar_graph.hpp
++++ b/applications/lds_polar_graph/lds_polar_graph.hpp
+@@ -69,7 +69,7 @@ private:
+   qreal angular_max_;
+   qreal radial_min_;
+   qreal radial_max;
+-  boost::asio::io_service io_;
++  boost::asio::io_context io_;
+   std::string port_;
+   uint32_t baud_rate_;
+   bool shutting_down_;
+diff --git a/include/hls_lfcd_lds_driver/hlds_laser_segment_publisher.hpp b/include/hls_lfcd_lds_driver/hlds_laser_segment_publisher.hpp
+index 1f8ff91..3422719 100644
+--- a/include/hls_lfcd_lds_driver/hlds_laser_segment_publisher.hpp
++++ b/include/hls_lfcd_lds_driver/hlds_laser_segment_publisher.hpp
+@@ -56,7 +56,7 @@ public:
+   * @param baud_rate The baud rate to open the serial port at.
+   * @param io Boost ASIO IO Service to use when creating the serial port object
+   */
+-  explicit LFCDLaser(boost::asio::io_service & io);
++  explicit LFCDLaser(boost::asio::io_context & io);
+ 
+   /**
+   * @brief Default destructor
+diff --git a/include/hls_lfcd_lds_driver/lfcd_laser.hpp b/include/hls_lfcd_lds_driver/lfcd_laser.hpp
+index 42d5bda..e6340f9 100644
+--- a/include/hls_lfcd_lds_driver/lfcd_laser.hpp
++++ b/include/hls_lfcd_lds_driver/lfcd_laser.hpp
+@@ -54,7 +54,7 @@ public:
+   * @param baud_rate The baud rate to open the serial port at.
+   * @param io Boost ASIO IO Service to use when creating the serial port object
+   */
+-  LFCDLaser(const std::string & port, uint32_t baud_rate, boost::asio::io_service & io);
++  LFCDLaser(const std::string & port, uint32_t baud_rate, boost::asio::io_context & io);
+ 
+   /**
+   * @brief Default destructor
+diff --git a/src/hlds_laser_publisher.cpp b/src/hlds_laser_publisher.cpp
+index bac0ecf..57a3d68 100644
+--- a/src/hlds_laser_publisher.cpp
++++ b/src/hlds_laser_publisher.cpp
+@@ -39,7 +39,7 @@
+ 
+ namespace hls_lfcd_lds
+ {
+-LFCDLaser::LFCDLaser(const std::string & port, uint32_t baud_rate, boost::asio::io_service & io)
++LFCDLaser::LFCDLaser(const std::string & port, uint32_t baud_rate, boost::asio::io_context & io)
+ : port_(port), baud_rate_(baud_rate), shutting_down_(false), serial_(io, port_)
+ {
+   serial_.set_option(boost::asio::serial_port_base::baud_rate(baud_rate_));
+@@ -127,7 +127,7 @@ int main(int argc, char ** argv)
+ 
+   auto node = rclcpp::Node::make_shared("hlds_laser_publisher");
+   rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr laser_pub;
+-  boost::asio::io_service io;
++  boost::asio::io_context io;
+ 
+   std::string port;
+   std::string frame_id;
+diff --git a/src/hlds_laser_segment_publisher.cpp b/src/hlds_laser_segment_publisher.cpp
+index bcd7d65..fed7d34 100644
+--- a/src/hlds_laser_segment_publisher.cpp
++++ b/src/hlds_laser_segment_publisher.cpp
+@@ -41,7 +41,7 @@
+ 
+ namespace hls_lfcd_lds
+ {
+-LFCDLaser::LFCDLaser(boost::asio::io_service & io)
++LFCDLaser::LFCDLaser(boost::asio::io_context & io)
+ : serial_(io),
+   shutting_down_(false)
+ {
+@@ -132,7 +132,7 @@ int main(int argc, char * argv[])
+ {
+   ros::init(argc, argv, "hlds_laser_segment_publisher");
+ 
+-  boost::asio::io_service io;
++  boost::asio::io_context io;
+   hls_lfcd_lds::LFCDLaser laser(io);
+ 
+   while (ros::ok()) {
+-- 
+2.43.0
+

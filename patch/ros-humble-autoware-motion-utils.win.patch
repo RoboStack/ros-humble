@@ -1,0 +1,488 @@
+diff --git a/include/autoware/motion_utils/trajectory/trajectory.hpp b/include/autoware/motion_utils/trajectory/trajectory.hpp
+--- a/include/autoware/motion_utils/trajectory/trajectory.hpp
++++ b/include/autoware/motion_utils/trajectory/trajectory.hpp
+@@ -196,15 +196,15 @@
+ 
+ extern template std::vector<autoware_planning_msgs::msg::PathPoint>
+ removeOverlapPoints<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+-  const std::vector<autoware_planning_msgs::msg::PathPoint> & points, const size_t start_idx = 0);
++  const std::vector<autoware_planning_msgs::msg::PathPoint> & points, const size_t start_idx);
+ extern template std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>
+ removeOverlapPoints<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const size_t start_idx = 0);
++  const size_t start_idx);
+ extern template std::vector<autoware_planning_msgs::msg::TrajectoryPoint>
+ removeOverlapPoints<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const size_t start_idx = 0);
++  const size_t start_idx);
+ 
+ /**
+  * @brief search through points container from specified start and end indices about first matching
+@@ -379,18 +379,18 @@
+ extern template std::optional<size_t>
+ findNearestIndex<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ extern template std::optional<size_t>
+ findNearestIndex<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ extern template std::optional<size_t>
+ findNearestIndex<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ 
+ /**
+  * @brief calculate longitudinal offset (length along trajectory from seg_idx point to nearest point
+@@ -463,16 +463,16 @@
+ extern template double
+ calcLongitudinalOffsetToSegment<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points, const size_t seg_idx,
+-  const geometry_msgs::msg::Point & p_target, const bool throw_exception = false);
++  const geometry_msgs::msg::Point & p_target, const bool throw_exception);
+ extern template double calcLongitudinalOffsetToSegment<
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+   const size_t seg_idx, const geometry_msgs::msg::Point & p_target,
+-  const bool throw_exception = false);
++  const bool throw_exception);
+ extern template double
+ calcLongitudinalOffsetToSegment<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points, const size_t seg_idx,
+-  const geometry_msgs::msg::Point & p_target, const bool throw_exception = false);
++  const geometry_msgs::msg::Point & p_target, const bool throw_exception);
+ 
+ /**
+  * @brief find nearest segment index to point.
+@@ -556,18 +556,18 @@
+ extern template std::optional<size_t>
+ findNearestSegmentIndex<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ extern template std::optional<size_t>
+ findNearestSegmentIndex<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ extern template std::optional<size_t>
+ findNearestSegmentIndex<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ 
+ /**
+  * @brief calculate lateral offset from p_target (length from p_target to trajectory) using given
+@@ -631,16 +631,16 @@
+ extern template double calcLateralOffset<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+   const geometry_msgs::msg::Point & p_target, const size_t seg_idx,
+-  const bool throw_exception = false);
++  const bool throw_exception);
+ extern template double
+ calcLateralOffset<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+   const geometry_msgs::msg::Point & p_target, const size_t seg_idx,
+-  const bool throw_exception = false);
++  const bool throw_exception);
+ extern template double calcLateralOffset<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+   const geometry_msgs::msg::Point & p_target, const size_t seg_idx,
+-  const bool throw_exception = false);
++  const bool throw_exception);
+ 
+ /**
+  * @brief calculate lateral offset from p_target (length from p_target to trajectory).
+@@ -693,14 +693,14 @@
+ 
+ extern template double calcLateralOffset<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+-  const geometry_msgs::msg::Point & p_target, const bool throw_exception = false);
++  const geometry_msgs::msg::Point & p_target, const bool throw_exception);
+ extern template double
+ calcLateralOffset<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const geometry_msgs::msg::Point & p_target, const bool throw_exception = false);
++  const geometry_msgs::msg::Point & p_target, const bool throw_exception);
+ extern template double calcLateralOffset<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const geometry_msgs::msg::Point & p_target, const bool throw_exception = false);
++  const geometry_msgs::msg::Point & p_target, const bool throw_exception);
+ 
+ /**
+  * @brief calculate length of 2D distance between two points, specified by start and end points
+@@ -1114,7 +1114,7 @@
+ extern template std::optional<double>
+ calcDistanceToForwardStopPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points_with_twist,
+-  const size_t src_idx = 0);
++  const size_t src_idx);
+ 
+ /**
+  * @brief calculate the point offset from source point index along the trajectory (or path) (points
+@@ -1190,15 +1190,15 @@
+ extern template std::optional<geometry_msgs::msg::Point>
+ calcLongitudinalOffsetPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points, const size_t src_idx,
+-  const double offset, const bool throw_exception = false);
++  const double offset, const bool throw_exception);
+ extern template std::optional<geometry_msgs::msg::Point>
+ calcLongitudinalOffsetPoint<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const size_t src_idx, const double offset, const bool throw_exception = false);
++  const size_t src_idx, const double offset, const bool throw_exception);
+ extern template std::optional<geometry_msgs::msg::Point>
+ calcLongitudinalOffsetPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points, const size_t src_idx,
+-  const double offset, const bool throw_exception = false);
++  const double offset, const bool throw_exception);
+ 
+ /**
+  * @brief calculate the point offset from source point along the trajectory (or path) (points
+@@ -1335,18 +1335,18 @@
+ extern template std::optional<geometry_msgs::msg::Pose>
+ calcLongitudinalOffsetPose<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points, const size_t src_idx,
+-  const double offset, const bool set_orientation_from_position_direction = true,
+-  const bool throw_exception = false);
++  const double offset, const bool set_orientation_from_position_direction,
++  const bool throw_exception);
+ extern template std::optional<geometry_msgs::msg::Pose>
+ calcLongitudinalOffsetPose<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+   const size_t src_idx, const double offset,
+-  const bool set_orientation_from_position_direction = true, const bool throw_exception = false);
++  const bool set_orientation_from_position_direction, const bool throw_exception);
+ extern template std::optional<geometry_msgs::msg::Pose>
+ calcLongitudinalOffsetPose<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points, const size_t src_idx,
+-  const double offset, const bool set_orientation_from_position_direction = true,
+-  const bool throw_exception = false);
++  const double offset, const bool set_orientation_from_position_direction,
++  const bool throw_exception);
+ 
+ /**
+  * @brief calculate the point offset from source point along the trajectory (or path) (points
+@@ -1383,17 +1383,17 @@
+ calcLongitudinalOffsetPose<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+   const geometry_msgs::msg::Point & src_point, const double offset,
+-  const bool set_orientation_from_position_direction = true);
++  const bool set_orientation_from_position_direction);
+ extern template std::optional<geometry_msgs::msg::Pose>
+ calcLongitudinalOffsetPose<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+   const geometry_msgs::msg::Point & src_point, const double offset,
+-  const bool set_orientation_from_position_direction = true);
++  const bool set_orientation_from_position_direction);
+ extern template std::optional<geometry_msgs::msg::Pose>
+ calcLongitudinalOffsetPose<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+   const geometry_msgs::msg::Point & src_point, const double offset,
+-  const bool set_orientation_from_position_direction = true);
++  const bool set_orientation_from_position_direction);
+ 
+ /**
+  * @brief insert a point in points container (trajectory, path, ...) using segment id
+@@ -1485,17 +1485,17 @@
+ insertTargetPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const size_t seg_idx, const geometry_msgs::msg::Point & p_target,
+   std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertTargetPoint<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const size_t seg_idx, const geometry_msgs::msg::Point & p_target,
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertTargetPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const size_t seg_idx, const geometry_msgs::msg::Point & p_target,
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ 
+ /**
+  * @brief insert a point in points container (trajectory, path, ...) using length of point to be
+@@ -1540,17 +1540,17 @@
+ insertTargetPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const double insert_point_length, const geometry_msgs::msg::Point & p_target,
+   std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertTargetPoint<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const double insert_point_length, const geometry_msgs::msg::Point & p_target,
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertTargetPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const double insert_point_length, const geometry_msgs::msg::Point & p_target,
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ 
+ /**
+  * @brief insert a point in points container (trajectory, path, ...) using segment index and length
+@@ -1613,17 +1613,17 @@
+ insertTargetPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const size_t src_segment_idx, const double insert_point_length,
+   std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertTargetPoint<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const size_t src_segment_idx, const double insert_point_length,
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertTargetPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const size_t src_segment_idx, const double insert_point_length,
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ 
+ /**
+  * @brief Insert a target point from a source pose on the trajectory
+@@ -1666,20 +1666,20 @@
+ insertTargetPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const geometry_msgs::msg::Pose & src_pose, const double insert_point_length,
+   std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+-  const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max(), const double overlap_threshold = 1e-3);
++  const double max_dist,
++  const double max_yaw, const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertTargetPoint<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const geometry_msgs::msg::Pose & src_pose, const double insert_point_length,
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max(), const double overlap_threshold = 1e-3);
++  const double max_dist,
++  const double max_yaw, const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertTargetPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const geometry_msgs::msg::Pose & src_pose, const double insert_point_length,
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max(), const double overlap_threshold = 1e-3);
++  const double max_dist,
++  const double max_yaw, const double overlap_threshold);
+ 
+ /**
+  * @brief Insert stop point from the source segment index
+@@ -1718,17 +1718,17 @@
+ insertStopPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const size_t src_segment_idx, const double distance_to_stop_point,
+   std::vector<autoware_planning_msgs::msg::PathPoint> & points_with_twist,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertStopPoint<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const size_t src_segment_idx, const double distance_to_stop_point,
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points_with_twist,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertStopPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const size_t src_segment_idx, const double distance_to_stop_point,
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points_with_twist,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ 
+ /**
+  * @brief Insert stop point from the front point of the path
+@@ -1767,17 +1767,17 @@
+ insertStopPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const double distance_to_stop_point,
+   std::vector<autoware_planning_msgs::msg::PathPoint> & points_with_twist,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertStopPoint<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const double distance_to_stop_point,
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points_with_twist,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertStopPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const double distance_to_stop_point,
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points_with_twist,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ 
+ /**
+  * @brief Insert Stop point from the source pose
+@@ -1822,20 +1822,20 @@
+ insertStopPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const geometry_msgs::msg::Pose & src_pose, const double distance_to_stop_point,
+   std::vector<autoware_planning_msgs::msg::PathPoint> & points_with_twist,
+-  const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max(), const double overlap_threshold = 1e-3);
++  const double max_dist,
++  const double max_yaw, const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertStopPoint<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const geometry_msgs::msg::Pose & src_pose, const double distance_to_stop_point,
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points_with_twist,
+-  const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max(), const double overlap_threshold = 1e-3);
++  const double max_dist,
++  const double max_yaw, const double overlap_threshold);
+ extern template std::optional<size_t>
+ insertStopPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const geometry_msgs::msg::Pose & src_pose, const double distance_to_stop_point,
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points_with_twist,
+-  const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max(), const double overlap_threshold = 1e-3);
++  const double max_dist,
++  const double max_yaw, const double overlap_threshold);
+ 
+ /**
+  * @brief Insert Stop point that is in the stop segment index
+@@ -1869,7 +1869,7 @@
+ insertStopPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const size_t stop_seg_idx, const geometry_msgs::msg::Point & stop_point,
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points_with_twist,
+-  const double overlap_threshold = 1e-3);
++  const double overlap_threshold);
+ 
+ /**
+  * @brief Insert deceleration point from the source pose
+@@ -2268,20 +2268,20 @@
+ findFirstNearestIndexWithSoftConstraints<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+   const geometry_msgs::msg::Pose & pose,
+-  const double dist_threshold = std::numeric_limits<double>::max(),
+-  const double yaw_threshold = std::numeric_limits<double>::max());
++  const double dist_threshold,
++  const double yaw_threshold);
+ extern template size_t findFirstNearestIndexWithSoftConstraints<
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+   const geometry_msgs::msg::Pose & pose,
+-  const double dist_threshold = std::numeric_limits<double>::max(),
+-  const double yaw_threshold = std::numeric_limits<double>::max());
++  const double dist_threshold,
++  const double yaw_threshold);
+ extern template size_t
+ findFirstNearestIndexWithSoftConstraints<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+   const geometry_msgs::msg::Pose & pose,
+-  const double dist_threshold = std::numeric_limits<double>::max(),
+-  const double yaw_threshold = std::numeric_limits<double>::max());
++  const double dist_threshold,
++  const double yaw_threshold);
+ 
+ /**
+  * @brief find nearest segment index to pose with soft constraints
+@@ -2324,20 +2324,20 @@
+   std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+   const geometry_msgs::msg::Pose & pose,
+-  const double dist_threshold = std::numeric_limits<double>::max(),
+-  const double yaw_threshold = std::numeric_limits<double>::max());
++  const double dist_threshold,
++  const double yaw_threshold);
+ extern template size_t findFirstNearestSegmentIndexWithSoftConstraints<
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+   const geometry_msgs::msg::Pose & pose,
+-  const double dist_threshold = std::numeric_limits<double>::max(),
+-  const double yaw_threshold = std::numeric_limits<double>::max());
++  const double dist_threshold,
++  const double yaw_threshold);
+ extern template size_t findFirstNearestSegmentIndexWithSoftConstraints<
+   std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+   const geometry_msgs::msg::Pose & pose,
+-  const double dist_threshold = std::numeric_limits<double>::max(),
+-  const double yaw_threshold = std::numeric_limits<double>::max());
++  const double dist_threshold,
++  const double yaw_threshold);
+ 
+ /**
+  * @brief calculate the point offset from source point along the trajectory (or path)
+@@ -2388,18 +2388,18 @@
+ extern template std::optional<double>
+ calcDistanceToForwardStopPoint<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points_with_twist,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ extern template std::optional<double> calcDistanceToForwardStopPoint<
+   std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points_with_twist,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ extern template std::optional<double>
+ calcDistanceToForwardStopPoint<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points_with_twist,
+-  const geometry_msgs::msg::Pose & pose, const double max_dist = std::numeric_limits<double>::max(),
+-  const double max_yaw = std::numeric_limits<double>::max());
++  const geometry_msgs::msg::Pose & pose, const double max_dist,
++  const double max_yaw);
+ 
+ // NOTE: Points after forward length from the point will be cropped
+ //       forward_length is assumed to be positive.
+@@ -2577,14 +2577,14 @@
+ 
+ extern template double calcYawDeviation<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+-  const geometry_msgs::msg::Pose & pose, const bool throw_exception = false);
++  const geometry_msgs::msg::Pose & pose, const bool throw_exception);
+ extern template double
+ calcYawDeviation<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+-  const geometry_msgs::msg::Pose & pose, const bool throw_exception = false);
++  const geometry_msgs::msg::Pose & pose, const bool throw_exception);
+ extern template double calcYawDeviation<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+-  const geometry_msgs::msg::Pose & pose, const bool throw_exception = false);
++  const geometry_msgs::msg::Pose & pose, const bool throw_exception);
+ 
+ /**
+  * @brief Check if the given target point is in front of the based pose from the trajectory.
+@@ -2613,16 +2613,16 @@
+ extern template bool isTargetPointFront<std::vector<autoware_planning_msgs::msg::PathPoint>>(
+   const std::vector<autoware_planning_msgs::msg::PathPoint> & points,
+   const geometry_msgs::msg::Point & base_point, const geometry_msgs::msg::Point & target_point,
+-  const double threshold = 0.0);
++  const double threshold);
+ extern template bool
+ isTargetPointFront<std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId>>(
+   const std::vector<autoware_internal_planning_msgs::msg::PathPointWithLaneId> & points,
+   const geometry_msgs::msg::Point & base_point, const geometry_msgs::msg::Point & target_point,
+-  const double threshold = 0.0);
++  const double threshold);
+ extern template bool isTargetPointFront<std::vector<autoware_planning_msgs::msg::TrajectoryPoint>>(
+   const std::vector<autoware_planning_msgs::msg::TrajectoryPoint> & points,
+   const geometry_msgs::msg::Point & base_point, const geometry_msgs::msg::Point & target_point,
+-  const double threshold = 0.0);
++  const double threshold);
+ 
+ /**
+  * @brief calculate the difference angle between the target pose and the nearest trajectory point

@@ -1022,7 +1022,10 @@ python3-flake8-builtins:
 python3-flake8-quotes:
   robostack: [flake8-quotes]
 python3-uvloop:
-  robostack: [uvloop]
+  robostack:
+    linux: [uvloop]
+    osx: [uvloop]
+    win64: []
 python3-venv:
   robostack: [virtualenv, pip, pip-tools, setuptools]
 python3-websocket:
@@ -1152,7 +1155,12 @@ yaml:
 yaml-cpp:
   robostack: [yaml-cpp]
 zbar:
-  robostack: [zbar]
+  robostack:
+    linux-64: [zbar]
+    linux-aarch64: []
+    osx-64: [zbar]
+    osx-arm64: [zbar]
+    win64: []
 zlib:
   robostack: [zlib]
 zziplib:

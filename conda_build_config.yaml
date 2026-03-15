@@ -1,17 +1,19 @@
 numpy:
-  - 2
+  - 2     # [not emscripten]
+  - 1.26  # [emscripten]
 assimp:
-  - 5
+  - 6.0.3
 libprotobuf:
-  - 6.31.1
+  - 6.33.5
 protobuf:
-  - 6.31.1
+  - 6.33.5
 spdlog:
-  - 1.17
+  - 1.17  # [not emscripten]
+  - 1.15  # [emscripten]
 pugixml:
   - '1.15'
 libopencv:
-  - 4.12.0
+  - 4.13.0
 libxml2:
   - 2.14.*
 graphviz:
@@ -21,7 +23,8 @@ graphviz:
 libcap:
   - 2.77
 fmt:
-  - 12.1
+  - 12.1  # [not emscripten]
+  - 11.1  # [emscripten]
 lua:
   - 5.4
 tbb:
@@ -37,7 +40,8 @@ cdt_name:  # [linux]
   - conda  # [linux]
 
 python:
-  - 3.12.* *_cpython
+  - 3.11.* *_cpython  # [emscripten]
+  - 3.12.* *_cpython  # [not emscripten]
 python_impl:
   - cpython
 

@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6ace0b4..5781ddc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -30,7 +30,7 @@ rclcpp_components_register_node(${PROJECT_NAME}
+   EXECUTOR SingleThreadedExecutor
+ )
+ 
+-target_link_libraries(${PROJECT_NAME} Eigen3::Eigen)
++target_link_libraries(${PROJECT_NAME} Eigen3::Eigen fmt::fmt)
+ 
+ function(add_testcase filepath)
+   get_filename_component(filename ${filepath} NAME)

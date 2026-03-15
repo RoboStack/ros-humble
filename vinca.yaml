@@ -17,8 +17,9 @@ mutex_package:
     - libboost-devel 1.88.*
     - pcl 1.15.1.*
     - gazebo 11.*
-    - libprotobuf 6.31.1.*
+    - libprotobuf 6.33.5.*
     - vtk 9.5.2.*
+    - krb5 1.21.*
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
@@ -273,7 +274,9 @@ packages_select_by_deps:
       - rqt_controller_manager
       - open3d_conversions
       - lanelet2
+
       # autoware
+      - autoware_internal_msgs
       - autoware_common_msgs
       - autoware_control_msgs
       - autoware_localization_msgs
@@ -284,8 +287,19 @@ packages_select_by_deps:
       - autoware_system_msgs
       - autoware_v2x_msgs
       - autoware_vehicle_msgs
+      - autoware_cmake
       - autoware_utils
-      - autoware_core
+      - autoware_component_interface_specs
+      - autoware_geography_utils
+      - autoware_global_parameter_loader
+      - autoware_interpolation
+      - autoware_kalman_filter
+      - autoware_node
+      - autoware_object_recognition_utils
+      - autoware_point_types
+      - autoware_signal_processing
+      - autoware_vehicle_info_utils
+  
       - automatika_ros_sugar
       - automatika_embodied_agents
       - flex_sync
@@ -379,6 +393,9 @@ packages_select_by_deps:
       - ublox_dgnss         # Aussie Robots
       - ublox_dgnss_node
       - ublox_ubx_interfaces
+      # Windows can be easily fixed by backporting https://github.com/RoboStack/ros-jazzy/blob/main/patch/ros-jazzy-foxglove-bridge.win.patch
+      # Osx fails with: "Unsupported platform/architecture combination: arm64-Darwin"
+      - foxglove_bridge
 
   - if: linux and not aarch64
     then:
@@ -391,8 +408,6 @@ packages_select_by_deps:
   - if: not wasm32 and not win
     then:
       - foxglove_compressed_video_transport
-      # Windows can be easily fixed by backporting https://github.com/RoboStack/ros-jazzy/blob/main/patch/ros-jazzy-foxglove-bridge.win.patch
-      - foxglove_bridge
       - velodyne
       # error C1189: #error:  WinSock.h has already been included
       - velodyne_simulator  # Dataspeed Inc.
@@ -451,10 +466,28 @@ packages_select_by_deps:
       - gz_ros2_control
       - ur_simulation_gz
       # mavros and mavlink (enabled on macOS for testing)
-      - mavlink
-      - mavros
-      - mavros_extras
+      # need updates for boost 1.88
+      # - mavlink
+      # - mavros
+      # - mavros_extras
 
       # robotique grippers
       - robotiq_description
       - robotiq_controllers
+
+      # Windows error: error C2765: 'function' : an explicit specialization of a function template cannot have any default arguments
+      - autoware_motion_utils
+      # depends on autoware_motion_utils
+      - autoware_trajectory
+      - autoware_pose_initializer
+      - autoware_core_control
+      # Windows error: error C2338: static_assert failed: 'First argument to logging macros must be an rclcpp::Logger'
+      - autoware_ekf_localizer
+      # depends on autoware_ekf_localizer
+      - autoware_core_localization
+      # Windows error: error C3546: '...': there are no parameter packs available to expand
+      # Windows error: error C2678: binary '|': no operator found which takes a left-hand operand of type 'ranges::transform_view<ranges::ref_view<const T>,Arg>'
+      - autoware_lanelet2_utils
+      - autoware_osqp_interface
+      - autoware_qp_interface
+      - autoware_core

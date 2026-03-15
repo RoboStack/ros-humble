@@ -1,3 +1,15 @@
+diff --git a/common/autoware_trajectory/CMakeLists.txt b/common/autoware_trajectory/CMakeLists.txt
+index 4c3275d32a..4aae06a991 100644
+--- a/common/autoware_trajectory/CMakeLists.txt
++++ b/common/autoware_trajectory/CMakeLists.txt
+@@ -44,6 +44,7 @@ ament_auto_add_library(autoware_trajectory SHARED
+   src/utils/footprint.cpp
+   src/utils/velocity.cpp
+ )
++target_link_libraries(autoware_trajectory fmt::fmt)
+ 
+ if(BUILD_TESTING)
+   ament_auto_find_test_dependencies()
 diff --git a/common/autoware_trajectory/include/autoware/trajectory/interpolator/detail/interpolator_common_interface.hpp b/common/autoware_trajectory/include/autoware/trajectory/interpolator/detail/interpolator_common_interface.hpp
 index e339508816..c010fa633a 100644
 --- a/common/autoware_trajectory/include/autoware/trajectory/interpolator/detail/interpolator_common_interface.hpp

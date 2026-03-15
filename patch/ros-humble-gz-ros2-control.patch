@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5e4ce57..b2f3a8d 100644
+index 9c539de1..0f3e137b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,6 +1,23 @@
@@ -23,6 +23,6 @@ index 5e4ce57..b2f3a8d 100644
 +  message(STATUS "Created TINYXML2::TINYXML2 compatibility target for ignition packages")
 +endif()
 +
- # Default to C++14
- if(NOT CMAKE_CXX_STANDARD)
-   set(CMAKE_CXX_STANDARD 14)
+ # Default to C11
+ if(NOT CMAKE_C_STANDARD)
+     set(CMAKE_C_STANDARD 11)

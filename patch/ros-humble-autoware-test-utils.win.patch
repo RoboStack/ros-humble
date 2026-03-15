@@ -1,0 +1,25 @@
+From 6ab3e01e98afc896107a88b6b34d92559240b1e7 Mon Sep 17 00:00:00 2001
+From: Olivier Roussel <olivier.roussel@inria.fr>
+Date: Thu, 12 Mar 2026 20:09:54 +0100
+Subject: [PATCH] fix implicit cast path to string for msvc
+
+---
+ src/autoware_test_utils.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/autoware_test_utils.cpp b/src/autoware_test_utils.cpp
+index efc68f75..c45f0571 100644
+--- a/src/autoware_test_utils.cpp
++++ b/src/autoware_test_utils.cpp
+@@ -397,7 +397,7 @@ std::optional<std::string> resolve_pkg_share_uri(const std::string & uri_path)
+     const std::string pkg_name = ament_index_cpp::get_package_share_directory(match[1].str());
+     const std::string resource_path = match[2].str();
+     const auto path = std::filesystem::path(pkg_name) / std::filesystem::path(resource_path);
+-    return std::filesystem::exists(path) ? std::make_optional<std::string>(path) : std::nullopt;
++    return std::filesystem::exists(path) ? std::make_optional<std::string>(path.string()) : std::nullopt;
+   }
+   return std::nullopt;
+ }
+-- 
+2.53.0.windows.1
+

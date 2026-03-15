@@ -1,0 +1,114 @@
+From 8b0fceaf82df7d69c2e79ef4d24dfc1891c23f3b Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Fri, 13 Mar 2026 16:45:00 +1000
+Subject: [PATCH] replace range-v3 adapters with indexed loops on Windows
+
+---
+ src/geometry.cpp      | 5 ++---
+ src/lane_sequence.cpp | 7 +++----
+ src/nn_search.cpp     | 3 ++-
+ src/topology.cpp      | 8 ++++----
+ 4 files changed, 11 insertions(+), 12 deletions(-)
+
+diff --git a/src/geometry.cpp b/src/geometry.cpp
+index f3bbaf16..0aeb5593 100644
+--- a/src/geometry.cpp
++++ b/src/geometry.cpp
+@@ -16,7 +16,6 @@
+ #include <autoware/lanelet2_utils/geometry.hpp>
+ #include <autoware/lanelet2_utils/nn_search.hpp>
+ #include <autoware_utils_geometry/geometry.hpp>
+-#include <range/v3/all.hpp>
+ 
+ #include <geometry_msgs/msg/point.hpp>
+ #include <geometry_msgs/msg/pose.hpp>
+@@ -296,8 +295,9 @@ lanelet::ConstLineString3d get_closest_segment(
+   lanelet::ConstLineString3d closest_segment;
+   double min_distance = std::numeric_limits<double>::max();
+ 
+-  for (const auto & [prev_pt, current_pt] :
+-       ranges::views::zip(linestring, linestring | ranges::views::drop(1))) {
++  for (size_t i = 0; i + 1 < linestring.size(); ++i) {
++    const auto & prev_pt = linestring[i];
++    const auto & current_pt = linestring[i + 1];
+     lanelet::Point3d prev_pt_3d(lanelet::InvalId, prev_pt.x(), prev_pt.y(), prev_pt.z());
+     lanelet::Point3d current_pt_3d(
+       lanelet::InvalId, current_pt.x(), current_pt.y(), current_pt.z());
+diff --git a/src/lane_sequence.cpp b/src/lane_sequence.cpp
+index a9a46873..4b13929c 100644
+--- a/src/lane_sequence.cpp
++++ b/src/lane_sequence.cpp
+@@ -14,7 +14,6 @@
+ 
+ #include <autoware/lanelet2_utils/lane_sequence.hpp>
+ #include <autoware/lanelet2_utils/topology.hpp>
+-#include <range/v3/all.hpp>
+ 
+ #include <lanelet2_core/geometry/Lanelet.h>
+ 
+@@ -29,9 +28,9 @@ namespace autoware::experimental::lanelet2_utils
+ std::optional<LaneSequence> LaneSequence::create(
+   const lanelet::ConstLanelets & lanelets, lanelet::routing::RoutingGraphConstPtr routing_graph)
+ {
+-  for (const auto lane1_2 : ranges::views::zip(lanelets, lanelets | ranges::views::drop(1))) {
+-    const auto lane1 = std::get<0>(lane1_2);
+-    const auto lane2 = std::get<1>(lane1_2);
++  for (size_t i = 0; i + 1 < lanelets.size(); ++i) {
++    const auto & lane1 = lanelets.at(i);
++    const auto & lane2 = lanelets.at(i + 1);
+     if (const auto nexts = following_lanelets(lane1, routing_graph);
+         std::find_if(nexts.begin(), nexts.end(), [&](const auto & lane) {
+           return lane.id() == lane2.id();
+diff --git a/src/nn_search.cpp b/src/nn_search.cpp
+index f09f84f5..718a1e82 100644
+--- a/src/nn_search.cpp
++++ b/src/nn_search.cpp
+@@ -18,7 +18,6 @@
+ #include <autoware/lanelet2_utils/nn_search.hpp>
+ #include <autoware_lanelet2_extension/utility/utilities.hpp>
+ #include <autoware_utils_math/normalization.hpp>
+-#include <range/v3/view/enumerate.hpp>
+ #include <tf2/utils.hpp>
+ 
+ #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
+@@ -158,7 +157,8 @@ LaneletRTree::LaneletRTree(const lanelet::ConstLanelets & lanelets) : lanelets_(
+ {
+   std::vector<Node> nodes;
+   nodes.reserve(lanelets.size());
+-  for (const auto & [i, lanelet] : ranges::views::enumerate(lanelets)) {
++  for (size_t i = 0; i < lanelets.size(); ++i) {
++    const auto & lanelet = lanelets.at(i);
+     nodes.emplace_back(
+       boost::geometry::return_envelope<autoware_utils_geometry::Box2d>(
+         lanelet.polygon2d().basicPolygon()),
+diff --git a/src/topology.cpp b/src/topology.cpp
+index 91bdc721..0af88245 100644
+--- a/src/topology.cpp
++++ b/src/topology.cpp
+@@ -14,7 +14,6 @@
+ 
+ #include <autoware/lanelet2_utils/conversion.hpp>
+ #include <autoware/lanelet2_utils/topology.hpp>
+-#include <range/v3/all.hpp>
+ #include <rclcpp/logging.hpp>
+ 
+ #include <lanelet2_core/geometry/LaneletMap.h>
+@@ -303,10 +302,12 @@ lanelet::ConstLanelets sibling_lanelets(
+ lanelet::ConstLanelets from_ids(
+   const lanelet::LaneletMapConstPtr lanelet_map, const std::vector<lanelet::Id> & ids)
+ {
+-  return ids | ranges::views::transform([&](const auto id) {
+-           return lanelet_map->laneletLayer.get(id);
+-         }) |
+-         ranges::to<std::vector>();
++  lanelet::ConstLanelets lanelets;
++  lanelets.reserve(ids.size());
++  for (const auto id : ids) {
++    lanelets.push_back(lanelet_map->laneletLayer.get(id));
++  }
++  return lanelets;
+ }
+ 
+ lanelet::ConstLanelets get_conflicting_lanelets(
+-- 
+2.53.0
