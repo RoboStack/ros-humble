@@ -8,9 +8,7 @@ env:
   SAVE_CACHE_AS_ARTIFACT: 'true'
   # Change to 'true' to ignore cache and force a full rebuild, but please restore to 'false' before merging
   IGNORE_CACHE_AND_DO_FULL_REBUILD: 'false'
-  # Retries for transient DNS/git-fetch failures in CI (see Could not resolve host: github.com)
-  CI_TRANSIENT_NET_MAX_RETRIES: '6'
-  CI_TRANSIENT_NET_BASE_DELAY_SEC: '20'
+
 jobs:
   build:
     strategy:
