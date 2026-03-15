@@ -54,6 +54,7 @@ packages_skip_by_deps:
       - osrf_testing_tools_cpp
   - if: win
     then:
+      - rclc_examples
       # Modern gz-sim integration is not supported on Humble on Windows, please
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/issues/68
@@ -95,6 +96,7 @@ packages_remove_from_deps:
       - osrf_testing_tools_cpp
   - if: win
     then:
+      - rclc_examples
       # Modern gz-sim integration is not supported on Humble on Windows, please
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/issues/68
@@ -332,6 +334,17 @@ packages_select_by_deps:
       - imu_tools
       - rplidar_ros
       - vector_pursuit_controller
+      - imu_transformer
+      - imu_calib
+      - polygon_msgs
+      - polygon_utils
+      - color_util
+      - rclc_parameter
+      - rclc_lifecycle
+      - rclc_examples
+      - ptz_action_server_msgs
+      - py_trees
+  
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
       # IntelRealSense
@@ -402,6 +415,7 @@ packages_select_by_deps:
       # Franka robots support
       # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
       - franka_ros2
+      - aerostack2
 
 
   # These packages are currently not build on Windows, but they may with some work
@@ -491,3 +505,7 @@ packages_select_by_deps:
       - autoware_osqp_interface
       - autoware_qp_interface
       - autoware_core
+      # mocap4r2
+      - mocap4r2_control
+      - mocap4r2_control_msgs
+

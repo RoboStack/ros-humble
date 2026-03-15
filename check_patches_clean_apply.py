@@ -10,10 +10,10 @@ Usage
 -----
 
     # From repository root
-    python .scripts/check_patches_clean_apply.py          # prepare + run
-    python .scripts/check_patches_clean_apply.py --dry    # prepare only
-    python .scripts/check_patches_clean_apply.py --dry --recipe ros-noetic-rviz
-    python .scripts/check_patches_clean_apply.py --clean  # delete output
+    python check_patches_clean_apply.py          # prepare + run
+    python check_patches_clean_apply.py --dry    # prepare only
+    python check_patches_clean_apply.py --dry --recipe ros-noetic-rviz
+    python check_patches_clean_apply.py --clean  # delete output
 
 The script creates (or refreshes) a sibling folder named
 *recipes_only_patch*.  Every recipe that declares *patches:* gets a
@@ -62,7 +62,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument(
         "--dry",
         action="store_true",
-        help="Only generate recipes_only_patch/, don’t run rattler-build",
+        help="Only generate recipes_only_patch/, don't run rattler-build",
     )
     ap.add_argument(
         "--clean",
@@ -76,8 +76,8 @@ def parse_args() -> argparse.Namespace:
         metavar="RECIPE",
         help=(
             "Only check the specified recipe directory under recipes/. "
-            "Repeat for multiple recipes, e.g. --recipe ros-noetic-rviz "
-            "--recipe ros-noetic-jskeus"
+            "Repeat for multiple recipes, e.g. --recipe ros-humble-rviz2 "
+            "--recipe ros-humble-tf2"
         ),
     )
     return ap.parse_args()
