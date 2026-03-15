@@ -1,7 +1,7 @@
 From 078de2bd18dc9a204fc7f58588cd57d134eed0fd Mon Sep 17 00:00:00 2001
 From: Olivier Roussel <olivier.roussel@inria.fr>
 Date: Wed, 11 Mar 2026 15:43:29 +0100
-Subject: [PATCH] do not apply reomve warnings compile options on msvc
+Subject: [PATCH] do not apply remove warnings compile options on msvc
 
 ---
  CMakeLists.txt | 16 ++++++++--------
