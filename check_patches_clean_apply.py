@@ -10,9 +10,10 @@ Usage
 -----
 
     # From repository root
-    python .scripts/check_patches_clean_apply.py          # prepare + run
-    python .scripts/check_patches_clean_apply.py --dry    # prepare only
-    python .scripts/check_patches_clean_apply.py --clean  # delete output
+    python check_patches_clean_apply.py          # prepare + run
+    python check_patches_clean_apply.py --dry    # prepare only
+    python check_patches_clean_apply.py --dry --recipe ros-noetic-rviz
+    python check_patches_clean_apply.py --clean  # delete output
 
 The script creates (or refreshes) a sibling folder named
 *recipes_only_patch*.  Every recipe that declares *patches:* gets a
@@ -26,6 +27,12 @@ Implementation details
   *source* and a stub *build* section remain.
 * Automatically invokes ``rattler-build build`` if *--dry* is **not**
   given.
+
+Modification summary
+--------------------
+* Each recipe is built individually (not batch)
+* All outputs collected; failures reported with summary and details
+* No early stopping; CI-friendly non-zero exit if any failures
 """
 
 from __future__ import annotations
@@ -38,6 +45,12 @@ from pathlib import Path
 from typing import Any, Dict, List, Union
 import yaml
 
+# Make console writes UTF-8 and never crash on unknown glyphs (Windows-safe)
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
 
 ROOT_DIR = Path.cwd()
 RECIPES_DIR = ROOT_DIR / "recipes"
@@ -49,18 +62,52 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument(
         "--dry",
         action="store_true",
-        help="Only generate recipes_only_patch/, don’t run rattler-build",
+        help="Only generate recipes_only_patch/, don't run rattler-build",
     )
     ap.add_argument(
         "--clean",
         action="store_true",
         help="Remove recipes_only_patch/ and exit",
     )
+    ap.add_argument(
+        "--recipe",
+        action="append",
+        default=[],
+        metavar="RECIPE",
+        help=(
+            "Only check the specified recipe directory under recipes/. "
+            "Repeat for multiple recipes, e.g. --recipe ros-humble-rviz2 "
+            "--recipe ros-humble-tf2"
+        ),
+    )
     return ap.parse_args()
 
 
 def find_recipe_files() -> List[Path]:
     return sorted(RECIPES_DIR.rglob("recipe.yaml"))
+
+
+def resolve_requested_recipe_files(requested: List[str]) -> List[Path]:
+    if not requested:
+        return find_recipe_files()
+
+    resolved: List[Path] = []
+    missing: List[str] = []
+    for name in requested:
+        recipe_file = RECIPES_DIR / name / "recipe.yaml"
+        if recipe_file.is_file():
+            resolved.append(recipe_file)
+        else:
+            missing.append(name)
+
+    if missing:
+        print("The following requested recipe(s) were not found under recipes/:")
+        for m in missing:
+            print(f" - {m}")
+        sys.exit(1)
+
+    # Keep deterministic order and remove duplicates.
+    return sorted(set(resolved))
 
 
 def filter_sources(src: Union[Dict[str, Any], List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
@@ -101,9 +148,9 @@ def write_minimal_recipe(
         yaml.dump(minimal, fh, sort_keys=False)
 
 
-def prepare_patch_recipes() -> List[Path]:
+def prepare_patch_recipes(recipe_files: List[Path]) -> List[Path]:
     recreated: List[Path] = []
-    for recipe_file in find_recipe_files():
+    for recipe_file in recipe_files:
         with recipe_file.open("r", encoding="utf-8") as fh:
             recipe = yaml.safe_load(fh) or {}
 
@@ -130,15 +177,68 @@ def prepare_patch_recipes() -> List[Path]:
     return recreated
 
 
-def run_rattler_build() -> None:
-    cmd = [
-        "rattler-build",
-        "build",
-        "--recipe-dir",
-        str(PATCH_RECIPES_DIR)
-    ]
-    print("\n Running:", " ".join(cmd), "\n", flush=True)
-    subprocess.run(cmd, check=True)
+def run_rattler_build_individually(recipes: List[Path]) -> None:
+    results = []
+    for recipe_file in recipes:
+        cmd = [
+            "rattler-build",
+            "build",
+            "--recipe-dir",
+            str(recipe_file.parent),
+        ]
+        print("\n Running:", " ".join(cmd), "\n", flush=True)
+        try:
+            proc = subprocess.run(cmd, text=True, capture_output=True, errors="replace", encoding="utf-8")
+            success = proc.returncode == 0
+            results.append(
+                {
+                    "recipe": str(recipe_file.parent.relative_to(PATCH_RECIPES_DIR)),
+                    "ok": success,
+                    "stdout": proc.stdout,
+                    "stderr": proc.stderr,
+                    "rc": proc.returncode,
+                }
+            )
+            print("   ->", "OK" if success else f"FAIL (rc={proc.returncode})", flush=True)
+        except Exception as e:
+            results.append(
+                {
+                    "recipe": str(recipe_file.parent.relative_to(PATCH_RECIPES_DIR)),
+                    "ok": False,
+                    "stdout": "",
+                    "stderr": str(e),
+                    "rc": -1,
+                }
+            )
+            print("   -> EXCEPTION:", e, flush=True)
+
+    # Summary
+    failed = [r for r in results if not r["ok"]]
+    print("\n================ Patch Application Summary ================\n")
+    print(f"Total recipes tested: {len(results)}")
+    print(f"Passed: {len(results) - len(failed)}")
+    print(f"Failed: {len(failed)}")
+
+    if not failed:
+        print("\nAll patches applied cleanly.\n")
+        return
+
+    print("\n---------------- Failures (Summary) ----------------")
+    for r in failed:
+        print(f"- {r['recipe']} (rc={r['rc']})")
+
+    print("\n---------------- Failures (Details) ----------------")
+    for r in failed:
+        print(f"\n### {r['recipe']} (rc={r['rc']})")
+        if r["stdout"]:
+            print("\n[stdout]")
+            print(r["stdout"].rstrip())
+        if r["stderr"]:
+            print("\n[stderr]")
+            print(r["stderr"].rstrip())
+        print("\n----------------------------------------------------\n")
+
+    sys.exit(2 if failed else 0)
 
 
 def main() -> None:
@@ -157,7 +257,11 @@ def main() -> None:
         print("Refreshing recipes_only_patch/ …")
         shutil.rmtree(PATCH_RECIPES_DIR)
 
-    recreated = prepare_patch_recipes()
+    recipe_files = resolve_requested_recipe_files(args.recipe)
+    if args.recipe:
+        print(f"Selected {len(recipe_files)} recipe(s) via --recipe.")
+
+    recreated = prepare_patch_recipes(recipe_files)
     if not recreated:
         print("No recipes with patches found – nothing to test.")
         return
@@ -165,11 +269,10 @@ def main() -> None:
     print(f"Prepared {len(recreated)} minimal recipe(s) in {PATCH_RECIPES_DIR}/")
 
     if not args.dry:
-        run_rattler_build()
+        run_rattler_build_individually(recreated)
     else:
         print("--dry given – rattler-build not executed.")
 
 
 if __name__ == "__main__":
     main()
-

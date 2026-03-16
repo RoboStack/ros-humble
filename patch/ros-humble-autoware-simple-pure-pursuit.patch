@@ -1,0 +1,30 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 72f8f60..fb4eb18 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -8,11 +8,25 @@ ament_auto_add_library(${PROJECT_NAME}_lib SHARED
+   DIRECTORY src
+ )
+ 
++if(NOT MSVC)
++  target_compile_options(${PROJECT_NAME}_lib
++    PUBLIC
++      -Wno-deprecated-declarations
++  )
++endif()
++
+ rclcpp_components_register_node(${PROJECT_NAME}_lib
+   PLUGIN "autoware::control::simple_pure_pursuit::SimplePurePursuitNode"
+   EXECUTABLE ${PROJECT_NAME}_exe
+ )
+ 
++if(NOT MSVC)
++  target_compile_options(${PROJECT_NAME}_exe
++    PUBLIC
++      -Wno-deprecated-declarations
++  )
++endif()
++
+ if(BUILD_TESTING)
+   ament_add_ros_isolated_gtest(${PROJECT_NAME}_test
+     test/test_simple_pure_pursuit.cpp

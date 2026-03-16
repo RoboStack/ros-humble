@@ -1,0 +1,29 @@
+From c2169b8fc02ba82b4f13643684ea75bb6d185df7 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Fri, 13 Mar 2026 17:05:00 +1000
+Subject: [PATCH] make HybridMap const enum lookup MSVC-friendly
+
+---
+ include/lanelet2_core/utility/HybridMap.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/include/lanelet2_core/utility/HybridMap.h b/include/lanelet2_core/utility/HybridMap.h
+index 9ba57a4e..c510ba73 100644
+--- a/include/lanelet2_core/utility/HybridMap.h
++++ b/include/lanelet2_core/utility/HybridMap.h
+@@ -118,8 +118,12 @@ class HybridMap {
+   }
+   const_iterator find(const key_type& k) const { return m_.find(k); }
+   const_iterator find(Enum k) const {
+     const auto pos = static_cast<size_t>(k);
+-    return v_.size() < pos + 1 ? m_.end() : v_[pos];
++    if (v_.size() < pos + 1) {
++      return m_.cend();
++    }
++
++    return const_iterator(v_[pos]);
+   }
+ 
+   iterator begin() { return m_.begin(); }
+-- 
+2.53.0

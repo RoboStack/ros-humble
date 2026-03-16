@@ -1,0 +1,22 @@
+diff --git a/src/route_handler.cpp b/src/route_handler.cpp
+index 878f1aa..d3604b4 100644
+--- a/src/route_handler.cpp
++++ b/src/route_handler.cpp
+@@ -2073,7 +2073,7 @@ bool RouteHandler::planPathLaneletsBetweenCheckpoints(
+           RCLCPP_WARN(
+             logger_,
+             "Failed to find reroute on previous preferred lanelets %s, but on previous route "
+-            "segment %ld still",
++            "segment %lld still",
+             preferred_lanelets_str.str().c_str(), closest_lanelet.id());
+           return closest_lanelet;
+         }
+@@ -2134,7 +2134,7 @@ bool RouteHandler::planPathLaneletsBetweenCheckpoints(
+     const double optional_route_length = optional_route->length2d();
+     const double optional_route_cost = optional_route_length + angle_diff_weight * angle_diff;
+     RCLCPP_DEBUG(
+-      logger_, "Lanelet ID %ld: Route length = %.1f, Angle Diff = %.4f rad, Route cost = %.2f",
++      logger_, "Lanelet ID %lld: Route length = %.1f, Angle Diff = %.4f rad, Route cost = %.2f",
+       st_llt.id(), optional_route_length, angle_diff, optional_route_cost);
+     if (optional_route_cost < min_route_cost) {
+       min_route_cost = optional_route_cost;

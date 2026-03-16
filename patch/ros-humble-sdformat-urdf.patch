@@ -1,18 +1,26 @@
-From 827163b79dc338ce23886559c24ca81b03c8468e Mon Sep 17 00:00:00 2001
-From: Silvio Traversaro <silvio@traversaro.it>
-Date: Tue, 7 Nov 2023 10:01:39 +0100
-Subject: [PATCH] Create sdformat_urdf_plugin as SHARED instead of MODULE for
- macOS compatibility
+From c7c75fd018aabd40ee8ac9bf4693dfeffd9ff012 Mon Sep 17 00:00:00 2001
+From: Olivier Roussel <olivier.roussel@inria.fr>
+Date: Tue, 3 Mar 2026 20:45:01 +0100
+Subject: [PATCH] patch ros humble
 
 ---
- sdformat_urdf/CMakeLists.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ CMakeLists.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5c82e21..e1026c2 100644
+index a6923d6..377a599 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -69,7 +69,9 @@ target_include_directories(sdformat_urdf
+@@ -15,7 +15,7 @@ find_package(ament_cmake_ros REQUIRED)
+ find_package(pluginlib REQUIRED)
+ find_package(rcutils REQUIRED)
+ find_package(sdformat12 REQUIRED)
+-find_package(urdfdom_headers 1.0.6 REQUIRED)
++find_package(urdfdom_headers REQUIRED)
+ find_package(urdf_parser_plugin REQUIRED)
+ find_package(tinyxml2_vendor REQUIRED)
+ find_package(TinyXML2 REQUIRED)
+@@ -38,7 +38,9 @@ target_include_directories(sdformat_urdf
  )
  
  # Add sdformat_urdf_plugin module library
@@ -23,3 +31,6 @@ index 5c82e21..e1026c2 100644
    src/sdformat_urdf_plugin.cpp
  )
  target_link_libraries(sdformat_urdf_plugin PRIVATE
+-- 
+2.43.0
+

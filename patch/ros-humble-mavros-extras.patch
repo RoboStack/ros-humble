@@ -23,7 +23,7 @@ index 5cb1fae47..cd5eee700 100644
  )
  pluginlib_export_plugin_description_file(mavros mavros_plugins.xml)
 +# Link GeographicLib - not handled by ament_target_dependencies
-+target_link_libraries(mavros_extras_plugins ${GeographicLib_LIBRARIES})
++target_link_libraries(mavros_extras_plugins PUBLIC ${GeographicLib_LIBRARIES})
 
  add_library(mavros_extras SHARED
    # [[[cog:

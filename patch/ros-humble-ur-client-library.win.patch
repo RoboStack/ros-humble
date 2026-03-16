@@ -32,10 +32,10 @@ index 7745da9..ebf128e 100644
  
  namespace urcl
 diff --git a/include/ur_client_library/control/reverse_interface.h b/include/ur_client_library/control/reverse_interface.h
-index e68acd9..aa9d1c1 100644
+index 82202079..4322d023 100644
 --- a/include/ur_client_library/control/reverse_interface.h
 +++ b/include/ur_client_library/control/reverse_interface.h
-@@ -29,13 +29,13 @@
+@@ -29,6 +29,7 @@
  #ifndef UR_CLIENT_LIBRARY_REVERSE_INTERFACE_H_INCLUDED
  #define UR_CLIENT_LIBRARY_REVERSE_INTERFACE_H_INCLUDED
  
@@ -43,13 +43,14 @@ index e68acd9..aa9d1c1 100644
  #include "ur_client_library/comm/tcp_server.h"
  #include "ur_client_library/comm/control_mode.h"
  #include "ur_client_library/types.h"
- #include "ur_client_library/log.h"
+@@ -36,7 +37,6 @@
  #include "ur_client_library/ur/robot_receive_timeout.h"
+ #include "ur_client_library/ur/version_information.h"
  #include <cstring>
 -#include <endian.h>
  #include <condition_variable>
+ #include <list>
  
- namespace urcl
 diff --git a/include/ur_client_library/endian.h b/include/ur_client_library/endian.h
 new file mode 100644
 index 0000000..9c5500b
