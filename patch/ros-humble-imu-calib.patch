@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0115283..c036ddc 100644
+index 0115283..e52a656 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -20,18 +20,6 @@ find_package(eigen3_cmake_module REQUIRED)
@@ -21,7 +21,16 @@ index 0115283..c036ddc 100644
  # === Build shared library from core components ===
  add_library(imu_calib_lib
    src/apply_calib.cpp
-@@ -44,20 +32,23 @@ target_include_directories(imu_calib_lib PUBLIC
+@@ -39,25 +27,32 @@ add_library(imu_calib_lib
+   src/do_calib.cpp  
+ )
+ 
++set_target_properties(imu_calib_lib PROPERTIES
++  WINDOWS_EXPORT_ALL_SYMBOLS ON
++)
++
+ target_include_directories(imu_calib_lib PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
    $<INSTALL_INTERFACE:include>
  )
  
