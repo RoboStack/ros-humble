@@ -105,13 +105,3 @@ lbr_fri_idl:
   url: https://github.com/lbr-stack/lbr_fri_idl.git
   rev: e422bff2b3d70ec47853145b35645980df623a60
   version: 1.5.0
-kinematics_interface:
-  url: https://github.com/ros-controls/kinematics_interface.git
-  rev: 7285c88693ae612cfdb1952e5344f9b9a6998ba2
-  version: 0.4.0
-  additional_folder: kinematics_interface
-kinematics_interface_kdl:
-  url: https://github.com/ros-controls/kinematics_interface.git
-  rev: 7285c88693ae612cfdb1952e5344f9b9a6998ba2
-  version: 0.4.0
-  additional_folder: kinematics_interface_kdl
