@@ -71,6 +71,10 @@ libfranka:
   generate_dummy_package_with_run_deps:
     dep_name: libfranka
     max_pin: 'x.x.x'
+apriltag:
+  generate_dummy_package_with_run_deps:
+    dep_name: apriltag
+    max_pin: 'x.x.x'
 ignition_cmake2_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 ignition_math6_vendor:
