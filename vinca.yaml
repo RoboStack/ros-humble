@@ -344,7 +344,7 @@ packages_select_by_deps:
       - rclc_examples
       - ptz_action_server_msgs
       - py_trees
-  
+
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
       # IntelRealSense
@@ -527,4 +527,4 @@ packages_select_by_deps:
       # mocap4r2
       - mocap4r2_control
       - mocap4r2_control_msgs
-
+      - pinocchio
