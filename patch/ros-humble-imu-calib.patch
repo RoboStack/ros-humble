@@ -1,33 +1,53 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0115283..c036ddc 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
- )
+@@ -20,18 +20,6 @@ find_package(eigen3_cmake_module REQUIRED)
+ find_package(Eigen3 REQUIRED)
+ find_package(ament_cmake_python REQUIRED)
  
- find_package(Eigen REQUIRED)
--pkg_check_modules(YAML yaml-cpp)
-+find_package(yaml-cpp REQUIRED)
- 
- ###################################
- ## catkin specific configuration ##
-@@ -28,15 +28,16 @@ include_directories(include)
- include_directories(
-   ${catkin_INCLUDE_DIRS}
-   ${Eigen_INCLUDE_DIRS}
--  ${YAML_INCLUDEDIR}
- )
- 
- # accel_calib library
- add_library(accel_calib
-   src/accel_calib/accel_calib.cpp
- )
--target_link_libraries(accel_calib
--  ${YAML_LIBRARIES}
+-# Set common dependencies in a variable
+-set(imu_calib_deps
+-  rclcpp
+-  sensor_msgs
+-  std_msgs
+-  yaml-cpp
+-  Eigen3
 -)
-+if(TARGET yaml-cpp::yaml-cpp)
-+  target_link_libraries(accel_calib yaml-cpp::yaml-cpp)
-+else()
-+  target_link_libraries(accel_calib yaml-cpp)
-+endif()
+-
+-# Include directories (global)
+-include_directories(include)
+-
+ # === Build shared library from core components ===
+ add_library(imu_calib_lib
+   src/apply_calib.cpp
+@@ -44,20 +32,23 @@ target_include_directories(imu_calib_lib PUBLIC
+   $<INSTALL_INTERFACE:include>
+ )
  
- # do_calib node
- add_executable(do_calib src/do_calib_node.cpp src/do_calib.cpp)
+-target_link_libraries(imu_calib_lib yaml-cpp)
+-ament_target_dependencies(imu_calib_lib ${imu_calib_deps})
++target_link_libraries(imu_calib_lib PUBLIC
++  rclcpp::rclcpp
++  ${sensor_msgs_TARGETS}
++  ${std_msgs_TARGETS}
++  Eigen3::Eigen
++  yaml-cpp::yaml-cpp
++)
+ 
+ # === Build executables ===
+ 
+ # apply_calib_node
+ add_executable(apply_calib_node src/apply_calib_node.cpp)
+-target_link_libraries(apply_calib_node imu_calib_lib)
+-ament_target_dependencies(apply_calib_node ${imu_calib_deps})
++target_link_libraries(apply_calib_node PRIVATE imu_calib_lib)
+ 
+ # do_calib_node
+ add_executable(do_calib_node src/do_calib_node.cpp)
+-target_link_libraries(do_calib_node imu_calib_lib)
+-ament_target_dependencies(do_calib_node ${imu_calib_deps})
++target_link_libraries(do_calib_node PRIVATE imu_calib_lib)
+ 
+ 
+ 
