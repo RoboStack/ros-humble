@@ -1,0 +1,62 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0115283..e52a656 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -20,18 +20,6 @@ find_package(eigen3_cmake_module REQUIRED)
+ find_package(Eigen3 REQUIRED)
+ find_package(ament_cmake_python REQUIRED)
+ 
+-# Set common dependencies in a variable
+-set(imu_calib_deps
+-  rclcpp
+-  sensor_msgs
+-  std_msgs
+-  yaml-cpp
+-  Eigen3
+-)
+-
+-# Include directories (global)
+-include_directories(include)
+-
+ # === Build shared library from core components ===
+ add_library(imu_calib_lib
+   src/apply_calib.cpp
+@@ -39,25 +27,32 @@ add_library(imu_calib_lib
+   src/do_calib.cpp  
+ )
+ 
++set_target_properties(imu_calib_lib PROPERTIES
++  WINDOWS_EXPORT_ALL_SYMBOLS ON
++)
++
+ target_include_directories(imu_calib_lib PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+   $<INSTALL_INTERFACE:include>
+ )
+ 
+-target_link_libraries(imu_calib_lib yaml-cpp)
+-ament_target_dependencies(imu_calib_lib ${imu_calib_deps})
++target_link_libraries(imu_calib_lib PUBLIC
++  rclcpp::rclcpp
++  ${sensor_msgs_TARGETS}
++  ${std_msgs_TARGETS}
++  Eigen3::Eigen
++  yaml-cpp::yaml-cpp
++)
+ 
+ # === Build executables ===
+ 
+ # apply_calib_node
+ add_executable(apply_calib_node src/apply_calib_node.cpp)
+-target_link_libraries(apply_calib_node imu_calib_lib)
+-ament_target_dependencies(apply_calib_node ${imu_calib_deps})
++target_link_libraries(apply_calib_node PRIVATE imu_calib_lib)
+ 
+ # do_calib_node
+ add_executable(do_calib_node src/do_calib_node.cpp)
+-target_link_libraries(do_calib_node imu_calib_lib)
+-ament_target_dependencies(do_calib_node ${imu_calib_deps})
++target_link_libraries(do_calib_node PRIVATE imu_calib_lib)
+ 
+ 
+ 
