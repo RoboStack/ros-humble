@@ -1,0 +1,33 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
+ )
+ 
+ find_package(Eigen REQUIRED)
+-pkg_check_modules(YAML yaml-cpp)
++find_package(yaml-cpp REQUIRED)
+ 
+ ###################################
+ ## catkin specific configuration ##
+@@ -28,15 +28,16 @@ include_directories(include)
+ include_directories(
+   ${catkin_INCLUDE_DIRS}
+   ${Eigen_INCLUDE_DIRS}
+-  ${YAML_INCLUDEDIR}
+ )
+ 
+ # accel_calib library
+ add_library(accel_calib
+   src/accel_calib/accel_calib.cpp
+ )
+-target_link_libraries(accel_calib
+-  ${YAML_LIBRARIES}
+-)
++if(TARGET yaml-cpp::yaml-cpp)
++  target_link_libraries(accel_calib yaml-cpp::yaml-cpp)
++else()
++  target_link_libraries(accel_calib yaml-cpp)
++endif()
+ 
+ # do_calib node
+ add_executable(do_calib src/do_calib_node.cpp src/do_calib.cpp)
