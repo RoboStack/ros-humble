@@ -242,7 +242,6 @@ packages_select_by_deps:
       - ros_ign
       # *** Vendor packages ***
       - graph_msgs          # PickNik Robotics
-      - apriltag            # AprilRobotics
       - ur_robot_driver     # Universal Robots
       - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
       - stubborn_buddies    # Open RMF
