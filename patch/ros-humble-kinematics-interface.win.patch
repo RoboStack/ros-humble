@@ -1,7 +1,7 @@
-diff --git a/kinematics_interface/CMakeLists.txt b/kinematics_interface/CMakeLists.txt
-index 27a6269..2a1a3ef 100644
---- a/kinematics_interface/CMakeLists.txt
-+++ b/kinematics_interface/CMakeLists.txt
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 88eaf9e..f0dbffd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
 @@ -5,6 +5,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
    add_compile_options(-Wall -Wextra -Wpedantic)
  endif()
