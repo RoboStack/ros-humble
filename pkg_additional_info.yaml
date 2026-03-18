@@ -157,3 +157,22 @@ proxsuite:
     dep_name: proxsuite
     max_pin: 'x.x'
     override_version: '0.7.2'
+
+# remember on next rebuild to remove build number override
+apriltag:
+  build_number: 16
+  generate_dummy_package_with_run_deps:
+    dep_name: apriltag
+    max_pin: 'x.x.x'
+apriltag_ros:
+  build_number: 16
+apriltag_draw:
+  build_number: 16
+apriltag_tools:
+  build_number: 16
+apriltag_detector_umich:
+  build_number: 16
+apriltag_detector_mit:
+  build_number: 16
+apriltag_detector:
+  build_number: 16
