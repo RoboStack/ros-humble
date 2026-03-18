@@ -509,3 +509,23 @@ packages_select_by_deps:
       - mocap4r2_control
       - mocap4r2_control_msgs
       - pinocchio
+
+      # requested in https://github.com/RoboStack/ros-humble/issues/352
+      - lbr_bringup
+      - lbr_demos_advanced_cpp
+      - lbr_demos_advanced_py
+      - lbr_demos_cpp
+      - lbr_demos_py
+      - lbr_moveit
+      - lbr_moveit_cpp
+      - lbr_description
+      - lbr_fri_ros2
+      - lbr_fri_ros2_stack
+      - iiwa14_moveit_config
+      - iiwa7_moveit_config
+      - med14_moveit_config
+      - med7_moveit_config
+      - lbr_ros2_control
+      - lbr_fri_idl
+      - kinematics_interface
+      - kinematics_interface_kdl

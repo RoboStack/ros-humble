@@ -83,5 +83,12 @@ libzenohcxx:
 libhwloc:
   - 2.12.2
 
+lbr_fri_client_sdk:
+  - '1.11'
+  - '1.14'
+  - '1.15'
+  - '1.16'
+  - '1.17'
+
 eigen_abi_devel:
   - '3.4.0'
