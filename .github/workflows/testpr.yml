@@ -93,7 +93,11 @@ jobs:
     - name: Check patches
       shell: bash -l {0}
       run: |
-        pixi run check-patches
+        if [ "${{ matrix.platform }}" = "emscripten-wasm32" ]; then
+          pixi run check-patches-emscripten
+        else
+          pixi run check-patches
+        fi
 
     - name: Restore build cache
       id: cache-restore
@@ -124,20 +128,17 @@ jobs:
       run: |
         ls ${{ matrix.folder_cache }} || true
 
-    - name: Build recipes [non emscripten]
+    - name: Build recipes
       shell: bash -l {0}
-      if: matrix.platform != 'emscripten-wasm32'
       run: |
         if [ "${{ runner.os }}" = "Windows" ]; then
           export VINCA_CUSTOM_CMAKE_BUILD_DIR='C:\x\'
         fi
-        pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
-
-    - name: Build recipes [emscripten]
-      shell: bash -l {0}
-      if: matrix.platform == 'emscripten-wasm32'
-      run: |
-        pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c conda-forge -c robostack-staging --skip-existing --test skip
+        if [ "${{ matrix.platform }}" = "emscripten-wasm32" ]; then
+          pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c conda-forge -c robostack-staging --skip-existing --test skip
+        else
+          pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
+        fi
 
     - name: See packages that will be saved in cache
       shell: bash -l {0}
