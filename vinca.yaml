@@ -10,7 +10,7 @@ build_number: 15
 
 mutex_package:
   name: "ros2-distro-mutex"
-  version: "0.8.1"
+  version: "0.8.0"
   upper_bound: "x.x"
   run_constraints:
     - libboost 1.88.*
@@ -20,9 +20,6 @@ mutex_package:
     - libprotobuf 6.33.5.*
     - vtk 9.5.2.*
     - krb5 1.21.*
-    - eigen 3.4.*
-
-trigger_new_versions: True
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

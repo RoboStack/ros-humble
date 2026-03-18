@@ -81,7 +81,7 @@ doxygen:
 draco:
   robostack: [draco]
 eigen:
-  robostack: [eigen]
+  robostack: [eigen, eigen-abi-devel]
 emacs:
   robostack: [emacs]
 festival:
