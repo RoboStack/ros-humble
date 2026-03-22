@@ -1,0 +1,41 @@
+diff --git a/controller_manager/src/controller_manager.cpp b/controller_manager/src/controller_manager.cpp
+index 6e088a2e..feca559f 100644
+--- a/controller_manager/src/controller_manager.cpp
++++ b/controller_manager/src/controller_manager.cpp
+@@ -94,7 +94,7 @@ bool controller_name_compare(const controller_manager::ControllerSpec & a, const
+  * \return true if interface has a controller name as prefix, false otherwise.
+  */
+ bool command_interface_is_reference_interface_of_controller(
+-  const std::string interface_name,
++  const std::string & interface_name,
+   const std::vector<controller_manager::ControllerSpec> & controllers,
+   controller_manager::ControllersListIterator & following_controller_it)
+ {
+@@ -146,7 +146,7 @@ bool command_interface_is_reference_interface_of_controller(
+  * empty.
+  */
+ std::vector<std::string> get_following_controller_names(
+-  const std::string controller_name,
++  const std::string & controller_name,
+   const std::vector<controller_manager::ControllerSpec> & controllers)
+ {
+   std::vector<std::string> following_controllers;
+@@ -208,7 +208,7 @@ std::vector<std::string> get_following_controller_names(
+  * empty.
+  */
+ std::vector<std::string> get_preceding_controller_names(
+-  const std::string controller_name,
++  const std::string & controller_name,
+   const std::vector<controller_manager::ControllerSpec> & controllers)
+ {
+   std::vector<std::string> preceding_controllers;
+@@ -1319,7 +1319,7 @@ controller_interface::return_type ControllerManager::switch_controller(
+   switch_params_.do_switch = true;
+   // wait until switch is finished
+   RCLCPP_DEBUG(get_logger(), "Requested atomic controller switch from realtime loop");
+-  std::unique_lock<std::mutex> switch_params_guard(switch_params_.mutex, std::defer_lock);
++  std::unique_lock<std::mutex> switch_params_guard(switch_params_.mutex);
+   if (!switch_params_.cv.wait_for(
+         switch_params_guard, switch_params_.timeout, [this] { return !switch_params_.do_switch; }))
+   {
+
