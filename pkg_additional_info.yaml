@@ -176,3 +176,5 @@ apriltag_detector_mit:
   build_number: 16
 apriltag_detector:
   build_number: 16
+controller_manager:
+  build_number: 16
