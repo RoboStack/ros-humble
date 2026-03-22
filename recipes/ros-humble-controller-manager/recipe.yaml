@@ -1,0 +1,125 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+
+package:
+  name: ros-humble-controller-manager
+  version: 2.53.1
+source:
+  git: https://github.com/ros2-gbp/ros2_control-release.git
+  tag: release/humble/controller_manager/2.53.1-1
+  target_directory: ros-humble-controller-manager/src/work
+  patches:
+    - patch/ros-humble-controller-manager.patch
+
+build:
+  script: ${{ '$RECIPE_DIR/build_ament_cmake.sh' if unix or wasm32 else '%RECIPE_DIR%\\bld_ament_cmake.bat' }}
+  number: 16
+  post_process:
+    - files:
+        - '*.pc'
+      regex: (?:-L|-I)?"?([^;\s]+/sysroot/)
+      replacement: $$(CONDA_BUILD_SYSROOT_S)
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/sysroot)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+    - files:
+        - '*.cmake'
+      regex: ([^;\s"]+/MacOSX\d*\.?\d*\.sdk)
+      replacement: $$ENV{CONDA_BUILD_SYSROOT}
+about:
+  license: Apache-2.0
+  summary: Description of controller_manager
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('c') }}
+    - if: target_platform!='emscripten-wasm32'
+      then:
+        - ${{ stdlib('c') }}
+    - ninja
+    - python
+    - setuptools
+    - git
+    - git-lfs
+    - if: unix
+      then:
+        - patch
+        - make
+        - coreutils
+    - if: win
+      then:
+        - m2-patch
+    - if: osx
+      then:
+        - tapi
+    - if: build_platform != target_platform
+      then:
+        - pkg-config
+    - cmake
+    - cython
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - numpy
+  host:
+    - if: build_platform == target_platform
+      then:
+        - pkg-config
+    - coverage
+    - numpy
+    - pip
+    - python
+    - ros-humble-ament-cmake
+    - ros-humble-ament-cmake-gen-version-h
+    - ros-humble-ament-cmake-gmock
+    - ros-humble-ament-cmake-pytest
+    - ros-humble-ament-cmake-python
+    - ros-humble-ament-index-cpp
+    - ros-humble-backward-ros
+    - ros-humble-controller-interface
+    - ros-humble-controller-manager-msgs
+    - ros-humble-generate-parameter-library
+    - ros-humble-hardware-interface
+    - ros-humble-hardware-interface-testing
+    - ros-humble-launch-testing
+    - ros-humble-libstatistics-collector
+    - ros-humble-lifecycle-msgs
+    - ros-humble-pluginlib
+    - ros-humble-rclcpp
+    - ros-humble-realtime-tools
+    - ros-humble-robot-state-publisher
+    - ros-humble-ros-environment
+    - ros-humble-ros-workspace
+    - ros-humble-ros2-control-test-assets
+    - ros-humble-ros2pkg
+    - ros-humble-std-msgs
+    - ros2-distro-mutex 0.8.* humble_*
+  run:
+    - python
+    - pyyaml
+    - ros-humble-ament-index-cpp
+    - ros-humble-backward-ros
+    - ros-humble-controller-interface
+    - ros-humble-controller-manager-msgs
+    - ros-humble-generate-parameter-library
+    - ros-humble-hardware-interface
+    - ros-humble-launch
+    - ros-humble-launch-ros
+    - ros-humble-launch-testing-ros
+    - ros-humble-libstatistics-collector
+    - ros-humble-lifecycle-msgs
+    - ros-humble-pluginlib
+    - ros-humble-rcl-interfaces
+    - ros-humble-rclcpp
+    - ros-humble-rclpy
+    - ros-humble-realtime-tools
+    - ros-humble-ros-workspace
+    - ros-humble-ros2param
+    - ros-humble-sensor-msgs
+    - ros-humble-std-msgs
+    - ros2-distro-mutex 0.8.* humble_*
