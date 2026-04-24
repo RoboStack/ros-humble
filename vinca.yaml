@@ -352,6 +352,8 @@ packages_select_by_deps:
       # IntelRealSense
       - librealsense2
 
+      - pointcloud_to_laserscan
+
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
     then:
@@ -431,7 +433,6 @@ packages_select_by_deps:
       # TODO on windows: fix iconv link issue
       - ffmpeg_image_transport
       - dual_laser_merger
-      - pointcloud_to_laserscan
       - laser_segmentation
       - rqt_tf_tree
       - rviz_satellite
