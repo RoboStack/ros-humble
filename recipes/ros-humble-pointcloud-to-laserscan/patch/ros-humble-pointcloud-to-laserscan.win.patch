@@ -1,0 +1,44 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d3c7c87..ea0e280 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3,6 +3,11 @@ project(pointcloud_to_laserscan)
+
+ find_package(ament_cmake REQUIRED)
+
++# MSVC does not define M_PI by default
++if(MSVC)
++  add_compile_definitions(_USE_MATH_DEFINES)
++endif()
++
+ find_package(laser_geometry REQUIRED)
+ find_package(message_filters REQUIRED)
+ find_package(rclcpp REQUIRED)
+diff --git a/src/laserscan_to_pointcloud_node.cpp b/src/laserscan_to_pointcloud_node.cpp
+index 0000000..0000001 100644
+--- a/src/laserscan_to_pointcloud_node.cpp
++++ b/src/laserscan_to_pointcloud_node.cpp
+@@ -49,7 +49,7 @@
+ #include <thread>
+ #include <utility>
+
+ #include "sensor_msgs/point_cloud2_iterator.hpp"
+-#include "tf2_sensor_msgs/tf2_sensor_msgs.h"
++#include "tf2_sensor_msgs/tf2_sensor_msgs.hpp"
+ #include "tf2_ros/create_timer_ros.h"
+
+ namespace pointcloud_to_laserscan
+diff --git a/src/pointcloud_to_laserscan_node.cpp b/src/pointcloud_to_laserscan_node.cpp
+index 0000000..0000001 100644
+--- a/src/pointcloud_to_laserscan_node.cpp
++++ b/src/pointcloud_to_laserscan_node.cpp
+@@ -49,7 +49,7 @@
+ #include <thread>
+ #include <utility>
+
+ #include "sensor_msgs/point_cloud2_iterator.hpp"
+-#include "tf2_sensor_msgs/tf2_sensor_msgs.h"
++#include "tf2_sensor_msgs/tf2_sensor_msgs.hpp"
+ #include "tf2_ros/create_timer_ros.h"
+
+ namespace pointcloud_to_laserscan
