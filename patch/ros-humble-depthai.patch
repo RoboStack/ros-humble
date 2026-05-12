@@ -1,0 +1,66 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Esteve Fernandez <esteve@apache.org>
+Date: Tue, 12 May 2026 14:01:42 +0100
+Subject: [PATCH] fix(depthai): keep Hunter cache in build tree and disable CURL
+
+Signed-off-by: Esteve Fernandez <esteve@apache.org>
+
+---
+ CMakeLists.txt                         |  2 ++
+ shared/depthai-bootloader-shared.cmake |  8 +++++---
+ shared/depthai-shared.cmake            |  8 +++++---
+ 3 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 049db26..9d7dd37 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -60,6 +60,8 @@ else()
+     message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+ endif()
+ 
++set(HUNTER_ROOT "${CMAKE_BINARY_DIR}/.hunter" CACHE PATH "Hunter package cache")
++set(DEPTHAI_ENABLE_CURL OFF CACHE BOOL "Enable CURL support" FORCE)
+ include("cmake/HunterGate.cmake")
+ HunterGate(
+     URL "https://github.com/cpp-pm/hunter/archive/9d9242b60d5236269f894efd3ddd60a9ca83dd7f.tar.gz"
+diff --git a/shared/depthai-bootloader-shared.cmake b/shared/depthai-bootloader-shared.cmake
+index c68df9d..4fe9622 100644
+--- a/shared/depthai-bootloader-shared.cmake
++++ b/shared/depthai-bootloader-shared.cmake
+@@ -29,9 +29,11 @@ if(GIT_FOUND AND NOT DEPTHAI_DOWNLOADED_SOURCES)
+             OUTPUT_VARIABLE statusCommit
+             ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE
+         )
+-        string(SUBSTRING ${statusCommit} 0 1 status)
+-        if("${status}" STREQUAL "-")
+-            message(FATAL_ERROR "Submodule 'depthai-bootloader-shared' not initialized/updated. Run 'git submodule update --init --recursive' first")
++        if(statusCommit)
++            string(SUBSTRING "${statusCommit}" 0 1 status)
++            if("${status}" STREQUAL "-")
++                message(FATAL_ERROR "Submodule 'depthai-bootloader-shared' not initialized/updated. Run 'git submodule update --init --recursive' first")
++            endif()
+         endif()
+     endif()
+ 
+-- 
+2.54.0
+diff --git a/shared/depthai-shared.cmake b/shared/depthai-shared.cmake
+index 548253d..713b263 100644
+--- a/shared/depthai-shared.cmake
++++ b/shared/depthai-shared.cmake
+@@ -35,9 +35,11 @@ if(GIT_FOUND AND NOT DEPTHAI_DOWNLOADED_SOURCES)
+             OUTPUT_VARIABLE statusCommit
+             ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE
+         )
+-        string(SUBSTRING ${statusCommit} 0 1 status)
+-        if("${status}" STREQUAL "-")
+-            message(FATAL_ERROR "Submodule 'depthai-shared' not initialized/updated. Run 'git submodule update --init --recursive' first")
++        if(statusCommit)
++            string(SUBSTRING "${statusCommit}" 0 1 status)
++            if("${status}" STREQUAL "-")
++                message(FATAL_ERROR "Submodule 'depthai-shared' not initialized/updated. Run 'git submodule update --init --recursive' first")
++            endif()
+         endif()
+     endif()
+ 

@@ -33,6 +33,12 @@ packages_skip_by_deps:
     then:
       - pendulum_control
       - rttest
+      - turtlebot4_base
+      - turtlebot4_bringup
+      - turtlebot4_diagnostics
+      - turtlebot4_robot
+      - turtlebot4_setup
+      - turtlebot4_tests
       - tlsf
       - tlsf_cpp
   - if: wasm32
@@ -75,6 +81,12 @@ packages_remove_from_deps:
     then:
       - pendulum_control
       - rttest
+      - turtlebot4_base
+      - turtlebot4_bringup
+      - turtlebot4_diagnostics
+      - turtlebot4_robot
+      - turtlebot4_setup
+      - turtlebot4_tests
       - tlsf
       - tlsf_cpp
   - if: wasm32
@@ -234,6 +246,25 @@ packages_select_by_deps:
       - turtlebot3
       - turtlebot3_simulations
       - turtlebot3_gazebo
+      - turtlebot4_base
+      - turtlebot4_bringup
+      - turtlebot4_cpp_tutorials
+      - turtlebot4_description
+      - turtlebot4_desktop
+      - turtlebot4_diagnostics
+      - turtlebot4_ignition_bringup
+      - turtlebot4_ignition_gui_plugins
+      - turtlebot4_ignition_toolbox
+      - turtlebot4_msgs
+      - turtlebot4_navigation
+      - turtlebot4_node
+      - turtlebot4_python_tutorials
+      - turtlebot4_robot
+      - turtlebot4_setup
+      - turtlebot4_simulator
+      - turtlebot4_tests
+      - turtlebot4_tutorials
+      - turtlebot4_viz
       # requested in https://github.com/RoboStack/ros-humble/issues/307
       - urdf_tutorial
       - geometry_tutorials

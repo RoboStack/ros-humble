@@ -1,0 +1,179 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Esteve Fernandez <esteve@apache.org>
+Date: Tue, 12 May 2026 14:02:58 +0100
+Subject: [PATCH] fix(turtlebot4-base): support both libgpiod 1 and 2
+
+Signed-off-by: Esteve Fernandez <esteve@apache.org>
+
+---
+ CMakeLists.txt                             |  7 ++++
+ include/turtlebot4_base/gpio_interface.hpp |  5 ++-
+ src/gpio_interface.cpp                     | 66 ++++++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6aeeea9..aeb64b4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -25,6 +25,12 @@ find_package(std_msgs REQUIRED)
+ find_package(sensor_msgs REQUIRED)
+ find_package(turtlebot4_msgs REQUIRED)
+ find_package(turtlebot4_node REQUIRED)
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(GPIOD REQUIRED libgpiod)
++
++if(NOT GPIOD_VERSION VERSION_LESS 2.0)
++  add_definitions(-DTURTLEBOT4_BASE_GPIOD_V2)
++endif()
+ 
+ find_library(gpiod_library NAMES libgpiod.so)
+ 
+@@ -32,6 +38,7 @@ find_library(gpiod_library NAMES libgpiod.so)
+ 
+ include_directories(
+   include
++  ${GPIOD_INCLUDE_DIRS}
+ )
+ 
+ add_library(${PROJECT_NAME}_lib
+diff --git a/include/turtlebot4_base/gpio_interface.hpp b/include/turtlebot4_base/gpio_interface.hpp
+index c25317e..b1b27a3 100644
+--- a/include/turtlebot4_base/gpio_interface.hpp
++++ b/include/turtlebot4_base/gpio_interface.hpp
+@@ -19,7 +19,6 @@
+ #ifndef TURTLEBOT4_BASE__GPIO_INTERFACE_HPP_
+ #define TURTLEBOT4_BASE__GPIO_INTERFACE_HPP_
+ 
+-#include <linux/gpio.h>
+ #include <gpiod.h>
+ 
+ #include <string>
+@@ -56,7 +55,11 @@ private:
+ 
+   gpiod_chip * chip_;
+ 
++#ifdef TURTLEBOT4_BASE_GPIOD_V2
++  std::map<uint8_t, gpiod_line_request *> lines_;
++#else
+   std::map<uint8_t, gpiod_line *> lines_;
++#endif
+ };
+ 
+ }  // namespace turtlebot4_base
+diff --git a/src/gpio_interface.cpp b/src/gpio_interface.cpp
+index 3127ba3..a21b977 100644
+--- a/src/gpio_interface.cpp
++++ b/src/gpio_interface.cpp
+@@ -50,7 +50,16 @@ GpioInterface::GpioInterface(const uint8_t & gpio_chip_number)
+  */
+ void GpioInterface::open_chip()
+ {
++#ifdef TURTLEBOT4_BASE_GPIOD_V2
++  std::string gpio_chip_path = gpio_chip_;
++  if (gpio_chip_path.empty() || gpio_chip_path.front() != '/') {
++    gpio_chip_path = "/dev/" + gpio_chip_path;
++  }
++
++  chip_ = gpiod_chip_open(gpio_chip_path.c_str());
++#else
+   chip_ = gpiod_chip_open_by_name(gpio_chip_.c_str());
++#endif
+ }
+ 
+ /**
+@@ -59,7 +68,11 @@ void GpioInterface::open_chip()
+ void GpioInterface::close_chip()
+ {
+   for (auto line : lines_) {
++#ifdef TURTLEBOT4_BASE_GPIOD_V2
++    gpiod_line_request_release(line.second);
++#else
+     gpiod_line_release(line.second);
++#endif
+   }
+ 
+   gpiod_chip_close(chip_);
+@@ -70,6 +83,47 @@ void GpioInterface::close_chip()
+  */
+ void GpioInterface::add_line(uint8_t line, GpioInterfaceLineDirection direction)
+ {
++#ifdef TURTLEBOT4_BASE_GPIOD_V2
++  unsigned int offset = line;
++  gpiod_request_config * request_config = gpiod_request_config_new();
++  gpiod_line_config * line_config = gpiod_line_config_new();
++  gpiod_line_settings * line_settings = gpiod_line_settings_new();
++
++  if (request_config == nullptr || line_config == nullptr || line_settings == nullptr) {
++    gpiod_request_config_free(request_config);
++    gpiod_line_config_free(line_config);
++    gpiod_line_settings_free(line_settings);
++    std::cerr << "Failed to configure GPIO Line" << std::endl;
++    return;
++  }
++
++  if (direction != LINE_DIRECTION_INPUT && direction != LINE_DIRECTION_OUTPUT) {
++    gpiod_request_config_free(request_config);
++    gpiod_line_config_free(line_config);
++    gpiod_line_settings_free(line_settings);
++    std::cerr << "Invalid GPIO Line Direction" << std::endl;
++    return;
++  }
++
++  gpiod_request_config_set_consumer(request_config, "Turtlebot4");
++  gpiod_line_settings_set_direction(line_settings, static_cast<gpiod_line_direction>(direction));
++  if (direction == LINE_DIRECTION_OUTPUT) {
++    gpiod_line_settings_set_output_value(line_settings, GPIOD_LINE_VALUE_INACTIVE);
++  }
++  gpiod_line_config_add_line_settings(line_config, &offset, 1, line_settings);
++
++  gpiod_line_request * gpio_line = gpiod_chip_request_lines(chip_, request_config, line_config);
++
++  gpiod_request_config_free(request_config);
++  gpiod_line_config_free(line_config);
++  gpiod_line_settings_free(line_settings);
++
++  if (gpio_line != nullptr) {
++    lines_.insert(std::pair<uint8_t, gpiod_line_request *>(line, gpio_line));
++  } else {
++    std::cerr << "Invalid GPIO Line" << std::endl;
++  }
++#else
+   gpiod_line * gpio_line = gpiod_chip_get_line(chip_, line);
+ 
+   if (gpio_line != nullptr) {
+@@ -86,6 +140,7 @@ void GpioInterface::add_line(uint8_t line, GpioInterfaceLineDirection direction)
+   } else {
+     std::cerr << "Invalid GPIO Line Direction" << std::endl;
+   }
++#endif
+ }
+ 
+ /**
+@@ -93,7 +148,14 @@ void GpioInterface::add_line(uint8_t line, GpioInterfaceLineDirection direction)
+  */
+ void GpioInterface::write(uint8_t line, uint8_t value)
+ {
++#ifdef TURTLEBOT4_BASE_GPIOD_V2
++  gpiod_line_request_set_value(
++    lines_[line],
++    line,
++    value ? GPIOD_LINE_VALUE_ACTIVE : GPIOD_LINE_VALUE_INACTIVE);
++#else
+   gpiod_line_set_value(lines_[line], value);
++#endif
+ }
+ 
+ /**
+@@ -101,5 +163,9 @@ void GpioInterface::write(uint8_t line, uint8_t value)
+  */
+ uint8_t GpioInterface::read(uint8_t line)
+ {
++#ifdef TURTLEBOT4_BASE_GPIOD_V2
++  return static_cast<uint8_t>(gpiod_line_request_get_value(lines_[line], line));
++#else
+   return gpiod_line_get_value(lines_[line]);
++#endif
+ }
+
+-- 
+2.54.0

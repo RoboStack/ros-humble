@@ -183,6 +183,11 @@ ignition-gazebo6:
     win64: [libignition-gazebo6]
 ignition-gui5:
   robostack: [libignition-gui5]
+ignition-gui6:
+  robostack:
+    linux: [libignition-gui6, libgl-devel]
+    osx: [libignition-gui6]
+    win64: [libignition-gui6]
 ignition-math6:
   robostack: [libignition-math6]
 ignition-msgs5:
@@ -191,6 +196,8 @@ ignition-msgs8:
   robostack: [libignition-msgs8]
 ignition-msgs7:
   robostack: [libignition-msgs7]
+ignition-plugin:
+  robostack: [libignition-plugin1]
 ignition-rendering5:
   robostack: [libignition-rendering5]
 ignition-transport8:
@@ -323,6 +330,11 @@ libgeos++-dev:
   robostack: [geos]
 libgflags-dev:
   robostack: [gflags]
+libgpiod-dev:
+  robostack:
+    linux: [libgpiod]
+    osx: []
+    win64: []
 libglew-dev:
   robostack: [glew]
 libglfw3-dev:
