@@ -75,6 +75,9 @@ packages_skip_by_deps:
       - ros_ign_gazebo
       - ros_ign_gazebo_demos
       - ros_ign_image
+      - gz_ros2_control
+      - ign_ros2_control
+      - ur_simulation_gz
 
 packages_remove_from_deps:
   - if: not linux
@@ -123,6 +126,9 @@ packages_remove_from_deps:
       - ros_ign_gazebo
       - ros_ign_gazebo_demos
       - ros_ign_image
+      - gz_ros2_control
+      - ign_ros2_control
+      - ur_simulation_gz
 
 packages_select_by_deps:
   # These are the packages that are build on all platforms, including wasm32
