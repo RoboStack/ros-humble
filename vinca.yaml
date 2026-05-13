@@ -77,6 +77,13 @@ packages_skip_by_deps:
       - ros_ign_image
       - gz_ros2_control
       - ign_ros2_control
+      - irobot_create_ignition_bringup
+      - irobot_create_ignition_plugins
+      - irobot_create_ignition_toolbox
+      - turtlebot4_ignition_bringup
+      - turtlebot4_ignition_gui_plugins
+      - turtlebot4_ignition_toolbox
+      - turtlebot4_simulator
       - ur_simulation_gz
 
 packages_remove_from_deps:
@@ -128,6 +135,13 @@ packages_remove_from_deps:
       - ros_ign_image
       - gz_ros2_control
       - ign_ros2_control
+      - irobot_create_ignition_bringup
+      - irobot_create_ignition_plugins
+      - irobot_create_ignition_toolbox
+      - turtlebot4_ignition_bringup
+      - turtlebot4_ignition_gui_plugins
+      - turtlebot4_ignition_toolbox
+      - turtlebot4_simulator
       - ur_simulation_gz
 
 packages_select_by_deps:
@@ -258,16 +272,12 @@ packages_select_by_deps:
       - turtlebot4_description
       - turtlebot4_desktop
       - turtlebot4_diagnostics
-      - turtlebot4_ignition_bringup
-      - turtlebot4_ignition_gui_plugins
-      - turtlebot4_ignition_toolbox
       - turtlebot4_msgs
       - turtlebot4_navigation
       - turtlebot4_node
       - turtlebot4_python_tutorials
       - turtlebot4_robot
       - turtlebot4_setup
-      - turtlebot4_simulator
       - turtlebot4_tests
       - turtlebot4_tutorials
       - turtlebot4_viz
@@ -484,6 +494,10 @@ packages_select_by_deps:
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/pull/320
       - ros_gz
+      - turtlebot4_ignition_bringup
+      - turtlebot4_ignition_gui_plugins
+      - turtlebot4_ignition_toolbox
+      - turtlebot4_simulator
       # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
       - grid_map
       # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator
