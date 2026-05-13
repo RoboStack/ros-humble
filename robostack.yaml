@@ -45,6 +45,11 @@ ca-certificates:
   robostack: [ca-certificates]
 cargo:
   robostack: [rust]
+chrony:
+  robostack:
+    linux: [chrony]
+    osx: [chrony]
+    win64: []
 clang-format:
   robostack: [clang-format]
 clang-tidy:
@@ -1050,6 +1055,11 @@ python3-yaml:
   robostack: [pyyaml]
 python3-zmq:
   robostack: [pyzmq]
+qml-module-qtquick-extras:
+  robostack:
+    linux: [qt-main, libopengl-devel, libgl-devel]
+    osx: [qt-main]
+    win64: [qt-main]
 qt5-image-formats-plugins:
   robostack:
     linux: [qt-main, libopengl-devel, libgl-devel]
