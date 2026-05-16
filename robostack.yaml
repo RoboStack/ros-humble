@@ -45,11 +45,6 @@ ca-certificates:
   robostack: [ca-certificates]
 cargo:
   robostack: [rust]
-chrony:
-  robostack:
-    linux: [chrony]
-    osx: [chrony]
-    win64: []
 clang-format:
   robostack: [clang-format]
 clang-tidy:

@@ -2,7 +2,10 @@
 rti-connext-dds-5.3.1:
   conda-forge: []
 
-# System service/runtime package used by TurtleBot 4 setup.
+# System service/runtime packages used by TurtleBot 4 setup.
+chrony:
+  robostack: []
+
 network-manager:
   robostack: []
 
