@@ -1,8 +1,8 @@
 tests:
   # Regression test for https://github.com/RoboStack/ros-humble/issues/274
   - script:
-    - if: osx and arm64
-      then: export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp && launch_test robot_state_publisher_smoke_test_launch.py
+    - if: osx
+      then: export ROS_LOCALHOST_ONLY=1 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp && launch_test robot_state_publisher_smoke_test_launch.py
       else: launch_test robot_state_publisher_smoke_test_launch.py
     requirements:
       run:
