@@ -357,7 +357,7 @@ packages_select_by_deps:
       - py_trees_ros
       - py_trees_js
       - py_trees_ros_viewer
-      - py_trees_ros_tutorial
+      - py_trees_ros_tutorials
 
     # These packages specifically don't work on windows
   - if: not win
