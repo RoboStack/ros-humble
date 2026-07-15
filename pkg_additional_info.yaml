@@ -167,3 +167,7 @@ apriltag:
   generate_dummy_package_with_run_deps:
     dep_name: apriltag
     max_pin: 'x.x.x'
+py_trees:
+  generate_dummy_package_with_run_deps:
+    dep_name: py-trees
+    max_pin: 'x.x.x'
