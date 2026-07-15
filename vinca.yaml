@@ -341,7 +341,6 @@ packages_select_by_deps:
       - rclc_lifecycle
       - rclc_examples
       - ptz_action_server_msgs
-      - py_trees
       # Requested in https://github.com/RoboStack/ros-humble/issues/394
       - zed-msgs
 
@@ -351,6 +350,14 @@ packages_select_by_deps:
       - librealsense2
 
       - pointcloud_to_laserscan
+
+      # py_trees stack
+      - py_trees
+      - py_trees_ros_interfaces
+      - py_trees_ros
+      - py_trees_js
+      - py_trees_ros_viewer
+      - py_trees_ros_tutorial
 
     # These packages specifically don't work on windows
   - if: not win
