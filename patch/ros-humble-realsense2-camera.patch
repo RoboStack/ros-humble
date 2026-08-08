@@ -1,0 +1,36 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 253b1412..07dd9be0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -15,6 +15,16 @@
+ cmake_minimum_required(VERSION 3.10)
+ project(realsense2_camera)
+ 
++# assume built-in pthreads on MacOS
++# credit https://github.com/alicevision/geogram/issues/2#issuecomment-536835320
++IF(APPLE)
++    set(CMAKE_THREAD_LIBS_INIT "-lpthread")
++    set(CMAKE_HAVE_THREADS_LIBRARY 1)
++    set(CMAKE_USE_WIN32_THREADS_INIT 0)
++    set(CMAKE_USE_PTHREADS_INIT 1)
++    set(THREADS_PREFER_PTHREAD_FLAG ON)
++ENDIF()
++
+ # Default to C99
+ if(NOT CMAKE_C_STANDARD)
+   set(CMAKE_C_STANDARD 99)
+@@ -36,7 +46,13 @@ option(USE_LIFECYCLE_NODE "Enable lifecycle nodes (ON/OFF)" OFF)
+ # Compiler Defense Flags
+ if(UNIX OR APPLE)
+   # Linker flags.
+-  if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Intel")
++  if (APPLE)
++    # macOS system linker (used by clang and gcc on macOS) doesn't support z flag
++    # -bind_at_load is passed to best mirror -z now, but noexecstack and relro
++    # don't really have an equivalent due to the default security behavior of macOS
++    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-bind_at_load")
++    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-bind_at_load")
++  elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Intel")
+     # GCC specific flags. ICC is compatible with them.
+     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -z noexecstack -z relro -z now")
+     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -z noexecstack -z relro -z now")
