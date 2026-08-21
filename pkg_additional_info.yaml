@@ -177,3 +177,5 @@ rosidl_cmake:
   build_number: 19
 ros2pkg:
   build_number: 19
+sensor_msgs:
+  build_number: 19
