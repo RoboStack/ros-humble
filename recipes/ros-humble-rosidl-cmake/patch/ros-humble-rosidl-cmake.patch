@@ -1,0 +1,83 @@
+diff --git a/rosidl_cmake/__init__.py b/rosidl_cmake/__init__.py
+--- a/rosidl_cmake/__init__.py
++++ b/rosidl_cmake/__init__.py
+@@ -20,6 +20,13 @@ import re
+ import sys
+ 
+ import em
++
++try:
++    from em import Configuration
++    em_has_configuration = True
++except ImportError:
++    em_has_configuration = False
++
+ from rosidl_parser.definition import IdlLocator
+ from rosidl_parser.parser import parse_idl_file
+ 
+@@ -146,20 +153,31 @@ def expand_template(
+         template_basepath = template_name.parent
+         template_name = template_name.name
+ 
+-    global interpreter
+-    output = StringIO()
+-    interpreter = em.Interpreter(
+-        output=output,
+-        options={
+-            em.BUFFERED_OPT: True,
+-            em.RAW_OPT: True,
+-        },
+-    )
+-
+     global template_prefix_path
+     template_prefix_path.append(template_basepath)
+     template_path = get_template_path(template_name)
+ 
++    global interpreter
++    output = StringIO()
++    if em_has_configuration:
++        config = Configuration(
++            defaultRoot=template_path,
++            defaultStdout=output,
++            deleteOnError=True,
++            rawErrors=True,
++            useProxy=True)
++        interpreter = em.Interpreter(
++            config=config,
++            dispatcher=False)
++    else:
++        interpreter = em.Interpreter(
++            output=output,
++            options={
++                em.BUFFERED_OPT: True,
++                em.RAW_OPT: True,
++            },
++        )
++
+     # create copy before manipulating
+     data = dict(data)
+     _add_helper_functions(data)
+@@ -169,7 +187,10 @@ def expand_template(
+             template_content = h.read()
+             interpreter.invoke(
+                 'beforeFile', name=template_name, file=h, locals=data)
+-        interpreter.string(template_content, template_path, locals=data)
++        if em_has_configuration:
++            interpreter.string(template_content, locals=data)
++        else:
++            interpreter.string(template_content, template_path, locals=data)
+         interpreter.invoke('afterFile')
+     except Exception as e:  # noqa: F841
+         if os.path.exists(output_file):
+@@ -218,7 +239,10 @@ def _expand_template(template_name, **kwargs):
+             'beforeInclude', name=str(template_path), file=h, locals=kwargs)
+         content = h.read()
+     try:
+-        interpreter.string(content, str(template_path), kwargs)
++        if em_has_configuration:
++            interpreter.string(content, locals=kwargs)
++        else:
++            interpreter.string(content, template_path, locals=kwargs)
+     except Exception as e:  # noqa: F841
+         print(f"{e.__class__.__name__} in template '{template_path}': {e}",
+               file=sys.stderr)
