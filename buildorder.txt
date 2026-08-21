@@ -1,0 +1,2 @@
+ros-humble-rosidl-adapter
+ros-humble-rosidl-cmake
