@@ -173,3 +173,7 @@ py_trees:
     max_pin: 'x.x.x'
 rosidl_adapter:
   build_number: 19
+rosidl_cmake:
+  build_number: 19
+ros2pkg:
+  build_number: 19
