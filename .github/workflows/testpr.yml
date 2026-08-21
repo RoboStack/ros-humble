@@ -120,9 +120,6 @@ jobs:
       shell: bash -l {0}
       run: |
         # rm -rf ${{ matrix.folder_cache }}/ros-humble-autoware-trajectory* 2>/dev/null || true
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-adapter* 2>/dev/null || true
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-cmake* 2>/dev/null || true
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-ros2pkg* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
@@ -140,8 +137,6 @@ jobs:
         if [ "${{ matrix.platform }}" = "emscripten-wasm32" ]; then
           pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c conda-forge -c robostack-staging --skip-existing --test skip
         else
-          pixi run rattler-build build --recipe-dir recipes/ros-humble-rosidl-adapter --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
-          pixi run rattler-build build --recipe-dir recipes/ros-humble-rosidl-cmake --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
           pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
         fi
 
