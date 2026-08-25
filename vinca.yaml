@@ -20,6 +20,7 @@ mutex_package:
     - libprotobuf 6.33.5.*
     - vtk 9.5.2.*
     - krb5 1.21.*
+    - gflags 2.2.*
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
@@ -130,19 +131,10 @@ packages_select_by_deps:
   - builtin_interfaces
   - rcutils
   - rcpputils
-  - roboplan  # requested in https://github.com/RoboStack/ros-rolling/issues/28
-  - roboplan_cartesian_planning
-  - roboplan_example_models
-  - roboplan_examples
-  - roboplan_oink
-  - roboplan_rrt
-  - roboplan_simple_ik
-  - roboplan_toppra
   - rosidl_runtime_c
   - rosidl_runtime_cpp
   - rosidl_typesupport_introspection_c
   - rosidl_typesupport_introspection_cpp
-  - toppra
   - yaml_cpp_vendor
   - osrf_testing_tools_cpp
 
@@ -368,6 +360,17 @@ packages_select_by_deps:
       - py_trees_js
       - py_trees_ros_viewer
       - py_trees_ros_tutorials
+
+      # roboplan, requested in https://github.com/RoboStack/ros-humble/issues/413
+      - roboplan
+      - roboplan_cartesian_planning
+      - roboplan_example_models
+      - roboplan_examples
+      - roboplan_oink
+      - roboplan_rrt
+      - roboplan_simple_ik
+      - roboplan_toppra
+      - toppra
 
     # These packages specifically don't work on windows
   - if: not win
