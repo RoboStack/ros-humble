@@ -105,23 +105,3 @@ lbr_fri_idl:
   url: https://github.com/lbr-stack/lbr_fri_idl.git
   rev: e422bff2b3d70ec47853145b35645980df623a60
   version: 1.5.0
-roboplan_ros_cpp:
-  tag: release/rolling/roboplan_ros_cpp/0.6.1-1
-  url: https://github.com/ros2-gbp/roboplan_ros-release.git
-  version: 0.6.1
-roboplan_ros_examples:
-  tag: release/rolling/roboplan_ros_examples/0.6.1-1
-  url: https://github.com/ros2-gbp/roboplan_ros-release.git
-  version: 0.6.1
-roboplan_ros_franka:
-  tag: release/rolling/roboplan_ros_franka/0.6.1-1
-  url: https://github.com/ros2-gbp/roboplan_ros-release.git
-  version: 0.6.1
-roboplan_ros_py:
-  tag: release/rolling/roboplan_ros_py/0.6.1-1
-  url: https://github.com/ros2-gbp/roboplan_ros-release.git
-  version: 0.6.1
-roboplan_ros_visualization:
-  tag: release/rolling/roboplan_ros_visualization/0.6.1-1
-  url: https://github.com/ros2-gbp/roboplan_ros-release.git
-  version: 0.6.1
