@@ -6,7 +6,7 @@ conda_index:
   - packages-ignore.yaml
 
 # Reminder for next full rebuild, the next build number should be 21
-build_number: 19
+build_number: 20
 
 mutex_package:
   name: "ros2-distro-mutex"

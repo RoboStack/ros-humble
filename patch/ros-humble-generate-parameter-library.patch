@@ -5,57 +5,64 @@ Subject: [PATCH] fix(generate_parameter_library): migrate tl_expected to libexpe
 
 Signed-off-by: Esteve Fernandez <esteve.fernandez@bonsairobotics.ai>
 ---
- cmake/generate_parameter_library.cmake  | 4 ++--
- generate_parameter_library-extras.cmake | 2 +-
- package.xml                             | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ cmake/generate_parameter_library.cmake  | 8 --------
+ generate_parameter_library-extras.cmake | 5 -----
+ package.xml                             | 5 -----
+ 3 files changed, 18 deletions(-)
 
 diff --git a/cmake/generate_parameter_library.cmake b/cmake/generate_parameter_library.cmake
-index b047ec4..6fe31e2 100644
+index 0e7ca5a..99262df 100644
 --- a/cmake/generate_parameter_library.cmake
 +++ b/cmake/generate_parameter_library.cmake
-@@ -96,10 +96,10 @@ macro(generate_parameter_library LIB_NAME YAML_FILE)
-     rclcpp_lifecycle::rclcpp_lifecycle
+@@ -97,19 +97,11 @@ macro(generate_parameter_library LIB_NAME YAML_FILE)
      rsl::rsl
      tcb_span::tcb_span
+     tl::expected
+-    # for backward compatibility
+-    # remove once this redirection is removed
+-    # https://github.com/PickNikRobotics/cpp_polyfills/pull/12
 -    tl_expected::tl_expected
-+    tl::expected
    )
    install(DIRECTORY ${LIB_INCLUDE_DIR} DESTINATION include)
--  ament_export_dependencies(fmt parameter_traits rclcpp rclcpp_lifecycle rsl tcb_span tl_expected)
-+  ament_export_dependencies(fmt parameter_traits rclcpp rclcpp_lifecycle rsl tcb_span tl-expected)
+   ament_export_dependencies(
+     fmt parameter_traits rclcpp rclcpp_lifecycle rsl tcb_span
+     tl-expected
+-    # for backward compatibility
+-    # remove once this redirection is removed
+-    # https://github.com/PickNikRobotics/cpp_polyfills/pull/12
+-    tl_expected
+   )
  endmacro()
  
- 
 diff --git a/generate_parameter_library-extras.cmake b/generate_parameter_library-extras.cmake
-index 452030d..30e80e8 100644
+index 00f0ab8..95efa6c 100644
 --- a/generate_parameter_library-extras.cmake
 +++ b/generate_parameter_library-extras.cmake
-@@ -32,6 +32,6 @@ find_package(rclcpp REQUIRED)
- find_package(rsl REQUIRED)
+@@ -32,11 +32,6 @@ find_package(rsl REQUIRED)
  find_package(rclcpp_lifecycle REQUIRED)
  find_package(tcb_span REQUIRED)
+ find_package(tl-expected REQUIRED)
+-# for backward compatibility
+-# remove once this redirection is removed
+-# https://github.com/PickNikRobotics/cpp_polyfills/pull/12
+-set(tl_expected_DEPRECATED_QUIET TRUE)
+ find_package(parameter_traits REQUIRED)
 -find_package(tl_expected REQUIRED)
-+find_package(tl-expected REQUIRED)
  
  include("${generate_parameter_library_DIR}/generate_parameter_library.cmake")
 diff --git a/package.xml b/package.xml
-index fcd4503..2971c44 100644
+index aaf29e8..2bb154f 100644
 --- a/package.xml
 +++ b/package.xml
-@@ -23,10 +23,10 @@
-   <buildtool_export_depend>generate_parameter_library_py</buildtool_export_depend>
- 
-   <depend>fmt</depend>
-+  <depend>libexpected-dev</depend>
-   <depend>parameter_traits</depend>
-   <depend>rclcpp</depend>
-   <depend>rclpy</depend>
-   <depend>rclcpp_lifecycle</depend>
-   <depend>rsl</depend>
+@@ -26,11 +26,6 @@
    <depend>tcb_span</depend>
--  <depend>tl_expected</depend>
+   <depend>libexpected-dev</depend>
  
+-  <!-- for backward compatibility -->
+-  <!-- remove once this redirection is removed -->
+-  <!-- https://github.com/PickNikRobotics/cpp_polyfills/pull/12 -->
+-  <depend>tl_expected</depend>
+-
    <export>
--- 
-2.54.0
+     <build_type>ament_cmake</build_type>
+     <rosdoc2>rosdoc2.yaml</rosdoc2>
