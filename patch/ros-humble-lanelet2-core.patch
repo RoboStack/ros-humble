@@ -343,3 +343,23 @@ index ad53b2f2..0d53f953 100644
      std::vector<TreeNode> nodes;
      nodes.reserve(primitives.size());
      std::transform(primitives.begin(), primitives.end(), std::back_inserter(nodes),
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -21,6 +21,7 @@
+ if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/custom.cmake")
+     include("${CMAKE_CURRENT_SOURCE_DIR}/custom.cmake")
+ endif()
+ 
+ find_package(AutoDeps REQUIRED COMPONENTS ${DEPENDEND_PACKAGES})
++find_package(Eigen3 REQUIRED CONFIG)
+ 
+@@ -54,6 +55,8 @@
+ mrt_add_library(${PROJECT_NAME}
+     INCLUDES ${PROJECT_HEADER_FILES_INC} ${PROJECT_SOURCE_FILES_INC}
+     SOURCES ${PROJECT_SOURCE_FILES_SRC}
+     )
++
++target_link_libraries(${PROJECT_NAME} PUBLIC Eigen3::Eigen)
+ 
+ #############
