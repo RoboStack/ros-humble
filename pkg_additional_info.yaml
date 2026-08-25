@@ -47,12 +47,14 @@ coal:
   generate_dummy_package_with_run_deps:
     dep_name: coal
     max_pin: 'x.x.x'
+    # ROS uses a custom versioning scheme; conda-forge is ahead
+    override_version: '3.0.4'
 eigenpy:
   generate_dummy_package_with_run_deps:
     dep_name: eigenpy
     max_pin: 'x.x.x'
     # the version in ros is not compatible with conda-forge's coal and hpp_fcl builds
-    override_version: '3.12.0'
+    override_version: '3.13.0'
 pinocchio:
   generate_dummy_package_with_run_deps:
     dep_name: pinocchio

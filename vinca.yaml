@@ -13,14 +13,13 @@ mutex_package:
   version: "0.10.0"
   upper_bound: "x.x"
   run_constraints:
-    - libboost 1.88.*
-    - libboost-devel 1.88.*
+    - libboost 1.90.*
+    - libboost-devel 1.90.*
     - pcl 1.15.1.*
     - gazebo 11.*
     - libprotobuf 6.33.5.*
-    - vtk 9.5.2.*
-    - krb5 1.21.*
-    - gflags 2.2.*
+    - vtk 9.6.2.*
+    - krb5 1.22.*
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml

@@ -5,7 +5,7 @@ foxglove_bridge:
 ros_ign_interfaces:
   add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
-  add_host: ["cartographer 2.*", "libboost-devel"]
+  add_host: ["cartographer 2.*", "libboost-devel", "ceres-solver * cpu*"]
 libyaml_vendor:
   add_host: ["yaml-cpp", "yaml"]
   add_run: ["yaml-cpp", "yaml"]
@@ -103,7 +103,7 @@ nav2_smac_planner:
 nav2_util:
   add_host: ["libboost-devel"]
 nav2_constrained_smoother:
-  add_host: ["${{ 'openblas' if win }}"]
+  add_host: ["${{ 'openblas' if win }}", "ceres-solver * cpu*"]
 nav2_mppi_controller:
   add_build: ["${{ 'clang <19' if osx }}"]
 ompl:
@@ -234,7 +234,7 @@ rmw_implementation:
     - "fmt"
 slam_toolbox:
   add_build: ["${{ 'qt-main' if (build_platform != target_platform) }}"]
-  add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}"]
+  add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}", "blas-devel", "ceres-solver * cpu*"]
 vision_msgs_rviz_plugins:
   add_build: ["${{ 'qt-main' if (build_platform != target_platform) }}"]
   add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}"]
