@@ -5,12 +5,12 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-# Reminder for next full rebuild, the next build number should be 20
-build_number: 18
+# Reminder for next full rebuild, the next build number should be 21
+build_number: 19
 
 mutex_package:
   name: "ros2-distro-mutex"
-  version: "0.9.0"
+  version: "0.10.0"
   upper_bound: "x.x"
   run_constraints:
     - libboost 1.88.*
@@ -130,10 +130,23 @@ packages_select_by_deps:
   - builtin_interfaces
   - rcutils
   - rcpputils
+  - roboplan  # requested in https://github.com/RoboStack/ros-rolling/issues/28
+  - roboplan_cartesian_planning
+  - roboplan_example_models
+  - roboplan_examples
+  - roboplan_oink
+  - roboplan_ros_cpp
+  - roboplan_ros_examples
+  - roboplan_ros_py
+  - roboplan_ros_visualization
+  - roboplan_rrt
+  - roboplan_simple_ik
+  - roboplan_toppra
   - rosidl_runtime_c
   - rosidl_runtime_cpp
   - rosidl_typesupport_introspection_c
   - rosidl_typesupport_introspection_cpp
+  - toppra
   - yaml_cpp_vendor
   - osrf_testing_tools_cpp
 

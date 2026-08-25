@@ -645,6 +645,8 @@ msgpack:
   robostack: [msgpack-python]
 muparser:
   robostack: [muparser]
+nanobind-dev:
+  robostack: [nanobind]
 netpbm:
   robostack:
     linux-aarch64: []

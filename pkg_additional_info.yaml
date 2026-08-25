@@ -58,7 +58,7 @@ pinocchio:
     dep_name: pinocchio
     max_pin: 'x.x.x'
     # the version on ros is outdated w.r.t. to the conda-forge one
-    override_version: '4.0.0'
+    override_version: '4.1.0'
 gtsam:
   generate_dummy_package_with_run_deps:
     dep_name: gtsam
@@ -161,8 +161,7 @@ proxsuite:
     dep_name: proxsuite
     max_pin: 'x.x'
     # the version on ros is outdated w.r.t. to the conda-forge one
-    override_version: '0.7.2'
-# remember on next rebuild to remove build number override
+    override_version: '0.7.3'
 apriltag:
   generate_dummy_package_with_run_deps:
     dep_name: apriltag
@@ -171,9 +170,39 @@ py_trees:
   generate_dummy_package_with_run_deps:
     dep_name: py-trees
     max_pin: 'x.x.x'
-rosidl_adapter:
-  build_number: 19
-rosidl_cmake:
-  build_number: 19
-ros2pkg:
-  build_number: 19
+roboplan:
+  generate_dummy_package_with_run_deps:
+    dep_name: roboplan-python
+    max_pin: 'x.x'
+roboplan-oink:
+  generate_dummy_package_with_run_deps:
+    dep_name: roboplan-oink-python
+    max_pin: 'x.x'
+roboplan_cartesian_planning:
+  generate_dummy_package_with_run_deps:
+    dep_name: roboplan-cartesian-planning-python
+    max_pin: 'x.x'
+roboplan_example_models:
+  generate_dummy_package_with_run_deps:
+    dep_name: roboplan-example-models-python
+    max_pin: 'x.x'
+roboplan_examples:
+  generate_dummy_package_with_run_deps:
+    dep_name: roboplan-examples-python
+    max_pin: 'x.x'
+roboplan_rrt:
+  generate_dummy_package_with_run_deps:
+    dep_name: roboplan-rrt-python
+    max_pin: 'x.x'
+roboplan_simple_ik:
+  generate_dummy_package_with_run_deps:
+    dep_name: roboplan-simple-ik-python
+    max_pin: 'x.x'
+roboplan_toppra:
+  generate_dummy_package_with_run_deps:
+    dep_name: roboplan-toppra-python
+    max_pin: 'x.x'
+toppra:
+  generate_dummy_package_with_run_deps:
+    dep_name: toppra-python
+    max_pin: 'x.x'
