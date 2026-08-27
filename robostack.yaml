@@ -89,6 +89,10 @@ festival:
     linux: [festival, festvox-kallpc16k]
     osx: []
     win64: []
+ffmpeg:
+  robostack: [ffmpeg]
+ffmpeg-dev:
+  robostack: [ffmpeg]
 # This is not available on Windows, and it is only
 # required by libcurl_vendor (see https://index.ros.org/d/file/)
 # but it is not actually used if libcurl is not compiled,
@@ -98,10 +102,6 @@ file:
     linux: [file]
     osx: [file]
     win64: []
-ffmpeg:
-  robostack: [ffmpeg]
-ffmpeg-dev:
-  robostack: [ffmpeg]
 flac:
   robostack: [libflac]
 flex:
@@ -159,19 +159,13 @@ gtk2:
   robostack: [gtk2]
 gtk3:
   robostack:
-    linux: [libglib, glib, gtk3, harfbuzz, libxcb, pthread-stubs, xorg-libxau, xorg-libxi,
-      xorg-libxrandr, xorg-libxcursor, xorg-libxtst, xorg-libxcomposite, xorg-libxdamage,
-      xorg-libxinerama, xorg-xineramaproto, epoxy, libgl-devel]
-    osx: [libglib, glib, gtk3, harfbuzz, libxcb, pthread-stubs, xorg-libxau, xorg-libxi,
-      xorg-libxrandr, xorg-libxcursor, xorg-libxtst, xorg-libxcomposite, xorg-libxdamage,
-      xorg-libxinerama, xorg-xineramaproto, epoxy]
-    win64: [libglib, glib, gtk3, harfbuzz, libxcb, pthread-stubs, xorg-libxau, xorg-libxi,
-      xorg-libxrandr, xorg-libxcursor, xorg-libxtst, xorg-libxcomposite, xorg-libxdamage,
-      xorg-libxinerama, xorg-xineramaproto, epoxy]
-ignition-common4:
-  robostack: [libignition-common4]
+    linux: [libglib, glib, gtk3, harfbuzz, libxcb, pthread-stubs, xorg-libxau, xorg-libxi, xorg-libxrandr, xorg-libxcursor, xorg-libxtst, xorg-libxcomposite, xorg-libxdamage, xorg-libxinerama, xorg-xineramaproto, epoxy, libgl-devel]
+    osx: [libglib, glib, gtk3, harfbuzz, libxcb, pthread-stubs, xorg-libxau, xorg-libxi, xorg-libxrandr, xorg-libxcursor, xorg-libxtst, xorg-libxcomposite, xorg-libxdamage, xorg-libxinerama, xorg-xineramaproto, epoxy]
+    win64: [libglib, glib, gtk3, harfbuzz, libxcb, pthread-stubs, xorg-libxau, xorg-libxi, xorg-libxrandr, xorg-libxcursor, xorg-libxtst, xorg-libxcomposite, xorg-libxdamage, xorg-libxinerama, xorg-xineramaproto, epoxy]
 ignition-cmake2:
   robostack: [libignition-cmake2]
+ignition-common4:
+  robostack: [libignition-common4]
 ignition-gazebo3:
   robostack: [libignition-gazebo5]
 ignition-gazebo5:
@@ -192,26 +186,26 @@ ignition-math6:
   robostack: [libignition-math6]
 ignition-msgs5:
   robostack: [libignition-msgs5]
-ignition-msgs8:
-  robostack: [libignition-msgs8]
 ignition-msgs7:
   robostack: [libignition-msgs7]
+ignition-msgs8:
+  robostack: [libignition-msgs8]
 ignition-plugin:
   robostack: [libignition-plugin1]
 ignition-rendering5:
   robostack: [libignition-rendering5]
-ignition-transport8:
-  robostack: [libignition-transport8]
 ignition-transport10:
   robostack: [libignition-transport10]
 ignition-transport11:
   robostack: [libignition-transport11]
+ignition-transport8:
+  robostack: [libignition-transport8]
+ipython3:
+  robostack: [ipython]
 java:
   robostack: [openjdk]
 jupyter-notebook:
   robostack: [notebook]
-ipython3:
-  robostack: [ipython]
 kitchen:
   robostack: [kitchen]
 lcov:
@@ -332,11 +326,6 @@ libgeos++-dev:
   robostack: [geos]
 libgflags-dev:
   robostack: [gflags]
-libgpiod-dev:
-  robostack:
-    linux: [libgpiod]
-    osx: []
-    win64: []
 libglew-dev:
   robostack: [glew]
 libglfw3-dev:
@@ -353,6 +342,11 @@ libgpgme-dev:
     linux: [gpgme]
     osx: [gpgme]
     win64: []
+libgpiod-dev:
+  robostack:
+    linux: [libgpiod]
+    osx: []
+    win64: []
 libgps:
   robostack: [gpsd]
 libgsl:
@@ -367,8 +361,6 @@ libhdf5-dev:
   robostack: [hdf5]
 libi2c-dev:
   robostack: [libi2c]
-liblttng-ust-dev:
-  robostack: ["${{ \"lttng-ust\" if linux }}"]
 libjpeg:
   robostack: [libjpeg-turbo]
 libjsoncpp:
@@ -377,6 +369,8 @@ libjsoncpp-dev:
   robostack: [jsoncpp]
 liblapack-dev:
   robostack: [liblapack]
+liblttng-ust-dev:
+  robostack: ["${{ \"lttng-ust\" if linux }}"]
 liblz4:
   robostack: [lz4]
 liblz4-dev:
@@ -463,9 +457,9 @@ libpqxx:
   robostack: [libpqxx]
 libpqxx-dev:
   robostack: [libpqxx]
-libqglviewer2-qt5:
-  robostack: [libqglviewer]
 libqglviewer-dev-qt5:
+  robostack: [libqglviewer]
+libqglviewer2-qt5:
   robostack: [libqglviewer]
 libqhull:
   robostack: [qhull]
@@ -530,12 +524,12 @@ libssl-dev:
   robostack: [openssl]
 libtheora:
   robostack: [libtheora]
+libtins-dev:
+  robostack: [libtins]
 libtool:
   robostack: [libtool]
 libturbojpeg:
   robostack: [libjpeg-turbo]
-libtins-dev:
-  robostack: [libtins]
 libudev-dev:
   robostack:
     linux: [libusb, libudev]
@@ -572,10 +566,12 @@ libvtk:
 libvtk-qt:
   robostack: [vtk]
 libvulkan-dev:
-  robostack: 
+  robostack:
     linux: [libvulkan-headers, libvulkan-loader]
     osx: []
     win64: [libvulkan-headers, libvulkan-loader]
+libwebsocketpp-dev:
+  robostack: [websocketpp]
 libx11:
   robostack:
     linux: [xorg-libx11, xorg-xorgproto, libopengl-devel, libgl-devel]
@@ -840,16 +836,24 @@ python3-docutils:
   robostack: [docutils]
 python3-empy:
   robostack: [empy]
+python3-fiona:
+  robostack: [fiona]
 python3-flake8:
   robostack: [flake8]
+python3-flake8-builtins:
+  robostack: [flake8-builtins]
 python3-flake8-comprehensions:
   robostack: [flake8-comprehensions]
+python3-flake8-docstrings:
+  robostack: [flake8-docstrings]
+python3-flake8-import-order:
+  robostack: [flake8-import-order]
+python3-flake8-quotes:
+  robostack: [flake8-quotes]
 python3-flask:
   robostack: [flask]
 python3-flask-cors:
   robostack: [flask-cors]
-python3-fiona:
-  robostack: [fiona]
 python3-future:
   robostack: [future]
 python3-gi:
@@ -965,8 +969,6 @@ python3-requests:
   robostack: [requests]
 python3-requests-oauthlib:
   robostack: [requests-oauthlib]
-python3-rtree:
-  robostack: [rtree]
 python3-rosdep:
   robostack: [rosdep]
 python3-rosdep-modules:
@@ -977,26 +979,28 @@ python3-rospkg:
   robostack: [rospkg]
 python3-rospkg-modules:
   robostack: [rospkg]
+python3-rtree:
+  robostack: [rtree]
 python3-ruamel.yaml:
   robostack: [ruamel.yaml]
 python3-ruff:
   robostack: [ruff]
 python3-scipy:
   robostack: [scipy]
+python3-semver:
+  robostack: [semver]
 python3-serial:
   robostack: [pyserial]
 python3-setproctitle:
   robostack: [setproctitle]
 python3-setuptools:
   robostack: [setuptools]
-python3-semver:
-  robostack: [semver]
+python3-shapely:
+  robostack: [shapely]
 python3-simplejson:
   robostack: [simplejson]
 python3-six:
   robostack: [six]
-python3-shapely:
-  robostack: [shapely]
 python3-skimage:
   robostack: [scikit-image]
 python3-sklearn:
@@ -1009,10 +1013,10 @@ python3-texttable:
   robostack: [texttable]
 python3-tk:
   robostack: [tk]
-python3-tornado:
-  robostack: [tornado]
 python3-toml:
   robostack: [toml]
+python3-tornado:
+  robostack: [tornado]
 python3-tqdm:
   robostack: [tqdm]
 python3-transforms3d:
@@ -1021,27 +1025,19 @@ python3-twisted:
   robostack: [twisted]
 python3-typeguard:
   robostack: [typeguard]
+python3-ujson:
+  robostack: [ujson]
 python3-unidiff:
   robostack: [unidiff]
 python3-usb:
   robostack: [pyusb]
-python3-ujson:
-  robostack: [ujson]
-python3-vcstool:
-  robostack: [vcstool]
-python3-flake8-docstrings:
-  robostack: [flake8-docstrings]
-python3-flake8-import-order:
-  robostack: [flake8-import-order]
-python3-flake8-builtins:
-  robostack: [flake8-builtins]
-python3-flake8-quotes:
-  robostack: [flake8-quotes]
 python3-uvloop:
   robostack:
     linux: [uvloop]
     osx: [uvloop]
     win64: []
+python3-vcstool:
+  robostack: [vcstool]
 python3-venv:
   robostack: [virtualenv, pip, pip-tools, setuptools]
 python3-websocket:
@@ -1114,14 +1110,14 @@ spacenavd:
   robostack: [libspnav]
 spdlog:
   robostack: [spdlog, fmt]
+sqlite3:
+  robostack: [sqlite 3.*]
 sshpass:
   robostack: [sshpass]
 subversion:
   robostack: [subversion]
 suitesparse:
   robostack: [suitesparse, blas-devel]
-sqlite3:
-  robostack: [sqlite 3.*]
 swig:
   robostack: [swig]
 sysstat:
@@ -1152,14 +1148,8 @@ uuid:
     win64: []
 virtualenv:
   robostack: [virtualenv]
-libwebsocketpp-dev:
-  robostack: [websocketpp]
 wget:
   robostack: [wget]
-xsimd:
-  robostack: [xsimd]
-xtensor:
-  robostack: [xtensor ==0.24.7]
 wx-common:
   robostack: [wxpython]
 wxpython:
@@ -1171,6 +1161,10 @@ x11-dev:
     linux: [xorg-libx11, libopengl-devel, libgl-devel]
     osx: [xorg-libx11]
     win64: [xorg-libx11]
+xsimd:
+  robostack: [xsimd]
+xtensor:
+  robostack: [xtensor ==0.24.7]
 yaml:
   robostack: [yaml, yaml-cpp]
 yaml-cpp:

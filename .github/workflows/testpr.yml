@@ -4,6 +4,7 @@ on:
 
 env:
   ROS_VERSION: 2
+  PYTHONIOENCODING: utf-8
   # Change to 'true' to enable the cache upload as artifacts
   SAVE_CACHE_AS_ARTIFACT: 'true'
   # Change to 'true' to ignore cache and force a full rebuild, but please restore to 'false' before merging
@@ -45,6 +46,12 @@ jobs:
     - uses: prefix-dev/setup-pixi@v0.9.4
       with:
         frozen: true
+
+    - name: Check sorting
+      if: matrix.platform == 'linux-64'
+      shell: bash -l {0}
+      run: |
+        pixi run sort --check
 
     - name: Long paths workarounds for win-64
       shell: bash -l {0}

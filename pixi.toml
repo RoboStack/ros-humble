@@ -23,7 +23,7 @@ git = "*"
 
 [pypi-dependencies]
 # This is tipically the latest commit on main branch
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "b5e03d1f397c576232effd48dd1dd4b790d90ea7" }
+vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "5104cd9" }
 # Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
 # (and regenerate the pixi.lock) once you push the modified commit to the repo
 #vinca = { path = "../vinca", editable = true }
@@ -35,6 +35,7 @@ check-patches = { cmd = "python check_patches_clean_apply.py", depends-on = ["ge
 create_snapshot = { cmd = "vinca-snapshot -d humble -o rosdistro_snapshot.yaml" }
 upload = "rattler-build upload anaconda -o robostack-staging -a $ANACONDA_API_TOKEN"
 build_continue_on_failure = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --continue-on-failure --skip-existing", depends-on = ["generate-recipes"] }
+sort = { cmd = "vinca-sort-vinca-lists {{ check }} vinca.yaml && vinca-sort-yaml-keys {{ check }} pkg_additional_info.yaml robostack.yaml rosdistro_additional_recipes.yaml", args = [{ arg = "check", default = "" }] }
 
 generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["remove-recipes"] }
 check-patches-emscripten = { cmd = "python check_patches_clean_apply.py", depends-on = ["generate-recipes-emscripten"] }
@@ -67,4 +68,3 @@ description = "Build a single package, from the ./recipes dir. Add the `ros-humb
       "--test", "skip"
       ]
   depends-on = ["generate-recipes-emscripten"]
-

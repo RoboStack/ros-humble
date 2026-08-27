@@ -11,21 +11,21 @@ dynmsg:
   # but it is used in rosdistro_additional_recipes.yaml to indicate if the
   # package to build is not in the root of the repository, but in a subfolder.
   additional_folder: dynmsg
-rmw_wasm_cpp:
-  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
-  url: https://github.com/ros2wasm/rmw_wasm.git
-  version: 0.0.2
-  additional_folder: rmw_wasm_cpp
-test_wasm:
-  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
-  url: https://github.com/ros2wasm/rmw_wasm.git
-  version: 0.0.2
-  additional_folder: test_wasm
-wasm_cpp:
-  rev: 15bc309ffd5ba2a2451cbe22864a8356da251e65
-  url: https://github.com/ros2wasm/rmw_wasm.git
-  version: 1.0.0
-  additional_folder: wasm_cpp
+iiwa14_moveit_config:
+  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
+  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
+  version: 0.3.0
+  additional_folder: lbr_moveit_config/iiwa14_moveit_config
+iiwa7_moveit_config:
+  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
+  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
+  version: 0.3.0
+  additional_folder: lbr_moveit_config/iiwa7_moveit_config
+lbr_bringup:
+  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
+  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
+  version: 2.2.2
+  additional_folder: lbr_bringup
 lbr_demos_advanced_cpp:
   url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
@@ -46,26 +46,15 @@ lbr_demos_py:
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
   version: 2.2.2
   additional_folder: lbr_demos/lbr_demos_py
-lbr_moveit:
-  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
-  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
-  version: 2.2.2
-  additional_folder: lbr_demos/lbr_moveit
-lbr_moveit_cpp:
-  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
-  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
-  version: 2.2.2
-  additional_folder: lbr_demos/lbr_moveit_cpp
-lbr_bringup:
-  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
-  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
-  version: 2.2.2
-  additional_folder: lbr_bringup
 lbr_description:
   url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
   version: 2.2.2
   additional_folder: lbr_description
+lbr_fri_idl:
+  url: https://github.com/lbr-stack/lbr_fri_idl.git
+  rev: e422bff2b3d70ec47853145b35645980df623a60
+  version: 1.5.0
 lbr_fri_ros2:
   url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
@@ -76,21 +65,21 @@ lbr_fri_ros2_stack:
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
   version: 2.2.2
   additional_folder: lbr_fri_ros2_stack
+lbr_moveit:
+  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
+  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
+  version: 2.2.2
+  additional_folder: lbr_demos/lbr_moveit
+lbr_moveit_cpp:
+  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
+  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
+  version: 2.2.2
+  additional_folder: lbr_demos/lbr_moveit_cpp
 lbr_ros2_control:
   url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
   version: 2.2.2
   additional_folder: lbr_ros2_control
-iiwa14_moveit_config:
-  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
-  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
-  version: 0.3.0
-  additional_folder: lbr_moveit_config/iiwa14_moveit_config
-iiwa7_moveit_config:
-  url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
-  rev: 2e932d4e062966afe216710a7cc2fe50a8099365
-  version: 0.3.0
-  additional_folder: lbr_moveit_config/iiwa7_moveit_config
 med14_moveit_config:
   url: https://github.com/lbr-stack/lbr_fri_ros2_stack.git
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
@@ -101,7 +90,18 @@ med7_moveit_config:
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
   version: 0.3.0
   additional_folder: lbr_moveit_config/med7_moveit_config
-lbr_fri_idl:
-  url: https://github.com/lbr-stack/lbr_fri_idl.git
-  rev: e422bff2b3d70ec47853145b35645980df623a60
-  version: 1.5.0
+rmw_wasm_cpp:
+  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
+  url: https://github.com/ros2wasm/rmw_wasm.git
+  version: 0.0.2
+  additional_folder: rmw_wasm_cpp
+test_wasm:
+  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
+  url: https://github.com/ros2wasm/rmw_wasm.git
+  version: 0.0.2
+  additional_folder: test_wasm
+wasm_cpp:
+  rev: 15bc309ffd5ba2a2451cbe22864a8356da251e65
+  url: https://github.com/ros2wasm/rmw_wasm.git
+  version: 1.0.0
+  additional_folder: wasm_cpp
