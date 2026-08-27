@@ -143,7 +143,7 @@ def main() -> int:
         print()
         missing = recipes - built
         print(
-            f"Recipe directories without built artifact on this platform: "
+            f"Recipe directories without built artifact on {platform} platform: "
             f"{len(missing)} out of {len(recipes)}"
         )
         if missing:
