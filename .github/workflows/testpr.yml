@@ -84,6 +84,11 @@ jobs:
         rm -rf /c/Strawberry
         rm -rf "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17763.0/"
 
+    - name: Disable git auto-maintenance in source caches
+      shell: bash -l {0}
+      run: |
+        git config --global maintenance.auto false
+
     - name: Generate recipes
       shell: bash -l {0}
       run: |
@@ -148,7 +153,8 @@ jobs:
 
     - name: Save build cache
       uses: actions/cache/save@v5
-      if: always()
+      # Save partial output when the build fails or is cancelled by the job timeout; do not save when it was skipped.
+      if: ${{ always() && (steps.build-recipes.outcome == 'success' || steps.build-recipes.outcome == 'failure' || steps.build-recipes.outcome == 'cancelled') }}
       with:
         path: |
           ${{ matrix.folder_cache }}
@@ -160,7 +166,8 @@ jobs:
         pixi run vinca-gha --platform ${{ matrix.platform }} --trigger-branch dummy_build_branch_as_it_is_unused -d ./recipes
 
     - name: Upload build cache as artifact
-      if: ${{ always() && env.SAVE_CACHE_AS_ARTIFACT == 'true' }}
+      # Keep artifacts consistent with the cache: retain partial output from failed or cancelled builds, but not skipped builds.
+      if: ${{ always() && env.SAVE_CACHE_AS_ARTIFACT == 'true' && (steps.build-recipes.outcome == 'success' || steps.build-recipes.outcome == 'failure' || steps.build-recipes.outcome == 'cancelled') }}
       uses: actions/upload-artifact@v6
       with:
         name: cache-${{ matrix.platform }}-${{ github.run_id }}
