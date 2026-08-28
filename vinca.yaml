@@ -461,100 +461,230 @@ packages_select_by_deps:
       # TODO on windows: fix iconv link issue
       - autoware_core_localization
       - autoware_ekf_localizer
+      - autoware_internal_localization_msgs
       - autoware_lanelet2_utils
       - autoware_motion_utils
       - autoware_osqp_interface
-      - autoware_pose_initializer
       # TODO on windows: cannot open pcl_io.lib
-      - autoware_qp_interface
+      - autoware_pose_initializer
       # A few compilation errors, solvable as the upstream project as a CI on Windows
       # requested in https://github.com/RoboStack/ros-humble/pull/205
+      - autoware_qp_interface
       - autoware_trajectory
-      - dual_laser_merger
       # Modern gz-sim integration is not supported on Humble on Windows, please
       # look to Jazzy or Kilted if you are interested in it, see
       # https://github.com/RoboStack/ros-humble/pull/320
-      - ffmpeg_image_transport
+      - cloudini_lib
       # Some nominmax/max macro problems on octomap-server, easy to fix with a bit of time
-      - foxglove_compressed_video_transport
+      - cloudini_ros
       # error C2338: static_assert failed: 'N4971 [rand.util.seedseq]/7 requires the value type of the iterator
       # to be an unsigned type that is at least 32-bit.' [%SRC_DIR%\build\g2o\examples\sphere\create_sphere.vcxproj]
-      - grid_map
+      - diagnostic_remote_logging
       # Windows error: error C3861: '__builtin_unreachable': identifier not found
-      - gz_ros2_control
+      - dual_laser_merger
       # Microstrain IMU Packages + dependencies
       # Fail on windows with FileTracker : error FTK1011: could not create the new file tracking log file: %SRC_DIR%
+      - ffmpeg_image_transport
+      - foxglove_compressed_video_transport
+      - grid_map
+      - gz_ros2_control
       - ign_ros2_control
-      - iiwa14_moveit_config
-      - iiwa7_moveit_config
-      - kinematics_interface
-      - kinematics_interface_kdl
       # IMRC Lab
       # Windows is failing with error C1083: Cannot open compiler generated file: ''
-      - laser_segmentation
+      - iiwa14_moveit_config
       # error C1083: Cannot open include file: 'rqt_gui_cpp/plugin.h'
-      - lbr_bringup
+      - iiwa7_moveit_config
       # Sick safety scanner packages
       # Werror passed on Windows
+      - kinematics_interface
+      - kinematics_interface_kdl
+      - laser_segmentation
+      # https://github.com/conda-forge/libspnav-feedstock is not available on Windows
+      - lbr_bringup
+      # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
       - lbr_demos_advanced_cpp
+      # aerostack2
       - lbr_demos_advanced_py
       - lbr_demos_cpp
-      # https://github.com/conda-forge/libspnav-feedstock is not available on Windows
       - lbr_demos_py
-      # unresolved external symbol "public: static struct QMetaObject const rviz_default_plugins::displays::MarkerNamespace::staticMetaObject"
       - lbr_description
-      # aerostack2
       - lbr_fri_idl
-      - lbr_fri_ros2
-      - lbr_fri_ros2_stack
-      - lbr_moveit
-      - lbr_moveit_cpp
       # mavros and mavlink (enabled on macOS for testing)
       # need updates for boost 1.88
       # - mavlink
       # - mavros
       # - mavros_extras
       # robotique grippers
+      - lbr_fri_ros2
+      - lbr_fri_ros2_stack
+      # Windows error: error C2765: 'function' : an explicit specialization of a function template cannot have any default arguments
+      - lbr_moveit
+      # depends on autoware_motion_utils
+      - lbr_moveit_cpp
       - lbr_ros2_control
       - libg2o
-      # Windows error: error C2765: 'function' : an explicit specialization of a function template cannot have any default arguments
-      - med14_moveit_config
-      # depends on autoware_motion_utils
-      - med7_moveit_config
-      - microstrain_inertial_description
-      - microstrain_inertial_driver
       # Windows error: error C2338: static_assert failed: 'First argument to logging macros must be an rclcpp::Logger'
-      - microstrain_inertial_examples
+      - mavlink
       # depends on autoware_ekf_localizer
-      - microstrain_inertial_msgs
+      - mavros
       # Windows error: error C3546: '...': there are no parameter packs available to expand
       # Windows error: error C2678: binary '|': no operator found which takes a left-hand operand of type 'ranges::transform_view<ranges::ref_view<const T>,Arg>'
+      - mavros_extras
+      - med14_moveit_config
+      - med7_moveit_config
+      - microstrain_inertial_description
+      # mocap4r2
+      - microstrain_inertial_driver
+      - microstrain_inertial_examples
+      - microstrain_inertial_msgs
+      # requested in https://github.com/RoboStack/ros-humble/issues/352
       - microstrain_inertial_rqt
       - mocap4r2_control
       - mocap4r2_control_msgs
+      - mocap4r2_dummy_driver
+      - mocap4r2_marker_publisher
+      - mocap4r2_marker_viz
+      - mocap4r2_marker_viz_srvs
+      - mocap4r2_robot_gt
+      - mocap4r2_robot_gt_msgs
       - motion_capture_tracking
-      # mocap4r2
       - moveit-hybrid-planning
       - moveit_py
+      - moveit_task_constructor_demo
+      - mujoco_ros2_control
+      - mujoco_ros2_control_demos
       - odom_to_tf_ros2
-      # requested in https://github.com/RoboStack/ros-humble/issues/352
+      - openvdb_vendor
+      - orbbec_camera
+      - orbbec_camera_msgs
+      - orbbec_description
+  - ament_cmake_clang_tidy
+  - ament_cmake_core
+  - autoware_adapi_v1_msgs
+  - autoware_adapi_version_msgs
+  - autoware_auto_msgs
+  - autoware_internal_debug_msgs
+  - autoware_internal_metric_msgs
+  - autoware_internal_perception_msgs
+  - autoware_internal_planning_msgs
+  - autoware_lanelet2_extension
+  - autoware_lanelet2_extension_python
+  - autoware_lint_common
+  - autoware_msgs
+  - autoware_utils_debug
+  - autoware_utils_diagnostics
+  - autoware_utils_geometry
+  - autoware_utils_logging
+  - autoware_utils_math
+  - autoware_utils_pcl
+  - autoware_utils_rclcpp
+  - autoware_utils_system
+  - autoware_utils_tf
+  - autoware_utils_uuid
+  - autoware_utils_visualization
+  - bondcpp
+  - can_msgs
+  - clearpath_common
+  - diagnostics
+  - foxglove_msgs
+  - gripper_controllers
+  - gz_ros2_control_demos
+  - irobot_create_common_bringup
+  - irobot_create_control
+  - irobot_create_description
+  - irobot_create_msgs
+  - irobot_create_nodes
+  - irobot_create_toolbox
+  - joy_teleop
+  - key_teleop
+  - magic_enum
+  - mavros_msgs
+  - mouse_teleop
+  - mujoco_ros2_control_msgs
+  - mujoco_vendor
+  - nmea_navsat_driver
+  - persist_parameter_server
+  - pick_ik
+  - picknik_ament_copyright
+  - point_cloud_transport_py
+  - proxsuite
+  - ros2_fmt_logger
+  - ros2_socketcan_msgs
+  - rqt_runtime_monitor
+  - rtabmap
+  - rviz_2d_overlay_msgs
+  - rviz_visual_tools
+  - sbg_driver
+  - sick_scan_xd
+  - smacc2_msgs
+  - tracetools
+  - tracetools_launch
+  - tracetools_trace
+  - ur_client_library
+  - urdf_launch
+  - if: not win
+    then:
       - ouster_ros
       - pinocchio
+      - plansys2_bringup
+      - plansys2_bt_actions
+  - if: linux
+    then:
+      - plansys2_core
+      - plansys2_domain_expert
+      - plansys2_executor
+      - plansys2_lifecycle_manager
+      - plansys2_msgs
+      - plansys2_pddl_parser
+      - plansys2_planner
+      - plansys2_popf_plan_solver
+      - plansys2_problem_expert
+      - plansys2_terminal
+      - plansys2_tools
       - plotjuggler
       - plotjuggler_ros
+      - popf
+      - proto2ros
       - realsense2-camera   # IntelRealSense
       - realsense2-description # IntelRealSense
+      - rmw_stats_shim
       - robotiq_controllers
       - robotiq_description
+      - ros2_medkit_beacon_common
+      - ros2_medkit_cmake
+      - ros2_medkit_diagnostic_bridge
+      - ros2_medkit_fault_manager
+      - ros2_medkit_fault_reporter
+      - ros2_medkit_gateway
+      - ros2_medkit_graph_provider
+      - ros2_medkit_integration_tests
+      - ros2_medkit_linux_introspection
+      - ros2_medkit_msgs
+      - ros2_medkit_param_beacon
+      - ros2_medkit_serialization
+      - ros2_medkit_topic_beacon
       - ros_gz
+      - rosgraph_monitor
+      - rosgraph_monitor_msgs
       - rqt_image_overlay
+      - rqt_mocap4r2_control
       - rqt_tf_tree
+      - rviz_2d_overlay_plugins
       - rviz_satellite
+      - septentrio_gnss_driver
       - sick_safetyscanners2
+  - if: not wasm32
+    then:
       - sick_safetyscanners2_interfaces
       - sick_safetyscanners_base
+      - smacc2
       - spacenav
+      - swri_console
+      - swri_serial_util
       - ur_simulation_gz
       - velodyne
       - velodyne_simulator  # Dataspeed Inc.
       - vision-msgs-rviz-plugins
+  - if: not wasm32 and not win
+    then:
+      - web_video_server
