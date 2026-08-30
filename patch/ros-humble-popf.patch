@@ -2,10 +2,14 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index a2ed58a..d4236d3 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -16,6 +16,9 @@ find_package(CoinUtils)
+@@ -2,0 +3,2 @@
++set(CMAKE_CXX_STANDARD 14)
++
+@@ -16,6 +16,10 @@ find_package(CoinUtils)
  find_package(Cbc)
  find_package(Cgl)
  
++find_package(OSI REQUIRED)
 +find_package(BISON REQUIRED)
 +find_package(FLEX REQUIRED)
 +
@@ -69,6 +73,103 @@ index a2ed58a..d4236d3 100644
 -ament_package()
 \ No newline at end of file
 +ament_package()
+diff --git a/src/popf/RPGBuilder.h b/src/popf/RPGBuilder.h
+--- a/src/popf/RPGBuilder.h
++++ b/src/popf/RPGBuilder.h
+@@ -44,7 +44,6 @@
+ #include "ptree.h"
+ 
+ #include <assert.h>
+-#include <values.h>
+ #include <math.h>
+ 
+ using namespace Inst;
+diff --git a/src/popf/minimalstate.h b/src/popf/minimalstate.h
+--- a/src/popf/minimalstate.h
++++ b/src/popf/minimalstate.h
+@@ -36,6 +36,5 @@
+ 
+ #include <float.h>  // Needed for DBL_MAX
+-#include <values.h>
+ 
+ using std::set;
+ using std::map;
+diff --git a/src/VALfiles/TimSupport.cpp b/src/VALfiles/TimSupport.cpp
+--- a/src/VALfiles/TimSupport.cpp
++++ b/src/VALfiles/TimSupport.cpp
+@@ -1554,8 +1554,10 @@ set<PropertySpace *> TIMAnalyser::relevant(pddl_type * tp)
+ namespace std
+ {
++#if !defined(_LIBCPP_VERSION)
+   template<>
+   struct iterator_traits<TIM::getConditionally<std::_Rb_tree_const_iterator<TIM::Property*> > >
+   {
+     typedef TIM::Property value_type;
+   };
++#endif
+ }
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -65,6 +65,7 @@ set(libParsePDDL_SRCS
+       ${CMAKE_CURRENT_BINARY_DIR}/pddl+.cpp
+       ${parsePDDL_SOURCE_DIR}/ptree.cpp
+       ${parsePDDL_SOURCE_DIR}/DebugWriteController.cpp
++      ${val_SOURCE_DIR}/ParserGlobals.cpp
+ )
+ 
+ add_library(ParsePDDL SHARED ${libParsePDDL_SRCS})
+diff --git a/src/VALfiles/ParserGlobals.cpp b/src/VALfiles/ParserGlobals.cpp
+new file mode 100644
+--- /dev/null
++++ b/src/VALfiles/ParserGlobals.cpp
+@@ -0,0 +1,12 @@
++#include "ptree.h"
++#include "FlexLexer.h"
++
++namespace VAL
++{
++parse_category * top_thing = NULL;
++analysis an_analysis;
++analysis * current_analysis = &an_analysis;
++yyFlexLexer * yfl = NULL;
++}
++
++char * current_filename = NULL;
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -151,6 +151,7 @@ set(popf_build_srcs
+ 
+ add_library(popfCommon SHARED ${popf_build_srcs})
+ target_link_libraries(popfCommon ParsePDDL Inst)
++target_link_libraries(popfCommon ${CBC_LIBRARY} ${CGL_LIBRARIES} ${OSICLP_LIBRARIES} ${OSI_LIBRARIES} ${CLP_LIBRARIES} ${COINUTILS_LIBRARIES})
+ 
+ install(TARGETS popfCommon ParsePDDL Inst
+  ARCHIVE DESTINATION lib
+diff --git a/src/cmake/modules/FindOSI.cmake b/src/cmake/modules/FindOSI.cmake
+--- a/src/cmake/modules/FindOSI.cmake
++++ b/src/cmake/modules/FindOSI.cmake
+@@ -7,7 +7,7 @@ endif (OSI_INCLUDES AND OSI_LIBRARIES)
+ 
+ find_path(OSI_INCLUDES
+   NAMES
+-  coin/config_osi.h
++  coin/OsiSolverInterface.hpp
+   PATHS
+   ${OSIDIR}/include
+   ${INCLUDE_INSTALL_DIR}
+diff --git a/src/popf/Popf.cpp b/src/popf/Popf.cpp
+--- a/src/popf/Popf.cpp
++++ b/src/popf/Popf.cpp
+@@ -31,6 +31,7 @@
+ #include "Popf.hpp"
+ 
+ #include <string>
++#include <unistd.h>
+ 
+ #include <cstdio>
+ #include <iostream>
 diff --git a/src/VALfiles/parse.cpp b/src/VALfiles/parse.cpp
 index b51c585..5880ffe 100644
 --- a/src/VALfiles/parse.cpp
