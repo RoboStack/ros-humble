@@ -688,3 +688,4 @@ packages_select_by_deps:
   - if: not wasm32 and not win
     then:
       - web_video_server
+
