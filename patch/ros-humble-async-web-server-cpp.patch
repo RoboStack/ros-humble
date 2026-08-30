@@ -1,0 +1,101 @@
+diff --git a/include/async_web_server_cpp/http_connection.hpp b/include/async_web_server_cpp/http_connection.hpp
+index 62ccd89..8b124c5 100644
+--- a/include/async_web_server_cpp/http_connection.hpp
++++ b/include/async_web_server_cpp/http_connection.hpp
+@@ -40,7 +40,7 @@ public:
+         ReadHandler;
+     typedef std::shared_ptr<const void> ResourcePtr;
+ 
+-    explicit HttpConnection(boost::asio::io_service& io_service,
++    explicit HttpConnection(boost::asio::io_context& io_context,
+                             HttpServerRequestHandler request_handler);
+ 
+     boost::asio::ip::tcp::socket& socket();
+@@ -79,7 +79,7 @@ private:
+     void handle_write(const boost::system::error_code& e,
+                       std::vector<ResourcePtr> resources);
+ 
+-    boost::asio::io_service::strand strand_;
++    boost::asio::io_context::strand strand_;
+     boost::asio::ip::tcp::socket socket_;
+     HttpServerRequestHandler request_handler_;
+     boost::array<char, 8192> buffer_;
+diff --git a/include/async_web_server_cpp/http_server.hpp b/include/async_web_server_cpp/http_server.hpp
+index f772f55..ee99c72 100644
+--- a/include/async_web_server_cpp/http_server.hpp
++++ b/include/async_web_server_cpp/http_server.hpp
+@@ -40,7 +40,7 @@ private:
+ 
+     void handle_accept(const boost::system::error_code& e);
+ 
+-    boost::asio::io_service io_service_;
++    boost::asio::io_context io_context_;
+     boost::asio::ip::tcp::acceptor acceptor_;
+     std::size_t thread_pool_size_;
+     std::vector<boost::shared_ptr<boost::thread>> threads_;
+diff --git a/src/http_connection.cpp b/src/http_connection.cpp
+index bcb77d4..bb43f8a 100644
+--- a/src/http_connection.cpp
++++ b/src/http_connection.cpp
+@@ -6,9 +6,9 @@
+ namespace async_web_server_cpp
+ {
+ 
+-HttpConnection::HttpConnection(boost::asio::io_service& io_service,
++HttpConnection::HttpConnection(boost::asio::io_context& io_context,
+                                HttpServerRequestHandler handler)
+-    : strand_(io_service), socket_(io_service), request_handler_(handler),
++    : strand_(io_context), socket_(io_context), request_handler_(handler),
+       write_in_progress_(false)
+ {
+ }
+diff --git a/src/http_server.cpp b/src/http_server.cpp
+index 2c1c4ea..322f5b9 100644
+--- a/src/http_server.cpp
++++ b/src/http_server.cpp
+@@ -8,14 +8,14 @@ namespace async_web_server_cpp
+ HttpServer::HttpServer(const std::string& address, const std::string& port,
+                        HttpServerRequestHandler request_handler,
+                        std::size_t thread_pool_size)
+-    : acceptor_(io_service_), thread_pool_size_(thread_pool_size),
++    : acceptor_(io_context_), thread_pool_size_(thread_pool_size),
+       request_handler_(request_handler)
+ {
+ 
+-    boost::asio::ip::tcp::resolver resolver(io_service_);
+-    boost::asio::ip::tcp::resolver::query query(
+-        address, port, boost::asio::ip::resolver_query_base::flags());
+-    boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
++    boost::asio::ip::tcp::resolver resolver(io_context_);
++    boost::asio::ip::tcp::resolver::results_type endpoints =
++        resolver.resolve(address, port);
++    boost::asio::ip::tcp::endpoint endpoint = *endpoints.begin();
+     acceptor_.open(endpoint.protocol());
+     acceptor_.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
+     acceptor_.bind(endpoint);
+@@ -33,14 +33,14 @@ void HttpServer::run()
+     for (std::size_t i = 0; i < thread_pool_size_; ++i)
+     {
+         boost::shared_ptr<boost::thread> thread(new boost::thread(
+-            boost::bind(&boost::asio::io_service::run, &io_service_)));
++            boost::bind(&boost::asio::io_context::run, &io_context_)));
+         threads_.push_back(thread);
+     }
+ }
+ 
+ void HttpServer::start_accept()
+ {
+-    new_connection_.reset(new HttpConnection(io_service_, request_handler_));
++    new_connection_.reset(new HttpConnection(io_context_, request_handler_));
+     acceptor_.async_accept(new_connection_->socket(),
+                            boost::bind(&HttpServer::handle_accept, this,
+                                        boost::asio::placeholders::error));
+@@ -62,7 +62,7 @@ void HttpServer::stop()
+         acceptor_.cancel();
+         acceptor_.close();
+     }
+-    io_service_.stop();
++    io_context_.stop();
+     // Wait for all threads in the pool to exit.
+     for (std::size_t i = 0; i < threads_.size(); ++i)
+         threads_[i]->join();
