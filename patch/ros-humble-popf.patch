@@ -4,16 +4,14 @@ index a2ed58a..d4236d3 100644
 +++ b/CMakeLists.txt
 @@ -2,0 +3,2 @@
 +set(CMAKE_CXX_STANDARD 14)
-+
-@@ -16,6 +16,10 @@ find_package(CoinUtils)
++@@ -16,6 +16,10 @@ find_package(CoinUtils)
  find_package(Cbc)
  find_package(Cgl)
  
 +find_package(OSI REQUIRED)
 +find_package(BISON REQUIRED)
 +find_package(FLEX REQUIRED)
-+
- set(val_SOURCE_DIR src/VALfiles)
++ set(val_SOURCE_DIR src/VALfiles)
  set(popf_SOURCE_DIR src/popf)
  set(parsePDDL_SOURCE_DIR ${val_SOURCE_DIR}/parsing)
 @@ -29,22 +32,11 @@ include_directories(
@@ -54,8 +52,7 @@ index a2ed58a..d4236d3 100644
  )
  
 +target_link_libraries(ParsePDDL ${FLEX_LIBRARIES})
-+
- add_library(Inst SHARED ${libInst_SRCS})
++ add_library(Inst SHARED ${libInst_SRCS})
  target_link_libraries(Inst ParsePDDL)
  
 @@ -129,6 +123,7 @@ add_executable(parser ${parser_SRCS})
@@ -126,16 +123,14 @@ new file mode 100644
 @@ -0,0 +1,12 @@
 +#include "ptree.h"
 +#include "FlexLexer.h"
-+
-+namespace VAL
+++namespace VAL
 +{
 +parse_category * top_thing = NULL;
 +analysis an_analysis;
 +analysis * current_analysis = &an_analysis;
 +yyFlexLexer * yfl = NULL;
 +}
-+
-+char * current_filename = NULL;
+++char * current_filename = NULL;
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
