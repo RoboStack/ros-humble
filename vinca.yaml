@@ -5,21 +5,21 @@ conda_index:
   - robostack.yaml
   - packages-ignore.yaml
 
-# Reminder for next full rebuild, the next build number should be 20
-build_number: 18
+# Reminder for next full rebuild, the next build number should be 21
+build_number: 20
 
 mutex_package:
   name: "ros2-distro-mutex"
-  version: "0.9.0"
+  version: "0.10.0"
   upper_bound: "x.x"
   run_constraints:
-    - libboost 1.88.*
-    - libboost-devel 1.88.*
+    - libboost 1.90.*
+    - libboost-devel 1.90.*
     - pcl 1.15.1.*
     - gazebo 11.*
     - libprotobuf 6.33.5.*
-    - vtk 9.5.2.*
-    - krb5 1.21.*
+    - vtk 9.6.2.*
+    - krb5 1.22.*
 
 patch_dir: patch
 rosdistro_snapshot: rosdistro_snapshot.yaml
@@ -35,15 +35,21 @@ packages_skip_by_deps:
       - ament_cmake_xmllint
       - ament_xmllint
       - mimick_vendor
+      - mujoco_ros2_control
+      - mujoco_ros2_control_demos
+      - mujoco_vendor
       - osrf_testing_tools_cpp
-  - if: wasm32
-    then:
       - pendulum_control
       - performance_test_fixture
       - rclc_examples
       - rmw_connextdds
+      - tlsf
+      - tlsf_cpp
+
+  # Dependencies unavailable when targeting WebAssembly.
+  - if: wasm32
+    then:
       - rmw_connextdds
-      - rmw_cyclonedds_cpp
       - rmw_cyclonedds_cpp
       - rmw_fastrtps_cpp
       - rmw_fastrtps_dds_common
@@ -53,23 +59,20 @@ packages_skip_by_deps:
       - ros_gz_bridge
       - ros_gz_image
       - ros_gz_sim
-  - if: win
-    then:
       - ros_gz_sim_demos
-      # Modern gz-sim integration is not supported on Humble on Windows, please
-      # look to Jazzy or Kilted if you are interested in it, see
-      # https://github.com/RoboStack/ros-humble/issues/68
       - ros_ign
       - ros_ign_bridge
       - ros_ign_gazebo
+
+  # Dependencies unavailable on Windows.
+  - if: win
+    then:
       - ros_ign_gazebo_demos
-      - ros_ign_image
+      - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
       - rosidl_typesupport_fastrtps_c
       - rosidl_typesupport_fastrtps_cpp
       - rttest
       - test_ros_gz_bridge
-      - tlsf
-      - tlsf_cpp
 
 packages_remove_from_deps:
 
@@ -78,15 +81,21 @@ packages_remove_from_deps:
       - ament_cmake_xmllint
       - ament_xmllint
       - mimick_vendor
+      - mujoco_ros2_control
+      - mujoco_ros2_control_demos
+      - mujoco_vendor
       - osrf_testing_tools_cpp
-  - if: wasm32
-    then:
       - pendulum_control
       - performance_test_fixture
       - rclc_examples
       - rmw_connextdds
+      - tlsf
+      - tlsf_cpp
+
+  # Dependencies unavailable when targeting WebAssembly.
+  - if: wasm32
+    then:
       - rmw_connextdds
-      - rmw_cyclonedds_cpp
       - rmw_cyclonedds_cpp
       - rmw_fastrtps_cpp
       - rmw_fastrtps_dds_common
@@ -96,23 +105,20 @@ packages_remove_from_deps:
       - ros_gz_bridge
       - ros_gz_image
       - ros_gz_sim
-  - if: win
-    then:
       - ros_gz_sim_demos
-      # Modern gz-sim integration is not supported on Humble on Windows, please
-      # look to Jazzy or Kilted if you are interested in it, see
-      # https://github.com/RoboStack/ros-humble/issues/68
       - ros_ign
       - ros_ign_bridge
       - ros_ign_gazebo
+
+  # Dependencies unavailable on Windows.
+  - if: win
+    then:
       - ros_ign_gazebo_demos
-      - ros_ign_image
+      - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
       - rosidl_typesupport_fastrtps_c
       - rosidl_typesupport_fastrtps_cpp
       - rttest
       - test_ros_gz_bridge
-      - tlsf
-      - tlsf_cpp
 
 packages_select_by_deps:
 
@@ -555,6 +561,8 @@ packages_select_by_deps:
       - mujoco_ros2_control_demos
       - odom_to_tf_ros2
       - openvdb_vendor
+  - if: linux
+    then:
       - orbbec_camera
       - orbbec_camera_msgs
       - orbbec_description
@@ -673,9 +681,9 @@ packages_select_by_deps:
       - rviz_satellite
       - septentrio_gnss_driver
       - sick_safetyscanners2
+      - sick_safetyscanners2_interfaces
   - if: not wasm32
     then:
-      - sick_safetyscanners2_interfaces
       - sick_safetyscanners_base
       - smacc2
       - spacenav

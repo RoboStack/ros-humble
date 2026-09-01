@@ -1,0 +1,59 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 958118e..8dba227 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -92,12 +92,12 @@ if (CMAKE_VERSION VERSION_LESS "3.1")
+ 		message(FATAL_ERROR "CMake version 3.1 or later is required to compile ${PROJECT_NAME} with Microsoft Visual C++")
+ 	endif ()
+ 	if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+-		set (CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
++		set (CMAKE_CXX_FLAGS "-std=c++14 ${CMAKE_CXX_FLAGS}")
+ 	else ()
+-		set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
++		set (CMAKE_CXX_FLAGS "-std=c++14 ${CMAKE_CXX_FLAGS}")
+ 	endif ()
+ else ()
+-	set (CMAKE_CXX_STANDARD 11)
++	set (CMAKE_CXX_STANDARD 14)
+ endif ()
+ 
+ include(GNUInstallDirs)
+@@ -163,9 +163,7 @@ if (USE_OPEN_MP)
+ 	if (OPENMP_FOUND)
+ 		target_compile_options(${LIB_NAME} PRIVATE -fopenmp ${OpenMP_CXX_FLAGS})
+ 		target_compile_definitions(${LIB_NAME} PRIVATE HAVE_OPENMP)
+-		if (CMAKE_COMPILER_IS_GNUCC)
+-			target_link_libraries(${LIB_NAME} PUBLIC gomp)
+-		endif()
++		target_link_libraries(${LIB_NAME} PUBLIC OpenMP::OpenMP_CXX)
+ 	endif()
+ endif()
+ 
+diff --git a/nabo/nabo.h b/nabo/nabo.h
+index c0cbd84..cced450 100644
+--- a/nabo/nabo.h
++++ b/nabo/nabo.h
+@@ -32,6 +32,8 @@
+ #ifndef __NABO_H
+ #define __NABO_H
+ 
++#include <cassert>
++
+ #include "Eigen/Core"
+ #if EIGEN_VERSION_AT_LEAST(2,92,0)
+ 	#define EIGEN3_API
+diff --git a/libnaboConfig.cmake.in b/libnaboConfig.cmake.in
+index c73d0aa..bdc00f5 100644
+--- a/libnaboConfig.cmake.in
++++ b/libnaboConfig.cmake.in
+@@ -1,5 +1,10 @@
+ # - Config file for the libnabo package
+ 
++if(@OPENMP_FOUND@)
++  include(CMakeFindDependencyMacro)
++  find_dependency(OpenMP)
++endif()
++
+ include(${CMAKE_CURRENT_LIST_DIR}/libnabo-targets.cmake)
+ 
+ # This causes catkin_simple to link against these libraries

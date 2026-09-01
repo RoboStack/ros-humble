@@ -15,9 +15,9 @@ pugixml:
 libopencv:
   - 4.13.0
 libxml2:
-  - 2.14.*
+  - '2.14'
 graphviz:
-  - 14.*
+  - '14'
 libcap:
   - 2.77
 fmt:
@@ -79,7 +79,10 @@ libzenohcxx:
   - 1.9.0
 
 libhwloc:
-  - 2.12.2
+  - 2.13.0
+
+vtk:
+  - 9.6.2
 
 lbr_fri_client_sdk:
   - '1.11'
@@ -89,7 +92,7 @@ lbr_fri_client_sdk:
   - '1.17'
 
 eigen_abi_devel:
-  - '3.4.0'
+  - '5.0.1'
 
 poco:
   - 1.15.2

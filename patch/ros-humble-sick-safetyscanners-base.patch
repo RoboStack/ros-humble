@@ -1,3 +1,16 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 594088d..869994a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,7 +9,7 @@ add_definitions(-std=c++11 -Wall -Werror)
+ 
+ 
+ ## Find system libraries
+-find_package(Boost REQUIRED COMPONENTS system thread chrono)
++find_package(Boost REQUIRED COMPONENTS thread chrono)
+ 
+ 
+ ###########
 diff --git a/include/sick_safetyscanners_base/SickSafetyscanners.h b/include/sick_safetyscanners_base/SickSafetyscanners.h
 index 58509a3..423c630 100644
 --- a/include/sick_safetyscanners_base/SickSafetyscanners.h
@@ -69,9 +82,17 @@ index 58509a3..423c630 100644
     * \brief Indicates whether sensor data is available in the receiving buffers.
     *
 diff --git a/include/sick_safetyscanners_base/communication/TCPClient.h b/include/sick_safetyscanners_base/communication/TCPClient.h
-index 1a2c880..38c26bb 100644
+index 1a2c880..5505a5f 100644
 --- a/include/sick_safetyscanners_base/communication/TCPClient.h
 +++ b/include/sick_safetyscanners_base/communication/TCPClient.h
+@@ -38,6 +38,7 @@
+ #define SICK_SAFETYSCANNERS_BASE_COMMUNICATION_SYNCTCPCLIENT_H
+ 
+ #include <boost/asio.hpp>
++#include <boost/asio/deadline_timer.hpp>
+ #include <boost/date_time/posix_time/posix_time_types.hpp>
+ #include <cstdint>
+ #include <vector>
 @@ -103,7 +103,7 @@ class TCPClient
    receive(sick::types::time_duration_t timeout = boost::posix_time::seconds(5));
  
@@ -81,10 +102,30 @@ index 1a2c880..38c26bb 100644
    sick::datastructure::PacketBuffer::ArrayBuffer m_recv_buffer;
    boost::asio::ip::tcp::socket m_socket;
    sick::types::ip_address_t m_server_ip;
+diff --git a/include/sick_safetyscanners_base/Types.h b/include/sick_safetyscanners_base/Types.h
+index 96c2d27..0af4798 100644
+--- a/include/sick_safetyscanners_base/Types.h
++++ b/include/sick_safetyscanners_base/Types.h
+@@ -39,6 +39,7 @@
+ #include "sick_safetyscanners_base/datastructure/Data.h"
+ #include "sick_safetyscanners_base/datastructure/PacketBuffer.h"
+ #include <boost/asio/ip/address_v4.hpp>
++#include <boost/date_time/posix_time/posix_time_types.hpp>
+ #include <cstdint>
+ #include <functional>
+ #include <memory>
 diff --git a/include/sick_safetyscanners_base/communication/UDPClient.h b/include/sick_safetyscanners_base/communication/UDPClient.h
-index 02831a5..5808f0b 100644
+index 02831a5..7d70566 100644
 --- a/include/sick_safetyscanners_base/communication/UDPClient.h
 +++ b/include/sick_safetyscanners_base/communication/UDPClient.h
+@@ -40,6 +40,7 @@
+ #include <iostream>
+ 
+ #include <boost/asio.hpp>
++#include <boost/asio/deadline_timer.hpp>
+ 
+ #include "sick_safetyscanners_base/Types.h"
+ #include "sick_safetyscanners_base/datastructure/PacketBuffer.h"
 @@ -60,7 +60,7 @@ class UDPClient
     * \param io_service Instance of the boost::asio io_service
     * \param server_port The local port number on the receiver (this client's) side.
@@ -246,4 +287,3 @@ index 0f42f5b..bd96ba4 100644
  }
  
  uint16_t ConfigData::getHostUdpPort() const
-

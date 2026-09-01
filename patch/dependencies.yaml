@@ -310,3 +310,9 @@ franka_ign_ros2_control:
 lbr_ros2_control:
   add_host: ["ros-humble-kinematics-interface"]
   add_run: ["ros-humble-kinematics-interface"]
+lbr_description:
+  remove_run: ["ros-humble-gz-ros2-control"]
+  add_run: ["${{ 'ros-humble-gz-ros2-control' if linux }}"]
+warehouse_ros_sqlite:
+  add_host: ["ros-humble-sqlite3-vendor"]
+  add_run: ["ros-humble-sqlite3-vendor"]

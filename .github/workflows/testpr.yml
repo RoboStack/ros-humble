@@ -2,9 +2,12 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  actions: read
+  contents: read
+
 env:
   ROS_VERSION: 2
-  PYTHONIOENCODING: utf-8
   # Change to 'true' to enable the cache upload as artifacts
   SAVE_CACHE_AS_ARTIFACT: 'true'
   # Change to 'true' to ignore cache and force a full rebuild, but please restore to 'false' before merging
@@ -43,9 +46,10 @@ jobs:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-    - uses: prefix-dev/setup-pixi@v0.9.4
+    - uses: prefix-dev/setup-pixi@v0.10.0
       with:
         frozen: true
+        pixi-version: v0.75.0
 
     - name: Check sorting
       if: matrix.platform == 'linux-64'
@@ -61,17 +65,6 @@ jobs:
         echo "CONDA_BLD_PATH=C:\\bld\\" >> $GITHUB_ENV
         mkdir /c/bld
 
-    - name: Enable Win32 long paths
-      shell: powershell
-      if: matrix.platform == 'win-64'
-      run: |
-        New-ItemProperty `
-          -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
-          -Name "LongPathsEnabled" `
-          -Value 1 `
-          -PropertyType DWORD `
-          -Force
-
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
       if: contains(matrix.os, 'windows')
@@ -84,7 +77,8 @@ jobs:
     # For some reason, the Strawberry perl's pkg-config is found
     # instead of the conda's one, so let's delete the /c/Strawberry directory
     # Furthermore, we also need to remove an older SDK that is used and can result in compilation problems
-    - name: Debug pkg-config problem
+    # And we also remove the vcpkg installed in the image, to avoid that projects pick it
+    - name: Remove problematic files of GitHub Actions images
       if: contains(matrix.os, 'windows')
       shell: bash -l {0}
       run: |
@@ -99,8 +93,20 @@ jobs:
     - name: Generate recipes
       shell: bash -l {0}
       run: |
-        mkdir -p recipes
-        pixi run -v vinca --platform ${{ matrix.platform }} -m -n
+        set -e
+        for attempt in 1 2 3; do
+          rm -rf recipes
+          mkdir -p recipes
+          if pixi run -v vinca --platform ${{ matrix.platform }} -m -n; then
+            break
+          fi
+          if [[ "${attempt}" == "3" ]]; then
+            echo "Recipe generation failed after ${attempt} attempts" >&2
+            exit 1
+          fi
+          echo "Recipe generation attempt ${attempt} failed; retrying..." >&2
+          sleep 15
+        done
 
     - name: Check patches
       shell: bash -l {0}
@@ -132,6 +138,8 @@ jobs:
       shell: bash -l {0}
       run: |
         # rm -rf ${{ matrix.folder_cache }}/ros-humble-autoware-trajectory* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-async-web-server-cpp* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-popf* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
@@ -143,9 +151,6 @@ jobs:
     - name: Build recipes
       shell: bash -l {0}
       run: |
-        if [ "${{ runner.os }}" = "Windows" ]; then
-          export VINCA_CUSTOM_CMAKE_BUILD_DIR='C:\x\'
-        fi
         if [ "${{ matrix.platform }}" = "emscripten-wasm32" ]; then
           pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c conda-forge -c robostack-staging --skip-existing --test skip
         else

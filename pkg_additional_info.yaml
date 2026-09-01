@@ -16,6 +16,7 @@ coal:
   generate_dummy_package_with_run_deps:
     dep_name: coal
     max_pin: 'x.x.x'
+    override_version: '3.0.3'
 console_bridge_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 data_tamer_cpp:
@@ -29,7 +30,7 @@ eigenpy:
     dep_name: eigenpy
     max_pin: 'x.x.x'
     # the version in ros is not compatible with conda-forge's coal and hpp_fcl builds
-    override_version: '3.12.0'
+    override_version: '3.13.0'
 force_torque_sensor_broadcaster:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
 gtsam:
@@ -75,9 +76,9 @@ hpp_fcl:
     # the version on ros is outdated w.r.t. to the conda-forge one
     override_version: '3.0.2'
 ignition_cmake2_vendor:
-  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK -DBUILD_TESTING=OFF"
 ignition_math6_vendor:
-  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+  additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK -DBUILD_TESTING=OFF"
 libcamera:
   generate_dummy_package_with_run_deps:
     dep_name: libcamera
@@ -95,6 +96,8 @@ libfranka:
     override_version: '0.21.2'
 liblz4_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+libnabo:
+  additional_cmake_args: "-DLIBNABO_BUILD_PYTHON=OFF"
 librealsense2:
   generate_dummy_package_with_run_deps:
     dep_name: librealsense
@@ -112,6 +115,8 @@ ompl:
   generate_dummy_package_with_run_deps:
     dep_name: ompl
     max_pin: 'x.x'
+    # OMPL 2 is rebuilt for Boost 1.90 on all supported platforms.
+    override_version: '2.0.1'
 openvdb_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 orocos_kdl_vendor:
@@ -135,6 +140,7 @@ py_trees:
   generate_dummy_package_with_run_deps:
     dep_name: py-trees
     max_pin: 'x.x.x'
+    override_version: '2.5.0'
 pybind11_json_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
 pybind11_vendor:
@@ -151,14 +157,13 @@ urdfdom:
   generate_dummy_package_with_run_deps:
     dep_name: urdfdom
     max_pin: 'x.x'
-    # humble is on 3.0.0, but we stick to 5 for compat
-    # with the rest of conda-forge
-    override_version: '5.1.2'
+    # the version on ros is outdated w.r.t. to the conda-forge one
+    override_version: '6.0.0'
 urdfdom_headers:
   generate_dummy_package_with_run_deps:
     dep_name: urdfdom_headers
     max_pin: 'x.x'
-    override_version: '2.1.2'
+    override_version: '3.0.0'
 urdfdom_py:
   generate_dummy_package_with_run_deps:
     dep_name: urdfdom-py
@@ -171,9 +176,3 @@ visp:
     override_version: '3.7.0'
 zenoh_cpp_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
-ros2pkg:
-  build_number: 19
-rosidl_adapter:
-  build_number: 19
-rosidl_cmake:
-  build_number: 19

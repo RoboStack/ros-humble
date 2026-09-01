@@ -1,0 +1,45 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a402b138..8b50b5ae 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -38,10 +38,10 @@ target_include_directories(${PROJECT_NAME}
+     "${EIGEN3_INCLUDE_DIR}"
+ )
+ 
+-ament_target_dependencies(${PROJECT_NAME}
+-  Eigen3
+-  osqp_vendor
+-  proxsuite
++target_link_libraries(${PROJECT_NAME}
++  Eigen3::Eigen
++  osqp::osqp
++  proxsuite::proxsuite
+ )
+ 
+ # crucial so downstream package builds because osqp_interface exposes osqp.hpp
+diff --git a/src/osqp_csc_matrix_conv.cpp b/src/osqp_csc_matrix_conv.cpp
+index 15314a9e..96056753 100644
+--- a/src/osqp_csc_matrix_conv.cpp
++++ b/src/osqp_csc_matrix_conv.cpp
+@@ -25,9 +25,9 @@ namespace autoware::qp_interface
+ {
+ CSC_Matrix calCSCMatrix(const Eigen::MatrixXd & mat)
+ {
+-  const size_t elem = static_cast<size_t>(mat.nonZeros());
+   const Eigen::Index rows = mat.rows();
+   const Eigen::Index cols = mat.cols();
++  const size_t elem = static_cast<size_t>(rows * cols);
+ 
+   std::vector<c_float> vals;
+   vals.reserve(elem);
+@@ -66,9 +66,9 @@ CSC_Matrix calCSCMatrix(const Eigen::MatrixXd & mat)
+ 
+ CSC_Matrix calCSCMatrixTrapezoidal(const Eigen::MatrixXd & mat)
+ {
+-  const size_t elem = static_cast<size_t>(mat.nonZeros());
+   const Eigen::Index rows = mat.rows();
+   const Eigen::Index cols = mat.cols();
++  const size_t elem = static_cast<size_t>(rows * (rows + 1) / 2);
+ 
+   if (rows != cols) {
+     throw std::invalid_argument("Matrix must be square (n, n)");

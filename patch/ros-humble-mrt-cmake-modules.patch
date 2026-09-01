@@ -24,3 +24,16 @@ index aa99d8d..8327d4e 100644
      find_package(catkin REQUIRED)
      catkin_package(CFG_EXTRAS mrt_cmake_modules-extras.cmake)
  else()
+diff --git a/yaml/cmake.yaml b/yaml/cmake.yaml
+index 6a2a6dc..1846d27 100644
+--- a/yaml/cmake.yaml
++++ b/yaml/cmake.yaml
+@@ -19,7 +19,7 @@ benchmark:
+   targets: ['benchmark::benchmark']
+ boost:
+   components: [wserialization thread random serialization log_setup prg_exec_monitor
+-      wave system chrono filesystem locale timer date_time regex graph program_options
++      wave chrono filesystem locale timer date_time regex graph program_options
+       unit_test_framework log atomic iostreams]
+   include_dirs: [Boost_INCLUDE_DIRS]
+   libraries: [Boost_LIBRARIES]

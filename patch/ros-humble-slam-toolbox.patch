@@ -1,102 +1,35 @@
-diff --git a/solvers/ceres_solver.cpp b/solvers/ceres_solver.cpp
-index 43e7d98..cd0e706 100644
---- a/solvers/ceres_solver.cpp
-+++ b/solvers/ceres_solver.cpp
-@@ -338,9 +338,9 @@ void CeresSolver::AddConstraint(karto::Edge<karto::LocalizedRangeScan> * pEdge)
-     cost_function, loss_function_,
-     &node1it->second(0), &node1it->second(1), &node1it->second(2),
-     &node2it->second(0), &node2it->second(1), &node2it->second(2));
--  problem_->SetParameterization(&node1it->second(2),
-+  problem_->SetManifold(&node1it->second(2),
-     angle_local_parameterization_);
--  problem_->SetParameterization(&node2it->second(2),
-+  problem_->SetManifold(&node2it->second(2),
-     angle_local_parameterization_);
+diff --git a/lib/karto_sdk/CMakeLists.txt b/lib/karto_sdk/CMakeLists.txt
+index a620bfd..f1e0f60 100644
+--- a/lib/karto_sdk/CMakeLists.txt
++++ b/lib/karto_sdk/CMakeLists.txt
+@@ -11,7 +11,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+ find_package(ament_cmake REQUIRED)
+ find_package(rclcpp REQUIRED)
+ find_package(Eigen3 REQUIRED)
+-find_package(Boost REQUIRED system serialization filesystem thread)
++find_package(Boost REQUIRED serialization filesystem thread)
+ find_package(TBB REQUIRED NO_CMAKE_PACKAGE_REGISTRY)
  
-   blocks_->insert(std::pair<std::size_t, ceres::ResidualBlockId>(
-diff --git a/solvers/ceres_solver.hpp b/solvers/ceres_solver.hpp
-index 162b559..023b7c9 100644
---- a/solvers/ceres_solver.hpp
-+++ b/solvers/ceres_solver.hpp
-@@ -7,7 +7,7 @@
- #define SOLVERS__CERES_SOLVER_HPP_
+ set(dependencies
+@@ -29,8 +29,9 @@ add_definitions(${EIGEN3_DEFINITIONS})
  
- #include <math.h>
--#include <ceres/local_parameterization.h>
-+#include <ceres/manifold.h>
- #include <ceres/ceres.h>
- #include <vector>
- #include <unordered_map>
-@@ -65,7 +65,7 @@ private:
-   ceres::Problem::Options options_problem_;
-   ceres::LossFunction * loss_function_;
-   ceres::Problem * problem_;
--  ceres::LocalParameterization * angle_local_parameterization_;
-+  ceres::Manifold * angle_local_parameterization_;
-   bool was_constant_set_, debug_logging_;
+ include_directories(include ${EIGEN3_INCLUDE_DIRS} ${TBB_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+ add_library(kartoSlamToolbox SHARED src/Karto.cpp src/Mapper.cpp)
++target_compile_definitions(kartoSlamToolbox PRIVATE KARTO_DYNAMIC)
+ ament_target_dependencies(kartoSlamToolbox ${dependencies})
+-target_link_libraries(kartoSlamToolbox ${Boost_LIBRARIES} TBB::tbb)
++target_link_libraries(kartoSlamToolbox Eigen3::Eigen ${Boost_LIBRARIES} TBB::tbb)
  
-   // graph
-diff --git a/solvers/ceres_utils.h b/solvers/ceres_utils.h
-index 42c2fad..e414c73 100644
---- a/solvers/ceres_utils.h
-+++ b/solvers/ceres_utils.h
-@@ -7,7 +7,7 @@
- #define SOLVERS__CERES_UTILS_H_
- 
- #include <ceres/ceres.h>
--#include <ceres/local_parameterization.h>
-+#include <ceres/manifold.h>
- #include <cmath>
- #include <utility>
- 
-@@ -38,6 +38,24 @@ inline T NormalizeAngle(const T & angle_radians)
- class AngleLocalParameterization
- {
- public:
-+  template <typename T>
-+  bool Plus(const T* x_radians,
-+            const T* delta_radians,
-+            T* x_plus_delta_radians) const {
-+    *x_plus_delta_radians = NormalizeAngle(*x_radians + *delta_radians);
-+    return true;
-+  }
-+
-+  template <typename T>
-+  bool Minus(const T* y_radians,
-+             const T* x_radians,
-+             T* y_minus_x_radians) const {
-+    *y_minus_x_radians =
-+        NormalizeAngle(*y_radians) - NormalizeAngle(*x_radians);
-+
-+    return true;
-+  }
-+
-   template<typename T>
-   bool operator()(
-     const T * theta_radians, const T * delta_theta_radians,
-@@ -47,9 +65,9 @@ public:
-     return true;
-   }
- 
--  static ceres::LocalParameterization * Create()
-+  static ceres::Manifold * Create()
-   {
--    return new ceres::AutoDiffLocalParameterization<AngleLocalParameterization, 1, 1>;
-+    return new ceres::AutoDiffManifold<AngleLocalParameterization, 1, 1>;
-   }
- };
- 
+ install(DIRECTORY include/
+ 	DESTINATION include/
 diff --git a/CMake/FindCSparse.cmake b/CMake/FindCSparse.cmake
-index 053c4e76d..702e00453 100644
+index 2da6c12..9c4917d 100644
 --- a/CMake/FindCSparse.cmake
 +++ b/CMake/FindCSparse.cmake
-@@ -10,6 +10,9 @@ FIND_PATH(CSPARSE_INCLUDE_DIR NAMES cs.h
-   /opt/local/include/ufsparse
-   /usr/local/include/ufsparse
-   /sw/include/ufsparse
-+  PATH_SUFFIXES
-+  suitesparse
-+  ufsparse
- )
- 
- FIND_LIBRARY(CSPARSE_LIBRARY NAMES cxsparse
+@@ -1,5 +1,6 @@
+ # Look for csparse; note the difference in the directory specifications!
+ FIND_PATH(CSPARSE_INCLUDE_DIR NAMES cs.h
++  PATH_SUFFIXES suitesparse
+   PATHS
+   /usr/include/suitesparse
+   /usr/include

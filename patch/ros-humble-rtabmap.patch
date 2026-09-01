@@ -8,7 +8,7 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
  PROJECT( RTABMap )
  SET(PROJECT_PREFIX rtabmap)
  
-@@ -80,12 +80,12 @@ IF(MINGW)
+@@ -80,11 +80,11 @@ IF(MINGW)
  ENDIF(MINGW)
  
  # GCC 4 required
@@ -26,3 +26,33 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 +# ENDIF(UNIX OR MINGW)
  
  #The CDT Error Parser cannot handle error messages that span 
+@@ -496,6 +496,9 @@ ENDIF(WITH_DC1394)
+ 
+ IF(WITH_G2O)
++    SET(_RTABMAP_CMAKE_FIND_PACKAGE_PREFER_CONFIG ${CMAKE_FIND_PACKAGE_PREFER_CONFIG})
++    SET(CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE)
+     FIND_PACKAGE(g2o NO_MODULE)
++    SET(CMAKE_FIND_PACKAGE_PREFER_CONFIG ${_RTABMAP_CMAKE_FIND_PACKAGE_PREFER_CONFIG})
+     IF(g2o_FOUND)
+         MESSAGE(STATUS "Found g2o (targets)")
+          SET(G2O_FOUND ${g2o_FOUND})
+@@ -535,4 +538,6 @@ ENDIF(WITH_G2O)
+ IF(WITH_GTSAM)
+-    # Force config mode to ignore PCL's findGTSAM.cmake file
++    SET(_RTABMAP_CMAKE_FIND_PACKAGE_PREFER_CONFIG ${CMAKE_FIND_PACKAGE_PREFER_CONFIG})
++    SET(CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE)
+     FIND_PACKAGE(GTSAM CONFIG QUIET)
++    SET(CMAKE_FIND_PACKAGE_PREFER_CONFIG ${_RTABMAP_CMAKE_FIND_PACKAGE_PREFER_CONFIG})
+ ENDIF(WITH_GTSAM)
+@@ -577,9 +582,9 @@ ENDIF(WITH_POINTMATCHER)
+ 
+ IF(libpointmatcher_FOUND OR GTSAM_FOUND)
+-    find_package(Boost COMPONENTS thread filesystem system program_options date_time REQUIRED)
++    find_package(Boost COMPONENTS thread filesystem program_options date_time REQUIRED)
+     IF(Boost_MINOR_VERSION GREATER 47)
+-        find_package(Boost COMPONENTS thread filesystem system program_options date_time chrono timer serialization REQUIRED)
++        find_package(Boost COMPONENTS thread filesystem program_options date_time chrono timer serialization REQUIRED)
+     ENDIF(Boost_MINOR_VERSION GREATER 47)
+     IF(WIN32)
+         MESSAGE(STATUS "Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
+         link_directories(${Boost_LIBRARY_DIRS})
