@@ -73,8 +73,10 @@ hpp_fcl:
   generate_dummy_package_with_run_deps:
     dep_name: hpp-fcl
     max_pin: 'x.x.x'
-    # the version on ros is outdated w.r.t. to the conda-forge one
-    override_version: '3.0.2'
+    # the version on ros is outdated w.r.t. to the conda-forge one; hpp-fcl on ros still
+    # uses its pre-rename name, upstream renamed the project to coal. 3.0.2's native
+    # backend (libcoal) needs libboost 1.88, 3.0.4 already needs libboost 1.90.
+    override_version: '3.0.4'
 ignition_cmake2_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK -DBUILD_TESTING=OFF"
 ignition_math6_vendor:
@@ -127,8 +129,9 @@ pinocchio:
   generate_dummy_package_with_run_deps:
     dep_name: pinocchio
     max_pin: 'x.x.x'
-    # the version on ros is outdated w.r.t. to the conda-forge one
-    override_version: '4.0.0'
+    # the version on ros is outdated w.r.t. to the conda-forge one; 4.0.0's libpinocchio
+    # needs libboost 1.88, 4.1.0 already needs libboost 1.90 and libcoal >=3.0.4.
+    override_version: '4.1.0'
 proxsuite:
   generate_dummy_package_with_run_deps:
     dep_name: proxsuite
@@ -191,3 +194,11 @@ iceoryx_posh:
     dep_name: libiceoryx-posh
     max_pin: 'x.x'
     override_version: '2.95.8'
+rtabmap:
+  # Disable the Qt-based standalone GUI/viewer (guilib + app) and the standalone
+  # CLI tools/examples; the ROS-side rtabmap_ros nodes only need the core SLAM
+  # library. This also drops the otherwise-unused qt_gui_cpp package.xml
+  # dependency (see patch/dependencies.yaml) and the OpenCV5 porting effort down
+  # to just corelib (patch/ros-humble-rtabmap.patch backports upstream's
+  # https://github.com/introlab/rtabmap/pull/1732, corelib-relevant hunks only).
+  additional_cmake_args: "-DWITH_QT=OFF -DBUILD_TOOLS=OFF -DBUILD_EXAMPLES=OFF"

@@ -1,0 +1,74 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -29,7 +29,7 @@
+ find_package(sensor_msgs REQUIRED)
+ find_package(geometry_msgs REQUIRED)
+ find_package(cv_bridge REQUIRED)
+-find_package(Qt5Widgets REQUIRED)
++find_package(Qt6Widgets REQUIRED)
+ find_package(ament_cmake_python REQUIRED)
+ 
+ set(rqt_image_view_SRCS
+@@ -46,9 +46,9 @@
+   src/rqt_image_view/image_view.ui
+ )
+ 
+-qt5_wrap_cpp(rqt_image_view_MOCS ${rqt_image_view_HDRS})
++qt6_wrap_cpp(rqt_image_view_MOCS ${rqt_image_view_HDRS})
+ 
+-qt5_wrap_ui(rqt_image_view_UIS_H ${rqt_image_view_UIS})
++qt6_wrap_ui(rqt_image_view_UIS_H ${rqt_image_view_UIS})
+ 
+ add_library(${PROJECT_NAME} SHARED
+   ${rqt_image_view_SRCS}
+@@ -67,7 +67,7 @@
+   image_transport::image_transport
+   ${sensor_msgs_TARGETS}
+   ${geometry_msgs_TARGETS}
+-  Qt5::Widgets
++  Qt6::Widgets
+ )
+ target_link_libraries(${PROJECT_NAME} PRIVATE
+   cv_bridge::cv_bridge)
+diff -ruN a/src/rqt_image_view/image_view.cpp b/src/rqt_image_view/image_view.cpp
+--- a/src/rqt_image_view/image_view.cpp
++++ b/src/rqt_image_view/image_view.cpp
+@@ -41,6 +41,8 @@
+ #include <QFileDialog>
+ #include <QMessageBox>
+ #include <QPainter>
++#include <QRegularExpression>
++#include <QRegularExpressionValidator>
+ 
+ namespace rqt_image_view {
+ 
+@@ -91,8 +93,8 @@
+ 
+   ui_.image_frame->setOuterLayout(ui_.image_layout);
+ 
+-  QRegExp rx("([a-zA-Z/][a-zA-Z0-9_/]*)?"); //see http://www.ros.org/wiki/ROS/Concepts#Names.Valid_Names (but also accept an empty field)
+-  ui_.publish_click_location_topic_line_edit->setValidator(new QRegExpValidator(rx, this));
++  QRegularExpression rx("([a-zA-Z/][a-zA-Z0-9_/]*)?"); //see http://www.ros.org/wiki/ROS/Concepts#Names.Valid_Names (but also accept an empty field)
++  ui_.publish_click_location_topic_line_edit->setValidator(new QRegularExpressionValidator(rx, this));
+   connect(ui_.publish_click_location_check_box, SIGNAL(toggled(bool)), this, SLOT(onMousePublish(bool)));
+   connect(ui_.image_frame, SIGNAL(mouseLeft(int, int)), this, SLOT(onMouseLeft(int, int)));
+   connect(ui_.publish_click_location_topic_line_edit, SIGNAL(editingFinished()), this, SLOT(onPubTopicChanged()));
+@@ -571,7 +573,7 @@
+         conversion_mat_ = cv_ptr->image;
+       } else if (msg->encoding == "8UC1") {
+         // convert gray to rgb
+-        cv::cvtColor(cv_ptr->image, conversion_mat_, CV_GRAY2RGB);
++        cv::cvtColor(cv_ptr->image, conversion_mat_, cv::COLOR_GRAY2RGB);
+       } else if (msg->encoding == "16UC1" || msg->encoding == "32FC1") {
+         // scale / quantify
+         double min = 0;
+@@ -589,7 +591,7 @@
+         }
+         cv::Mat img_scaled_8u;
+         cv::Mat(cv_ptr->image-min).convertTo(img_scaled_8u, CV_8UC1, 255. / (max - min));
+-        cv::cvtColor(img_scaled_8u, conversion_mat_, CV_GRAY2RGB);
++        cv::cvtColor(img_scaled_8u, conversion_mat_, cv::COLOR_GRAY2RGB);
+       } else {
+         qWarning("ImageView.callback_image() could not convert image from '%s' to 'rgb8' (%s)", msg->encoding.c_str(), e.what());
+         ui_.image_frame->setImage(QImage());

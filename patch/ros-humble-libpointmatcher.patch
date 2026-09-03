@@ -1,8 +1,13 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b6fe123..83a677e 100644
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -124,9 +124,9 @@ endif()
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8.12)
++cmake_minimum_required(VERSION 3.5)
+ 
+ include(CheckSymbolExists)
+ include(GNUInstallDirs) # populate CMAKE_INSTALL_{LIB,BIN}DIR
+@@ -124,9 +124,9 @@
  #--------------------
  # DEPENDENCY:  boost
  #--------------------
@@ -14,7 +19,7 @@ index b6fe123..83a677e 100644
  endif ()
  
  #--------------------
-@@ -281,12 +281,12 @@ if (CMAKE_VERSION VERSION_LESS "3.1")
+@@ -281,12 +281,12 @@
  		message(FATAL_ERROR, "CMake version 3.1 or later is required to compiler ${PROJECT_NAME} with Microsoft Visual C++")
  	endif ()
  	if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -30,26 +35,10 @@ index b6fe123..83a677e 100644
  endif ()
  
  # SOURCE
-diff --git a/libpointmatcherConfig.cmake.in b/libpointmatcherConfig.cmake.in
-index 3d7eb14..4eef748 100644
---- a/libpointmatcherConfig.cmake.in
-+++ b/libpointmatcherConfig.cmake.in
-@@ -5,8 +5,8 @@
- 
- include(CMakeFindDependencyMacro)
- find_dependency(libnabo REQUIRED)
--find_package(Boost COMPONENTS thread filesystem system program_options date_time REQUIRED)
-+find_package(Boost COMPONENTS thread filesystem program_options date_time REQUIRED)
- if (Boost_MINOR_VERSION GREATER 47)
--  find_package(Boost COMPONENTS thread filesystem system program_options date_time chrono REQUIRED)
-+  find_package(Boost COMPONENTS thread filesystem program_options date_time chrono REQUIRED)
- endif ()
- include(${CMAKE_CURRENT_LIST_DIR}/libpointmatcher-config.cmake)
-diff --git a/contrib/yaml-cpp-pm/CMakeLists.txt b/contrib/yaml-cpp-pm/CMakeLists.txt
-index 484221f..325c459 100644
+diff -ruN a/contrib/yaml-cpp-pm/CMakeLists.txt b/contrib/yaml-cpp-pm/CMakeLists.txt
 --- a/contrib/yaml-cpp-pm/CMakeLists.txt
 +++ b/contrib/yaml-cpp-pm/CMakeLists.txt
-@@ -91,14 +91,6 @@ if(CMAKE_COMPILER_IS_GNUCXX)
+@@ -91,14 +91,6 @@
  	#
  	set(CMAKE_CXX_FLAGS "-Wall ${GCC_EXTRA_OPTIONS} -fPIC -pedantic -Wno-long-long ${CMAKE_CXX_FLAGS}")
  	#
@@ -63,8 +52,8 @@ index 484221f..325c459 100644
 -		VERBATIM)
  endif()
  
- if(YAML_CPP_BUILD_TOOLS)
-@@ -105,6 +97,10 @@ add_library(yaml-cpp-pm
+ 
+@@ -113,6 +105,10 @@
  	${contrib_public_headers}
  	${contrib_private_headers}
  )
@@ -75,11 +64,38 @@ index 484221f..325c459 100644
  
  set_target_properties(yaml-cpp-pm PROPERTIES
  	VERSION "${YAML_CPP_VERSION}"
-diff --git a/pointmatcher/IO.cpp b/pointmatcher/IO.cpp
-index a8e2513..9bdb5cd 100644
+diff -ruN a/examples/demo_cmake/CMakeLists.txt b/examples/demo_cmake/CMakeLists.txt
+--- a/examples/demo_cmake/CMakeLists.txt
++++ b/examples/demo_cmake/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ # This is demo on how to link libpointmatcher to an
+ # external project.
+ 
+-cmake_minimum_required (VERSION 2.8)
++cmake_minimum_required (VERSION 3.5)
+ project(convert)
+ 
+ set (CMAKE_CXX_STANDARD 11)
+diff -ruN a/libpointmatcherConfig.cmake.in b/libpointmatcherConfig.cmake.in
+--- a/libpointmatcherConfig.cmake.in
++++ b/libpointmatcherConfig.cmake.in
+@@ -5,9 +5,9 @@
+ 
+ include(CMakeFindDependencyMacro)
+ find_dependency(libnabo REQUIRED)
+-find_package(Boost COMPONENTS thread filesystem system program_options date_time REQUIRED)
++find_package(Boost COMPONENTS thread filesystem program_options date_time REQUIRED)
+ if (Boost_MINOR_VERSION GREATER 47)
+-  find_package(Boost COMPONENTS thread filesystem system program_options date_time chrono REQUIRED)
++  find_package(Boost COMPONENTS thread filesystem program_options date_time chrono REQUIRED)
+ endif ()
+ include(${CMAKE_CURRENT_LIST_DIR}/libpointmatcher-config.cmake)
+ include(${CMAKE_CURRENT_LIST_DIR}/yaml-cpp-pm-targets.cmake)
+diff -ruN a/pointmatcher/IO.cpp b/pointmatcher/IO.cpp
 --- a/pointmatcher/IO.cpp
 +++ b/pointmatcher/IO.cpp
-@@ -360,11 +360,11 @@ void PointMatcherSupport::validateFile(const std::string& fileName)
+@@ -360,12 +360,12 @@
+ 	if (!ifs.good() || !boost::filesystem::is_regular_file(fullPath))
  	#if BOOST_FILESYSTEM_VERSION >= 3
  		#if BOOST_VERSION >= 105000
 -				throw runtime_error(string("Cannot open file ") + boost::filesystem::complete(fullPath).generic_string());
@@ -93,7 +109,8 @@ index a8e2513..9bdb5cd 100644
      #endif
  }
  
-@@ -375,6 +375,6 @@ typename PointMatcher<T>::DataPoints PointMatcher<T>::DataPoints::load(const std
+@@ -375,7 +375,7 @@
+ typename PointMatcher<T>::DataPoints PointMatcher<T>::DataPoints::load(const std::string& fileName)
  {
  	const boost::filesystem::path path(fileName);
 -	const string& ext(boost::filesystem::extension(path));
@@ -101,7 +118,8 @@ index a8e2513..9bdb5cd 100644
  	if (boost::iequals(ext, ".vtk"))
  		return PointMatcherIO<T>::loadVTK(fileName);
  	else if (boost::iequals(ext, ".csv"))
-@@ -809,6 +809,6 @@ void PointMatcher<T>::DataPoints::save(const std::string& fileName, bool binary)
+@@ -809,7 +809,7 @@
+ void PointMatcher<T>::DataPoints::save(const std::string& fileName, bool binary) const
  {
  	const boost::filesystem::path path(fileName);
 -	const string& ext(boost::filesystem::extension(path));

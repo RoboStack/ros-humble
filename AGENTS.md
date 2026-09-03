@@ -207,6 +207,52 @@ Check:
 - When `build_gap_report.py` shows built artifacts without recipe directories, add those package seeds to `vinca.yaml`.
 - After `vinca.yaml` edits, regenerate recipes before expecting `build_gap_report.py` results to change.
 
+## Check dependency pins before building anything
+
+Incompatible pins (mutex `run_constraints` in `vinca.yaml`, the rendered
+`conda_build_config.yaml`, and what conda-forge actually ships) used to surface only
+after hundreds of packages had been built. `check_dependency_compat.py` finds them up
+front by solving one fake package that requires every non-ROS `host`/`run` dependency
+of the generated recipes plus the mutex constraints; nothing is built.
+
+```bash
+# regenerate recipes, then solve the fake package for the current platform
+pixi run check-deps
+
+# other platforms / options (recipes must already be generated)
+pixi run python check_dependency_compat.py --platform linux-64
+pixi run python check_dependency_compat.py --no-migrations --json conflicts.json
+```
+
+What it reports:
+- `PIN MISMATCH`: a mutex `run_constraints` entry contradicts the rendered pin (e.g. mutex
+  `vtk 9.6.2.*` while `vinca_pinning.yaml` applies `vtk970`). Fix `vinca.yaml` or the
+  migration list; never edit `conda_build_config.yaml` by hand.
+- Per conflicting package: which recipes need it, which pin it clashes with (bisected
+  when it only fails in combination), the solver explanation, and the conda-forge
+  migration status of its feedstock (done / in-pr / awaiting-parents). That status list
+  is the conda-forge to-do list; "no migration" means the feedstock simply needs a rebuild.
+- Exit code 1 when anything conflicts, so it can gate CI.
+
+### Rebuild only the packages built with an outdated pin
+
+```bash
+# local artifacts (output/<platform>) built against pins that no longer match
+pixi run python check_dependency_compat.py --stale
+# only violations of the mutex run_constraints (ignore conda_build_config.yaml drift)
+pixi run python check_dependency_compat.py --stale --mutex-only
+# the published channel
+pixi run python check_dependency_compat.py --stale --repodata https://conda.anaconda.org/robostack-staging
+# delete the stale local artifacts and re-index; `pixi run build` then rebuilds just those
+pixi run python check_dependency_compat.py --stale --delete
+```
+
+When the stale builds are already on the channel, the report prints a
+`pkg_additional_info.yaml` build-number snippet for exactly those packages plus a
+`mutex_package: build_number:` bump for `vinca.yaml` (so the mutex is re-published with
+the new `run_constraints` while keeping its version), and the `anaconda remove` commands
+for the old files. Only those packages are then regenerated and rebuilt.
+
 ## Local contribution workflow (RoboStack)
 
 ```bash
@@ -216,7 +262,14 @@ pixi run build
 ## Full rebuilds
 For full rebuilds also remember:
 - refresh snapshot: `pixi run create_snapshot`
-- update `conda_build_config.yaml` for active migrations. You can use https://github.com/conda-forge/conda-forge-pinning-feedstock/blob/main/recipe/conda_build_config.yaml as a base, and then also apply migrations that are mostly done; you can check the status at https://conda-forge.org/status/.
+- update the pins: `conda_build_config.yaml` is generated from `vinca_pinning.yaml` (exact
+  `conda-forge-pinning` version + list of applied migrations + local overrides). Run
+  `pixi run vinca-pinning-update --render` to move to the latest pinning and select the
+  migrations that are complete for our dependencies (status: https://conda-forge.org/status/),
+  or edit `vinca_pinning.yaml` and run `pixi run vinca-pinning-render`. Never edit
+  `conda_build_config.yaml` directly.
+- keep `mutex_package.run_constraints` in `vinca.yaml` consistent with the rendered pins
+  and verify with `pixi run check-deps` before starting the rebuild.
 - bump `build_number`
 - bump mutex minor and update hardcoded mutex refs where needed
 - clear stale `pkg_additional_info.yaml` build-number overrides unless intentional

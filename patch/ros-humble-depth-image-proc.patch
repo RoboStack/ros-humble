@@ -1,8 +1,7 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5ed278fe..043f6526 100644
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -13,12 +13,7 @@ endif()
+@@ -13,12 +13,7 @@
  find_package(ament_cmake_auto REQUIRED)
  ament_auto_find_build_dependencies()
  
@@ -16,3 +15,24 @@ index 5ed278fe..043f6526 100644
  
  find_package(OpenCV REQUIRED)
  
+diff -ruN a/src/crop_foremost.cpp b/src/crop_foremost.cpp
+--- a/src/crop_foremost.cpp
++++ b/src/crop_foremost.cpp
+@@ -128,7 +128,7 @@
+     case CV_8UC1:
+     case CV_8SC1:
+     case CV_32F:
+-      cv::threshold(cv_ptr->image, cv_ptr->image, minVal + distance_, 0, CV_THRESH_TOZERO_INV);
++      cv::threshold(cv_ptr->image, cv_ptr->image, minVal + distance_, 0, cv::THRESH_TOZERO_INV);
+       break;
+     case CV_16UC1:
+     case CV_16SC1:
+@@ -136,7 +136,7 @@
+     case CV_64F:
+       // 8 bit or 32 bit floating array is required to use cv::threshold
+       cv_ptr->image.convertTo(cv_ptr->image, CV_32F);
+-      cv::threshold(cv_ptr->image, cv_ptr->image, minVal + distance_, 1, CV_THRESH_TOZERO_INV);
++      cv::threshold(cv_ptr->image, cv_ptr->image, minVal + distance_, 1, cv::THRESH_TOZERO_INV);
+ 
+       cv_ptr->image.convertTo(cv_ptr->image, imtype);
+       break;
