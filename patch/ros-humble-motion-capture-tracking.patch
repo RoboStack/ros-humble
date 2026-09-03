@@ -1,0 +1,53 @@
+diff --git a/deps/libmotioncapture/CMakeLists.txt b/deps/libmotioncapture/CMakeLists.txt
+index ab6f28b..7646cd6 100644
+--- a/deps/libmotioncapture/CMakeLists.txt
++++ b/deps/libmotioncapture/CMakeLists.txt
+@@ -18,7 +18,7 @@ set(CMAKE_CXX_STANDARD 14)
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+ 
+-find_package(Boost 1.5 COMPONENTS system REQUIRED) # for optitrack
++find_package(Boost 1.5 REQUIRED) # for optitrack (system component is header-only in Boost 1.70+)
+ add_definitions(
+   -DBOOST_DATE_TIME_NO_LIB
+   -DBOOST_REGEX_NO_LIB
+@@ -26,6 +26,9 @@ add_definitions(
+ )
+
+ find_package(Eigen3 REQUIRED)
++if(NOT EIGEN3_INCLUDE_DIRS AND TARGET Eigen3::Eigen)
++  get_target_property(EIGEN3_INCLUDE_DIRS Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)
++endif()
+
+ set(VICON_SDK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/vicon-datastream-sdk/)
+ set(QUALISYS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/qualisys_cpp_sdk/)
+@@ -87,7 +90,6 @@ if (LIBMOTIONCAPTURE_ENABLE_OPTITRACK)
+   )
+   set(my_libraries
+     ${my_libraries}
+-    Boost::system
+   )
+ endif()
+ 
+diff --git a/deps/libmotioncapture/deps/vicon-datastream-sdk/CMakeLists.txt b/deps/libmotioncapture/deps/vicon-datastream-sdk/CMakeLists.txt
+index adf6dc0..31c09bb 100644
+--- a/deps/libmotioncapture/deps/vicon-datastream-sdk/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vicon-datastream-sdk/CMakeLists.txt
+@@ -6,7 +6,7 @@ set (CMAKE_CXX_STANDARD 14)
+ include(GNUInstallDirs)
+ include(CMakePackageConfigHelpers)
+ 
+-find_package(Boost 1.5 COMPONENTS system thread chrono REQUIRED)
++find_package(Boost 1.5 COMPONENTS thread chrono REQUIRED)
+ set(THREADS_PREFER_PTHREAD_FLAG ON)
+ find_package(Threads REQUIRED)
+ 
+@@ -36,7 +36,7 @@ add_library(ViconDataStreamSDK_CPP STATIC
+ 
+ target_link_libraries(ViconDataStreamSDK_CPP
+   PRIVATE
+-    Boost::system
++    
+     Boost::thread
+     Boost::chrono
+     Threads::Threads

@@ -1,0 +1,26 @@
+conda_forge_pinning_version: 2026.09.01.16.28.00
+migrations:
+  - giflib6
+  - go_macos
+  - gstreamer128
+  - hdf52
+  - libboost190
+  - pybind11_abi11
+  - urdfdom6
+  - vtk970
+pinning_overrides:
+  # Build commands provide their channels with `-c`, so omit the inherited
+  # conda-forge-pinning channel_sources value from the rendered configuration.
+  channel_sources: null
+  channel_targets: null
+  libzenohc:
+    - 1.10.0
+  libzenohcxx:
+    - 1.10.0
+  python:
+    - 3.14.* *_cp314
+  is_python_min:
+    - false
+  python_impl:
+    - cpython
+

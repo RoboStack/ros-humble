@@ -17,7 +17,7 @@ mutex_package:
     - libboost-devel 1.90.*
     - pcl 1.15.1.*
     - gazebo 11.*
-    - libprotobuf 6.33.5.*
+    - libprotobuf 7.35.1.*
     - vtk 9.6.2.*
     - krb5 1.22.*
 
@@ -45,6 +45,12 @@ packages_skip_by_deps:
       - rmw_connextdds
       - tlsf
       - tlsf_cpp
+
+  # pinocchio requires coal-python 3.0.2 which pins libboost 1.88.*, conflicting with
+  # ros2-distro-mutex's libboost 1.90.* constraint on macOS (conda-forge packaging issue).
+  - if: osx
+    then:
+      - pinocchio
 
   # Dependencies unavailable when targeting WebAssembly.
   - if: wasm32

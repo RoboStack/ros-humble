@@ -176,3 +176,18 @@ visp:
     override_version: '3.7.0'
 zenoh_cpp_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+iceoryx_hoofs:
+  generate_dummy_package_with_run_deps:
+    dep_name: libiceoryx-hoofs
+    max_pin: 'x.x'
+    override_version: '2.95.8'
+iceoryx_binding_c:
+  generate_dummy_package_with_run_deps:
+    dep_name: libiceoryx-binding-c
+    max_pin: 'x.x'
+    override_version: '2.95.8'
+iceoryx_posh:
+  generate_dummy_package_with_run_deps:
+    dep_name: libiceoryx-posh
+    max_pin: 'x.x'
+    override_version: '2.95.8'

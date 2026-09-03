@@ -28,7 +28,7 @@ colordiff = "*"
 [pypi-dependencies]
 # emscripten-wasm32 in platforms prevents pixi-build from resolving vinca as
 # a conda source dep (uv is unavailable for that target), so use pypi here.
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "6aacb6f6334b0df6bc9c863c37eb02ba685f1a1b" }
+vinca = { git = "https://github.com/RoboStack/vinca.git" }
 # For local development uncomment:
 # vinca = { path = "../vinca", editable = true }
 
