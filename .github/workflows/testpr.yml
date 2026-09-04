@@ -169,6 +169,17 @@ jobs:
         # persistent GHA cache, built well before this fix chain) being stale or
         # bad on win-64. Force it to rebuild fresh too.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-eigen3-cmake-module* 2>/dev/null || true
+        # 8e73ae0d stopped excluding rosidl_typesupport_fastrtps_c/cpp on Windows
+        # (they were previously skip-listed there entirely, so rmw_fastrtps_cpp's
+        # hard find_package(rosidl_typesupport_fastrtps_c REQUIRED) could never
+        # have succeeded). Cached win-64 artifacts of these and their consumers
+        # from before that fix are suspected of causing robot_state_publisher's
+        # win-64 test crash ("Type support not from this implementation" out of
+        # rmw_fastrtps_cpp during node/publisher creation). Force a clean rebuild
+        # of the whole fastrtps typesupport chain plus its first real consumer.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-typesupport-fastrtps-c* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rmw-fastrtps-* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-robot-state-publisher* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
