@@ -144,6 +144,11 @@ jobs:
         # rm -rf ${{ matrix.folder_cache }}/ros-humble-autoware-trajectory* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-async-web-server-cpp* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-popf* 2>/dev/null || true
+        # python-qt-binding itself never failed to build (only qt_gui_cpp, which
+        # consumes its installed cmake/sip_helper.cmake, did), so its cached artifact
+        # from before the sip_helper.cmake fix keeps getting reused by --skip-existing
+        # despite the patch changes. Force it to rebuild once with the fix baked in.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-python-qt-binding* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
