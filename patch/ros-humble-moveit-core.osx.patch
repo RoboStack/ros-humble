@@ -1,13 +1,3 @@
-diff --git a/ConfigExtras.cmake b/ConfigExtras.cmake
-index 66d6e50b1..66d6e50b1 100644
---- a/ConfigExtras.cmake
-+++ b/ConfigExtras.cmake
-@@ -10,5 +10,4 @@ find_package(
-   program_options
-   regex
-   serialization
--  system
-   thread)
 diff --git a/collision_detection/include/moveit/collision_detection/collision_common.h b/collision_detection/include/moveit/collision_detection/collision_common.h
 index 319273fd6..319273fd6 100644
 --- a/collision_detection/include/moveit/collision_detection/collision_common.h
