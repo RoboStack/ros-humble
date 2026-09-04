@@ -72,8 +72,6 @@ packages_skip_by_deps:
     then:
       - ros_ign_gazebo_demos
       - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
-      - rosidl_typesupport_fastrtps_c
-      - rosidl_typesupport_fastrtps_cpp
       - rttest
       - test_ros_gz_bridge
 
@@ -118,8 +116,6 @@ packages_remove_from_deps:
     then:
       - ros_ign_gazebo_demos
       - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
-      - rosidl_typesupport_fastrtps_c
-      - rosidl_typesupport_fastrtps_cpp
       - rttest
       - test_ros_gz_bridge
 
