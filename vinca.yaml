@@ -75,6 +75,22 @@ packages_skip_by_deps:
       - rttest
       - test_ros_gz_bridge
 
+  # Pulled in transitively via aerostack2 (already linux-only above). Its
+  # FetchContent'd dynamic_trajectory_generator dependency (unpinned
+  # GIT_TAG master) itself FetchContent's a pinned old NLopt commit whose
+  # cmake/generate-cpp.cmake and cmake/generate-fortran.cmake declare
+  # cmake_minimum_required below CMake 4's floor of 3.5. Unlike depthai's
+  # Hunter (a nested `cmake -H -B` subprocess spawned during configure,
+  # inheriting a set(ENV{...}) done earlier in the same process) or
+  # as2_behaviors_trajectory_generation's own glog fetch (an
+  # add_subdirectory() sharing the same cmake process/cache), NLopt's
+  # generate-*.cmake scripts run via a *build-time* (ninja) custom command --
+  # a separate process that inherits neither -D cache args nor configure-time
+  # ENV{} mutations. A real fix would need patching files two FetchContent
+  # levels deep through an unpinned third-party branch, which is too fragile
+  # to attempt blindly; skip for now.
+  - as2_behaviors_trajectory_generation
+
 packages_remove_from_deps:
 
   - if: not linux
