@@ -2,6 +2,14 @@ apriltag:
   generate_dummy_package_with_run_deps:
     dep_name: apriltag
     max_pin: 'x.x.x'
+as2_platform_multirotor_simulator:
+  # RPS98/multirotor_simulator's model.hpp uses assert() inside template
+  # functions without including <cassert>; GCC 15 flags that as an error
+  # (-Wtemplate-body: "declaration of 'assert' must be available") since it
+  # can no longer assume assert() was pulled in transitively.
+  additional_cmake_args:
+    if: unix
+    then: '-DCMAKE_CXX_FLAGS="-include cassert"'
 aws_sdk_cpp_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 cartographer:
