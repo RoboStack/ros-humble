@@ -277,6 +277,8 @@ libclang-dev:
   robostack: [libclang]
 libconsole-bridge-dev:
   robostack: [console_bridge]
+libcpp-httplib-dev:
+  robostack: [cpp-httplib]
 libcunit-dev:
   robostack: [cunit]
 libcurl:
