@@ -230,14 +230,15 @@ index adf5b5c..c25b12c 100644
  #include <cstdio>
  #include <iostream>
 diff --git a/src/popf/RPGBuilder.h b/src/popf/RPGBuilder.h
-index 851ad9a..c51d627 100644
+index 851ad9a..65ae42e 100644
 --- a/src/popf/RPGBuilder.h
 +++ b/src/popf/RPGBuilder.h
-@@ -46,7 +46,6 @@ using std::map;
+@@ -46,7 +46,7 @@ using std::map;
  #include "ptree.h"
  
  #include <assert.h>
 -#include <values.h>
++#include <climits>
  #include <math.h>
  
  using namespace Inst;
