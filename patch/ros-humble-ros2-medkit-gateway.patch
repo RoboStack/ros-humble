@@ -34,3 +34,28 @@ diff -ruN a/src/http/handlers/bulkdata_handlers.cpp b/src/http/handlers/bulkdata
      if (!meta_str.empty()) {
        auto parsed = nlohmann::json::parse(meta_str, nullptr, false);
        if (parsed.is_discarded()) {
+diff -ruN a/src/http/handlers/script_handlers.cpp b/src/http/handlers/script_handlers.cpp
+--- a/src/http/handlers/script_handlers.cpp
++++ b/src/http/handlers/script_handlers.cpp
+@@ -200,8 +200,8 @@
+       return;
+     }
+ 
+-    auto file_it = req.files.find("file");
+-    if (file_it == req.files.end()) {
++    auto file_it = req.form.files.find("file");
++    if (file_it == req.form.files.end()) {
+       HandlerContext::send_error(res, 400, ERR_INVALID_REQUEST, "Missing required multipart field: file");
+       return;
+     }
+@@ -209,8 +209,8 @@
+     const auto & file_part = file_it->second;
+ 
+     std::optional<json> metadata;
+-    auto meta_it = req.files.find("metadata");
+-    if (meta_it != req.files.end()) {
++    auto meta_it = req.form.files.find("metadata");
++    if (meta_it != req.form.files.end()) {
+       try {
+         metadata = json::parse(meta_it->second.content);
+       } catch (const json::parse_error &) {
