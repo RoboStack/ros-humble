@@ -12,15 +12,27 @@ index 0262ec2..c3e8606 100644
 +if type register-python-argcomplete > /dev/null 2>&1; then
    eval "$(register-python-argcomplete rosidl)"
  fi
+diff --git a/rosidl_cli/completion/rosidl-argcomplete.zsh b/rosidl_cli/completion/rosidl-argcomplete.zsh
+index 9a86dbd..c4a4253 100644
+--- a/rosidl_cli/completion/rosidl-argcomplete.zsh
++++ b/rosidl_cli/completion/rosidl-argcomplete.zsh
+@@ -18,6 +18,6 @@ autoload -U +X bashcompinit && bashcompinit
+ # Get this scripts directory
+ __rosidl_cli_completion_dir=${0:a:h}
+ # Just source the bash version, it works in zsh too
+-source "$__rosidl_cli_completion_dir/rosidl-argcomplete.bash"
++source "$CONDA_PREFIX/share/bash-completion/completions/rosidl-argcomplete.bash"
+ # Cleanup
+ unset __rosidl_cli_completion_dir
 diff --git a/rosidl_cli/setup.py b/rosidl_cli/setup.py
-index bacc9e8..b4fd32c 100644
+index dd12abb..4cd1fcf 100644
 --- a/rosidl_cli/setup.py
 +++ b/rosidl_cli/setup.py
-@@ -20,6 +20,14 @@ setup(
+@@ -23,6 +23,14 @@ setup(
              'completion/rosidl-argcomplete.bash',
              'completion/rosidl-argcomplete.zsh'
          ]),
-+        
++
 +        # [pixi] install autocompletion scripts
 +        ('share/bash-completion/completions', [
 +            'completion/rosidl-argcomplete.bash',

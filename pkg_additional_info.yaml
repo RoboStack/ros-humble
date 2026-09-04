@@ -177,3 +177,7 @@ rosidl_cmake:
   build_number: 19
 ros2pkg:
   build_number: 19
+rosidl_cli:
+  build_number: 19
+ros2cli:
+  build_number: 19
