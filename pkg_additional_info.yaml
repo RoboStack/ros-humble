@@ -77,6 +77,21 @@ hpp_fcl:
     # uses its pre-rename name, upstream renamed the project to coal. 3.0.2's native
     # backend (libcoal) needs libboost 1.88, 3.0.4 already needs libboost 1.90.
     override_version: '3.0.4'
+iceoryx_binding_c:
+  generate_dummy_package_with_run_deps:
+    dep_name: libiceoryx-binding-c
+    max_pin: 'x.x'
+    override_version: '2.95.8'
+iceoryx_hoofs:
+  generate_dummy_package_with_run_deps:
+    dep_name: libiceoryx-hoofs
+    max_pin: 'x.x'
+    override_version: '2.95.8'
+iceoryx_posh:
+  generate_dummy_package_with_run_deps:
+    dep_name: libiceoryx-posh
+    max_pin: 'x.x'
+    override_version: '2.95.8'
 ignition_cmake2_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK -DBUILD_TESTING=OFF"
 ignition_math6_vendor:
@@ -148,6 +163,14 @@ pybind11_json_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
 pybind11_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
+rtabmap:
+  # Disable the Qt-based standalone GUI/viewer (guilib + app) and the standalone
+  # CLI tools/examples; the ROS-side rtabmap_ros nodes only need the core SLAM
+  # library. This also drops the otherwise-unused qt_gui_cpp package.xml
+  # dependency (see patch/dependencies.yaml) and the OpenCV5 porting effort down
+  # to just corelib (patch/ros-humble-rtabmap.patch backports upstream's
+  # https://github.com/introlab/rtabmap/pull/1732, corelib-relevant hunks only).
+  additional_cmake_args: "-DWITH_QT=OFF -DBUILD_TOOLS=OFF -DBUILD_EXAMPLES=OFF"
 sdformat_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 spdlog_vendor:
@@ -179,26 +202,3 @@ visp:
     override_version: '3.7.0'
 zenoh_cpp_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
-iceoryx_hoofs:
-  generate_dummy_package_with_run_deps:
-    dep_name: libiceoryx-hoofs
-    max_pin: 'x.x'
-    override_version: '2.95.8'
-iceoryx_binding_c:
-  generate_dummy_package_with_run_deps:
-    dep_name: libiceoryx-binding-c
-    max_pin: 'x.x'
-    override_version: '2.95.8'
-iceoryx_posh:
-  generate_dummy_package_with_run_deps:
-    dep_name: libiceoryx-posh
-    max_pin: 'x.x'
-    override_version: '2.95.8'
-rtabmap:
-  # Disable the Qt-based standalone GUI/viewer (guilib + app) and the standalone
-  # CLI tools/examples; the ROS-side rtabmap_ros nodes only need the core SLAM
-  # library. This also drops the otherwise-unused qt_gui_cpp package.xml
-  # dependency (see patch/dependencies.yaml) and the OpenCV5 porting effort down
-  # to just corelib (patch/ros-humble-rtabmap.patch backports upstream's
-  # https://github.com/introlab/rtabmap/pull/1732, corelib-relevant hunks only).
-  additional_cmake_args: "-DWITH_QT=OFF -DBUILD_TOOLS=OFF -DBUILD_EXAMPLES=OFF"
