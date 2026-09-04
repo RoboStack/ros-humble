@@ -153,6 +153,7 @@ jobs:
         ls ${{ matrix.folder_cache }} || true
 
     - name: Build recipes
+      id: build-recipes
       shell: bash -l {0}
       run: |
         if [ "${{ matrix.platform }}" = "emscripten-wasm32" ]; then
