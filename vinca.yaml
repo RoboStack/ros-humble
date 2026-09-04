@@ -431,8 +431,6 @@ packages_select_by_deps:
       # Uses linux-specific flags in  https://github.com/SteveMacenski/spatio_temporal_voxel_layer/blob/e23d730d35407bd8e2bf9c33d10388a6a07c735d/spatio_temporal_voxel_layer/CMakeLists.txt#L124,
       # but should be easy to fix
       - foxglove_bridge
-      # Some missing support for macOS, see https://github.com/cyberbotics/webots_ros2/pull/733
-      - franka_ros2
       # Linking problems on macOS, probably a missing link to draco library or similar
       - livox_ros_driver2
        # removed in jazzy, never supported windows or macos, no packages depend on it
@@ -448,10 +446,19 @@ packages_select_by_deps:
       # Windows can be easily fixed by backporting https://github.com/RoboStack/ros-jazzy/blob/main/patch/ros-jazzy-foxglove-bridge.win.patch
       # Osx fails with: "Unsupported platform/architecture combination: arm64-Darwin"
       - ublox_dgnss_node
+
+  # Packages restricted to linux-x86_64 specifically (excluding linux-aarch64
+  # too, unlike the "if: linux" block above). Keep this comment directly
+  # before the "if:" line below -- vinca-sort-vinca-lists merges adjacent
+  # if/then blocks that aren't separated by a top-level comment, which will
+  # otherwise scramble which package belongs under which condition.
   - if: linux and not aarch64
     then:
       # Franka robots support
       # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
+      - franka_ros2
+      # conda-forge's libfranka is only published for linux-64, not linux-aarch64
+      - libfranka
       - ublox_ubx_interfaces
       - webots_ros2         # Cyberbotics
 
