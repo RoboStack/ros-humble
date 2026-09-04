@@ -1,0 +1,14 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -69,6 +69,10 @@
+ find_program(CLANG_TIDY_EXECUTABLE NAMES "clang-tidy" REQUIRED)
+ set(CXX_CLANG_TIDY "${CLANG_TIDY_EXECUTABLE}"
+   "-header-filter=.*proto2ros/.*conversions.hpp"
++  # A checks list with only a "-"-prefixed exclusion and nothing positive
++  # (e.g. "*") enables zero checks; this clang-tidy errors out on that
++  # ("no checks enabled") instead of silently no-op'ing, so allow it.
++  "--allow-no-checks"
+   "-checks=-clang-diagnostic-ignored-optimization-argument")
+ set_target_properties(${PROJECT_NAME}_conversions PROPERTIES CXX_CLANG_TIDY "${CXX_CLANG_TIDY}")
+ 

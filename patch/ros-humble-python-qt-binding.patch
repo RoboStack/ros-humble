@@ -102,7 +102,7 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
  endif()
  
  if(SIP_EXECUTABLE)
-@@ -26,6 +26,15 @@
+@@ -26,6 +26,29 @@
    set(sip_helper_NOTFOUND TRUE)
  endif()
  
@@ -115,10 +115,24 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +  # message(STATUS "SIP binding generator version: ${SIP_VERSION}")
 +endif()
 +
++# The sip toolchain always compiles the binding as a CPython C extension, so
++# it always uses Python's own extension suffix (.so on both Linux and macOS,
++# .pyd on Windows) -- never CMAKE_SHARED_LIBRARY_SUFFIX, which is .dylib on
++# macOS and .dll on Windows and would produce a file CPython can't import.
++# This matches the LIBQT_GUI_CPP_SIP_SUFFIX convention qt_gui_cpp_sip's own
++# CMakeLists.txt already uses for its install() rule.
++if(APPLE)
++  set(SIP_MODULE_SUFFIX .so)
++elseif(WIN32)
++  set(SIP_MODULE_SUFFIX .pyd)
++else()
++  set(SIP_MODULE_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
++endif()
++
  #
  # Run the SIP generator and compile the generated code into a library.
  #
-@@ -77,35 +86,112 @@
+@@ -77,37 +100,114 @@
      set(LIBRARY_DIRS ${${PROJECT_NAME}_LIBRARY_DIRS})
      set(LDFLAGS_OTHER ${${PROJECT_NAME}_LDFLAGS_OTHER})
  
@@ -133,10 +147,10 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +    if(${SIP_VERSION} VERSION_GREATER_EQUAL "5.0.0")
 +        # Since v5, SIP implements the backend per PEP 517, PEP 518
 +        # Here we synthesize `pyproject.toml` and run `pip install`
++
++        find_program(QMAKE_EXECUTABLE NAMES qmake6 qmake REQUIRED)
  
 -    if(NOT EXISTS "${sip_LIBRARY_DIR}")
-+        find_program(QMAKE_EXECUTABLE NAMES qmake6 qmake REQUIRED)
-+
 +        file(REMOVE_RECURSE ${SIP_BUILD_DIR})
          file(MAKE_DIRECTORY ${sip_LIBRARY_DIR})
 -    endif()
@@ -198,15 +212,15 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +            ${sip_BINARY_DIR}/sip/pyproject.toml
 +        )
 +        add_custom_command(
-+            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${SIP_MODULE_SUFFIX}
 +            COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
 +            # PyQt-builder's wheel install places the compiled module under a
 +            # Python ABI-tagged name (e.g. lib${PROJECT_NAME}.cpython-312-x86_64-linux-gnu.so)
-+            # rather than the plain lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX} this
++            # rather than the plain lib${PROJECT_NAME}${SIP_MODULE_SUFFIX} this
 +            # macro's callers expect, so ninja never sees this OUTPUT get created and
 +            # the subsequent install() step fails with "file INSTALL cannot find ...".
 +            # Copy whatever tagged variant was actually installed to the expected name.
-+            COMMAND ${Python3_EXECUTABLE} ${__PYTHON_QT_BINDING_SIP_HELPER_DIR}/fixup_sip_module_name.py ${sip_LIBRARY_DIR} lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++            COMMAND ${Python3_EXECUTABLE} ${__PYTHON_QT_BINDING_SIP_HELPER_DIR}/fixup_sip_module_name.py ${sip_LIBRARY_DIR} lib${PROJECT_NAME}${SIP_MODULE_SUFFIX}
 +            DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
 +            WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
 +            COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
@@ -235,7 +249,7 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +        if(NOT EXISTS "${sip_LIBRARY_DIR}")
 +            file(MAKE_DIRECTORY ${sip_LIBRARY_DIR})
 +        endif()
- 
++
 +        if(WIN32)
 +            set(MAKE_EXECUTABLE NMake.exe)
 +        else()
@@ -243,17 +257,20 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +        endif()
 +
 +        add_custom_command(
-+            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${SIP_MODULE_SUFFIX}
 +            COMMAND ${MAKE_EXECUTABLE}
 +            DEPENDS ${SIP_BUILD_DIR}/Makefile
 +            WORKING_DIRECTORY ${SIP_BUILD_DIR}
 +            COMMENT "Compiling generated code for ${PROJECT_NAME} Python bindings..."
 +        )
 +    endif()
-+
+ 
      add_custom_target(lib${PROJECT_NAME} ALL
-         DEPENDS ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
+-        DEPENDS ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++        DEPENDS ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${SIP_MODULE_SUFFIX}
          COMMENT "Meta target for ${PROJECT_NAME} Python bindings..."
+     )
+     add_dependencies(lib${PROJECT_NAME} ${sip_DEPENDENCIES})
 diff -ruN a/src/python_qt_binding/__init__.py b/src/python_qt_binding/__init__.py
 --- a/src/python_qt_binding/__init__.py
 +++ b/src/python_qt_binding/__init__.py

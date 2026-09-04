@@ -59,3 +59,17 @@ diff -ruN a/src/http/handlers/script_handlers.cpp b/src/http/handlers/script_han
        try {
          metadata = json::parse(meta_it->second.content);
        } catch (const json::parse_error &) {
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -209,6 +209,10 @@
+   jwt-cpp::jwt-cpp
+   SQLite::SQLite3
+   ${CMAKE_DL_LIBS}
++  # cpp-httplib's async client name resolution (getaddrinfo_a/gai_suspend/
++  # gai_error/gai_cancel) is glibc-only and, on this toolchain, still needs
++  # explicit -lanl even though the symbols live in glibc itself.
++  $<$<PLATFORM_ID:Linux>:anl>
+ )
+ 
+ # Precompiled headers - heavy headers used across most translation units.
