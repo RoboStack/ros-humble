@@ -79,7 +79,7 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
  #
  # Run the SIP generator and compile the generated code into a library.
  #
-@@ -77,35 +86,127 @@
+@@ -77,35 +86,112 @@
      set(LIBRARY_DIRS ${${PROJECT_NAME}_LIBRARY_DIRS})
      set(LDFLAGS_OTHER ${${PROJECT_NAME}_LDFLAGS_OTHER})
  
@@ -158,35 +158,20 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +            ${__PYTHON_QT_BINDING_SIP_HELPER_DIR}/pyproject.toml.in
 +            ${sip_BINARY_DIR}/sip/pyproject.toml
 +        )
-+        if(WIN32)
-+          # On Windows, qmake does not add its own "lib" prefix to the DLL
-+          # it builds for a name that already has one (see pyproject.toml.in),
-+          # so the module it produces already matches what this macro's
-+          # callers expect below.
-+          add_custom_command(
-+              OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
-+              COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
-+              DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
-+              WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
-+              COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
-+          )
-+        else()
-+          # On Unix, qmake's shared-library convention prefixes "lib" onto
-+          # the sip module name (which, per pyproject.toml.in, already
-+          # starts with "lib"), producing liblib${PROJECT_NAME} instead of
-+          # the lib${PROJECT_NAME} this macro's callers expect. Normalize
-+          # it here instead of chasing every consumer of that name.
-+          add_custom_command(
-+              OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
-+              COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
-+              COMMAND ${CMAKE_COMMAND} -E copy_if_different
-+                  ${sip_LIBRARY_DIR}/liblib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
-+                  ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
-+              DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
-+              WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
-+              COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
-+          )
-+        endif()
++        add_custom_command(
++            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++            COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
++            # PyQt-builder's wheel install places the compiled module under a
++            # Python ABI-tagged name (e.g. lib${PROJECT_NAME}.cpython-312-x86_64-linux-gnu.so)
++            # rather than the plain lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX} this
++            # macro's callers expect, so ninja never sees this OUTPUT get created and
++            # the subsequent install() step fails with "file INSTALL cannot find ...".
++            # Copy whatever tagged variant was actually installed to the expected name.
++            COMMAND ${Python3_EXECUTABLE} -c "import glob, os, shutil; want = 'lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}'; hits = [f for f in glob.glob(os.path.join('${sip_LIBRARY_DIR}', 'lib${PROJECT_NAME}*${CMAKE_SHARED_LIBRARY_SUFFIX}')) if os.path.basename(f) != want]; shutil.copyfile(hits[0], os.path.join('${sip_LIBRARY_DIR}', want)) if hits else None"
++            DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
++            WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
++            COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
++        )
      else()
 -      find_program(MAKE_PROGRAM NAMES make)
 -      message(STATUS "Found required make: ${MAKE_PROGRAM}")
