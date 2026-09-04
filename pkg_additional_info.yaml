@@ -2,6 +2,13 @@ apriltag:
   generate_dummy_package_with_run_deps:
     dep_name: apriltag
     max_pin: 'x.x.x'
+as2_behaviors_trajectory_generation:
+  # Its FetchContent'd dynamic_trajectory_generator dependency itself
+  # FetchContent's an old glog release whose cmake_policy() call is below
+  # CMake 4's floor of 3.5. Since this all happens via add_subdirectory()
+  # within the same cmake process (unlike a separate downloaded-tool
+  # subprocess), passing this as a plain cache arg is enough to reach it.
+  additional_cmake_args: '-DCMAKE_POLICY_VERSION_MINIMUM=3.5'
 as2_platform_multirotor_simulator:
   # RPS98/multirotor_simulator's model.hpp uses assert() inside template
   # functions without including <cassert>; GCC 15 flags that as an error
