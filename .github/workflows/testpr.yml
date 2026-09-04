@@ -186,6 +186,13 @@ jobs:
         # artifact keeps getting reused by --skip-existing despite the new
         # #include <cstdint> patch.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-gtest-vendor* 2>/dev/null || true
+        # sick_safetyscanners_base's own CMakeLists.txt was already patched for
+        # Boost 1.90 dropping the "system" component config, but its separate,
+        # manually-committed sick_safetyscanners_baseConfig.cmake (consumed by
+        # downstream sick_safetyscanners2) independently declared the same
+        # find_package(... COMPONENTS ... system ...) call, unpatched until now.
+        # Its pre-fix cached artifact keeps getting reused by --skip-existing.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-sick-safetyscanners-base* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
