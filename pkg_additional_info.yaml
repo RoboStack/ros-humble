@@ -218,11 +218,3 @@ visp:
     override_version: '3.7.0'
 zenoh_cpp_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
-python_qt_binding:
-  # --skip-existing reuses whatever build is already published under the
-  # current (name, version, build_string) regardless of patch content, so a
-  # patch-only fix to this package's sip_helper.cmake/CMakeLists.txt never
-  # actually gets built as long as an old build_number-20 artifact already
-  # exists in the channel. Bump it here to force a fresh build once; revert
-  # once that fixed build has actually landed in robostack-staging.
-  build_number: 21
