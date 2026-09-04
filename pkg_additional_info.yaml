@@ -36,6 +36,15 @@ console_bridge_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 data_tamer_cpp:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
+depthai:
+  # The patch's set(ENV{CMAKE_POLICY_VERSION_MINIMUM}) call (needed for
+  # Hunter's own subprocess-spawned cmake -H...-B... invocation) doesn't
+  # reach cmake/CMakeRC.cmake's cmake_minimum_required() -- that file is
+  # include()'d directly into the *same* top-level cmake process later on,
+  # so a plain cache arg on the top-level configure is what actually
+  # covers it (same "same-process include()" case as
+  # as2_behaviors_trajectory_generation's glog FetchContent, above).
+  additional_cmake_args: '-DCMAKE_POLICY_VERSION_MINIMUM=3.5'
 diagnostic_aggregator:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
 diagnostic_updater:
