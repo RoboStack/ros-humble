@@ -125,8 +125,12 @@ libfranka:
   generate_dummy_package_with_run_deps:
     dep_name: libfranka
     max_pin: 'x.x.x'
-    # humble is on 0.20.4, but we stick to 0.21.2 for compat with the rest of conda-forge
-    override_version: '0.21.2'
+    # humble is on 0.20.4, but we stick to conda-forge's latest for compat with the
+    # rest of conda-forge. 0.21.2 needs libpinocchio 4.0.0, which needs libcoal 3.0.3
+    # (libboost 1.88) — conflicts with pinocchio/hpp_fcl's own 4.1.0/3.0.4 pins (libboost
+    # 1.90) and with ros2-distro-mutex's libboost 1.90 pin. 0.21.3 needs libpinocchio
+    # 4.1.0, resolving the conflict.
+    override_version: '0.21.3'
 liblz4_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 libnabo:
