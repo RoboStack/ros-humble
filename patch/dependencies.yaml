@@ -201,6 +201,12 @@ ros_gz_sim:
   add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}"]
 geometric_shapes:
   add_host: ["libboost-devel", "octomap"]
+kdl_parser:
+  # orocos_kdl_vendor's exported orocos_kdl_vendor-extras.cmake does
+  # find_package(eigen3_cmake_module) itself, but kdl_parser's package.xml
+  # never declares that as a build_depend (it only depends on
+  # orocos_kdl_vendor), so CMake can't find Findeigen3_cmake_module.cmake.
+  add_host: ["ros-humble-eigen3-cmake-module"]
 ros_image_to_qimage:
   # Same PyQt6 port as qt_gui_cpp/rqt_gui_cpp above (patch/ros-humble-ros-image-to-qimage.patch).
   remove_host: ["qt-main"]

@@ -55,14 +55,17 @@ diff -ruN a/cmake/sip_configure.py b/cmake/sip_configure.py
 diff -ruN a/cmake/fixup_sip_module_name.py b/cmake/fixup_sip_module_name.py
 --- /dev/null
 +++ b/cmake/fixup_sip_module_name.py
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,29 @@
 +#!/usr/bin/env python3
 +"""Copy PyQt-builder's ABI-tagged sip module to the plain name CMake expects.
 +
 +PyQt-builder's pip-based wheel install places the compiled module under a
 +Python ABI-tagged filename (e.g. libfoo.cpython-312-x86_64-linux-gnu.so)
 +rather than the plain libfoo.so that build_sip_binding()'s callers (and the
-+install() step) expect, so this script normalizes it in place.
++install() step) expect, so this script normalizes it in place. Searches
++recursively since pip --target layout can nest the module in a subdirectory,
++and fails loudly (rather than leaving a confusing later "file INSTALL cannot
++find" CMake error) when nothing matches.
 +"""
 +import glob
 +import os
@@ -70,12 +73,18 @@ diff -ruN a/cmake/fixup_sip_module_name.py b/cmake/fixup_sip_module_name.py
 +import sys
 +
 +library_dir, want = sys.argv[1], sys.argv[2]
++pattern = want.replace('.', '*.', 1)
 +hits = [
-+    f for f in glob.glob(os.path.join(library_dir, want.replace('.', '*.', 1)))
++    f for f in glob.glob(os.path.join(library_dir, '**', pattern), recursive=True)
 +    if os.path.basename(f) != want
 +]
 +if hits:
 +    shutil.copyfile(hits[0], os.path.join(library_dir, want))
++else:
++    available = []
++    for root, _dirs, files in os.walk(library_dir):
++        available.extend(os.path.relpath(os.path.join(root, f), library_dir) for f in files)
++    sys.exit(f"fixup_sip_module_name.py: no file matching {pattern!r} found under {library_dir}; contents: {available}")
 diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 --- a/cmake/sip_helper.cmake
 +++ b/cmake/sip_helper.cmake
