@@ -1,11 +1,12 @@
 diff -ruN a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -11,6 +11,7 @@
+@@ -11,6 +11,8 @@
    cmake/shiboken_helper.cmake
    cmake/sip_configure.py
    cmake/sip_helper.cmake
 +  cmake/pyproject.toml.in
++  cmake/fixup_sip_module_name.py
    DESTINATION share/${PROJECT_NAME}/cmake)
  
  if(BUILD_TESTING)
@@ -51,6 +52,30 @@ diff -ruN a/cmake/sip_configure.py b/cmake/sip_configure.py
      # The __cplusplus flag is not properly set on Windows for backwards
      # compatibilty. This flag sets it correctly
      makefile.CXXFLAGS.append('/Zc:__cplusplus')
+diff -ruN a/cmake/fixup_sip_module_name.py b/cmake/fixup_sip_module_name.py
+--- /dev/null
++++ b/cmake/fixup_sip_module_name.py
+@@ -0,0 +1,20 @@
++#!/usr/bin/env python3
++"""Copy PyQt-builder's ABI-tagged sip module to the plain name CMake expects.
++
++PyQt-builder's pip-based wheel install places the compiled module under a
++Python ABI-tagged filename (e.g. libfoo.cpython-312-x86_64-linux-gnu.so)
++rather than the plain libfoo.so that build_sip_binding()'s callers (and the
++install() step) expect, so this script normalizes it in place.
++"""
++import glob
++import os
++import shutil
++import sys
++
++library_dir, want = sys.argv[1], sys.argv[2]
++hits = [
++    f for f in glob.glob(os.path.join(library_dir, want.replace('.', '*.', 1)))
++    if os.path.basename(f) != want
++]
++if hits:
++    shutil.copyfile(hits[0], os.path.join(library_dir, want))
 diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 --- a/cmake/sip_helper.cmake
 +++ b/cmake/sip_helper.cmake
@@ -167,7 +192,7 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +            # macro's callers expect, so ninja never sees this OUTPUT get created and
 +            # the subsequent install() step fails with "file INSTALL cannot find ...".
 +            # Copy whatever tagged variant was actually installed to the expected name.
-+            COMMAND ${Python3_EXECUTABLE} -c "import glob, os, shutil; want = 'lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}'; hits = [f for f in glob.glob(os.path.join('${sip_LIBRARY_DIR}', 'lib${PROJECT_NAME}*${CMAKE_SHARED_LIBRARY_SUFFIX}')) if os.path.basename(f) != want]; shutil.copyfile(hits[0], os.path.join('${sip_LIBRARY_DIR}', want)) if hits else None"
++            COMMAND ${Python3_EXECUTABLE} ${__PYTHON_QT_BINDING_SIP_HELPER_DIR}/fixup_sip_module_name.py ${sip_LIBRARY_DIR} lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
 +            DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
 +            WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
 +            COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
