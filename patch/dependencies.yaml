@@ -170,7 +170,9 @@ rqt_image_view:
   remove_host: ["qt-main"]
   add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}", "qt6-main"]
 rqt_image_overlay_layer:
-  add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}"]
+  # Same PyQt6 port as qt_gui_cpp/rqt_gui_cpp above (patch/ros-humble-rqt-image-overlay-layer.patch).
+  remove_host: ["qt-main"]
+  add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}", "qt6-main"]
 rviz_visual_testing_framework:
   add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}"]
 rviz2:
@@ -200,9 +202,13 @@ ros_gz_sim:
 geometric_shapes:
   add_host: ["libboost-devel", "octomap"]
 ros_image_to_qimage:
-  add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}"]
+  # Same PyQt6 port as qt_gui_cpp/rqt_gui_cpp above (patch/ros-humble-ros-image-to-qimage.patch).
+  remove_host: ["qt-main"]
+  add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}", "qt6-main"]
 rqt_image_overlay:
-  add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}"]
+  # Same PyQt6 port as qt_gui_cpp/rqt_gui_cpp above (patch/ros-humble-rqt-image-overlay.patch).
+  remove_host: ["qt-main"]
+  add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}", "qt6-main"]
 tracetools:
   remove_host: [ "pkg-config" ]
 spdlog_vendor:
