@@ -12,9 +12,15 @@ Signed-off-by: Esteve Fernandez <esteve@apache.org>
  3 files changed, 41 insertions(+), 33 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 109d9da..24d9aff 100644
+index 109d9da..cf18430 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.4) # For Hunter
++cmake_minimum_required(VERSION 3.5) # For Hunter
+ 
+ # MSVC variable isn't available before 'project' call
+ # Generalize to Win32 platform for now
 @@ -60,6 +60,8 @@ else()
      message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
  endif()
