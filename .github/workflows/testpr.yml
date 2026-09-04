@@ -149,6 +149,13 @@ jobs:
         # from before the sip_helper.cmake fix keeps getting reused by --skip-existing
         # despite the patch changes. Force it to rebuild once with the fix baked in.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-python-qt-binding* 2>/dev/null || true
+        # Same story: rqt_image_overlay_layer and ros_image_to_qimage both still
+        # find_package(Qt5Widgets) and export it via ament_export_dependencies, so
+        # their pre-Qt6-migration builds already succeeded and got cached, silently
+        # feeding Qt5 into consumers now built against Qt6 (rqt_image_overlay's
+        # "INTERFACE_QT_MAJOR_VERSION property of Qt5::Core does not agree").
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rqt-image-overlay-layer* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-ros-image-to-qimage* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
