@@ -31,6 +31,14 @@ eigenpy:
     max_pin: 'x.x.x'
     # the version in ros is not compatible with conda-forge's coal and hpp_fcl builds
     override_version: '3.13.0'
+fastrtps:
+  # Several DDSSQLFilter headers use uint8_t/uint64_t without including <cstdint>,
+  # relying on it coming in transitively. GCC 15's leaner libstdc++ headers no
+  # longer provide that, so force it in for every translation unit rather than
+  # patching each affected header as they turn up.
+  additional_cmake_args:
+    if: unix
+    then: "-DCMAKE_CXX_FLAGS=-include cstdint"
 force_torque_sensor_broadcaster:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
 gtsam:
