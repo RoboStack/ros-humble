@@ -1,0 +1,85 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9a97f64..1d99274 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -8,7 +8,7 @@ find_package(qt_gui_cpp REQUIRED)
+ find_package(rqt_gui_cpp REQUIRED)
+ find_package(plansys2_problem_expert REQUIRED)
+ 
+-find_package(Qt5Widgets REQUIRED)
++find_package(Qt6Widgets REQUIRED)
+ 
+ set(CMAKE_CXX_STANDARD 17)
+ 
+@@ -49,11 +49,11 @@ set(rqt_plansys2_knowledge_UIS
+ 
+ set(rqt_plansys2_knowledge_INCLUDE_DIRECTORIES
+   include
+-  ${Qt5Widgets_INCLUDE_DIRS}
++  ${Qt6Widgets_INCLUDE_DIRS}
+ )
+ 
+-qt5_wrap_cpp(rqt_plansys2_knowledge_MOCS ${rqt_plansys2_knowledge_HDRS})
+-qt5_wrap_ui(rqt_plansys2_knowledge_UIS_H ${rqt_plansys2_knowledge_UIS})
++qt6_wrap_cpp(rqt_plansys2_knowledge_MOCS ${rqt_plansys2_knowledge_HDRS})
++qt6_wrap_ui(rqt_plansys2_knowledge_UIS_H ${rqt_plansys2_knowledge_UIS})
+ 
+ include_directories(
+   ${rqt_plansys2_knowledge_INCLUDE_DIRECTORIES}
+@@ -67,7 +67,7 @@ add_library(rqt_plansys2_knowledge SHARED
+ 
+ target_link_libraries(
+   rqt_plansys2_knowledge
+-  Qt5::Widgets
++  Qt6::Widgets
+ )
+ ament_target_dependencies(rqt_plansys2_knowledge ${dependencies})
+ 
+@@ -88,11 +88,11 @@ set(rqt_plansys2_performers_UIS
+ 
+ set(rqt_plansys2_performers_INCLUDE_DIRECTORIES
+   include
+-  ${Qt5Widgets_INCLUDE_DIRS}
++  ${Qt6Widgets_INCLUDE_DIRS}
+ )
+ 
+-qt5_wrap_cpp(rqt_plansys2_performers_MOCS ${rqt_plansys2_performers_HDRS})
+-qt5_wrap_ui(rqt_plansys2_performers_UIS_H ${rqt_plansys2_performers_UIS})
++qt6_wrap_cpp(rqt_plansys2_performers_MOCS ${rqt_plansys2_performers_HDRS})
++qt6_wrap_ui(rqt_plansys2_performers_UIS_H ${rqt_plansys2_performers_UIS})
+ 
+ include_directories(
+   ${rqt_plansys2_performers_INCLUDE_DIRECTORIES}
+@@ -106,7 +106,7 @@ add_library(rqt_plansys2_performers SHARED
+ 
+ target_link_libraries(
+   rqt_plansys2_performers
+-  Qt5::Widgets
++  Qt6::Widgets
+ )
+ ament_target_dependencies(rqt_plansys2_performers ${dependencies})
+ 
+@@ -127,11 +127,11 @@ set(rqt_plansys2_plan_UIS
+ 
+ set(rqt_plansys2_plan_INCLUDE_DIRECTORIES
+   include
+-  ${Qt5Widgets_INCLUDE_DIRS}
++  ${Qt6Widgets_INCLUDE_DIRS}
+ )
+ 
+-qt5_wrap_cpp(rqt_plansys2_plan_MOCS ${rqt_plansys2_plan_HDRS})
+-qt5_wrap_ui(rqt_plansys2_plan_UIS_H ${rqt_plansys2_plan_UIS})
++qt6_wrap_cpp(rqt_plansys2_plan_MOCS ${rqt_plansys2_plan_HDRS})
++qt6_wrap_ui(rqt_plansys2_plan_UIS_H ${rqt_plansys2_plan_UIS})
+ 
+ include_directories(
+   ${rqt_plansys2_plan_INCLUDE_DIRECTORIES}
+@@ -145,7 +145,7 @@ add_library(rqt_plansys2_plan SHARED
+ 
+ target_link_libraries(
+   rqt_plansys2_plan
+-  Qt5::Widgets
++  Qt6::Widgets
+ )
+ ament_target_dependencies(rqt_plansys2_plan ${dependencies})
+ 
