@@ -1,0 +1,39 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9639bc8..7d9e63b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -14,7 +14,7 @@ find_package(rclcpp REQUIRED)
+ find_package(pluginlib REQUIRED)
+ find_package(rqt_gui_cpp REQUIRED)
+ find_package(image_transport REQUIRED)
+-find_package(Qt5Widgets REQUIRED)
++find_package(Qt6Widgets REQUIRED)
+ find_package(ros_image_to_qimage REQUIRED)
+ find_package(rqt_image_overlay_layer REQUIRED)
+ 
+@@ -29,14 +29,14 @@ set(SOURCES
+   src/list_image_topics.cpp
+   src/color_dialog_delegate.cpp
+   src/overlay_manager_view.cpp)
+-qt5_wrap_cpp(SOURCES    # Must do this for qt's Meta-Object Compiler.
++qt6_wrap_cpp(SOURCES    # Must do this for qt's Meta-Object Compiler.
+   src/image_overlay.hpp
+   src/composition_frame.hpp
+   src/compositor.hpp
+   src/image_manager.hpp
+   src/color_dialog_delegate.hpp
+   src/overlay_manager_view.hpp)
+-qt5_wrap_ui(UIS resource/image_overlay.ui)
++qt6_wrap_ui(UIS resource/image_overlay.ui)
+ add_library(rqt_image_overlay SHARED
+   ${SOURCES}
+   ${UIS})
+@@ -47,7 +47,7 @@ ament_target_dependencies(rqt_image_overlay
+   rclcpp
+   rqt_gui_cpp
+   image_transport
+-  Qt5Widgets
++  Qt6Widgets
+   ros_image_to_qimage
+   rqt_image_overlay_layer)
+ 
