@@ -79,7 +79,7 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
  #
  # Run the SIP generator and compile the generated code into a library.
  #
-@@ -77,34 +86,104 @@
+@@ -77,35 +86,127 @@
      set(LIBRARY_DIRS ${${PROJECT_NAME}_LIBRARY_DIRS})
      set(LDFLAGS_OTHER ${${PROJECT_NAME}_LDFLAGS_OTHER})
  
@@ -158,13 +158,35 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +            ${__PYTHON_QT_BINDING_SIP_HELPER_DIR}/pyproject.toml.in
 +            ${sip_BINARY_DIR}/sip/pyproject.toml
 +        )
-+        add_custom_command(
-+            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
-+            COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
-+            DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
-+            WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
-+            COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
-+        )
++        if(WIN32)
++          # On Windows, qmake does not add its own "lib" prefix to the DLL
++          # it builds for a name that already has one (see pyproject.toml.in),
++          # so the module it produces already matches what this macro's
++          # callers expect below.
++          add_custom_command(
++              OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++              COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
++              DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
++              WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
++              COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
++          )
++        else()
++          # On Unix, qmake's shared-library convention prefixes "lib" onto
++          # the sip module name (which, per pyproject.toml.in, already
++          # starts with "lib"), producing liblib${PROJECT_NAME} instead of
++          # the lib${PROJECT_NAME} this macro's callers expect. Normalize
++          # it here instead of chasing every consumer of that name.
++          add_custom_command(
++              OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++              COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
++              COMMAND ${CMAKE_COMMAND} -E copy_if_different
++                  ${sip_LIBRARY_DIR}/liblib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++                  ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++              DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
++              WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
++              COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
++          )
++        endif()
      else()
 -      find_program(MAKE_PROGRAM NAMES make)
 -      message(STATUS "Found required make: ${MAKE_PROGRAM}")
@@ -189,7 +211,7 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +        if(NOT EXISTS "${sip_LIBRARY_DIR}")
 +            file(MAKE_DIRECTORY ${sip_LIBRARY_DIR})
 +        endif()
-+
+ 
 +        if(WIN32)
 +            set(MAKE_EXECUTABLE NMake.exe)
 +        else()
@@ -204,9 +226,10 @@ diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 +            COMMENT "Compiling generated code for ${PROJECT_NAME} Python bindings..."
 +        )
 +    endif()
- 
++
      add_custom_target(lib${PROJECT_NAME} ALL
          DEPENDS ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
+         COMMENT "Meta target for ${PROJECT_NAME} Python bindings..."
 diff -ruN a/src/python_qt_binding/__init__.py b/src/python_qt_binding/__init__.py
 --- a/src/python_qt_binding/__init__.py
 +++ b/src/python_qt_binding/__init__.py
