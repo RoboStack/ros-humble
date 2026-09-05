@@ -193,6 +193,13 @@ jobs:
         # find_package(... COMPONENTS ... system ...) call, unpatched until now.
         # Its pre-fix cached artifact keeps getting reused by --skip-existing.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-sick-safetyscanners-base* 2>/dev/null || true
+        # mutex_package.build_number (21) wasn't checked by the "already built,
+        # skip" comparison (only pkg_additional_info's per-package override /
+        # the top-level default build_number-20 was) until the distro_mutex
+        # override was added, so any build-20 mutex artifact already sitting in
+        # this cache needs to be forced out to pick up build 21's new
+        # run_constraints (libboost 1.90, pcl 1.15.1, vtk 9.7.0, etc).
+        rm -rf ${{ matrix.folder_cache }}/ros2-distro-mutex* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
