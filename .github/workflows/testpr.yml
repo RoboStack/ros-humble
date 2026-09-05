@@ -206,6 +206,10 @@ jobs:
         # with the identical fix -- same upstream source). Force a fresh
         # rebuild without it.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-libg2o* 2>/dev/null || true
+        # Same corrupt-cache pattern seen on jazzy win-64 (~20-25KB packages
+        # that fail downstream "package not found" checks despite being
+        # present locally): ros-humble-lanelet2-core on win-64, only ~20KB.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-lanelet2-core* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
