@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c906851..b48600f 100644
+index 20bdedf..aaa3d38 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -5,8 +5,10 @@ project(apriltag_ros)
@@ -15,3 +15,29 @@ index c906851..b48600f 100644
  endif()
  
  option(ASAN "use AddressSanitizer to detect memory issues" OFF)
+@@ -41,7 +43,15 @@ find_package(image_transport REQUIRED)
+ find_package(cv_bridge REQUIRED)
+ find_package(Eigen3 REQUIRED NO_MODULE)
+ find_package(Threads REQUIRED)
+-find_package(OpenCV REQUIRED COMPONENTS core calib3d)
++find_package(OpenCV REQUIRED COMPONENTS core)
++if(OpenCV_VERSION_MAJOR GREATER 4)
++  # calib3d was split into "calib" + "geometry" in OpenCV 5.
++  find_package(OpenCV REQUIRED COMPONENTS calib geometry)
++  set(APRILTAG_ROS_OPENCV_CALIB_LIBS opencv_calib opencv_geometry)
++else()
++  find_package(OpenCV REQUIRED COMPONENTS calib3d)
++  set(APRILTAG_ROS_OPENCV_CALIB_LIBS opencv_calib3d)
++endif()
+ find_package(apriltag 3.2 REQUIRED)
+ 
+ if(cv_bridge_VERSION VERSION_GREATER_EQUAL 3.3.0)
+@@ -86,7 +96,7 @@ target_link_libraries(pose_estimation
+   PUBLIC
+     apriltag::apriltag
+     Eigen3::Eigen
+-    opencv_calib3d
++    ${APRILTAG_ROS_OPENCV_CALIB_LIBS}
+     conversion
+     ${geometry_msgs_TARGETS}
+     tf2::tf2
