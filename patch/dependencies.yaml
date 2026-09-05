@@ -86,7 +86,11 @@ tvm_vendor:
 libphidget22:
   add_host: ["libusb"]
 libg2o:
-  add_host: ["qt-main", "${{ 'libglu' if linux }}", "${{ 'freeglut' if not osx }}"]
+  # qt-main isn't declared in package.xml and CMakeLists.txt's
+  # find_package(QGLViewer) is optional (QGLViewer itself, a separate
+  # library, was never provided by this dep anyway) -- it's dead weight
+  # that conflicts with vtk's now-Qt6-only build.
+  add_host: ["${{ 'libglu' if linux }}", "${{ 'freeglut' if not osx }}"]
 fmilibrary_vendor:
   add_host: ["fmilib"]
 mrpt2:

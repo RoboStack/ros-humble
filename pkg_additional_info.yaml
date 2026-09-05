@@ -147,6 +147,10 @@ libfranka:
     # 1.90) and with ros2-distro-mutex's libboost 1.90 pin. 0.21.3 needs libpinocchio
     # 4.1.0, resolving the conflict.
     override_version: '0.21.3'
+libg2o:
+  # csparse_extension exports no symbols on win-64, so MSVC produces the
+  # .dll but no import .lib and solver_csparse fails LNK1181.
+  additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
 liblz4_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 libnabo:
