@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index bbe97e2..d78db3c 100644
+index bbe97e2..4ef746f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,5 +1,5 @@
@@ -9,3 +9,17 @@ index bbe97e2..d78db3c 100644
  project(rot_conv)
  
  # Enable C++11
+@@ -104,6 +104,13 @@ install(TARGETS rotconvshared
+ ament_target_dependencies(rotconvstatic Eigen3)
+ ament_target_dependencies(rotconvshared Eigen3)
+ ament_target_dependencies(rot_conv_sample_direct Eigen3)
++# Eigen 5's Eigen3Config.cmake no longer sets the legacy Eigen3_INCLUDE_DIRS
++# variable that ament_target_dependencies() (and eigen3_cmake_module's
++# FindEigen3.cmake shim) rely on -- it only provides the modern Eigen3::Eigen
++# imported target now, so link that explicitly too.
++target_link_libraries(rotconvstatic Eigen3::Eigen)
++target_link_libraries(rotconvshared Eigen3::Eigen)
++target_link_libraries(rot_conv_sample_direct Eigen3::Eigen)
+ 
+ ament_export_include_directories(include)
+ ament_export_libraries(rotconvshared)
