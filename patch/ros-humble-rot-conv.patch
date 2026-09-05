@@ -1,14 +1,20 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index bbe97e2..4ef746f 100644
+index bbe97e2..892babc 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1,5 +1,5 @@
+@@ -1,10 +1,10 @@
  # Rotations Conversion Library project
 -cmake_minimum_required(VERSION 3.3)
 +cmake_minimum_required(VERSION 3.5)
  project(rot_conv)
  
  # Enable C++11
+ message(STATUS "Enabling C++11")
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+ add_compile_options(-Wall -Wextra -Wpedantic)
+ 
+ # Include directories
 @@ -104,6 +104,13 @@ install(TARGETS rotconvshared
  ament_target_dependencies(rotconvstatic Eigen3)
  ament_target_dependencies(rotconvshared Eigen3)
