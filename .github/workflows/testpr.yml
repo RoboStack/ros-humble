@@ -180,6 +180,16 @@ jobs:
         rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-typesupport-fastrtps-c* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-rmw-fastrtps-* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-robot-state-publisher* 2>/dev/null || true
+        # Same fastrtps-typesupport staleness, a second downstream consumer:
+        # robot_localization's win-64 build fails LNK2019 on
+        # geographic_msgs/geometry_msgs/builtin_interfaces fastrtps typesupport
+        # symbols (cdr_serialize/get_serialized_size/etc). Those message
+        # packages' own cached artifacts still predate the 8e73ae0d fix above,
+        # so their fastrtps typesupport libs never actually export the
+        # symbols downstream consumers need. Force them fresh too.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-geographic-msgs* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-geometry-msgs* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-builtin-interfaces* 2>/dev/null || true
         # gtest_vendor itself never failed to build (its own build doesn't
         # compile gtest-death-test.cc; consuming packages with BUILD_TESTING
         # on do, from the vendored source it installs), so its pre-fix cached
