@@ -344,6 +344,8 @@ packages_select_by_deps:
       - ptz_action_server_msgs
       # Requested in https://github.com/RoboStack/ros-humble/issues/394
       - zed-msgs
+      # Requested in https://github.com/RoboStack/ros-humble/issues/421
+      - zed_description
 
       # Requested in https://github.com/RoboStack/ros-humble/issues/345
       - topic_based_ros2_control
