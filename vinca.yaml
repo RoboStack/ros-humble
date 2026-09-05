@@ -645,28 +645,13 @@ packages_select_by_deps:
   - rviz_2d_overlay_msgs
   - rviz_visual_tools
   - sbg_driver
+  - sick_scan_xd
   - smacc2_msgs
   - tracetools
   - tracetools_launch
   - tracetools_trace
   - ur_client_library
   - urdf_launch
-
-  # sick_scan_xd's vendored msgpack11.cpp hits a GCC-only "call of overloaded
-  # MsgPack(...) is ambiguous" error inside a templated parse_arith<T>
-  # function on both linux-64 and linux-aarch64 (confirmed with the exact
-  # conda-forge gxx 15.3.0 used in CI). Compiling the vendored msgpack11
-  # source standalone with that same compiler and the exact CI flags succeeds
-  # cleanly, so this only reproduces with the full translation unit (all the
-  # rclcpp/tf2/std_msgs -isystem includes CMakeLists.txt adds) -- needs a
-  # real Linux GCC build environment to bisect further (tracked separately;
-  # a local multipass VM would let us reproduce this, but its SSH access is
-  # currently broken -- revisit once that's fixed). Skip on Linux for now
-  # rather than block the whole platform matrix; untested but unaffected on
-  # macOS (clang) and Windows (MSVC).
-  - if: not linux
-    then:
-      - sick_scan_xd
 
   # These packages specifically don't work on Windows. Keep this comment
   # directly before the "if:" line below -- vinca-sort-vinca-lists merges
