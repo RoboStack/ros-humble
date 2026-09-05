@@ -49,16 +49,6 @@ diagnostic_aggregator:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
 diagnostic_updater:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
-distro_mutex:
-  # vinca.yaml's mutex_package.build_number (21) is independent of the
-  # top-level default build_number (20) -- but the "already built, skip"
-  # check only compares against this per-package override (falling back to
-  # the top-level default), never mutex_package.build_number itself. Without
-  # this override the mutex recipe keeps matching the stale build_number-20
-  # cached/published artifact and never gets regenerated with build 21's new
-  # run_constraints. (ros2-distro-mutex normalizes to "distro_mutex" here:
-  # strip the ros2_ prefix.)
-  build_number: 21
 eigenpy:
   generate_dummy_package_with_run_deps:
     dep_name: eigenpy
@@ -248,3 +238,13 @@ visp:
     override_version: '3.7.0'
 zenoh_cpp_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+distro_mutex:
+  # vinca.yaml's mutex_package.build_number (21) is independent of the
+  # top-level default build_number (20) -- but the "already built, skip"
+  # check only compares against this per-package override (falling back to
+  # the top-level default), never mutex_package.build_number itself. Without
+  # this override the mutex recipe keeps matching the stale build_number-20
+  # cached/published artifact and never gets regenerated with build 21's new
+  # run_constraints. (ros2-distro-mutex normalizes to "distro_mutex" here:
+  # strip the ros2_ prefix.)
+  build_number: 21
