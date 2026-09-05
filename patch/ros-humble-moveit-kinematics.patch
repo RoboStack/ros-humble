@@ -27,3 +27,15 @@ diff --git a/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plu
            permutation[i] = i;
 -        std::random_shuffle(permutation.begin(), permutation.end());
 +        std::shuffle(permutation.begin(), permutation.end(), std::mt19937{ std::random_device{}() });
+diff --git a/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/GreedyKCenters.h b/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/GreedyKCenters.h
+--- a/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/GreedyKCenters.h
++++ b/cached_ik_kinematics_plugin/include/moveit/cached_ik_kinematics_plugin/detail/GreedyKCenters.h
+@@ -92,7 +92,7 @@
+     centers.clear();
+     centers.reserve(k);
+     if (((long unsigned int)dists.rows()) < data.size() || ((long unsigned int)dists.cols()) < k)
+-      dists.resize(std::max(2 * ((long unsigned int)dists.rows()) + 1, data.size()), k);
++      dists.resize(std::max<size_t>(2 * static_cast<size_t>(dists.rows()) + 1, data.size()), k);
+     // first center is picked randomly
+     centers.push_back(std::uniform_int_distribution<size_t>{ 0, data.size() - 1 }(generator_));
+     for (unsigned i = 1; i < k; ++i)
