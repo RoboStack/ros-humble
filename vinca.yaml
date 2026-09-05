@@ -187,7 +187,6 @@ packages_select_by_deps:
       - apriltag_draw
       - apriltag_tools
       - asio_cmake_module
-      - automatika_embodied_agents
       - automatika_ros_sugar
       # rqt
       - autoware_cmake
@@ -378,6 +377,20 @@ packages_select_by_deps:
       - vector_pursuit_controller
       - vision-msgs
       - visp
+
+  # automatika_embodied_agents' generated rosidl_typesupport_fastrtps_c
+  # library fails to link on win-64 with dozens of "unresolved external
+  # symbol __imp_get_serialized_size_<pkg>__msg__<Type>" errors for
+  # sensor_msgs/std_msgs/unique_identifier_msgs/builtin_interfaces types --
+  # despite sensor_msgs/std_msgs/builtin_interfaces all already being listed
+  # in its rosidl_generate_interfaces() DEPENDENCIES, and unique_identifier_msgs
+  # presumably needed for the VisionLanguageAction action's goal_id field.
+  # Root cause unclear without a Windows build environment to iterate
+  # against; skip on Windows for now rather than guess at a
+  # DEPENDENCIES/CMake fix blind.
+  - if: not win
+    then:
+      - automatika_embodied_agents
     # These packages specifically don't work on windows
   - if: not win
     then:
