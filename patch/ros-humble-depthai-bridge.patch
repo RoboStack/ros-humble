@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b8e3b77..920d903 100644
+index b8e3b77..2c99597 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -13,13 +13,7 @@ if(POLICY CMP0057)
+@@ -13,12 +13,12 @@ if(POLICY CMP0057)
      cmake_policy(SET CMP0057 NEW)
  endif()
  
@@ -12,8 +12,12 @@ index b8e3b77..920d903 100644
 -  message(STATUS "----------------Did not find OpenCV 4, trying OpenCV 3--------------")
 -  set(opencv_version 3)
 -  find_package(OpenCV ${opencv_version} REQUIRED COMPONENTS imgproc highgui calib3d)
--endif()
-+find_package(OpenCV REQUIRED COMPONENTS imgproc highgui calib3d)
++find_package(OpenCV REQUIRED COMPONENTS core)
++if(OpenCV_VERSION_MAJOR GREATER 4)
++  # calib3d was split into "calib" + "geometry" in OpenCV 5.
++  find_package(OpenCV REQUIRED COMPONENTS imgproc highgui calib geometry)
++else()
++  find_package(OpenCV REQUIRED COMPONENTS imgproc highgui calib3d)
+ endif()
  
  
- message(STATUS "------------------------------------------")
