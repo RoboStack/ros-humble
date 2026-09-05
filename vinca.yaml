@@ -75,6 +75,17 @@ packages_skip_by_deps:
       - rttest
       - test_ros_gz_bridge
 
+  # robot_localization's own packages_select_by_deps if:not-win exclusion
+  # (below) only stops it from being a direct top-level selection --
+  # clearpath_control (unconditionally selected) still depends on it and
+  # pulls it back in transitively. Confirmed via a local win-64 recipe
+  # regeneration: ros-humble-robot-localization was still generated (and
+  # referenced from ros-humble-clearpath-control) despite the select-side
+  # exclusion. Skip it from the dependency-closure walk too.
+  - if: win
+    then:
+      - robot_localization
+
   # Pulled in transitively via aerostack2 (already linux-only above). Its
   # FetchContent'd dynamic_trajectory_generator dependency (unpinned
   # GIT_TAG master) itself FetchContent's a pinned old NLopt commit whose
@@ -134,6 +145,14 @@ packages_remove_from_deps:
       - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
       - rttest
       - test_ros_gz_bridge
+
+  # robot_localization is skipped on win-64 (see packages_skip_by_deps and
+  # packages_select_by_deps above), but clearpath_control still depends on
+  # it and would otherwise get a dangling reference to a .conda that's
+  # never built. Strip the reference from clearpath_control's own recipe.
+  - if: win
+    then:
+      - robot_localization
 
 packages_select_by_deps:
 
