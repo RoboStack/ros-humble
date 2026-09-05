@@ -210,6 +210,15 @@ jobs:
         # that fail downstream "package not found" checks despite being
         # present locally): ros-humble-lanelet2-core on win-64, only ~20KB.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-lanelet2-core* 2>/dev/null || true
+        # ros-humble-coal's generated dummy-package run-constraint was stale
+        # at "coal >=3.0.3,<3.0.4a0" (pkg_additional_info.yaml override_version),
+        # capping it below the libcoal >=3.0.4 that pinocchio 4.1.0 and
+        # eigenpy 3.13.0 need from conda-forge -- this made
+        # ros-humble-pinocchio's test-environment solve unsatisfiable
+        # (confirmed via full recipe resolution in a local multipass VM).
+        # Force both to rebuild fresh with the corrected 3.0.4 pin.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-coal* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-pinocchio* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 

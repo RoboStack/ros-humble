@@ -31,7 +31,14 @@ coal:
   generate_dummy_package_with_run_deps:
     dep_name: coal
     max_pin: 'x.x.x'
-    override_version: '3.0.3'
+    # 3.0.3's generated run-constraint (coal >=3.0.3,<3.0.4a0) capped coal
+    # below the libcoal >=3.0.4 that both pinocchio 4.1.0 and eigenpy 3.13.0
+    # (see their own dummy-package entries below/above) require from
+    # conda-forge, making ros2-pinocchio's test-environment solve
+    # unsatisfiable (confirmed on jazzy; same stale pin here). Bump to
+    # match; conda-forge's coal 3.0.4 depends on libboost >=1.90.0,
+    # consistent with our own libboost-devel 1.90 pin.
+    override_version: '3.0.4'
 console_bridge_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 data_tamer_cpp:
