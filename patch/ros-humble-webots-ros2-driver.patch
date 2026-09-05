@@ -1,24 +1,27 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8856bcb90..bfefbd625 100644
+index 693d9ed..54660a8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,4 +1,4 @@
 -cmake_minimum_required(VERSION 3.10)
 +cmake_minimum_required(VERSION 3.16)
  project(webots_ros2_driver)
-
+ 
  set(CMAKE_CXX_STANDARD 17)
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8856bcb90..0834db8ab 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -31,7 +31,7 @@ find_package(TinyXML2 REQUIRED)
+@@ -30,15 +30,7 @@ find_package(tinyxml2_vendor REQUIRED)
+ find_package(TinyXML2 REQUIRED)
  find_package(yaml-cpp REQUIRED)
  
- if($ENV{ROS_DISTRO} MATCHES "humble")
+-if($ENV{ROS_DISTRO} MATCHES "humble")
 -  find_package(Python 3.10 EXACT REQUIRED COMPONENTS Development)
-+  find_package(Python REQUIRED COMPONENTS Development)
- elseif($ENV{ROS_DISTRO} MATCHES "jazzy")
-   find_package(Python 3.12 EXACT REQUIRED COMPONENTS Development)
- elseif($ENV{ROS_DISTRO} MATCHES "rolling")
+-elseif($ENV{ROS_DISTRO} MATCHES "iron")
+-  find_package(Python 3.10 EXACT REQUIRED COMPONENTS Development)
+-elseif($ENV{ROS_DISTRO} MATCHES "jazzy")
+-  find_package(Python 3.12 EXACT REQUIRED COMPONENTS Development)
+-elseif($ENV{ROS_DISTRO} MATCHES "rolling")
+-  find_package(Python 3.12 EXACT REQUIRED COMPONENTS Development)
+-endif()
++find_package(Python 3 REQUIRED COMPONENTS Development)
+ 
+ add_custom_target(compile-lib-controller ALL
+   COMMAND ${CMAKE_COMMAND} -E env "WEBOTS_HOME=${CMAKE_CURRENT_SOURCE_DIR}/webots" make release -f Makefile > /dev/null 2>&1
