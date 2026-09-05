@@ -1,5 +1,22 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 213770e..f3cc179 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -26,6 +26,12 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   add_compile_options(-Wall -Wextra)
+ endif()
+ 
++# node.cpp's object file exceeds MSVC's default section-count limit due to
++# heavy Boost/Eigen/protobuf template instantiation.
++if(MSVC)
++  add_compile_options(/bigobj)
++endif()
++
+ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+ 
+ find_package(builtin_interfaces REQUIRED)
 diff --git a/src/occupancy_grid_node_main.cpp b/src/occupancy_grid_node_main.cpp
-index 282b890c8..e5f527b2d 100644
+index 282b890..e5f527b 100644
 --- a/src/occupancy_grid_node_main.cpp
 +++ b/src/occupancy_grid_node_main.cpp
 @@ -94,7 +94,8 @@ Node::Node(const double resolution, const double publish_period_sec)
