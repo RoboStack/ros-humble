@@ -180,13 +180,20 @@ jobs:
         rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-typesupport-fastrtps-c* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-rmw-fastrtps-* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-robot-state-publisher* 2>/dev/null || true
-        # Same fastrtps-typesupport staleness, a second downstream consumer:
-        # robot_localization's win-64 build fails LNK2019 on
+        # NOT actually a stale-cache issue (confirmed: robot_localization's
+        # win-64 build still fails LNK2019/LNK2001 on
         # geographic_msgs/geometry_msgs/builtin_interfaces fastrtps typesupport
-        # symbols (cdr_serialize/get_serialized_size/etc). Those message
-        # packages' own cached artifacts still predate the 8e73ae0d fix above,
-        # so their fastrtps typesupport libs never actually export the
-        # symbols downstream consumers need. Force them fresh too.
+        # symbols even after these three rebuild fully fresh, verified via the
+        # "Running build for recipe" log lines, not "Skipping build"). The
+        # real root cause is deeper: their rosidl_typesupport_fastrtps_c/cpp
+        # libraries aren't exporting these symbols on win-64 at all, likely a
+        # missing WINDOWS_EXPORT_ALL_SYMBOLS / dllexport gap in how
+        # rosidl_generate_interfaces() wires up the fastrtps typesupport
+        # target for MSVC -- same failure family as robot_state_publisher's
+        # win-64 crash above. Left the forced-rebuild here since it's
+        # harmless, but it does not fix the issue; needs an investigation
+        # session with a Windows environment (or emulation) to iterate
+        # against the rosidl/ament_cmake macros themselves.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-geographic-msgs* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-geometry-msgs* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-builtin-interfaces* 2>/dev/null || true

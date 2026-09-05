@@ -313,7 +313,6 @@ packages_select_by_deps:
       - realtime_tools
       - rmw_zenoh_cpp
       - robot_controllers
-      - robot_localization
       - ros2-control-cmake
       - ros2-controllers
       - ros2_control
@@ -395,6 +394,22 @@ packages_select_by_deps:
   - if: not win
     then:
       - zed-msgs
+
+  # robot_localization's win-64 build fails LNK2019/LNK2001: unresolved
+  # external symbols in geographic_msgs/geometry_msgs/builtin_interfaces'
+  # rosidl_typesupport_fastrtps_c/cpp libraries (cdr_serialize,
+  # get_serialized_size, etc). Confirmed NOT a stale-cache issue -- these
+  # three message packages rebuild fully fresh and the link still fails,
+  # so their fastrtps typesupport libs aren't exporting these symbols on
+  # win-64 at all. Root cause looks like a missing
+  # WINDOWS_EXPORT_ALL_SYMBOLS/dllexport wiring in how
+  # rosidl_generate_interfaces() sets up the fastrtps typesupport target
+  # for MSVC -- needs a Windows environment to iterate against the
+  # rosidl/ament_cmake macros themselves; skip on Windows for now rather
+  # than guess blind.
+  - if: not win
+    then:
+      - robot_localization
 
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
