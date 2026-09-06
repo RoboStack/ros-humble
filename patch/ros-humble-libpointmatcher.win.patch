@@ -29,3 +29,128 @@ index 316dbe2..ed85931 100644
  }
  #endif // _POSIX_TIMERS
  
+diff --git a/pointmatcher/DataPointsFilters/utils/sparsetv.hpp b/pointmatcher/DataPointsFilters/utils/sparsetv.hpp
+index b75e990..8f3fd48 100644
+--- a/pointmatcher/DataPointsFilters/utils/sparsetv.hpp
++++ b/pointmatcher/DataPointsFilters/utils/sparsetv.hpp
+@@ -62,7 +62,7 @@ void TensorVoting<T>::encode(const DP& pts, Encoding encoding)
+ 		case Encoding::ZERO:
+ 		{
+ #pragma omp parallel for
+-			for(std::size_t i = 0; i < nbPts; ++i) 
++			for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i) 
+ 				tensors(i) = Tensor::Zero();
+ 			break;
+ 		}
+@@ -71,7 +71,7 @@ void TensorVoting<T>::encode(const DP& pts, Encoding encoding)
+ 		case Encoding::BALL:
+ 		{
+ #pragma omp parallel for
+-			for(std::size_t i = 0; i < nbPts; ++i)
++			for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 				tensors(i) = Tensor::Identity();
+ 			break;
+ 		}
+@@ -83,7 +83,7 @@ void TensorVoting<T>::encode(const DP& pts, Encoding encoding)
+ 
+ 			const auto& balls_ = pts.getDescriptorViewByName("balls");
+ #pragma omp parallel for						
+-			for(std::size_t i = 0; i < nbPts; ++i)
++			for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 				tensors(i) = Tensor::Identity() * balls_(0,i);
+ 
+ 			break;
+@@ -92,7 +92,7 @@ void TensorVoting<T>::encode(const DP& pts, Encoding encoding)
+ 		case Encoding::UPLATE:
+ 		{
+ #pragma omp parallel for
+-			for(std::size_t i = 0; i < nbPts; ++i)
++			for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 				tensors(i) << 
+ 					1., 0., 0., 
+ 					0., 1., 0., 
+@@ -108,7 +108,7 @@ void TensorVoting<T>::encode(const DP& pts, Encoding encoding)
+ 
+ 			const auto& plates_ = pts.getDescriptorViewByName("plates");
+ #pragma omp parallel for
+-			for(std::size_t i = 0; i < nbPts; ++i)
++			for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 			{
+ 				const Vector3 n1 = plates_.col(i).segment(1,3);
+ 				const Vector3 n2 = plates_.col(i).tail(3);
+@@ -121,7 +121,7 @@ void TensorVoting<T>::encode(const DP& pts, Encoding encoding)
+ 		case Encoding::USTICK:
+ 		{
+ #pragma omp parallel for
+-			for(std::size_t i = 0; i < nbPts; ++i)
++			for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 				tensors(i) << 
+ 					1., 0., 0., 
+ 					0., 0., 0., 
+@@ -137,7 +137,7 @@ void TensorVoting<T>::encode(const DP& pts, Encoding encoding)
+ 
+ 			const auto& sticks_ = pts.getDescriptorViewByName("sticks");
+ #pragma omp parallel for
+-			for(std::size_t i = 0; i < nbPts; ++i)
++			for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 			{
+ 				const Vector3 n = sticks_.col(i).tail(3);		
+ 				tensors(i) = (encoding == Encoding::SSTICK ? sticks_(0,i) : 1.) * (n * n.transpose());
+@@ -157,7 +157,7 @@ void TensorVoting<T>::encode(const DP& pts, Encoding encoding)
+ 			const auto& sticks_ = pts.getDescriptorViewByName("sticks");
+ 			const auto& plates_ = pts.getDescriptorViewByName("plates");
+ #pragma omp parallel for
+-			for(std::size_t i = 0; i < nbPts; ++i)
++			for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 			{
+ 				const Tensor S = sticks_.col(i).tail(3) * sticks_.col(i).tail(3).transpose();
+ 				const Tensor P = plates_.col(i).segment(1,3) * plates_.col(i).segment(1,3).transpose() + plates_.col(i).tail(3) * plates_.col(i).tail(3).transpose();
+@@ -174,7 +174,7 @@ void TensorVoting<T>::disableBallComponent()
+ {
+ 	const std::size_t nbPts = tensors.rows();
+ #pragma omp parallel for
+-	for(std::size_t i = 0; i < nbPts; ++i)
++	for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 	{
+ 		const Tensor S = sticks.col(i).tail(3) * sticks.col(i).tail(3).transpose();
+ 		const Tensor P = plates.col(i).segment(1,3) * plates.col(i).segment(1,3).transpose() + plates.col(i).tail(3) * plates.col(i).tail(3).transpose();
+@@ -388,7 +388,7 @@ void TensorVoting<T>::cfvote(const DP& pts, bool doKnn)
+ 	encode(pts, Encoding::ZERO); //all tensors are zero
+ 	
+ #pragma omp parallel for
+-	for(std::size_t votee = 0; votee < nbPts; ++votee) //vote sites
++	for(std::ptrdiff_t votee = 0; votee < static_cast<std::ptrdiff_t>(nbPts); ++votee) //vote sites
+ 	{
+ 		const Vector3 x_i  = pts.features.col(votee).head(3);
+ 		
+@@ -433,7 +433,7 @@ void TensorVoting<T>::decompose()
+ 	sparseBall.resize(nbPts);
+ 	
+ #pragma omp parallel for	
+-	for(std::size_t i = 0; i < nbPts; ++i)
++	for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 	{
+ 		Eigen::SelfAdjointEigenSolver<Tensor> solver(tensors(i));
+ 		
+@@ -487,7 +487,7 @@ void TensorVoting<T>::toDescriptors()
+ 	balls  = PM::Matrix::Zero(1, nbPts);
+ 
+ #pragma omp parallel for  
+-	for(std::size_t i = 0; i < nbPts; i++)
++	for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); i++)
+ 	{
+ 		surfaceness(i) = sparseStick(i)(0) / k;
+ 		curveness(i) = sparsePlate(i)(0) / k;
+diff --git a/pointmatcher/DataPointsFilters/SpectralDecomposition.cpp b/pointmatcher/DataPointsFilters/SpectralDecomposition.cpp
+index cddcbbc..9a1100e 100644
+--- a/pointmatcher/DataPointsFilters/SpectralDecomposition.cpp
++++ b/pointmatcher/DataPointsFilters/SpectralDecomposition.cpp
+@@ -143,7 +143,7 @@ void SpectralDecompositionDataPointsFilter<T>::addDescriptor(DataPoints& pts, co
+ 	if(keepLabels_ or keepLambdas_)
+ 	{
+ 	#pragma omp parallel for
+-		for(std::size_t i = 0; i < nbPts; ++i)
++		for(std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(nbPts); ++i)
+ 		{
+ 			const T lambda1 = tv.surfaceness(i) + tv.curveness(i) + tv.pointness(i);
+ 			const T lambda2 = tv.curveness(i) + tv.pointness(i);
