@@ -31,6 +31,58 @@ rosdistro_additional_recipes: rosdistro_additional_recipes.yaml
 skip_existing:
   - https://conda.anaconda.org/robostack-staging/
 
+# --------------------------------------------------------------------------
+# Three related but DISTINCT ways to exclude a package -- read this before
+# adding to any of the three (vinca revision pinned in pixi.toml verified
+# against on 2026-09-06; re-check vinca/main.py + vinca/resolve.py if that
+# pin ever moves, in case the mechanism changes):
+#
+# 1. packages_select_by_deps, wrapped in `if: not <platform> then: [...]`
+#    (see below). This is the PRIMARY way to exclude a package's own
+#    recipe: vinca/main.py::get_selected_packages adds every name listed
+#    here to `selected_packages` unconditionally, before any skip-list is
+#    even consulted -- so simply never listing a package under the
+#    current platform's branch here is what keeps its own recipe from
+#    being generated.
+#
+# 2. packages_skip_by_deps (this list) only affects TRANSITIVE pull-in:
+#    it's passed as `ignore_pkgs` to `distro.get_depends()`, so it stops
+#    some OTHER selected package's dependency-closure walk from dragging
+#    the excluded package back in. It does NOT stop a package listed
+#    directly in packages_select_by_deps from being selected -- the two
+#    lists answer different questions ("should X be pulled in as someone
+#    else's dependency?" vs. "should X itself be built?").
+#
+# 3. packages_remove_from_deps (further below) is checked by
+#    vinca/resolve.py::should_skip_pkg via resolve_pkgname(), which is
+#    called BOTH when vinca resolves a package's OWN final name (in
+#    generate_fat_source -- an empty result makes it `continue`, i.e.
+#    skip generating that package's recipe entirely) AND when it resolves
+#    OTHER packages' host/run dependency names. So this list is really a
+#    THIRD, independent way to fully exclude a package's own build -- and
+#    it ALSO strips the package's name from every other recipe's
+#    dependency list as an inseparable side effect. If some other
+#    selected package legitimately needs to depend on the package you're
+#    excluding, packages_remove_from_deps is the WRONG tool (it removes
+#    both); use packages_select_by_deps's if-wrapper (+ packages_skip_by_deps
+#    if something's dependency closure would otherwise repull it) instead.
+#
+# Worked examples from real fixes in this repo:
+#   - robot_localization (win-64): needed ALL THREE together, because
+#     clearpath_control (itself unconditionally selected) transitively
+#     depended on it -- (1) alone left it selected via clearpath_control's
+#     closure. See commits 411b2f7d, 929734a9.
+#   - rclc_examples (win-64): excluded via (3) ALONE -- it has NO
+#     `if: not win` wrapper under packages_select_by_deps at all, and
+#     isn't in packages_skip_by_deps either; it's only ever excluded
+#     because it's listed under packages_remove_from_deps's win branch.
+#     A win-64 compile bug in this package looked "never fixed" until it
+#     was traced to the package being fully excluded by this mechanism.
+#   - ros-jazzy mavlink/mavros/mavros_extras/libmavconn: (1) alone was
+#     sufficient there -- confirmed via full recipe regeneration that no
+#     other selected package referenced them, so (2)/(3) were never
+#     needed for that case.
+# --------------------------------------------------------------------------
 packages_skip_by_deps:
 
   - if: not linux
@@ -102,6 +154,12 @@ packages_skip_by_deps:
   # to attempt blindly; skip for now.
   - as2_behaviors_trajectory_generation
 
+# See the "Three related but DISTINCT ways to exclude a package" block above
+# packages_skip_by_deps: this list (3) ALSO fully excludes a package's own
+# recipe (not just its appearance in others' deps) -- use packages_select_by_deps's
+# if-wrapper instead if you only want to stop this package's own build while
+# still letting another selected package depend on it.
+
 packages_remove_from_deps:
 
   - if: not linux
@@ -153,6 +211,12 @@ packages_remove_from_deps:
   - if: win
     then:
       - robot_localization
+
+# See the "Three related but DISTINCT ways to exclude a package" block above
+# packages_skip_by_deps: an `if: not <platform> then: [pkg]` branch here is
+# mechanism (1), the primary way to exclude pkg's own recipe for that
+# platform. Add to packages_skip_by_deps too if something else's dependency
+# closure would otherwise still pull it back in.
 
 packages_select_by_deps:
 
