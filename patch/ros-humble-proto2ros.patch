@@ -1,0 +1,21 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -66,11 +66,12 @@
+ target_link_libraries(${PROJECT_NAME}_conversions ${${PROJECT_NAME}_cpp_msgs} protobuf::libprotobuf)
+ ament_target_dependencies(${PROJECT_NAME}_conversions builtin_interfaces rclcpp std_msgs)
+ 
+-find_program(CLANG_TIDY_EXECUTABLE NAMES "clang-tidy" REQUIRED)
+-set(CXX_CLANG_TIDY "${CLANG_TIDY_EXECUTABLE}"
+-  "-header-filter=.*proto2ros/.*conversions.hpp"
+-  "-checks=-clang-diagnostic-ignored-optimization-argument")
+-set_target_properties(${PROJECT_NAME}_conversions PROPERTIES CXX_CLANG_TIDY "${CXX_CLANG_TIDY}")
++# clang-tidy is deliberately not wired up here (see patch/ros-humble-proto2ros.patch):
++# the configured checks list is only a "-"-prefixed exclusion with nothing
++# positive enabling any checks, so it was already a no-op upstream, and on
++# this toolchain clang-tidy's bundled clang frontend can't even find <limits>
++# for this GCC-toolchain build, hard-failing with clang-diagnostic-error
++# instead of running the intended no-op.
+ 
+ include(cmake/rosidl_helpers.cmake)
+ rosidl_generated_python_package_add(

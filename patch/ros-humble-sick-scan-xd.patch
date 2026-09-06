@@ -1,0 +1,12 @@
+diff --git a/include/sick_scansegment_xd/msgpack11/msgpack11.hpp b/include/sick_scansegment_xd/msgpack11/msgpack11.hpp
+index 1c23871..7e0009b 100644
+--- a/include/sick_scansegment_xd/msgpack11/msgpack11.hpp
++++ b/include/sick_scansegment_xd/msgpack11/msgpack11.hpp
+@@ -8,6 +8,7 @@
+ #include <istream>
+ #include <ostream>
+ #include <sstream>
++#include <cstdint>
+
+
+ #ifdef _MSC_VER

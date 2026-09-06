@@ -1,9 +1,9 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b26ed0b..b630d07 100644
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,9 +1,9 @@
- cmake_minimum_required(VERSION 2.8.3)
+-cmake_minimum_required(VERSION 2.8.12)
++cmake_minimum_required(VERSION 3.5)
  project(lanelet2)
 -if($ENV{ROS_VERSION} EQUAL 1)
 +if(2 EQUAL 1)

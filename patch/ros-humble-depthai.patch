@@ -12,15 +12,28 @@ Signed-off-by: Esteve Fernandez <esteve@apache.org>
  3 files changed, 41 insertions(+), 33 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 109d9da..24d9aff 100644
+index 109d9da..4d68b21 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -60,6 +60,8 @@ else()
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.4) # For Hunter
++cmake_minimum_required(VERSION 3.5) # For Hunter
+ 
+ # MSVC variable isn't available before 'project' call
+ # Generalize to Win32 platform for now
+@@ -60,6 +60,15 @@ else()
      message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
  endif()
  
 +set(HUNTER_ROOT "${CMAKE_BINARY_DIR}/.hunter" CACHE PATH "Hunter package cache")
 +set(DEPTHAI_ENABLE_CURL OFF CACHE BOOL "Enable CURL support" FORCE)
++# Hunter's own vendored CMakeLists.txt (downloaded by HunterGate below and
++# configured via its own nested `cmake -H... -B...` subprocess) declares a
++# cmake_minimum_required below CMake 4's floor of 3.5 too, and we can't patch
++# a file that only exists after being downloaded at build time. Setting this
++# as a real environment variable (not just a -D cache arg) is what actually
++# reaches that nested cmake invocation.
++set(ENV{CMAKE_POLICY_VERSION_MINIMUM} "3.5")
  include("cmake/HunterGate.cmake")
  HunterGate(
      URL "https://github.com/cpp-pm/hunter/archive/9d9242b60d5236269f894efd3ddd60a9ca83dd7f.tar.gz"

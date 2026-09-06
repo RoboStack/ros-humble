@@ -1,0 +1,75 @@
+diff -ruN a/src/http/handlers/bulkdata_handlers.cpp b/src/http/handlers/bulkdata_handlers.cpp
+--- a/src/http/handlers/bulkdata_handlers.cpp
++++ b/src/http/handlers/bulkdata_handlers.cpp
+@@ -244,12 +244,12 @@
+   }
+ 
+   // Extract multipart file
+-  if (!req.has_file("file")) {
++  if (!req.form.has_file("file")) {
+     HandlerContext::send_error(res, 400, ERR_INVALID_REQUEST, "Missing 'file' field in multipart/form-data request");
+     return;
+   }
+ 
+-  const auto & file = req.get_file_value("file");
++  const auto & file = req.form.get_file("file");
+   std::string filename = file.filename.empty() ? "upload" : file.filename;
+   std::string content_type = file.content_type.empty() ? "application/octet-stream" : file.content_type;
+ 
+@@ -261,13 +261,13 @@
+ 
+   // Extract optional description and metadata
+   std::string description;
+-  if (req.has_file("description")) {
+-    description = req.get_file_value("description").content;
++  if (req.form.has_file("description")) {
++    description = req.form.get_file("description").content;
+   }
+ 
+   nlohmann::json metadata = nlohmann::json::object();
+-  if (req.has_file("metadata")) {
+-    const auto & meta_str = req.get_file_value("metadata").content;
++  if (req.form.has_file("metadata")) {
++    const auto & meta_str = req.form.get_file("metadata").content;
+     if (!meta_str.empty()) {
+       auto parsed = nlohmann::json::parse(meta_str, nullptr, false);
+       if (parsed.is_discarded()) {
+diff -ruN a/src/http/handlers/script_handlers.cpp b/src/http/handlers/script_handlers.cpp
+--- a/src/http/handlers/script_handlers.cpp
++++ b/src/http/handlers/script_handlers.cpp
+@@ -200,8 +200,8 @@
+       return;
+     }
+ 
+-    auto file_it = req.files.find("file");
+-    if (file_it == req.files.end()) {
++    auto file_it = req.form.files.find("file");
++    if (file_it == req.form.files.end()) {
+       HandlerContext::send_error(res, 400, ERR_INVALID_REQUEST, "Missing required multipart field: file");
+       return;
+     }
+@@ -209,8 +209,8 @@
+     const auto & file_part = file_it->second;
+ 
+     std::optional<json> metadata;
+-    auto meta_it = req.files.find("metadata");
+-    if (meta_it != req.files.end()) {
++    auto meta_it = req.form.files.find("metadata");
++    if (meta_it != req.form.files.end()) {
+       try {
+         metadata = json::parse(meta_it->second.content);
+       } catch (const json::parse_error &) {
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -209,6 +209,10 @@
+   jwt-cpp::jwt-cpp
+   SQLite::SQLite3
+   ${CMAKE_DL_LIBS}
++  # cpp-httplib's async client name resolution (getaddrinfo_a/gai_suspend/
++  # gai_error/gai_cancel) is glibc-only and, on this toolchain, still needs
++  # explicit -lanl even though the symbols live in glibc itself.
++  $<$<PLATFORM_ID:Linux>:anl>
+ )
+ 
+ # Precompiled headers - heavy headers used across most translation units.

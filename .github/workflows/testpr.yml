@@ -2,6 +2,14 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: read
+  contents: read
+
 env:
   ROS_VERSION: 2
   # Change to 'true' to enable the cache upload as artifacts
@@ -42,9 +50,16 @@ jobs:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-    - uses: prefix-dev/setup-pixi@v0.9.4
+    - uses: prefix-dev/setup-pixi@v0.10.0
       with:
         frozen: true
+        pixi-version: v0.75.0
+
+    - name: Check sorting
+      if: matrix.platform == 'linux-64'
+      shell: bash -l {0}
+      run: |
+        pixi run sort --check
 
     - name: Long paths workarounds for win-64
       shell: bash -l {0}
@@ -53,17 +68,6 @@ jobs:
         # Workaround for problem related to long paths
         echo "CONDA_BLD_PATH=C:\\bld\\" >> $GITHUB_ENV
         mkdir /c/bld
-
-    - name: Enable Win32 long paths
-      shell: powershell
-      if: matrix.platform == 'win-64'
-      run: |
-        New-ItemProperty `
-          -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
-          -Name "LongPathsEnabled" `
-          -Value 1 `
-          -PropertyType DWORD `
-          -Force
 
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
@@ -77,18 +81,36 @@ jobs:
     # For some reason, the Strawberry perl's pkg-config is found
     # instead of the conda's one, so let's delete the /c/Strawberry directory
     # Furthermore, we also need to remove an older SDK that is used and can result in compilation problems
-    - name: Debug pkg-config problem
+    # And we also remove the vcpkg installed in the image, to avoid that projects pick it
+    - name: Remove problematic files of GitHub Actions images
       if: contains(matrix.os, 'windows')
       shell: bash -l {0}
       run: |
         rm -rf /c/Strawberry
         rm -rf "/c/Program Files (x86)/Windows Kits/10/Include/10.0.17763.0/"
 
+    - name: Disable git auto-maintenance in source caches
+      shell: bash -l {0}
+      run: |
+        git config --global maintenance.auto false
+
     - name: Generate recipes
       shell: bash -l {0}
       run: |
-        mkdir -p recipes
-        pixi run -v vinca --platform ${{ matrix.platform }} -m -n
+        set -e
+        for attempt in 1 2 3; do
+          rm -rf recipes
+          mkdir -p recipes
+          if pixi run -v vinca --platform ${{ matrix.platform }} -m -n; then
+            break
+          fi
+          if [[ "${attempt}" == "3" ]]; then
+            echo "Recipe generation failed after ${attempt} attempts" >&2
+            exit 1
+          fi
+          echo "Recipe generation attempt ${attempt} failed; retrying..." >&2
+          sleep 15
+        done
 
     - name: Check patches
       shell: bash -l {0}
@@ -120,6 +142,146 @@ jobs:
       shell: bash -l {0}
       run: |
         # rm -rf ${{ matrix.folder_cache }}/ros-humble-autoware-trajectory* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-async-web-server-cpp* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-popf* 2>/dev/null || true
+        # python-qt-binding itself never failed to build (only qt_gui_cpp, which
+        # consumes its installed cmake/sip_helper.cmake, did), so its cached artifact
+        # from before the sip_helper.cmake fix keeps getting reused by --skip-existing
+        # despite the patch changes. Force it to rebuild once with the fix baked in.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-python-qt-binding* 2>/dev/null || true
+        # Same story: rqt_image_overlay_layer and ros_image_to_qimage both still
+        # find_package(Qt5Widgets) and export it via ament_export_dependencies, so
+        # their pre-Qt6-migration builds already succeeded and got cached, silently
+        # feeding Qt5 into consumers now built against Qt6 (rqt_image_overlay's
+        # "INTERFACE_QT_MAJOR_VERSION property of Qt5::Core does not agree").
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rqt-image-overlay-layer* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-ros-image-to-qimage* 2>/dev/null || true
+        # kdl_parser itself never failed to build historically (it only started
+        # failing once orocos_kdl_vendor's exported cmake started requiring
+        # eigen3_cmake_module), so its pre-fix cached artifact keeps getting
+        # reused by --skip-existing despite the new dependencies.yaml host dep.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-kdl-parser* 2>/dev/null || true
+        # Busting kdl_parser alone didn't fix win-64: the "Finalized host
+        # dependencies" table shows ros-humble-eigen3-cmake-module correctly
+        # resolved into kdl_parser's host env from the local channel, yet CMake
+        # still can't find its exported Findeigen3_cmake_module.cmake -- pointing
+        # at the cached eigen3-cmake-module artifact itself (restored from the
+        # persistent GHA cache, built well before this fix chain) being stale or
+        # bad on win-64. Force it to rebuild fresh too.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-eigen3-cmake-module* 2>/dev/null || true
+        # 8e73ae0d stopped excluding rosidl_typesupport_fastrtps_c/cpp on Windows
+        # (they were previously skip-listed there entirely, so rmw_fastrtps_cpp's
+        # hard find_package(rosidl_typesupport_fastrtps_c REQUIRED) could never
+        # have succeeded). Cached win-64 artifacts of these and their consumers
+        # from before that fix are suspected of causing robot_state_publisher's
+        # win-64 test crash ("Type support not from this implementation" out of
+        # rmw_fastrtps_cpp during node/publisher creation). Force a clean rebuild
+        # of the whole fastrtps typesupport chain plus its first real consumer.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-typesupport-fastrtps-c* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rmw-fastrtps-* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-robot-state-publisher* 2>/dev/null || true
+        # CORRECTED root cause (this comment used to claim it wasn't a cache
+        # issue -- that was wrong, just one level removed from where we were
+        # looking). Downloaded and inspected the actual win-64 cache
+        # artifacts directly (gh api .../artifacts, then unzipped the
+        # relevant .conda files). geometry_msgs's build log shows "-- Using
+        # single rosidl_typesupport_c: rosidl_typesupport_introspection_c"
+        # -- rosidl_generate_interfaces() genuinely couldn't find
+        # rosidl_typesupport_fastrtps_c/cpp in the resolved host env, even
+        # though rosidl_default_generators' package.xml unconditionally
+        # buildtool_export_depends on both. The cached
+        # ros-humble-rosidl-default-generators .conda restored into this
+        # run was dated Sep 4 while everything else in the same run was
+        # freshly built Sep 6, and its baked-in `depends` (checked via
+        # info/index.json inside the .conda) was missing nearly every
+        # rosidl_generator_*/rosidl_typesupport_* dep its own package.xml
+        # declares -- a stale artifact from before those were wired up
+        # correctly, kept alive indefinitely by --skip-existing since
+        # nothing was ever busting this specific meta-package. Every
+        # message package depends on it, so ALL of them silently lost
+        # fastrtps typesupport generation on win-64 at once -- exactly
+        # matching the failure pattern across robot_state_publisher,
+        # robot_localization, and nav2_msgs. Busting it (and its sibling
+        # rosidl_default_runtime, same risk) should fix all of them in one
+        # shot.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-default-generators* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-default-runtime* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-geographic-msgs* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-geometry-msgs* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-builtin-interfaces* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-std-msgs* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-nav2-msgs* 2>/dev/null || true
+        # The rosidl_default_generators staleness above wasn't an isolated
+        # case: inspecting the actual win-64 cache artifact (downloaded via
+        # `gh api .../artifacts`) showed nearly the ENTIRE rosidl/message-
+        # package ecosystem predates the fix -- every rosidl_generator_*/
+        # rosidl_typesupport_*_c/cpp package, plus dozens of *_msgs/
+        # *_interfaces packages (sensor_msgs, std_msgs, unique_identifier_msgs,
+        # diagnostic_msgs, nav_msgs, visualization_msgs, action_msgs, and
+        # more), all dated well before the fix landed. Confirmed this is
+        # win-64-specific in practice: linux-64/linux-aarch64/osx-64/
+        # osx-arm64 are all passing with the exact same stale cache, so the
+        # staleness itself is harmless there -- it only bites win-64 because
+        # that's the only platform where missing DLL exports actually breaks
+        # linking. Rather than individually discovering and cache-busting
+        # each affected message package one CI round-trip at a time (already
+        # happened once with nav2_msgs depending on geographic_msgs
+        # depending on unique_identifier_msgs), do a single broad win-64-only
+        # sweep of the whole rosidl/message-package family. This is
+        # deliberately scoped to win-64 only (via the shell if-guard) so it
+        # doesn't force an unnecessary full rebuild on the 4 platforms that
+        # are already fine -- a global build_number bump was considered and
+        # rejected for exactly that reason.
+        if [ "${{ matrix.platform }}" = "win-64" ]; then
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-generator-* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-typesupport-* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-adapter* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-cli* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-cmake* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-parser* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-runtime-* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/*-msgs-* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/*-interfaces-* 2>/dev/null || true
+        fi
+        # gtest_vendor itself never failed to build (its own build doesn't
+        # compile gtest-death-test.cc; consuming packages with BUILD_TESTING
+        # on do, from the vendored source it installs), so its pre-fix cached
+        # artifact keeps getting reused by --skip-existing despite the new
+        # #include <cstdint> patch.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-gtest-vendor* 2>/dev/null || true
+        # sick_safetyscanners_base's own CMakeLists.txt was already patched for
+        # Boost 1.90 dropping the "system" component config, but its separate,
+        # manually-committed sick_safetyscanners_baseConfig.cmake (consumed by
+        # downstream sick_safetyscanners2) independently declared the same
+        # find_package(... COMPONENTS ... system ...) call, unpatched until now.
+        # Its pre-fix cached artifact keeps getting reused by --skip-existing.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-sick-safetyscanners-base* 2>/dev/null || true
+        # mutex_package.build_number (21) wasn't checked by the "already built,
+        # skip" comparison (only pkg_additional_info's per-package override /
+        # the top-level default build_number-20 was) until the distro_mutex
+        # override was added, so any build-20 mutex artifact already sitting in
+        # this cache needs to be forced out to pick up build 21's new
+        # run_constraints (libboost 1.90, pcl 1.15.1, vtk 9.7.0, etc).
+        rm -rf ${{ matrix.folder_cache }}/ros2-distro-mutex* 2>/dev/null || true
+        # libg2o's cached artifact still has its old qt-main (Qt5) run
+        # dependency baked in from before that host dep was dropped,
+        # conflicting with pcl's qt6-main requirement (confirmed on jazzy
+        # with the identical fix -- same upstream source). Force a fresh
+        # rebuild without it.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-libg2o* 2>/dev/null || true
+        # Same corrupt-cache pattern seen on jazzy win-64 (~20-25KB packages
+        # that fail downstream "package not found" checks despite being
+        # present locally): ros-humble-lanelet2-core on win-64, only ~20KB.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-lanelet2-core* 2>/dev/null || true
+        # ros-humble-coal's generated dummy-package run-constraint was stale
+        # at "coal >=3.0.3,<3.0.4a0" (pkg_additional_info.yaml override_version),
+        # capping it below the libcoal >=3.0.4 that pinocchio 4.1.0 and
+        # eigenpy 3.13.0 need from conda-forge -- this made
+        # ros-humble-pinocchio's test-environment solve unsatisfiable
+        # (confirmed via full recipe resolution in a local multipass VM).
+        # Force both to rebuild fresh with the corrected 3.0.4 pin.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-coal* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-pinocchio* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
@@ -129,16 +291,44 @@ jobs:
         ls ${{ matrix.folder_cache }} || true
 
     - name: Build recipes
+      id: build-recipes
       shell: bash -l {0}
       run: |
-        if [ "${{ runner.os }}" = "Windows" ]; then
-          export VINCA_CUSTOM_CMAKE_BUILD_DIR='C:\x\'
-        fi
+        set +e
         if [ "${{ matrix.platform }}" = "emscripten-wasm32" ]; then
-          pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c conda-forge -c robostack-staging --skip-existing --test skip
+          pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c conda-forge -c robostack-staging --skip-existing --test skip 2>&1 | tee rattler-build.log
         else
-          pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing
+          # Without this, resolvo's strict channel priority can refuse a
+          # just-built local package outright once any other-channel build of
+          # the same name exists, even when the local one is the only valid
+          # option (confirmed via a peer session on rolling, and hit here on
+          # jazzy's ros2-pinocchio test step excluding its own freshly-built
+          # local .conda and falling back through an unrelated,
+          # unsatisfiable dependency chain instead).
+          pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing --channel-priority disabled 2>&1 | tee rattler-build.log
         fi
+        build_status=${PIPESTATUS[0]}
+        echo "exit-code=${build_status}" >> "$GITHUB_OUTPUT"
+        exit "$build_status"
+
+    - name: Summarize build result
+      if: always()
+      shell: bash -l {0}
+      run: |
+        pixi run python .github/scripts/summarize_rattler_build.py \
+          --log rattler-build.log \
+          --platform "${{ matrix.platform }}" \
+          --outcome "${{ steps.build-recipes.outcome }}" \
+          >> "$GITHUB_STEP_SUMMARY"
+
+    - name: Upload build log
+      if: always()
+      uses: actions/upload-artifact@v6
+      with:
+        name: build-log-${{ matrix.platform }}-${{ github.run_id }}-${{ github.run_attempt }}
+        path: rattler-build.log
+        if-no-files-found: warn
+        retention-days: 7
 
     - name: See packages that will be saved in cache
       shell: bash -l {0}
@@ -148,7 +338,8 @@ jobs:
 
     - name: Save build cache
       uses: actions/cache/save@v5
-      if: always()
+      # Save partial output when the build fails or is cancelled by the job timeout; do not save when it was skipped.
+      if: ${{ always() && (steps.build-recipes.outcome == 'success' || steps.build-recipes.outcome == 'failure' || steps.build-recipes.outcome == 'cancelled') }}
       with:
         path: |
           ${{ matrix.folder_cache }}
@@ -160,7 +351,8 @@ jobs:
         pixi run vinca-gha --platform ${{ matrix.platform }} --trigger-branch dummy_build_branch_as_it_is_unused -d ./recipes
 
     - name: Upload build cache as artifact
-      if: ${{ always() && env.SAVE_CACHE_AS_ARTIFACT == 'true' }}
+      # Keep artifacts consistent with the cache: retain partial output from failed or cancelled builds, but not skipped builds.
+      if: ${{ always() && env.SAVE_CACHE_AS_ARTIFACT == 'true' && (steps.build-recipes.outcome == 'success' || steps.build-recipes.outcome == 'failure' || steps.build-recipes.outcome == 'cancelled') }}
       uses: actions/upload-artifact@v6
       with:
         name: cache-${{ matrix.platform }}-${{ github.run_id }}

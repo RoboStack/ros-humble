@@ -1,0 +1,89 @@
+diff --git a/server/include/parameter_server.h b/server/include/parameter_server.h
+index 8bbf643..62ae93d 100644
+--- a/server/include/parameter_server.h
++++ b/server/include/parameter_server.h
+@@ -21,6 +21,7 @@
+ #include <atomic>
+ 
+ #include "rclcpp/rclcpp.hpp"
++#include "rclcpp/version.h"
+ #include "std_srvs/srv/trigger.hpp"
+ #include "rclcpp_components/register_node_macro.hpp"
+ #include "yaml-cpp/yaml.h"
+@@ -37,6 +38,10 @@ public:
+   ~ParameterServer();
+ 
+ private:
++#if RCLCPP_VERSION_MAJOR < 17
++  std::shared_ptr<rclcpp::ParameterEventHandler> server_param_subscriber_;
++  std::shared_ptr<rclcpp::ParameterEventCallbackHandle> param_event_callback_handle_;
++#endif
+   bool must_save_on_update_ = false;
+   // Using custom yaml file same as yaml format of ros2 parameter as much as possible,
+   // so use rcl_yaml_param_parser functions directly to load custom persistent yaml file.
+@@ -72,7 +77,9 @@ private:
+ 
+   // set parameters callback handler
+   OnSetParametersCallbackHandle::SharedPtr callback_handler_;
++#if RCLCPP_VERSION_MAJOR >= 17
+   PostSetParametersCallbackHandle::SharedPtr post_set_callback_handler_;
++#endif
+ 
+   // for periodic storing to the file system
+   rclcpp::TimerBase::SharedPtr timer_;
+diff --git a/server/src/parameter_server.cpp b/server/src/parameter_server.cpp
+index 210a80a..bf415ce 100644
+--- a/server/src/parameter_server.cpp
++++ b/server/src/parameter_server.cpp
+@@ -24,6 +24,7 @@
+ #include "rcl_yaml_param_parser/parser.h"
+ #include "rclcpp/parameter.hpp"
+ #include "rclcpp/parameter_map.hpp"
++#include "rclcpp/version.h"
+ 
+ #define ROS_PARAMETER_KEY     "ros__parameters"
+ #define ROS_PARAMETER_DOT_KEY "ros__parameters."
+@@ -67,6 +68,10 @@ ParameterServer::ParameterServer(
+ {
+   RCLCPP_DEBUG(this->get_logger(), "%s yaml:%s", __PRETTY_FUNCTION__, persistent_yaml_file_.c_str());
+ 
++#if RCLCPP_VERSION_MAJOR < 17
++  server_param_subscriber_ = std::make_shared<rclcpp::ParameterEventHandler>(this);
++#endif
++
+   int storing_period = 0;
+   // if automatically_declare_parameters_from_overrides is false, then the parameter_overrides will not be declared.
+   // So it is safer to fetch the passed parameters directly from options.parameter_overrides()
+@@ -149,7 +154,32 @@ ParameterServer::ParameterServer(
+     };
+   // callback_handler_ needs to be alive to keep the callback functional
+   callback_handler_ = this->add_on_set_parameters_callback(param_change_callback);
++
++#if RCLCPP_VERSION_MAJOR < 17
++  auto param_event_callback =
++    [this](const rcl_interfaces::msg::ParameterEvent & event)
++    {
++      if (!must_save_on_update_ ||
++        event.node != std::string(this->get_fully_qualified_name()))
++      {
++        return;
++      }
++      std::vector<rclcpp::Parameter> parameters;
++      for (const auto & parameter : event.new_parameters) {
++        parameters.push_back(rclcpp::Parameter::from_parameter_msg(parameter));
++      }
++      for (const auto & parameter : event.changed_parameters) {
++        parameters.push_back(rclcpp::Parameter::from_parameter_msg(parameter));
++      }
++      if (CheckPersistentParam(parameters)) {
++        StoreYamlFile();
++      }
++    };
++  param_event_callback_handle_ =
++    server_param_subscriber_->add_parameter_event_callback(param_event_callback);
++#else
+   post_set_callback_handler_ = this->add_post_set_parameters_callback(post_param_change_callback);
++#endif
+ 
+   save_trigger_ = this->create_service<std_srvs::srv::Trigger>("~/save_params",
+     [this]([[maybe_unused]] const std_srvs::srv::Trigger::Request::SharedPtr& req,

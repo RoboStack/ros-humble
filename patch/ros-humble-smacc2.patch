@@ -1,0 +1,98 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0350eae..2f1bd91 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,6 +17,8 @@ find_package(smacc2_msgs REQUIRED)
+ find_package(Boost COMPONENTS thread REQUIRED)
+ find_package(tracetools)
+-find_package(LTTngUST REQUIRED)
++if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
++  find_package(LTTngUST REQUIRED)
++endif()
+ 
+ set(dependencies
+   rclcpp
+@@ -30,5 +32,8 @@ include_directories(include ${LTTNGUST_INCLUDE_DIRS})
+ 
+ file(GLOB_RECURSE SRC_FILES src *.cpp)
++if(NOT LTTngUST_FOUND)
++  list(REMOVE_ITEM SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/smacc2/trace_provider.cpp")
++endif()
+ add_library(smacc2 SHARED ${SRC_FILES})
+ 
+ # removes unused parameters warning related with lttng, compiler warning
+diff --git a/src/smacc2/signal_detector.cpp b/src/smacc2/signal_detector.cpp
+index d66e20c..1325bb7 100644
+--- a/src/smacc2/signal_detector.cpp
++++ b/src/smacc2/signal_detector.cpp
+@@ -24,7 +24,6 @@
+ #include <thread>
+ #include <vector>
+ 
+-#include <lttng/tracepoint.h>
+ #include <smacc2/client_bases/smacc_action_client_base.hpp>
+ #include <smacc2/smacc_signal_detector.hpp>
+ #include <smacc2/smacc_state_machine.hpp>
+diff --git a/src/smacc2/client_bases/smacc_ros_launch_client_2.cpp b/src/smacc2/client_bases/smacc_ros_launch_client_2.cpp
+index 20582eb8..14c07151 100644
+--- a/src/smacc2/client_bases/smacc_ros_launch_client_2.cpp
++++ b/src/smacc2/client_bases/smacc_ros_launch_client_2.cpp
+@@ -154,7 +154,6 @@ std::future<std::string> ClRosLaunch2::executeRosLaunch(
+       }
+ 
+       pclose(child.pipe);
+-      close(child.pipe->_fileno);  // Close pipe file descriptor but not processes
+ 
+       RCLCPP_WARN_STREAM(rclcpp::get_logger("smacc2"), "[ClRosLaunch2] RESULT:\n" << result);
+ 
+diff --git a/src/smacc2/client_behaviors/cb_ros_launch.cpp b/src/smacc2/client_behaviors/cb_ros_launch.cpp
+index b48e5999..bab2c497 100644
+--- a/src/smacc2/client_behaviors/cb_ros_launch.cpp
++++ b/src/smacc2/client_behaviors/cb_ros_launch.cpp
+@@ -39,12 +39,6 @@ CbRosLaunch::CbRosLaunch(std::string package, std::string launchfile, RosLaunchM
+ 
+ CbRosLaunch::~CbRosLaunch() {}
+ 
+-template <typename TOrthogonal, typename TSourceObject>
+-void onOrthogonalAllocation()
+-{
+-  smacc2::SmaccAsyncClientBehavior::onOrthogonalAllocation<TOrthogonal, TSourceObject>();
+-}
+-
+ void CbRosLaunch::onEntry()
+ {
+   RCLCPP_INFO_STREAM(getLogger(), "[CbRosLaunch] OnEntry");
+diff --git a/src/smacc2/client_behaviors/cb_ros_launch_2.cpp b/src/smacc2/client_behaviors/cb_ros_launch_2.cpp
+index 9fdb7549..05ddcbbe 100644
+--- a/src/smacc2/client_behaviors/cb_ros_launch_2.cpp
++++ b/src/smacc2/client_behaviors/cb_ros_launch_2.cpp
+@@ -40,12 +40,6 @@ CbRosLaunch2::CbRosLaunch2(std::string package, std::string launchfile, RosLaunc
+ 
+ CbRosLaunch2::~CbRosLaunch2() {}
+ 
+-template <typename TOrthogonal, typename TSourceObject>
+-void onOrthogonalAllocation()
+-{
+-  smacc2::SmaccAsyncClientBehavior::onOrthogonalAllocation<TOrthogonal, TSourceObject>();
+-}
+-
+ void CbRosLaunch2::onEntry()
+ {
+   RCLCPP_INFO_STREAM(getLogger(), "[CbRosLaunch2] OnEntry");
+diff --git a/src/smacc2/client_behaviors/cb_ros_stop_2.cpp b/src/smacc2/client_behaviors/cb_ros_stop_2.cpp
+index 429ebc81..e9b854e3 100644
+--- a/src/smacc2/client_behaviors/cb_ros_stop_2.cpp
++++ b/src/smacc2/client_behaviors/cb_ros_stop_2.cpp
+@@ -31,12 +31,6 @@ CbRosStop2::CbRosStop2(pid_t launchPid) {}
+ 
+ CbRosStop2::~CbRosStop2() {}
+ 
+-template <typename TOrthogonal, typename TSourceObject>
+-void onOrthogonalAllocation()
+-{
+-  smacc2::SmaccAsyncClientBehavior::onOrthogonalAllocation<TOrthogonal, TSourceObject>();
+-}
+-
+ void CbRosStop2::onEntry()
+ {
+   this->requiresClient(client_);

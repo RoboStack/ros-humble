@@ -1,5 +1,5 @@
 diff --git a/detect_aruco_markers_behavior/src/detect_aruco_markers_behavior.cpp b/detect_aruco_markers_behavior/src/detect_aruco_markers_behavior.cpp
-index ce4a7522..640e5a3a 100644
+index 7db8dc4..4339c3b 100644
 --- a/detect_aruco_markers_behavior/src/detect_aruco_markers_behavior.cpp
 +++ b/detect_aruco_markers_behavior/src/detect_aruco_markers_behavior.cpp
 @@ -85,8 +85,9 @@ void DetectArucoMarkersBehavior::loadParameters()
@@ -13,16 +13,63 @@ index ce4a7522..640e5a3a 100644
  }
  
  // SIMULATION
-@@ -161,7 +162,8 @@ void DetectArucoMarkersBehavior::imageCallback(const sensor_msgs::msg::Image::Sh
+@@ -161,11 +162,13 @@ void DetectArucoMarkersBehavior::imageCallback(const sensor_msgs::msg::Image::Sh
    // init ArUco detection
    std::vector<int> marker_ids;
    std::vector<std::vector<cv::Point2f>> marker_corners, rejected_candidates;
 -  cv::Ptr<cv::aruco::DetectorParameters> detector_params = cv::aruco::DetectorParameters::create();
 +  //cv::Ptr<cv::aruco::DetectorParameters> detector_params = cv::aruco::DetectorParameters::create();
-+  cv::Ptr<cv::aruco::DetectorParameters> detector_params = cv::makePtr<cv::aruco::DetectorParameters>();
++  cv::aruco::DetectorParameters detector_params;
++  cv::aruco::ArucoDetector detector(*aruco_dict_, detector_params);
  
    // detect markers on the fisheye, it's no worth it to detect over the rectified image
-   cv::aruco::detectMarkers(
+-  cv::aruco::detectMarkers(
+-    cv_ptr->image, aruco_dict_, marker_corners, marker_ids, detector_params, rejected_candidates);
++  detector.detectMarkers(
++    cv_ptr->image, marker_corners, marker_ids, rejected_candidates);
+   cv::Mat output_image = cv_ptr->image.clone();
+   cv::Vec3d aruco_position, aruco_rotation;
+ 
+@@ -174,8 +177,22 @@ void DetectArucoMarkersBehavior::imageCallback(const sensor_msgs::msg::Image::Sh
+       output_image, marker_corners,
+       marker_ids);  // Draw markers to ensure orientation
+     std::vector<cv::Vec3d> rvecs, tvecs;
+-    cv::aruco::estimatePoseSingleMarkers(
+-      marker_corners, aruco_size_, camera_matrix_, dist_coeffs_, rvecs, tvecs);
++    // estimatePoseSingleMarkers was removed from OpenCV; this replicates its
++    // default behavior (EstimateParameters::pattern == CCW_center,
++    // solvePnPMethod == SOLVEPNP_ITERATIVE) via a manual per-marker solvePnP,
++    // per https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/aruco/src/aruco.cpp
++    std::vector<cv::Point3f> marker_obj_points{
++      cv::Point3f(-aruco_size_ / 2.f, aruco_size_ / 2.f, 0.f),
++      cv::Point3f(aruco_size_ / 2.f, aruco_size_ / 2.f, 0.f),
++      cv::Point3f(aruco_size_ / 2.f, -aruco_size_ / 2.f, 0.f),
++      cv::Point3f(-aruco_size_ / 2.f, -aruco_size_ / 2.f, 0.f)};
++    rvecs.resize(marker_corners.size());
++    tvecs.resize(marker_corners.size());
++    for (size_t i = 0; i < marker_corners.size(); ++i) {
++      cv::solvePnP(
++        marker_obj_points, marker_corners[i], camera_matrix_, dist_coeffs_, rvecs[i], tvecs[i],
++        false, cv::SOLVEPNP_ITERATIVE);
++    }
+ 
+     for (int i = 0; i < rvecs.size(); ++i) {
+       int id = marker_ids[i];
+
+diff --git a/detect_aruco_markers_behavior/include/detect_aruco_markers_behavior/detect_aruco_markers_behavior.hpp b/detect_aruco_markers_behavior/include/detect_aruco_markers_behavior/detect_aruco_markers_behavior.hpp
+index 33b89b6..e9928e8 100644
+--- a/detect_aruco_markers_behavior/include/detect_aruco_markers_behavior/detect_aruco_markers_behavior.hpp
++++ b/detect_aruco_markers_behavior/include/detect_aruco_markers_behavior/detect_aruco_markers_behavior.hpp
+@@ -57,7 +57,7 @@
+ #include "sensor_msgs/msg/image.hpp"
+ 
+ #include <image_transport/image_transport.hpp>
+-#include <opencv2/aruco.hpp>
++#include <opencv2/objdetect/aruco_detector.hpp>
+ #include <opencv2/calib3d.hpp>
+ 
+ class DetectArucoMarkersBehavior
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 643ca101..612f51c3 100644
 --- a/CMakeLists.txt

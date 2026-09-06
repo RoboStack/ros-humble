@@ -3,17 +3,34 @@ name = "ros-humble"
 description = "RoboStack repo to package ros-humble packages as conda packages"
 authors = ["Tobias Fischer <tobias.fischer@qut.edu.au>", "Wolf Vollprecht <w.vollprecht@gmail.com>", "Silvio Traversaro <silvio@traversaro.it>"]
 channels = ["https://prefix.dev/conda-forge"]
-platforms = ["osx-arm64", "linux-64", "osx-64", "linux-aarch64", "win-64"]
+platforms = [
+    # 2.17 is the glibc version used in centos 7
+    { platform = "linux-64", glibc = "2.17" },
+    { platform = "linux-aarch64", glibc = "2.17" },
+    "osx-arm64",
+    "osx-64",
+    "win-64",
+]
+preview = ["pixi-build"]
 
-[system-requirements]
-# 2.17 is the glibc version used in centos 7
-libc = { family="glibc", version="2.17" }
+[target.win.activation.env]
+PYTHONIOENCODING = "utf-8"
 
 [dependencies]
 python = ">=3.11.0,<3.12"
 rattler-build = ">=0.57.0,<0.58"
 setuptools = "<82.0"
 rattler-index = ">=0.27.16"
+curl = "*"
+go-yq = "*"
+colordiff = "*"
+
+[pypi-dependencies]
+# emscripten-wasm32 in platforms prevents pixi-build from resolving vinca as
+# a conda source dep (uv is unavailable for that target), so use pypi here.
+vinca = { git = "https://github.com/RoboStack/vinca.git" }
+# For local development uncomment:
+# vinca = { path = "../vinca", editable = true }
 
 [target.win-64.dependencies]
 # patch is required by rattler-build
@@ -21,26 +38,22 @@ m2-patch = "*"
 # git is required by rattler-build
 git = "*"
 
-[pypi-dependencies]
-# This is tipically the latest commit on main branch
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "b5e03d1f397c576232effd48dd1dd4b790d90ea7" }
-# Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
-# (and regenerate the pixi.lock) once you push the modified commit to the repo
-#vinca = { path = "../vinca", editable = true }
-
 [tasks]
 generate-recipes = { cmd = "vinca -m", depends-on = ["remove-recipes"] }
 generate-gha-workflows = { cmd = "vinca-gha --trigger-branch dummy_build_branch_as_it_is_unused -d ./recipes", depends-on = ["generate-recipes"] }
-check-patches = { cmd = "python check_patches_clean_apply.py", depends-on = ["generate-recipes"] }
+check-orphaned-patches = { cmd = "python check_orphaned_platform_patches.py", description = "Detect patch/ files vinca's add_package_name_variants() will never wire into any recipe because a same-package patch exists under a different name-prefix variant (see script docstring)." }
+check-patches = { cmd = "python check_patches_clean_apply.py", depends-on = ["generate-recipes", "check-orphaned-patches"] }
+check-deps = { cmd = "python check_dependency_compat.py", depends-on = ["generate-recipes"], description = "Solve one fake package containing every non-ROS dependency plus the mutex constraints to find pin conflicts before building anything. Run `python check_dependency_compat.py --stale` to list already-built artifacts that conflict with the current pins." }
 create_snapshot = { cmd = "vinca-snapshot -d humble -o rosdistro_snapshot.yaml" }
 upload = "rattler-build upload anaconda -o robostack-staging -a $ANACONDA_API_TOKEN"
 build_continue_on_failure = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --continue-on-failure --skip-existing", depends-on = ["generate-recipes"] }
+sort = { cmd = "vinca-sort-vinca-lists {{ check }} vinca.yaml && vinca-sort-yaml-keys {{ check }} pkg_additional_info.yaml robostack.yaml rosdistro_additional_recipes.yaml", args = [{ arg = "check", default = "" }] }
 
 generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["remove-recipes"] }
 check-patches-emscripten = { cmd = "python check_patches_clean_apply.py", depends-on = ["generate-recipes-emscripten"] }
 
 [tasks.build]
-cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c https://prefix.dev/conda-forge -c robostack-staging --skip-existing"
+cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c https://repo.prefix.dev/conda-forge -c robostack-staging --skip-existing"
 depends-on = ["generate-recipes"]
 description = "Build all packages, from the ./recipes dir. This will skip already existing packages, so it can be used to build only a subset of packages by first removing the recipes of the packages you want to rebuild (see `pixi run remove-recipes`)."
 
@@ -52,6 +65,14 @@ description = "Remove all generated recipes, before regenerating them."
 cmd = "cp ./patch/{{ PACKAGE }}.*patch ./recipes/{{ PACKAGE }}/patch/; rattler-build build --recipe ./recipes/{{ PACKAGE }}/recipe.yaml -m ./conda_build_config.yaml -c https://repo.prefix.dev/conda-forge -c robostack-staging"
 args = [{ arg = "PACKAGE", default = "ros-humble-ros-workspace" }]
 description = "Build a single package, from the ./recipes dir. Add the `ros-humble-` prefix to the package name, e.g. `pixi run build-one ros-humble-ros-workspace`"
+
+[tasks.conda-build-config-upstream-diff]
+cmd = """
+curl -sLo .tmp.yaml https://github.com/conda-forge/conda-forge-pinning-feedstock/raw/refs/heads/main/recipe/conda_build_config.yaml && \
+yq eval 'with_entries(.value = (load(".tmp.yaml")[.key] // .value))' conda_build_config.yaml | colordiff -u conda_build_config.yaml - ;\
+rm .tmp.yaml
+"""
+description = "Check if there are differences between the local conda_build_config.yaml and the one in the conda-forge-pinning-feedstock."
 
 [tasks.build-emscripten]
   cmd = [
@@ -67,4 +88,3 @@ description = "Build a single package, from the ./recipes dir. Add the `ros-humb
       "--test", "skip"
       ]
   depends-on = ["generate-recipes-emscripten"]
-

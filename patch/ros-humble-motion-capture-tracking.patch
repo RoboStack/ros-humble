@@ -1,0 +1,253 @@
+diff --git a/deps/libmotioncapture/CMakeLists.txt b/deps/libmotioncapture/CMakeLists.txt
+index ab6f28b..8ae21e2 100644
+--- a/deps/libmotioncapture/CMakeLists.txt
++++ b/deps/libmotioncapture/CMakeLists.txt
+@@ -18,7 +18,7 @@ set(CMAKE_CXX_STANDARD 14)
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+ 
+-find_package(Boost 1.5 COMPONENTS system REQUIRED) # for optitrack
++find_package(Boost 1.5 REQUIRED) # for optitrack (system component is header-only in Boost 1.70+)
+ add_definitions(
+   -DBOOST_DATE_TIME_NO_LIB
+   -DBOOST_REGEX_NO_LIB
+@@ -26,6 +26,9 @@ add_definitions(
+ )
+ 
+ find_package(Eigen3 REQUIRED)
++if(NOT EIGEN3_INCLUDE_DIRS AND TARGET Eigen3::Eigen)
++  get_target_property(EIGEN3_INCLUDE_DIRS Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)
++endif()
+ 
+ set(VICON_SDK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/vicon-datastream-sdk/)
+ set(QUALISYS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deps/qualisys_cpp_sdk/)
+@@ -87,7 +90,6 @@ if (LIBMOTIONCAPTURE_ENABLE_OPTITRACK)
+   )
+   set(my_libraries
+     ${my_libraries}
+-    Boost::system
+   )
+ endif()
+ 
+diff --git a/deps/libmotioncapture/deps/NatNetSDKCrossplatform/CMakeLists.txt b/deps/libmotioncapture/deps/NatNetSDKCrossplatform/CMakeLists.txt
+index 5dc394f..d577449 100644
+--- a/deps/libmotioncapture/deps/NatNetSDKCrossplatform/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/NatNetSDKCrossplatform/CMakeLists.txt
+@@ -5,7 +5,7 @@ set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+ set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+ find_package(Threads REQUIRED)
+ 
+-find_package(Boost 1.5 REQUIRED COMPONENTS system thread)
++find_package(Boost 1.5 REQUIRED COMPONENTS thread)
+ 
+ # Enable C++14 and warnings
+ set(CMAKE_CXX_STANDARD 14)
+@@ -21,7 +21,6 @@ add_executable(packetClient
+   samples/PacketClient/PacketClient.cpp
+ )
+ target_link_libraries(packetClient
+-  Boost::system
+   Boost::thread
+ )
+ 
+diff --git a/deps/libmotioncapture/deps/pybind11/CMakeLists.txt b/deps/libmotioncapture/deps/pybind11/CMakeLists.txt
+index 0d93203..5b59677 100644
+--- a/deps/libmotioncapture/deps/pybind11/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/pybind11/CMakeLists.txt
+@@ -5,7 +5,7 @@
+ # All rights reserved. Use of this source code is governed by a
+ # BSD-style license that can be found in the LICENSE file.
+ 
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.5)
+ 
+ # The `cmake_minimum_required(VERSION 3.4...3.22)` syntax does not work with
+ # some versions of VS that have a patched CMake 3.11. This forces us to emulate
+diff --git a/deps/libmotioncapture/deps/pybind11/tests/CMakeLists.txt b/deps/libmotioncapture/deps/pybind11/tests/CMakeLists.txt
+index 491f215..f0a9112 100644
+--- a/deps/libmotioncapture/deps/pybind11/tests/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/pybind11/tests/CMakeLists.txt
+@@ -5,7 +5,7 @@
+ # All rights reserved. Use of this source code is governed by a
+ # BSD-style license that can be found in the LICENSE file.
+ 
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.5)
+ 
+ # The `cmake_minimum_required(VERSION 3.4...3.18)` syntax does not work with
+ # some versions of VS that have a patched CMake 3.11. This forces us to emulate
+diff --git a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_embed/CMakeLists.txt b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_embed/CMakeLists.txt
+index f7d6939..2847142 100644
+--- a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_embed/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_embed/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.5)
+ 
+ # The `cmake_minimum_required(VERSION 3.4...3.18)` syntax does not work with
+ # some versions of VS that have a patched CMake 3.11. This forces us to emulate
+diff --git a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_function/CMakeLists.txt b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_function/CMakeLists.txt
+index d7ca4db..74322f5 100644
+--- a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_function/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_function/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.5)
+ project(test_installed_module CXX)
+ 
+ # The `cmake_minimum_required(VERSION 3.4...3.18)` syntax does not work with
+diff --git a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_target/CMakeLists.txt b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_target/CMakeLists.txt
+index bc5e101..2d21a21 100644
+--- a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_target/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/installed_target/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.5)
+ 
+ # The `cmake_minimum_required(VERSION 3.4...3.18)` syntax does not work with
+ # some versions of VS that have a patched CMake 3.11. This forces us to emulate
+diff --git a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_embed/CMakeLists.txt b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_embed/CMakeLists.txt
+index 58cdd7c..f9835f3 100644
+--- a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_embed/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_embed/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.5)
+ 
+ # The `cmake_minimum_required(VERSION 3.4...3.18)` syntax does not work with
+ # some versions of VS that have a patched CMake 3.11. This forces us to emulate
+diff --git a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_function/CMakeLists.txt b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_function/CMakeLists.txt
+index 01557c4..6d96cc3 100644
+--- a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_function/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_function/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.5)
+ 
+ # The `cmake_minimum_required(VERSION 3.4...3.18)` syntax does not work with
+ # some versions of VS that have a patched CMake 3.11. This forces us to emulate
+diff --git a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_target/CMakeLists.txt b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_target/CMakeLists.txt
+index ba82fde..6f8e044 100644
+--- a/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_target/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/pybind11/tests/test_cmake_build/subdirectory_target/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.5)
+ 
+ # The `cmake_minimum_required(VERSION 3.4...3.18)` syntax does not work with
+ # some versions of VS that have a patched CMake 3.11. This forces us to emulate
+diff --git a/deps/libmotioncapture/deps/vicon-datastream-sdk/CMakeLists.txt b/deps/libmotioncapture/deps/vicon-datastream-sdk/CMakeLists.txt
+index adf6dc0..31c09bb 100644
+--- a/deps/libmotioncapture/deps/vicon-datastream-sdk/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vicon-datastream-sdk/CMakeLists.txt
+@@ -6,7 +6,7 @@ set (CMAKE_CXX_STANDARD 14)
+ include(GNUInstallDirs)
+ include(CMakePackageConfigHelpers)
+ 
+-find_package(Boost 1.5 COMPONENTS system thread chrono REQUIRED)
++find_package(Boost 1.5 COMPONENTS thread chrono REQUIRED)
+ set(THREADS_PREFER_PTHREAD_FLAG ON)
+ find_package(Threads REQUIRED)
+ 
+@@ -36,7 +36,7 @@ add_library(ViconDataStreamSDK_CPP STATIC
+ 
+ target_link_libraries(ViconDataStreamSDK_CPP
+   PRIVATE
+-    Boost::system
++    
+     Boost::thread
+     Boost::chrono
+     Threads::Threads
+diff --git a/deps/libmotioncapture/deps/vrpn/CMakeLists.txt b/deps/libmotioncapture/deps/vrpn/CMakeLists.txt
+index bb5cd42..d5b8cb2 100644
+--- a/deps/libmotioncapture/deps/vrpn/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vrpn/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8.3)
++cmake_minimum_required(VERSION 3.5)
+ project(VRPN)
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/deps/libmotioncapture/deps/vrpn/client_src/CMakeLists.txt b/deps/libmotioncapture/deps/vrpn/client_src/CMakeLists.txt
+index 469ede1..124abc4 100644
+--- a/deps/libmotioncapture/deps/vrpn/client_src/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vrpn/client_src/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.6)
++cmake_minimum_required(VERSION 3.5)
+ 
+ #-----------------------------------------------------------------------------
+ # XXX Things to make better.
+diff --git a/deps/libmotioncapture/deps/vrpn/cmake/FindOpenHaptics.cmake b/deps/libmotioncapture/deps/vrpn/cmake/FindOpenHaptics.cmake
+index 0e4958c..207401a 100644
+--- a/deps/libmotioncapture/deps/vrpn/cmake/FindOpenHaptics.cmake
++++ b/deps/libmotioncapture/deps/vrpn/cmake/FindOpenHaptics.cmake
+@@ -53,7 +53,7 @@
+ # (See accompanying file LICENSE_1_0.txt or copy at
+ # http://www.boost.org/LICENSE_1_0.txt)
+ 
+-cmake_minimum_required(VERSION 2.6.3)
++cmake_minimum_required(VERSION 3.5)
+ 
+ set(OPENHAPTICS_ROOT_DIR
+ 	"${OPENHAPTICS_ROOT_DIR}"
+diff --git a/deps/libmotioncapture/deps/vrpn/quat/CMakeLists.txt b/deps/libmotioncapture/deps/vrpn/quat/CMakeLists.txt
+index c3b246e..c20d290 100644
+--- a/deps/libmotioncapture/deps/vrpn/quat/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vrpn/quat/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.6)
++cmake_minimum_required(VERSION 3.5)
+ project(quatlib)
+ 
+ if(APPLE)
+diff --git a/deps/libmotioncapture/deps/vrpn/server_src/CMakeLists.txt b/deps/libmotioncapture/deps/vrpn/server_src/CMakeLists.txt
+index ad61889..2cd0730 100644
+--- a/deps/libmotioncapture/deps/vrpn/server_src/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vrpn/server_src/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.6)
++cmake_minimum_required(VERSION 3.5)
+ 
+ #-----------------------------------------------------------------------------
+ # XXX Things to make better.
+diff --git a/deps/libmotioncapture/deps/vrpn/server_src/example_embedded_server/CMakeLists.txt b/deps/libmotioncapture/deps/vrpn/server_src/example_embedded_server/CMakeLists.txt
+index 9dc3540..ef2bc77 100644
+--- a/deps/libmotioncapture/deps/vrpn/server_src/example_embedded_server/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vrpn/server_src/example_embedded_server/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8)
++cmake_minimum_required(VERSION 3.5)
+ 
+ PROJECT(embedded)
+ 
+diff --git a/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/CMakeLists.txt b/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/CMakeLists.txt
+index 49e092a..698edae 100644
+--- a/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.6)
++cmake_minimum_required(VERSION 3.5)
+ 
+ project(vrpn_Qt)
+ 
+diff --git a/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/vrpn_Qt_AppExample/CMakeLists.txt b/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/vrpn_Qt_AppExample/CMakeLists.txt
+index 3dafcd5..e93386f 100644
+--- a/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/vrpn_Qt_AppExample/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/vrpn_Qt_AppExample/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.6)
++cmake_minimum_required(VERSION 3.5)
+ 
+ project(vrpn_Qt_AppExample)
+ 
+diff --git a/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/vrpn_Qt_AutoGUI/CMakeLists.txt b/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/vrpn_Qt_AutoGUI/CMakeLists.txt
+index 8b5225d..8afff1f 100644
+--- a/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/vrpn_Qt_AutoGUI/CMakeLists.txt
++++ b/deps/libmotioncapture/deps/vrpn/vrpn_Qt_GUI_server/vrpn_Qt_AutoGUI/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.6)
++cmake_minimum_required(VERSION 3.5)
+ 
+ project(vrpn_Qt_AutoGUI)
+ 

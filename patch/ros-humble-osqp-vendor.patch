@@ -1,0 +1,12 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,6 +13,8 @@
+ macro(build_osqp)
+   set(git_tag "v0.6.2")
+   set(extra_cmake_args)
++  # osqp v0.6.2 declares cmake_minimum_required < 3.5, rejected by CMake >= 4
++  list(APPEND extra_cmake_args -DCMAKE_POLICY_VERSION_MINIMUM=3.5)
+ 
+   get_property(multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+   if(NOT multi_config AND DEFINED CMAKE_BUILD_TYPE)
