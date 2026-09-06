@@ -1,0 +1,31 @@
+diff --git a/pointmatcher/Timer.h b/pointmatcher/Timer.h
+index 316dbe2..ed85931 100644
+--- a/pointmatcher/Timer.h
++++ b/pointmatcher/Timer.h
+@@ -74,10 +74,24 @@ namespace PointMatcherSupport
+ 	};
+ } // namespace PointMatcherSupport
+ #else // _POSIX_TIMERS
+-#include <boost/timer.hpp>
++// boost::timer (v1) is deprecated and, as of Boost 1.90, <boost/timer.hpp>
++// hard-errors unless BOOST_TIMER_ENABLE_DEPRECATED is defined. Avoid the
++// dependency entirely with a minimal std::chrono-based replacement that
++// keeps the same interface (default-construct starts, restart(), elapsed()).
++#include <chrono>
+ namespace PointMatcherSupport
+ {
+-	typedef boost::timer timer;
++	struct timer
++	{
++		timer() { restart(); }
++		void restart() { _start = std::chrono::steady_clock::now(); }
++		double elapsed() const
++		{
++			return std::chrono::duration<double>(std::chrono::steady_clock::now() - _start).count();
++		}
++	private:
++		std::chrono::steady_clock::time_point _start;
++	};
+ }
+ #endif // _POSIX_TIMERS
+ 
