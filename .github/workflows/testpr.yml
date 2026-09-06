@@ -211,6 +211,38 @@ jobs:
         rm -rf ${{ matrix.folder_cache }}/ros-humble-builtin-interfaces* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-std-msgs* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-nav2-msgs* 2>/dev/null || true
+        # The rosidl_default_generators staleness above wasn't an isolated
+        # case: inspecting the actual win-64 cache artifact (downloaded via
+        # `gh api .../artifacts`) showed nearly the ENTIRE rosidl/message-
+        # package ecosystem predates the fix -- every rosidl_generator_*/
+        # rosidl_typesupport_*_c/cpp package, plus dozens of *_msgs/
+        # *_interfaces packages (sensor_msgs, std_msgs, unique_identifier_msgs,
+        # diagnostic_msgs, nav_msgs, visualization_msgs, action_msgs, and
+        # more), all dated well before the fix landed. Confirmed this is
+        # win-64-specific in practice: linux-64/linux-aarch64/osx-64/
+        # osx-arm64 are all passing with the exact same stale cache, so the
+        # staleness itself is harmless there -- it only bites win-64 because
+        # that's the only platform where missing DLL exports actually breaks
+        # linking. Rather than individually discovering and cache-busting
+        # each affected message package one CI round-trip at a time (already
+        # happened once with nav2_msgs depending on geographic_msgs
+        # depending on unique_identifier_msgs), do a single broad win-64-only
+        # sweep of the whole rosidl/message-package family. This is
+        # deliberately scoped to win-64 only (via the shell if-guard) so it
+        # doesn't force an unnecessary full rebuild on the 4 platforms that
+        # are already fine -- a global build_number bump was considered and
+        # rejected for exactly that reason.
+        if [ "${{ matrix.platform }}" = "win-64" ]; then
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-generator-* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-typesupport-* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-adapter* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-cli* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-cmake* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-parser* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-runtime-* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/*-msgs-* 2>/dev/null || true
+          rm -rf ${{ matrix.folder_cache }}/*-interfaces-* 2>/dev/null || true
+        fi
         # gtest_vendor itself never failed to build (its own build doesn't
         # compile gtest-death-test.cc; consuming packages with BUILD_TESTING
         # on do, from the vendored source it installs), so its pre-fix cached
