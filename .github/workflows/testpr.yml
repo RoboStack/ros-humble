@@ -180,23 +180,37 @@ jobs:
         rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-typesupport-fastrtps-c* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-rmw-fastrtps-* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-robot-state-publisher* 2>/dev/null || true
-        # NOT actually a stale-cache issue (confirmed: robot_localization's
-        # win-64 build still fails LNK2019/LNK2001 on
-        # geographic_msgs/geometry_msgs/builtin_interfaces fastrtps typesupport
-        # symbols even after these three rebuild fully fresh, verified via the
-        # "Running build for recipe" log lines, not "Skipping build"). The
-        # real root cause is deeper: their rosidl_typesupport_fastrtps_c/cpp
-        # libraries aren't exporting these symbols on win-64 at all, likely a
-        # missing WINDOWS_EXPORT_ALL_SYMBOLS / dllexport gap in how
-        # rosidl_generate_interfaces() wires up the fastrtps typesupport
-        # target for MSVC -- same failure family as robot_state_publisher's
-        # win-64 crash above. Left the forced-rebuild here since it's
-        # harmless, but it does not fix the issue; needs an investigation
-        # session with a Windows environment (or emulation) to iterate
-        # against the rosidl/ament_cmake macros themselves.
+        # CORRECTED root cause (this comment used to claim it wasn't a cache
+        # issue -- that was wrong, just one level removed from where we were
+        # looking). Downloaded and inspected the actual win-64 cache
+        # artifacts directly (gh api .../artifacts, then unzipped the
+        # relevant .conda files). geometry_msgs's build log shows "-- Using
+        # single rosidl_typesupport_c: rosidl_typesupport_introspection_c"
+        # -- rosidl_generate_interfaces() genuinely couldn't find
+        # rosidl_typesupport_fastrtps_c/cpp in the resolved host env, even
+        # though rosidl_default_generators' package.xml unconditionally
+        # buildtool_export_depends on both. The cached
+        # ros-humble-rosidl-default-generators .conda restored into this
+        # run was dated Sep 4 while everything else in the same run was
+        # freshly built Sep 6, and its baked-in `depends` (checked via
+        # info/index.json inside the .conda) was missing nearly every
+        # rosidl_generator_*/rosidl_typesupport_* dep its own package.xml
+        # declares -- a stale artifact from before those were wired up
+        # correctly, kept alive indefinitely by --skip-existing since
+        # nothing was ever busting this specific meta-package. Every
+        # message package depends on it, so ALL of them silently lost
+        # fastrtps typesupport generation on win-64 at once -- exactly
+        # matching the failure pattern across robot_state_publisher,
+        # robot_localization, and nav2_msgs. Busting it (and its sibling
+        # rosidl_default_runtime, same risk) should fix all of them in one
+        # shot.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-default-generators* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-rosidl-default-runtime* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-geographic-msgs* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-geometry-msgs* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-builtin-interfaces* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-std-msgs* 2>/dev/null || true
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-nav2-msgs* 2>/dev/null || true
         # gtest_vendor itself never failed to build (its own build doesn't
         # compile gtest-death-test.cc; consuming packages with BUILD_TESTING
         # on do, from the vendored source it installs), so its pre-fix cached
