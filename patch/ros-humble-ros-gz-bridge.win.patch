@@ -1,16 +1,1313 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8f4cc27d..e05c90cd 100644
+index a208093..88a7340 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -10,6 +10,11 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+@@ -8,6 +8,8 @@ if(NOT CMAKE_CXX_STANDARD)
+ endif()
+ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
++elseif(MSVC)
++  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
  endif()
  
-+if(MSVC)
-+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
-+endif()
-+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-+
  find_package(ament_cmake REQUIRED)
- find_package(rclcpp REQUIRED)
- find_package(rclcpp_components REQUIRED)
+@@ -137,6 +139,13 @@ add_library(${bridge_lib}
+   ${generated_files}
+ )
+ 
++include(GenerateExportHeader)
++generate_export_header(${bridge_lib}
++  EXPORT_FILE_NAME
++    "${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/visibility_control.hpp"
++  EXPORT_MACRO_NAME ROS_GZ_BRIDGE_VISIBLE
++)
++
+ target_link_libraries(${bridge_lib}
+   ${GZ_TARGET_PREFIX}-msgs${GZ_MSGS_VER}::core
+   ${GZ_TARGET_PREFIX}-transport${GZ_TRANSPORT_VER}::core
+@@ -152,6 +161,7 @@ ament_target_dependencies(${bridge_lib}
+ target_include_directories(${bridge_lib}
+   PUBLIC
+     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
++    "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"
+     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+   PRIVATE
+     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>"
+@@ -163,6 +173,11 @@ target_link_libraries(${bridge_lib}
+   ${GZ_TARGET_PREFIX}-transport${GZ_TRANSPORT_VER}::core
+ )
+ 
++# Many tests do not link ${bridge_lib} even if they include its headers,
++# ensure that ${CMAKE_CURRENT_BINARY_DIR}/include that includes the visibility_control.hpp header
++# is properly visible
++include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
++
+ rclcpp_components_register_node(
+   ${bridge_lib}
+   PLUGIN ros_gz_bridge::RosGzBridge
+@@ -178,6 +193,11 @@ install(
+   DESTINATION include/${PROJECT_NAME}
+ )
+ 
++install(
++  FILES "${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_NAME}/visibility_control.hpp"
++  DESTINATION include/${PROJECT_NAME}/${PROJECT_NAME}
++)
++
+ set(bridge_executables
+   parameter_bridge
+   static_bridge
+diff --git a/include/ros_gz_bridge/bridge_config.hpp b/include/ros_gz_bridge/bridge_config.hpp
+index 00b0b3a..1a2ef39 100644
+--- a/include/ros_gz_bridge/bridge_config.hpp
++++ b/include/ros_gz_bridge/bridge_config.hpp
+@@ -18,6 +18,8 @@
+ #include <string>
+ #include <vector>
+ 
++#include "ros_gz_bridge/visibility_control.hpp"
++
+ namespace ros_gz_bridge
+ {
+ 
+@@ -42,7 +44,7 @@ static constexpr bool kDefaultLazy = false;
+ // \brief Default bridge connectivity
+ static constexpr BridgeDirection kDefaultDirection = BridgeDirection::BIDIRECTIONAL;
+ 
+-struct BridgeConfig
++struct ROS_GZ_BRIDGE_VISIBLE BridgeConfig
+ {
+   /// \brief The ROS message type (eg std_msgs/msg/String)
+   std::string ros_type_name;
+@@ -73,12 +75,12 @@ struct BridgeConfig
+ /// \brief Generate a group of BridgeConfigs from a YAML String
+ /// \param[in] data string containing YAML of bridge configurations
+ /// \return Vector of bridge configurations
+-std::vector<BridgeConfig> readFromYamlString(const std::string & data);
++ROS_GZ_BRIDGE_VISIBLE std::vector<BridgeConfig> readFromYamlString(const std::string & data);
+ 
+ /// \brief Generate a group of BridgeConfigs from a YAML File
+ /// \param[in] filename name of file containing YAML of bridge configurations
+ /// \return Vector of bridge configurations
+-std::vector<BridgeConfig> readFromYamlFile(const std::string & filename);
++ROS_GZ_BRIDGE_VISIBLE std::vector<BridgeConfig> readFromYamlFile(const std::string & filename);
+ 
+ }  // namespace ros_gz_bridge
+ 
+diff --git a/include/ros_gz_bridge/convert/actuator_msgs.hpp b/include/ros_gz_bridge/convert/actuator_msgs.hpp
+index ea4055b..14d27d6 100644
+--- a/include/ros_gz_bridge/convert/actuator_msgs.hpp
++++ b/include/ros_gz_bridge/convert/actuator_msgs.hpp
+@@ -27,13 +27,13 @@ namespace ros_gz_bridge
+ {
+ // actuator_msgs
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const actuator_msgs::msg::Actuators & ros_msg,
+   gz::msgs::Actuators & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Actuators & gz_msg,
+   actuator_msgs::msg::Actuators & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/builtin_interfaces.hpp b/include/ros_gz_bridge/convert/builtin_interfaces.hpp
+index 04c47ba..c2c06ca 100644
+--- a/include/ros_gz_bridge/convert/builtin_interfaces.hpp
++++ b/include/ros_gz_bridge/convert/builtin_interfaces.hpp
+@@ -25,13 +25,13 @@ namespace ros_gz_bridge
+ {
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const builtin_interfaces::msg::Time & ros_msg,
+   gz::msgs::Time & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Time & gz_msg,
+   builtin_interfaces::msg::Time & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/geometry_msgs.hpp b/include/ros_gz_bridge/convert/geometry_msgs.hpp
+index 70537de..5b70b86 100644
+--- a/include/ros_gz_bridge/convert/geometry_msgs.hpp
++++ b/include/ros_gz_bridge/convert/geometry_msgs.hpp
+@@ -47,181 +47,181 @@ namespace ros_gz_bridge
+ 
+ // geometry_msgs
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::Quaternion & ros_msg,
+   gz::msgs::Quaternion & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Quaternion & gz_msg,
+   geometry_msgs::msg::Quaternion & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::Vector3 & ros_msg,
+   gz::msgs::Vector3d & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Vector3d & gz_msg,
+   geometry_msgs::msg::Vector3 & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::Point & ros_msg,
+   gz::msgs::Vector3d & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Vector3d & gz_msg,
+   geometry_msgs::msg::Point & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::Pose & ros_msg,
+   gz::msgs::Pose & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Pose & gz_msg,
+   geometry_msgs::msg::Pose & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::PoseArray & ros_msg,
+   gz::msgs::Pose_V & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Pose_V & gz_msg,
+   geometry_msgs::msg::PoseArray & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::PoseWithCovariance & ros_msg,
+   gz::msgs::PoseWithCovariance & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::PoseWithCovariance & gz_msg,
+   geometry_msgs::msg::PoseWithCovariance & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::PoseStamped & ros_msg,
+   gz::msgs::Pose & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Pose & gz_msg,
+   geometry_msgs::msg::PoseStamped & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::Transform & ros_msg,
+   gz::msgs::Pose & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Pose & gz_msg,
+   geometry_msgs::msg::Transform & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::TransformStamped & ros_msg,
+   gz::msgs::Pose & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Pose & gz_msg,
+   geometry_msgs::msg::TransformStamped & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::Twist & ros_msg,
+   gz::msgs::Twist & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Twist & gz_msg,
+   geometry_msgs::msg::Twist & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::TwistStamped & ros_msg,
+   gz::msgs::Twist & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Twist & gz_msg,
+   geometry_msgs::msg::TwistStamped & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::TwistWithCovariance & ros_msg,
+   gz::msgs::TwistWithCovariance & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::TwistWithCovariance & gz_msg,
+   geometry_msgs::msg::TwistWithCovariance & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::TwistWithCovarianceStamped & ros_msg,
+   gz::msgs::TwistWithCovariance & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::TwistWithCovariance & gz_msg,
+   geometry_msgs::msg::TwistWithCovarianceStamped & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::Wrench & ros_msg,
+   gz::msgs::Wrench & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Wrench & gz_msg,
+   geometry_msgs::msg::Wrench & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const geometry_msgs::msg::WrenchStamped & ros_msg,
+   gz::msgs::Wrench & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Wrench & gz_msg,
+   geometry_msgs::msg::WrenchStamped & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/gps_msgs.hpp b/include/ros_gz_bridge/convert/gps_msgs.hpp
+index d6cf194..fda4568 100644
+--- a/include/ros_gz_bridge/convert/gps_msgs.hpp
++++ b/include/ros_gz_bridge/convert/gps_msgs.hpp
+@@ -26,13 +26,13 @@
+ namespace ros_gz_bridge
+ {
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const gps_msgs::msg::GPSFix & ros_msg,
+   gz::msgs::NavSat & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::NavSat & gz_msg,
+   gps_msgs::msg::GPSFix & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/nav_msgs.hpp b/include/ros_gz_bridge/convert/nav_msgs.hpp
+index 91c0f1a..fad3eb3 100644
+--- a/include/ros_gz_bridge/convert/nav_msgs.hpp
++++ b/include/ros_gz_bridge/convert/nav_msgs.hpp
+@@ -28,25 +28,25 @@ namespace ros_gz_bridge
+ {
+ // nav_msgs
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const nav_msgs::msg::Odometry & ros_msg,
+   gz::msgs::Odometry & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Odometry & gz_msg,
+   nav_msgs::msg::Odometry & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const nav_msgs::msg::Odometry & ros_msg,
+   gz::msgs::OdometryWithCovariance & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::OdometryWithCovariance & gz_msg,
+   nav_msgs::msg::Odometry & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/rcl_interfaces.hpp b/include/ros_gz_bridge/convert/rcl_interfaces.hpp
+index 261849c..fbd70cc 100644
+--- a/include/ros_gz_bridge/convert/rcl_interfaces.hpp
++++ b/include/ros_gz_bridge/convert/rcl_interfaces.hpp
+@@ -29,13 +29,13 @@ namespace ros_gz_bridge
+ {
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const rcl_interfaces::msg::ParameterValue & ros_msg,
+   gz::msgs::Any & ign_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Any & ign_msg,
+   rcl_interfaces::msg::ParameterValue & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/ros_gz_interfaces.hpp b/include/ros_gz_bridge/convert/ros_gz_interfaces.hpp
+index e83e99c..726dcd2 100644
+--- a/include/ros_gz_bridge/convert/ros_gz_interfaces.hpp
++++ b/include/ros_gz_bridge/convert/ros_gz_interfaces.hpp
+@@ -75,276 +75,276 @@ namespace ros_gz_bridge
+ {
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::JointWrench & ros_msg,
+   gz::msgs::JointWrench & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::JointWrench & gz_msg,
+   ros_gz_interfaces::msg::JointWrench & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::Altimeter & ros_msg,
+   gz::msgs::Altimeter & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Altimeter & gz_msg,
+   ros_gz_interfaces::msg::Altimeter & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::Entity & ros_msg,
+   gz::msgs::Entity & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::Entity & ros_msg,
+   gz::msgs::Pose & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Entity & gz_msg,
+   ros_gz_interfaces::msg::Entity & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::EntityFactory & ros_msg,
+   gz::msgs::EntityFactory & gz_msg);
+ 
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::EntityFactory & gz_msg,
+   ros_gz_interfaces::msg::EntityFactory & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::EntityWrench & ros_msg,
+   gz::msgs::EntityWrench & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::EntityWrench & gz_msg,
+   ros_gz_interfaces::msg::EntityWrench & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::Contact & ros_msg,
+   gz::msgs::Contact & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Contact & gz_msg,
+   ros_gz_interfaces::msg::Contact & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::Contacts & ros_msg,
+   gz::msgs::Contacts & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Contacts & gz_msg,
+   ros_gz_interfaces::msg::Contacts & ros_msg);
+ 
+ #if HAVE_DATAFRAME
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::Dataframe & ros_msg,
+   gz::msgs::Dataframe & ign_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Dataframe & ign_msg,
+   ros_gz_interfaces::msg::Dataframe & ros_msg);
+ #endif  // HAVE_DATAFRAME
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::GuiCamera & ros_msg,
+   gz::msgs::GUICamera & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::GUICamera & gz_msg,
+   ros_gz_interfaces::msg::GuiCamera & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::Light & ros_msg,
+   gz::msgs::Light & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Light & gz_msg,
+   ros_gz_interfaces::msg::Light & ros_msg);
+ 
+ #if HAVE_MATERIALCOLOR
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::MaterialColor & ros_msg,
+   gz::msgs::MaterialColor & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::MaterialColor & gz_msg,
+   ros_gz_interfaces::msg::MaterialColor & ros_msg);
+ #endif  // HAVE_MATERIALCOLOR
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::SensorNoise & ros_msg,
+   gz::msgs::SensorNoise & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::SensorNoise & gz_msg,
+   ros_gz_interfaces::msg::SensorNoise & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::StringVec & ros_msg,
+   gz::msgs::StringMsg_V & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::StringMsg_V & gz_msg,
+   ros_gz_interfaces::msg::StringVec & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::ParamVec & ros_msg,
+   gz::msgs::Param & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Param & gz_msg,
+   ros_gz_interfaces::msg::ParamVec & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::ParamVec & ros_msg,
+   gz::msgs::Param_V & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Param_V & gz_msg,
+   ros_gz_interfaces::msg::ParamVec & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::TrackVisual & ros_msg,
+   gz::msgs::TrackVisual & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::TrackVisual & gz_msg,
+   ros_gz_interfaces::msg::TrackVisual & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::VideoRecord & ros_msg,
+   gz::msgs::VideoRecord & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::VideoRecord & gz_msg,
+   ros_gz_interfaces::msg::VideoRecord & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::WorldControl & ros_msg,
+   gz::msgs::WorldControl & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::WorldControl & gz_msg,
+   ros_gz_interfaces::msg::WorldControl & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::WorldReset & ros_msg,
+   gz::msgs::WorldReset & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::WorldReset & gz_msg,
+   ros_gz_interfaces::msg::WorldReset & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::WorldStatistics & gz_msg,
+   ros_gz_interfaces::msg::WorldStatistics & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::WorldStatistics & ros_msg,
+   gz::msgs::WorldStatistics & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::Float32Array & ros_msg,
+   gz::msgs::Float_V & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Float_V & gz_msg,
+   ros_gz_interfaces::msg::Float32Array & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ros_gz_interfaces::msg::LogPlaybackStatistics & ros_msg,
+   gz::msgs::LogPlaybackStatistics & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::LogPlaybackStatistics & gz_msg,
+   ros_gz_interfaces::msg::LogPlaybackStatistics & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/rosgraph_msgs.hpp b/include/ros_gz_bridge/convert/rosgraph_msgs.hpp
+index 7916aaa..2f0ef2e 100644
+--- a/include/ros_gz_bridge/convert/rosgraph_msgs.hpp
++++ b/include/ros_gz_bridge/convert/rosgraph_msgs.hpp
+@@ -27,13 +27,13 @@ namespace ros_gz_bridge
+ {
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Clock & gz_msg,
+   rosgraph_msgs::msg::Clock & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const rosgraph_msgs::msg::Clock & ros_msg,
+   gz::msgs::Clock & gz_msg);
+diff --git a/include/ros_gz_bridge/convert/sensor_msgs.hpp b/include/ros_gz_bridge/convert/sensor_msgs.hpp
+index 53fc1bc..a1410f7 100644
+--- a/include/ros_gz_bridge/convert/sensor_msgs.hpp
++++ b/include/ros_gz_bridge/convert/sensor_msgs.hpp
+@@ -49,133 +49,133 @@ namespace ros_gz_bridge
+ 
+ // sensor_msgs
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::Joy & ros_msg,
+   gz::msgs::Joy & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Joy & gz_msg,
+   sensor_msgs::msg::Joy & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::FluidPressure & ros_msg,
+   gz::msgs::FluidPressure & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::FluidPressure & gz_msg,
+   sensor_msgs::msg::FluidPressure & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::Image & ros_msg,
+   gz::msgs::Image & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Image & gz_msg,
+   sensor_msgs::msg::Image & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::CameraInfo & ros_msg,
+   gz::msgs::CameraInfo & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::CameraInfo & gz_msg,
+   sensor_msgs::msg::CameraInfo & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::Imu & ros_msg,
+   gz::msgs::IMU & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::IMU & gz_msg,
+   sensor_msgs::msg::Imu & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::JointState & ros_msg,
+   gz::msgs::Model & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Model & gz_msg,
+   sensor_msgs::msg::JointState & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::LaserScan & ros_msg,
+   gz::msgs::LaserScan & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::LaserScan & gz_msg,
+   sensor_msgs::msg::LaserScan & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::MagneticField & ros_msg,
+   gz::msgs::Magnetometer & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Magnetometer & gz_msg,
+   sensor_msgs::msg::MagneticField & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::NavSatFix & ros_msg,
+   gz::msgs::NavSat & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::NavSat & gz_msg,
+   sensor_msgs::msg::NavSatFix & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::PointCloud2 & ros_msg,
+   gz::msgs::PointCloudPacked & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::PointCloudPacked & gz_msg,
+   sensor_msgs::msg::PointCloud2 & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const sensor_msgs::msg::BatteryState & ros_msg,
+   gz::msgs::BatteryState & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::BatteryState & gz_msg,
+   sensor_msgs::msg::BatteryState & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/std_msgs.hpp b/include/ros_gz_bridge/convert/std_msgs.hpp
+index 78d3f11..652c4f9 100644
+--- a/include/ros_gz_bridge/convert/std_msgs.hpp
++++ b/include/ros_gz_bridge/convert/std_msgs.hpp
+@@ -43,109 +43,109 @@ namespace ros_gz_bridge
+ {
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::Bool & ros_msg,
+   gz::msgs::Boolean & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Boolean & gz_msg,
+   std_msgs::msg::Bool & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::ColorRGBA & ros_msg,
+   gz::msgs::Color & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Color & gz_msg,
+   std_msgs::msg::ColorRGBA & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::Empty & ros_msg,
+   gz::msgs::Empty & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Empty & gz_msg,
+   std_msgs::msg::Empty & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::UInt32 & ros_msg,
+   gz::msgs::UInt32 & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::UInt32 & gz_msg,
+   std_msgs::msg::UInt32 & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::Float32 & ros_msg,
+   gz::msgs::Float & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Float & gz_msg,
+   std_msgs::msg::Float32 & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::Float64 & ros_msg,
+   gz::msgs::Double & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Double & gz_msg,
+   std_msgs::msg::Float64 & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::Header & ros_msg,
+   gz::msgs::Header & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Header & gz_msg,
+   std_msgs::msg::Header & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::Int32 & ros_msg,
+   gz::msgs::Int32 & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Int32 & gz_msg,
+   std_msgs::msg::Int32 & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const std_msgs::msg::String & ros_msg,
+   gz::msgs::StringMsg & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::StringMsg & gz_msg,
+   std_msgs::msg::String & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/tf2_msgs.hpp b/include/ros_gz_bridge/convert/tf2_msgs.hpp
+index a7df9e0..64f852e 100644
+--- a/include/ros_gz_bridge/convert/tf2_msgs.hpp
++++ b/include/ros_gz_bridge/convert/tf2_msgs.hpp
+@@ -27,13 +27,13 @@ namespace ros_gz_bridge
+ {
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const tf2_msgs::msg::TFMessage & ros_msg,
+   gz::msgs::Pose_V & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::Pose_V & gz_msg,
+   tf2_msgs::msg::TFMessage & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/trajectory_msgs.hpp b/include/ros_gz_bridge/convert/trajectory_msgs.hpp
+index d2120db..4d575d6 100644
+--- a/include/ros_gz_bridge/convert/trajectory_msgs.hpp
++++ b/include/ros_gz_bridge/convert/trajectory_msgs.hpp
+@@ -27,25 +27,25 @@ namespace ros_gz_bridge
+ {
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const trajectory_msgs::msg::JointTrajectoryPoint & ros_msg,
+   gz::msgs::JointTrajectoryPoint & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::JointTrajectoryPoint & gz_msg,
+   trajectory_msgs::msg::JointTrajectoryPoint & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const trajectory_msgs::msg::JointTrajectory & ros_msg,
+   gz::msgs::JointTrajectory & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::JointTrajectory & gz_msg,
+   trajectory_msgs::msg::JointTrajectory & ros_msg);
+diff --git a/include/ros_gz_bridge/convert/vision_msgs.hpp b/include/ros_gz_bridge/convert/vision_msgs.hpp
+index b1556f6..4e0c8a2 100644
+--- a/include/ros_gz_bridge/convert/vision_msgs.hpp
++++ b/include/ros_gz_bridge/convert/vision_msgs.hpp
+@@ -27,49 +27,49 @@
+ namespace ros_gz_bridge
+ {
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const vision_msgs::msg::Detection2D & ros_msg,
+   gz::msgs::AnnotatedAxisAligned2DBox & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::AnnotatedAxisAligned2DBox & gz_msg,
+   vision_msgs::msg::Detection2D & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const vision_msgs::msg::Detection2DArray & ros_msg,
+   gz::msgs::AnnotatedAxisAligned2DBox_V & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::AnnotatedAxisAligned2DBox_V & gz_msg,
+   vision_msgs::msg::Detection2DArray & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const vision_msgs::msg::Detection3D & ros_msg,
+   gz::msgs::AnnotatedOriented3DBox & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::AnnotatedOriented3DBox & gz_msg,
+   vision_msgs::msg::Detection3D & ros_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const vision_msgs::msg::Detection3DArray & ros_msg,
+   gz::msgs::AnnotatedOriented3DBox_V & gz_msg);
+ 
+ template<>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const gz::msgs::AnnotatedOriented3DBox_V & gz_msg,
+   vision_msgs::msg::Detection3DArray & ros_msg);
+diff --git a/include/ros_gz_bridge/convert_decl.hpp b/include/ros_gz_bridge/convert_decl.hpp
+index 3141997..5d2ca98 100644
+--- a/include/ros_gz_bridge/convert_decl.hpp
++++ b/include/ros_gz_bridge/convert_decl.hpp
+@@ -15,17 +15,19 @@
+ #ifndef ROS_GZ_BRIDGE__CONVERT_DECL_HPP_
+ #define ROS_GZ_BRIDGE__CONVERT_DECL_HPP_
+ 
++#include "ros_gz_bridge/visibility_control.hpp"
++
+ namespace ros_gz_bridge
+ {
+ 
+ template<typename ROS_T, typename GZ_T>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_ros_to_gz(
+   const ROS_T & ros_msg,
+   GZ_T & gz_msg);
+ 
+ template<typename ROS_T, typename GZ_T>
+-void
++ROS_GZ_BRIDGE_VISIBLE void
+ convert_gz_to_ros(
+   const GZ_T & gz_msg,
+   ROS_T & ros_msg);
+diff --git a/include/ros_gz_bridge/ros_gz_bridge.hpp b/include/ros_gz_bridge/ros_gz_bridge.hpp
+index 71abf1d..c880fcd 100644
+--- a/include/ros_gz_bridge/ros_gz_bridge.hpp
++++ b/include/ros_gz_bridge/ros_gz_bridge.hpp
+@@ -23,6 +23,7 @@
+ #include <gz/transport/Node.hh>
+ #include <rclcpp/node.hpp>
+ #include "ros_gz_bridge/bridge_config.hpp"
++#include "ros_gz_bridge/visibility_control.hpp"
+ 
+ // Dataframe is available from versions 8.4.0 (fortress) forward
+ // This can be removed when the minimum supported version passes 8.4.0
+@@ -49,7 +50,7 @@ namespace ros_gz_bridge
+ class BridgeHandle;
+ 
+ /// \brief Component container for the ROS-GZ Bridge
+-class RosGzBridge : public rclcpp::Node
++class ROS_GZ_BRIDGE_VISIBLE RosGzBridge : public rclcpp::Node
+ {
+ public:
+   /// \brief Constructor
+diff --git a/src/factory_interface.hpp b/src/factory_interface.hpp
+index 985f932..1c4bf1b 100644
+--- a/src/factory_interface.hpp
++++ b/src/factory_interface.hpp
+@@ -25,11 +25,12 @@
+ #include <rclcpp/rclcpp.hpp>
+ 
+ #include "bridge_handle_gz_to_ros_parameters.hpp"
++#include "ros_gz_bridge/visibility_control.hpp"
+ 
+ namespace ros_gz_bridge
+ {
+ 
+-class FactoryInterface
++class ROS_GZ_BRIDGE_VISIBLE FactoryInterface
+ {
+ public:
+   virtual ~FactoryInterface() = 0;
+diff --git a/src/get_factory.hpp b/src/get_factory.hpp
+index 6215a02..495b65d 100644
+--- a/src/get_factory.hpp
++++ b/src/get_factory.hpp
+@@ -20,16 +20,17 @@
+ 
+ #include "factory_interface.hpp"
+ #include "service_factory_interface.hpp"
++#include "ros_gz_bridge/visibility_control.hpp"
+ 
+ namespace ros_gz_bridge
+ {
+ 
+-std::shared_ptr<FactoryInterface>
++ROS_GZ_BRIDGE_VISIBLE std::shared_ptr<FactoryInterface>
+ get_factory(
+   const std::string & ros_type_name,
+   const std::string & gz_type_name);
+ 
+-std::shared_ptr<ServiceFactoryInterface>
++ROS_GZ_BRIDGE_VISIBLE std::shared_ptr<ServiceFactoryInterface>
+ get_service_factory(
+   const std::string & ros_type_name,
+   const std::string & gz_req_type_name,
+diff --git a/src/get_mappings.hpp b/src/get_mappings.hpp
+index f26ae20..1c699cf 100644
+--- a/src/get_mappings.hpp
++++ b/src/get_mappings.hpp
+@@ -18,16 +18,18 @@
+ #include <map>
+ #include <string>
+ 
++#include "ros_gz_bridge/visibility_control.hpp"
++
+ namespace ros_gz_bridge
+ {
+ 
+-bool
++ROS_GZ_BRIDGE_VISIBLE bool
+ get_gz_to_ros_mapping(const std::string & gz_type_name, std::string & ros_type_name);
+ 
+-bool
++ROS_GZ_BRIDGE_VISIBLE bool
+ get_ros_to_gz_mapping(const std::string & ros_type_name, std::string & gz_type_name);
+ 
+-std::multimap<std::string, std::string>
++ROS_GZ_BRIDGE_VISIBLE std::multimap<std::string, std::string>
+ get_all_message_mappings_ros_to_gz();
+ 
+ }  // namespace ros_gz_bridge
+diff --git a/src/service_factory_interface.hpp b/src/service_factory_interface.hpp
+index 766ce51..afa06e6 100644
+--- a/src/service_factory_interface.hpp
++++ b/src/service_factory_interface.hpp
+@@ -23,10 +23,12 @@
+ #include <rclcpp/service.hpp>
+ #include <rclcpp/node.hpp>
+ 
++#include "ros_gz_bridge/visibility_control.hpp"
++
+ namespace ros_gz_bridge
+ {
+ 
+-class ServiceFactoryInterface
++class ROS_GZ_BRIDGE_VISIBLE ServiceFactoryInterface
+ {
+ public:
+   virtual ~ServiceFactoryInterface() = 0;
