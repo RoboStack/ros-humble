@@ -282,6 +282,12 @@ jobs:
         # Force both to rebuild fresh with the corrected 3.0.4 pin.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-coal* 2>/dev/null || true
         rm -rf ${{ matrix.folder_cache }}/ros-humble-pinocchio* 2>/dev/null || true
+        # ros-humble-ros-gz-bridge's win-64 cache may hold an artifact built
+        # before the CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS cache-default fix
+        # (243b693d) -- --skip-existing would happily reuse it without ever
+        # exercising the fix, since it matches on name+version+build_number,
+        # not patch content. Force a fresh build to actually verify the fix.
+        rm -rf ${{ matrix.folder_cache }}/ros-humble-ros-gz-bridge* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
