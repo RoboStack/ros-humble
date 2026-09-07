@@ -299,3 +299,30 @@ index 0164775..2dc8fdc 100644
 +find_package(Boost COMPONENTS chrono thread REQUIRED)
  include("${CMAKE_CURRENT_LIST_DIR}/sick_safetyscanners_baseTargets.cmake")
  
+
+diff --git a/include/sick_safetyscanners_base/Exceptions.h b/include/sick_safetyscanners_base/Exceptions.h
+index bdc42f4..e557d3a 100644
+--- a/include/sick_safetyscanners_base/Exceptions.h
++++ b/include/sick_safetyscanners_base/Exceptions.h
+@@ -131,21 +131,6 @@ public:
+    */
+   explicit timeout_error() = delete;
+ 
+-  /*!
+-   * \brief Constructor of the timeout error object
+-   *
+-   * \param msg A description of the reason for the failure.
+-   * \param timeout The timeout that has been exceeded represented as timeval-struct. The timeout
+-   * information is appended as string after the message string.
+-   */
+-  explicit timeout_error(const std::string& msg, timeval timeout)
+-    : runtime_error(msg)
+-  {
+-    std::stringstream ss;
+-    ss << msg << " (timeout was set to " << timeout.tv_sec + timeout.tv_usec * 1e-6 << " sec)";
+-    msg_ = ss.str();
+-  }
+-
+   /*!
+    * \brief Constructor of the timeout error object
+    *
