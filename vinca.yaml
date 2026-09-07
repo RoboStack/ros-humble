@@ -133,6 +133,12 @@ packages_skip_by_deps:
       # neither is ever actually selected on win-64 -- no entry needed.)
       - ros_gz_sim
       - ros_gz_sim_demos
+      # ros_ign_gazebo is the legacy-name counterpart of ros_gz_sim (same
+      # gazebosim/ros_gz upstream repo, parallel ros_ign_* naming scheme) --
+      # a separate package, not merely a dependent of ros_gz_sim, so it needs
+      # its own exclusion here. Confirmed win-64 CI failure: CMake couldn't
+      # find ignition-gazebo6 while configuring ros-humble-ros-ign-gazebo.
+      - ros_ign_gazebo
       - ros_ign_gazebo_demos
       - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
       - rttest
@@ -223,6 +229,10 @@ packages_remove_from_deps:
       # neither is ever actually selected on win-64 -- no entry needed.)
       - ros_gz_sim
       - ros_gz_sim_demos
+      # ros_ign_gazebo is the legacy-name counterpart of ros_gz_sim -- a
+      # separate package, not merely a dependent of ros_gz_sim, so it needs
+      # its own exclusion here too. See packages_skip_by_deps above.
+      - ros_ign_gazebo
       - ros_ign_gazebo_demos
       - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
       - rttest
