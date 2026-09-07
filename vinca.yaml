@@ -349,7 +349,6 @@ packages_select_by_deps:
       - desktop
       - desktop_full
       - diff-drive-controller
-      - dynmsg
       - flex_sync
       - gazebo-ros-pkgs
       # - joystick_drivers
@@ -527,6 +526,17 @@ packages_select_by_deps:
   - if: not win
     then:
       - robot_localization
+
+  # dynmsg (dynamic_message_introspection) uses dlopen()/dlfcn.h to load
+  # message typesupport libraries at runtime -- a POSIX-only API with no
+  # Windows equivalent without a real LoadLibrary/GetProcAddress port.
+  # It also fails to find yaml-cpp/yaml.h despite ros-humble-yaml-cpp-vendor
+  # being a declared host dep, a separate CMake target-linking gap. Nothing
+  # else depends on it (confirmed via vinca's dependency-closure resolver);
+  # skip on Windows rather than attempt a real dlopen port blind.
+  - if: not win
+    then:
+      - dynmsg
 
   # These packages are only built on Linux as they depend on Linux-specific API
   - if: linux
