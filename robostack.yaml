@@ -286,7 +286,10 @@ libcurl:
 libcurl-dev:
   robostack: [libcurl]
 libdc1394-dev:
-  robostack: [libdc1394]
+  robostack:
+    linux: [libdc1394]
+    osx: [libdc1394]
+    win64: []
 libdraco-dev:
   robostack: [draco]
 libdw-dev:
