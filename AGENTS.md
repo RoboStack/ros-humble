@@ -201,6 +201,12 @@ Check:
 
 ## `vinca.yaml` maintenance guidelines
 
+Three distinct ways to exclude a package (vinca revision pinned in `pixi.toml`; re-check `vinca/main.py` + `vinca/resolve.py` if that pin moves):
+
+1. `packages_select_by_deps`, wrapped in `if: not <platform> then: [...]` — the primary way to exclude a package's own recipe. `get_selected_packages` adds every name here to `selected_packages` unconditionally, so simply not listing it for a platform keeps its recipe from being generated.
+2. `packages_skip_by_deps` only affects transitive pull-in (`ignore_pkgs` passed to `distro.get_depends()`). It does not stop a package listed directly in `packages_select_by_deps`.
+3. `packages_remove_from_deps` is checked by `resolve.py::should_skip_pkg` both for a package's own recipe generation and when resolving other packages' host/run dependency names — using it strips both simultaneously, inseparably. Wrong tool if another selected package legitimately needs the dependency; use (1)+(2) instead.
+
 - Add package seeds under `packages_select_by_deps` using ROS package names (dash/underscore accepted).
 - Use platform conditions for Linux-only packages; avoid temporary macOS comment blocks.
 - Keep `packages_skip_by_deps` and `packages_remove_from_deps` coherent with platform constraints.

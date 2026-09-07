@@ -86,10 +86,6 @@ tvm_vendor:
 libphidget22:
   add_host: ["libusb"]
 libg2o:
-  # qt-main isn't declared in package.xml and CMakeLists.txt's
-  # find_package(QGLViewer) is optional (QGLViewer itself, a separate
-  # library, was never provided by this dep anyway) -- it's dead weight
-  # that conflicts with vtk's now-Qt6-only build.
   add_host: ["${{ 'libglu' if linux }}", "${{ 'freeglut' if not osx }}"]
 fmilibrary_vendor:
   add_host: ["fmilib"]
@@ -103,15 +99,7 @@ ros1_rosbag_storage_vendor:
 popf:
   add_host: ["perl"]
 rtabmap:
-  # libdc1394 (FireWire camera support) has no win-64 build on conda-forge at
-  # all. rtabmap's own CMakeLists.txt treats it as fully optional
-  # (FIND_PACKAGE(DC1394 QUIET), guarded by IF(DC1394_FOUND) everywhere), so
-  # simply not requesting it on Windows is enough -- rtabmap builds fine
-  # without FireWire camera support there. Same fix as ros-jazzy@76bf93d1.
   add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}", "ceres-solver", "${{ 'libdc1394' if not win }}", "libusb", "vtk"]
-  # qt_gui_cpp is declared in rtabmap's package.xml but never referenced by its
-  # CMakeLists.txt (it is for the optional Qt guilib/app, disabled via WITH_QT=OFF
-  # in pkg_additional_info.yaml) -- drop it so it does not pull in Qt at all.
   remove_host: ["ros-humble-qt-gui-cpp"]
   remove_run: ["ros-humble-qt-gui-cpp"]
 backward_ros:
