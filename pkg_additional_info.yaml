@@ -27,11 +27,8 @@ console_bridge_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 cyclonedds:
   generate_dummy_package_with_run_deps:
-    # win-64 conda-forge only has cyclonedds 0.5/0.6/11.x, not the 0.10.x ROS is pinned to; keep it vendored there.
-    if: not win
-    then:
-      dep_name: cyclonedds
-      max_pin: 'x.x'
+    dep_name: cyclonedds
+    max_pin: 'x.x'
 data_tamer_cpp:
   additional_cmake_args: "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
 depthai:
