@@ -2064,3 +2064,32 @@ diff -ruN a/corelib/src/util3d_surface.cpp b/corelib/src/util3d_surface.cpp
  
  		if(pcaEigenVectors)
  		{
+
+diff -ruN a/app/src/main.cpp b/app/src/main.cpp
+--- a/app/src/main.cpp
++++ b/app/src/main.cpp
+@@ -25,6 +25,10 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
++#ifdef WIN32
++#include <objbase.h>
++#endif
++
+ #include <QApplication>
+ #include <QtCore/QDir>
+ #include "rtabmap/utilite/UEventsManager.h"
+diff -ruN a/tools/DatabaseViewer/main.cpp b/tools/DatabaseViewer/main.cpp
+--- a/tools/DatabaseViewer/main.cpp
++++ b/tools/DatabaseViewer/main.cpp
+@@ -25,6 +25,10 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
++#ifdef WIN32
++#include <objbase.h>
++#endif
++
+ #include <QApplication>
+ #include "rtabmap/gui/DatabaseViewer.h"
+ #include "rtabmap/utilite/ULogger.h"
