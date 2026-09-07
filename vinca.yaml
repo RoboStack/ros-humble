@@ -122,14 +122,15 @@ packages_skip_by_deps:
   # Dependencies unavailable on Windows.
   - if: win
     then:
-      - franka_ign_ros2_control
       - gz_ros2_control
       - gz_ros2_control_demos
-      - irobot_create_ignition_plugins
       # Gazebo Classic (ignition-gazebo6/gazebo11) is known-broken on Windows,
       # and conda-forge's newest libignition-gazebo6 build only supports up
       # to libprotobuf 4.24.4 -- incompatible with our libprotobuf 7.35.1.*
       # mutex pin regardless. Exclude everything that pulls it in transitively.
+      # (franka_ign_ros2_control and irobot_create_ignition_plugins were
+      # considered too, but vinca's own dependency-closure resolver confirms
+      # neither is ever actually selected on win-64 -- no entry needed.)
       - ros_gz_sim
       - ros_gz_sim_demos
       - ros_ign_gazebo_demos
@@ -209,16 +210,17 @@ packages_remove_from_deps:
   # Dependencies unavailable on Windows.
   - if: win
     then:
-      - franka_ign_ros2_control
       - gz_ros2_control
       - gz_ros2_control_demos
-      - irobot_create_ignition_plugins
       # Gazebo Classic (ignition-gazebo6/gazebo11) is known-broken on Windows,
       # and conda-forge's newest libignition-gazebo6 build only supports up
       # to libprotobuf 4.24.4 -- incompatible with our libprotobuf 7.35.1.*
       # mutex pin regardless. Strip these from any other recipe's deps too
       # (see packages_skip_by_deps above for the matching selection-side
       # exclusion), same pattern as robot_localization just below.
+      # (franka_ign_ros2_control and irobot_create_ignition_plugins were
+      # considered too, but vinca's own dependency-closure resolver confirms
+      # neither is ever actually selected on win-64 -- no entry needed.)
       - ros_gz_sim
       - ros_gz_sim_demos
       - ros_ign_gazebo_demos
