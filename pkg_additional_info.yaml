@@ -214,6 +214,11 @@ urdfdom_py:
   generate_dummy_package_with_run_deps:
     dep_name: urdfdom-py
     max_pin: 'x.x'
+velodyne_gazebo_plugins:
+  # M_PI is only defined on MSVC when _USE_MATH_DEFINES is set before <cmath> is first included.
+  additional_cmake_args:
+    if: win
+    then: '-DCMAKE_CXX_FLAGS="-D_USE_MATH_DEFINES"'
 visp:
   generate_dummy_package_with_run_deps:
     dep_name: visp
