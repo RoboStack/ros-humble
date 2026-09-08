@@ -800,7 +800,6 @@ packages_select_by_deps:
   - if: not wasm32
     then:
       - sick_safetyscanners_base
-      - spacenav
       - swri_console
       - swri_serial_util
       - ur_simulation_gz
@@ -810,8 +809,11 @@ packages_select_by_deps:
 
   # smacc2 needs cxxabi.h (Itanium ABI demangling) and poll.h, both POSIX-only
   # with no MSVC equivalent; jazzy excludes it from win-64 the same way.
+  # spacenav needs libspnav, which has no win-64 conda-forge build; jazzy
+  # excludes it from win-64 the same way.
   - if: not wasm32 and not win
     then:
       - smacc2
+      - spacenav
       - web_video_server
 
