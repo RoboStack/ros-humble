@@ -37,9 +37,25 @@ cmake:
 cdt_name:  # [linux]
   - conda  # [linux]
 
+# Multi-python-version experiment (see README-multi-python.md): a real
+# matrix for non-emscripten platforms instead of a single pinned version,
+# so that packages vinca now classifies as actually needing Python (see
+# vinca's _package_needs_python, RoboStack/vinca#153) get built once per
+# version here, while everything else still builds exactly once
+# regardless of how many entries this list has. emscripten intentionally
+# left untouched (single pin, unrelated to this experiment).
 python:
   - 3.11.* *_cpython  # [emscripten]
+  - 3.11.* *_cpython  # [not emscripten]
   - 3.12.* *_cpython  # [not emscripten]
+  - 3.13.* *_cp313    # [not emscripten]
+# Minimum supported Python version, per CFEP-25 -- used by vinca (from
+# RoboStack/vinca#153 onward) to pin the build-time-only Python interpreter
+# every ament_cmake recipe needs regardless of its own Python content, so
+# that entry doesn't drag every single recipe into the full version matrix
+# above. Falls back to 3.11 on vinca's side if this key is ever removed.
+python_min:
+  - '3.11'
 python_impl:
   - cpython
 
