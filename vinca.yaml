@@ -800,7 +800,6 @@ packages_select_by_deps:
   - if: not wasm32
     then:
       - sick_safetyscanners_base
-      - smacc2
       - spacenav
       - swri_console
       - swri_serial_util
@@ -808,7 +807,11 @@ packages_select_by_deps:
       - velodyne
       - velodyne_simulator  # Dataspeed Inc.
       - vision-msgs-rviz-plugins
+
+  # smacc2 needs cxxabi.h (Itanium ABI demangling) and poll.h, both POSIX-only
+  # with no MSVC equivalent; jazzy excludes it from win-64 the same way.
   - if: not wasm32 and not win
     then:
+      - smacc2
       - web_video_server
 
