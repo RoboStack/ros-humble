@@ -1,10 +1,33 @@
 version: 7
 platforms:
-- name: linux-64
-- name: linux-aarch64
+- name: linux-64-glibc-2-17
+  subdir: linux-64
+  virtual-packages:
+  - __glibc=2.17
+  - __unix=0=0
+  - __linux=4.18
+  - __archspec=0=x86_64
+- name: linux-aarch64-glibc-2-17
+  subdir: linux-aarch64
+  virtual-packages:
+  - __glibc=2.17
+  - __unix=0=0
+  - __linux=4.18
+  - __archspec=0=aarch64
 - name: osx-64
+  virtual-packages:
+  - __unix=0=0
+  - __osx=13.0
+  - __archspec=0=x86_64
 - name: osx-arm64
+  virtual-packages:
+  - __unix=0=0
+  - __osx=13.0
+  - __archspec=0=m1
 - name: win-64
+  virtual-packages:
+  - __win=10.0
+  - __archspec=0=x86_64
 environments:
   default:
     channels:
@@ -12,7 +35,7 @@ environments:
     indexes:
     - https://pypi.org/simple
     packages:
-      linux-64:
+      linux-64-glibc-2-17:
       - conda: https://prefix.dev/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
       - conda: https://prefix.dev/conda-forge/linux-64/bzip2-1.0.8-hda65f42_9.conda
       - conda: https://prefix.dev/conda-forge/linux-64/ld_impl_linux-64-2.45.1-default_hbd61a6d_102.conda
@@ -36,12 +59,13 @@ environments:
       - conda: https://prefix.dev/conda-forge/linux-64/rattler-build-0.57.2-he64ecbb_1.conda
       - conda: https://prefix.dev/conda-forge/linux-64/rattler-index-0.28.1-h58ba7e0_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/readline-8.3-h853b02a_0.conda
+      - conda: https://prefix.dev/conda-forge/linux-64/sccache-0.17.0-he64ecbb_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/tk-8.6.13-noxft_h366c992_103.conda
       - conda: https://prefix.dev/conda-forge/linux-64/zstd-1.5.7-hb78ec9c_6.conda
       - conda: https://prefix.dev/conda-forge/noarch/ca-certificates-2026.4.22-hbd8a1cb_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/setuptools-81.0.0-pyh332efcf_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/tzdata-2025c-hc9c84f9_1.conda
-      - pypi: git+https://github.com/RoboStack/vinca.git?rev=b5e03d1f397c576232effd48dd1dd4b790d90ea7#b5e03d1f397c576232effd48dd1dd4b790d90ea7
+      - pypi: git+https://github.com/Tobias-Fischer/vinca.git?rev=feature%2Fconditional-python-dependency-v2#2cfe1323cb806246186de88534724fe7f5c0a05e
       - pypi: https://files.pythonhosted.org/packages/02/10/5da547df7a391dcde17f59520a231527b8571e6f46fc8efb02ccb370ab12/docutils-0.22.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/bd/c038d7cc38edc1aa5bf91ab8068b63d4308c66c4c8bb3cbba7dfbc049f9c/pyparsing-3.3.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
@@ -64,12 +88,13 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b3/81/4da04ced5a082363ecfa159c010d200ecbd959ae410c10c0264a38cac0f5/markdown_it_py-4.2.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/bb/1f/e9cfd801a3f9190bf3e759c422bbfd2247db9d7f3d54a56ecde70137791a/zstandard-0.25.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/d2/23/408243171aa9aaba178d3e2559159c24c1171a641aa83b67bdd3394ead8e/idna-3.15-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/df/b2/87e62e8c3e2f4b32e5fe99e0b86d576da1312593b39f47d8ceef365e95ed/packaging-26.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e5/ca/78d423b324b8d77900030fa59c4aa9054261ef0925631cd2501dd015b7b7/boolean_py-5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f4/7e/a72dd26f3b0f4f2bf1dd8923c85f7ceb43172af56d63c7383eb62b332364/pygments-2.20.0-py3-none-any.whl
-      linux-aarch64:
+      linux-aarch64-glibc-2-17:
       - conda: https://prefix.dev/conda-forge/linux-aarch64/_openmp_mutex-4.5-20_gnu.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/bzip2-1.0.8-h4777abc_9.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/ld_impl_linux-aarch64-2.45.1-default_h1979696_102.conda
@@ -93,12 +118,13 @@ environments:
       - conda: https://prefix.dev/conda-forge/linux-aarch64/rattler-build-0.57.2-hb434046_1.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/rattler-index-0.28.1-h9889dc0_0.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/readline-8.3-hb682ff5_0.conda
+      - conda: https://prefix.dev/conda-forge/linux-aarch64/sccache-0.17.0-hb434046_0.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/tk-8.6.13-noxft_h0dc03b3_103.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/zstd-1.5.7-h85ac4a6_6.conda
       - conda: https://prefix.dev/conda-forge/noarch/ca-certificates-2026.4.22-hbd8a1cb_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/setuptools-81.0.0-pyh332efcf_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/tzdata-2025c-hc9c84f9_1.conda
-      - pypi: git+https://github.com/RoboStack/vinca.git?rev=b5e03d1f397c576232effd48dd1dd4b790d90ea7#b5e03d1f397c576232effd48dd1dd4b790d90ea7
+      - pypi: git+https://github.com/Tobias-Fischer/vinca.git?rev=feature%2Fconditional-python-dependency-v2#2cfe1323cb806246186de88534724fe7f5c0a05e
       - pypi: https://files.pythonhosted.org/packages/02/10/5da547df7a391dcde17f59520a231527b8571e6f46fc8efb02ccb370ab12/docutils-0.22.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/62/d2eb46264d4b157dae1275b573017abec435397aa59cbcdab6fc978a8af4/pyyaml-6.0.3-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/10/bd/c038d7cc38edc1aa5bf91ab8068b63d4308c66c4c8bb3cbba7dfbc049f9c/pyparsing-3.3.2-py3-none-any.whl
@@ -107,6 +133,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/22/30/7cd8fdcdfbc5b869528b079bfb76dcdf6056b1a2097a662e5e8c04f42965/certifi-2026.4.22-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/32/d0fbc4383a6a213d315c39dda9107f81654d9941c43d6c687e61995ec388/rosdistro-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/35/79/5e2cffa1c77432f11cd93a5351f30732c997a239d3a3090856a72d6d8ba7/ruamel.yaml-0.17.40-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/3b/13/2b7ed68bd85e69a2069bcc72141d378f22cae5a0f3b353a2c8f50ef30c1b/zstandard-0.25.0-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
       - pypi: https://files.pythonhosted.org/packages/50/19/1ee204b047ef84ce3dc9f77a5f935076211832f50bc7a4c918275193f807/rospkg-1.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/5a/53/58c29116c340e5456724ecd2fff4196d236b98f3da97b404bc5e51ac3493/charset_normalizer-3.4.7-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl
@@ -144,14 +171,16 @@ environments:
       - conda: https://prefix.dev/conda-forge/osx-64/rattler-build-0.57.2-h4728fb8_1.conda
       - conda: https://prefix.dev/conda-forge/osx-64/rattler-index-0.28.1-hbc4d974_0.conda
       - conda: https://prefix.dev/conda-forge/osx-64/readline-8.3-h68b038d_0.conda
+      - conda: https://prefix.dev/conda-forge/osx-64/sccache-0.17.0-h19f9e61_0.conda
       - conda: https://prefix.dev/conda-forge/osx-64/tk-8.6.13-h7142dee_3.conda
-      - pypi: git+https://github.com/RoboStack/vinca.git?rev=b5e03d1f397c576232effd48dd1dd4b790d90ea7#b5e03d1f397c576232effd48dd1dd4b790d90ea7
+      - pypi: git+https://github.com/Tobias-Fischer/vinca.git?rev=feature%2Fconditional-python-dependency-v2#2cfe1323cb806246186de88534724fe7f5c0a05e
       - pypi: https://files.pythonhosted.org/packages/02/10/5da547df7a391dcde17f59520a231527b8571e6f46fc8efb02ccb370ab12/docutils-0.22.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/08/db/fefacb2136439fc8dd20e797950e749aa1f4997ed584c62cfb8ef7c2be0e/markupsafe-3.0.3-cp311-cp311-macosx_10_9_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/10/bd/c038d7cc38edc1aa5bf91ab8068b63d4308c66c4c8bb3cbba7dfbc049f9c/pyparsing-3.3.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/30/7cd8fdcdfbc5b869528b079bfb76dcdf6056b1a2097a662e5e8c04f42965/certifi-2026.4.22-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/22/32/d0fbc4383a6a213d315c39dda9107f81654d9941c43d6c687e61995ec388/rosdistro-1.0.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/2a/83/c3ca27c363d104980f1c9cee1101cc8ba724ac8c28a033ede6aab89585b1/zstandard-0.25.0-cp311-cp311-macosx_10_9_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/2c/80/8ce7b9af532aa94dd83360f01ce4716264db73de6bc8efd22c32341f6658/ruamel_yaml_clib-0.2.15-cp311-cp311-macosx_10_9_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/35/79/5e2cffa1c77432f11cd93a5351f30732c997a239d3a3090856a72d6d8ba7/ruamel.yaml-0.17.40-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
@@ -190,8 +219,9 @@ environments:
       - conda: https://prefix.dev/conda-forge/osx-arm64/rattler-build-0.57.2-h6fdd925_1.conda
       - conda: https://prefix.dev/conda-forge/osx-arm64/rattler-index-0.28.1-hcb0414c_0.conda
       - conda: https://prefix.dev/conda-forge/osx-arm64/readline-8.3-h46df422_0.conda
+      - conda: https://prefix.dev/conda-forge/osx-arm64/sccache-0.17.0-h6fdd925_0.conda
       - conda: https://prefix.dev/conda-forge/osx-arm64/tk-8.6.13-h010d191_3.conda
-      - pypi: git+https://github.com/RoboStack/vinca.git?rev=b5e03d1f397c576232effd48dd1dd4b790d90ea7#b5e03d1f397c576232effd48dd1dd4b790d90ea7
+      - pypi: git+https://github.com/Tobias-Fischer/vinca.git?rev=feature%2Fconditional-python-dependency-v2#2cfe1323cb806246186de88534724fe7f5c0a05e
       - pypi: https://files.pythonhosted.org/packages/02/10/5da547df7a391dcde17f59520a231527b8571e6f46fc8efb02ccb370ab12/docutils-0.22.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/bd/c038d7cc38edc1aa5bf91ab8068b63d4308c66c4c8bb3cbba7dfbc049f9c/pyparsing-3.3.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
@@ -208,6 +238,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/99/1b/50316bd6f95c50686b35799abebb6168d90ee18b7c03e3065f587f010f7c/catkin_pkg-1.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/9e/c9/b2622292ea83fbb4ec318f5b9ab867d0a28ab43c5717bb85b0a5f6b3b0a4/networkx-3.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/ac/4d/e66465c5411a7cf4866aeadc7d108081d8ceba9bc7abe6b14aa21c671ec3/zstandard-0.25.0-cp311-cp311-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/af/40/791891d4c0c4dab4c5e187c17261cedc26285fd41541577f900470a45a4d/license_expression-30.4.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b3/81/4da04ced5a082363ecfa159c010d200ecbd959ae410c10c0264a38cac0f5/markdown_it_py-4.2.0-py3-none-any.whl
@@ -238,12 +269,13 @@ environments:
       - conda: https://prefix.dev/conda-forge/win-64/python-3.11.15-h0159041_0_cpython.conda
       - conda: https://prefix.dev/conda-forge/win-64/rattler-build-0.57.2-h18a1a76_1.conda
       - conda: https://prefix.dev/conda-forge/win-64/rattler-index-0.28.1-h91801bb_0.conda
+      - conda: https://prefix.dev/conda-forge/win-64/sccache-0.17.0-h18a1a76_0.conda
       - conda: https://prefix.dev/conda-forge/win-64/tk-8.6.13-h6ed50ae_3.conda
       - conda: https://prefix.dev/conda-forge/win-64/ucrt-10.0.26100.0-h57928b3_0.conda
       - conda: https://prefix.dev/conda-forge/win-64/vc-14.5-h1b7c187_36.conda
       - conda: https://prefix.dev/conda-forge/win-64/vc14_runtime-14.51.36231-h1b9f54f_36.conda
       - conda: https://prefix.dev/conda-forge/win-64/vcomp14-14.51.36231-h1b9f54f_36.conda
-      - pypi: git+https://github.com/RoboStack/vinca.git?rev=b5e03d1f397c576232effd48dd1dd4b790d90ea7#b5e03d1f397c576232effd48dd1dd4b790d90ea7
+      - pypi: git+https://github.com/Tobias-Fischer/vinca.git?rev=feature%2Fconditional-python-dependency-v2#2cfe1323cb806246186de88534724fe7f5c0a05e
       - pypi: https://files.pythonhosted.org/packages/02/10/5da547df7a391dcde17f59520a231527b8571e6f46fc8efb02ccb370ab12/docutils-0.22.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/bd/c038d7cc38edc1aa5bf91ab8068b63d4308c66c4c8bb3cbba7dfbc049f9c/pyparsing-3.3.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl
@@ -252,6 +284,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/22/32/d0fbc4383a6a213d315c39dda9107f81654d9941c43d6c687e61995ec388/rosdistro-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/35/79/5e2cffa1c77432f11cd93a5351f30732c997a239d3a3090856a72d6d8ba7/ruamel.yaml-0.17.40-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/43/a3/c6155f5c1cce691cb80dfd38627046e50af3ee9ddc5d0b45b9b063bfb8c9/zstandard-0.25.0-cp311-cp311-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/50/19/1ee204b047ef84ce3dc9f77a5f935076211832f50bc7a4c918275193f807/rospkg-1.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl
@@ -618,6 +651,21 @@ packages:
     - readline >=8.3,<9.0a0
   size: 345073
   timestamp: 1765813471974
+- conda: https://prefix.dev/conda-forge/linux-64/sccache-0.17.0-he64ecbb_0.conda
+  sha256: 11a20891b4480c39ccc041a327e5f123e7e7d98964758d8b630e8975acb27eba
+  md5: 160a13fba898e2b7e444b3d9df545f2d
+  depends:
+  - libgcc >=14
+  - __glibc >=2.17,<3.0.a0
+  - openssl >=3.5.7,<4.0a0
+  constrains:
+  - __glibc >=2.17
+  license: Apache-2.0
+  license_family: APACHE
+  purls: []
+  run_exports: {}
+  size: 6172571
+  timestamp: 1785323817187
 - conda: https://prefix.dev/conda-forge/linux-64/tk-8.6.13-noxft_h366c992_103.conda
   sha256: cafeec44494f842ffeca27e9c8b0c27ed714f93ac77ddadc6aaf726b5554ebac
   md5: cffd3bdd58090148f4cfcd831f4b26ab
@@ -972,6 +1020,20 @@ packages:
     - readline >=8.3,<9.0a0
   size: 357597
   timestamp: 1765815673644
+- conda: https://prefix.dev/conda-forge/linux-aarch64/sccache-0.17.0-hb434046_0.conda
+  sha256: ae2d8566578ed786e97583575f6380a347f3102cd4ab81c95a678592c0730384
+  md5: 9fd94192bf93767e18bd9c27b47b69c6
+  depends:
+  - libgcc >=14
+  - openssl >=3.5.7,<4.0a0
+  constrains:
+  - __glibc >=2.17
+  license: Apache-2.0
+  license_family: APACHE
+  purls: []
+  run_exports: {}
+  size: 6137709
+  timestamp: 1785323806246
 - conda: https://prefix.dev/conda-forge/linux-aarch64/tk-8.6.13-noxft_h0dc03b3_103.conda
   sha256: e25c314b52764219f842b41aea2c98a059f06437392268f09b03561e4f6e5309
   md5: 7fc6affb9b01e567d2ef1d05b84aa6ed
@@ -1266,6 +1328,19 @@ packages:
     - readline >=8.3,<9.0a0
   size: 317819
   timestamp: 1765813692798
+- conda: https://prefix.dev/conda-forge/osx-64/sccache-0.17.0-h19f9e61_0.conda
+  sha256: e83eef5cf8f1ae1c7cc926979adf7789f5151b0ad6d0ea4678849a94ddc8dcc1
+  md5: f975ab735d1f87f0b41ca03d4ac5066e
+  depends:
+  - __osx >=11.0
+  constrains:
+  - __osx >=11.0
+  license: Apache-2.0
+  license_family: APACHE
+  purls: []
+  run_exports: {}
+  size: 6105438
+  timestamp: 1785323815069
 - conda: https://prefix.dev/conda-forge/osx-64/tk-8.6.13-h7142dee_3.conda
   sha256: 7f0d9c320288532873e2d8486c331ec6d87919c9028208d3f6ac91dc8f99a67b
   md5: 6e6efb7463f8cef69dbcb4c2205bf60e
@@ -1468,6 +1543,19 @@ packages:
     - readline >=8.3,<9.0a0
   size: 313930
   timestamp: 1765813902568
+- conda: https://prefix.dev/conda-forge/osx-arm64/sccache-0.17.0-h6fdd925_0.conda
+  sha256: 9966e2f3c0d24cabb3d4a6104908de3becb0d65af17d27f3104285159ee8d675
+  md5: 0ca157f928b26b0fbbe50d02c5f0c434
+  depends:
+  - __osx >=11.0
+  constrains:
+  - __osx >=11.0
+  license: Apache-2.0
+  license_family: APACHE
+  purls: []
+  run_exports: {}
+  size: 5628038
+  timestamp: 1785323886974
 - conda: https://prefix.dev/conda-forge/osx-arm64/tk-8.6.13-h010d191_3.conda
   sha256: 799cab4b6cde62f91f750149995d149bc9db525ec12595e8a1d91b9317f038b3
   md5: a9d86bc62f39b94c4661716624eb21b0
@@ -1683,6 +1771,19 @@ packages:
   run_exports: {}
   size: 6220331
   timestamp: 1777644567824
+- conda: https://prefix.dev/conda-forge/win-64/sccache-0.17.0-h18a1a76_0.conda
+  sha256: c25ac00355036dac397b8c9a6abfc334d44c1e07fc2ded143243f7642872cb5a
+  md5: 5e97eea6d345491a5eb09f16fbf5d23c
+  depends:
+  - vc >=14.3,<15
+  - vc14_runtime >=14.44.35208
+  - ucrt >=10.0.20348.0
+  license: Apache-2.0
+  license_family: APACHE
+  purls: []
+  run_exports: {}
+  size: 6737544
+  timestamp: 1785323795892
 - conda: https://prefix.dev/conda-forge/win-64/tk-8.6.13-h6ed50ae_3.conda
   sha256: 0e79810fae28f3b69fe7391b0d43f5474d6bd91d451d5f2bde02f55ae481d5e3
   md5: 0481bfd9814bf525bd4b3ee4b51494c4
@@ -1751,19 +1852,21 @@ packages:
     - vcomp14 >=14.51.36231
   size: 124124
   timestamp: 1779061850036
-- pypi: git+https://github.com/RoboStack/vinca.git?rev=b5e03d1f397c576232effd48dd1dd4b790d90ea7#b5e03d1f397c576232effd48dd1dd4b790d90ea7
+- pypi: git+https://github.com/Tobias-Fischer/vinca.git?rev=feature%2Fconditional-python-dependency-v2#2cfe1323cb806246186de88534724fe7f5c0a05e
   name: vinca
   version: 0.2.0
   requires_dist:
   - catkin-pkg>=0.4.16
+  - ruamel-yaml>=0.16.6,<0.18.0
+  - rosdistro>=0.8.0
   - empy>=3.3.4,<4.0.0
+  - requests>=2.24.0
+  - networkx>=2.5
+  - rich>=10
   - jinja2>=3.0.0
   - license-expression>=30.0.0
-  - networkx>=2.5
-  - requests>=2.24.0
-  - rich>=10
-  - rosdistro>=0.8.0
-  - ruamel-yaml>=0.16.6,<0.18.0
+  - packaging>=23.0
+  - zstandard>=0.19.0
   requires_python: '>=3.9'
 - pypi: https://files.pythonhosted.org/packages/02/10/5da547df7a391dcde17f59520a231527b8571e6f46fc8efb02ccb370ab12/docutils-0.22.4-py3-none-any.whl
   name: docutils
@@ -1824,6 +1927,14 @@ packages:
   - rospkg
   - pytest ; extra == 'test'
   requires_python: '>=3.6'
+- pypi: https://files.pythonhosted.org/packages/2a/83/c3ca27c363d104980f1c9cee1101cc8ba724ac8c28a033ede6aab89585b1/zstandard-0.25.0-cp311-cp311-macosx_10_9_x86_64.whl
+  name: zstandard
+  version: 0.25.0
+  sha256: 933b65d7680ea337180733cf9e87293cc5500cc0eb3fc8769f4d3c88d724ec5c
+  requires_dist:
+  - cffi~=1.17 ; python_full_version < '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  - cffi>=2.0.0b0 ; python_full_version >= '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  requires_python: '>=3.9'
 - pypi: https://files.pythonhosted.org/packages/2c/80/8ce7b9af532aa94dd83360f01ce4716264db73de6bc8efd22c32341f6658/ruamel_yaml_clib-0.2.15-cp311-cp311-macosx_10_9_x86_64.whl
   name: ruamel-yaml-clib
   version: 0.2.15
@@ -1844,10 +1955,26 @@ packages:
   - mercurial>5.7 ; extra == 'docs'
   - ruamel-yaml-jinja2>=0.2 ; extra == 'jinja2'
   requires_python: '>=3'
+- pypi: https://files.pythonhosted.org/packages/3b/13/2b7ed68bd85e69a2069bcc72141d378f22cae5a0f3b353a2c8f50ef30c1b/zstandard-0.25.0-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.whl
+  name: zstandard
+  version: 0.25.0
+  sha256: 01582723b3ccd6939ab7b3a78622c573799d5d8737b534b86d0e06ac18dbde4a
+  requires_dist:
+  - cffi~=1.17 ; python_full_version < '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  - cffi>=2.0.0b0 ; python_full_version >= '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  requires_python: '>=3.9'
 - pypi: https://files.pythonhosted.org/packages/3b/95/88ed47cb7da88569a78b7d6fb9420298df7e99997810c844a924d96d3c08/empy-3.3.4.tar.gz
   name: empy
   version: 3.3.4
   sha256: 73ac49785b601479df4ea18a7c79bc1304a8a7c34c02b9472cf1206ae88f01b3
+- pypi: https://files.pythonhosted.org/packages/43/a3/c6155f5c1cce691cb80dfd38627046e50af3ee9ddc5d0b45b9b063bfb8c9/zstandard-0.25.0-cp311-cp311-win_amd64.whl
+  name: zstandard
+  version: 0.25.0
+  sha256: daab68faadb847063d0c56f361a289c4f268706b598afbf9ad113cbe5c38b6b2
+  requires_dist:
+  - cffi~=1.17 ; python_full_version < '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  - cffi>=2.0.0b0 ; python_full_version >= '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  requires_python: '>=3.9'
 - pypi: https://files.pythonhosted.org/packages/50/19/1ee204b047ef84ce3dc9f77a5f935076211832f50bc7a4c918275193f807/rospkg-1.6.1-py3-none-any.whl
   name: rospkg
   version: 1.6.1
@@ -2002,6 +2129,14 @@ packages:
   version: 0.2.15
   sha256: 617d35dc765715fa86f8c3ccdae1e4229055832c452d4ec20856136acc75053f
   requires_python: '>=3.9'
+- pypi: https://files.pythonhosted.org/packages/ac/4d/e66465c5411a7cf4866aeadc7d108081d8ceba9bc7abe6b14aa21c671ec3/zstandard-0.25.0-cp311-cp311-macosx_11_0_arm64.whl
+  name: zstandard
+  version: 0.25.0
+  sha256: a3f79487c687b1fc69f19e487cd949bf3aae653d181dfb5fde3bf6d18894706f
+  requires_dist:
+  - cffi~=1.17 ; python_full_version < '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  - cffi>=2.0.0b0 ; python_full_version >= '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  requires_python: '>=3.9'
 - pypi: https://files.pythonhosted.org/packages/af/40/791891d4c0c4dab4c5e187c17261cedc26285fd41541577f900470a45a4d/license_expression-30.4.4-py3-none-any.whl
   name: license-expression
   version: 30.4.4
@@ -2065,6 +2200,14 @@ packages:
   version: 1.17.0
   sha256: 4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274
   requires_python: '>=2.7,!=3.0.*,!=3.1.*,!=3.2.*'
+- pypi: https://files.pythonhosted.org/packages/bb/1f/e9cfd801a3f9190bf3e759c422bbfd2247db9d7f3d54a56ecde70137791a/zstandard-0.25.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+  name: zstandard
+  version: 0.25.0
+  sha256: 9300d02ea7c6506f00e627e287e0492a5eb0371ec1670ae852fefffa6164b072
+  requires_dist:
+  - cffi~=1.17 ; python_full_version < '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  - cffi>=2.0.0b0 ; python_full_version >= '3.14' and platform_python_implementation != 'PyPy' and extra == 'cffi'
+  requires_python: '>=3.9'
 - pypi: https://files.pythonhosted.org/packages/bb/eb/00ff6032c19c7537371e3119287999570867a0eafb0154fccc80e74bf57a/ruamel_yaml_clib-0.2.15-cp311-cp311-win_amd64.whl
   name: ruamel-yaml-clib
   version: 0.2.15

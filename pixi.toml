@@ -14,6 +14,7 @@ python = ">=3.11.0,<3.12"
 rattler-build = ">=0.57.0,<0.58"
 setuptools = "<82.0"
 rattler-index = ">=0.27.16"
+sccache = "*"
 
 [target.win-64.dependencies]
 # patch is required by rattler-build
@@ -22,8 +23,14 @@ m2-patch = "*"
 git = "*"
 
 [pypi-dependencies]
-# This is tipically the latest commit on main branch
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "b5e03d1f397c576232effd48dd1dd4b790d90ea7" }
+# Pinned to Tobias-Fischer/vinca#feature/conditional-python-dependency-v2
+# (branched off upstream RoboStack/vinca master) for the multi-python-version
+# experiment: only adds python/numpy/pip host+run deps to a recipe when the
+# package actually needs them (ament_python, a rosidl interface package, or
+# an explicit python-flavored dependency), instead of unconditionally on
+# every package -- see README-multi-python.md. Also routes the ament_cmake
+# and catkin build scripts' C/C++ compiler through sccache when present.
+vinca = { git = "https://github.com/Tobias-Fischer/vinca.git", rev = "feature/conditional-python-dependency-v2" }
 # Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
 # (and regenerate the pixi.lock) once you push the modified commit to the repo
 #vinca = { path = "../vinca", editable = true }
@@ -40,9 +47,13 @@ generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", d
 check-patches-emscripten = { cmd = "python check_patches_clean_apply.py", depends-on = ["generate-recipes-emscripten"] }
 
 [tasks.build]
-cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c https://prefix.dev/conda-forge -c robostack-staging --skip-existing"
+cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c https://prefix.dev/conda-forge -c robostack-staging --skip-existing --no-build-id"
 depends-on = ["generate-recipes"]
-description = "Build all packages, from the ./recipes dir. This will skip already existing packages, so it can be used to build only a subset of packages by first removing the recipes of the packages you want to rebuild (see `pixi run remove-recipes`)."
+description = "Build all packages, from the ./recipes dir. This will skip already existing packages, so it can be used to build only a subset of packages by first removing the recipes of the packages you want to rebuild (see `pixi run remove-recipes`). --no-build-id keeps build directory paths stable across runs so sccache (installed by default here) can actually hit its cache."
+
+[tasks.sccache-stats]
+cmd = "sccache --show-stats"
+description = "Show sccache hit-rate stats for this workspace's builds."
 
 [tasks.remove-recipes]
 cmd = "rm -rf recipes_only_patch; rm -rf recipes; mkdir recipes"
