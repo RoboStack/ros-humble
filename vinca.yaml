@@ -89,6 +89,10 @@ packages_skip_by_deps:
       - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
       - rttest
       - test_ros_gz_bridge
+      # velodyne_gazebo_plugins (pulled in via velodyne_simulator) links
+      # against Gazebo Classic's Ogre-based rendering libs; win-64's
+      # gazebo11 build is missing OgreBites.lib (LNK1181).
+      - velodyne_gazebo_plugins
 
   # robot_localization's own packages_select_by_deps if:not-win exclusion
   # (below) only stops it from being a direct top-level selection --
@@ -177,6 +181,10 @@ packages_remove_from_deps:
       - ros_ign_image  # Modern gz-sim integration is unsupported on Humble Windows; see issue #68.
       - rttest
       - test_ros_gz_bridge
+      # velodyne_gazebo_plugins is skipped on win-64 (see packages_skip_by_deps
+      # above), but velodyne_simulator still depends on it and would
+      # otherwise get a dangling reference to a .conda that's never built.
+      - velodyne_gazebo_plugins
 
   # robot_localization is skipped on win-64 (see packages_skip_by_deps and
   # packages_select_by_deps above), but clearpath_control still depends on
