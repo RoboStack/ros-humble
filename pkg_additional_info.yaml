@@ -179,7 +179,16 @@ pybind11_json_vendor:
 pybind11_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR"
 rtabmap:
-  additional_cmake_args: "-DWITH_QT=OFF -DBUILD_TOOLS=OFF -DBUILD_EXAMPLES=OFF"
+  # GTSAM's exported tbb_allocator template collides with rtabmap's own instantiation on MSVC (LNK2005); g2o/Ceres remain as optimizer backends.
+  additional_cmake_args:
+    if: win
+    then: "-DWITH_QT=OFF -DBUILD_TOOLS=OFF -DBUILD_EXAMPLES=OFF -DWITH_GTSAM=OFF"
+    else: "-DWITH_QT=OFF -DBUILD_TOOLS=OFF -DBUILD_EXAMPLES=OFF"
+sbg_driver:
+  # M_PI/M_SQRT2 are only defined on MSVC when _USE_MATH_DEFINES is set before <cmath> is first included.
+  additional_cmake_args:
+    if: win
+    then: '-DCMAKE_CXX_FLAGS="-D_USE_MATH_DEFINES"'
 sdformat_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 spdlog_vendor:
