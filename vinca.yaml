@@ -801,7 +801,6 @@ packages_select_by_deps:
     then:
       - sick_safetyscanners_base
       - ur_simulation_gz
-      - velodyne
       - velodyne_simulator  # Dataspeed Inc.
       - vision-msgs-rviz-plugins
 
@@ -816,11 +815,15 @@ packages_select_by_deps:
   # Windows port); the existing patch already covers macOS, which still
   # builds fine here, so this is win-only unlike jazzy's broader linux-only
   # exclusion.
+  # velodyne (velodyne_driver) needs netinet/in.h, a POSIX/BSD sockets
+  # header absent on Windows; builds fine on macOS/Linux, so win-only here
+  # too, unlike jazzy's broader linux-only exclusion.
   - if: not wasm32 and not win
     then:
       - smacc2
       - spacenav
       - swri_console
       - swri_serial_util
+      - velodyne
       - web_video_server
 
