@@ -206,7 +206,7 @@ jobs:
     - name: Generate GitHub Actions workflows to catch post-PR problems
       shell: bash -l {0}
       run: |
-        pixi run vinca-gha --platform ${{ matrix.platform }} --trigger-branch dummy_build_branch_as_it_is_unused -d ./recipes
+        pixi run vinca-gha --platform ${{ matrix.platform }} --trigger-branch dummy_build_branch_as_it_is_unused -d ./recipes --batch_size 10
 
     - name: Upload build cache as artifact
       # Keep artifacts consistent with the cache: retain partial output from failed or cancelled builds, but not skipped builds.
