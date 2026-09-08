@@ -810,7 +810,6 @@ packages_select_by_deps:
       - sick_safetyscanners_base
       - ur_simulation_gz
       - velodyne_simulator  # Dataspeed Inc.
-      - vision-msgs-rviz-plugins
 
   # smacc2 needs cxxabi.h (Itanium ABI demangling) and poll.h, both POSIX-only
   # with no MSVC equivalent; jazzy excludes it from win-64 the same way.
@@ -826,6 +825,10 @@ packages_select_by_deps:
   # velodyne (velodyne_driver) needs netinet/in.h, a POSIX/BSD sockets
   # header absent on Windows; builds fine on macOS/Linux, so win-only here
   # too, unlike jazzy's broader linux-only exclusion.
+  # vision_msgs_rviz_plugins fails to link on MSVC (LNK2001: unresolved
+  # rviz_default_plugins::displays::MarkerNamespace::staticMetaObject) --
+  # a Qt/MOC export gap in rviz_default_plugins itself, not something fixable
+  # here; jazzy excludes it from win-64 the same way.
   - if: not wasm32 and not win
     then:
       - smacc2
@@ -833,5 +836,6 @@ packages_select_by_deps:
       - swri_console
       - swri_serial_util
       - velodyne
+      - vision-msgs-rviz-plugins
       - web_video_server
 
