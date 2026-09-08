@@ -800,7 +800,6 @@ packages_select_by_deps:
   - if: not wasm32
     then:
       - sick_safetyscanners_base
-      - swri_serial_util
       - ur_simulation_gz
       - velodyne
       - velodyne_simulator  # Dataspeed Inc.
@@ -813,10 +812,15 @@ packages_select_by_deps:
   # swri_console has an MSVC compile error (numeric_limits<T>::max()/min()
   # macro collision); jazzy excludes it from win-64 pending a rosdistro sync
   # (see https://github.com/ros/rosdistro/pull/49750).
+  # swri_serial_util needs sys/ioctl.h/termios.h (POSIX serial APIs, no
+  # Windows port); the existing patch already covers macOS, which still
+  # builds fine here, so this is win-only unlike jazzy's broader linux-only
+  # exclusion.
   - if: not wasm32 and not win
     then:
       - smacc2
       - spacenav
       - swri_console
+      - swri_serial_util
       - web_video_server
 
