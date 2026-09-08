@@ -191,6 +191,8 @@ sbg_driver:
     then: '-DCMAKE_CXX_FLAGS="-D_USE_MATH_DEFINES"'
 sdformat_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
+sick_scan_xd:
+  additional_cmake_args: "-DBUILD_DEBUG_TARGET:BOOL=OFF -DROS_VERSION=2"
 spdlog_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
 sqlite3_vendor:
