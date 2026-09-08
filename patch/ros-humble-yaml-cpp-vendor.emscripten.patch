@@ -1,0 +1,108 @@
+--- a/CMakeLists.txt	2026-09-08 12:41:17
++++ b/CMakeLists.txt	2026-09-08 12:41:17
+@@ -30,6 +30,24 @@
+   list(APPEND extra_cmake_args "-DYAML_BUILD_SHARED_LIBS=ON")
+   list(APPEND extra_cmake_args "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}")
+   list(APPEND extra_cmake_args "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}")
++  # yaml-cpp 0.7.0's own cmake_minimum_required predates CMake 3.5, which
++  # CMake >=4.0 (ours is 4.4.3) refuses outright ("Compatibility with
++  # CMake < 3.5 has been removed"). Only reached here on wasm32, where no
++  # conda yaml-cpp package exists and this ExternalProject fallback fires.
++  list(APPEND extra_cmake_args "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
++  # Without re-propagating vinca's __vinca_shared_lib_patch.cmake (which
++  # sets TARGET_SUPPORTS_SHARED_LIBS TRUE and the emscripten
++  # MAIN_MODULE/SIDE_MODULE linker flags needed for real .so output), this
++  # nested ExternalProject build silently downgrades YAML_BUILD_SHARED_LIBS
++  # to a static libyaml-cppd.a despite the flag above -- Emscripten.cmake's
++  # default is TARGET_SUPPORTS_SHARED_LIBS=FALSE, and CMake add_library()
++  # honors that over the SHARED keyword. A statically-linked yaml-cpp then
++  # gets pulled into multiple final .wasm links (rcl directly, plus
++  # transitively via dynmsg), and unlike a real linker, wasm-ld treats the
++  # same static archive appearing twice as a hard duplicate-symbol error.
++  if(CMAKE_PROJECT_INCLUDE)
++    list(APPEND extra_cmake_args "-DCMAKE_PROJECT_INCLUDE=${CMAKE_PROJECT_INCLUDE}")
++  endif()
+ 
+   if(WIN32 AND NOT ${CMAKE_VERBOSE_MAKEFILE})
+     set(should_log ON)  # prevent warnings in Windows CI
+@@ -55,13 +73,32 @@
+   )
+ 
+   # The external project will install to the build folder, but we'll install that on make install.
+-  install(
+-    DIRECTORY
+-      ${CMAKE_CURRENT_BINARY_DIR}/yaml_cpp_install/
+-    DESTINATION
+-      ${CMAKE_INSTALL_PREFIX}/opt/yaml_cpp_vendor
+-    USE_SOURCE_PERMISSIONS
+-  )
++  # On wasm32, installing under a private opt/yaml_cpp_vendor prefix (as
++  # done for every other platform, to avoid clashing with a real system
++  # yaml-cpp package) leaves the resulting libyaml-cppd.so.0.7.0 outside
++  # every consumer's emscripten -L search path -- em++'s dylink dependency
++  # resolution independently re-resolves each .so's NEEDED entries by name
++  # through -L, it doesn't just trust the full path already on the link
++  # command line. There's no real yaml-cpp package to clash with here
++  # anyway (that's the whole reason this ExternalProject fallback exists),
++  # so install straight into $PREFIX where every other .so already lives.
++  if(EMSCRIPTEN)
++    install(
++      DIRECTORY
++        ${CMAKE_CURRENT_BINARY_DIR}/yaml_cpp_install/
++      DESTINATION
++        ${CMAKE_INSTALL_PREFIX}
++      USE_SOURCE_PERMISSIONS
++    )
++  else()
++    install(
++      DIRECTORY
++        ${CMAKE_CURRENT_BINARY_DIR}/yaml_cpp_install/
++      DESTINATION
++        ${CMAKE_INSTALL_PREFIX}/opt/yaml_cpp_vendor
++      USE_SOURCE_PERMISSIONS
++    )
++  endif()
+ endmacro()
+ 
+ # NO_CMAKE_PACKAGE_REGISTRY used to avoid finding the library downloaded in WORKSPACE B
+
+--- a/yaml_cpp_vendor-extras.cmake.in	2026-09-08 12:40:17
++++ b/yaml_cpp_vendor-extras.cmake.in	2026-09-08 12:40:17
+@@ -4,6 +4,11 @@
+   # add the local Modules directory to the modules path
+   if(WIN32)
+     set(yaml-cpp_DIR "${@PROJECT_NAME@_DIR}/../../../opt/yaml_cpp_vendor/CMake")
++  elseif(EMSCRIPTEN)
++    # Installed straight into $PREFIX on wasm32 (see the EMSCRIPTEN branch
++    # of build_yaml_cpp()'s install() call) so the resulting .so lands
++    # somewhere every consumer's -L search path already covers.
++    set(yaml-cpp_DIR "${@PROJECT_NAME@_DIR}/../../../share/cmake/yaml-cpp")
+   else()
+     set(yaml-cpp_DIR "${@PROJECT_NAME@_DIR}/../../../opt/yaml_cpp_vendor/share/cmake/yaml-cpp")
+   endif()
+@@ -15,4 +20,24 @@
+ set(yaml_cpp_vendor_LIBRARIES ${YAML_CPP_LIBRARIES})
+ set(yaml_cpp_vendor_INCLUDE_DIRS ${YAML_CPP_INCLUDE_DIR})
+ 
+-list(APPEND yaml_cpp_vendor_TARGETS yaml-cpp::yaml-cpp)
++# yaml-cpp 0.7.0 (built from source here, since no yaml-cpp conda package
++# exists for wasm32) only exports the plain "yaml-cpp" imported target,
++# not the "yaml-cpp::yaml-cpp" ALIAS added in later releases -- referencing
++# a nonexistent aliased target left consumers silently missing yaml-cpp's
++# include directories (confirmed: wasm_cpp's build compiled fine except
++# "yaml-cpp/yaml.h" file not found once ament_target_dependencies fell
++# through to this target list). Detect whichever target actually exists.
++if(TARGET yaml-cpp::yaml-cpp)
++  set(_yaml_cpp_vendor_real_target yaml-cpp::yaml-cpp)
++elseif(TARGET yaml-cpp)
++  set(_yaml_cpp_vendor_real_target yaml-cpp)
++endif()
++if(_yaml_cpp_vendor_real_target)
++  list(APPEND yaml_cpp_vendor_TARGETS ${_yaml_cpp_vendor_real_target})
++  if(NOT yaml_cpp_vendor_INCLUDE_DIRS)
++    get_target_property(yaml_cpp_vendor_INCLUDE_DIRS ${_yaml_cpp_vendor_real_target} INTERFACE_INCLUDE_DIRECTORIES)
++  endif()
++  if(NOT yaml_cpp_vendor_LIBRARIES)
++    set(yaml_cpp_vendor_LIBRARIES ${_yaml_cpp_vendor_real_target})
++  endif()
++endif()

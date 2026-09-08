@@ -18,35 +18,152 @@ pinning_overrides:
   # c_stdlib_version shares a zip_keys group with the compiler versions, so the whole
   # group has to be overridden; the compiler entries mirror the conda-forge base file
   # and must be refreshed when `vinca-pinning-update` moves to a newer compiler.
+  #
+  # emscripten-wasm32 support: vinca's own selector namespace (v1_selectors.py)
+  # treats "unix" as linux OR osx OR emscripten OR wasi OR freebsd OR zos, so the
+  # base conda-forge-pinning zip_keys group below -- [c_stdlib_version,
+  # c_compiler_version, cxx_compiler_version, fortran_compiler_version,
+  # cuda_compiler_version], all scoped [unix] -- silently applies to emscripten too,
+  # even though conda-forge itself never builds for that platform. Since emscripten
+  # needs its own compiler (emscripten/emscripten, version pinned by
+  # emscripten-forge/recipes' variant.yaml, currently 4.0.9) but has no Fortran
+  # toolchain, no libc sysroot, and no CUDA, simply adding an emscripten branch to
+  # c_compiler_version/cxx_compiler_version would leave them non-empty while
+  # c_stdlib_version/fortran_compiler_version/cuda_compiler_version stay empty for
+  # that platform -- a zip-length mismatch (confirmed as the actual CI failure:
+  # "Zip key elements do not all have same length: c_compiler_version"). Fixed by
+  # (1) restricting fortran_compiler_version's selector from [unix] to
+  # [linux or osx] so it no longer nominally covers emscripten, and (2) splitting
+  # zip_keys (below) into a [c_compiler_version, cxx_compiler_version] group (valid
+  # for linux/osx/emscripten alike, always 1 entry each) separate from the
+  # [c_stdlib_version, fortran_compiler_version, cuda_compiler_version] group
+  # (linux/osx only, always 0 entries -- i.e. absent -- on emscripten, so 0==0==0
+  # there instead of clashing with the compiler-version group's 1==1).
   c_stdlib_version:
     - 2.28                       # [linux and not riscv64]
     - 2.39                       # [linux and riscv64]
     - 2.28                       # [linux and (x86_64 or aarch64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
     - 14.0                       # [osx]
+  c_compiler:
+    - gcc                        # [linux]
+    - clang                      # [osx]
+    - vs2022                     # [win]
+    - emscripten                 # [emscripten]
+  cxx_compiler:
+    - gxx                        # [linux]
+    - clangxx                    # [osx]
+    - vs2022                     # [win]
+    - emscripten                 # [emscripten]
   c_compiler_version:
     - 15                         # [linux]
     - 21                         # [osx]
     - 14                         # [linux and (x86_64 or aarch64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+    # Matches emscripten-forge/recipes' variant.yaml c_compiler_version; refresh
+    # alongside cxx_compiler_version and emscripten_emscripten-wasm32 (below) when
+    # emscripten-forge bumps their emscripten SDK version.
+    - 4.0.9                      # [emscripten]
   cxx_compiler_version:
     - 15                         # [linux]
     - 21                         # [osx]
     - 14                         # [linux and (x86_64 or aarch64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+    - 4.0.9                      # [emscripten]
   fortran_compiler_version:
-    - 15                         # [unix]
+    - 15                         # [linux or osx]
     - 5                          # [win64]
     - 22                         # [win and arm64]
     - 14                         # [linux and (x86_64 or aarch64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
   cuda_compiler_version:
     - None
     - 12.9                       # [((linux and (x86_64 or aarch64)) or win64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+  zip_keys:
+    -
+      - c_compiler_version
+      - cxx_compiler_version
+    -
+      - c_stdlib_version         # [linux or osx]
+      - fortran_compiler_version # [linux or osx]
+      - cuda_compiler_version    # [linux or osx]
+    -
+      - python
+      - is_python_min
+    -
+      - libarrow
+      - libarrow_all
+    -
+      - root_base
+      - root_cxx_standard
+    -
+      - clhep
+      - geant4
+  # Pre-existing conda-forge-pinning inconsistency, unrelated to emscripten:
+  # clhep (3 entries) and geant4 (1 entry) are zipped together but not the same
+  # length -- rattler-build's `--render-only` (used to sanity-check variant
+  # resolution while adding emscripten support) validates every zip_keys group
+  # up front regardless of whether a given recipe touches it, so this crashes
+  # `--render-only` on ANY target platform even though neither HEP package is
+  # ever built by RoboStack and a plain bulk `rattler-build build
+  # --recipe-dir` never happens to trigger it. Trimmed clhep down to geant4's
+  # single already-selected version so the group is internally consistent.
+  clhep:
+    - 2.4.7.2
+  geant4:
+    - 11.4.2
   libzenohc:
     - 1.10.0
   libzenohcxx:
     - 1.10.0
+  # emscripten-forge/recipes only publishes graphviz 15.1.0 -- our regular
+  # graphviz 14 pin (from conda-forge-pinning) has no candidates there,
+  # breaking eigenpy/pinocchio's host: dep on it.
+  graphviz:
+    - '14'                      # [not emscripten]
+    - '15.1.0'                  # [emscripten]
+  # emscripten-forge/recipes only publishes libffi 3.4.6 -- our regular
+  # 3.5.* pin (from conda-forge-pinning) has no candidates there, breaking
+  # rmw_wasm_cpp's host: dep on it (added via patch/dependencies.yaml
+  # add_host since its package.xml never declares one).
+  libffi:
+    - '3.5'                     # [not emscripten]
+    - '3.4.6'                   # [emscripten]
+  # emscripten-forge/recipes only publishes python 3.13 builds today (their own
+  # variant.yaml pins python: 3.13.* *_cp313), well behind conda-forge's 3.14 --
+  # keep 3.14 for every other platform and use their exact pin for emscripten.
+  # Written as a v1 if/then/else (rather than the legacy `# [selector]`
+  # comment form used elsewhere in this file) because a cross-compiling
+  # recipe's BUILD-time deps need to resolve against the *build platform*'s
+  # own variant (e.g. a native osx-arm64 rosidl_default_generators helper,
+  # itself built at python 3.14), not the invocation's --target-platform;
+  # the legacy comment selector only ever sees target_platform, so it pinned
+  # python 3.13 globally for the whole invocation regardless of which
+  # sub-resolution was actually being solved.
   python:
-    - 3.14.* *_cp314
+    - if: emscripten
+      then:
+        - 3.13.* *_cp313
+    - if: not emscripten
+      then:
+        - 3.14.* *_cp314
   is_python_min:
-    - false
+    - if: emscripten
+      then:
+        - false
+    - if: not emscripten
+      then:
+        - false
   python_impl:
     - cpython
+  # Needed for cross-compiled targets: emitted whenever a recipe's
+  # `packages_select_by_deps`/host deps expand `cross-python_${{ target_platform }}`
+  # (see e.g. ros-humble-rosidl-default-generators's host deps) with
+  # target_platform == emscripten-wasm32. Not a conda-forge-pinning key at all
+  # (conda-forge doesn't cross-compile to emscripten), so it must be added here
+  # rather than merely overridden. Matches emscripten-forge/recipes' variant.yaml.
+  cross-python_emscripten-wasm32:
+    - '3.13.1'
+  # The emscripten SDK/toolchain package version itself, keyed by vinca's
+  # `<pkgname>_<target_platform>` convention for cross-compilation toolchain
+  # packages (mirrors emscripten_emscripten-wasm32 in emscripten-forge/recipes'
+  # variant.yaml). Keep in sync with c_compiler_version/cxx_compiler_version above.
+  emscripten_emscripten-wasm32:
+    - 4.0.9
 

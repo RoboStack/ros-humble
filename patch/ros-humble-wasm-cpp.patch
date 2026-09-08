@@ -1,0 +1,62 @@
+--- a/wasm_cpp/CMakeLists.txt	2026-09-08 10:48:06
++++ b/wasm_cpp/CMakeLists.txt	2026-09-08 10:48:42
+@@ -36,7 +36,11 @@
+ wasm_compile_options(wasm_cpp)
+ wasm_link_options(wasm_cpp)
+
+-ament_target_dependencies(${PROJECT_NAME})
++# Upstream calls find_package(yaml_cpp_vendor REQUIRED) above but never
++# actually wires it into the wasm_cpp target, silently dropping yaml-cpp's
++# include directories ("yaml-cpp/yaml.h" file not found compiling
++# roslibjs.cpp/tojson.hpp, which #include it directly).
++ament_target_dependencies(${PROJECT_NAME} yaml_cpp_vendor)
+
+ target_include_directories(${PROJECT_NAME} PRIVATE
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+--- a/wasm_cpp/cmake/WasmBuildOptions.cmake	2026-09-08 18:57:00
++++ b/wasm_cpp/cmake/WasmBuildOptions.cmake	2026-09-08 18:57:13
+@@ -9,16 +9,41 @@
+
+ function(wasm_link_options target)
+     target_link_options("${target}"
+-        PUBLIC "SHELL: -lembind"
++        # Deliberately not linked here: wasm_cpp is a SIDE_MODULE (a .so
++        # dynamically loaded by a MAIN_MODULE executable like test_wasm),
++        # and vinca's own build script already forces -lembind onto every
++        # wasm32 MAIN_MODULE executable's CMAKE_EXE_LINKER_FLAGS. Also
++        # linking it here made wasm_cpp bring its OWN separate copy of
++        # embind's JS runtime, so both it and the main executable
++        # independently registered the same basic types ("void", "bool",
++        # ...) into embind's shared registry at load time --
++        # "BindingError: Cannot register type 'void' twice" at startup.
++        # The main executable is meant to be the sole provider of
++        # embind's JS library; side modules should just import from it.
+         PUBLIC "SHELL: --pre-js ${CMAKE_SOURCE_DIR}/src/pre.js"
+         PUBLIC "SHELL: -fexceptions"
+         # PUBLIC "SHELL: -s ASYNCIFY=1"
+         PUBLIC "SHELL: -s ALLOW_MEMORY_GROWTH=1"
+-        PUBLIC "SHELL: -s DEMANGLE_SUPPORT=1"
++        # -s DEMANGLE_SUPPORT=1 was removed in emscripten 4.0.9 (the SDK
++        # version we build against): "No longer supported", rejected
++        # outright by em++ at link time.
+         PUBLIC "SHELL: -s ASSERTIONS=1"
+         PUBLIC "SHELL: -s EXIT_RUNTIME=1"
+         PUBLIC "SHELL: -s WASM=1"
+-        PUBLIC "SHELL: -s USE_PTHREADS=0"
++        # USE_PTHREADS is intentionally left unset here: vinca's own build
++        # template now sets it globally (compile+link, via
++        # CMAKE_PROJECT_INCLUDE) to 1 for every emscripten-wasm32 package,
++        # since real threads are required for libc++'s condition_variable
++        # timed-wait (used by rclcpp's executor / rmw wait set) to
++        # actually wake up on its own. Setting it explicitly to 0 or 1
++        # here would just override (and potentially conflict with) that
++        # global default -- the later flag on the em++ command line wins,
++        # so don't repeat it here at all. (This was previously hardcoded
++        # to 0 upstream and silently left this .so without the
++        # atomics/bulk-memory wasm features every other pthread-enabled
++        # module in the dependency tree now requires, causing
++        # "WebAssembly.instantiate(): ... shared state of memory" LinkErrors
++        # at runtime.)
+         PUBLIC "SHELL: -s TOTAL_STACK=16mb"
+         PUBLIC "SHELL: -s INITIAL_MEMORY=64mb"
+         PUBLIC "SHELL: -03" # Optimize for async

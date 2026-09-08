@@ -1,5 +1,11 @@
 ament_package:
   add_host: ["importlib_resources"]
+rmw_wasm_cpp:
+  # CMakeLists.txt directly calls pkg_check_modules(libffi REQUIRED libffi)
+  # but package.xml never declares a <depend> for it, so it's never resolved
+  # into the host env at all (surfaced on wasm32 since cross-python_emscripten-wasm32
+  # doesn't transitively pull in libffi the way a native "python" package does).
+  add_host: ["libffi"]
 foxglove_bridge:
   add_host: ["ros-humble-ament-cmake"]
 ros_ign_interfaces:
@@ -16,11 +22,33 @@ cartographer:
   remove_host: ["lua", "gflags"]
   remove_run: ["lua", "gflags"]
 libyaml_vendor:
-  add_host: ["yaml-cpp", "yaml"]
-  add_run: ["yaml-cpp", "yaml"]
+  # emscripten-forge/recipes publishes the C library under its newer name
+  # "libyaml" (not the legacy conda-forge "yaml"), and doesn't publish
+  # "yaml-cpp" at all for wasm32 -- libyaml_vendor's own CMakeLists only
+  # needs plain libyaml (its Findyaml.cmake falls back to pkg-config's
+  # "yaml-0.1" module, which the conda "libyaml" package still provides
+  # regardless of the conda package's own name).
+  add_host:
+    - if: wasm32
+      then: ["libyaml"]
+      else: ["yaml-cpp", "yaml"]
+  add_run:
+    - if: wasm32
+      then: ["libyaml"]
+      else: ["yaml-cpp", "yaml"]
 yaml_cpp_vendor:
-  add_host: ["yaml-cpp"]
-  add_run: ["yaml-cpp"]
+  # No "yaml-cpp" conda package exists for emscripten-wasm32 (confirmed
+  # absent from emscripten-forge-4x's repodata, 2026-09-07). Omitting the
+  # host/run dep for wasm32 makes yaml_cpp_vendor's own
+  # find_package(yaml-cpp QUIET) fail as designed, so its CMakeLists falls
+  # back to its original ExternalProject_Add source build instead of
+  # redirecting to a nonexistent system package.
+  add_host:
+    - if: not wasm32
+      then: ["yaml-cpp"]
+  add_run:
+    - if: not wasm32
+      then: ["yaml-cpp"]
 zstd_vendor:
   add_host: ["zstd", "${{ 'zstd-static' if not win }}"]
   add_run: ["zstd"]
@@ -222,8 +250,16 @@ rqt_image_overlay:
 tracetools:
   remove_host: [ "pkg-config" ]
 spdlog_vendor:
-  add_host: ["spdlog"]
-  add_run: ["spdlog"]
+  # No spdlog conda package exists for emscripten-wasm32 (same rationale as
+  # yaml_cpp_vendor above): omit the host/run dep so its own
+  # find_package(spdlog QUIET) fails as designed and it falls back to its
+  # ExternalProject source build.
+  add_host:
+    - if: not wasm32
+      then: ["spdlog"]
+  add_run:
+    - if: not wasm32
+      then: ["spdlog"]
 rcl_logging_spdlog:
   add_host: ["${{ 'fmt' if emscripten }}"]
 rcl:

@@ -16,6 +16,17 @@ tests:
         - set ROS_LOCALHOST_ONLY=1
         - set RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
         - launch_test robot_state_publisher_smoke_test_launch.py
+    # Cross-compiled emscripten-wasm32 binaries can't be executed on the
+    # (non-wasm) build host, so the real CI job already passes `--test
+    # skip` for this platform -- but rattler-build's recipe schema still
+    # requires `script` to resolve to a non-empty list at PARSE time,
+    # before any --test flag is consulted. Without an `if: emscripten`
+    # branch here, none of the above conditions match on that platform and
+    # the whole `script:` field disappears, which is a hard parse error
+    # ("missing field `script`"), not just a skipped test. This branch is
+    # a no-op placeholder that's never actually run.
+    - if: emscripten
+      then: "true"
     requirements:
       run:
         - ros-humble-launch-testing-ros
