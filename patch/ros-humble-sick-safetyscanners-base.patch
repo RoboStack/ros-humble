@@ -1,8 +1,15 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 594088d..869994a 100644
+index 59faf98..8bf0f32 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -9,7 +9,7 @@ add_definitions(-std=c++11 -Wall -Werror)
+@@ -5,11 +5,13 @@ project(sick_safetyscanners_base CXX)
+ #add_definitions(-std=c++11 -Wall)
+ ## By adding -Wall and -Werror, the compiler does not ignore warnings anymore,
+ ## enforcing cleaner code.
+-add_definitions(-std=c++11 -Wall -Werror)
++if(NOT MSVC)
++  add_definitions(-std=c++11 -Wall -Werror)
++endif()
  
  
  ## Find system libraries
