@@ -800,7 +800,6 @@ packages_select_by_deps:
   - if: not wasm32
     then:
       - sick_safetyscanners_base
-      - swri_console
       - swri_serial_util
       - ur_simulation_gz
       - velodyne
@@ -811,9 +810,13 @@ packages_select_by_deps:
   # with no MSVC equivalent; jazzy excludes it from win-64 the same way.
   # spacenav needs libspnav, which has no win-64 conda-forge build; jazzy
   # excludes it from win-64 the same way.
+  # swri_console has an MSVC compile error (numeric_limits<T>::max()/min()
+  # macro collision); jazzy excludes it from win-64 pending a rosdistro sync
+  # (see https://github.com/ros/rosdistro/pull/49750).
   - if: not wasm32 and not win
     then:
       - smacc2
       - spacenav
+      - swri_console
       - web_video_server
 
