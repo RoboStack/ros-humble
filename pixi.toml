@@ -26,8 +26,6 @@ go-yq = "*"
 colordiff = "*"
 
 [pypi-dependencies]
-# emscripten-wasm32 in platforms prevents pixi-build from resolving vinca as
-# a conda source dep (uv is unavailable for that target), so use pypi here.
 vinca = { git = "https://github.com/RoboStack/vinca.git" }
 # For local development uncomment:
 # vinca = { path = "../vinca", editable = true }
@@ -48,9 +46,6 @@ create_snapshot = { cmd = "vinca-snapshot -d humble -o rosdistro_snapshot.yaml" 
 upload = "rattler-build upload anaconda -o robostack-staging -a $ANACONDA_API_TOKEN"
 build_continue_on_failure = { cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --continue-on-failure --skip-existing", depends-on = ["generate-recipes"] }
 sort = { cmd = "vinca-sort-vinca-lists {{ check }} vinca.yaml && vinca-sort-yaml-keys {{ check }} pkg_additional_info.yaml robostack.yaml rosdistro_additional_recipes.yaml", args = [{ arg = "check", default = "" }] }
-
-generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", depends-on = ["remove-recipes"] }
-check-patches-emscripten = { cmd = "python check_patches_clean_apply.py", depends-on = ["generate-recipes-emscripten"] }
 
 [tasks.build]
 cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c https://repo.prefix.dev/conda-forge -c robostack-staging --skip-existing"
@@ -73,18 +68,3 @@ yq eval 'with_entries(.value = (load(".tmp.yaml")[.key] // .value))' conda_build
 rm .tmp.yaml
 """
 description = "Check if there are differences between the local conda_build_config.yaml and the one in the conda-forge-pinning-feedstock."
-
-[tasks.build-emscripten]
-  cmd = [
-      "rattler-build", "build",
-      "--package-format", "tar-bz2",
-      "--recipe-dir", "./recipes",
-      "-m", "./conda_build_config.yaml",
-      "-c", "https://repo.prefix.dev/conda-forge",
-      "-c", "https://repo.mamba.pm/emscripten-forge",
-      "-c", "robostack-staging",
-      "--target-platform", "emscripten-wasm32",
-      "--skip-existing",
-      "--test", "skip"
-      ]
-  depends-on = ["generate-recipes-emscripten"]

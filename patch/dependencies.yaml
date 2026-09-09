@@ -224,20 +224,18 @@ tracetools:
 spdlog_vendor:
   add_host: ["spdlog"]
   add_run: ["spdlog"]
-rcl_logging_spdlog:
-  add_host: ["${{ 'fmt' if emscripten }}"]
 rcl:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+  add_host: ["ros-humble-yaml-cpp-vendor"]
 libstatistics_collector:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+  add_host: ["ros-humble-yaml-cpp-vendor"]
 rcl_action:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+  add_host: ["ros-humble-yaml-cpp-vendor"]
 rclc:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+  add_host: ["ros-humble-yaml-cpp-vendor"]
 rclcpp:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+  add_host: ["ros-humble-yaml-cpp-vendor"]
 rclcpp_action:
-  add_host: [ "ros-humble-yaml-cpp-vendor", "${{ 'fmt' if emscripten }}"]
+  add_host: ["ros-humble-yaml-cpp-vendor"]
 parameter_traits:
   remove_host: ["ros-humble-tl-expected"]
   remove_run: ["ros-humble-tl-expected"]
@@ -256,30 +254,8 @@ autoware_trajectory:
 imu_calib:
   add_host: [ "ros-humble-eigen3-cmake-module" ]
   add_run: [ "ros-humble-eigen3-cmake-module" ]
-examples_rclcpp_minimal_subscriber:
-  add_host:
-    - if: (target_platform == 'emscripten-wasm32')
-      then:
-        - ros-humble-rmw-wasm-cpp
-examples_rclcpp_minimal_publisher:
-  add_host:
-    - if: (target_platform == 'emscripten-wasm32')
-      then:
-        - ros-humble-rmw-wasm-cpp
-rclcpp_components:
-  add_host:
-    - if: (target_platform == 'emscripten-wasm32')
-      then:
-        - ros-humble-rmw-wasm-cpp
 rmw_implementation:
-  add_run:
-    - if: (target_platform == 'emscripten-wasm32')
-      then:
-        - ros-humble-rmw-wasm-cpp
   add_host:
-    - if: (target_platform == 'emscripten-wasm32')
-      then:
-        - ros-humble-rmw-wasm-cpp
     - "ros-humble-yaml-cpp-vendor"
     - "fmt"
 slam_toolbox:
@@ -329,8 +305,6 @@ camera_calibration:
   add_run: ["libopencv * *qt6*"]
 gazebo_ros:
   add_host: ["${{ 'libgl-devel' if linux }}", "${{ 'libopengl-devel' if linux }}"]
-wasm_cpp:
-  add_run: ["${{ 'fmt' if emscripten }}", "${{ 'sqlite' if emscripten }}", "${{ 'bzip2' if emscripten }}", "${{ 'zlib' if emscripten }}", "${{ 'libffi' if emscripten }}"]
 aws_sdk_cpp_vendor:
   add_host: ["aws-sdk-cpp"]
   add_run: ["aws-sdk-cpp"]

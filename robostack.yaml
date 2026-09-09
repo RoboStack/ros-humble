@@ -138,7 +138,6 @@ google-mock:
     linux: [gmock]
     osx: [gmock]
     win64: [gmock]
-    emscripten: []
 graphicsmagick:
   robostack: [graphicsmagick]
 graphviz:

@@ -142,32 +142,6 @@ jobs:
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
 
-    # Build emscripten-wasm32
-    - name: Reset repo
-      run: |
-        git reset --hard origin/main 
-    - name: Generate recipes for emscripten-wasm32
-      run: |
-        git clean -fdx
-        pixi run -v vinca --multiple --platform emscripten-wasm32
-        
-    - name: Generate azure pipelines for emscripten-wasm32
-      run: |
-        pixi run -v vinca-gha --platform emscripten-wasm32 --trigger-branch buildbranch_emscripten -d ./recipes --batch_size 1
-    - name: Commit files for emscripten-wasm32
-      run: |
-        if [[ -f "emscripten_wasm32.yml" ]]; then
-            mv emscripten_wasm32.yml .github/workflows/
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add -f . ':!.pixi'
-            git commit -m "Add build files `date '+%Y-%m-%d-%H%M'`" -a
-            remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git push "${remote_repo}" HEAD:buildbranch_emscripten --follow-tags --force
-        fi
-      env:
-        INPUT_GITHUB_TOKEN: ${{ secrets.GHA_PAT }}
-   
 on:
   push:
     branches:
