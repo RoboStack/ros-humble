@@ -1171,3 +1171,10 @@ libzenohc:
   - 1.10.0
 libzenohcxx:
   - 1.10.0
+  # conda-forge's sip 6.16.x (6.16.1 uploaded 2026-09-08) regressed ABI
+  # targeting for PyQt5-based bindings: sip-build now fails with "ABI v12
+  # is being targeted but the <module> module doesn't support it" for
+  # packages like qt_gui_cpp_sip, which build against pyqt5-sip's fixed
+  # ABI v12. Pin back to the last known-good line until upstream fixes it.
+sip:
+  - 6.15
