@@ -224,7 +224,31 @@ def prepare_patch_recipes(
         pkg = recipe.get("package", {"name": recipe_file.parent.name, "version": "0"})
         pkg_name = pkg.get("name", recipe_file.parent.name)
 
-        pkg_patches = all_patches.get(pkg_name)
+        # Entries that the recipe.yaml already resolved patches onto (for
+        # whichever host platform generated it) tell us where to attach our
+        # freshly-discovered, platform-complete patch list. If none did
+        # (e.g. the package has *only* a platform-specific patch that the
+        # generating host never selected), fall back to the sole/first
+        # source entry, which is the case for virtually every ROS package.
+        already_patched = filter_sources(src_section)
+
+        # Under vinca's package_name_mode: both/new, the recipe's own
+        # package name (e.g. ros2-<pkg>) no longer matches the on-disk
+        # patch filename convention (<legacy-name>.patch), even though
+        # vinca still resolved and embedded the correct patch path(s) onto
+        # this recipe's source section. Prefer deriving the all_patches
+        # lookup key from that embedded reference so discovery keeps
+        # working regardless of naming mode; fall back to the recipe's own
+        # package name (the legacy-only-mode behavior) when nothing was
+        # already resolved here.
+        patch_key = pkg_name
+        for entry in already_patched:
+            refs = entry.get("patches") or []
+            if refs:
+                patch_key = Path(refs[0]).name.split(".")[0]
+                break
+
+        pkg_patches = all_patches.get(patch_key)
         if pkg_patches is None:
             # No patch/*.patch file for this package on any platform -> skip
             continue
@@ -238,13 +262,6 @@ def prepare_patch_recipes(
         if not dict_entries:
             continue
 
-        # Entries that the recipe.yaml already resolved patches onto (for
-        # whichever host platform generated it) tell us where to attach our
-        # freshly-discovered, platform-complete patch list. If none did
-        # (e.g. the package has *only* a platform-specific patch that the
-        # generating host never selected), fall back to the sole/first
-        # source entry, which is the case for virtually every ROS package.
-        already_patched = filter_sources(src_section)
         target_ids = {id(e) for e in already_patched} or {id(dict_entries[0])}
 
         rel_dir = recipe_file.parent.relative_to(RECIPES_DIR)

@@ -1,5 +1,7 @@
 ros_distro: humble
 
+package_name_mode: both
+
 # mapping for package keys
 conda_index:
   - robostack.yaml
