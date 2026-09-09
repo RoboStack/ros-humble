@@ -1,0 +1,66 @@
+--- a/CMakeLists.txt	2026-09-08 18:37:25
++++ b/CMakeLists.txt	2026-09-08 18:38:16
+@@ -9,7 +9,62 @@
+   cmake_policy(SET CMP0135 NEW)
+ endif()
+
+-find_package(spdlog REQUIRED)
++# No spdlog conda package exists for emscripten-wasm32, so unlike every
++# other platform (where RoboStack always finds the real conda-forge
++# package and this REQUIRED find_package never actually builds anything)
++# fall back to building spdlog from source here, same as upstream
++# spdlog_vendor did before RoboStack's ament_vendor patch simplified this
++# file down to a bare REQUIRED find_package.
++find_package(spdlog QUIET)
++if(NOT spdlog_FOUND)
++  set(extra_cmake_args)
++  if(DEFINED CMAKE_BUILD_TYPE)
++    list(APPEND extra_cmake_args -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE})
++  endif()
++  if(DEFINED CMAKE_TOOLCHAIN_FILE)
++    list(APPEND extra_cmake_args "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
++  else()
++    list(APPEND extra_cmake_args "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}")
++  endif()
++  list(APPEND extra_cmake_args "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}")
++  # Forward the parent build's CMAKE_PROJECT_INCLUDE (vinca's
++  # __vinca_shared_lib_patch.cmake under emscripten) into this nested
++  # ExternalProject build. Without it, this inner spdlog build never sees
++  # the global SIDE_MODULE/pthread/etc. settings the outer build applies
++  # to every other target, so e.g. its object files get compiled without
++  # the atomics/bulk-memory wasm features our pthread-enabled build
++  # requires -- silently producing a libspdlogd.a that fails to link
++  # ("wasm-ld: error: --shared-memory is disallowed by spdlog.cpp.o
++  # because it was not compiled with 'atomics' or 'bulk-memory'
++  # features") into anything that actually links it (rcl_logging_spdlog).
++  if(DEFINED CMAKE_PROJECT_INCLUDE)
++    list(APPEND extra_cmake_args "-DCMAKE_PROJECT_INCLUDE=${CMAKE_PROJECT_INCLUDE}")
++  endif()
++  list(APPEND extra_cmake_args "-DSPDLOG_BUILD_TESTS=OFF")
++  list(APPEND extra_cmake_args "-DSPDLOG_BUILD_EXAMPLE=OFF")
++  list(APPEND extra_cmake_args "-DSPDLOG_BUILD_SHARED=ON")
+
++  include(ExternalProject)
++
++  externalproject_add(spdlog-1.8.2
++    URL https://github.com/gabime/spdlog/archive/v1.8.2.tar.gz
++    URL_MD5 22518fb28d4be66c92a703c67d99b1d1
++    TIMEOUT 600
++    CMAKE_ARGS
++      -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_install
++      ${extra_cmake_args}
++  )
++
++  install(
++    DIRECTORY
++      ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_install/
++    DESTINATION
++      ${CMAKE_INSTALL_PREFIX}
++    USE_SOURCE_PERMISSIONS
++  )
++else()
++  find_package(spdlog REQUIRED)
++endif()
++
+ # this ensures that the package has an environment hook setting the PATH
+ ament_package()

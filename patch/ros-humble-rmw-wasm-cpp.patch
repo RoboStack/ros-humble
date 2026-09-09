@@ -1,0 +1,85 @@
+--- a/rmw_wasm_cpp/CMakeLists.txt	2026-09-08 18:31:13
++++ b/rmw_wasm_cpp/CMakeLists.txt	2026-09-08 18:31:45
+@@ -29,11 +29,36 @@
+ find_package(rosidl_runtime_cpp REQUIRED)
+ find_package(rosidl_typesupport_introspection_c REQUIRED)
+ find_package(rosidl_typesupport_introspection_cpp REQUIRED)
+-find_package(BZip2 REQUIRED)
+-find_package(SQLite3 REQUIRED)
+-find_package(ZLIB REQUIRED)
++# BZip2/SQLite3/ZLIB are find_package()'d and target_link_libraries()'d
++# below but nothing in rmw_wasm_cpp's own sources (src/*.cpp) actually
++# calls into any of them -- dead weight left over from whatever RMW
++# implementation this CMakeLists.txt was originally templated from. On
++# every other platform that's harmless (conda-forge ships all three, so
++# find_package() just succeeds and the unused link entries are inert).
++# Under emscripten it isn't harmless: emscripten-forge's prebuilt
++# libsqlite3.a/libbz2.a static libs weren't compiled with the
++# atomics/bulk-memory wasm features our pthread-enabled build now
++# requires (we have no way to add compile flags to an already-built
++# external static archive), so pulling them into this SIDE_MODULE link
++# fails with "wasm-ld: error: --shared-memory is disallowed by
++# sqlite3.o ... because it was not compiled with 'atomics' or
++# 'bulk-memory' features." Skip them entirely under emscripten instead
++# of trying to rebuild emscripten-forge's own packages with pthread
++# support just to satisfy an unused dependency.
++if(NOT EMSCRIPTEN)
++  find_package(BZip2 REQUIRED)
++  find_package(SQLite3 REQUIRED)
++  find_package(ZLIB REQUIRED)
++endif()
+ find_package(PkgConfig REQUIRED)
+-pkg_check_modules(libffi REQUIRED libffi)
++if(EMSCRIPTEN)
++  # emscripten-forge's libffi package ships headers and a static lib but no
++  # libffi.pc, so pkg_check_modules() can never find it here (it works fine
++  # on every other platform, where conda-forge's libffi does ship one).
++  find_library(libffi_LINK_LIBRARIES NAMES ffi libffi REQUIRED)
++else()
++  pkg_check_modules(libffi REQUIRED libffi)
++endif()
+ 
+ set(${PROJECT_NAME}_SOURCES
+   src/rmw_wasm_identifier.cpp
+@@ -97,10 +122,14 @@
+   rosidl_typesupport_introspection_c::rosidl_typesupport_introspection_c
+   rosidl_typesupport_introspection_cpp::rosidl_typesupport_introspection_cpp
+   ${libffi_LINK_LIBRARIES}
+-  ${SQLite3_LIBRARIES}
+-  BZip2::BZip2
+-  ZLIB::ZLIB
+ )
++if(NOT EMSCRIPTEN)
++  target_link_libraries(${PROJECT_NAME}
++    ${SQLite3_LIBRARIES}
++    BZip2::BZip2
++    ZLIB::ZLIB
++  )
++endif()
+ 
+ ament_export_dependencies(
+   rmw
+--- a/rmw_wasm_cpp/src/rmw_wait.cpp
++++ b/rmw_wasm_cpp/src/rmw_wait.cpp
+@@ -102,6 +102,21 @@
+         auto rmw_wasm_wait_set = static_cast<rmw_wasm_wait_set_t *>(wait_set->data);
+         auto wasm_wait_set = rmw_wasm_wait_set->wasm_wait_set;
+
++        // wasm_wait_set is one long-lived object (created once in
++        // rmw_create_wait_set() and reused for the executor's entire
++        // lifetime), but add_subscriber()/add_guard_condition() below just
++        // push onto its internal vectors with no de-duplication. Without
++        // clearing it first, every rmw_wait() call (i.e. every executor
++        // spin iteration) re-adds the same entities on top of the ones
++        // from all previous iterations, so its subscriber count grows
++        // without bound. On the 2nd call this already makes the
++        // `subscriptions->subscriber_count == wait_set_subscriptions.size()`
++        // assert below fail (aborting the whole program); with assertions
++        // compiled out it instead corrupts wasm_wait_set's internal state
++        // enough to eventually crash with an unrelated-looking
++        // "memory access out of bounds" a few iterations later.
++        wasm_wait_set->clear();
++
+         // TODO: add objects to wait set
+         if (subscriptions) {
+             for (size_t i = 0u; i < subscriptions->subscriber_count; i++) {

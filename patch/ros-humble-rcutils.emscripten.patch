@@ -1,0 +1,62 @@
+--- a/src/time_unix.c	2026-09-08 19:31:05
++++ b/src/time_unix.c	2026-09-08 19:52:59
+@@ -61,6 +61,23 @@
+   mach_port_deallocate(mach_task_self(), cclock);
+   timespec_now.tv_sec = mts.tv_sec;
+   timespec_now.tv_nsec = mts.tv_nsec;
++#elif defined(__EMSCRIPTEN__)
++  // clock_gettime(CLOCK_REALTIME, ...) silently returns a struct that's
++  // still all-zero (tv_sec=0, tv_nsec=0) here specifically when main() has
++  // been moved onto a real pthread Worker via -s PROXY_TO_PTHREAD=1 (its
++  // return value isn't checked below, matching upstream, so this could
++  // also be a silent failure rather than a genuine epoch-0 result -- either
++  // way the wall-clock value coming out of it is unusable). A timer whose
++  // rcl_clock_get_now() always returns the same value never looks any
++  // closer to its next scheduled firing, so timers created against this
++  // clock (rclcpp::Node's default, used by create_wall_timer() whenever
++  // sim time isn't active) fire exactly once and then never again.
++  // CLOCK_MONOTONIC does not have this problem in the same worker context,
++  // so use it here too -- this trades true wall-clock alignment (logged
++  // timestamps become time-since-worker-start instead of real UTC) for a
++  // clock that actually advances, which is what every caller of "system
++  // time" in this codebase actually needs it for.
++  clock_gettime(CLOCK_MONOTONIC, &timespec_now);
+ #else  // defined(__MACH__)
+   // Otherwise use clock_gettime.
+   clock_gettime(CLOCK_REALTIME, &timespec_now);
+@@ -90,11 +107,20 @@
+   timespec_now.tv_nsec = mts.tv_nsec;
+ #else  // defined(__MACH__)
+   // Otherwise use clock_gettime.
+-#if defined(CLOCK_MONOTONIC_RAW)
++  // CLOCK_MONOTONIC_RAW is #define'd by emscripten's headers (so the
++  // defined() check below picks it) but the wasm32/pthread runtime's
++  // actual implementation of it is broken here -- it silently writes back
++  // a bogus timespec (in practice: tv_nsec's value ends up read out where
++  // tv_sec is expected, producing a "now" that looks like tv_nsec * 1e9
++  // nanoseconds instead of the real time), even though plain
++  // CLOCK_MONOTONIC on the exact same build works correctly. Skip the
++  // RAW variant entirely under emscripten rather than trusting whichever
++  // clock ID the SDK headers happen to define.
++#if defined(CLOCK_MONOTONIC_RAW) && !defined(__EMSCRIPTEN__)
+   clock_gettime(CLOCK_MONOTONIC_RAW, &timespec_now);
+-#else  // defined(CLOCK_MONOTONIC_RAW)
++#else  // defined(CLOCK_MONOTONIC_RAW) && !defined(__EMSCRIPTEN__)
+   clock_gettime(CLOCK_MONOTONIC, &timespec_now);
+-#endif  // defined(CLOCK_MONOTONIC_RAW)
++#endif  // defined(CLOCK_MONOTONIC_RAW) && !defined(__EMSCRIPTEN__)
+ #endif  // defined(__MACH__)
+   if (__WOULD_BE_NEGATIVE(timespec_now.tv_sec, timespec_now.tv_nsec)) {
+     RCUTILS_SET_ERROR_MSG("unexpected negative time");
+@@ -110,7 +136,10 @@
+   RCUTILS_CHECK_ARGUMENT_FOR_NULL(now, RCUTILS_RET_INVALID_ARGUMENT);
+   struct timespec timespec_now;
+ 
+-#if defined(CLOCK_MONOTONIC_RAW)
++  // See the matching comment in rcutils_steady_time_now() above: skip
++  // CLOCK_MONOTONIC_RAW under emscripten, it's broken here even though
++  // the headers define it.
++#if defined(CLOCK_MONOTONIC_RAW) && !defined(__EMSCRIPTEN__)
+   clockid_t monotonic_raw_clock = CLOCK_MONOTONIC_RAW;
+ #else
+   clockid_t monotonic_raw_clock = CLOCK_MONOTONIC;

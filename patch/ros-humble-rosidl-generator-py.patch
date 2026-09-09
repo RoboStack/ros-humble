@@ -2,7 +2,7 @@ diff --git a/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.c
 index a6d8263e..552d7acf 100644
 --- a/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake
 +++ b/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake
-@@ -17,10 +17,22 @@ find_package(rosidl_runtime_c REQUIRED)
+@@ -17,10 +17,27 @@ find_package(rosidl_runtime_c REQUIRED)
  find_package(rosidl_typesupport_c REQUIRED)
  find_package(rosidl_typesupport_interface REQUIRED)
  
@@ -19,7 +19,12 @@ index a6d8263e..552d7acf 100644
 +  find_package(Python REQUIRED COMPONENTS Interpreter Development NumPy)
 +  find_package(PythonExtra REQUIRED)
 +  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${_PREV_CMAKE_FIND_ROOT_PATH_MODE_INCLUDE})
-+  set(Python_NumPy_INCLUDE_DIRS "$ENV{PREFIX}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages/numpy/core/include")
++  # NumPy >=2.0 renamed its private "core" package to "_core", moving the
++  # bundled C headers from numpy/core/include to numpy/_core/include (the
++  # old numpy/core/include path no longer exists at all, confirmed via
++  # our numpy 2.5.x host env, 2026-09-08) -- our conda_build_config.yaml
++  # pins numpy 2.*, so this must use the new path.
++  set(Python_NumPy_INCLUDE_DIRS "$ENV{PREFIX}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages/numpy/_core/include")
 +  message(WARNING "Python_NumPy_INCLUDE_DIRS: ${Python_NumPy_INCLUDE_DIRS}")
 +else()
 +  find_package(PythonExtra REQUIRED)

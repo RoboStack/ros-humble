@@ -63,6 +63,343 @@ packages_skip_by_deps:
       - ros_ign
       - ros_ign_bridge
       - ros_ign_gazebo
+      - rosidl_typesupport_fastrtps_c
+      - rosidl_typesupport_fastrtps_cpp
+
+  # Additional packages transitively pulled in via wasm32-selected packages'
+  # (rmw_wasm_cpp/wasm_cpp/test_wasm) dependency closures that are not
+  # actually meant to be built for wasm32 -- e.g. moveit/autoware/ros2_control/
+  # rviz2/clearpath families, which need full DDS middleware, GUI toolkits, or
+  # hardware drivers unavailable under emscripten. These entries only stop
+  # transitive pull-in (mechanism 2 above); none of them are ever directly
+  # select_by_deps'd for wasm32 in the first place. Computed by diffing
+  # generate-recipes-emscripten's selected-package output between this branch
+  # and main on 2026-09-07, to keep wasm32's build scope from silently growing
+  # every time an unrelated new package is added elsewhere in this file.
+  - if: wasm32
+    then:
+      - ackermann_msgs
+      - ackermann_steering_controller
+      - actionlib_msgs
+      - admittance_controller
+      - ament_clang_format
+      - ament_clang_tidy
+      - ament_cmake_auto
+      - ament_cmake_clang_tidy
+      - ament_mypy
+      - angles
+      - automatika_embodied_agents
+      - automatika_ros_sugar
+      - autoware_adapi_v1_msgs
+      - autoware_adapi_version_msgs
+      - autoware_auto_msgs
+      - autoware_cmake
+      - autoware_common_msgs
+      - autoware_control_msgs
+      - autoware_internal_debug_msgs
+      - autoware_internal_metric_msgs
+      - autoware_internal_msgs
+      - autoware_internal_perception_msgs
+      - autoware_internal_planning_msgs
+      - autoware_lanelet2_extension
+      - autoware_lanelet2_extension_python
+      - autoware_lint_common
+      - autoware_localization_msgs
+      - autoware_map_msgs
+      - autoware_msgs
+      - autoware_perception_msgs
+      - autoware_planning_msgs
+      - autoware_sensing_msgs
+      - autoware_simulation_msgs
+      - autoware_system_msgs
+      - autoware_utils_debug
+      - autoware_utils_diagnostics
+      - autoware_utils_geometry
+      - autoware_utils_logging
+      - autoware_utils_math
+      - autoware_utils_pcl
+      - autoware_utils_rclcpp
+      - autoware_utils_system
+      - autoware_utils_tf
+      - autoware_utils_uuid
+      - autoware_utils_visualization
+      - autoware_v2x_msgs
+      - autoware_vehicle_msgs
+      - backward_ros
+      - behaviortree_cpp_v3
+      - bicycle_steering_controller
+      - bond
+      - bondcpp
+      - can_msgs
+      - cascade_lifecycle_msgs
+      - chomp_motion_planner
+      - class_loader
+      - clearpath_common
+      - clearpath_config
+      - clearpath_control
+      - clearpath_description
+      - clearpath_generator_common
+      - clearpath_manipulators
+      - clearpath_manipulators_description
+      - clearpath_mecanum_drive_controller
+      - clearpath_mounts_description
+      - clearpath_platform_description
+      - clearpath_sensors_description
+      - common_interfaces
+      - composition_interfaces
+      - console_bridge_vendor
+      - control_msgs
+      - control_toolbox
+      - controller_interface
+      - controller_manager
+      - controller_manager_msgs
+      - cv_bridge
+      - diagnostic_aggregator
+      - diagnostic_common_diagnostics
+      - diagnostic_msgs
+      - diagnostic_updater
+      - diagnostics
+      - diff_drive_controller
+      - effort_controllers
+      - eigen3_cmake_module
+      - eigen_stl_containers
+      - ewellix_description
+      - fastcdr
+      - fastrtps_cmake_module
+      - filters
+      - force_torque_sensor_broadcaster
+      - forward_command_controller
+      - foxglove_msgs
+      - franka_description
+      - generate_parameter_library
+      - generate_parameter_library_py
+      - geographic_msgs
+      - geometric_shapes
+      - geometry_msgs
+      - gpio_controllers
+      - gripper_controllers
+      - gz_ros2_control
+      - gz_ros2_control_demos
+      - hardware_interface
+      - hardware_interface_testing
+      - ignition_cmake2_vendor
+      - ignition_math6_vendor
+      - image_transport
+      - imu_filter_madgwick
+      - imu_sensor_broadcaster
+      - interactive_marker_twist_server
+      - interactive_markers
+      - irobot_create_common_bringup
+      - irobot_create_control
+      - irobot_create_description
+      - irobot_create_msgs
+      - irobot_create_nodes
+      - irobot_create_toolbox
+      - joint_state_broadcaster
+      - joint_state_publisher
+      - joint_state_publisher_gui
+      - joint_trajectory_controller
+      - joy
+      - joy_linux
+      - joy_teleop
+      - jrl_cmakemodules
+      - kdl_parser
+      - key_teleop
+      - kinematics_interface
+      - kinematics_interface_kdl
+      - kortex_description
+      - lanelet2_core
+      - lanelet2_io
+      - lanelet2_maps
+      - lanelet2_matching
+      - lanelet2_projection
+      - lanelet2_python
+      - lanelet2_routing
+      - lanelet2_traffic_rules
+      - lanelet2_validation
+      - laser_geometry
+      - launch_param_builder
+      - launch_pytest
+      - launch_ros
+      - launch_testing_ros
+      - libcurl_vendor
+      - libg2o
+      - libnabo
+      - libpointmatcher
+      - logging_demo
+      - magic_enum
+      - map_msgs
+      - mavros_msgs
+      - mecanum_drive_controller
+      - message_filters
+      - microstrain_inertial_description
+      - mouse_teleop
+      - moveit_common
+      - moveit_configs_utils
+      - moveit_core
+      - moveit_kinematics
+      - moveit_msgs
+      - moveit_planners
+      - moveit_planners_chomp
+      - moveit_planners_ompl
+      - moveit_resources_fanuc_description
+      - moveit_resources_fanuc_moveit_config
+      - moveit_resources_panda_description
+      - moveit_resources_panda_moveit_config
+      - moveit_resources_pr2_description
+      - moveit_resources_prbt_ikfast_manipulator_plugin
+      - moveit_resources_prbt_moveit_config
+      - moveit_resources_prbt_pg70_support
+      - moveit_resources_prbt_support
+      - moveit_ros_move_group
+      - moveit_ros_occupancy_map_monitor
+      - moveit_ros_planning
+      - moveit_ros_planning_interface
+      - moveit_ros_robot_interaction
+      - moveit_ros_visualization
+      - moveit_ros_warehouse
+      - moveit_setup_framework
+      - moveit_setup_srdf_plugins
+      - moveit_simple_controller_manager
+      - mrt_cmake_modules
+      - mujoco_ros2_control_msgs
+      - mujoco_vendor
+      - nav_msgs
+      - nmea_msgs
+      - nmea_navsat_driver
+      - object_recognition_msgs
+      - octomap_msgs
+      - orocos_kdl_vendor
+      - ouster_ros
+      - ouster_sensor_msgs
+      - parameter_traits
+      - pcl_conversions
+      - pcl_msgs
+      - pcl_ros
+      - persist_parameter_server
+      - pick_ik
+      - picknik_ament_copyright
+      - picknik_reset_fault_controller
+      - picknik_twist_controller
+      - pid_controller
+      - pilz_industrial_motion_planner
+      - pilz_industrial_motion_planner_testutils
+      - plansys2_bringup
+      - plansys2_bt_actions
+      - plansys2_core
+      - plansys2_domain_expert
+      - plansys2_executor
+      - plansys2_lifecycle_manager
+      - plansys2_msgs
+      - plansys2_pddl_parser
+      - plansys2_planner
+      - plansys2_popf_plan_solver
+      - plansys2_problem_expert
+      - pluginlib
+      - point_cloud_transport
+      - point_cloud_transport_py
+      - popf
+      - pose_broadcaster
+      - position_controllers
+      - python_orocos_kdl_vendor
+      - python_qt_binding
+      - qt_gui
+      - qt_gui_cpp
+      - random_numbers
+      - range_sensor_broadcaster
+      - rclcpp_cascade_lifecycle
+      - rclcpp_components
+      - rclcpp_lifecycle
+      - realsense2_camera_msgs
+      - realsense2_description
+      - realtime_tools
+      - resource_retriever
+      - robot_localization
+      - robot_state_publisher
+      - robotiq_description
+      - ros2_control_test_assets
+      - ros2_controllers
+      - ros2_fmt_logger
+      - ros2_socketcan_msgs
+      - ros2cli
+      - ros2controlcli
+      - ros2launch
+      - ros2node
+      - ros2param
+      - ros2pkg
+      - ros2run
+      - ros2service
+      - ros2test
+      - ros2topic
+      - ros_testing
+      - rosidl_runtime_py
+      - rosidl_typesupport_fastrtps_c
+      - rosidl_typesupport_fastrtps_cpp
+      - rqt_gui
+      - rqt_gui_py
+      - rqt_runtime_monitor
+      - rsl
+      - rtabmap
+      - rtcm_msgs
+      - ruckig
+      - rviz2
+      - rviz_2d_overlay_msgs
+      - rviz_assimp_vendor
+      - rviz_common
+      - rviz_default_plugins
+      - rviz_ogre_vendor
+      - rviz_rendering
+      - rviz_rendering_tests
+      - rviz_visual_testing_framework
+      - rviz_visual_tools
+      - sbg_driver
+      - sdl2_vendor
+      - self_test
+      - sensor_msgs
+      - sensor_msgs_py
+      - shape_msgs
+      - sick_scan_xd
+      - smacc2_msgs
+      - smclib
+      - srdfdom
+      - std_srvs
+      - steering_controllers_library
+      - stereo_msgs
+      - tango_icons_vendor
+      - tcb_span
+      - teleop_tools_msgs
+      - teleop_twist_joy
+      - tf2
+      - tf2_eigen
+      - tf2_eigen_kdl
+      - tf2_geometry_msgs
+      - tf2_kdl
+      - tf2_msgs
+      - tf2_py
+      - tf2_ros
+      - tf2_ros_py
+      - tf_transformations
+      - tinyxml2_vendor
+      - tinyxml_vendor
+      - tl_expected
+      - tracetools_launch
+      - tracetools_trace
+      - trajectory_msgs
+      - tricycle_controller
+      - tricycle_steering_controller
+      - twist_mux
+      - twist_mux_msgs
+      - ur_client_library
+      - ur_description
+      - urdf
+      - urdf_launch
+      - urdf_parser_plugin
+      - velocity_controllers
+      - velodyne_description
+      - visualization_msgs
+      - warehouse_ros
+      - xacro
+      - zed_msgs
 
   # Dependencies unavailable on Windows.
   - if: win
@@ -122,6 +459,30 @@ packages_skip_by_deps:
 
 packages_remove_from_deps:
 
+  # cppcheck and uncrustify are native, compiled analysis/formatting tools
+  # that emscripten-forge does not publish (and never will -- nobody runs a
+  # static-analysis tool as WASM) for the emscripten-wasm32 target: `cppcheck`
+  # and `uncrustify` are absent from both the emscripten-wasm32 and noarch
+  # subdirs of https://repo.prefix.dev/emscripten-forge-4x, confirmed
+  # 2026-09-07. ament_uncrustify/uncrustify_vendor and ament_cppcheck are only
+  # ever pulled in transitively (via ament_lint_common's dependency closure,
+  # not directly select_by_deps'd), so removing them here also automatically
+  # drops them from ament_lint_common's own run: list (side effect of
+  # mechanism 3) rather than leaving a dangling reference to a package that's
+  # never built for this platform. Their ament_cmake_* CMake wrappers are
+  # excluded for the same reason. The other ament_lint_common members
+  # (flake8/pep257/cpplint/copyright/lint-cmake) wrap pure-Python tools
+  # published as plain conda-forge noarch packages, so they need no such
+  # exclusion.
+  - if: wasm32
+    then:
+      - ament_cmake_cppcheck
+      - ament_cmake_uncrustify
+      - ament_cppcheck
+      - ament_uncrustify
+      - uncrustify_vendor
+
+  # Pre-existing: packages unavailable/pointless outside Linux.
   - if: not linux
     then:
       - ament_cmake_xmllint
@@ -141,6 +502,8 @@ packages_remove_from_deps:
   # Dependencies unavailable when targeting WebAssembly.
   - if: wasm32
     then:
+      - ament_cmake_google_benchmark
+      - google_benchmark_vendor
       - rmw_connextdds
       - rmw_cyclonedds_cpp
       - rmw_fastrtps_cpp
@@ -155,6 +518,15 @@ packages_remove_from_deps:
       - ros_ign
       - ros_ign_bridge
       - ros_ign_gazebo
+      # google benchmark is a native micro-benchmarking tool that
+      # emscripten-forge does not publish ("No candidates were found for
+      # benchmark *" resolving rclcpp's host deps, confirmed 2026-09-07).
+      # ament_cmake_google_benchmark/google_benchmark_vendor are only ever
+      # pulled in transitively (via rclcpp's dependency closure, not
+      # directly select_by_deps'd), so removing them here also drops them
+      # from rclcpp's own build: list (side effect of mechanism 3).
+      - rosidl_typesupport_fastrtps_c
+      - rosidl_typesupport_fastrtps_cpp
 
   # Dependencies unavailable on Windows.
   - if: win
@@ -444,11 +816,11 @@ packages_select_by_deps:
   # Root cause unclear without a Windows build environment to iterate
   # against; skip on Windows for now rather than guess at a
   # DEPENDENCIES/CMake fix blind.
-  - if: not win
+  - if: not win and not wasm32
     then:
       - automatika_embodied_agents
     # These packages specifically don't work on windows
-  - if: not win
+  - if: not win and not wasm32
     then:
       - zed-msgs
 
@@ -464,7 +836,7 @@ packages_select_by_deps:
   # for MSVC -- needs a Windows environment to iterate against the
   # rosidl/ament_cmake macros themselves; skip on Windows for now rather
   # than guess blind.
-  - if: not win
+  - if: not win and not wasm32
     then:
       - robot_localization
 
@@ -684,75 +1056,86 @@ packages_select_by_deps:
       - orbbec_camera
       - orbbec_camera_msgs
       - orbbec_description
-  - ament_cmake_clang_tidy
   - ament_cmake_core
-  - autoware_adapi_v1_msgs
-  - autoware_adapi_version_msgs
-  - autoware_auto_msgs
-  - autoware_internal_debug_msgs
-  - autoware_internal_metric_msgs
-  - autoware_internal_perception_msgs
-  - autoware_internal_planning_msgs
-  - autoware_lanelet2_extension
-  - autoware_lanelet2_extension_python
-  - autoware_lint_common
-  - autoware_msgs
-  - autoware_utils_debug
-  - autoware_utils_diagnostics
-  - autoware_utils_geometry
-  - autoware_utils_logging
-  - autoware_utils_math
-  - autoware_utils_pcl
-  - autoware_utils_rclcpp
-  - autoware_utils_system
-  - autoware_utils_tf
-  - autoware_utils_uuid
-  - autoware_utils_visualization
-  - bondcpp
-  - can_msgs
-  - clearpath_common
-  - diagnostics
-  - foxglove_msgs
-  - gripper_controllers
-  - gz_ros2_control_demos
-  - irobot_create_common_bringup
-  - irobot_create_control
-  - irobot_create_description
-  - irobot_create_msgs
-  - irobot_create_nodes
-  - irobot_create_toolbox
-  - joy_teleop
-  - key_teleop
-  - magic_enum
-  - mavros_msgs
-  - mouse_teleop
-  - mujoco_ros2_control_msgs
-  - mujoco_vendor
-  - nmea_navsat_driver
-  - persist_parameter_server
-  - pick_ik
-  - picknik_ament_copyright
-  - point_cloud_transport_py
-  - proxsuite
-  - ros2_fmt_logger
-  - ros2_socketcan_msgs
-  - rqt_runtime_monitor
-  - rtabmap
-  - rviz_2d_overlay_msgs
-  - rviz_visual_tools
-  - sbg_driver
-  - sick_scan_xd
-  - smacc2_msgs
   - tracetools
-  - tracetools_launch
-  - tracetools_trace
-  - ur_client_library
-  - urdf_launch
+
+  # These are needed on every OTHER platform but were never meant for
+  # wasm32 (full DDS/RMW middleware, GUI toolkits, hardware drivers, or
+  # simply pointless in a browser/WASM context) -- moved out of the
+  # unconditional list above on 2026-09-07 after diffing this branch's
+  # emscripten candidate selection against main's. Previously these were
+  # still being *selected* for wasm32 and patched out downstream via
+  # packages_skip_by_deps/packages_remove_from_deps instead of not being
+  # selected in the first place -- fix the selection here, not the symptom.
+  - if: not wasm32
+    then:
+      - ament_cmake_clang_tidy
+      - autoware_adapi_v1_msgs
+      - autoware_adapi_version_msgs
+      - autoware_auto_msgs
+      - autoware_internal_debug_msgs
+      - autoware_internal_metric_msgs
+      - autoware_internal_perception_msgs
+      - autoware_internal_planning_msgs
+      - autoware_lanelet2_extension
+      - autoware_lanelet2_extension_python
+      - autoware_lint_common
+      - autoware_msgs
+      - autoware_utils_debug
+      - autoware_utils_diagnostics
+      - autoware_utils_geometry
+      - autoware_utils_logging
+      - autoware_utils_math
+      - autoware_utils_pcl
+      - autoware_utils_rclcpp
+      - autoware_utils_system
+      - autoware_utils_tf
+      - autoware_utils_uuid
+      - autoware_utils_visualization
+      - bondcpp
+      - can_msgs
+      - clearpath_common
+      - diagnostics
+      - foxglove_msgs
+      - gripper_controllers
+      - gz_ros2_control_demos
+      - irobot_create_common_bringup
+      - irobot_create_control
+      - irobot_create_description
+      - irobot_create_msgs
+      - irobot_create_nodes
+      - irobot_create_toolbox
+      - joy_teleop
+      - key_teleop
+      - magic_enum
+      - mavros_msgs
+      - mouse_teleop
+      - mujoco_ros2_control_msgs
+      - mujoco_vendor
+      - nmea_navsat_driver
+      - persist_parameter_server
+      - pick_ik
+      - picknik_ament_copyright
+      - point_cloud_transport_py
+      - proxsuite
+      - ros2_fmt_logger
+      - ros2_socketcan_msgs
+      - rqt_runtime_monitor
+      - rtabmap
+      - rviz_2d_overlay_msgs
+      - rviz_visual_tools
+      - sbg_driver
+      - sick_scan_xd
+      - smacc2_msgs
+      - tracetools_launch
+      - tracetools_trace
+      - ur_client_library
+      - urdf_launch
 
   # These packages specifically don't work on Windows. Keep this comment
   # directly before the "if:" line below -- vinca-sort-vinca-lists merges
   # adjacent if/then blocks that aren't separated by a top-level comment.
-  - if: not win
+  - if: not win and not wasm32
     then:
       - ouster_ros
       - pinocchio

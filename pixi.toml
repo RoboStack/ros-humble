@@ -18,7 +18,7 @@ PYTHONIOENCODING = "utf-8"
 
 [dependencies]
 python = ">=3.11.0,<3.12"
-rattler-build = ">=0.57.0,<0.58"
+rattler-build = ">=0.67.0,<0.68"
 setuptools = "<82.0"
 rattler-index = ">=0.27.16"
 curl = "*"
@@ -28,7 +28,40 @@ colordiff = "*"
 [pypi-dependencies]
 # emscripten-wasm32 in platforms prevents pixi-build from resolving vinca as
 # a conda source dep (uv is unavailable for that target), so use pypi here.
-vinca = { git = "https://github.com/RoboStack/vinca.git" }
+# Pinned to Tobias-Fischer/vinca#feature/emscripten-pthreads (PR open at
+# https://github.com/RoboStack/vinca/pulls -- search "emscripten-pthreads";
+# branched off master rather than the previously-pinned 4683e080a since
+# this branch is now based on a current master commit) until merged
+# upstream, then this should be re-pointed to the merged RoboStack/vinca
+# commit. Three commits on top of master:
+#  1. removes the -s DEMANGLE_SUPPORT=1 emcc flag from
+#     build_ament_cmake.sh.in's emscripten branch, which emscripten 4.0.9
+#     (the SDK version currently published as emscripten_emscripten-wasm32)
+#     rejects outright ("No longer supported"), breaking every wasm32
+#     ament_cmake build past the first one or two.
+#  2. _overlay() now converts v1 if/then/else selectors in
+#     pinning_overrides values into the legacy `# [selector]` comment form,
+#     since rattler-build's variant loader treats the raw if/then mapping
+#     as an opaque literal rather than evaluating it -- needed so the
+#     python override below can differ for build- vs host-platform
+#     sub-resolutions within one emscripten-wasm32 invocation.
+#  3. flips USE_PTHREADS 0->1 (compile+link, globally via
+#     CMAKE_PROJECT_INCLUDE) for every emscripten-wasm32 package: without
+#     real threads, libc++'s condition_variable timed-wait (used by
+#     rclcpp's executor / rmw wait set) never wakes on its own, hanging the
+#     whole program after one spin iteration. This requires every
+#     emscripten-wasm32 artifact to be rebuilt from scratch -- mixing a
+#     pthread and non-pthread wasm module is a hard ABI mismatch ("memory
+#     import shared state mismatch").
+# (An earlier fourth commit removing -lembind from CMAKE_EXE_LINKER_FLAGS
+# was tried and reverted during development -- the MAIN executable is the
+# one that must provide embind's JS runtime library for side modules to
+# import from, so removing it there broke embind entirely; the actual
+# duplicate-registration fix belongs in the SIDE MODULE's own -lembind
+# instead, via patch/ros-humble-wasm-cpp.patch in this repo. That
+# try/revert pair was squashed out of the branch history before opening
+# the PR, so it's not one of the three commits above.)
+vinca = { git = "https://github.com/Tobias-Fischer/vinca.git", rev = "7133b302498edda9bc87a939329353fac95177c5" }
 # For local development uncomment:
 # vinca = { path = "../vinca", editable = true }
 
@@ -81,7 +114,13 @@ description = "Check if there are differences between the local conda_build_conf
       "--recipe-dir", "./recipes",
       "-m", "./conda_build_config.yaml",
       "-c", "https://repo.prefix.dev/conda-forge",
-      "-c", "https://repo.mamba.pm/emscripten-forge",
+      # https://repo.mamba.pm/emscripten-forge is stale/legacy (empty for
+      # osx-arm64, ~1/3 the package count for the emscripten-wasm32 target
+      # vs the channel below, as of 2026-09-07) -- emscripten-forge/recipes'
+      # own pixi.toml (build-emscripten-compiler-pkg/build-cross-python-pkg
+      # tasks) publishes the emscripten SDK + cross-python toolchain here.
+      "-c", "https://repo.prefix.dev/emscripten-forge-4x",
+      "-c", "microsoft",
       "-c", "robostack-staging",
       "--target-platform", "emscripten-wasm32",
       "--skip-existing",

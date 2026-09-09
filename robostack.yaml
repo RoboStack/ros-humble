@@ -81,7 +81,13 @@ doxygen:
 draco:
   robostack: [draco]
 eigen:
-  robostack: [eigen, eigen-abi-devel]
+  # eigen-abi-devel isn't published for emscripten-wasm32 (only plain
+  # eigen 3.4.1 is), so eigenpy/pinocchio/hpp-fcl couldn't resolve it there.
+  robostack:
+    linux: [eigen, eigen-abi-devel]
+    osx: [eigen, eigen-abi-devel]
+    win64: [eigen, eigen-abi-devel]
+    emscripten: [eigen]
 emacs:
   robostack: [emacs]
 festival:
@@ -1114,7 +1120,17 @@ socat:
 spacenavd:
   robostack: [libspnav]
 spdlog:
-  robostack: [spdlog, fmt]
+  # No spdlog conda package exists for emscripten-wasm32 (fmt is published
+  # there, but spdlog itself isn't, confirmed absent from
+  # emscripten-forge-4x's repodata, 2026-09-07). Dropping the dep here lets
+  # spdlog_vendor's own find_package(spdlog QUIET) fail as designed,
+  # falling back to its ExternalProject source build instead of a
+  # nonexistent system package.
+  robostack:
+    linux: [spdlog, fmt]
+    osx: [spdlog, fmt]
+    win64: [spdlog, fmt]
+    emscripten: []
 sqlite3:
   robostack: [sqlite 3.*]
 sshpass:
@@ -1171,9 +1187,27 @@ xsimd:
 xtensor:
   robostack: [xtensor ==0.24.7]
 yaml:
-  robostack: [yaml, yaml-cpp]
+  # emscripten-forge/recipes publishes the C library under its newer name
+  # "libyaml" (not the legacy conda-forge "yaml"), and doesn't publish
+  # "yaml-cpp" at all for wasm32 -- C++ consumers get yaml-cpp via the
+  # from-source yaml_cpp_vendor ROS package (unconditionally selected for
+  # wasm32) instead of the conda package.
+  robostack:
+    linux: [yaml, yaml-cpp]
+    osx: [yaml, yaml-cpp]
+    win64: [yaml, yaml-cpp]
+    emscripten: [libyaml]
 yaml-cpp:
-  robostack: [yaml-cpp]
+  # No yaml-cpp conda package exists for emscripten-wasm32 (confirmed absent
+  # from emscripten-forge-4x's repodata, 2026-09-07). Dropping the dep here
+  # lets yaml_cpp_vendor's own find_package(yaml-cpp QUIET) fail as
+  # designed, falling back to its ExternalProject source build instead of
+  # a nonexistent system package.
+  robostack:
+    linux: [yaml-cpp]
+    osx: [yaml-cpp]
+    win64: [yaml-cpp]
+    emscripten: []
 zbar:
   robostack:
     linux-64: [zbar]
