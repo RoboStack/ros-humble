@@ -12,7 +12,6 @@ mutex_package:
   name: "ros2-distro-mutex"
   version: "0.10.0"
   upper_bound: "x.x"
-  build_number: 21
   run_constraints:
     - libboost 1.90.*
     - libboost-devel 1.90.*

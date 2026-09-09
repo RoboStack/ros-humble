@@ -69,6 +69,19 @@ jobs:
         echo "CONDA_BLD_PATH=C:\\bld\\" >> $GITHUB_ENV
         mkdir /c/bld
 
+    - name: Enable Windows long path support
+      if: matrix.platform == 'win-64'
+      shell: pwsh
+      run: |
+        # MSVC/MSBuild (VS 2019 16.0+, which windows-2022's toolset is well past)
+        # honor the Win32 long-path opt-in via this registry key. Without it,
+        # cl.exe can fail with a cryptic "fatal error C1083: Cannot open
+        # compiler generated file: ''" once a target's generated intermediate
+        # (.obj/.tlog) path exceeds the legacy 260-char MAX_PATH, which is easy
+        # to hit given how deeply nested and long rosidl-generated target names
+        # can get even under the shortened C:\bld\ prefix above.
+        New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+
     # Workaround for https://github.com/RoboStack/ros-humble/pull/141#issuecomment-1941919816
     - name: Clean up PATH
       if: contains(matrix.os, 'windows')
@@ -159,11 +172,21 @@ jobs:
       shell: bash -l {0}
       run: |
         set +e
+        EXTRA_BUILD_ARGS=""
+        if [ "${{ matrix.platform }}" == "win-64" ]; then
+          # Drop the timestamp suffix from the per-package build work dir
+          # (rattler-build_<name>_<timestamp> -> rattler-build_<name>) to claw
+          # back headroom under Windows' MAX_PATH for long package names, e.g.
+          # rosbag2_performance_benchmarking_msgs's generated rosidl Python
+          # typesupport targets (see error C1083 "Cannot open compiler
+          # generated file: ''").
+          EXTRA_BUILD_ARGS="--no-build-id"
+        fi
         if [ "${{ matrix.platform }}" = "emscripten-wasm32" ]; then
           pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c https://repo.mamba.pm/emscripten-forge/ -c conda-forge -c robostack-staging --skip-existing --test skip 2>&1 | tee rattler-build.log
         else
           # --channel-priority disabled: resolvo would otherwise refuse a just-built local package once any other-channel build of the same name exists.
-          pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing --channel-priority disabled 2>&1 | tee rattler-build.log
+          pixi run rattler-build build --recipe-dir recipes --target-platform ${{ matrix.platform }} -m ./conda_build_config.yaml -c conda-forge -c robostack-staging --skip-existing --channel-priority disabled $EXTRA_BUILD_ARGS 2>&1 | tee rattler-build.log
         fi
         build_status=${PIPESTATUS[0]}
         echo "exit-code=${build_status}" >> "$GITHUB_OUTPUT"

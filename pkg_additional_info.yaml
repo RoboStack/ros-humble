@@ -222,6 +222,3 @@ visp:
     override_version: '3.7.0'
 zenoh_cpp_vendor:
   additional_cmake_args: "-DAMENT_VENDOR_POLICY=NEVER_VENDOR_IGNORE_SATISFIED_CHECK"
-distro_mutex:
-  # Keeps ros2-distro-mutex's build_number in sync with vinca.yaml's mutex_package.build_number (21), independent of the top-level default build_number (20).
-  build_number: 21
