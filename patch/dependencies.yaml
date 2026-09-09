@@ -5,6 +5,13 @@ foxglove_bridge:
 ros_ign_interfaces:
   add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
+  # package.xml's <depend>cartographer</depend> auto-resolves to the
+  # ros2-cartographer dummy package (see the cartographer entry below),
+  # but add_host below also pulls in conda-forge's cartographer directly
+  # for the same lua-pin reason -- vinca doesn't dedupe the two, so drop
+  # the dummy and keep only the direct conda-forge dependency.
+  remove_host: ["ros2-cartographer"]
+  remove_run: ["ros2-cartographer"]
   add_host: ["cartographer 2.*", "libboost-devel"]
 cartographer:
   # This is the dummy package for ros-humble-cartographer (build script is empty,
