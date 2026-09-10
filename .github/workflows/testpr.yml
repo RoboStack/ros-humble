@@ -152,6 +152,8 @@ jobs:
         rm -rf ${{ matrix.folder_cache }}/ros-humble-popf* 2>/dev/null || true
         # Corrupt ~34KB cached artifact (same recurring pattern as other win-64 packages this cycle) missing its installed cmake config.
         rm -rf ${{ matrix.folder_cache }}/ros-humble-nav2-behavior-tree* 2>/dev/null || true
+        # Corrupt ~51KB cached artifact (same pattern: a cancelled run's cache-save step caught it mid-write) missing its installed cmake config -- chomp_motion_planner's find_package(moveit_core) failed against it.
+        rm -rf ${{ matrix.folder_cache }}/ros2-moveit-core* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
