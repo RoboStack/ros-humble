@@ -26,11 +26,14 @@ go-yq = "*"
 colordiff = "*"
 
 [pypi-dependencies]
-vinca = { git = "https://github.com/Tobias-Fischer/vinca.git", rev = "ddac23537fd8d33adffbcb4a47609bf37b4faf75" }
-# TEMPORARY: pinned to a fork commit fixing raw.githubusercontent.com tag-URL
-# ambiguity (RoboStack/vinca#156) that was causing persistent, non-transient
-# package.xml 404s in CI. Revert to the plain RoboStack/vinca.git line above
-# once that PR merges.
+vinca = { git = "https://github.com/Tobias-Fischer/vinca.git", rev = "9e44663eaf17a1a7ae698e3140ff095a78e849e7" }
+# TEMPORARY: pinned to RoboStack/vinca@1f1dca5 (last commit before the
+# rosdistro-cache-snapshot feature landed -- our already-generated
+# rosdistro_snapshot.yaml wasn't produced with that machinery and broke
+# against it) with the raw.githubusercontent.com tag-URL ambiguity fix
+# (RoboStack/vinca#156) cherry-picked on top. Revert to the plain
+# RoboStack/vinca.git line once #156 merges and the snapshot format is
+# reconciled.
 # For local development uncomment:
 # vinca = { path = "../vinca", editable = true }
 
