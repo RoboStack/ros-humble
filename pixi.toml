@@ -26,7 +26,11 @@ go-yq = "*"
 colordiff = "*"
 
 [pypi-dependencies]
-vinca = { git = "https://github.com/RoboStack/vinca.git" }
+vinca = { git = "https://github.com/Tobias-Fischer/vinca.git", rev = "ddac23537fd8d33adffbcb4a47609bf37b4faf75" }
+# TEMPORARY: pinned to a fork commit fixing raw.githubusercontent.com tag-URL
+# ambiguity (RoboStack/vinca#156) that was causing persistent, non-transient
+# package.xml 404s in CI. Revert to the plain RoboStack/vinca.git line above
+# once that PR merges.
 # For local development uncomment:
 # vinca = { path = "../vinca", editable = true }
 
