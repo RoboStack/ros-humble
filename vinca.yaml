@@ -98,37 +98,23 @@ packages_remove_from_deps:
       - test_ros_gz_bridge
       - velodyne_gazebo_plugins
 
+# These are the packages that are built on all platforms (only a subset, to reduce maintainer load)
+
 packages_select_by_deps:
-
-  # These are the packages that are built on all platforms (only a subset, to reduce maintainer load)
-  - rclpy
-  - ros_workspace
-  - ros_environment
-  - ament_cmake
-  - ament_pep257
-  - ament_flake8
-  - ament_lint
-  - ament_lint_common
-  - ament_pycodestyle
-  - rmw
-  - rclc
-  - rclcpp
-  - builtin_interfaces
-  - rcutils
-  - rcpputils
-  - rosidl_runtime_c
-  - rosidl_runtime_cpp
-  - rosidl_typesupport_introspection_c
-  - rosidl_typesupport_introspection_cpp
-  - yaml_cpp_vendor
-  - osrf_testing_tools_cpp
-
   - ackermann-msgs
+  - ament_cmake
   - ament_cmake_black
   - ament_cmake_catch2  # Open RMF
+  - ament_cmake_clang_tidy
+  - ament_cmake_core
   - ament_cmake_mypy
   - ament_cmake_nose
   - ament_cmake_vendor_package # Requested in https://github.com/RoboStack/ros-humble/pull/210
+  - ament_flake8
+  - ament_lint
+  - ament_lint_common
+  - ament_pep257
+  - ament_pycodestyle
   - apex_test_tools
   - apriltag            # AprilRobotics
   - apriltag_detector
@@ -138,19 +124,28 @@ packages_select_by_deps:
   - apriltag_tools
   - asio_cmake_module
   - automatika_ros_sugar
-  # rqt
+  - autoware_adapi_v1_msgs
+  - autoware_adapi_version_msgs
+  - autoware_auto_msgs
   - autoware_cmake
   - autoware_common_msgs
   - autoware_component_interface_specs
   - autoware_control_msgs
   - autoware_geography_utils
-  # gazebo
   - autoware_global_parameter_loader
+  - autoware_internal_debug_msgs
+  - autoware_internal_metric_msgs
   - autoware_internal_msgs
+  - autoware_internal_perception_msgs
+  - autoware_internal_planning_msgs
   - autoware_interpolation
   - autoware_kalman_filter
+  - autoware_lanelet2_extension
+  - autoware_lanelet2_extension_python
+  - autoware_lint_common
   - autoware_localization_msgs
   - autoware_map_msgs
+  - autoware_msgs
   - autoware_node
   - autoware_object_recognition_utils
   - autoware_perception_msgs
@@ -160,6 +155,17 @@ packages_select_by_deps:
   - autoware_signal_processing
   - autoware_system_msgs
   - autoware_utils
+  - autoware_utils_debug
+  - autoware_utils_diagnostics
+  - autoware_utils_geometry
+  - autoware_utils_logging
+  - autoware_utils_math
+  - autoware_utils_pcl
+  - autoware_utils_rclcpp
+  - autoware_utils_system
+  - autoware_utils_tf
+  - autoware_utils_uuid
+  - autoware_utils_visualization
   - autoware_v2x_msgs
   - autoware_vehicle_info_utils
   - autoware_vehicle_msgs
@@ -169,55 +175,61 @@ packages_select_by_deps:
   - behaviortree_cpp_v3
   - bno055              # flynneva
   - bond_core
+  - bondcpp
+  - builtin_interfaces
+  - can_msgs
   - cartographer_ros
-  # Requested in https://www.linkedin.com/feed/update/urn:li:activity:7346559234177703938/
-  - cascade-lifecycle-msgs
+  - cascade-lifecycle-msgs  # Requested in https://www.linkedin.com/feed/update/urn:li:activity:7346559234177703938/
+  - clearpath_common
   - color_util
   - control-toolbox
   - control_msgs
   - data_tamer_cpp
   - demo_nodes_cpp
-  # ros control
   - demo_nodes_py
   - desktop
   - desktop_full
+  - diagnostics
   - diff-drive-controller
   - flex_sync
+  - foxglove_msgs
   - gazebo-ros-pkgs
-  # - joystick_drivers
   - gazebo_dev
   - gazebo_msgs
-  # - wiimote          # needs bluetooth and is not in conda-forge
-  # - wiimote_msgs
-  # other control
   - gazebo_plugins
   - gazebo_ros
-  # Modern gz-sim integration isn't supported on Humble/Windows (see issue #68); ros_gz_interfaces only, for Linux/macOS.
   - gazebo_ros2_control
   - gazebo_ros2_control_demos
-  # generic sim interfaces
   - gazebo_ros_pkgs
   - geodesy
-  # *** learning and tutorials ***
   - geographic_info
   - geometry_tutorials
   - graph_msgs          # PickNik Robotics
-  # requested in https://github.com/RoboStack/ros-humble/issues/307
-  - gtsam
+  - gripper_controllers
+  - gtsam  # requested in https://github.com/RoboStack/ros-humble/issues/307
+  - gz_ros2_control_demos
   - imu_calib
-  # gazebo
   - imu_tools
   - imu_transformer
-  # *** Vendor packages ***
   - io_context
+  - irobot_create_common_bringup
+  - irobot_create_control
+  - irobot_create_description
+  - irobot_create_msgs
+  - irobot_create_nodes
+  - irobot_create_toolbox
   - joint-state-publisher # probably this should not be here as there is some strange porting to ros2
   - joy
+  - joy_teleop
+  - key_teleop
   - lanelet2
   - librealsense2
+  - magic_enum
   - marker-msgs         # TUW Robotics
+  - mavros_msgs
   - mocap4r2_msgs
+  - mouse_teleop
   - moveit
-  # - transport_drivers
   - moveit-chomp-optimizer-adapter
   - moveit-ros-control-interface
   - moveit2_tutorials
@@ -226,52 +238,69 @@ packages_select_by_deps:
   - moveit_ros_occupancy_map_monitor
   - moveit_servo
   - moveit_visual_tools
-  # Only msgs as avt_vimba_camera ships some Linux .so in the repo, so it only supports linux
+  - mujoco_ros2_control_msgs
+  - mujoco_vendor
   - nav2_bringup
   - navigation2
   - nmea_msgs
+  - nmea_navsat_driver
   - open3d_conversions
+  - osrf_testing_tools_cpp
   - pal_statistics
-  # requested in https://github.com/RoboStack/ros-humble/pull/205
-  - perception
+  - perception  # requested in https://github.com/RoboStack/ros-humble/pull/205
+  - persist_parameter_server
+  - pick_ik
+  - picknik_ament_copyright
   - pilz-industrial-motion-planner
   - plotjuggler_msgs
-  # requested in https://github.com/RoboStack/ros-humble/issues/249
-  - pointcloud_to_laserscan
-  # requested in https://github.com/RoboStack/ros-humble/issues/252
-  - polygon_msgs
-  # requested in https://github.com/RoboStack/ros-humble/issues/256
-  - polygon_utils
+  - point_cloud_transport_py
+  - pointcloud_to_laserscan  # requested in https://github.com/RoboStack/ros-humble/issues/249
+  - polygon_msgs  # requested in https://github.com/RoboStack/ros-humble/issues/252
+  - polygon_utils  # requested in https://github.com/RoboStack/ros-humble/issues/256
+  - proxsuite
   - ptz_action_server_msgs
   - py-binding-tools
-  # autoware
-  - py_trees
+  - py_trees  # py_trees stack requested in https://github.com/RoboStack/ros-humble/issues/412
   - py_trees_js
   - py_trees_ros
   - py_trees_ros_interfaces
   - py_trees_ros_tutorials
   - py_trees_ros_viewer
   - radar_msgs
+  - rclc
   - rclc_examples
   - rclc_lifecycle
   - rclc_parameter
+  - rclcpp
   - rclcpp-cascade-lifecycle
+  - rclpy
+  - rcpputils
+  - rcutils
   - realtime_tools
+  - rmw
   - rmw_zenoh_cpp
   - robot_controllers
   - ros2-control-cmake
   - ros2-controllers
   - ros2_control
   - ros2_controllers
+  - ros2_fmt_logger
+  - ros2_socketcan_msgs
   - ros_base
   - ros_core
-  - ros_gz_interfaces
+  - ros_environment
+  - ros_gz_interfaces  # Modern gz-sim integration isn't supported on Humble/Windows (see issue #68); this is the only part we include, for Linux/macOS.
   - ros_ign
   - ros_ign_interfaces
+  - ros_workspace
   - rosbag2-performance-benchmarking
   - rosbag2_storage_mcap
   - rosbridge_suite
   - rosidl-generator-dds-idl
+  - rosidl_runtime_c
+  - rosidl_runtime_cpp
+  - rosidl_typesupport_introspection_c
+  - rosidl_typesupport_introspection_cpp
   - rplidar_ros
   - rqt
   - rqt-gui
@@ -279,47 +308,50 @@ packages_select_by_deps:
   - rqt-robot-dashboard
   - rqt-robot-monitor
   - rqt-robot-steering
-  # cascade lifecycle packages
   - rqt_controller_manager
+  - rqt_runtime_monitor
+  - rtabmap
   - rtcm_msgs
-  # Demo nodes
   - rviz2
+  - rviz_2d_overlay_msgs
+  - rviz_visual_tools
+  - sbg_driver
   - sdl2_vendor
-  # requested in https://github.com/RoboStack/ros-humble/issues/302
-  - serial_driver
-  # requested in https://github.com/RoboStack/ros-humble/issues/305
-  - simulation
-  # requested in https://github.com/RoboStack/ros-humble/issues/304
-  - simulation_interfaces
+  - serial_driver  # requested in https://github.com/RoboStack/ros-humble/issues/302
+  - sick_scan_xd
+  - simulation  # requested in https://github.com/RoboStack/ros-humble/issues/305
+  - simulation_interfaces  # requested in https://github.com/RoboStack/ros-humble/issues/304
   - slam_toolbox
-  # Requested in https://github.com/RoboStack/ros-humble/issues/325
-  - stubborn_buddies    # Open RMF
+  - smacc2_msgs
+  - stubborn_buddies    # Open RMF; Requested in https://github.com/RoboStack/ros-humble/issues/325
   - system_modes        # Micro-ROS
   - teleop_tools
   - tf-transformations
   - tf_transformations  # DLu
   - topic_based_ros2_control
   - topic_tools
+  - tracetools
+  - tracetools_launch
+  - tracetools_trace
   - turtle-tf2-py
   - turtle_tf2_cpp
   - turtle_tf2_py
   - turtlebot3
   - turtlebot3_gazebo
   - turtlebot3_simulations
-  # Requested in https://github.com/RoboStack/ros-humble/issues/394
-  - twist_mux
-  # Requested in https://github.com/RoboStack/ros-humble/issues/345
-  - udp_driver
-  # IntelRealSense
+  - twist_mux  # Requested in https://github.com/RoboStack/ros-humble/issues/394
+  - udp_driver  # Requested in https://github.com/RoboStack/ros-humble/issues/345
   - ur
   - ur_calibration      # Universal Robots, requested in https://github.com/RoboStack/ros-humble/issues/217
-  # py_trees stack, requested in https://github.com/RoboStack/ros-humble/issues/412
+  - ur_client_library
   - ur_robot_driver     # Universal Robots
+  - urdf_launch
   - urdf_tutorial
   - urg-node
   - vector_pursuit_controller
   - vision-msgs
   - visp
+  - yaml_cpp_vendor
 
   # These packages are currently not build on Windows, but they may with some work.
   - if: not win
@@ -515,69 +547,4 @@ packages_select_by_deps:
       - libfranka
       - ublox_ubx_interfaces
       - webots_ros2         # Cyberbotics
-
-  - ament_cmake_clang_tidy
-  - ament_cmake_core
-  - autoware_adapi_v1_msgs
-  - autoware_adapi_version_msgs
-  - autoware_auto_msgs
-  - autoware_internal_debug_msgs
-  - autoware_internal_metric_msgs
-  - autoware_internal_perception_msgs
-  - autoware_internal_planning_msgs
-  - autoware_lanelet2_extension
-  - autoware_lanelet2_extension_python
-  - autoware_lint_common
-  - autoware_msgs
-  - autoware_utils_debug
-  - autoware_utils_diagnostics
-  - autoware_utils_geometry
-  - autoware_utils_logging
-  - autoware_utils_math
-  - autoware_utils_pcl
-  - autoware_utils_rclcpp
-  - autoware_utils_system
-  - autoware_utils_tf
-  - autoware_utils_uuid
-  - autoware_utils_visualization
-  - bondcpp
-  - can_msgs
-  - clearpath_common
-  - diagnostics
-  - foxglove_msgs
-  - gripper_controllers
-  - gz_ros2_control_demos
-  - irobot_create_common_bringup
-  - irobot_create_control
-  - irobot_create_description
-  - irobot_create_msgs
-  - irobot_create_nodes
-  - irobot_create_toolbox
-  - joy_teleop
-  - key_teleop
-  - magic_enum
-  - mavros_msgs
-  - mouse_teleop
-  - mujoco_ros2_control_msgs
-  - mujoco_vendor
-  - nmea_navsat_driver
-  - persist_parameter_server
-  - pick_ik
-  - picknik_ament_copyright
-  - point_cloud_transport_py
-  - proxsuite
-  - ros2_fmt_logger
-  - ros2_socketcan_msgs
-  - rqt_runtime_monitor
-  - rtabmap
-  - rviz_2d_overlay_msgs
-  - rviz_visual_tools
-  - sbg_driver
-  - sick_scan_xd
-  - smacc2_msgs
-  - tracetools
-  - tracetools_launch
-  - tracetools_trace
-  - ur_client_library
-  - urdf_launch
 
