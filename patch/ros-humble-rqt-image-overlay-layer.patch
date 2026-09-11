@@ -1,0 +1,22 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 338d2ed..e50d872 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -10,7 +10,7 @@ find_package(rclcpp REQUIRED)
+ find_package(rosidl_runtime_cpp REQUIRED)
+ find_package(rcpputils REQUIRED)
+ find_package(pluginlib REQUIRED)
+-find_package(Qt5Widgets REQUIRED)
++find_package(Qt6Widgets REQUIRED)
+ find_package(message_filters REQUIRED)
+ 
+ install(
+@@ -31,7 +31,7 @@ ament_export_dependencies(rclcpp)
+ ament_export_dependencies(rosidl_runtime_cpp)
+ ament_export_dependencies(rcpputils)
+ ament_export_dependencies(pluginlib)
+-ament_export_dependencies(Qt5Widgets)
++ament_export_dependencies(Qt6Widgets)
+ ament_export_dependencies(message_filters)
+ 
+ ament_package()

@@ -1,0 +1,49 @@
+diff --git a/src/serial_port.cpp b/src/serial_port.cpp
+index e6279a9664..5c0a2b4141 100644
+--- a/src/serial_port.cpp
++++ b/src/serial_port.cpp
+@@ -35,7 +35,9 @@
+ #include <unistd.h>
+ #include <poll.h>
+ #include <termios.h>
++#ifdef __linux__
+ #include <linux/serial.h>
++#endif
+ #include <cstring>
+
+ namespace swri_serial_util
+@@ -198,6 +200,7 @@ namespace swri_serial_util
+
+   bool SerialPort::SetLowLatencyMode()
+   {
++#ifdef __linux__
+     if (fd_ < 0)
+     {
+       error_msg_ = "Device not open.";
+@@ -221,6 +224,10 @@ namespace swri_serial_util
+     }
+
+     return true;
++#else
++    error_msg_ = "Low latency mode is not supported on this platform.";
++    return false;
++#endif
+   }
+
+   int32_t SerialPort::ParseBaudRate(int32_t baud)
+@@ -299,6 +306,7 @@ namespace swri_serial_util
+     {
+       value = B230400;
+     }
++#ifdef __linux__
+     else if (baud == B460800 || baud == 460800)
+     {
+       value = B460800;
+@@ -343,6 +351,7 @@ namespace swri_serial_util
+     {
+       value = B4000000;
+     }
++#endif
+
+     return value;
+   }

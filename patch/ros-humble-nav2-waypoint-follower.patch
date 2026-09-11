@@ -1,0 +1,14 @@
+diff -ruN a/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp b/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+--- a/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
++++ b/include/nav2_waypoint_follower/plugins/photo_at_waypoint.hpp
+@@ -32,8 +32,8 @@
+ 
+ #include "sensor_msgs/msg/image.hpp"
+ #include "nav2_core/waypoint_task_executor.hpp"
+-#include "opencv4/opencv2/core.hpp"
+-#include "opencv4/opencv2/opencv.hpp"
++#include "opencv2/core.hpp"
++#include "opencv2/opencv.hpp"
+ #include "cv_bridge/cv_bridge.h"
+ #include "image_transport/image_transport.hpp"
+ 

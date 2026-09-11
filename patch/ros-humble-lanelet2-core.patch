@@ -13,6 +13,22 @@ index 37a3107f..a8620438 100644
  ###################
  ## Find packages ##
  ###################
+@@ -19,5 +23,6 @@ if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/custom.cmake")
+ endif()
+ 
++find_package(Eigen3 REQUIRED CONFIG)
+ find_package(AutoDeps REQUIRED COMPONENTS ${DEPENDEND_PACKAGES})
+ 
+ mrt_parse_package_xml()
+@@ -52,6 +57,8 @@ mrt_add_library(${PROJECT_NAME}
+     SOURCES ${PROJECT_SOURCE_FILES_SRC}
+     )
+ 
++target_link_libraries(${PROJECT_NAME} PUBLIC Eigen3::Eigen)
++
+ #############
+ ## Install ##
+ #############
 diff --git a/include/lanelet2_core/geometry/Area.h b/include/lanelet2_core/geometry/Area.h
 index 1e2bdeca..feb1e79a 100644
 --- a/include/lanelet2_core/geometry/Area.h

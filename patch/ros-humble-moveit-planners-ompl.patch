@@ -1,3 +1,16 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bb578b1a..eb303305 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,7 +5,7 @@ project(moveit_planners_ompl)
+ find_package(moveit_common REQUIRED)
+ moveit_package()
+ 
+-find_package(Boost REQUIRED system filesystem date_time thread serialization)
++find_package(Boost REQUIRED filesystem date_time thread serialization)
+ find_package(moveit_core REQUIRED)
+ find_package(moveit_msgs REQUIRED)
+ find_package(moveit_ros_planning REQUIRED)
 diff --git a/ompl_interface/CMakeLists.txt b/ompl_interface/CMakeLists.txt
 index ff71c07c..0d0aef71 100644
 --- a/ompl_interface/CMakeLists.txt

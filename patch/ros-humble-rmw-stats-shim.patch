@@ -1,0 +1,23 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -31,6 +31,11 @@
+ find_package(rosgraph_monitor_msgs REQUIRED)
+ find_package(rosidl_runtime_cpp REQUIRED)
+ find_package(rosidl_typesupport_cpp REQUIRED)
++# src/timer.cpp uses std::thread, which on this toolchain still needs an
++# explicit pthread link even though -Wl,--no-undefined (above) is the only
++# reason the missing symbols (pthread_create/pthread_join) turn into a hard
++# link error instead of a silent runtime problem.
++find_package(Threads REQUIRED)
+ 
+ add_library(${PROJECT_NAME} SHARED
+   src/shim.cpp
+@@ -42,6 +47,7 @@
+   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
+ target_link_libraries(${PROJECT_NAME} PUBLIC
+   rcpputils::rcpputils
++  Threads::Threads
+   rmw::rmw
+   rosidl_runtime_cpp::rosidl_runtime_cpp
+   rosidl_typesupport_cpp::rosidl_typesupport_cpp

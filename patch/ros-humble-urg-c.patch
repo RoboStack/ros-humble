@@ -1,0 +1,3910 @@
+diff --git a/current/dox/connect_and_get.c b/current/dox/connect_and_get.c
+index f11a6b3..934daed 100644
+--- a/current/dox/connect_and_get.c
++++ b/current/dox/connect_and_get.c
+@@ -1,4 +1,4 @@
+-// ƒVƒŠƒAƒ‹Ú‘±‚Å‚ÌƒZƒ“ƒT‚Æ‚ÌÚ‘±‚Æ‹——£ƒf[ƒ^‚Ìæ“¾
++// ã‚·ãƒªã‚¢ãƒ«æ¥ç¶šã§ã®ã‚»ãƒ³ã‚µã¨ã®æ¥ç¶šã¨è·é›¢ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+ 
+ #include "urg_sensor.h"
+ #include "urg_utils.h"
+@@ -12,26 +12,26 @@ int main(void)
+     long *length_data;
+     int length_data_size;
+ 
+-    // "COM1" ‚ÍAƒZƒ“ƒT‚ª”F¯‚³‚ê‚Ä‚¢‚éƒfƒoƒCƒX–¼‚É‚·‚é•K—v‚ª‚ ‚é
++    // "COM1" ã¯ã€ã‚»ãƒ³ã‚µãŒèªè­˜ã•ã‚Œã¦ã„ã‚‹ãƒ‡ãƒã‚¤ã‚¹åã«ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
+     const char connect_device[] = "COM1";
+     const long connect_baudrate = 115200;
+ 
+-    // ƒZƒ“ƒT‚É‘Î‚µ‚ÄÚ‘±‚ğs‚¤B
++    // ã‚»ãƒ³ã‚µã«å¯¾ã—ã¦æ¥ç¶šã‚’è¡Œã†ã€‚
+     ret = urg_open(&urg, URG_SERIAL, connect_device, connect_baudrate);
+-    // \todo check error code
++    // Â¥todo check error code
+ 
+-    // ƒf[ƒ^óM‚Ì‚½‚ß‚Ì—Ìˆæ‚ğŠm•Û‚·‚é
++    // ãƒ‡ãƒ¼ã‚¿å—ä¿¡ã®ãŸã‚ã®é ˜åŸŸã‚’ç¢ºä¿ã™ã‚‹
+     length_data = (long *)malloc(sizeof(long) * urg_max_data_size(&urg));
+-    // \todo check length_data is not NULL
++    // Â¥todo check length_data is not NULL
+ 
+-    // ƒZƒ“ƒT‚©‚ç‹——£ƒf[ƒ^‚ğæ“¾‚·‚éB
++    // ã‚»ãƒ³ã‚µã‹ã‚‰è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ã€‚
+     ret = urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+-    // \todo check error code
++    // Â¥todo check error code
+ 
+     length_data_size = urg_get_distance(&urg, length_data, NULL);
+-    // \todo process length_data array
++    // Â¥todo process length_data array
+ 
+-    // ƒZƒ“ƒT‚Æ‚ÌÚ‘±‚ğ•Â‚¶‚éB
++    // ã‚»ãƒ³ã‚µã¨ã®æ¥ç¶šã‚’é–‰ã˜ã‚‹ã€‚
+     urg_close(&urg);
+ 
+     return 0;
+diff --git a/current/dox/connect_ethernet.c b/current/dox/connect_ethernet.c
+index 706fdc6..64c3910 100644
+--- a/current/dox/connect_ethernet.c
++++ b/current/dox/connect_ethernet.c
+@@ -5,13 +5,13 @@ int main(void)
+ {
+     urg_t urg;
+     int ret;
+-// ƒC[ƒT[ƒlƒbƒgÚ‘±‚Å‚ÌƒZƒ“ƒT‚Æ‚ÌÚ‘±‚Æ‹——£ƒf[ƒ^‚Ìæ“¾
++// ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆæ¥ç¶šã§ã®ã‚»ãƒ³ã‚µã¨ã®æ¥ç¶šã¨è·é›¢ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+ 
+ const char connect_address[] = "192.168.0.10";
+ const long connect_port = 10940;
+ 
+-// ƒZƒ“ƒT‚É‘Î‚µ‚ÄÚ‘±‚ğs‚¤B
++// ã‚»ãƒ³ã‚µã«å¯¾ã—ã¦æ¥ç¶šã‚’è¡Œã†ã€‚
+ ret = urg_open(&urg, URG_ETHERNET, connect_address, connect_port);
+-// \todo check error code
++// Â¥todo check error code
+ return 0;
+ }
+diff --git a/current/dox/convert_xy.c b/current/dox/convert_xy.c
+index 7fc90da..4a8252c 100644
+--- a/current/dox/convert_xy.c
++++ b/current/dox/convert_xy.c
+@@ -9,11 +9,11 @@ urg_t urg;
+ long *length_data = NULL;
+ int length_data_size;
+ int i;
+-// ‹——£ƒf[ƒ^‚ğ X-Y À•WŒn‚É•ÏŠ·‚µ‚Ä•\¦‚·‚é
++// è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’ X-Y åº§æ¨™ç³»ã«å¤‰æ›ã—ã¦è¡¨ç¤ºã™ã‚‹
+ 
+ length_data_size = urg_get_distance(&urg, length_data, NULL);
+ for (i = 0; i < length_data_size; ++i) {
+-    // ‚»‚Ì‹——£ƒf[ƒ^‚Ìƒ‰ƒWƒAƒ“Šp“x‚ğ‹‚ßAX, Y ‚ÌÀ•W’l‚ğŒvZ‚·‚é
++    // ãã®è·é›¢ãƒ‡ãƒ¼ã‚¿ã®ãƒ©ã‚¸ã‚¢ãƒ³è§’åº¦ã‚’æ±‚ã‚ã€X, Y ã®åº§æ¨™å€¤ã‚’è¨ˆç®—ã™ã‚‹
+     double radian;
+     long length;
+     long x;
+@@ -21,12 +21,12 @@ for (i = 0; i < length_data_size; ++i) {
+ 
+     radian = urg_index2rad(&urg, i);
+     length = length_data[i];
+-    // \todo check length is valid
++    // Â¥todo check length is valid
+ 
+     x = (long)(length * cos(radian));
+     y = (long)(length * sin(radian));
+     printf("(%ld, %ld), ", x, y);
+ }
+-printf("\n");
++printf("Â¥n");
+ return 0;
+ }
+diff --git a/current/dox/get_scans.c b/current/dox/get_scans.c
+index 4ce7c71..bed6a54 100644
+--- a/current/dox/get_scans.c
++++ b/current/dox/get_scans.c
+@@ -6,22 +6,22 @@ int main(void)
+     urg_t urg;
+     int ret;
+     long *length_data = NULL;
+-// scan_times ‰ñ‚ÌƒXƒLƒƒƒ“ƒf[ƒ^‚ğæ“¾
++// scan_times å›ã®ã‚¹ã‚­ãƒ£ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
+ 
+-// urg_start_measurement() ŠÖ”‚ÅƒXƒLƒƒƒ“‰ñ”‚ğw’è‚µ
+-// urg_get_distance() ŠÖ”‚Åw’è‚µ‚½‰ñ”‚¾‚¯ƒf[ƒ^‚ğóM‚·‚éB
++// urg_start_measurement() é–¢æ•°ã§ã‚¹ã‚­ãƒ£ãƒ³å›æ•°ã‚’æŒ‡å®šã—
++// urg_get_distance() é–¢æ•°ã§æŒ‡å®šã—ãŸå›æ•°ã ã‘ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹ã€‚
+ 
+ const int scan_times = 123;
+ int length_data_size;
+ int i;
+ 
+-// ƒZƒ“ƒT‚©‚ç‹——£ƒf[ƒ^‚ğæ“¾‚·‚éB
++// ã‚»ãƒ³ã‚µã‹ã‚‰è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ã€‚
+ ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, 0);
+-// \todo check error code
++// Â¥todo check error code
+ 
+ for (i = 0; i < scan_times; ++i) {
+     length_data_size = urg_get_distance(&urg, length_data, NULL);
+-    // \todo process length_data array
++    // Â¥todo process length_data array
+ }
+ return 0;
+ }
+diff --git a/current/dox/get_timestamp.c b/current/dox/get_timestamp.c
+index 17039b5..5c6ff92 100644
+--- a/current/dox/get_timestamp.c
++++ b/current/dox/get_timestamp.c
+@@ -6,25 +6,25 @@ int main(void)
+ urg_t urg;
+ long *length_data = NULL;
+ int ret;
+-// ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ìæ“¾
++// ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã®å–å¾—
+ 
+-// urg_get_distance() ŠÖ”‚É•Ï”‚ğ—^‚¦Aƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾‚·‚éB
++// urg_get_distance() é–¢æ•°ã«å¤‰æ•°ã‚’ä¸ãˆã€ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å–å¾—ã™ã‚‹ã€‚
+ 
+ const int scan_times = 123;
+ int length_data_size;
+ long timestamp;
+ int i;
+ 
+-// ƒZƒ“ƒT‚©‚ç‹——£ƒf[ƒ^‚ğæ“¾‚·‚éB
++// ã‚»ãƒ³ã‚µã‹ã‚‰è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ã€‚
+ ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, 0);
+-// \todo check error code
++// Â¥todo check error code
+ 
+ for (i = 0; i < scan_times; ++i) {
+     length_data_size = urg_get_distance(&urg, length_data, &timestamp);
+-    // \todo process length_data array
++    // Â¥todo process length_data array
+ 
+-    // æ“¾‚µ‚½ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğo—Í‚·‚é
+-    printf("%ld\n", timestamp);
++    // å–å¾—ã—ãŸã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å‡ºåŠ›ã™ã‚‹
++    printf("%ldÂ¥n", timestamp);
+ }
+ return 0;
+ }
+diff --git a/current/dox/set_parameter.c b/current/dox/set_parameter.c
+index 88e43cb..f3c9671 100644
+--- a/current/dox/set_parameter.c
++++ b/current/dox/set_parameter.c
+@@ -12,26 +12,26 @@ int skip_step;
+ int scan_times;
+ int skip_scan;
+ int ret;
+-// Œv‘ªƒpƒ‰ƒ[ƒ^‚Ìİ’è
++// è¨ˆæ¸¬ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
+ 
+-// ƒZƒ“ƒT‚É‘Î‚µ‚ÄÚ‘±‚ğs‚¤B
+-// Ú‘±‚ğs‚¤‚ÆAŒv‘ªƒpƒ‰ƒ[ƒ^‚Ìİ’è‚Í‰Šú‰»‚³‚ê‚é
++// ã‚»ãƒ³ã‚µã«å¯¾ã—ã¦æ¥ç¶šã‚’è¡Œã†ã€‚
++// æ¥ç¶šã‚’è¡Œã†ã¨ã€è¨ˆæ¸¬ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®šã¯åˆæœŸåŒ–ã•ã‚Œã‚‹
+ ret = urg_open(&urg, URG_SERIAL, connect_device, connect_baudrate);
+-// \todo check error code
++// Â¥todo check error code
+ 
+-// Œv‘ª”ÍˆÍ‚ğw’è‚·‚é
+-// ƒZƒ“ƒT³–Ê•ûŒü‚Ì 90 [deg] ”ÍˆÍ‚Ìƒf[ƒ^æ“¾‚ğs‚¢AƒXƒeƒbƒvŠÔˆø‚«‚ğs‚í‚È‚¢—á
++// è¨ˆæ¸¬ç¯„å›²ã‚’æŒ‡å®šã™ã‚‹
++// ã‚»ãƒ³ã‚µæ­£é¢æ–¹å‘ã® 90 [deg] ç¯„å›²ã®ãƒ‡ãƒ¼ã‚¿å–å¾—ã‚’è¡Œã„ã€ã‚¹ãƒ†ãƒƒãƒ—é–“å¼•ãã‚’è¡Œã‚ãªã„ä¾‹
+ first_step = urg_rad2step(&urg, -45);
+ last_step = urg_rad2step(&urg, +45);
+ skip_step = 0;
+ ret = urg_set_scanning_parameter(&urg, first_step, last_step, skip_step);
+-// \todo check error code
++// Â¥todo check error code
+ 
+-// Œv‘ª‰ñ”‚ÆŒv‘ª‚ÌŠÔˆø‚«‚ğw’è‚µ‚ÄAŒv‘ª‚ğŠJn‚·‚é
+-// 123 ‰ñ‚ÌŒv‘ª‚ğw¦‚µAƒXƒLƒƒƒ“‚ÌŠÔˆø‚«‚ğs‚í‚È‚¢—á
++// è¨ˆæ¸¬å›æ•°ã¨è¨ˆæ¸¬ã®é–“å¼•ãã‚’æŒ‡å®šã—ã¦ã€è¨ˆæ¸¬ã‚’é–‹å§‹ã™ã‚‹
++// 123 å›ã®è¨ˆæ¸¬ã‚’æŒ‡ç¤ºã—ã€ã‚¹ã‚­ãƒ£ãƒ³ã®é–“å¼•ãã‚’è¡Œã‚ãªã„ä¾‹
+ scan_times = 123;
+ skip_scan = 0;
+ ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, skip_scan);
+-// \todo check error code
++// Â¥todo check error code
+ return 0;
+ }
+diff --git a/current/include/urg_c/urg_connection.h b/current/include/urg_c/urg_connection.h
+index 865c6e9..59661f6 100644
+--- a/current/include/urg_c/urg_connection.h
++++ b/current/include/urg_c/urg_connection.h
+@@ -2,10 +2,10 @@
+ #define URG_CONNECTION_H
+ 
+ /*!
+-  \file
+-  \brief ’ÊM‚Ìˆ—
++  Â¥file
++  Â¥brief é€šä¿¡ã®å‡¦ç†
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_connection.h,v 1d233c7a2240 2011/02/19 03:08:45 Satofumi $
+ */
+@@ -19,73 +19,73 @@ extern "C" {
+ 
+ 
+ /*!
+-  \brief ’è”’è‹`
++  Â¥brief å®šæ•°å®šç¾©
+ */
+ enum {
+-    URG_CONNECTION_TIMEOUT = -1, //!< ƒ^ƒCƒ€ƒAƒEƒg‚ª”­¶‚µ‚½‚Æ‚«‚Ì–ß‚è’l
++    URG_CONNECTION_TIMEOUT = -1, //!< ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãŒç™ºç”Ÿã—ãŸã¨ãã®æˆ»ã‚Šå€¤
+ };
+ 
+ 
+ /*!
+-  \brief ’ÊMƒ^ƒCƒv
++  Â¥brief é€šä¿¡ã‚¿ã‚¤ãƒ—
+ */
+ typedef enum {
+-    URG_SERIAL,                 //!< ƒVƒŠƒAƒ‹, USB Ú‘±
+-    URG_ETHERNET,               //!< ƒC[ƒT[ƒlƒbƒgÚ‘±
++    URG_SERIAL,                 //!< ã‚·ãƒªã‚¢ãƒ«, USB æ¥ç¶š
++    URG_ETHERNET,               //!< ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆæ¥ç¶š
+ } urg_connection_type_t;
+ 
+ 
+ /*!
+-  \brief ’ÊMƒŠƒ\[ƒX
++  Â¥brief é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
+ */
+ typedef struct
+ {
+-    urg_connection_type_t type; //!< Ú‘±ƒ^ƒCƒv
+-    urg_serial_t serial;        //!< ƒVƒŠƒAƒ‹Ú‘±
+-    urg_tcpclient_t tcpclient;  //!< ƒC[ƒT[ƒlƒbƒgÚ‘±
++    urg_connection_type_t type; //!< æ¥ç¶šã‚¿ã‚¤ãƒ—
++    urg_serial_t serial;        //!< ã‚·ãƒªã‚¢ãƒ«æ¥ç¶š
++    urg_tcpclient_t tcpclient;  //!< ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆæ¥ç¶š
+ } urg_connection_t;
+ 
+ 
+ /*!
+-  \brief Ú‘±
++  Â¥brief æ¥ç¶š
+ 
+-  w’è‚³‚ê‚½ƒfƒoƒCƒX‚ÉÚ‘±‚·‚éB
++  æŒ‡å®šã•ã‚ŒãŸãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶šã™ã‚‹ã€‚
+ 
+-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
+-  \param[in] connection_type Ú‘±ƒ^ƒCƒv
+-  \param[in] device Ú‘±–¼
+-  \param[in] baudrate_or_port ƒ{[ƒŒ[ƒg / ƒ|[ƒg”Ô†
++  Â¥param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
++  Â¥param[in] connection_type æ¥ç¶šã‚¿ã‚¤ãƒ—
++  Â¥param[in] device æ¥ç¶šå
++  Â¥param[in] baudrate_or_port ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆ / ãƒãƒ¼ãƒˆç•ªå·
+ 
+-  \retval 0 ³í
+-  \retval <0 ƒGƒ‰[
++  Â¥retval 0 æ­£å¸¸
++  Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-  connection_type ‚É‚Í
++  connection_type ã«ã¯
+ 
+-  - URG_SERIAL ... ƒVƒŠƒAƒ‹’ÊM
+-  - URG_ETHERNET .. ƒC[ƒT[ƒlƒbƒg’ÊM
++  - URG_SERIAL ... ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
++  - URG_ETHERNET .. ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆé€šä¿¡
+ 
+-  ‚ğw’è‚·‚éB
++  ã‚’æŒ‡å®šã™ã‚‹ã€‚
+ 
+-  device, baudrate_or_port ‚Ìw’è‚Í connection_type ‚É‚æ‚èw’è‚Å‚«‚é’l‚ªˆÙ‚È‚éB
+-  —á‚¦‚ÎAƒVƒŠƒAƒ‹’ÊM‚Ìê‡‚ÍˆÈ‰º‚Ì‚æ‚¤‚É‚È‚éB
++  device, baudrate_or_port ã®æŒ‡å®šã¯ connection_type ã«ã‚ˆã‚ŠæŒ‡å®šã§ãã‚‹å€¤ãŒç•°ãªã‚‹ã€‚
++  ä¾‹ãˆã°ã€ã‚·ãƒªã‚¢ãƒ«é€šä¿¡ã®å ´åˆã¯ä»¥ä¸‹ã®ã‚ˆã†ã«ãªã‚‹ã€‚
+ 
+   Example
+-  \code
++  Â¥code
+   connection_t connection;
+   if (! connection_open(&connection, URG_SERIAL, "COM1", 115200)) {
+       return 1;
+-  } \endcode
++  } Â¥endcode
+ 
+-  ‚Ü‚½AƒC[ƒT[ƒlƒbƒg’ÊM‚Ìê‡‚ÍˆÈ‰º‚Ì‚æ‚¤‚É‚È‚éB
++  ã¾ãŸã€ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆé€šä¿¡ã®å ´åˆã¯ä»¥ä¸‹ã®ã‚ˆã†ã«ãªã‚‹ã€‚
+ 
+   Example
+-  \code
++  Â¥code
+   connection_t connection;
+   if (! connection_open(&connection, URG_ETHERNET, "192.168.0.10", 10940)) {
+       return 1;
+-  } \endcode
++  } Â¥endcode
+ 
+-  \see connection_close()
++  Â¥see connection_close()
+ */
+ extern int connection_open(urg_connection_t *connection,
+                            urg_connection_type_t connection_type,
+@@ -93,98 +93,98 @@ extern int connection_open(urg_connection_t *connection,
+ 
+ 
+ /*!
+-  \brief Ø’f
++  Â¥brief åˆ‡æ–­
+ 
+-  ƒfƒoƒCƒX‚Æ‚ÌÚ‘±‚ğØ’f‚·‚éB
++  ãƒ‡ãƒã‚¤ã‚¹ã¨ã®æ¥ç¶šã‚’åˆ‡æ–­ã™ã‚‹ã€‚
+ 
+-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
++  Â¥param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
+ 
+-  \code
+-  connection_close(&connection); \endcode
++  Â¥code
++  connection_close(&connection); Â¥endcode
+ 
+-  \see connection_open()
++  Â¥see connection_open()
+ */
+ extern void connection_close(urg_connection_t *connection);
+ 
+ 
+-/*! ƒ{[ƒŒ[ƒg‚ğİ’è‚·‚é */
++/*! ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹ */
+ extern int connection_set_baudrate(urg_connection_t *connection, long baudrate);
+ 
+ 
+ /*!
+-  \brief ‘—M
++  Â¥brief é€ä¿¡
+ 
+-  ƒf[ƒ^‚ğ‘—M‚·‚éB
++  ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹ã€‚
+ 
+-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
+-  \param[in] data ‘—Mƒf[ƒ^
+-  \param[in] size ‘—MƒoƒCƒg”
++  Â¥param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
++  Â¥param[in] data é€ä¿¡ãƒ‡ãƒ¼ã‚¿
++  Â¥param[in] size é€ä¿¡ãƒã‚¤ãƒˆæ•°
+ 
+-  \retval >=0 ‘—Mƒf[ƒ^”
+-  \retval <0 ƒGƒ‰[
++  Â¥retval >=0 é€ä¿¡ãƒ‡ãƒ¼ã‚¿æ•°
++  Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+   Example
+-  \code
+-  n = connection_write(&connection, "QT\n", 3); \endcode
++  Â¥code
++  n = connection_write(&connection, "QTÂ¥n", 3); Â¥endcode
+ 
+-  \see connection_read(), connection_readline()
++  Â¥see connection_read(), connection_readline()
+ */
+ extern int connection_write(urg_connection_t *connection,
+                             const char *data, int size);
+ 
+ 
+ /*!
+-  \brief óM
++  Â¥brief å—ä¿¡
+ 
+-  ƒf[ƒ^‚ğóM‚·‚éB
++  ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹ã€‚
+ 
+-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
+-  \param[in] data óMƒf[ƒ^‚ğŠi”[‚·‚éƒoƒbƒtƒ@
+-  \param[in] max_size óMƒf[ƒ^‚ğŠi”[‚Å‚«‚éƒoƒCƒg”
+-  \param[in] timeout ƒ^ƒCƒ€ƒAƒEƒgŠÔ [msec]
++  Â¥param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
++  Â¥param[in] data å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
++  Â¥param[in] max_size å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã§ãã‚‹ãƒã‚¤ãƒˆæ•°
++  Â¥param[in] timeout ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ [msec]
+ 
+-  \retval >=0 óMƒf[ƒ^”
+-  \retval <0 ƒGƒ‰[
++  Â¥retval >=0 å—ä¿¡ãƒ‡ãƒ¼ã‚¿æ•°
++  Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-  timeout ‚É•‰‚Ì’l‚ğw’è‚µ‚½ê‡Aƒ^ƒCƒ€ƒAƒEƒg‚Í”­¶‚µ‚È‚¢B
++  timeout ã«è² ã®å€¤ã‚’æŒ‡å®šã—ãŸå ´åˆã€ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã¯ç™ºç”Ÿã—ãªã„ã€‚
+ 
+-  1 •¶š‚àóM‚µ‚È‚©‚Á‚½‚Æ‚«‚Í #URG_CONNECTION_TIMEOUT ‚ğ•Ô‚·B
++  1 æ–‡å­—ã‚‚å—ä¿¡ã—ãªã‹ã£ãŸã¨ãã¯ #URG_CONNECTION_TIMEOUT ã‚’è¿”ã™ã€‚
+ 
+   Example
+-  \code
++  Â¥code
+ enum {
+     BUFFER_SIZE = 256,
+     TIMEOUT_MSEC = 1000,
+ };
+ char buffer[BUFFER_SIZE];
+-n = connection_read(&connection, buffer, BUFFER_SIZE, TIMEOUT_MSEC); \endcode
++n = connection_read(&connection, buffer, BUFFER_SIZE, TIMEOUT_MSEC); Â¥endcode
+ 
+-  \see connection_write(), connection_readline()
++  Â¥see connection_write(), connection_readline()
+ */
+ extern int connection_read(urg_connection_t *connection,
+                            char *data, int max_size, int timeout);
+ 
+ 
+ /*!
+-  \brief ‰üs•¶š‚Ü‚Å‚ÌóM
++  Â¥brief æ”¹è¡Œæ–‡å­—ã¾ã§ã®å—ä¿¡
+ 
+-  ‰üs•¶š‚Ü‚Å‚Ìƒf[ƒ^‚ğóM‚·‚éB
++  æ”¹è¡Œæ–‡å­—ã¾ã§ã®ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹ã€‚
+ 
+-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
+-  \param[in] data óMƒf[ƒ^‚ğŠi”[‚·‚éƒoƒbƒtƒ@
+-  \param[in] max_size óMƒf[ƒ^‚ğŠi”[‚Å‚«‚éƒoƒCƒg”
+-  \param[in] timeout ƒ^ƒCƒ€ƒAƒEƒgŠÔ [msec]
++  Â¥param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
++  Â¥param[in] data å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
++  Â¥param[in] max_size å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã§ãã‚‹ãƒã‚¤ãƒˆæ•°
++  Â¥param[in] timeout ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ [msec]
+ 
+-  \retval >=0 óMƒf[ƒ^”
+-  \retval <0 ƒGƒ‰[
++  Â¥retval >=0 å—ä¿¡ãƒ‡ãƒ¼ã‚¿æ•°
++  Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-  data ‚É‚ÍA'\\0' I’[‚³‚ê‚½•¶š—ñ‚ª max_size ‚ğ‰z‚¦‚È‚¢ƒoƒCƒg”‚¾‚¯Ši”[‚³‚ê‚éB ‚Â‚Ü‚èAóM‚Å‚«‚é•¶š‚ÌƒoƒCƒg”‚ÍAÅ‘å‚Å max_size - 1 ‚Æ‚È‚éB
++  data ã«ã¯ã€'Â¥Â¥0' çµ‚ç«¯ã•ã‚ŒãŸæ–‡å­—åˆ—ãŒ max_size ã‚’è¶Šãˆãªã„ãƒã‚¤ãƒˆæ•°ã ã‘æ ¼ç´ã•ã‚Œã‚‹ã€‚ ã¤ã¾ã‚Šã€å—ä¿¡ã§ãã‚‹æ–‡å­—ã®ãƒã‚¤ãƒˆæ•°ã¯ã€æœ€å¤§ã§ max_size - 1 ã¨ãªã‚‹ã€‚
+ 
+-  ‰üs•¶š‚Í '\\r' ‚Ü‚½‚Í '\\n' ‚Æ‚·‚éB
++  æ”¹è¡Œæ–‡å­—ã¯ 'Â¥Â¥r' ã¾ãŸã¯ 'Â¥Â¥n' ã¨ã™ã‚‹ã€‚
+ 
+-  óM‚µ‚½Å‰‚Ì•¶š‚ª‰üs‚Ìê‡‚ÍA0 ‚ğ•Ô‚µA1 •¶š‚àóM‚µ‚È‚©‚Á‚½‚Æ‚«‚Í #URG_CONNECTION_TIMEOUT ‚ğ•Ô‚·B
++  å—ä¿¡ã—ãŸæœ€åˆã®æ–‡å­—ãŒæ”¹è¡Œã®å ´åˆã¯ã€0 ã‚’è¿”ã—ã€1 æ–‡å­—ã‚‚å—ä¿¡ã—ãªã‹ã£ãŸã¨ãã¯ #URG_CONNECTION_TIMEOUT ã‚’è¿”ã™ã€‚
+ 
+-  \see connection_write(), connection_read()
++  Â¥see connection_write(), connection_read()
+ */
+ extern int connection_readline(urg_connection_t *connection,
+                                char *data, int max_size, int timeout);
+diff --git a/current/include/urg_c/urg_debug.h b/current/include/urg_c/urg_debug.h
+index 0b79b8e..984dc1d 100644
+--- a/current/include/urg_c/urg_debug.h
++++ b/current/include/urg_c/urg_debug.h
+@@ -2,16 +2,16 @@
+ #define URG_DEBUG_H
+ 
+ /*!
+-  \file
+-  \brief URG debugging functions
++  Â¥file
++  Â¥brief URG debugging functions
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+-  \~japanese
+-  \attention g‚¤•K—v‚Í‚ ‚è‚Ü‚¹‚ñB
++  Â¥â€¾japanese
++  Â¥attention ä½¿ã†å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
+ 
+-  \~english
+-  \attention Don't need to use these functions.
++  Â¥â€¾english
++  Â¥attention Don't need to use these functions.
+ 
+   $Id$
+ */
+@@ -23,15 +23,15 @@ extern "C" {
+ #include "urg_c/urg_sensor.h"
+ 
+ 
+-    /*! \~japanese ƒZƒ“ƒT‚Éƒf[ƒ^‚ğ’¼Ú‘—M‚·‚é */
++    /*! Â¥â€¾japanese ã‚»ãƒ³ã‚µã«ãƒ‡ãƒ¼ã‚¿ã‚’ç›´æ¥é€ä¿¡ã™ã‚‹ */
+     extern int urg_raw_write(urg_t *urg, const char *data, int data_size);
+ 
+ 
+-    /*! \~japanese ƒZƒ“ƒT‚©‚çƒf[ƒ^‚ğ’¼ÚóM‚·‚é */
++    /*! Â¥â€¾japanese ã‚»ãƒ³ã‚µã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’ç›´æ¥å—ä¿¡ã™ã‚‹ */
+     extern int urg_raw_read(urg_t *urg, char *data, int max_data_size,
+                             int timeout);
+ 
+-    /*! \~japanese ƒZƒ“ƒT‚©‚ç‰üs‚Ü‚Å‚Ìƒf[ƒ^‚ğ’¼ÚóM‚·‚é */
++    /*! Â¥â€¾japanese ã‚»ãƒ³ã‚µã‹ã‚‰æ”¹è¡Œã¾ã§ã®ãƒ‡ãƒ¼ã‚¿ã‚’ç›´æ¥å—ä¿¡ã™ã‚‹ */
+     extern int urg_raw_readline(urg_t *urg,char *data, int max_data_size,
+                                 int timeout);
+ 
+diff --git a/current/include/urg_c/urg_detect_os.h b/current/include/urg_c/urg_detect_os.h
+index ab5b6fb..a873788 100644
+--- a/current/include/urg_c/urg_detect_os.h
++++ b/current/include/urg_c/urg_detect_os.h
+@@ -2,10 +2,10 @@
+ #define URG_DETECT_OS_H
+ 
+ /*!
+-  \file
+-  \brief OS ‚ÌŒŸo
++  Â¥file
++  Â¥brief OS ã®æ¤œå‡º
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_detect_os.h,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
+ */
+@@ -21,7 +21,7 @@
+ #define URG_LINUX_OS
+ 
+ #else
+-// ŒŸo‚Å‚«‚È‚¢‚Æ‚«‚ğAMac ˆµ‚¢‚É‚µ‚Ä‚µ‚Ü‚¤
++// æ¤œå‡ºã§ããªã„ã¨ãã‚’ã€Mac æ‰±ã„ã«ã—ã¦ã—ã¾ã†
+ #define URG_MAC_OS
+ #endif
+ 
+diff --git a/current/include/urg_c/urg_errno.h b/current/include/urg_c/urg_errno.h
+index 08cac7d..0c13eaa 100644
+--- a/current/include/urg_c/urg_errno.h
++++ b/current/include/urg_c/urg_errno.h
+@@ -2,10 +2,10 @@
+ #define URG_ERRNO_H
+ 
+ /*!
+-  \file
+-  \brief URG ƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒGƒ‰[’è‹`
++  Â¥file
++  Â¥brief URG ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ã‚¨ãƒ©ãƒ¼å®šç¾©
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+diff --git a/current/include/urg_c/urg_ring_buffer.h b/current/include/urg_c/urg_ring_buffer.h
+index dfe8d77..ee4d319 100644
+--- a/current/include/urg_c/urg_ring_buffer.h
++++ b/current/include/urg_c/urg_ring_buffer.h
+@@ -2,80 +2,80 @@
+ #define URG_RING_BUFFER_H
+ 
+ /*!
+-  \file
+-  \brief ƒŠƒ“ƒOƒoƒbƒtƒ@
++  Â¥file
++  Â¥brief ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+ 
+ 
+-//! ƒŠƒ“ƒOƒoƒbƒtƒ@‚ÌŠÇ—î•ñ
++//! ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ç®¡ç†æƒ…å ±
+ typedef struct
+ {
+-    char *buffer;                 //!< ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
+-    int buffer_size;              //!< ƒoƒbƒtƒ@ƒTƒCƒY
+-    int first;                    //!< ƒoƒbƒtƒ@‚Ìæ“ªˆÊ’u
+-    int last;                     //!< ƒoƒbƒtƒ@‚ÌÅIˆÊ’u
++    char *buffer;                 //!< ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
++    int buffer_size;              //!< ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
++    int first;                    //!< ãƒãƒƒãƒ•ã‚¡ã®å…ˆé ­ä½ç½®
++    int last;                     //!< ãƒãƒƒãƒ•ã‚¡ã®æœ€çµ‚ä½ç½®
+ } ring_buffer_t;
+ 
+ 
+ /*!
+-  \brief ‰Šú‰»
++  Â¥brief åˆæœŸåŒ–
+ 
+-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
+-  \param[in] buffer Š„‚è“–‚Ä‚éƒoƒbƒtƒ@
+-  \param[in] shift_length ƒoƒbƒtƒ@ƒTƒCƒY‚Ì 2 ‚Ìæ”
++  Â¥param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
++  Â¥param[in] buffer å‰²ã‚Šå½“ã¦ã‚‹ãƒãƒƒãƒ•ã‚¡
++  Â¥param[in] shift_length ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã® 2 ã®ä¹—æ•°
+ */
+ extern void ring_initialize(ring_buffer_t *ring,
+                             char *buffer, const int shift_length);
+ 
+ 
+ /*!
+-  \brief ƒŠƒ“ƒOƒoƒbƒtƒ@‚ÌƒNƒŠƒA
++  Â¥brief ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
+ 
+-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
++  Â¥param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
+ */
+ extern void ring_clear(ring_buffer_t *ring);
+ 
+ 
+ /*!
+-  \brief Ši”[ƒf[ƒ^”‚ğ•Ô‚·
++  Â¥brief æ ¼ç´ãƒ‡ãƒ¼ã‚¿æ•°ã‚’è¿”ã™
+ 
+-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
++  Â¥param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
+ */
+ extern int ring_size(const ring_buffer_t *ring);
+ 
+ 
+ /*!
+-  \brief Å‘å‚ÌŠi”[ƒf[ƒ^”‚ğ•Ô‚·
++  Â¥brief æœ€å¤§ã®æ ¼ç´ãƒ‡ãƒ¼ã‚¿æ•°ã‚’è¿”ã™
+ 
+-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
++  Â¥param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
+ */
+ extern int ring_capacity(const ring_buffer_t *ring);
+ 
+ 
+ /*!
+-  \brief ƒf[ƒ^‚ÌŠi”[
++  Â¥brief ãƒ‡ãƒ¼ã‚¿ã®æ ¼ç´
+ 
+-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
+-  \param[in] data ƒf[ƒ^
+-  \param[in] size ƒf[ƒ^ƒTƒCƒY
++  Â¥param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
++  Â¥param[in] data ãƒ‡ãƒ¼ã‚¿
++  Â¥param[in] size ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+ 
+-  \return Ši”[‚µ‚½ƒf[ƒ^”
++  Â¥return æ ¼ç´ã—ãŸãƒ‡ãƒ¼ã‚¿æ•°
+ */
+ extern int ring_write(ring_buffer_t *ring, const char *data, int size);
+ 
+ 
+ /*!
+-  \brief ƒf[ƒ^‚Ìæ‚èo‚µ
++  Â¥brief ãƒ‡ãƒ¼ã‚¿ã®å–ã‚Šå‡ºã—
+ 
+-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
+-  \param[out] buffer ƒf[ƒ^
+-  \param[in] size Å‘å‚Ìƒf[ƒ^ƒTƒCƒY
++  Â¥param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
++  Â¥param[out] buffer ãƒ‡ãƒ¼ã‚¿
++  Â¥param[in] size æœ€å¤§ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+ 
+-  \return æ‚èo‚µ‚½ƒf[ƒ^”
++  Â¥return å–ã‚Šå‡ºã—ãŸãƒ‡ãƒ¼ã‚¿æ•°
+ */
+ extern int ring_read(ring_buffer_t *ring, char *buffer, int size);
+ 
+diff --git a/current/include/urg_c/urg_sensor.h b/current/include/urg_c/urg_sensor.h
+index 018d932..4c7d3e0 100644
+--- a/current/include/urg_c/urg_sensor.h
++++ b/current/include/urg_c/urg_sensor.h
+@@ -2,20 +2,20 @@
+ #define URG_SENSOR_H
+ 
+ /*!
+-  \file
+-  \~japanese
+-  \brief URG ƒZƒ“ƒT§Œä
++  Â¥file
++  Â¥â€¾japanese
++  Â¥brief URG ã‚»ãƒ³ã‚µåˆ¶å¾¡
+ 
+-  URG —p‚ÌŠî–{“I‚ÈŠÖ”‚ğ’ñ‹Ÿ‚µ‚Ü‚·B
++  URG ç”¨ã®åŸºæœ¬çš„ãªé–¢æ•°ã‚’æä¾›ã—ã¾ã™ã€‚
+ 
+ 
+-  \~english
+-  \brief URG sensor
++  Â¥â€¾english
++  Â¥brief URG sensor
+ 
+-  URG —p‚ÌŠî–{“I‚ÈŠÖ”‚ğ’ñ‹Ÿ‚µ‚Ü‚·B
++  URG ç”¨ã®åŸºæœ¬çš„ãªé–¢æ•°ã‚’æä¾›ã—ã¾ã™ã€‚
+ 
+-  \~
+-  \author Satofumi KAMIMURA
++  Â¥â€¾
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_sensor.h,v 540bc11f70c8 2011/05/08 23:04:49 satofumi $
+ */
+@@ -29,45 +29,45 @@ extern "C" {
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief Œv‘ªƒ^ƒCƒv
++      Â¥â€¾japanese
++      Â¥brief è¨ˆæ¸¬ã‚¿ã‚¤ãƒ—
+     */
+     typedef enum {
+-        URG_DISTANCE,           /*!< \~japanese ‹——£ */
+-        URG_DISTANCE_INTENSITY, /*!< \~japanese ‹——£ + ‹­“x */
+-        URG_MULTIECHO,          /*!< \~japanese ƒ}ƒ‹ƒ`ƒGƒR[‚Ì‹——£ */
+-        URG_MULTIECHO_INTENSITY, /*!< \~japanese ƒ}ƒ‹ƒ`ƒGƒR[‚Ì(‹——£ + ‹­“x) */
+-        URG_STOP,                /*!< \~japanese Œv‘ª‚Ì’â~ */
+-        URG_UNKNOWN,             /*!< \~japanese •s–¾ */
++        URG_DISTANCE,           /*!< Â¥â€¾japanese è·é›¢ */
++        URG_DISTANCE_INTENSITY, /*!< Â¥â€¾japanese è·é›¢ + å¼·åº¦ */
++        URG_MULTIECHO,          /*!< Â¥â€¾japanese ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®è·é›¢ */
++        URG_MULTIECHO_INTENSITY, /*!< Â¥â€¾japanese ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®(è·é›¢ + å¼·åº¦) */
++        URG_STOP,                /*!< Â¥â€¾japanese è¨ˆæ¸¬ã®åœæ­¢ */
++        URG_UNKNOWN,             /*!< Â¥â€¾japanese ä¸æ˜ */
+     } urg_measurement_type_t;
+ 
+     /*!
+-      \~japanese
+-      \brief ‹——£‚ğ‰½ byte ‚Å•\Œ»‚·‚é‚©‚Ìw’è
++      Â¥â€¾japanese
++      Â¥brief è·é›¢ã‚’ä½• byte ã§è¡¨ç¾ã™ã‚‹ã‹ã®æŒ‡å®š
+     */
+     typedef enum {
+-        URG_COMMUNICATION_3_BYTE, /*!< \~japanese ‹——£‚ğ 3 byte ‚Å•\Œ»‚·‚é */
+-        URG_COMMUNICATION_2_BYTE, /*!< \~japanese ‹——£‚ğ 2 byte ‚Å•\Œ»‚·‚é */
++        URG_COMMUNICATION_3_BYTE, /*!< Â¥â€¾japanese è·é›¢ã‚’ 3 byte ã§è¡¨ç¾ã™ã‚‹ */
++        URG_COMMUNICATION_2_BYTE, /*!< Â¥â€¾japanese è·é›¢ã‚’ 2 byte ã§è¡¨ç¾ã™ã‚‹ */
+     } urg_range_data_byte_t;
+ 
+ 
+     enum {
+-        URG_SCAN_INFINITY = 0,  /*!< \~japanese –³ŒÀ‰ñ‚Ìƒf[ƒ^æ“¾ */
+-        URG_MAX_ECHO = 3, /*!< \~japanese ƒ}ƒ‹ƒ`ƒGƒR[‚ÌÅ‘åƒGƒR[” */
++        URG_SCAN_INFINITY = 0,  /*!< Â¥â€¾japanese ç„¡é™å›ã®ãƒ‡ãƒ¼ã‚¿å–å¾— */
++        URG_MAX_ECHO = 3, /*!< Â¥â€¾japanese ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®æœ€å¤§ã‚¨ã‚³ãƒ¼æ•° */
+     };
+ 
+ 
+-    /*! \~japanese ƒGƒ‰[ƒnƒ“ƒhƒ‰ \~english error handler */
++    /*! Â¥â€¾japanese ã‚¨ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒ© Â¥â€¾english error handler */
+     typedef urg_measurement_type_t
+     (*urg_error_handler)(const char *status, void *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief URG ƒZƒ“ƒTŠÇ—
++      Â¥â€¾japanese
++      Â¥brief URG ã‚»ãƒ³ã‚µç®¡ç†
+ 
+-      \~english
+-      \brief URG sensor
++      Â¥â€¾english
++      Â¥brief URG sensor
+     */
+     typedef struct
+     {
+@@ -106,29 +106,29 @@ extern "C" {
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief Ú‘±
++      Â¥â€¾japanese
++      Â¥brief æ¥ç¶š
+ 
+-      w’è‚µ‚½ƒfƒoƒCƒX‚ÉÚ‘±‚µA‹——£‚ğŒv‘ª‚Å‚«‚é‚æ‚¤‚É‚·‚éB
++      æŒ‡å®šã—ãŸãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶šã—ã€è·é›¢ã‚’è¨ˆæ¸¬ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[in] connection_type ’ÊMƒ^ƒCƒv
+-      \param[in] device_or_address Ú‘±ƒfƒoƒCƒX–¼
+-      \param[in] baudrate_or_port Ú‘±ƒ{[ƒŒ[ƒg [bps] / TCP/IP ƒ|[ƒg
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[in] connection_type é€šä¿¡ã‚¿ã‚¤ãƒ—
++      Â¥param[in] device_or_address æ¥ç¶šãƒ‡ãƒã‚¤ã‚¹å
++      Â¥param[in] baudrate_or_port æ¥ç¶šãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆ [bps] / TCP/IP ãƒãƒ¼ãƒˆ
+ 
+-      \retval 0 ³í
+-      \retval <0 ƒGƒ‰[
++      Â¥retval 0 æ­£å¸¸
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      connection_type ‚É‚ÍAˆÈ‰º‚Ì€–Ú‚ªw’è‚Å‚«‚Ü‚·B
++      connection_type ã«ã¯ã€ä»¥ä¸‹ã®é …ç›®ãŒæŒ‡å®šã§ãã¾ã™ã€‚
+ 
+       - #URG_SERIAL
+-      - ƒVƒŠƒAƒ‹AUSB Ú‘±
++      - ã‚·ãƒªã‚¢ãƒ«ã€USB æ¥ç¶š
+ 
+       - #URG_ETHERNET
+-      - ƒC[ƒT[ƒlƒbƒgÚ‘±
++      - ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆæ¥ç¶š
+ 
+       Example
+-      \code
++      Â¥code
+       urg_t urg;
+ 
+       if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
+@@ -137,12 +137,12 @@ extern "C" {
+ 
+       ...
+ 
+-      urg_close(&urg); \endcode
++      urg_close(&urg); Â¥endcode
+ 
+-      \attention URG C ƒ‰ƒCƒuƒ‰ƒŠ‚Ì‘¼‚ÌŠÖ”‚ğŒÄ‚Ño‚·‘O‚ÉA‚±‚ÌŠÖ”‚ğŒÄ‚Ño‚·•K—v‚ª‚ ‚è‚Ü‚·B
++      Â¥attention URG C ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ä»–ã®é–¢æ•°ã‚’å‘¼ã³å‡ºã™å‰ã«ã€ã“ã®é–¢æ•°ã‚’å‘¼ã³å‡ºã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+ 
+-      \~
+-      \see urg_close()
++      Â¥â€¾
++      Â¥see urg_close()
+     */
+     extern int urg_open(urg_t *urg, urg_connection_type_t connection_type,
+                         const char *device_or_address,
+@@ -150,177 +150,177 @@ extern "C" {
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief Ø’f
++      Â¥â€¾japanese
++      Â¥brief åˆ‡æ–­
+ 
+-      ƒŒ[ƒU‚ğÁ“”‚µAURG ‚Æ‚ÌÚ‘±‚ğØ’f‚µ‚Ü‚·B
++      ãƒ¬ãƒ¼ã‚¶ã‚’æ¶ˆç¯ã—ã€URG ã¨ã®æ¥ç¶šã‚’åˆ‡æ–­ã—ã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+ 
+-      \~
+-      \see urg_open()
++      Â¥â€¾
++      Â¥see urg_open()
+     */
+     extern void urg_close(urg_t *urg);
+ 
+ 
+     /*!
+-      \brief ƒ^ƒCƒ€ƒAƒEƒgŠÔ‚Ìİ’è
++      Â¥brief ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã®è¨­å®š
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[in] msec ƒ^ƒCƒ€ƒAƒEƒg‚·‚éŠÔ [msec]
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[in] msec ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã™ã‚‹æ™‚é–“ [msec]
+ 
+-      \attention urg_open() ‚ğŒÄ‚Ño‚·‚Æ timeout ‚Ìİ’è’l‚ÍƒfƒtƒHƒ‹ƒg’l‚É‰Šú‰»‚³‚ê‚é‚½‚ßA‚±‚ÌŠÖ”‚Í urg_open() Œã‚ÉŒÄ‚Ño‚·‚±‚ÆB
++      Â¥attention urg_open() ã‚’å‘¼ã³å‡ºã™ã¨ timeout ã®è¨­å®šå€¤ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã«åˆæœŸåŒ–ã•ã‚Œã‚‹ãŸã‚ã€ã“ã®é–¢æ•°ã¯ urg_open() å¾Œã«å‘¼ã³å‡ºã™ã“ã¨ã€‚
+     */
+     extern void urg_set_timeout_msec(urg_t *urg, int msec);
+ 
+ 
+-    /*! \~japanese ƒ^ƒCƒ€ƒXƒ^ƒ“ƒvƒ‚[ƒh‚ÌŠJn */
++    /*! Â¥â€¾japanese ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®é–‹å§‹ */
+     extern int urg_start_time_stamp_mode(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ìæ“¾
++      Â¥â€¾japanese
++      Â¥brief ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã®å–å¾—
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+ 
+-      \retval >=0 ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv [msec]
+-      \retval <0 ƒGƒ‰[
++      Â¥retval >=0 ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ— [msec]
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+       Example
+-      \code
++      Â¥code
+       urg_start_time_stamp_mode(&urg);
+ 
+       before_ticks = get_pc_msec_function();
+       time_stamp = urg_time_stamp(&urg);
+       after_ticks = get_pc_msec_function();
+ 
+-      // ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚É‚Â‚¢‚Ä‚ÌŒvZ
++      // ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã«ã¤ã„ã¦ã®è¨ˆç®—
+       ...
+ 
+-      urg_stop_time_stamp_mode(&urg); \endcode
++      urg_stop_time_stamp_mode(&urg); Â¥endcode
+ 
+-      Ú‚µ‚­‚Í \ref sync_time_stamp.c ‚ğQÆ‚µ‚Ä‰º‚³‚¢B
++      è©³ã—ãã¯ Â¥ref sync_time_stamp.c ã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„ã€‚
+     */
+     extern long urg_time_stamp(urg_t *urg);
+ 
+ 
+-    /*! \~japanese ƒ^ƒCƒ€ƒXƒ^ƒ“ƒvƒ‚[ƒh‚ÌI—¹ */
++    /*! Â¥â€¾japanese ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®çµ‚äº† */
+     extern int urg_stop_time_stamp_mode(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ‹——£ƒf[ƒ^‚Ìæ“¾‚ğŠJn
++      Â¥â€¾japanese
++      Â¥brief è·é›¢ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã‚’é–‹å§‹
+ 
+-      ‹——£ƒf[ƒ^‚Ìæ“¾‚ğŠJn‚µ‚Ü‚·BÀÛ‚Ìƒf[ƒ^‚Í urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity() ‚Åæ“¾‚Å‚«‚Ü‚·B
++      è·é›¢ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã‚’é–‹å§‹ã—ã¾ã™ã€‚å®Ÿéš›ã®ãƒ‡ãƒ¼ã‚¿ã¯ urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity() ã§å–å¾—ã§ãã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[in] type ƒf[ƒ^Eƒ^ƒCƒv
+-      \param[in] scan_times ƒf[ƒ^‚Ìæ“¾‰ñ”
+-      \param[in] skip_scan ƒf[ƒ^‚Ìæ“¾ŠÔŠu
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[in] type ãƒ‡ãƒ¼ã‚¿ãƒ»ã‚¿ã‚¤ãƒ—
++      Â¥param[in] scan_times ãƒ‡ãƒ¼ã‚¿ã®å–å¾—å›æ•°
++      Â¥param[in] skip_scan ãƒ‡ãƒ¼ã‚¿ã®å–å¾—é–“éš”
+ 
+-      \retval 0 ³í
+-      \retval <0 ƒGƒ‰[
++      Â¥retval 0 æ­£å¸¸
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      type ‚É‚Íæ“¾‚·‚éƒf[ƒ^‚Ìí—Ş‚ğw’è‚µ‚Ü‚·B
++      type ã«ã¯å–å¾—ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã®ç¨®é¡ã‚’æŒ‡å®šã—ã¾ã™ã€‚
+ 
+-      - #URG_DISTANCE ... ‹——£ƒf[ƒ^
+-      - #URG_DISTANCE_INTENSITY ... ‹——£ƒf[ƒ^‚Æ‹­“xƒf[ƒ^
+-      - #URG_MULTIECHO ... ƒ}ƒ‹ƒ`ƒGƒR[”Å‚Ì‹——£ƒf[ƒ^
+-      - #URG_MULTIECHO_INTENSITY ... ƒ}ƒ‹ƒ`ƒGƒR[”Å‚Ì(‹——£ƒf[ƒ^‚Æ‹­“xƒf[ƒ^)
++      - #URG_DISTANCE ... è·é›¢ãƒ‡ãƒ¼ã‚¿
++      - #URG_DISTANCE_INTENSITY ... è·é›¢ãƒ‡ãƒ¼ã‚¿ã¨å¼·åº¦ãƒ‡ãƒ¼ã‚¿
++      - #URG_MULTIECHO ... ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ç‰ˆã®è·é›¢ãƒ‡ãƒ¼ã‚¿
++      - #URG_MULTIECHO_INTENSITY ... ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ç‰ˆã®(è·é›¢ãƒ‡ãƒ¼ã‚¿ã¨å¼·åº¦ãƒ‡ãƒ¼ã‚¿)
+ 
+-      scan_times ‚Í‰½‰ñ‚Ìƒf[ƒ^‚ğæ“¾‚·‚é‚©‚ğ 0 ˆÈã‚Ì”‚Åw’è‚µ‚Ü‚·B‚½‚¾‚µA0 ‚Ü‚½‚Í #URG_SCAN_INFINITY ‚ğw’è‚µ‚½ê‡‚ÍA–³ŒÀ‰ñ‚Ìƒf[ƒ^‚ğæ“¾‚µ‚Ü‚·B\n
+-      ŠJn‚µ‚½Œv‘ª‚ğ’†’f‚·‚é‚É‚Í urg_stop_measurement() ‚ğg‚¢‚Ü‚·B
++      scan_times ã¯ä½•å›ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ã‹ã‚’ 0 ä»¥ä¸Šã®æ•°ã§æŒ‡å®šã—ã¾ã™ã€‚ãŸã ã—ã€0 ã¾ãŸã¯ #URG_SCAN_INFINITY ã‚’æŒ‡å®šã—ãŸå ´åˆã¯ã€ç„¡é™å›ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¾ã™ã€‚Â¥n
++      é–‹å§‹ã—ãŸè¨ˆæ¸¬ã‚’ä¸­æ–­ã™ã‚‹ã«ã¯ urg_stop_measurement() ã‚’ä½¿ã„ã¾ã™ã€‚
+ 
+-      skip_scan ‚Íƒ~ƒ‰[‚Ì‰ñ“]”‚Ì‚¤‚¿A‚P‰ñ‚ÌƒXƒLƒƒƒ“Œã‚É‰½‰ñƒXƒLƒƒƒ“‚µ‚È‚¢‚©‚ğw’è‚µ‚Ü‚·Bskip_scan ‚Éw’è‚Å‚«‚é”ÍˆÍ‚Í [0, 9] ‚Å‚·B
++      skip_scan ã¯ãƒŸãƒ©ãƒ¼ã®å›è»¢æ•°ã®ã†ã¡ã€ï¼‘å›ã®ã‚¹ã‚­ãƒ£ãƒ³å¾Œã«ä½•å›ã‚¹ã‚­ãƒ£ãƒ³ã—ãªã„ã‹ã‚’æŒ‡å®šã—ã¾ã™ã€‚skip_scan ã«æŒ‡å®šã§ãã‚‹ç¯„å›²ã¯ [0, 9] ã§ã™ã€‚
+ 
+-      \image html skip_scan_image.png ‰½‰ñ‚É‚P‰ñ‚¾‚¯Œv‘ª‚·‚é‚©
++      Â¥image html skip_scan_image.png ä½•å›ã«ï¼‘å›ã ã‘è¨ˆæ¸¬ã™ã‚‹ã‹
+ 
+-      ‚½‚Æ‚¦‚ÎAƒ~ƒ‰[‚Ì‚P‰ñ“]‚ª 100 [msec] ‚ÌƒZƒ“ƒT‚Å skip_scan ‚É 1 ‚ğw’è‚µ‚½ê‡Aƒf[ƒ^‚Ìæ“¾ŠÔŠu‚Í 200 [msec] ‚É‚È‚è‚Ü‚·B
++      ãŸã¨ãˆã°ã€ãƒŸãƒ©ãƒ¼ã®ï¼‘å›è»¢ãŒ 100 [msec] ã®ã‚»ãƒ³ã‚µã§ skip_scan ã« 1 ã‚’æŒ‡å®šã—ãŸå ´åˆã€ãƒ‡ãƒ¼ã‚¿ã®å–å¾—é–“éš”ã¯ 200 [msec] ã«ãªã‚Šã¾ã™ã€‚
+ 
+       Example
+-      \code
++      Â¥code
+       enum { CAPTURE_TIMES = 10 };
+       urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
+ 
+       for (i = 0; i < CAPTURE_TIMES; ++i) {
+       int n = urg_get_distance(&urg, data, &time_stamp);
+ 
+-      // óM‚µ‚½ƒf[ƒ^‚Ì—˜—p
++      // å—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿ã®åˆ©ç”¨
+       ...
+-      } \endcode
++      } Â¥endcode
+ 
+-      \~
+-      \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
++      Â¥â€¾
++      Â¥see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
+     */
+     extern int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
+                                      int scan_times, int skip_scan);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ‹——£ƒf[ƒ^‚Ìæ“¾
++      Â¥â€¾japanese
++      Â¥brief è·é›¢ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+ 
+-      ƒZƒ“ƒT‚©‚ç‹——£ƒf[ƒ^‚ğæ“¾‚µ‚Ü‚·B–‘O‚É urg_start_measurement() ‚ğ #URG_DISTANCE w’è‚ÅŒÄ‚Ño‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚è‚Ü‚·B
++      ã‚»ãƒ³ã‚µã‹ã‚‰è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¾ã™ã€‚äº‹å‰ã« urg_start_measurement() ã‚’ #URG_DISTANCE æŒ‡å®šã§å‘¼ã³å‡ºã—ã¦ãŠãå¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[out] data ‹——£ƒf[ƒ^ [mm]
+-      \param[out] time_stamp ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv [msec]
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[out] data è·é›¢ãƒ‡ãƒ¼ã‚¿ [mm]
++      Â¥param[out] time_stamp ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ— [msec]
+ 
+-      \retval >=0 óM‚µ‚½ƒf[ƒ^ŒÂ”
+-      \retval <0 ƒGƒ‰[
++      Â¥retval >=0 å—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿å€‹æ•°
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      data ‚É‚ÍAƒZƒ“ƒT‚©‚çæ“¾‚µ‚½‹——£ƒf[ƒ^‚ªŠi”[‚³‚ê‚Ü‚·Bdata ‚Íƒf[ƒ^‚ğŠi”[‚·‚é‚ÌƒTƒCƒY‚ğŠm•Û‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚è‚Ü‚·Bdata ‚ÉŠi”[‚³‚ê‚éƒf[ƒ^”‚Í urg_max_data_size() ‚Åæ“¾‚Å‚«‚Ü‚·B
++      data ã«ã¯ã€ã‚»ãƒ³ã‚µã‹ã‚‰å–å¾—ã—ãŸè·é›¢ãƒ‡ãƒ¼ã‚¿ãŒæ ¼ç´ã•ã‚Œã¾ã™ã€‚data ã¯ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ã®ã‚µã‚¤ã‚ºã‚’ç¢ºä¿ã—ã¦ãŠãå¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚data ã«æ ¼ç´ã•ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿æ•°ã¯ urg_max_data_size() ã§å–å¾—ã§ãã¾ã™ã€‚
+ 
+-      time_stamp ‚É‚ÍAƒZƒ“ƒT“à•”‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ªŠi”[‚³‚ê‚Ü‚·Btime_stamp ‚ğæ“¾‚µ‚½‚­‚È‚¢ê‡ NULL ‚ğw’è‚µ‚Ä‰º‚³‚¢B
++      time_stamp ã«ã¯ã€ã‚»ãƒ³ã‚µå†…éƒ¨ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ãŒæ ¼ç´ã•ã‚Œã¾ã™ã€‚time_stamp ã‚’å–å¾—ã—ãŸããªã„å ´åˆ NULL ã‚’æŒ‡å®šã—ã¦ä¸‹ã•ã„ã€‚
+ 
+       Example
+-      \code
++      Â¥code
+       long *data = (long*)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
+ 
+       ...
+ 
+-      // ƒf[ƒ^‚Ì‚İæ“¾‚·‚é
++      // ãƒ‡ãƒ¼ã‚¿ã®ã¿å–å¾—ã™ã‚‹
+       urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+       int n = urg_get_distance(&urg, data, NULL);
+ 
+       ...
+ 
+-      // ƒf[ƒ^‚Æƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾‚·‚é
++      // ãƒ‡ãƒ¼ã‚¿ã¨ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å–å¾—ã™ã‚‹
+       long time_stamp;
+       urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+-      n = urg_get_distance(&urg, data, &time_stamp); \endcode
++      n = urg_get_distance(&urg, data, &time_stamp); Â¥endcode
+ 
+-      \~
+-      \see urg_start_measurement(), urg_max_data_size()
++      Â¥â€¾
++      Â¥see urg_start_measurement(), urg_max_data_size()
+     */
+     extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp, unsigned long long *system_time_stamp);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ‹——£‚Æ‹­“xƒf[ƒ^‚Ìæ“¾
++      Â¥â€¾japanese
++      Â¥brief è·é›¢ã¨å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+ 
+-      urg_get_distance() ‚É‰Á‚¦A‹­“xƒf[ƒ^‚Ìæ“¾‚ª‚Å‚«‚éŠÖ”‚Å‚·B–‘O‚É urg_start_measurement() ‚ğ #URG_DISTANCE_INTENSITY w’è‚ÅŒÄ‚Ño‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚è‚Ü‚·B
++      urg_get_distance() ã«åŠ ãˆã€å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ãŒã§ãã‚‹é–¢æ•°ã§ã™ã€‚äº‹å‰ã« urg_start_measurement() ã‚’ #URG_DISTANCE_INTENSITY æŒ‡å®šã§å‘¼ã³å‡ºã—ã¦ãŠãå¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[out] data ‹——£ƒf[ƒ^ [mm]
+-      \param[out] intensity ‹­“xƒf[ƒ^
+-      \param[out] time_stamp ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv [msec]
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[out] data è·é›¢ãƒ‡ãƒ¼ã‚¿ [mm]
++      Â¥param[out] intensity å¼·åº¦ãƒ‡ãƒ¼ã‚¿
++      Â¥param[out] time_stamp ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ— [msec]
+ 
+-      \retval >=0 óM‚µ‚½ƒf[ƒ^ŒÂ”
+-      \retval <0 ƒGƒ‰[
++      Â¥retval >=0 å—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿å€‹æ•°
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      ‹­“xƒf[ƒ^‚Æ‚ÍA‹——£ŒvZ‚Ég‚Á‚½”gŒ`‚Ì”½Ë‹­“x‚Å‚ ‚èAƒZƒ“ƒT‚ÌƒVƒŠ[ƒY–ˆ‚É“Á«‚ªˆÙ‚È‚è‚Ü‚·B ‹­“xƒf[ƒ^‚ğg‚¤‚±‚Æ‚ÅA•¨‘Ì‚Ì”½Ë—¦‚âŠÂ‹«‚Ì‘å‚Ü‚©‚È”Z’W‚ğ„‘ª‚Å‚«‚Ü‚·B
++      å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã¨ã¯ã€è·é›¢è¨ˆç®—ã«ä½¿ã£ãŸæ³¢å½¢ã®åå°„å¼·åº¦ã§ã‚ã‚Šã€ã‚»ãƒ³ã‚µã®ã‚·ãƒªãƒ¼ã‚ºæ¯ã«ç‰¹æ€§ãŒç•°ãªã‚Šã¾ã™ã€‚ å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã‚’ä½¿ã†ã“ã¨ã§ã€ç‰©ä½“ã®åå°„ç‡ã‚„ç’°å¢ƒã®å¤§ã¾ã‹ãªæ¿ƒæ·¡ã‚’æ¨æ¸¬ã§ãã¾ã™ã€‚
+ 
+-      data, time_stamp ‚É‚Â‚¢‚Ä‚Í urg_get_distance() ‚Æ“¯‚¶‚Å‚·B
++      data, time_stamp ã«ã¤ã„ã¦ã¯ urg_get_distance() ã¨åŒã˜ã§ã™ã€‚
+ 
+-      intensity ‚É‚ÍAƒZƒ“ƒT‚©‚çæ“¾‚µ‚½‹­“xƒf[ƒ^‚ªŠi”[‚³‚ê‚Ü‚·Bintensity ‚Íƒf[ƒ^‚ğŠi”[‚·‚é‚ÌƒTƒCƒY‚ğŠm•Û‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚è‚Ü‚·Bintensity ‚ÉŠi”[‚³‚ê‚éƒf[ƒ^”‚Í urg_max_data_size() ‚Åæ“¾‚Å‚«‚Ü‚·B
++      intensity ã«ã¯ã€ã‚»ãƒ³ã‚µã‹ã‚‰å–å¾—ã—ãŸå¼·åº¦ãƒ‡ãƒ¼ã‚¿ãŒæ ¼ç´ã•ã‚Œã¾ã™ã€‚intensity ã¯ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ã®ã‚µã‚¤ã‚ºã‚’ç¢ºä¿ã—ã¦ãŠãå¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚intensity ã«æ ¼ç´ã•ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿æ•°ã¯ urg_max_data_size() ã§å–å¾—ã§ãã¾ã™ã€‚
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       int data_size = urg_max_data_size(&urg);
+       long *data = malloc(data_size * sizeof(long));
+       long *intensity = malloc(data_size * sizeof(unsigned short));
+@@ -328,10 +328,10 @@ extern "C" {
+       ...
+ 
+       urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
+-      int n = urg_get_distance_intensity(&urg, data, intesnity, NULLL); \endcode
++      int n = urg_get_distance_intensity(&urg, data, intesnity, NULLL); Â¥endcode
+ 
+-      \~
+-      \see urg_start_measurement(), urg_max_data_size()
++      Â¥â€¾
++      Â¥see urg_start_measurement(), urg_max_data_size()
+     */
+     extern int urg_get_distance_intensity(urg_t *urg, long data[],
+                                           unsigned short intensity[],
+@@ -339,75 +339,75 @@ extern "C" {
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ‹——£ƒf[ƒ^‚Ìæ“¾ (ƒ}ƒ‹ƒ`ƒGƒR[”Å)
++      Â¥â€¾japanese
++      Â¥brief è·é›¢ãƒ‡ãƒ¼ã‚¿ã®å–å¾— (ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ç‰ˆ)
+ 
+-      ƒ}ƒ‹ƒ`ƒGƒR[”Å‚Ì‹——£ƒf[ƒ^æ“¾ŠÖ”‚Å‚·B–‘O‚É urg_start_measurement() ‚ğ #URG_MULTIECHO w’è‚ÅŒÄ‚Ño‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚è‚Ü‚·B
++      ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ç‰ˆã®è·é›¢ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°ã§ã™ã€‚äº‹å‰ã« urg_start_measurement() ã‚’ #URG_MULTIECHO æŒ‡å®šã§å‘¼ã³å‡ºã—ã¦ãŠãå¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[out] data_multi ‹——£ƒf[ƒ^ [mm]
+-      \param[out] time_stamp ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv [msec]
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[out] data_multi è·é›¢ãƒ‡ãƒ¼ã‚¿ [mm]
++      Â¥param[out] time_stamp ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ— [msec]
+ 
+-      \retval >=0 óM‚µ‚½ƒf[ƒ^ŒÂ”
+-      \retval <0 ƒGƒ‰[
++      Â¥retval >=0 å—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿å€‹æ•°
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      ƒ}ƒ‹ƒ`ƒGƒR[‚Æ‚Í•¡”‚Ì‹——£ƒf[ƒ^‚Å‚·B ƒ}ƒ‹ƒ`ƒGƒR[‚ÍA‚P‚Â‚ÌƒŒ[ƒU”­Œõ‚É‚¨‚¢‚Ä•¡”‚Ì‹——£ƒf[ƒ^‚ª“¾‚ç‚ê‚½‚Æ‚«‚É“¾‚ç‚ê‚Ü‚·B
++      ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã¨ã¯è¤‡æ•°ã®è·é›¢ãƒ‡ãƒ¼ã‚¿ã§ã™ã€‚ ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã¯ã€ï¼‘ã¤ã®ãƒ¬ãƒ¼ã‚¶ç™ºå…‰ã«ãŠã„ã¦è¤‡æ•°ã®è·é›¢ãƒ‡ãƒ¼ã‚¿ãŒå¾—ã‚‰ã‚ŒãŸã¨ãã«å¾—ã‚‰ã‚Œã¾ã™ã€‚
+ 
+-      \image html multiecho_image.png ƒ}ƒ‹ƒ`ƒGƒR[‚ÌƒCƒ[ƒW}
++      Â¥image html multiecho_image.png ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®ã‚¤ãƒ¡ãƒ¼ã‚¸å›³
+ 
+-      time_stamp ‚É‚Â‚¢‚Ä‚Í urg_get_distance() ‚Æ“¯‚¶‚Å‚·B
++      time_stamp ã«ã¤ã„ã¦ã¯ urg_get_distance() ã¨åŒã˜ã§ã™ã€‚
+ 
+-      data_multi ‚É‚ÍAƒZƒ“ƒT‚©‚çæ“¾‚µ‚½‹——£ƒf[ƒ^‚ª‚P‚Â‚Ì step ‚ ‚½‚èÅ‘å‚Å #URG_MAX_ECHO (3 ‚Â)Ši”[‚³‚ê‚Ü‚·Bƒ}ƒ‹ƒ`ƒGƒR[‚ª‘¶İ‚µ‚È‚¢€–Ú‚Ìƒf[ƒ^’l‚Í -1 ‚ªŠi”[‚³‚ê‚Ä‚¢‚Ü‚·B
++      data_multi ã«ã¯ã€ã‚»ãƒ³ã‚µã‹ã‚‰å–å¾—ã—ãŸè·é›¢ãƒ‡ãƒ¼ã‚¿ãŒï¼‘ã¤ã® step ã‚ãŸã‚Šæœ€å¤§ã§ #URG_MAX_ECHO (3 ã¤)æ ¼ç´ã•ã‚Œã¾ã™ã€‚ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ãŒå­˜åœ¨ã—ãªã„é …ç›®ã®ãƒ‡ãƒ¼ã‚¿å€¤ã¯ -1 ãŒæ ¼ç´ã•ã‚Œã¦ã„ã¾ã™ã€‚
+ 
+-      \verbatim
+-      data_multi[0] ... step n ‚Ì‹——£ƒf[ƒ^ (1 ‚Â‚ß)
+-      data_multi[1] ... step n ‚Ì‹——£ƒf[ƒ^ (2 ‚Â‚ß)
+-      data_multi[2] ... step n ‚Ì‹——£ƒf[ƒ^ (3 ‚Â‚ß)
+-      data_multi[3] ... step (n + 1) ‚Ì ‹——£ƒf[ƒ^ (1 ‚Â‚ß)
+-      data_multi[4] ... step (n + 1) ‚Ì ‹——£ƒf[ƒ^ (2 ‚Â‚ß)
+-      data_multi[5] ... step (n + 1) ‚Ì ‹——£ƒf[ƒ^ (3 ‚Â‚ß)
+-      ... \endverbatim
++      Â¥verbatim
++      data_multi[0] ... step n ã®è·é›¢ãƒ‡ãƒ¼ã‚¿ (1 ã¤ã‚)
++      data_multi[1] ... step n ã®è·é›¢ãƒ‡ãƒ¼ã‚¿ (2 ã¤ã‚)
++      data_multi[2] ... step n ã®è·é›¢ãƒ‡ãƒ¼ã‚¿ (3 ã¤ã‚)
++      data_multi[3] ... step (n + 1) ã® è·é›¢ãƒ‡ãƒ¼ã‚¿ (1 ã¤ã‚)
++      data_multi[4] ... step (n + 1) ã® è·é›¢ãƒ‡ãƒ¼ã‚¿ (2 ã¤ã‚)
++      data_multi[5] ... step (n + 1) ã® è·é›¢ãƒ‡ãƒ¼ã‚¿ (3 ã¤ã‚)
++      ... Â¥endverbatim
+ 
+-      Ši”[‡‚ÍAŠe step ‚É‚¨‚¢‚Ä urg_get_distance() ‚Ì‚Æ‚«‚Æ“¯‚¶‹——£‚Ìƒf[ƒ^‚ª (3n + 0) ‚ÌˆÊ’u‚ÉŠi”[‚³‚êA‚»‚êˆÈŠO‚Ìƒf[ƒ^‚ª (3n + 1), (3n + 2) ‚ÌˆÊ’u‚É~‡‚ÉŠi”[‚³‚ê‚Ü‚·B\n
+-      ‚Â‚Ü‚è data_multi[3n + 1] >= data_multi[3n + 2] ‚É‚È‚é‚±‚Æ‚Í•ÛØ‚³‚ê‚Ü‚·‚ª data_multi[3n + 0] ‚Æ data_multi[3n + 1] ‚ÌŠÖŒW‚Í–¢’è‹`‚Å‚·B(data_multi[3n + 1] == data_multi[3n + 2] ‚ª¬‚è—§‚Â‚Ì‚Íƒf[ƒ^’l‚ª -1 ‚Ì‚Æ‚«B)
++      æ ¼ç´é †ã¯ã€å„ step ã«ãŠã„ã¦ urg_get_distance() ã®ã¨ãã¨åŒã˜è·é›¢ã®ãƒ‡ãƒ¼ã‚¿ãŒ (3n + 0) ã®ä½ç½®ã«æ ¼ç´ã•ã‚Œã€ãã‚Œä»¥å¤–ã®ãƒ‡ãƒ¼ã‚¿ãŒ (3n + 1), (3n + 2) ã®ä½ç½®ã«é™é †ã«æ ¼ç´ã•ã‚Œã¾ã™ã€‚Â¥n
++      ã¤ã¾ã‚Š data_multi[3n + 1] >= data_multi[3n + 2] ã«ãªã‚‹ã“ã¨ã¯ä¿è¨¼ã•ã‚Œã¾ã™ãŒ data_multi[3n + 0] ã¨ data_multi[3n + 1] ã®é–¢ä¿‚ã¯æœªå®šç¾©ã§ã™ã€‚(data_multi[3n + 1] == data_multi[3n + 2] ãŒæˆã‚Šç«‹ã¤ã®ã¯ãƒ‡ãƒ¼ã‚¿å€¤ãŒ -1 ã®ã¨ãã€‚)
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       long *data_multi = malloc(3 * urg_max_data_size(&urg) * sizeof(long));
+ 
+       ...
+ 
+       urg_start_measurement(&urg, URG_MULTIECHO, 1, 0);
+-      int n = urg_get_distance_intensity(&urg, data_multi, NULLL); \endcode
++      int n = urg_get_distance_intensity(&urg, data_multi, NULLL); Â¥endcode
+ 
+-      \~
+-      \see urg_start_measurement(), urg_max_data_size()
++      Â¥â€¾
++      Â¥see urg_start_measurement(), urg_max_data_size()
+     */
+     extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp, unsigned long long *system_time_stamp);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ‹——£‚Æ‹­“xƒf[ƒ^‚Ìæ“¾ (ƒ}ƒ‹ƒ`ƒGƒR[”Å)
++      Â¥â€¾japanese
++      Â¥brief è·é›¢ã¨å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã®å–å¾— (ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ç‰ˆ)
+ 
+-      urg_get_multiecho() ‚É‰Á‚¦A‹­“xƒf[ƒ^‚Ìæ“¾‚Å‚«‚éŠÖ”‚Å‚·B–‘O‚É urg_start_measurement() ‚ğ #URG_MULTIECHO_INTENSITY w’è‚ÅŒÄ‚Ño‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚è‚Ü‚·B
++      urg_get_multiecho() ã«åŠ ãˆã€å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã§ãã‚‹é–¢æ•°ã§ã™ã€‚äº‹å‰ã« urg_start_measurement() ã‚’ #URG_MULTIECHO_INTENSITY æŒ‡å®šã§å‘¼ã³å‡ºã—ã¦ãŠãå¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[out] data_multi ‹——£ƒf[ƒ^ [mm]
+-      \param[out] intensity_multi ‹­“xƒf[ƒ^
+-      \param[out] time_stamp ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv [msec]
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[out] data_multi è·é›¢ãƒ‡ãƒ¼ã‚¿ [mm]
++      Â¥param[out] intensity_multi å¼·åº¦ãƒ‡ãƒ¼ã‚¿
++      Â¥param[out] time_stamp ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ— [msec]
+ 
+-      \retval >=0 óM‚µ‚½ƒf[ƒ^ŒÂ”
+-      \retval <0 ƒGƒ‰[
++      Â¥retval >=0 å—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿å€‹æ•°
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      data_multi, time_stamp ‚É‚Â‚¢‚Ä‚Í urg_get_multiecho() ‚Æ“¯‚¶‚Å‚·B
++      data_multi, time_stamp ã«ã¤ã„ã¦ã¯ urg_get_multiecho() ã¨åŒã˜ã§ã™ã€‚
+ 
+-      intensity_multi ‚Ìƒf[ƒ^‚Ì•À‚Ñ‚Í data_multi ‚Æ‘Î‰‚µ‚½‚à‚Ì‚É‚È‚è‚Ü‚·Bintensity_multi ‚ÉŠi”[‚³‚ê‚éƒf[ƒ^”‚Í urg_max_data_size() ‚Åæ“¾‚Å‚«‚Ü‚·B
++      intensity_multi ã®ãƒ‡ãƒ¼ã‚¿ã®ä¸¦ã³ã¯ data_multi ã¨å¯¾å¿œã—ãŸã‚‚ã®ã«ãªã‚Šã¾ã™ã€‚intensity_multi ã«æ ¼ç´ã•ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿æ•°ã¯ urg_max_data_size() ã§å–å¾—ã§ãã¾ã™ã€‚
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       int data_size = urg_max_data_size(&urg);
+       long *data_multi = malloc(3 * data_size * sizeof(long));
+       long *intensity_multi = malloc(3 * data_size * sizeof(unsigned short));
+@@ -416,10 +416,10 @@ extern "C" {
+ 
+       urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
+       int n = urg_get_multiecho_intensity(&urg, data_multi,
+-      intesnity_multi, NULLL); \endcode
++      intesnity_multi, NULLL); Â¥endcode
+ 
+-      \~
+-      \see urg_start_measurement(), urg_max_data_size()
++      Â¥â€¾
++      Â¥see urg_start_measurement(), urg_max_data_size()
+     */
+     extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
+                                            unsigned short intensity_multi[],
+@@ -427,259 +427,259 @@ extern "C" {
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief Œv‘ª‚ğ’†’f‚µAƒŒ[ƒU‚ğÁ“”‚³‚¹‚Ü‚·
++      Â¥â€¾japanese
++      Â¥brief è¨ˆæ¸¬ã‚’ä¸­æ–­ã—ã€ãƒ¬ãƒ¼ã‚¶ã‚’æ¶ˆç¯ã•ã›ã¾ã™
+ 
+-      \ref urg_start_measurement() ‚ÌŒv‘ª‚ğ’†’f‚µ‚Ü‚·B
++      Â¥ref urg_start_measurement() ã®è¨ˆæ¸¬ã‚’ä¸­æ–­ã—ã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+ 
+-      \retval 0 ³í
+-      \retval <0 ƒGƒ‰[
++      Â¥retval 0 æ­£å¸¸
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
+       for (int i = 0; i < 10; ++i) {
+       urg_get_distance(&urg, data, NULL);
+       }
+-      urg_stop_measurement(&urg); \endcode
++      urg_stop_measurement(&urg); Â¥endcode
+ 
+-      \~
+-      \see urg_start_measurement()
++      Â¥â€¾
++      Â¥see urg_start_measurement()
+     */
+     extern int urg_stop_measurement(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief Œv‘ª”ÍˆÍ‚ğİ’è‚µ‚Ü‚·
++      Â¥â€¾japanese
++      Â¥brief è¨ˆæ¸¬ç¯„å›²ã‚’è¨­å®šã—ã¾ã™
+ 
+-      ƒZƒ“ƒT‚ªŒv‘ª‚·‚é”ÍˆÍ‚ğ step ’l‚Åw’è‚µ‚Ü‚·Burg_get_distance() ‚È‚Ç‚Ì‹——£ƒf[ƒ^æ“¾‚ÌŠÖ”‚Å•Ô‚³‚ê‚éƒf[ƒ^”‚ÍA‚±‚±‚Åw’è‚µ‚½”ÍˆÍ‚Å§ŒÀ‚³‚ê‚Ü‚·B
++      ã‚»ãƒ³ã‚µãŒè¨ˆæ¸¬ã™ã‚‹ç¯„å›²ã‚’ step å€¤ã§æŒ‡å®šã—ã¾ã™ã€‚urg_get_distance() ãªã©ã®è·é›¢ãƒ‡ãƒ¼ã‚¿å–å¾—ã®é–¢æ•°ã§è¿”ã•ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿æ•°ã¯ã€ã“ã“ã§æŒ‡å®šã—ãŸç¯„å›²ã§åˆ¶é™ã•ã‚Œã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[in] first_step Œv‘ª‚ÌŠJn step
+-      \param[in] last_step Œv‘ª‚ÌI—¹ step
+-      \param[in] skip_step Œv‘ªƒf[ƒ^‚ğƒOƒ‹[ƒsƒ“ƒO‚·‚éŒÂ”
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[in] first_step è¨ˆæ¸¬ã®é–‹å§‹ step
++      Â¥param[in] last_step è¨ˆæ¸¬ã®çµ‚äº† step
++      Â¥param[in] skip_step è¨ˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã‚’ã‚°ãƒ«ãƒ¼ãƒ”ãƒ³ã‚°ã™ã‚‹å€‹æ•°
+ 
+-      \retval 0 ³í
+-      \retval <0 ƒGƒ‰[
++      Â¥retval 0 æ­£å¸¸
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      ƒZƒ“ƒT‚Ì step ‚ÍAƒZƒ“ƒT³–Ê‚ğ 0 ‚Æ‚µAƒZƒ“ƒTã•”‚©‚çŒ©‚Ä”½Œv‚Ü‚í‚è‚ÌŒü‚«‚ª³‚Ì’l‚Æ‚È‚é‡‚ÉŠ„‚èU‚ç‚ê‚Ü‚·B
++      ã‚»ãƒ³ã‚µã® step ã¯ã€ã‚»ãƒ³ã‚µæ­£é¢ã‚’ 0 ã¨ã—ã€ã‚»ãƒ³ã‚µä¸Šéƒ¨ã‹ã‚‰è¦‹ã¦åæ™‚è¨ˆã¾ã‚ã‚Šã®å‘ããŒæ­£ã®å€¤ã¨ãªã‚‹é †ã«å‰²ã‚ŠæŒ¯ã‚‰ã‚Œã¾ã™ã€‚
+ 
+-      \image html sensor_angle_image.png ƒZƒ“ƒT‚Æ step ‚ÌŠÖŒW
++      Â¥image html sensor_angle_image.png ã‚»ãƒ³ã‚µã¨ step ã®é–¢ä¿‚
+ 
+-      step ‚ÌŠÔŠu‚ÆAÅ‘å’lAÅ¬’l‚ÍƒZƒ“ƒTˆË‘¶‚Å‚·Bstep ’l‚ÌÅ‘å’lAÅ¬’l‚Í urg_step_min_max() ‚Åæ“¾‚Å‚«‚Ü‚·B\n
++      step ã®é–“éš”ã¨ã€æœ€å¤§å€¤ã€æœ€å°å€¤ã¯ã‚»ãƒ³ã‚µä¾å­˜ã§ã™ã€‚step å€¤ã®æœ€å¤§å€¤ã€æœ€å°å€¤ã¯ urg_step_min_max() ã§å–å¾—ã§ãã¾ã™ã€‚Â¥n
+ 
+-      first_step, last_step ‚Åƒf[ƒ^‚ÌŒv‘ª”ÍˆÍ‚ğw’è‚µ‚Ü‚·BŒv‘ª”ÍˆÍ‚Í [first_step, last_step] ‚Æ‚È‚è‚Ü‚·B
++      first_step, last_step ã§ãƒ‡ãƒ¼ã‚¿ã®è¨ˆæ¸¬ç¯„å›²ã‚’æŒ‡å®šã—ã¾ã™ã€‚è¨ˆæ¸¬ç¯„å›²ã¯ [first_step, last_step] ã¨ãªã‚Šã¾ã™ã€‚
+ 
+-      skip_step ‚ÍAŒv‘ªƒf[ƒ^‚ğƒOƒ‹[ƒsƒ“ƒO‚·‚éŒÂ”‚ğw’è‚µ‚Ü‚·Bw’è‚Å‚«‚é’l‚Í [0, 99] ‚Å‚·B\n
+-      skip_step ‚ÍAw’è‚³‚ê‚½”‚Ìƒf[ƒ^‚ğ 1 ‚Â‚É‚Ü‚Æ‚ß‚é‚±‚Æ‚ÅAƒZƒ“ƒT‚©‚çóM‚·‚éƒf[ƒ^—Ê‚ğŒ¸‚ç‚µA‹——£æ“¾‚ğs‚¤ŠÖ”‚Ì‰“š«‚ğ‚‚ß‚é‚Æ‚«‚Ég‚¢‚Ü‚·B‚½‚¾‚µAƒf[ƒ^‚ğ‚Ü‚Æ‚ß‚é‚½‚ßA“¾‚ç‚ê‚éƒf[ƒ^‚Ì•ª‰ğ”\‚ÍŒ¸‚è‚Ü‚·B
++      skip_step ã¯ã€è¨ˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã‚’ã‚°ãƒ«ãƒ¼ãƒ”ãƒ³ã‚°ã™ã‚‹å€‹æ•°ã‚’æŒ‡å®šã—ã¾ã™ã€‚æŒ‡å®šã§ãã‚‹å€¤ã¯ [0, 99] ã§ã™ã€‚Â¥n
++      skip_step ã¯ã€æŒ‡å®šã•ã‚ŒãŸæ•°ã®ãƒ‡ãƒ¼ã‚¿ã‚’ 1 ã¤ã«ã¾ã¨ã‚ã‚‹ã“ã¨ã§ã€ã‚»ãƒ³ã‚µã‹ã‚‰å—ä¿¡ã™ã‚‹ãƒ‡ãƒ¼ã‚¿é‡ã‚’æ¸›ã‚‰ã—ã€è·é›¢å–å¾—ã‚’è¡Œã†é–¢æ•°ã®å¿œç­”æ€§ã‚’é«˜ã‚ã‚‹ã¨ãã«ä½¿ã„ã¾ã™ã€‚ãŸã ã—ã€ãƒ‡ãƒ¼ã‚¿ã‚’ã¾ã¨ã‚ã‚‹ãŸã‚ã€å¾—ã‚‰ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿ã®åˆ†è§£èƒ½ã¯æ¸›ã‚Šã¾ã™ã€‚
+ 
+-      —á‚¦‚ÎˆÈ‰º‚Ì‚æ‚¤‚È‹——£ƒf[ƒ^‚ª“¾‚ç‚ê‚éê‡‚É
+-      \verbatim
++      ä¾‹ãˆã°ä»¥ä¸‹ã®ã‚ˆã†ãªè·é›¢ãƒ‡ãƒ¼ã‚¿ãŒå¾—ã‚‰ã‚Œã‚‹å ´åˆã«
++      Â¥verbatim
+       100, 101, 102, 103, 104, 105, 106, 107, 108, 109
+-      \endverbatim
++      Â¥endverbatim
+ 
+-      skip_step ‚É 2 ‚ğw’è‚·‚é‚ÆA“¾‚ç‚ê‚éƒf[ƒ^‚Í
+-      \verbatim
+-      \endverbatim
++      skip_step ã« 2 ã‚’æŒ‡å®šã™ã‚‹ã¨ã€å¾—ã‚‰ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿ã¯
++      Â¥verbatim
++      Â¥endverbatim
+ 
+-      ƒf[ƒ^‚ÍA‚Ü‚Æ‚ß‚éƒf[ƒ^‚Ì‚¤‚¿Aˆê”Ô¬‚³‚È’l‚Ìƒf[ƒ^‚ª—p‚¢‚ç‚ê‚Ü‚·B
++      ãƒ‡ãƒ¼ã‚¿ã¯ã€ã¾ã¨ã‚ã‚‹ãƒ‡ãƒ¼ã‚¿ã®ã†ã¡ã€ä¸€ç•ªå°ã•ãªå€¤ã®ãƒ‡ãƒ¼ã‚¿ãŒç”¨ã„ã‚‰ã‚Œã¾ã™ã€‚
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       urg_set_scanning_parameter(&urg, urg_deg2step(&urg, -45),
+       urg_deg2step(&urg, +45), 1);
+       urg_start_measurement(&urg, URG_DISTANCE, 0);
+       int n = urg_get_distance(&urg, data, NULL);
+       for (int i = 0; i < n; ++i) {
+-      printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
+-      } \endcode
++      printf("%d [mm], %d [deg]Â¥n", data[i], urg_index2deg(&urg, i));
++      } Â¥endcode
+ 
+-      \~
+-      \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
++      Â¥â€¾
++      Â¥see urg_step_min_max(), urg_rad2step(), urg_deg2step()
+     */
+     extern int urg_set_scanning_parameter(urg_t *urg, int first_step,
+                                           int last_step, int skip_step);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ’ÊMƒf[ƒ^‚ÌƒTƒCƒY•ÏX
++      Â¥â€¾japanese
++      Â¥brief é€šä¿¡ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚ºå¤‰æ›´
+ 
+-      ‹——£ƒf[ƒ^‚ğƒZƒ“ƒT‚©‚çóM‚ÌÛ‚Ìƒf[ƒ^ƒTƒCƒY‚ğ•ÏX‚µ‚Ü‚·B
++      è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒ³ã‚µã‹ã‚‰å—ä¿¡ã®éš›ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã‚’å¤‰æ›´ã—ã¾ã™ã€‚
+ 
+-      \param[in,out] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[in] data_byte ‹——£’l‚ğ•\Œ»‚·‚éƒf[ƒ^‚ÌƒoƒCƒg”
++      Â¥param[in,out] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[in] data_byte è·é›¢å€¤ã‚’è¡¨ç¾ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒˆæ•°
+ 
+-      \retval 0 ¬Œ÷
+-      \retval <0 ƒGƒ‰[
++      Â¥retval 0 æˆåŠŸ
++      Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ 
+-      data_byte ‚É‚Í
++      data_byte ã«ã¯
+ 
+-      - URG_COMMUNICATION_3_BYTE ... ‹——£‚ğ 3 byte ‚Å•\Œ»‚·‚é
+-      - URG_COMMUNICATION_2_BYTE ... ‹——£‚ğ 2 byte ‚Å•\Œ»‚·‚é
++      - URG_COMMUNICATION_3_BYTE ... è·é›¢ã‚’ 3 byte ã§è¡¨ç¾ã™ã‚‹
++      - URG_COMMUNICATION_2_BYTE ... è·é›¢ã‚’ 2 byte ã§è¡¨ç¾ã™ã‚‹
+ 
+-      ‚ğw’è‚Å‚«‚Ü‚·B\n
+-      ‰Šúó‘Ô‚Å‚Í‹——£‚ğ 3 byte ‚Å•\Œ»‚·‚é‚æ‚¤‚É‚È‚Á‚Ä‚¢‚Ü‚·B‚±‚Ìİ’è‚ğ 2 byte ‚Éİ’è‚·‚é‚±‚Æ‚ÅAƒZƒ“ƒT‚©‚çóM‚·‚éƒf[ƒ^”‚Í 2/3 ‚É‚È‚è‚Ü‚·B‚½‚¾‚µAæ“¾‚Å‚«‚é‹——£‚ÌÅ‘å’l‚ª 4095 ‚É‚È‚é‚½‚ßAŠÏ‘ª‚µ‚½‚¢‘ÎÛ‚ª 4 [m] ˆÈ“à‚Ì”ÍˆÍ‚É‘¶İ‚·‚éê‡‚Ì‚İ—˜—p‚µ‚Ä‰º‚³‚¢B
++      ã‚’æŒ‡å®šã§ãã¾ã™ã€‚Â¥n
++      åˆæœŸçŠ¶æ…‹ã§ã¯è·é›¢ã‚’ 3 byte ã§è¡¨ç¾ã™ã‚‹ã‚ˆã†ã«ãªã£ã¦ã„ã¾ã™ã€‚ã“ã®è¨­å®šã‚’ 2 byte ã«è¨­å®šã™ã‚‹ã“ã¨ã§ã€ã‚»ãƒ³ã‚µã‹ã‚‰å—ä¿¡ã™ã‚‹ãƒ‡ãƒ¼ã‚¿æ•°ã¯ 2/3 ã«ãªã‚Šã¾ã™ã€‚ãŸã ã—ã€å–å¾—ã§ãã‚‹è·é›¢ã®æœ€å¤§å€¤ãŒ 4095 ã«ãªã‚‹ãŸã‚ã€è¦³æ¸¬ã—ãŸã„å¯¾è±¡ãŒ 4 [m] ä»¥å†…ã®ç¯„å›²ã«å­˜åœ¨ã™ã‚‹å ´åˆã®ã¿åˆ©ç”¨ã—ã¦ä¸‹ã•ã„ã€‚
+     */
+     extern int urg_set_communication_data_size(urg_t *urg,
+                                                urg_range_data_byte_t data_byte);
+ 
+ 
+-    /*! \~japanese ƒŒ[ƒU‚ğ”­Œõ‚³‚¹‚é */
++    /*! Â¥â€¾japanese ãƒ¬ãƒ¼ã‚¶ã‚’ç™ºå…‰ã•ã›ã‚‹ */
+     extern int urg_laser_on(urg_t *urg);
+ 
+ 
+-    /*! \~japanese ƒŒ[ƒU‚ğÁ“”‚·‚é */
++    /*! Â¥â€¾japanese ãƒ¬ãƒ¼ã‚¶ã‚’æ¶ˆç¯ã™ã‚‹ */
+     extern int urg_laser_off(urg_t *urg);
+ 
+ 
+-    /*! \~japanese ƒZƒ“ƒT‚ğÄ‹N“®‚·‚é */
++    /*! Â¥â€¾japanese ã‚»ãƒ³ã‚µã‚’å†èµ·å‹•ã™ã‚‹ */
+     extern int urg_reboot(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒT‚ğ’áÁ”ï“d—Í‚Ìó‘Ô‚É‘JˆÚ‚³‚¹‚é
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µã‚’ä½æ¶ˆè²»é›»åŠ›ã®çŠ¶æ…‹ã«é·ç§»ã•ã›ã‚‹
+ 
+-      ’áÁ”ï“d—Í‚Ìƒ‚[ƒh‚Å‚ÍAƒXƒLƒƒƒi‚Ì‰ñ“]‚ª’â~‚µŒv‘ª‚à’†’f‚³‚ê‚Ü‚·B
++      ä½æ¶ˆè²»é›»åŠ›ã®ãƒ¢ãƒ¼ãƒ‰ã§ã¯ã€ã‚¹ã‚­ãƒ£ãƒŠã®å›è»¢ãŒåœæ­¢ã—è¨ˆæ¸¬ã‚‚ä¸­æ–­ã•ã‚Œã¾ã™ã€‚
+ 
+-      - ’áÁ”ï“d—Í‚Ìƒ‚[ƒh
+-        - ƒŒ[ƒU‚ªÁ“”‚µ‚ÄŒv‘ª‚ª’†’f‚³‚ê‚éB
+-        - ƒXƒLƒƒƒi‚Ì‰ñ“]‚ª’â~‚·‚éB
++      - ä½æ¶ˆè²»é›»åŠ›ã®ãƒ¢ãƒ¼ãƒ‰
++        - ãƒ¬ãƒ¼ã‚¶ãŒæ¶ˆç¯ã—ã¦è¨ˆæ¸¬ãŒä¸­æ–­ã•ã‚Œã‚‹ã€‚
++        - ã‚¹ã‚­ãƒ£ãƒŠã®å›è»¢ãŒåœæ­¢ã™ã‚‹ã€‚
+ 
+-      ’áÁ”ï“d—Í‚Ìƒ‚[ƒh‚©‚ç”²‚¯‚é‚½‚ß‚É‚Í \ref urg_wakeup() ŠÖ”‚ğŒÄ‚Ño‚µ‚Ä‰º‚³‚¢B
++      ä½æ¶ˆè²»é›»åŠ›ã®ãƒ¢ãƒ¼ãƒ‰ã‹ã‚‰æŠœã‘ã‚‹ãŸã‚ã«ã¯ Â¥ref urg_wakeup() é–¢æ•°ã‚’å‘¼ã³å‡ºã—ã¦ä¸‹ã•ã„ã€‚
+ 
+-      \see urg_wakeup()
++      Â¥see urg_wakeup()
+     */
+     extern void urg_sleep(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒT‚ğ’áÁ”ï“d—Í‚Ìƒ‚[ƒh‚©‚ç’Êí‚Ìó‘Ô‚É‘JˆÚ‚³‚¹‚é
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µã‚’ä½æ¶ˆè²»é›»åŠ›ã®ãƒ¢ãƒ¼ãƒ‰ã‹ã‚‰é€šå¸¸ã®çŠ¶æ…‹ã«é·ç§»ã•ã›ã‚‹
+ 
+-      \see urg_sleep()
++      Â¥see urg_sleep()
+     */
+     extern void urg_wakeup(urg_t *urg);
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒT‚ªŒv‘ª‚Å‚«‚éó‘Ô‚©‚ğ•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µãŒè¨ˆæ¸¬ã§ãã‚‹çŠ¶æ…‹ã‹ã‚’è¿”ã™
+ 
+-      \retval 1 ƒZƒ“ƒT‚ªŒv‘ª‚Å‚«‚éó‘Ô‚É‚ ‚é
+-      \retval 0 ƒZƒ“ƒT‚ªŒv‘ª‚Å‚«‚éó‘Ô‚É‚È‚¢
++      Â¥retval 1 ã‚»ãƒ³ã‚µãŒè¨ˆæ¸¬ã§ãã‚‹çŠ¶æ…‹ã«ã‚ã‚‹
++      Â¥retval 0 ã‚»ãƒ³ã‚µãŒè¨ˆæ¸¬ã§ãã‚‹çŠ¶æ…‹ã«ãªã„
+ 
+-      ‹N“®’¼Œã‚ÅƒXƒLƒƒƒi‚Ì‰ñ“]‚ªˆÀ’è‚µ‚Ä‚¢‚È‚¢ê‡‚âA‰½‚ç‚©‚ÌƒGƒ‰[‚ÅŒv‘ª‚Å‚«‚È‚¢ê‡A‚±‚ÌŠÖ”‚Í 0 ‚ğ•Ô‚µ‚Ü‚·B
++      èµ·å‹•ç›´å¾Œã§ã‚¹ã‚­ãƒ£ãƒŠã®å›è»¢ãŒå®‰å®šã—ã¦ã„ãªã„å ´åˆã‚„ã€ä½•ã‚‰ã‹ã®ã‚¨ãƒ©ãƒ¼ã§è¨ˆæ¸¬ã§ããªã„å ´åˆã€ã“ã®é–¢æ•°ã¯ 0 ã‚’è¿”ã—ã¾ã™ã€‚
+     */
+     extern int urg_is_stable(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒTŒ^®‚ğ•¶š—ñ‚Å•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µå‹å¼ã‚’æ–‡å­—åˆ—ã§è¿”ã™
+ 
+-      ƒZƒ“ƒT‚ÌŒ^®‚ğ•¶š—ñ‚Å•Ô‚·B•Ô‚³‚ê‚é•¶š—ñ‚ÍƒZƒ“ƒTˆË‘¶‚Æ‚È‚éB
++      ã‚»ãƒ³ã‚µã®å‹å¼ã‚’æ–‡å­—åˆ—ã§è¿”ã™ã€‚è¿”ã•ã‚Œã‚‹æ–‡å­—åˆ—ã¯ã‚»ãƒ³ã‚µä¾å­˜ã¨ãªã‚‹ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+ 
+-      \return ƒZƒ“ƒTŒ^®‚Ì•¶š—ñ
++      Â¥return ã‚»ãƒ³ã‚µå‹å¼ã®æ–‡å­—åˆ—
+     */
+     extern const char *urg_sensor_product_type(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒT‚ÌƒVƒŠƒAƒ‹ ID •¶š—ñ‚ğ•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µã®ã‚·ãƒªã‚¢ãƒ« ID æ–‡å­—åˆ—ã‚’è¿”ã™
+ 
+-      ƒZƒ“ƒT‚ÌƒVƒŠƒAƒ‹ ID •¶š—ñ‚ğ•Ô‚·B•Ô‚³‚ê‚é•¶š—ñ‚ÍƒZƒ“ƒTˆË‘¶‚Æ‚È‚éB
++      ã‚»ãƒ³ã‚µã®ã‚·ãƒªã‚¢ãƒ« ID æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚è¿”ã•ã‚Œã‚‹æ–‡å­—åˆ—ã¯ã‚»ãƒ³ã‚µä¾å­˜ã¨ãªã‚‹ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+ 
+-      \return ƒVƒŠƒAƒ‹ ID •¶š—ñ
++      Â¥return ã‚·ãƒªã‚¢ãƒ« ID æ–‡å­—åˆ—
+     */
+     extern const char *urg_sensor_serial_id(urg_t *urg);
+ 
+     /*!
+-      \brief returns the vendor name
++      Â¥brief returns the vendor name
+ 
+-      \param[in] URG
++      Â¥param[in] URG
+ 
+-      \return The vendor name
++      Â¥return The vendor name
+     */
+     extern const char *urg_sensor_vendor(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒT‚Ìƒo[ƒWƒ‡ƒ“•¶š—ñ‚ğ•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æ–‡å­—åˆ—ã‚’è¿”ã™
+ 
+-      ƒZƒ“ƒT‚Ìƒ\ƒtƒgƒEƒFƒAEƒo[ƒWƒ‡ƒ“•¶š—ñ‚ğ•Ô‚·B•Ô‚³‚ê‚é•¶š—ñ‚ÍƒZƒ“ƒTˆË‘¶‚Æ‚È‚éB
++      ã‚»ãƒ³ã‚µã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ãƒ»ãƒãƒ¼ã‚¸ãƒ§ãƒ³æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚è¿”ã•ã‚Œã‚‹æ–‡å­—åˆ—ã¯ã‚»ãƒ³ã‚µä¾å­˜ã¨ãªã‚‹ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+ 
+-      \return ƒo[ƒWƒ‡ƒ“•¶š—ñ
++      Â¥return ãƒãƒ¼ã‚¸ãƒ§ãƒ³æ–‡å­—åˆ—
+     */
+     extern const char *urg_sensor_firmware_version(urg_t *urg);
+ 
+     extern const char *urg_sensor_firmware_date(urg_t *urg);
+ 
+     /*!
+-      \brief returns the protocol version
++      Â¥brief returns the protocol version
+ 
+-      \param[in] URG
++      Â¥param[in] URG
+ 
+-      \return The current protocol version
++      Â¥return The current protocol version
+     */
+     extern const char *urg_sensor_protocol_version(urg_t *urg);
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒT‚ÌƒXƒe[ƒ^ƒX•¶š—ñ‚ğ•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ–‡å­—åˆ—ã‚’è¿”ã™
+ 
+-      ƒZƒ“ƒT‚ÌƒXƒe[ƒ^ƒX•¶š—ñ‚ğ•Ô‚·B•Ô‚³‚ê‚é•¶š—ñ‚ÍƒZƒ“ƒTˆË‘¶‚Æ‚È‚éB
++      ã‚»ãƒ³ã‚µã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚è¿”ã•ã‚Œã‚‹æ–‡å­—åˆ—ã¯ã‚»ãƒ³ã‚µä¾å­˜ã¨ãªã‚‹ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
+-      \return ƒXƒe[ƒ^ƒX•¶š—ñ
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥return ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ–‡å­—åˆ—
+     */
+     extern const char *urg_sensor_status(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒT‚Ìó‘Ô‚ğ•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µã®çŠ¶æ…‹ã‚’è¿”ã™
+ 
+-      ƒZƒ“ƒT‚ÌƒXƒe[ƒ^ƒX•¶š—ñ‚ğ•Ô‚·B•Ô‚³‚ê‚é•¶š—ñ‚ÍƒZƒ“ƒTˆË‘¶‚Æ‚È‚éB
++      ã‚»ãƒ³ã‚µã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚è¿”ã•ã‚Œã‚‹æ–‡å­—åˆ—ã¯ã‚»ãƒ³ã‚µä¾å­˜ã¨ãªã‚‹ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
+-      \return ó‘Ô‚ğ¦‚·•¶š—ñ
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥return çŠ¶æ…‹ã‚’ç¤ºã™æ–‡å­—åˆ—
+ 
+-      \attention ó‘Ô‚É‚Â‚¢‚Ä‚Í SCIP ‚Ì’ÊMd—l‘‚ğQÆ‚Ì‚±‚ÆB
++      Â¥attention çŠ¶æ…‹ã«ã¤ã„ã¦ã¯ SCIP ã®é€šä¿¡ä»•æ§˜æ›¸ã‚’å‚ç…§ã®ã“ã¨ã€‚
+     */
+     extern const char *urg_sensor_state(urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief Œv‘ª—p‚ÌƒGƒ‰[ƒnƒ“ƒhƒ‰‚ğ“o˜^‚·‚é
++      Â¥â€¾japanese
++      Â¥brief è¨ˆæ¸¬ç”¨ã®ã‚¨ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒ©ã‚’ç™»éŒ²ã™ã‚‹
+ 
+-      ƒGƒ‰[ƒnƒ“ƒhƒ‰‚Í Gx, Mx Œn‚ÌƒRƒ}ƒ“ƒh‚Ì‰“š‚ª "00" ‚© "99" ˆÈŠO‚Ì‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚éB
++      ã‚¨ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒ©ã¯ Gx, Mx ç³»ã®ã‚³ãƒãƒ³ãƒ‰ã®å¿œç­”ãŒ "00" ã‹ "99" ä»¥å¤–ã®ã¨ãã«å‘¼ã³å‡ºã•ã‚Œã‚‹ã€‚
+     */
+     extern void urg_set_error_handler(urg_t *urg, urg_error_handler handler);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief SCIP •¶š—ñ‚ÌƒfƒR[ƒh‚ğs‚¤
++      Â¥â€¾japanese
++      Â¥brief SCIP æ–‡å­—åˆ—ã®ãƒ‡ã‚³ãƒ¼ãƒ‰ã‚’è¡Œã†
+ 
+-      \param[in] data SCIP •¶š—ñ
+-      \param[in] data ‚Ì byte ƒTƒCƒY
++      Â¥param[in] data SCIP æ–‡å­—åˆ—
++      Â¥param[in] data ã® byte ã‚µã‚¤ã‚º
+ 
+-      \retval ƒfƒR[ƒhŒã‚Ì”’l
++      Â¥retval ãƒ‡ã‚³ãƒ¼ãƒ‰å¾Œã®æ•°å€¤
+     */
+     extern long urg_scip_decode(const char data[], int size);
+ 
+diff --git a/current/include/urg_c/urg_serial.h b/current/include/urg_c/urg_serial.h
+index 3ac5ec7..417df86 100644
+--- a/current/include/urg_c/urg_serial.h
++++ b/current/include/urg_c/urg_serial.h
+@@ -2,10 +2,10 @@
+ #define URG_SERIAL_H
+ 
+ /*!
+-  \file
+-  \brief ƒVƒŠƒAƒ‹’ÊM
++  Â¥file
++  Â¥brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_serial.h,v 1d233c7a2240 2011/02/19 03:08:45 Satofumi $
+ */
+@@ -36,51 +36,51 @@ enum {
+ };
+ 
+ 
+-//! ƒVƒŠƒAƒ‹’ÊM—p
++//! ã‚·ãƒªã‚¢ãƒ«é€šä¿¡ç”¨
+ typedef struct
+ {
+ #if defined(URG_WINDOWS_OS)
+-    HANDLE hCom;                /*!< Ú‘±ƒŠƒ\[ƒX */
+-    int current_timeout;        /*!< ƒ^ƒCƒ€ƒAƒEƒg‚Ìİ’èŠÔ [msec] */
++    HANDLE hCom;                /*!< æ¥ç¶šãƒªã‚½ãƒ¼ã‚¹ */
++    int current_timeout;        /*!< ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®è¨­å®šæ™‚é–“ [msec] */
+ #else
+-    int fd;                     /*!< ƒtƒ@ƒCƒ‹ƒfƒBƒXƒNƒŠƒvƒ^*/
+-    struct termios sio;         /*!< ’ÊMİ’è */
++    int fd;                     /*!< ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿*/
++    struct termios sio;         /*!< é€šä¿¡è¨­å®š */
+ #endif
+ 
+-    ring_buffer_t ring;         /*!< ƒŠƒ“ƒOƒoƒbƒtƒ@ */
+-    char buffer[RING_BUFFER_SIZE]; /*!< ƒoƒbƒtƒ@—Ìˆæ */
+-    char has_last_ch;          /*!< ‘‚«–ß‚µ‚½•¶š‚ª‚ ‚é‚©‚Ìƒtƒ‰ƒO */
+-    char last_ch;              /*!< ‘‚«–ß‚µ‚½‚P•¶š */
++    ring_buffer_t ring;         /*!< ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ */
++    char buffer[RING_BUFFER_SIZE]; /*!< ãƒãƒƒãƒ•ã‚¡é ˜åŸŸ */
++    char has_last_ch;          /*!< æ›¸ãæˆ»ã—ãŸæ–‡å­—ãŒã‚ã‚‹ã‹ã®ãƒ•ãƒ©ã‚° */
++    char last_ch;              /*!< æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­— */
+ } urg_serial_t;
+ 
+ 
+-//! Ú‘±‚ğŠJ‚­
++//! æ¥ç¶šã‚’é–‹ã
+ extern int serial_open(urg_serial_t *serial, const char *device, long baudrate);
+ 
+ 
+-//! Ú‘±‚ğ•Â‚¶‚é
++//! æ¥ç¶šã‚’é–‰ã˜ã‚‹
+ extern void serial_close(urg_serial_t *serial);
+ 
+ 
+-//! ƒ{[ƒŒ[ƒg‚ğİ’è‚·‚é
++//! ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹
+ extern int serial_set_baudrate(urg_serial_t *serial, long baudrate);
+ 
+ 
+-//! ƒf[ƒ^‚ğ‘—M‚·‚é
++//! ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹
+ extern int serial_write(urg_serial_t *serial, const char *data, int size);
+ 
+ 
+-//! ƒf[ƒ^‚ğóM‚·‚é
++//! ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹
+ extern int serial_read(urg_serial_t *serial,
+                        char *data, int max_size, int timeout);
+ 
+ 
+-//! ‰üs‚Ü‚Å‚Ìƒf[ƒ^‚ğóM‚·‚é
++//! æ”¹è¡Œã¾ã§ã®ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹
+ extern int serial_readline(urg_serial_t *serial,
+                            char *data, int max_size, int timeout);
+ 
+ 
+-//! ƒGƒ‰[•¶š—ñ‚ğŠi”[‚µ‚Ä•Ô‚·
++//! ã‚¨ãƒ©ãƒ¼æ–‡å­—åˆ—ã‚’æ ¼ç´ã—ã¦è¿”ã™
+ extern int serial_error(urg_serial_t *serial,
+                         char *error_message, int max_size);
+ 
+diff --git a/current/include/urg_c/urg_serial_utils.h b/current/include/urg_c/urg_serial_utils.h
+index f1650c1..30afdf5 100644
+--- a/current/include/urg_c/urg_serial_utils.h
++++ b/current/include/urg_c/urg_serial_utils.h
+@@ -2,29 +2,29 @@
+ #define URG_SERIAL_UTILS_H
+ 
+ /*!
+-  \file
+-  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
++  Â¥file
++  Â¥brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+ 
+ 
+-//! ƒVƒŠƒAƒ‹ƒ|[ƒg‚ğŒŸõ‚·‚é
++//! ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆã‚’æ¤œç´¢ã™ã‚‹
+ extern int urg_serial_find_port(void);
+ 
+ 
+-//! ŒŸõ‚µ‚½ƒVƒŠƒAƒ‹ƒ|[ƒg–¼‚ğ•Ô‚·
++//! æ¤œç´¢ã—ãŸã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆåã‚’è¿”ã™
+ extern const char *urg_serial_port_name(int index);
+ 
+ 
+ /*!
+-  \brief ƒ|[ƒg‚ª URG ‚©‚Ç‚¤‚©
++  Â¥brief ãƒãƒ¼ãƒˆãŒ URG ã‹ã©ã†ã‹
+ 
+-  \retval 1 URG ‚Ìƒ|[ƒg
+-  \retval 0 •s–¾
+-  \retval <0 ƒGƒ‰[
++  Â¥retval 1 URG ã®ãƒãƒ¼ãƒˆ
++  Â¥retval 0 ä¸æ˜
++  Â¥retval <0 ã‚¨ãƒ©ãƒ¼
+ */
+ extern int urg_serial_is_urg_port(int index);
+ 
+diff --git a/current/include/urg_c/urg_utils.h b/current/include/urg_c/urg_utils.h
+index 8048421..2f02d0f 100644
+--- a/current/include/urg_c/urg_utils.h
++++ b/current/include/urg_c/urg_utils.h
+@@ -2,15 +2,15 @@
+ #define URG_UTILS_H
+ 
+ /*!
+-  \file
+-  \~japanese
+-  \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
++  Â¥file
++  Â¥â€¾japanese
++  Â¥brief URG ã‚»ãƒ³ã‚µç”¨ã®è£œåŠ©é–¢æ•°
+ 
+-  \~english
+-  \brief URG sensor utility
++  Â¥â€¾english
++  Â¥brief URG sensor utility
+ 
+-  \~
+-  \author Satofumi KAMIMURA
++  Â¥â€¾
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_utils.h,v 630ee326c5ce 2011/02/19 08:06:25 Satofumi $
+ */
+@@ -23,37 +23,37 @@ extern "C" {
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief URG ‚ÌƒGƒ‰[‚ğ¦‚·•¶š—ñ‚ğ•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief URG ã®ã‚¨ãƒ©ãƒ¼ã‚’ç¤ºã™æ–‡å­—åˆ—ã‚’è¿”ã™
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+ 
+-      \retval URG ‚ÌƒGƒ‰[‚ğ¦‚·•¶š—ñ
++      Â¥retval URG ã®ã‚¨ãƒ©ãƒ¼ã‚’ç¤ºã™æ–‡å­—åˆ—
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       if (!urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL)) {
+-      printf("urg_open: %s\n", urg_error(&urg));
++      printf("urg_open: %sÂ¥n", urg_error(&urg));
+       return -1;
+-      } \endcode
++      } Â¥endcode
+     */
+     extern const char *urg_error(const urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒZƒ“ƒT‚ª•Ô‚·‹——£‚ÌÅ‘å’lAÅ¬’l‚ğ•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief ã‚»ãƒ³ã‚µãŒè¿”ã™è·é›¢ã®æœ€å¤§å€¤ã€æœ€å°å€¤ã‚’è¿”ã™
+ 
+-      ƒZƒ“ƒT‚ª•Ô‚·‹——£‚ğ [Å¬’l, Å‘å’l] ‚Å•Ô‚µ‚Ü‚·B
++      ã‚»ãƒ³ã‚µãŒè¿”ã™è·é›¢ã‚’ [æœ€å°å€¤, æœ€å¤§å€¤] ã§è¿”ã—ã¾ã™ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[out] min_distance Å¬’l [mm]
+-      \param[out] max_distance Å‘å’l [mm]
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[out] min_distance æœ€å°å€¤ [mm]
++      Â¥param[out] max_distance æœ€å¤§å€¤ [mm]
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       long min_distance, max_distance;
+       urg_distance_min_max(&urg, &min_distance, &max_distance);
+ 
+@@ -63,126 +63,126 @@ extern "C" {
+       continue;
+       }
+       ...
+-      } \endcode
++      } Â¥endcode
+     */
+     extern void urg_distance_min_max(const urg_t *urg,
+                                      long *min_distance, long *max_distance);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief Œv‘ª step ‚ÌÅ‘å’lAÅ¬’l‚ğ•Ô‚·
++      Â¥â€¾japanese
++      Â¥brief è¨ˆæ¸¬ step ã®æœ€å¤§å€¤ã€æœ€å°å€¤ã‚’è¿”ã™
+ 
+-      urg_set_scanning_parameter() ‚Åw’è‚Å‚«‚é”ÍˆÍ‚ğ [Å¬’l, Å‘å’l] ‚Å•Ô‚·B
++      urg_set_scanning_parameter() ã§æŒ‡å®šã§ãã‚‹ç¯„å›²ã‚’ [æœ€å°å€¤, æœ€å¤§å€¤] ã§è¿”ã™ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[out] min_step Å¬’l
+-      \param[out] max_step Å‘å’l
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[out] min_step æœ€å°å€¤
++      Â¥param[out] max_step æœ€å¤§å€¤
+ 
+-      step ‚ÍƒZƒ“ƒT³–Ê‚ª 0 ‚Å‚ ‚èAƒZƒ“ƒTã•”‚©‚çŒ©‚½ê‡‚Ì”½Œv‚Ü‚í‚è‚Ì•ûŒü‚ª³AŒv‚Ü‚í‚è‚Ì•ûŒü‚ª•‰‚Ì step ’l‚Æ‚È‚éB
++      step ã¯ã‚»ãƒ³ã‚µæ­£é¢ãŒ 0 ã§ã‚ã‚Šã€ã‚»ãƒ³ã‚µä¸Šéƒ¨ã‹ã‚‰è¦‹ãŸå ´åˆã®åæ™‚è¨ˆã¾ã‚ã‚Šã®æ–¹å‘ãŒæ­£ã€æ™‚è¨ˆã¾ã‚ã‚Šã®æ–¹å‘ãŒè² ã® step å€¤ã¨ãªã‚‹ã€‚
+ 
+-      \image html sensor_step_image.png ƒZƒ“ƒT‚Æ step ‚ÌŠÖŒW
++      Â¥image html sensor_step_image.png ã‚»ãƒ³ã‚µã¨ step ã®é–¢ä¿‚
+ 
+-      min_step, max_step ‚Ì’l‚ÍƒZƒ“ƒT‚É‚æ‚Á‚ÄˆÙ‚È‚éB
++      min_step, max_step ã®å€¤ã¯ã‚»ãƒ³ã‚µã«ã‚ˆã£ã¦ç•°ãªã‚‹ã€‚
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       urg_step_min_max(&urg, &min_step, &max_step);
+ 
+-      printf("range first: %d [deg]\n", urg_step2deg(&urg, min_step));
+-      printf("range last : %d [deg]\n", urg_step2deg(&urg, max_step)); \endcode
++      printf("range first: %d [deg]Â¥n", urg_step2deg(&urg, min_step));
++      printf("range last : %d [deg]Â¥n", urg_step2deg(&urg, max_step)); Â¥endcode
+ 
+-      \see urg_set_scanning_parameter(), urg_step2rad(), urg_step2deg()
++      Â¥see urg_set_scanning_parameter(), urg_step2rad(), urg_step2deg()
+     */
+     extern void urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
+ 
+ 
+-    /*! \~japanese ‚PƒXƒLƒƒƒ“‚É‚©‚©‚éŠÔ [usec] ‚ğ•Ô‚· */
++    /*! Â¥â€¾japanese ï¼‘ã‚¹ã‚­ãƒ£ãƒ³ã«ã‹ã‹ã‚‹æ™‚é–“ [usec] ã‚’è¿”ã™ */
+     extern long urg_scan_usec(const urg_t *urg);
+ 
+ 
+-    /*! \~japanese æ“¾ƒf[ƒ^”‚ÌÅ‘å’l‚ğ•Ô‚· */
++    /*! Â¥â€¾japanese å–å¾—ãƒ‡ãƒ¼ã‚¿æ•°ã®æœ€å¤§å€¤ã‚’è¿”ã™ */
+     extern int urg_max_data_size(const urg_t *urg);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief ƒCƒ“ƒfƒbƒNƒX‚ÆŠp“x(radian)‚Ì•ÏŠ·‚ğs‚¤
++      Â¥â€¾japanese
++      Â¥brief ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¨è§’åº¦(radian)ã®å¤‰æ›ã‚’è¡Œã†
+ 
+-      ƒCƒ“ƒfƒbƒN‚Æ‚Í urg_get_distance() ‚È‚Ç‚Ì‹——£ƒf[ƒ^æ“¾ŠÖ”‚ª•Ô‚µ‚½ƒf[ƒ^”z—ñ‚É‚Â‚¢‚Ä‚Ì’l‚Å‚ ‚éB‚±‚ÌŠÖ”‚ÍAÅŒã‚És‚Á‚½‹——£ƒf[ƒ^æ“¾ŠÖ”‚Ìƒf[ƒ^”z—ñ‚É‚Â‚¢‚Ä—LŒø‚Æ‚È‚éB
++      ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã¨ã¯ urg_get_distance() ãªã©ã®è·é›¢ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°ãŒè¿”ã—ãŸãƒ‡ãƒ¼ã‚¿é…åˆ—ã«ã¤ã„ã¦ã®å€¤ã§ã‚ã‚‹ã€‚ã“ã®é–¢æ•°ã¯ã€æœ€å¾Œã«è¡Œã£ãŸè·é›¢ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°ã®ãƒ‡ãƒ¼ã‚¿é…åˆ—ã«ã¤ã„ã¦æœ‰åŠ¹ã¨ãªã‚‹ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[in] index ƒCƒ“ƒfƒbƒNƒX
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[in] index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+ 
+-      \return Šp“x [radian]
++      Â¥return è§’åº¦ [radian]
+ 
+-      index ‚ÍAæ“¾‚µ‚½Œv‘ªƒf[ƒ^‚É‚Â‚¢‚Ä‚Ì’l‚Å‚ ‚è step ‚âŠp“x‚Æ‚ÌŠÖŒW‚Íæ“¾İ’è‚É‚æ‚èˆÙ‚È‚éB
++      index ã¯ã€å–å¾—ã—ãŸè¨ˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦ã®å€¤ã§ã‚ã‚Š step ã‚„è§’åº¦ã¨ã®é–¢ä¿‚ã¯å–å¾—è¨­å®šã«ã‚ˆã‚Šç•°ãªã‚‹ã€‚
+ 
+-      \image html sensor_index_image.png ƒZƒ“ƒT‚ÌŒv‘ª”ÍˆÍ‚ÆƒCƒ“ƒfƒbƒNƒX‚ÌŠÖŒW
++      Â¥image html sensor_index_image.png ã‚»ãƒ³ã‚µã®è¨ˆæ¸¬ç¯„å›²ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–¢ä¿‚
+ 
+-      \~
++      Â¥â€¾
+       Example
+-      \code
++      Â¥code
+       int n = urg_get_distance(&urg, data, NULL);
+       for (int i = 0; i < n; ++i) {
+       long distance = data[i];
+       double radian = urg_index2rad(i);
+       double x = distance * cos(radian);
+       double y = distance * sin(radian);
+-      printf("%.1f, %.1f\n", x, y);
+-      } \endcode
++      printf("%.1f, %.1fÂ¥n", x, y);
++      } Â¥endcode
+ 
+-      \see urg_index2deg(), urg_rad2index(), urg_deg2index()
++      Â¥see urg_index2deg(), urg_rad2index(), urg_deg2index()
+     */
+     extern double urg_index2rad(const urg_t *urg, int index);
+ 
+ 
+-    /*! \~japanese ƒCƒ“ƒfƒbƒNƒX‚ÆŠp“x(degree)‚Ì•ÏŠ·‚ğs‚¤ */
++    /*! Â¥â€¾japanese ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¨è§’åº¦(degree)ã®å¤‰æ›ã‚’è¡Œã† */
+     extern double urg_index2deg(const urg_t *urg, int index);
+ 
+ 
+-    /*! \~japanese Šp“x(radian)‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤ */
++    /*! Â¥â€¾japanese è§’åº¦(radian)ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã† */
+     extern int urg_rad2index(const urg_t *urg, double radian);
+ 
+ 
+-    /*! \~japanese Šp“x(degree)‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤ */
++    /*! Â¥â€¾japanese è§’åº¦(degree)ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã† */
+     extern int urg_deg2index(const urg_t *urg, double degree);
+ 
+ 
+     /*!
+-      \~japanese
+-      \brief Šp“x(radian)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤
++      Â¥â€¾japanese
++      Â¥brief è§’åº¦(radian)ã¨ step ã®å¤‰æ›ã‚’è¡Œã†
+ 
+-      urg_step_min_max() ‚Å’è‹`‚³‚ê‚Ä‚¢‚é step ‚É‚Â‚¢‚ÄAŠp“x(radian)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤B
++      urg_step_min_max() ã§å®šç¾©ã•ã‚Œã¦ã„ã‚‹ step ã«ã¤ã„ã¦ã€è§’åº¦(radian)ã¨ step ã®å¤‰æ›ã‚’è¡Œã†ã€‚
+ 
+-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
+-      \param[in] radian Šp“x [radian]
++      Â¥param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
++      Â¥param[in] radian è§’åº¦ [radian]
+ 
+-      \return step
++      Â¥return step
+ 
+-      \image html sensor_angle_image.png ƒZƒ“ƒT‚Ì step ‚ÆŠp“x‚Æ‚ÌŠÖŒW
++      Â¥image html sensor_angle_image.png ã‚»ãƒ³ã‚µã® step ã¨è§’åº¦ã¨ã®é–¢ä¿‚
+ 
+-      Šp“x‚©‚ç step ‚Ö•ÏŠ·‚µ‚½Œ‹‰Ê‚ª®”‚Å‚È‚¢ê‡AŒ‹‰Ê‚Í 0 ‚Ì•ûŒü‚ÉØ‚èÌ‚Ä‚ç‚ê‚½’l‚Æ‚È‚éB
++      è§’åº¦ã‹ã‚‰ step ã¸å¤‰æ›ã—ãŸçµæœãŒæ•´æ•°ã§ãªã„å ´åˆã€çµæœã¯ 0 ã®æ–¹å‘ã«åˆ‡ã‚Šæ¨ã¦ã‚‰ã‚ŒãŸå€¤ã¨ãªã‚‹ã€‚
+ 
+-      \~
+-      \see urg_step_min_max(), urg_deg2step(), urg_step2rad(), urg_step2deg()
++      Â¥â€¾
++      Â¥see urg_step_min_max(), urg_deg2step(), urg_step2rad(), urg_step2deg()
+     */
+     extern int urg_rad2step(const urg_t *urg, double radian);
+ 
+ 
+-    /*! \~japanese Šp“x(degree)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤ */
++    /*! Â¥â€¾japanese è§’åº¦(degree)ã¨ step ã®å¤‰æ›ã‚’è¡Œã† */
+     extern int urg_deg2step(const urg_t *urg, double degree);
+ 
+ 
+-    /*! \~japanese step ‚Æ Šp“x(radian)‚Ì•ÏŠ·‚ğs‚¤ */
++    /*! Â¥â€¾japanese step ã¨ è§’åº¦(radian)ã®å¤‰æ›ã‚’è¡Œã† */
+     extern double urg_step2rad(const urg_t *urg, int step);
+ 
+ 
+-    /*! \~japanese step ‚Æ Šp“x(degree)‚Ì•ÏŠ·‚ğs‚¤ */
++    /*! Â¥â€¾japanese step ã¨ è§’åº¦(degree)ã®å¤‰æ›ã‚’è¡Œã† */
+     extern double urg_step2deg(const urg_t *urg, int step);
+ 
+-    /*! \~japanese step ‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤ */
++    /*! Â¥â€¾japanese step ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã† */
+     extern int urg_step2index(const urg_t *urg, int step);
+ 
+ #ifdef __cplusplus
+diff --git a/current/samples/calculate_xy.c b/current/samples/calculate_xy.c
+index 5cf21e5..230ad3d 100644
+--- a/current/samples/calculate_xy.c
++++ b/current/samples/calculate_xy.c
+@@ -1,10 +1,10 @@
+ /*!
+-  \~japanese
+-  \example calculate_xy.c X-Y À•WŒn‚Å‚ÌˆÊ’u‚ğŒvZ‚·‚é
++  Â¥â€¾japanese
++  Â¥example calculate_xy.c X-Y åº§æ¨™ç³»ã§ã®ä½ç½®ã‚’è¨ˆç®—ã™ã‚‹
+ 
+-  ƒZƒ“ƒT‘O•û‚ª X ²‚Ì•ûŒü‚Æ‚İ‚È‚µ‚½’¼sÀ•Wã‚ÅA‹——£ƒf[ƒ^‚ğˆÊ’u‚ğo—Í‚·‚éB
++  ã‚»ãƒ³ã‚µå‰æ–¹ãŒ X è»¸ã®æ–¹å‘ã¨ã¿ãªã—ãŸç›´è¡Œåº§æ¨™ä¸Šã§ã€è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’ä½ç½®ã‚’å‡ºåŠ›ã™ã‚‹ã€‚
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: calculate_xy.c,v 586c4fa697ef 2011/01/24 08:50:01 Satofumi $
+ */
+@@ -38,16 +38,16 @@ int main(int argc, char *argv[])
+         return 1;
+     }
+ 
+-    // \~japanese ƒf[ƒ^æ“¾
++    // Â¥â€¾japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
+     urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+     n = urg_get_distance(&urg, data, &time_stamp, &system_time_stamp);
+     if (n < 0) {
+-        printf("urg_get_distance: %s\n", urg_error(&urg));
++        printf("urg_get_distance: %sÂ¥n", urg_error(&urg));
+         urg_close(&urg);
+         return 1;
+     }
+ 
+-    // \~japanese X-Y À•WŒn‚Ì’l‚ğo—Í
++    // Â¥â€¾japanese X-Y åº§æ¨™ç³»ã®å€¤ã‚’å‡ºåŠ›
+     urg_distance_min_max(&urg, &min_distance, &max_distance);
+     for (i = 0; i < n; ++i) {
+         long distance = data[i];
+@@ -63,11 +63,11 @@ int main(int argc, char *argv[])
+         x = (long)(distance * cos(radian));
+         y = (long)(distance * sin(radian));
+ 
+-        printf("%ld, %ld\n", x, y);
++        printf("%ld, %ldÂ¥n", x, y);
+     }
+-    printf("\n");
++    printf("Â¥n");
+ 
+-    // \~japanese Ø’f
++    // Â¥â€¾japanese åˆ‡æ–­
+     free(data);
+     urg_close(&urg);
+ 
+diff --git a/current/samples/find_port.c b/current/samples/find_port.c
+index 5039934..88e04f2 100644
+--- a/current/samples/find_port.c
++++ b/current/samples/find_port.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \~japanese
+-  \example find_port.c ƒ|[ƒg‚Ì’Tõ
++  Â¥â€¾japanese
++  Â¥example find_port.c ãƒãƒ¼ãƒˆã®æ¢ç´¢
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+@@ -17,7 +17,7 @@ int main(void)
+     int i;
+ 
+     if (found_port_size == 0) {
+-        printf("could not found ports.\n");
++        printf("could not found ports.Â¥n");
+         return 1;
+     }
+ 
+@@ -26,7 +26,7 @@ int main(void)
+         if (urg_serial_is_urg_port(i)) {
+           printf(" [URG]");
+         }
+-        printf("\n");
++        printf("Â¥n");
+     }
+ 
+     return 0;
+diff --git a/current/samples/get_distance.c b/current/samples/get_distance.c
+index 98f2336..3002ece 100644
+--- a/current/samples/get_distance.c
++++ b/current/samples/get_distance.c
+@@ -1,9 +1,9 @@
+ /*!
+-  \~japanese
+-  \example get_distance.c ‹——£ƒf[ƒ^‚ğæ“¾‚·‚é
++  Â¥â€¾japanese
++  Â¥example get_distance.c è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+ 
+-  \~
+-  \author Satofumi KAMIMURA
++  Â¥â€¾
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: get_distance.c,v 586c4fa697ef 2011/01/24 08:50:01 Satofumi $
+ */
+@@ -22,9 +22,9 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
+ 
+     (void)data_n;
+ 
+-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
++    // Â¥â€¾japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
+     front_index = urg_step2index(urg, 0);
+-    printf("%ld [mm], (%ld [msec])\n", data[front_index], time_stamp);
++    printf("%ld [mm], (%ld [msec])Â¥n", data[front_index], time_stamp);
+ 
+ #else
+     (void)time_stamp;
+@@ -33,7 +33,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
+     long min_distance;
+     long max_distance;
+ 
+-    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚Ì X-Y ‚ÌˆÊ’u‚ğ•\¦
++    // Â¥â€¾japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã® X-Y ã®ä½ç½®ã‚’è¡¨ç¤º
+     urg_distance_min_max(urg, &min_distance, &max_distance);
+     for (i = 0; i < data_n; ++i) {
+         long l = data[i];
+@@ -49,7 +49,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
+         y = (long)(l * sin(radian));
+         printf("(%ld, %ld), ", x, y);
+     }
+-    printf("\n");
++    printf("Â¥n");
+ #endif
+ }
+ 
+@@ -76,9 +76,9 @@ int main(int argc, char *argv[])
+         return 1;
+     }
+ 
+-    // \~japanese ƒf[ƒ^æ“¾
++    // Â¥â€¾japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
+ #if 0
+-    // \~japanese ƒf[ƒ^‚Ìæ“¾”ÍˆÍ‚ğ•ÏX‚·‚éê‡
++    // Â¥â€¾japanese ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ç¯„å›²ã‚’å¤‰æ›´ã™ã‚‹å ´åˆ
+     urg_set_scanning_parameter(&urg,
+                                urg_deg2step(&urg, -90),
+                                urg_deg2step(&urg, +90), 0);
+@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
+     for (i = 0; i < CAPTURE_TIMES; ++i) {
+         n = urg_get_distance(&urg, data, &time_stamp, &system_time_stamp);
+         if (n <= 0) {
+-            printf("urg_get_distance: %s\n", urg_error(&urg));
++            printf("urg_get_distance: %sÂ¥n", urg_error(&urg));
+             free(data);
+             urg_close(&urg);
+             return 1;
+@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
+         print_data(&urg, data, n, time_stamp);
+     }
+ 
+-    // \~japanese Ø’f
++    // Â¥â€¾japanese åˆ‡æ–­
+     free(data);
+     urg_close(&urg);
+ 
+diff --git a/current/samples/get_distance_intensity.c b/current/samples/get_distance_intensity.c
+index 0c5acc2..584c78e 100644
+--- a/current/samples/get_distance_intensity.c
++++ b/current/samples/get_distance_intensity.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \~japanese
+-  \example get_distance_intensity.c ‹——£E‹­“xƒf[ƒ^‚ğæ“¾‚·‚é
++  Â¥â€¾japanese
++  Â¥example get_distance_intensity.c è·é›¢ãƒ»å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: get_distance_intensity.c,v 586c4fa697ef 2011/01/24 08:50:01 Satofumi $
+ */
+@@ -22,9 +22,9 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
+     int front_index;
+     (void)data_n;
+ 
+-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
++    // Â¥â€¾japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
+     front_index = urg_step2index(urg, 0);
+-    printf("%ld [mm], %d [1], (%ld [msec])\n",
++    printf("%ld [mm], %d [1], (%ld [msec])Â¥n",
+            data[front_index], intensity[front_index], time_stamp);
+ 
+ #else
+@@ -32,10 +32,10 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
+ 
+     int i;
+ 
+-    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚ğ•\¦
+-    printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
++    // Â¥â€¾japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
++    printf("# n = %d, time_stamp = %ldÂ¥n", data_n, time_stamp);
+     for (i = 0; i < data_n; ++i) {
+-        printf("%d, %ld, %d\n", i, data[i], intensity[i]);
++        printf("%d, %ld, %dÂ¥n", i, data[i], intensity[i]);
+     }
+ #endif
+ }
+@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
+ 
+ 	// Distance Intensity reading only (?) on UXM-30LX
+ 	if (!strstr(urg_sensor_product_type(&urg),"UXM-30LX")) {
+-		fprintf(stderr,"Distance Intensity not supported on %s\n",
++		fprintf(stderr,"Distance Intensity not supported on %sÂ¥n",
+ 				urg_sensor_product_type(&urg));
+ 		return 1;
+ 	}
+@@ -78,12 +78,12 @@ int main(int argc, char *argv[])
+         return 1;
+     }
+ 
+-    // \~japanese ƒf[ƒ^æ“¾
++    // Â¥â€¾japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
+     urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, CAPTURE_TIMES, 0);
+     for (i = 0; i < CAPTURE_TIMES; ++i) {
+         n = urg_get_distance_intensity(&urg, data, intensity, &time_stamp, &system_time_stamp);
+         if (n <= 0) {
+-            printf("urg_get_distance_intensity: %s\n", urg_error(&urg));
++            printf("urg_get_distance_intensity: %sÂ¥n", urg_error(&urg));
+             free(data);
+             urg_close(&urg);
+             return 1;
+@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
+         print_data(&urg, data, intensity, n, time_stamp);
+     }
+ 
+-    // \~japanese Ø’f
++    // Â¥â€¾japanese åˆ‡æ–­
+     free(intensity);
+     free(data);
+     urg_close(&urg);
+diff --git a/current/samples/get_multiecho.c b/current/samples/get_multiecho.c
+index 6e3816d..b9445f6 100644
+--- a/current/samples/get_multiecho.c
++++ b/current/samples/get_multiecho.c
+@@ -1,8 +1,8 @@
+  /*!
+-   \~japanese
+-  \example get_multiecho.c ‹——£ƒf[ƒ^(ƒ}ƒ‹ƒ`ƒGƒR[)‚ğæ“¾‚·‚é
++   Â¥â€¾japanese
++  Â¥example get_multiecho.c è·é›¢ãƒ‡ãƒ¼ã‚¿(ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼)ã‚’å–å¾—ã™ã‚‹
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+@@ -32,21 +32,21 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
+ 
+     (void)data_n;
+ 
+-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
++    // Â¥â€¾japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
+     front_index = urg_step2index(urg, 0);
+     print_echo_data(data, front_index);
+-    printf("%ld\n", time_stamp);
++    printf("%ldÂ¥n", time_stamp);
+ 
+ #else
+     (void)urg;
+ 
+     int i;
+ 
+-    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚ğ•\¦
+-    printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
++    // Â¥â€¾japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
++    printf("# n = %d, time_stamp = %ldÂ¥n", data_n, time_stamp);
+     for (i = 0; i < data_n; ++i) {
+         print_echo_data(data, i);
+-        printf("\n");
++        printf("Â¥n");
+     }
+ #endif
+ }
+@@ -74,12 +74,12 @@ int main(int argc, char *argv[])
+         return 1;
+     }
+ 
+-    // \~japanese ƒf[ƒ^æ“¾
++    // Â¥â€¾japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
+     urg_start_measurement(&urg, URG_MULTIECHO, CAPTURE_TIMES, 0);
+     for (i = 0; i < CAPTURE_TIMES; ++i) {
+         n = urg_get_multiecho(&urg, data, &time_stamp, &system_time_stamp);
+         if (n <= 0) {
+-            printf("urg_get_multiecho: %s\n", urg_error(&urg));
++            printf("urg_get_multiecho: %sÂ¥n", urg_error(&urg));
+             free(data);
+             urg_close(&urg);
+             return 1;
+@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
+         print_data(&urg, data, n, time_stamp);
+     }
+ 
+-    // \~japanese Ø’f
++    // Â¥â€¾japanese åˆ‡æ–­
+     free(data);
+     urg_close(&urg);
+ 
+diff --git a/current/samples/get_multiecho_intensity.c b/current/samples/get_multiecho_intensity.c
+index 1c1d79c..717250b 100644
+--- a/current/samples/get_multiecho_intensity.c
++++ b/current/samples/get_multiecho_intensity.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \~japanese
+-  \example get_multiecho_intensity.c ‹——£E‹­“xƒf[ƒ^(ƒ}ƒ‹ƒ`ƒGƒR[)‚ğæ“¾‚·‚é
++  Â¥â€¾japanese
++  Â¥example get_multiecho_intensity.c è·é›¢ãƒ»å¼·åº¦ãƒ‡ãƒ¼ã‚¿(ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼)ã‚’å–å¾—ã™ã‚‹
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+@@ -31,7 +31,7 @@ static void print_echo_data(long data[], unsigned short intensity[],
+ }
+ 
+ 
+-// \~japanese ‹——£A‹­“x‚Ìƒf[ƒ^‚ğ•\¦‚·‚é
++// Â¥â€¾japanese è·é›¢ã€å¼·åº¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºã™ã‚‹
+ static void print_data(urg_t *urg, long data[],
+                        unsigned short intensity[], int data_n, long time_stamp)
+ {
+@@ -40,20 +40,20 @@ static void print_data(urg_t *urg, long data[],
+ 
+     (void)data_n;
+ 
+-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
++    // Â¥â€¾japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
+     front_index = urg_step2index(urg, 0);
+     print_echo_data(data, intensity, front_index);
+-    printf("%ld\n", time_stamp);
++    printf("%ldÂ¥n", time_stamp);
+ 
+ #else
+     (void)urg;
+     int i;
+ 
+-    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚ğ•\¦
+-    printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
++    // Â¥â€¾japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
++    printf("# n = %d, time_stamp = %ldÂ¥n", data_n, time_stamp);
+     for (i = 0; i < data_n; ++i) {
+         print_echo_data(data, intensity, i);
+-        printf("\n");
++        printf("Â¥n");
+     }
+ #endif
+ }
+@@ -87,12 +87,12 @@ int main(int argc, char *argv[])
+         return 1;
+     }
+ 
+-    // \~japanese ƒf[ƒ^æ“¾
++    // Â¥â€¾japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
+     urg_start_measurement(&urg, URG_MULTIECHO_INTENSITY, CAPTURE_TIMES, 0);
+     for (i = 0; i < CAPTURE_TIMES; ++i) {
+         n = urg_get_multiecho_intensity(&urg, data, intensity, &time_stamp, &system_time_stamp);
+         if (n <= 0) {
+-            printf("urg_get_multiecho_intensity: %s\n", urg_error(&urg));
++            printf("urg_get_multiecho_intensity: %sÂ¥n", urg_error(&urg));
+             free(data);
+             free(intensity);
+             urg_close(&urg);
+@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
+         print_data(&urg, data, intensity, n, time_stamp);
+     }
+ 
+-    // \~japanese Ø’f
++    // Â¥â€¾japanese åˆ‡æ–­
+     free(data);
+     free(intensity);
+     urg_close(&urg);
+diff --git a/current/samples/open_urg_sensor.c b/current/samples/open_urg_sensor.c
+index 5a0a564..00ecb75 100644
+--- a/current/samples/open_urg_sensor.c
++++ b/current/samples/open_urg_sensor.c
+@@ -1,9 +1,9 @@
+ /*!
+-  \~japanese
+-  \brief URG ‚Æ‚ÌÚ‘±
++  Â¥â€¾japanese
++  Â¥brief URG ã¨ã®æ¥ç¶š
+ 
+-  \~
+-  \author Satofumi KAMIMURA
++  Â¥â€¾
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: open_urg_sensor.c,v d00944669fc8 2011/02/16 13:41:09 Satofumi $
+ */
+@@ -31,7 +31,7 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
+     const char *ip_address = "192.168.0.10";
+     int i;
+ 
+-    // \~japanese Ú‘±ƒ^ƒCƒv‚ÌØ‘Ö‚¦
++    // Â¥â€¾japanese æ¥ç¶šã‚¿ã‚¤ãƒ—ã®åˆ‡æ›¿ãˆ
+     for (i = 1; i < argc; ++i) {
+         if (!strcmp(argv[i], "-e")) {
+             connection_type = URG_ETHERNET;
+@@ -40,9 +40,9 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
+         }
+     }
+ 
+-    // \~japanese Ú‘±
++    // Â¥â€¾japanese æ¥ç¶š
+     if (urg_open(urg, connection_type, device, baudrate_or_port) < 0) {
+-        printf("urg_open: %s, %ld: %s\n",
++        printf("urg_open: %s, %ld: %sÂ¥n",
+             device, baudrate_or_port, urg_error(urg));
+         return -1;
+     }
+diff --git a/current/samples/open_urg_sensor.h b/current/samples/open_urg_sensor.h
+index 9eb9b7a..42565e4 100644
+--- a/current/samples/open_urg_sensor.h
++++ b/current/samples/open_urg_sensor.h
+@@ -2,11 +2,11 @@
+ #define OPEN_URG_SENSOR_H
+ 
+ /*!
+-  \~japanese
+-  \brief URG ‚Æ‚ÌÚ‘±
++  Â¥â€¾japanese
++  Â¥brief URG ã¨ã®æ¥ç¶š
+ 
+-  \~
+-  \author Satofumi KAMIMURA
++  Â¥â€¾
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+diff --git a/current/samples/sensor_parameter.c b/current/samples/sensor_parameter.c
+index c379050..8cd5094 100644
+--- a/current/samples/sensor_parameter.c
++++ b/current/samples/sensor_parameter.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \~japanese
+-  \example sensor_parameter.c ƒZƒ“ƒTî•ñ‚Ìo—Í
++  Â¥â€¾japanese
++  Â¥example sensor_parameter.c ã‚»ãƒ³ã‚µæƒ…å ±ã®å‡ºåŠ›
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: sensor_parameter.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
+ */
+@@ -25,20 +25,20 @@ int main(int argc, char *argv[])
+         return 1;
+     }
+ 
+-    printf("Sensor product type: %s\n", urg_sensor_product_type(&urg));
+-    printf("Sensor firmware version: %s\n", urg_sensor_firmware_version(&urg));
+-    printf("Sensor serial ID: %s\n", urg_sensor_serial_id(&urg));
+-    printf("Sensor status: %s\n", urg_sensor_status(&urg));
+-    printf("Sensor state: %s\n", urg_sensor_state(&urg));
++    printf("Sensor product type: %sÂ¥n", urg_sensor_product_type(&urg));
++    printf("Sensor firmware version: %sÂ¥n", urg_sensor_firmware_version(&urg));
++    printf("Sensor serial ID: %sÂ¥n", urg_sensor_serial_id(&urg));
++    printf("Sensor status: %sÂ¥n", urg_sensor_status(&urg));
++    printf("Sensor state: %sÂ¥n", urg_sensor_state(&urg));
+ 
+     urg_step_min_max(&urg, &min_step, &max_step);
+-    printf("step: [%d, %d]\n", min_step, max_step);
++    printf("step: [%d, %d]Â¥n", min_step, max_step);
+ 
+     urg_distance_min_max(&urg, &min_distance, &max_distance);
+-    printf("distance: [%ld, %ld)\n", min_distance, max_distance);
++    printf("distance: [%ld, %ld)Â¥n", min_distance, max_distance);
+ 
+-    printf("scan interval: %ld [usec]\n", urg_scan_usec(&urg));
+-    printf("sensor data size: %d\n", urg_max_data_size(&urg));
++    printf("scan interval: %ld [usec]Â¥n", urg_scan_usec(&urg));
++    printf("sensor data size: %dÂ¥n", urg_max_data_size(&urg));
+ 
+     urg_close(&urg);
+ 
+diff --git a/current/samples/sync_time_stamp.c b/current/samples/sync_time_stamp.c
+index 196803d..0a32b1c 100644
+--- a/current/samples/sync_time_stamp.c
++++ b/current/samples/sync_time_stamp.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \~japanese
+-  \example sync_time_stamp.c ƒZƒ“ƒT‚Æ PC ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğ“¯Šú‚·‚é
++  Â¥â€¾japanese
++  Â¥example sync_time_stamp.c ã‚»ãƒ³ã‚µã¨ PC ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’åŒæœŸã™ã‚‹
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: sync_time_stamp.c,v 799c195d046c 2011/01/14 05:10:38 hokuyo $
+ */
+@@ -52,8 +52,8 @@ static int pc_msec_time(void)
+ 
+ 
+ /*!
+-  \~japanese
+-  \brief PC ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚É•â³‚·‚é‚½‚ß‚Ì’l‚ğ•Ô‚·
++  Â¥â€¾japanese
++  Â¥brief PC ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã«è£œæ­£ã™ã‚‹ãŸã‚ã®å€¤ã‚’è¿”ã™
+ */
+ static long print_time_stamp(urg_t *urg, long time_stamp_offset)
+ {
+@@ -71,7 +71,7 @@ static long print_time_stamp(urg_t *urg, long time_stamp_offset)
+     delay = (after_pc_time_stamp - before_pc_time_stamp) / 2;
+ 
+     if (sensor_time_stamp < 0) {
+-        printf("urg_time_stamp: %s\n", urg_error(urg));
++        printf("urg_time_stamp: %sÂ¥n", urg_error(urg));
+         return -1;
+     }
+     sensor_time_stamp -= time_stamp_offset;
+@@ -79,7 +79,7 @@ static long print_time_stamp(urg_t *urg, long time_stamp_offset)
+     pc_time_stamp = pc_msec_time();
+     urg_stop_time_stamp_mode(urg);
+ 
+-    printf("%ld,\t%ld\n", pc_time_stamp, sensor_time_stamp);
++    printf("%ld,Â¥t%ldÂ¥n", pc_time_stamp, sensor_time_stamp);
+ 
+     return sensor_time_stamp - (pc_time_stamp - delay);
+ }
+@@ -99,12 +99,12 @@ int main(int argc, char *argv[])
+         return 1;
+     }
+ 
+-    printf("# pc,\tsensor\n");
++    printf("# pc,Â¥tsensorÂ¥n");
+ 
+-    // \~japanese URG ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Æ PC ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğ•\¦
++    // Â¥â€¾japanese URG ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã¨ PC ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’è¡¨ç¤º
+     time_stamp_offset = print_time_stamp(&urg, 0);
+ 
+-    // \~japanese URG ‚Ì•â³Œã‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Æ PC ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğ•\¦
++    // Â¥â€¾japanese URG ã®è£œæ­£å¾Œã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã¨ PC ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’è¡¨ç¤º
+     for (i = 0; i < TIME_STAMP_PRINT_TIMES; ++i) {
+         print_time_stamp(&urg, time_stamp_offset);
+     }
+diff --git a/current/src/urg_connection.c b/current/src/urg_connection.c
+index c474459..46adf8d 100644
+--- a/current/src/urg_connection.c
++++ b/current/src/urg_connection.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \file
+-  \brief ’ÊM‚Ìˆ—
++  Â¥file
++  Â¥brief é€šä¿¡ã®å‡¦ç†
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_connection.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
+ */
+diff --git a/current/src/urg_debug.c b/current/src/urg_debug.c
+index 1d55c3e..b670f59 100644
+--- a/current/src/urg_debug.c
++++ b/current/src/urg_debug.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \~japanese
+-  \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
++  Â¥â€¾japanese
++  Â¥brief URG ã‚»ãƒ³ã‚µç”¨ã®è£œåŠ©é–¢æ•°
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_utils.c,v da778fd816c2 2011/01/05 20:02:06 Satofumi $
+ */
+diff --git a/current/src/urg_ring_buffer.c b/current/src/urg_ring_buffer.c
+index cdbfb2c..72d29ec 100644
+--- a/current/src/urg_ring_buffer.c
++++ b/current/src/urg_ring_buffer.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \file
+-  \brief ƒŠƒ“ƒOƒoƒbƒtƒ@
++  Â¥file
++  Â¥brief ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+@@ -54,9 +54,9 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
+     int free_size = ring_capacity(ring) - ring_size(ring);
+     int push_size = (size > free_size) ? free_size : size;
+ 
+-    // ƒf[ƒ^”z’u
++    // ãƒ‡ãƒ¼ã‚¿é…ç½®
+     if (ring->first <= ring->last) {
+-        // last ‚©‚ç buffer_size I’[‚Ü‚Å‚É”z’u
++        // last ã‹ã‚‰ buffer_size çµ‚ç«¯ã¾ã§ã«é…ç½®
+         int left_size = 0;
+         int to_end = ring->buffer_size - ring->last;
+         int move_size = (to_end > push_size) ? push_size : to_end;
+@@ -67,12 +67,12 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
+ 
+         left_size = push_size - move_size;
+         if (left_size > 0) {
+-            // 0 ‚©‚ç first ‚Ì‘O‚Ü‚Å‚ğ”z’u
++            // 0 ã‹ã‚‰ first ã®å‰ã¾ã§ã‚’é…ç½®
+             byte_move(ring->buffer, &data[move_size], left_size);
+             ring->last = left_size;
+         }
+     } else {
+-        // last ‚©‚ç first ‚Ì‘O‚Ü‚Å”z’u
++        // last ã‹ã‚‰ first ã®å‰ã¾ã§é…ç½®
+         byte_move(&ring->buffer[ring->last], data, size);
+         ring->last += push_size;
+     }
+@@ -82,7 +82,7 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
+ 
+ int ring_read(ring_buffer_t *ring, char *buffer, int size)
+ {
+-    // ƒf[ƒ^æ“¾
++    // ãƒ‡ãƒ¼ã‚¿å–å¾—
+     int now_size = ring_size(ring);
+     int pop_size = (size > now_size) ? now_size : size;
+ 
+@@ -91,7 +91,7 @@ int ring_read(ring_buffer_t *ring, char *buffer, int size)
+         ring->first += pop_size;
+ 
+     } else {
+-        // first ‚©‚ç buffer_size I’[‚Ü‚Å‚ğ”z’u
++        // first ã‹ã‚‰ buffer_size çµ‚ç«¯ã¾ã§ã‚’é…ç½®
+         int left_size = 0;
+         int to_end = ring->buffer_size - ring->first;
+         int move_size = (to_end > pop_size) ? pop_size : to_end;
+@@ -102,7 +102,7 @@ int ring_read(ring_buffer_t *ring, char *buffer, int size)
+ 
+         left_size = pop_size - move_size;
+         if (left_size > 0) {
+-            // 0 ‚©‚ç last ‚Ì‘O‚Ü‚Å‚ğ”z’u
++            // 0 ã‹ã‚‰ last ã®å‰ã¾ã§ã‚’é…ç½®
+             byte_move(&buffer[move_size], ring->buffer, left_size);
+ 
+             ring->first = left_size;
+diff --git a/current/src/urg_sensor.c b/current/src/urg_sensor.c
+index 801d366..f4fa3dd 100644
+--- a/current/src/urg_sensor.c
++++ b/current/src/urg_sensor.c
+@@ -1,11 +1,11 @@
+ /*!
+-  \brief URG ƒZƒ“ƒT§Œä
++  Â¥brief URG ã‚»ãƒ³ã‚µåˆ¶å¾¡
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_sensor.c,v 66816edea765 2011/05/03 06:53:52 satofumi $
+ 
+-  \todo Mx Œv‘ª’†‚É‘¼‚Ì Mx ƒRƒ}ƒ“ƒh‚ğ‘—M‚µ‚½‚Æ‚«‚ÉA“KØ‚É“®ì‚·‚é‚æ‚¤‚É‚·‚é
++  Â¥todo Mx è¨ˆæ¸¬ä¸­ã«ä»–ã® Mx ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã—ãŸã¨ãã«ã€é©åˆ‡ã«å‹•ä½œã™ã‚‹ã‚ˆã†ã«ã™ã‚‹
+ */
+ 
+ #include "urg_c/urg_sensor.h"
+@@ -29,7 +29,7 @@ enum {
+     EXPECTED_END = -1,
+ 
+     RECEIVE_DATA_TIMEOUT,
+-    RECEIVE_DATA_COMPLETE,      /*!< ƒf[ƒ^‚ğ³í‚ÉóM */
++    RECEIVE_DATA_COMPLETE,      /*!< ãƒ‡ãƒ¼ã‚¿ã‚’æ­£å¸¸ã«å—ä¿¡ */
+ 
+     PP_RESPONSE_LINES = 10,
+     VV_RESPONSE_LINES = 7,
+@@ -43,7 +43,7 @@ static const char NOT_CONNECTED_MESSAGE[] = "not connected.";
+ static const char RECEIVE_ERROR_MESSAGE[] = "receive error.";
+ 
+ 
+-//! ƒ`ƒFƒbƒNƒTƒ€‚ÌŒvZ
++//! ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è¨ˆç®—
+ static char scip_checksum(const char buffer[], int size)
+ {
+     unsigned char sum = 0x00;
+@@ -53,7 +53,7 @@ static char scip_checksum(const char buffer[], int size)
+         sum += buffer[i];
+     }
+ 
+-    // ŒvZ‚ÌˆÓ–¡‚Í SCIP d—l‘‚ğQÆ‚Ì‚±‚Æ
++    // è¨ˆç®—ã®æ„å‘³ã¯ SCIP ä»•æ§˜æ›¸ã‚’å‚ç…§ã®ã“ã¨
+     return (sum & 0x3f) + 0x30;
+ }
+ 
+@@ -65,7 +65,7 @@ static int set_errno_and_return(urg_t *urg, int urg_errno)
+ }
+ 
+ 
+-// óM‚µ‚½‰“š‚Ìs”‚ğ•Ô‚·
++// å—ä¿¡ã—ãŸå¿œç­”ã®è¡Œæ•°ã‚’è¿”ã™
+ static int scip_response(urg_t *urg, const char* command,
+                          const int expected_ret[], int timeout,
+                          char *receive_buffer, int receive_buffer_max_size)
+@@ -84,7 +84,7 @@ static int scip_response(urg_t *urg, const char* command,
+     }
+ 
+     if (p) {
+-        *p = '\0';
++        *p = 'Â¥0';
+     }
+ 
+     do {
+@@ -94,20 +94,20 @@ static int scip_response(urg_t *urg, const char* command,
+ 
+         } else if (p && (line_number > 0)
+                    && (n < (receive_buffer_max_size - filled_size))) {
+-            // ƒGƒR[ƒoƒbƒN‚ÍŠ®‘Sˆê’v‚Ìƒ`ƒFƒbƒN‚ğs‚¤‚½‚ßAŠi”[‚µ‚È‚¢
++            // ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ã¯å®Œå…¨ä¸€è‡´ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†ãŸã‚ã€æ ¼ç´ã—ãªã„
+             memcpy(p, buffer, n);
+             p += n;
+-            *p++ = '\0';
++            *p++ = 'Â¥0';
+             filled_size += n;
+         }
+ 
+         if (line_number == 0) {
+-            // ƒGƒR[ƒoƒbƒN•¶š—ñ‚ªAˆê’v‚·‚é‚©‚ğŠm”F‚·‚é
++            // ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯æ–‡å­—åˆ—ãŒã€ä¸€è‡´ã™ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹
+             if (strncmp(buffer, command, write_size - 1)) {
+                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+             }
+         } else if (n > 0) {
+-            // ƒGƒR[ƒoƒbƒNˆÈŠO‚Ìs‚Ìƒ`ƒFƒbƒNƒTƒ€‚ğ•]‰¿‚·‚é
++            // ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ä»¥å¤–ã®è¡Œã®ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã‚’è©•ä¾¡ã™ã‚‹
+             char checksum = buffer[n - 1];
+             if ((checksum != scip_checksum(buffer, n - 1)) &&
+                 (checksum != scip_checksum(buffer, n - 2))) {
+@@ -115,10 +115,10 @@ static int scip_response(urg_t *urg, const char* command,
+             }
+         }
+ 
+-        // ƒXƒe[ƒ^ƒX‰“š‚ğ•]‰¿‚µ‚ÄA–ß‚è’l‚ğŒˆ’è‚·‚é
++        // ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å¿œç­”ã‚’è©•ä¾¡ã—ã¦ã€æˆ»ã‚Šå€¤ã‚’æ±ºå®šã™ã‚‹
+         if (line_number == 1) {
+             if (n == 1) {
+-                // SCIP 1.1 ‰“š‚Ìê‡‚ÍA³í‰“š‚Æ‚İ‚È‚·
++                // SCIP 1.1 å¿œç­”ã®å ´åˆã¯ã€æ­£å¸¸å¿œç­”ã¨ã¿ãªã™
+                 ret = 0;
+ 
+             } else if (n != 3) {
+@@ -167,7 +167,7 @@ static void ignore_receive_data_with_qt(urg_t *urg, int timeout)
+         return;
+     }
+ 
+-    connection_write(&urg->connection, "QT\n", 3);
++    connection_write(&urg->connection, "QTÂ¥n", 3);
+     urg->is_sending = URG_TRUE;
+     urg->is_laser_on = URG_FALSE;
+     ignore_receive_data(urg, timeout);
+@@ -183,15 +183,15 @@ static int change_sensor_baudrate(urg_t *urg,
+     int ret;
+ 
+     if (current_baudrate == next_baudrate) {
+-        // Œ»İ‚Ìƒ{[ƒŒ[ƒg‚Æİ’è‚·‚éƒ{[ƒŒ[ƒg‚ªˆê‚È‚ç‚ÎA–ß‚é
++        // ç¾åœ¨ã®ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã¨è¨­å®šã™ã‚‹ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆãŒä¸€ç·’ãªã‚‰ã°ã€æˆ»ã‚‹
+         return set_errno_and_return(urg, URG_NO_ERROR);
+     }
+ 
+-    // "SS" ƒRƒ}ƒ“ƒh‚Åƒ{[ƒŒ[ƒg‚ğ•ÏX‚·‚é
+-    snprintf(buffer, SS_COMMAND_SIZE, "SS%06ld\n", next_baudrate);
++    // "SS" ã‚³ãƒãƒ³ãƒ‰ã§ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã™ã‚‹
++    snprintf(buffer, SS_COMMAND_SIZE, "SS%06ldÂ¥n", next_baudrate);
+     ret = scip_response(urg, buffer, ss_expected, urg->timeout, NULL, 0);
+ 
+-    // 0F ‰“š‚Ì‚Æ‚«‚Í Ethernet —p‚ÌƒZƒ“ƒT‚Æ‚İ‚È‚µA³í‰“š‚ğ•Ô‚·
++    // 0F å¿œç­”ã®ã¨ãã¯ Ethernet ç”¨ã®ã‚»ãƒ³ã‚µã¨ã¿ãªã—ã€æ­£å¸¸å¿œç­”ã‚’è¿”ã™
+     if (ret == -15) {
+         return set_errno_and_return(urg, URG_NO_ERROR);
+     }
+@@ -199,24 +199,24 @@ static int change_sensor_baudrate(urg_t *urg,
+         return set_errno_and_return(urg, URG_INVALID_PARAMETER);
+     }
+ 
+-    // ³í‰“š‚È‚ç‚ÎAƒzƒXƒg‘¤‚Ìƒ{[ƒŒ[ƒg‚ğ•ÏX‚·‚é
++    // æ­£å¸¸å¿œç­”ãªã‚‰ã°ã€ãƒ›ã‚¹ãƒˆå´ã®ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã™ã‚‹
+     ret = connection_set_baudrate(&urg->connection, next_baudrate);
+ 
+-    // ƒZƒ“ƒT‘¤‚Ìİ’è”½‰f‚ğ‘Ò‚Â‚½‚ß‚É­‚µ‚¾‚¯‘Ò‹@‚·‚é
++    // ã‚»ãƒ³ã‚µå´ã®è¨­å®šåæ˜ ã‚’å¾…ã¤ãŸã‚ã«å°‘ã—ã ã‘å¾…æ©Ÿã™ã‚‹
+     ignore_receive_data(urg, MAX_TIMEOUT);
+ 
+     return set_errno_and_return(urg, ret);
+ }
+ 
+ 
+-// ƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚È‚ª‚çÚ‘±‚·‚é
++// ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ãªãŒã‚‰æ¥ç¶šã™ã‚‹
+ static int connect_urg_device(urg_t *urg, long baudrate)
+ {
+     long try_baudrate[] = { 19200, 38400, 115200 };
+     int try_times = sizeof(try_baudrate) / sizeof(try_baudrate[0]);
+     int i;
+ 
+-    // w¦‚³‚ê‚½ƒ{[ƒŒ[ƒg‚©‚çÚ‘±‚·‚é
++    // æŒ‡ç¤ºã•ã‚ŒãŸãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‹ã‚‰æ¥ç¶šã™ã‚‹
+     for (i = 0; i < try_times; ++i) {
+         if (try_baudrate[i] == baudrate) {
+             try_baudrate[i] = try_baudrate[0];
+@@ -233,55 +233,55 @@ static int connect_urg_device(urg_t *urg, long baudrate)
+ 
+         connection_set_baudrate(&urg->connection, try_baudrate[i]);
+ 
+-        // QT ‚ğ‘—M‚µA‰“š‚ª•Ô‚³‚ê‚é‚©‚Åƒ{[ƒŒ[ƒg‚ªˆê’v‚µ‚Ä‚¢‚é‚©‚ğŠm”F‚·‚é
+-        ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
++        // QT ã‚’é€ä¿¡ã—ã€å¿œç­”ãŒè¿”ã•ã‚Œã‚‹ã‹ã§ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆãŒä¸€è‡´ã—ã¦ã„ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹
++        ret = scip_response(urg, "QTÂ¥n", qt_expected, MAX_TIMEOUT,
+                             receive_buffer, RECEIVE_BUFFER_SIZE);
+         if (ret > 0) {
+             if (!strcmp(receive_buffer, "E")) {
+                 int scip20_expected[] = { 0, EXPECTED_END };
+ 
+-                // QT ‰“š‚ÌÅŒã‚Ì‰üs‚ğ“Ç‚İ”ò‚Î‚·
++                // QT å¿œç­”ã®æœ€å¾Œã®æ”¹è¡Œã‚’èª­ã¿é£›ã°ã™
+                 ignore_receive_data(urg, MAX_TIMEOUT);
+ 
+-                // "E" ‚ª•Ô‚³‚ê‚½ê‡‚ÍASCIP 1.1 ‚Æ‚İ‚È‚µ "SCIP2.0" ‚ğ‘—M‚·‚é
+-                ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
++                // "E" ãŒè¿”ã•ã‚ŒãŸå ´åˆã¯ã€SCIP 1.1 ã¨ã¿ãªã— "SCIP2.0" ã‚’é€ä¿¡ã™ã‚‹
++                ret = scip_response(urg, "SCIP2.0Â¥n", scip20_expected,
+                                     MAX_TIMEOUT, NULL, 0);
+ 
+-                // SCIP2.0 ‰“š‚ÌÅŒã‚Ì‰üs‚ğ“Ç‚İ”ò‚Î‚·
++                // SCIP2.0 å¿œç­”ã®æœ€å¾Œã®æ”¹è¡Œã‚’èª­ã¿é£›ã°ã™
+                 ignore_receive_data(urg, MAX_TIMEOUT);
+ 
+-                // ƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚Ä–ß‚é
++                // ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦æˆ»ã‚‹
+                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
+ 
+             } else if (!strcmp(receive_buffer, "0Ee")) {
+                 int tm2_expected[] = { 0, EXPECTED_END };
+ 
+-                // "0Ee" ‚ª•Ô‚³‚ê‚½ê‡‚ÍATM ƒ‚[ƒh‚Æ‚İ‚È‚µ "TM2" ‚ğ‘—M‚·‚é
+-                scip_response(urg, "TM2\n", tm2_expected,
++                // "0Ee" ãŒè¿”ã•ã‚ŒãŸå ´åˆã¯ã€TM ãƒ¢ãƒ¼ãƒ‰ã¨ã¿ãªã— "TM2" ã‚’é€ä¿¡ã™ã‚‹
++                scip_response(urg, "TM2Â¥n", tm2_expected,
+                               MAX_TIMEOUT, NULL, 0);
+ 
+-                // ƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚Ä–ß‚é
++                // ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦æˆ»ã‚‹
+                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
+             }
+         }
+ 
+         if (ret <= 0) {
+             if (ret == URG_INVALID_RESPONSE) {
+-                // ˆÙí‚ÈƒGƒR[ƒoƒbƒN‚Ì‚Æ‚«‚ÍA‹——£ƒf[ƒ^óM’†‚Æ‚İ‚È‚µ‚Ä
+-                // ƒf[ƒ^‚ğ“Ç‚İ”ò‚Î‚·
++                // ç•°å¸¸ãªã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ã®ã¨ãã¯ã€è·é›¢ãƒ‡ãƒ¼ã‚¿å—ä¿¡ä¸­ã¨ã¿ãªã—ã¦
++                // ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿é£›ã°ã™
+                 ignore_receive_data_with_qt(urg, MAX_TIMEOUT);
+ 
+-                // ƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚Ä–ß‚é
++                // ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦æˆ»ã‚‹
+                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
+ 
+             } else {
+-                // ‰“š‚ª‚È‚¢‚Æ‚«‚ÍAƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚ÄAÄ“xÚ‘±‚ğs‚¤
++                // å¿œç­”ãŒãªã„ã¨ãã¯ã€ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦ã€å†åº¦æ¥ç¶šã‚’è¡Œã†
+                 ignore_receive_data_with_qt(urg, MAX_TIMEOUT);
+                 continue;
+             }
+         } else if (!strcmp("00P", receive_buffer)) {
+ 
+-            // ƒZƒ“ƒT‚ÆƒzƒXƒg‚Ìƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚Ä–ß‚é
++            // ã‚»ãƒ³ã‚µã¨ãƒ›ã‚¹ãƒˆã®ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦æˆ»ã‚‹
+             return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
+         }
+     }
+@@ -290,7 +290,7 @@ static int connect_urg_device(urg_t *urg, long baudrate)
+ }
+ 
+ 
+-// PP ƒRƒ}ƒ“ƒh‚Ì‰“š‚ğ urg_t ‚ÉŠi”[‚·‚é
++// PP ã‚³ãƒãƒ³ãƒ‰ã®å¿œç­”ã‚’ urg_t ã«æ ¼ç´ã™ã‚‹
+ static int receive_parameter(urg_t *urg)
+ {
+     enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 9, };
+@@ -300,7 +300,7 @@ static int receive_parameter(urg_t *urg)
+     char *p;
+     int i;
+ 
+-    int ret = scip_response(urg, "PP\n", pp_expected, MAX_TIMEOUT,
++    int ret = scip_response(urg, "PPÂ¥n", pp_expected, MAX_TIMEOUT,
+                             receive_buffer, RECEIVE_BUFFER_SIZE);
+     if (ret < 0) {
+         return ret;
+@@ -338,7 +338,7 @@ static int receive_parameter(urg_t *urg)
+ 
+         } else if (!strncmp(p, "SCAN:", 5)) {
+             int rpm = strtol(p + 5, NULL, 10);
+-            // ƒ^ƒCƒ€ƒAƒEƒgŠÔ‚ÍAŒv‘ªüŠú‚Ì 16 ”{’ö“x‚Ì’l‚É‚·‚é
++            // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã¯ã€è¨ˆæ¸¬å‘¨æœŸã® 16 å€ç¨‹åº¦ã®å€¤ã«ã™ã‚‹
+             urg->scan_usec = 1000 * 1000 * 60 / rpm;
+             urg->timeout = urg->scan_usec >> (10 - 4);
+             received_bits |= 0x0040;
+@@ -346,7 +346,7 @@ static int receive_parameter(urg_t *urg)
+         p += strlen(p) + 1;
+     }
+ 
+-    // ‘S‚Ä‚Ìƒpƒ‰ƒ[ƒ^‚ğóM‚µ‚½‚©Šm”F
++    // å…¨ã¦ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å—ä¿¡ã—ãŸã‹ç¢ºèª
+     if (received_bits != 0x007f) {
+         return set_errno_and_return(urg, URG_RECEIVE_ERROR);
+     }
+@@ -360,7 +360,7 @@ static int receive_parameter(urg_t *urg)
+ }
+ 
+ 
+-//! SCIP •¶š—ñ‚ÌƒfƒR[ƒh
++//! SCIP æ–‡å­—åˆ—ã®ãƒ‡ã‚³ãƒ¼ãƒ‰
+ long urg_scip_decode(const char data[], int size)
+ {
+     const char* p = data;
+@@ -369,7 +369,7 @@ long urg_scip_decode(const char data[], int size)
+ 
+     while (p < last_p) {
+         value <<= 6;
+-        value &= ~0x3f;
++        value &= â€¾0x3f;
+         value |= *p++ - 0x30;
+     }
+     return value;
+@@ -381,7 +381,7 @@ static int parse_parameter(const char *parameter, int size)
+     char buffer[5];
+ 
+     memcpy(buffer, parameter, size);
+-    buffer[size] = '\0';
++    buffer[size] = 'Â¥0';
+ 
+     return strtol(buffer, NULL, 10);
+ }
+@@ -413,7 +413,7 @@ static urg_measurement_type_t parse_distance_parameter(urg_t *urg,
+         return URG_UNKNOWN;
+     }
+ 
+-    // ƒpƒ‰ƒ[ƒ^‚ÌŠi”[
++    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®æ ¼ç´
+     urg->received_first_index = parse_parameter(&echoback[2], 4);
+     urg->received_last_index = parse_parameter(&echoback[6], 4);
+     urg->received_skip_step = parse_parameter(&echoback[10], 2);
+@@ -479,7 +479,7 @@ static int receive_length_data(urg_t *urg, long length[],
+                                 urg->timeout);
+ 
+         if (n > 0) {
+-            // ƒ`ƒFƒbƒNƒTƒ€‚Ì•]‰¿
++            // ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è©•ä¾¡
+             if (buffer[line_filled + n - 1] !=
+                 scip_checksum(&buffer[line_filled], n - 1)) {
+                 ignore_receive_data_with_qt(urg, urg->timeout);
+@@ -496,10 +496,10 @@ static int receive_length_data(urg_t *urg, long length[],
+             int index;
+ 
+             if (*p == '&') {
+-                // æ“ª•¶š‚ª '&' ‚¾‚Á‚½‚Æ‚«‚ÍAƒ}ƒ‹ƒ`ƒGƒR[‚Ìƒf[ƒ^‚Æ‚İ‚È‚·
++                // å…ˆé ­æ–‡å­—ãŒ '&' ã ã£ãŸã¨ãã¯ã€ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã¨ã¿ãªã™
+ 
+                 if ((last_p - (p + 1)) < data_size) {
+-                    // '&' ‚ğœ‚¢‚ÄAdata_size •ªƒf[ƒ^‚ª–³‚¯‚ê‚Î”²‚¯‚é
++                    // '&' ã‚’é™¤ã„ã¦ã€data_size åˆ†ãƒ‡ãƒ¼ã‚¿ãŒç„¡ã‘ã‚Œã°æŠœã‘ã‚‹
+                     break;
+                 }
+ 
+@@ -509,7 +509,7 @@ static int receive_length_data(urg_t *urg, long length[],
+                 --line_filled;
+ 
+             } else {
+-                // Ÿ‚Ìƒf[ƒ^
++                // æ¬¡ã®ãƒ‡ãƒ¼ã‚¿
+                 multiecho_index = 0;
+             }
+ 
+@@ -517,14 +517,14 @@ static int receive_length_data(urg_t *urg, long length[],
+ 
+             if (step_filled >
+                 (urg->received_last_index - urg->received_first_index)) {
+-                // ƒf[ƒ^‚ª‘½‰ß‚¬‚éê‡‚ÍAc‚è‚Ìƒf[ƒ^‚ğ–³‹‚µ‚Ä–ß‚é
++                // ãƒ‡ãƒ¼ã‚¿ãŒå¤šéãã‚‹å ´åˆã¯ã€æ®‹ã‚Šã®ãƒ‡ãƒ¼ã‚¿ã‚’ç„¡è¦–ã—ã¦æˆ»ã‚‹
+                 ignore_receive_data_with_qt(urg, urg->timeout);
+                 return set_errno_and_return(urg, URG_RECEIVE_ERROR);
+             }
+ 
+ 
+             if (is_multiecho && (multiecho_index == 0)) {
+-                // ƒ}ƒ‹ƒ`ƒGƒR[‚Ìƒf[ƒ^Ši”[æ‚ğƒ_ƒ~[ƒf[ƒ^‚Å–„‚ß‚é
++                // ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿æ ¼ç´å…ˆã‚’ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿ã§åŸ‹ã‚ã‚‹
+                 int i;
+                 if (length) {
+                     for (i = 1; i < multiecho_max_size; ++i) {
+@@ -538,13 +538,13 @@ static int receive_length_data(urg_t *urg, long length[],
+                 }
+             }
+ 
+-            // ‹——£ƒf[ƒ^‚ÌŠi”[
++            // è·é›¢ãƒ‡ãƒ¼ã‚¿ã®æ ¼ç´
+             if (length) {
+                 length[index] = urg_scip_decode(p, 3);
+             }
+             p += 3;
+ 
+-            // ‹­“xƒf[ƒ^‚ÌŠi”[
++            // å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã®æ ¼ç´
+             if (is_intensity) {
+                 if (intensity) {
+                     intensity[index] = (unsigned short)urg_scip_decode(p, 3);
+@@ -556,7 +556,7 @@ static int receive_length_data(urg_t *urg, long length[],
+             line_filled -= data_size;
+         }
+ 
+-        // Ÿ‚Éˆ—‚·‚é•¶š‚ğ‘Ş”ğ
++        // æ¬¡ã«å‡¦ç†ã™ã‚‹æ–‡å­—ã‚’é€€é¿
+         memmove(buffer, p, line_filled);
+     } while (n > 0);
+ 
+@@ -564,7 +564,7 @@ static int receive_length_data(urg_t *urg, long length[],
+ }
+ 
+ 
+-//! ‹——£ƒf[ƒ^‚Ìæ“¾
++//! è·é›¢ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+                         long *time_stamp, unsigned long long *system_time_stamp)
+ {
+@@ -575,16 +575,16 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+     int extended_timeout = urg->timeout
+         + 2 * (urg->scan_usec * (urg->scanning_skip_scan) / 1000);
+ 
+-    // ƒGƒR[ƒoƒbƒN‚Ìæ“¾
++    // ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ã®å–å¾—
+     n = connection_readline(&urg->connection,
+                             buffer, BUFFER_SIZE, extended_timeout);
+     if (n <= 0) {
+         return set_errno_and_return(urg, URG_NO_RESPONSE);
+     }
+-    // ƒGƒR[ƒoƒbƒN‚Ì‰ğÍ
++    // ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ã®è§£æ
+     type = parse_distance_echoback(urg, buffer);
+ 
+-    // ‰“š‚Ìæ“¾
++    // å¿œç­”ã®å–å¾—
+     n = connection_readline(&urg->connection,
+                             buffer, BUFFER_SIZE, urg->timeout);
+     if (n != 3) {
+@@ -593,13 +593,13 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+     }
+ 
+     if (buffer[n - 1] != scip_checksum(buffer, n - 1)) {
+-        // ƒ`ƒFƒbƒNƒTƒ€‚Ì•]‰¿
++        // ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è©•ä¾¡
+         ignore_receive_data_with_qt(urg, urg->timeout);
+         return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
+     }
+ 
+     if (type == URG_STOP) {
+-        // QT ‰“š‚Ìê‡‚É‚ÍAÅŒã‚Ì‰üs‚ğ“Ç‚İÌ‚ÄA³í‰“š‚Æ‚µ‚Äˆ—‚·‚é
++        // QT å¿œç­”ã®å ´åˆã«ã¯ã€æœ€å¾Œã®æ”¹è¡Œã‚’èª­ã¿æ¨ã¦ã€æ­£å¸¸å¿œç­”ã¨ã—ã¦å‡¦ç†ã™ã‚‹
+         n = connection_readline(&urg->connection,
+                                 buffer, BUFFER_SIZE, urg->timeout);
+         if (n == 0) {
+@@ -611,8 +611,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+ 
+     if (urg->specified_scan_times != 1) {
+         if (!strncmp(buffer, "00", 2)) {
+-            // "00" ‰“š‚Ìê‡‚ÍAƒGƒR[ƒoƒbƒN‰“š‚Æ‚İ‚È‚µA
+-            // ÅŒã‚Ì‹ós‚ğ“Ç‚İÌ‚ÄAŸ‚©‚ç‚Ìƒf[ƒ^‚ğ•Ô‚·
++            // "00" å¿œç­”ã®å ´åˆã¯ã€ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯å¿œç­”ã¨ã¿ãªã—ã€
++            // æœ€å¾Œã®ç©ºè¡Œã‚’èª­ã¿æ¨ã¦ã€æ¬¡ã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
+             n = connection_readline(&urg->connection,
+                                     buffer, BUFFER_SIZE, urg->timeout);
+ 
+@@ -632,14 +632,14 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+         }
+ 
+         if (type == URG_UNKNOWN) {
+-            // Gx, Hx ‚Ì‚Æ‚«‚Í 00P ‚ª•Ô‚³‚ê‚½‚Æ‚«‚ªƒf[ƒ^
+-            // Mx, Nx ‚Ì‚Æ‚«‚Í 99b ‚ª•Ô‚³‚ê‚½‚Æ‚«‚ªƒf[ƒ^
++            // Gx, Hx ã®ã¨ãã¯ 00P ãŒè¿”ã•ã‚ŒãŸã¨ããŒãƒ‡ãƒ¼ã‚¿
++            // Mx, Nx ã®ã¨ãã¯ 99b ãŒè¿”ã•ã‚ŒãŸã¨ããŒãƒ‡ãƒ¼ã‚¿
+             ignore_receive_data_with_qt(urg, urg->timeout);
+             return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+         }
+     }
+ 
+-    // ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ìæ“¾
++    // ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã®å–å¾—
+     n = connection_readline(&urg->connection,
+                             buffer, BUFFER_SIZE, urg->timeout);
+     if (n > 0) {
+@@ -651,7 +651,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+         }
+     }
+ 
+-    // ƒf[ƒ^‚Ìæ“¾
++    // ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+     switch (type) {
+     case URG_DISTANCE:
+     case URG_MULTIECHO:
+@@ -669,11 +669,11 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+         break;
+     }
+ 
+-    // specified_scan_times == 1 ‚Ì‚Æ‚«‚Í Gx ŒnƒRƒ}ƒ“ƒh‚ªg‚í‚ê‚é‚½‚ß
+-    // ƒf[ƒ^‚ğ–¾¦“I‚É’â~‚µ‚È‚­‚Ä‚æ‚¢
++    // specified_scan_times == 1 ã®ã¨ãã¯ Gx ç³»ã‚³ãƒãƒ³ãƒ‰ãŒä½¿ã‚ã‚Œã‚‹ãŸã‚
++    // ãƒ‡ãƒ¼ã‚¿ã‚’æ˜ç¤ºçš„ã«åœæ­¢ã—ãªãã¦ã‚ˆã„
+     if ((urg->specified_scan_times > 1) && (urg->scanning_remain_times > 0)) {
+         if (--urg->scanning_remain_times <= 0) {
+-            // ƒf[ƒ^‚Ì’â~‚Ì‚İ‚ğs‚¤
++            // ãƒ‡ãƒ¼ã‚¿ã®åœæ­¢ã®ã¿ã‚’è¡Œã†
+             urg_stop_measurement(urg);
+         }
+     }
+@@ -694,7 +694,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
+     urg->scanning_skip_scan = 0;
+     urg->error_handler = NULL;
+ 
+-    // ƒfƒoƒCƒX‚Ö‚ÌÚ‘±
++    // ãƒ‡ãƒã‚¤ã‚¹ã¸ã®æ¥ç¶š
+     ret = connection_open(&urg->connection, connection_type,
+                           device_or_address, baudrate_or_port);
+ 
+@@ -715,9 +715,9 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
+         return urg->last_errno;
+     }
+ 
+-    // w’è‚µ‚½ƒ{[ƒŒ[ƒg‚Å URG ‚Æ’ÊM‚Å‚«‚é‚æ‚¤‚É’²®
++    // æŒ‡å®šã—ãŸãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã§ URG ã¨é€šä¿¡ã§ãã‚‹ã‚ˆã†ã«èª¿æ•´
+     if (connection_type == URG_ETHERNET) {
+-        // Ethernet ‚Ì‚Æ‚«‚Í‰¼‚Ì’ÊM‘¬“x‚ğw’è‚µ‚Ä‚¨‚­
++        // Ethernet ã®ã¨ãã¯ä»®ã®é€šä¿¡é€Ÿåº¦ã‚’æŒ‡å®šã—ã¦ãŠã
+         baudrate = 115200;
+     }
+ 
+@@ -726,14 +726,14 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
+     }
+     urg->is_sending = URG_FALSE;
+ 
+-    // •Ï”‚Ì‰Šú‰»
++    // å¤‰æ•°ã®åˆæœŸåŒ–
+     urg->last_errno = URG_NO_ERROR;
+     urg->range_data_byte = URG_COMMUNICATION_3_BYTE;
+     urg->specified_scan_times = 0;
+     urg->scanning_remain_times = 0;
+     urg->is_laser_on = URG_FALSE;
+ 
+-    // ƒpƒ‰ƒ[ƒ^î•ñ‚ğæ“¾
++    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æƒ…å ±ã‚’å–å¾—
+     ret = receive_parameter(urg);
+     if (ret == URG_NO_ERROR) {
+         urg->is_active = URG_TRUE;
+@@ -767,8 +767,8 @@ int urg_start_time_stamp_mode(urg_t *urg)
+         return set_errno_and_return(urg, URG_NOT_CONNECTED);
+     }
+ 
+-    // TM0 ‚ğ”­s‚·‚é
+-    n = scip_response(urg, "TM0\n", expected, urg->timeout, NULL, 0);
++    // TM0 ã‚’ç™ºè¡Œã™ã‚‹
++    n = scip_response(urg, "TM0Â¥n", expected, urg->timeout, NULL, 0);
+     if (n <= 0) {
+         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+     } else {
+@@ -788,15 +788,15 @@ long urg_time_stamp(urg_t *urg)
+         return set_errno_and_return(urg, URG_NOT_CONNECTED);
+     }
+ 
+-    ret = scip_response(urg, "TM1\n", expected,
++    ret = scip_response(urg, "TM1Â¥n", expected,
+                         urg->timeout, buffer, BUFFER_SIZE);
+     if (ret < 0) {
+         return ret;
+     }
+ 
+-    // buffer ‚©‚çƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾‚µAƒfƒR[ƒh‚µ‚Ä•Ô‚·
++    // buffer ã‹ã‚‰ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å–å¾—ã—ã€ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ã¦è¿”ã™
+     if (strcmp(buffer, "00P")) {
+-        // Å‰‚Ì‰“š‚ª "00P" ‚Å‚È‚¯‚ê‚Î–ß‚é
++        // æœ€åˆã®å¿œç­”ãŒ "00P" ã§ãªã‘ã‚Œã°æˆ»ã‚‹
+         return set_errno_and_return(urg, URG_RECEIVE_ERROR);
+     }
+     p = buffer + 4;
+@@ -819,8 +819,8 @@ int urg_stop_time_stamp_mode(urg_t *urg)
+         return set_errno_and_return(urg, URG_NOT_CONNECTED);
+     }
+ 
+-    // TM2 ‚ğ”­s‚·‚é
+-    n = scip_response(urg, "TM2\n", expected, urg->timeout, NULL, 0);
++    // TM2 ã‚’ç™ºè¡Œã™ã‚‹
++    n = scip_response(urg, "TM2Â¥n", expected, urg->timeout, NULL, 0);
+     if (n <= 0) {
+         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+     } else {
+@@ -842,21 +842,21 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
+     urg->scanning_remain_times = urg->specified_scan_times;
+     urg->scanning_skip_scan = (skip_scan < 0) ? 0 : skip_scan;
+     if (scan_times >= 100) {
+-        // Œv‘ª‰ñ”‚ª 99 ‚ğ‰z‚¦‚éê‡‚ÍA–³ŒÀ‰ñ‚ÌƒXƒLƒƒƒ“‚ğs‚¤
++        // è¨ˆæ¸¬å›æ•°ãŒ 99 ã‚’è¶Šãˆã‚‹å ´åˆã¯ã€ç„¡é™å›ã®ã‚¹ã‚­ãƒ£ãƒ³ã‚’è¡Œã†
+         urg->specified_scan_times = 0;
+     }
+ 
+     if (urg->scanning_remain_times == 1) {
+-        // ƒŒ[ƒU”­Œõ‚ğw¦
++        // ãƒ¬ãƒ¼ã‚¶ç™ºå…‰ã‚’æŒ‡ç¤º
+         urg_laser_on(urg);
+ 
+-        write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d\n",
++        write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02dÂ¥n",
+                               single_scan_ch, scan_type_ch,
+                               urg->scanning_first_step + front_index,
+                               urg->scanning_last_step + front_index,
+                               urg->scanning_skip_step);
+     } else {
+-        write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d%01d%02d\n",
++        write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d%01d%02dÂ¥n",
+                               continuous_scan_ch, scan_type_ch,
+                               urg->scanning_first_step + front_index,
+                               urg->scanning_last_step + front_index,
+@@ -889,12 +889,12 @@ int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
+         return set_errno_and_return(urg, URG_INVALID_PARAMETER);
+     }
+ 
+-    // !!! Mx Œn, Nx Œn‚ÌŒv‘ª’†‚Ì‚Æ‚«‚ÍAQT ‚ğ”­s‚µ‚Ä‚©‚ç
+-    // !!! Œv‘ªŠJnƒRƒ}ƒ“ƒh‚ğ‘—M‚·‚é‚æ‚¤‚É‚·‚é
+-    // !!! ‚½‚¾‚µAMD Œv‘ª’†‚É MD ‚ğ”­s‚·‚é‚æ‚¤‚ÉA“¯‚¶ƒRƒ}ƒ“ƒh‚Ìê‡‚Í
+-    // !!! Mx Œn, Nx Œn‚ÌŒv‘ª‚Íã‘‚«‚·‚é‚±‚Æ‚ª‚Å‚«‚é‚æ‚¤‚É‚·‚é
++    // !!! Mx ç³», Nx ç³»ã®è¨ˆæ¸¬ä¸­ã®ã¨ãã¯ã€QT ã‚’ç™ºè¡Œã—ã¦ã‹ã‚‰
++    // !!! è¨ˆæ¸¬é–‹å§‹ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹
++    // !!! ãŸã ã—ã€MD è¨ˆæ¸¬ä¸­ã« MD ã‚’ç™ºè¡Œã™ã‚‹ã‚ˆã†ã«ã€åŒã˜ã‚³ãƒãƒ³ãƒ‰ã®å ´åˆã¯
++    // !!! Mx ç³», Nx ç³»ã®è¨ˆæ¸¬ã¯ä¸Šæ›¸ãã™ã‚‹ã“ã¨ãŒã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
+ 
+-    // w’è‚³‚ê‚½ƒ^ƒCƒv‚ÌƒpƒPƒbƒg‚ğ¶¬‚µA‘—M‚·‚é
++    // æŒ‡å®šã•ã‚ŒãŸã‚¿ã‚¤ãƒ—ã®ãƒ‘ã‚±ãƒƒãƒˆã‚’ç”Ÿæˆã—ã€é€ä¿¡ã™ã‚‹
+     switch (type) {
+     case URG_DISTANCE:
+         range_byte_ch =
+@@ -986,17 +986,17 @@ int urg_stop_measurement(urg_t *urg)
+         return set_errno_and_return(urg, URG_NOT_CONNECTED);
+     }
+ 
+-    // QT ‚ğ”­s‚·‚é
+-    n = connection_write(&urg->connection, "QT\n", 3);
++    // QT ã‚’ç™ºè¡Œã™ã‚‹
++    n = connection_write(&urg->connection, "QTÂ¥n", 3);
+     if (n != 3) {
+         return set_errno_and_return(urg, URG_SEND_ERROR);
+     }
+ 
+     for (i = 0; i < MAX_READ_TIMES; ++i) {
+-        // QT ‚Ì‰“š‚ª•Ô‚³‚ê‚é‚Ü‚ÅA‹——£ƒf[ƒ^‚ğ“Ç‚İÌ‚Ä‚é
++        // QT ã®å¿œç­”ãŒè¿”ã•ã‚Œã‚‹ã¾ã§ã€è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿æ¨ã¦ã‚‹
+         ret = receive_data(urg, NULL, NULL, NULL, NULL);
+         if (ret == URG_NO_ERROR) {
+-            // ³í‰“š
++            // æ­£å¸¸å¿œç­”
+             urg->is_laser_on = URG_FALSE;
+             urg->is_sending = URG_FALSE;
+             return set_errno_and_return(urg, URG_NO_ERROR);
+@@ -1009,7 +1009,7 @@ int urg_stop_measurement(urg_t *urg)
+ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
+                                int skip_step)
+ {
+-    // İ’è‚Ì”ÍˆÍŠO‚ğw’è‚µ‚½‚Æ‚«‚ÍAƒGƒ‰[‚ğ•Ô‚·
++    // è¨­å®šã®ç¯„å›²å¤–ã‚’æŒ‡å®šã—ãŸã¨ãã¯ã€ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+     if (((skip_step < 0) || (skip_step >= 100)) ||
+         (first_step > last_step) ||
+         (first_step < -urg->front_data_index) ||
+@@ -1053,12 +1053,12 @@ int urg_laser_on(urg_t *urg)
+     }
+ 
+     if (urg->is_laser_on != URG_FALSE) {
+-        // Šù‚ÉƒŒ[ƒU‚ª”­Œõ‚µ‚Ä‚¢‚é‚Æ‚«‚ÍAƒRƒ}ƒ“ƒh‚ğ‘—M‚µ‚È‚¢‚æ‚¤‚É‚·‚é
++        // æ—¢ã«ãƒ¬ãƒ¼ã‚¶ãŒç™ºå…‰ã—ã¦ã„ã‚‹ã¨ãã¯ã€ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã—ãªã„ã‚ˆã†ã«ã™ã‚‹
+         urg->last_errno = 0;
+         return urg->last_errno;
+     }
+ 
+-    ret = scip_response(urg, "BM\n", expected, urg->timeout, NULL, 0);
++    ret = scip_response(urg, "BMÂ¥n", expected, urg->timeout, NULL, 0);
+     if (ret >= 0) {
+         urg->is_laser_on = URG_TRUE;
+         ret = 0;
+@@ -1083,9 +1083,9 @@ int urg_reboot(urg_t *urg)
+         return set_errno_and_return(urg, URG_NOT_CONNECTED);
+     }
+ 
+-    // ‚Q‰ñ–Ú‚Ì RB ‘—MŒãAÚ‘±‚ğØ’f‚·‚é
++    // ï¼’å›ç›®ã® RB é€ä¿¡å¾Œã€æ¥ç¶šã‚’åˆ‡æ–­ã™ã‚‹
+     for (i = 0; i < 2; ++i) {
+-        ret = scip_response(urg, "RB\n", expected, urg->timeout, NULL, 0);
++        ret = scip_response(urg, "RBÂ¥n", expected, urg->timeout, NULL, 0);
+         if (ret < 0) {
+             return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+         }
+@@ -1108,7 +1108,7 @@ void urg_sleep(urg_t *urg)
+         return;
+     }
+ 
+-    scip_response(urg, "%SL\n", sl_expected, MAX_TIMEOUT,
++    scip_response(urg, "%SLÂ¥n", sl_expected, MAX_TIMEOUT,
+                   receive_buffer, RECEIVE_BUFFER_SIZE);
+ }
+ 
+@@ -1142,7 +1142,7 @@ static char *copy_token(char *dest, char *receive_buffer,
+ 
+                 char *last_p = strchr(p + start_str_len, end_ch[j]);
+                 if (last_p) {
+-                    *last_p = '\0';
++                    *last_p = 'Â¥0';
+                     memcpy(dest, p + start_str_len,
+                            last_p - (p + start_str_len) + 1);
+                     return dest;
+@@ -1187,7 +1187,7 @@ const char *urg_sensor_product_type(urg_t *urg)
+     char *p;
+ 
+     ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+-                                   "VV\n", VV_RESPONSE_LINES);
++                                   "VVÂ¥n", VV_RESPONSE_LINES);
+     if (ret) {
+         return ret;
+     }
+@@ -1208,7 +1208,7 @@ const char *urg_sensor_serial_id(urg_t *urg)
+     char *p;
+ 
+     ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+-                                   "VV\n", VV_RESPONSE_LINES);
++                                   "VVÂ¥n", VV_RESPONSE_LINES);
+     if (ret) {
+         return ret;
+     }
+@@ -1231,7 +1231,7 @@ const char *urg_sensor_vendor(urg_t *urg){
+     }
+ 
+     ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+-                                   "VV\n", VV_RESPONSE_LINES);
++                                   "VVÂ¥n", VV_RESPONSE_LINES);
+     if (ret) {
+         return ret;
+     }
+@@ -1255,7 +1255,7 @@ const char *urg_sensor_firmware_version(urg_t *urg)
+     }
+ 
+     ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+-                                   "VV\n", VV_RESPONSE_LINES);
++                                   "VVÂ¥n", VV_RESPONSE_LINES);
+     if (ret) {
+         return ret;
+     }
+@@ -1284,7 +1284,7 @@ const char *urg_sensor_firmware_date(urg_t *urg)
+     strcat(firmware_version, "(");
+ 
+     ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+-                                   "VV\n", VV_RESPONSE_LINES);
++                                   "VVÂ¥n", VV_RESPONSE_LINES);
+     if (ret) {
+         return ret;
+     }
+@@ -1311,7 +1311,7 @@ const char *urg_sensor_protocol_version(urg_t *urg)
+     }
+ 
+     ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+-                                   "VV\n", VV_RESPONSE_LINES);
++                                   "VVÂ¥n", VV_RESPONSE_LINES);
+     if (ret) {
+         return ret;
+     }
+@@ -1336,7 +1336,7 @@ const char *urg_sensor_status(urg_t *urg)
+     }
+ 
+     ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+-                                   "II\n", II_RESPONSE_LINES);
++                                   "IIÂ¥n", II_RESPONSE_LINES);
+     if (ret) {
+         return ret;
+     }
+@@ -1361,7 +1361,7 @@ const char *urg_sensor_state(urg_t *urg)
+     }
+ 
+     ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+-                                   "II\n", II_RESPONSE_LINES);
++                                   "IIÂ¥n", II_RESPONSE_LINES);
+     if (ret) {
+         return ret;
+     }
+diff --git a/current/src/urg_serial.c b/current/src/urg_serial.c
+index 68a24c3..7d7158d 100644
+--- a/current/src/urg_serial.c
++++ b/current/src/urg_serial.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \file
+-  \brief ƒVƒŠƒAƒ‹’ÊM
++  Â¥file
++  Â¥brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_serial.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
+ */
+@@ -23,10 +23,10 @@ enum {
+ #endif
+ 
+ 
+-// ‰üs‚©‚Ç‚¤‚©‚Ì”»’è
++// æ”¹è¡Œã‹ã©ã†ã‹ã®åˆ¤å®š
+ static int is_linefeed(const char ch)
+ {
+-    return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
++    return ((ch == 'Â¥r') || (ch == 'Â¥n')) ? 1 : 0;
+ }
+ 
+ 
+@@ -39,7 +39,7 @@ static void serial_ungetc(urg_serial_t *serial, char ch)
+ 
+ int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
+ {
+-    /* ‚P•¶š‚¸‚Â“Ç‚İo‚µ‚Ä•]‰¿‚·‚é */
++    /* ï¼‘æ–‡å­—ãšã¤èª­ã¿å‡ºã—ã¦è©•ä¾¡ã™ã‚‹ */
+     int filled = 0;
+     int is_timeout = 0;
+ 
+@@ -58,12 +58,12 @@ int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
+         --filled;
+         serial_ungetc(serial, data[filled]);
+     }
+-    data[filled] = '\0';
++    data[filled] = 'Â¥0';
+ 
+     if ((filled == 0) && is_timeout) {
+         return -1;
+     } else {
+-        //fprintf(stderr, "%s\n", data);
++        //fprintf(stderr, "%sÂ¥n", data);
+         return filled;
+     }
+ }
+diff --git a/current/src/urg_serial_linux.c b/current/src/urg_serial_linux.c
+index ff8e75d..d928a6c 100644
+--- a/current/src/urg_serial_linux.c
++++ b/current/src/urg_serial_linux.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \file
+-  \brief ƒVƒŠƒAƒ‹’ÊM
++  Â¥file
++  Â¥brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+@@ -43,36 +43,36 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
+     serial_initialize(serial);
+ 
+ #ifndef URG_MAC_OS
+-    enum { O_EXLOCK = 0x0 }; /* Linux ‚Å‚Íg‚¦‚È‚¢‚Ì‚Åƒ_ƒ~[‚ğì¬‚µ‚Ä‚¨‚­ */
++    enum { O_EXLOCK = 0x0 }; /* Linux ã§ã¯ä½¿ãˆãªã„ã®ã§ãƒ€ãƒŸãƒ¼ã‚’ä½œæˆã—ã¦ãŠã */
+ #endif
+     serial->fd = open(device, O_RDWR | O_EXLOCK | O_NONBLOCK | O_NOCTTY);
+     if (serial->fd < 0) {
+-        /* Ú‘±‚É¸”s */
++        /* æ¥ç¶šã«å¤±æ•— */
+         //strerror_r(errno, serial->error_string, ERROR_MESSAGE_SIZE);
+         return -1;
+     }
+ 
+     flags = fcntl(serial->fd, F_GETFL, 0);
+-    fcntl(serial->fd, F_SETFL, flags & ~O_NONBLOCK);
++    fcntl(serial->fd, F_SETFL, flags & â€¾O_NONBLOCK);
+ 
+-    /* ƒVƒŠƒAƒ‹’ÊM‚Ì‰Šú‰» */
++    /* ã‚·ãƒªã‚¢ãƒ«é€šä¿¡ã®åˆæœŸåŒ– */
+     tcgetattr(serial->fd, &serial->sio);
+     serial->sio.c_iflag = 0;
+     serial->sio.c_oflag = 0;
+-    serial->sio.c_cflag &= ~(CSIZE | PARENB | CSTOPB);
++    serial->sio.c_cflag &= â€¾(CSIZE | PARENB | CSTOPB);
+     serial->sio.c_cflag |= CS8 | CREAD | CLOCAL;
+-    serial->sio.c_lflag &= ~(ICANON | ECHO | ISIG | IEXTEN);
++    serial->sio.c_lflag &= â€¾(ICANON | ECHO | ISIG | IEXTEN);
+ 
+     serial->sio.c_cc[VMIN] = 0;
+     serial->sio.c_cc[VTIME] = 0;
+ 
+-    /* ƒ{[ƒŒ[ƒg‚Ì•ÏX */
++    /* ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã®å¤‰æ›´ */
+     ret = serial_set_baudrate(serial, baudrate);
+     if (ret < 0) {
+         return ret;
+     }
+ 
+-    /* ƒVƒŠƒAƒ‹§Œä\‘¢‘Ì‚Ì‰Šú‰» */
++    /* ã‚·ãƒªã‚¢ãƒ«åˆ¶å¾¡æ§‹é€ ä½“ã®åˆæœŸåŒ– */
+     serial->has_last_ch = False;
+ 
+     return 0;
+@@ -121,7 +121,7 @@ int serial_set_baudrate(urg_serial_t *serial, long baudrate)
+         return -1;
+     }
+ 
+-    /* ƒ{[ƒŒ[ƒg•ÏX */
++    /* ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆå¤‰æ›´ */
+     cfsetospeed(&serial->sio, baudrate_value);
+     cfsetispeed(&serial->sio, baudrate_value);
+     tcsetattr(serial->fd, TCSADRAIN, &serial->sio);
+@@ -145,7 +145,7 @@ static int wait_receive(urg_serial_t* serial, int timeout)
+     fd_set rfds;
+     struct timeval tv;
+ 
+-    // ƒ^ƒCƒ€ƒAƒEƒgİ’è
++    // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆè¨­å®š
+     FD_ZERO(&rfds);
+     FD_SET(serial->fd, &rfds);
+ 
+@@ -154,7 +154,7 @@ static int wait_receive(urg_serial_t* serial, int timeout)
+ 
+     if (select(serial->fd + 1, &rfds, NULL, NULL,
+                (timeout < 0) ? NULL : &tv) <= 0) {
+-        /* ƒ^ƒCƒ€ƒAƒEƒg”­¶ */
++        /* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç™ºç”Ÿ */
+         return 0;
+     }
+     return 1;
+@@ -181,7 +181,7 @@ static int internal_receive(char data[], int data_size_max,
+         require_n = data_size_max - filled;
+         read_n = read(serial->fd, &data[filled], require_n);
+         if (read_n <= 0) {
+-            /* “Ç‚İo‚µƒGƒ‰[BŒ»İ‚Ü‚Å‚ÌóM“à—e‚Å–ß‚é */
++            /* èª­ã¿å‡ºã—ã‚¨ãƒ©ãƒ¼ã€‚ç¾åœ¨ã¾ã§ã®å—ä¿¡å†…å®¹ã§æˆ»ã‚‹ */
+             break;
+         }
+         filled += read_n;
+@@ -200,7 +200,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+         return 0;
+     }
+ 
+-    /* ‘‚«–ß‚µ‚½‚P•¶š‚ª‚ ‚ê‚ÎA‘‚«o‚· */
++    /* æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­—ãŒã‚ã‚Œã°ã€æ›¸ãå‡ºã™ */
+     if (serial->has_last_ch != False) {
+         data[0] = serial->last_ch;
+         serial->has_last_ch = False;
+@@ -217,7 +217,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+     buffer_size = ring_size(&serial->ring);
+     read_n = max_size - filled;
+     if (buffer_size < read_n) {
+-        // ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚Å‘«‚è‚È‚¯‚ê‚ÎAƒf[ƒ^‚ğ“Ç‚İ‘«‚·
++        // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã§è¶³ã‚Šãªã‘ã‚Œã°ã€ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¶³ã™
+         char buffer[RING_BUFFER_SIZE];
+         int n = internal_receive(buffer,
+                                  ring_capacity(&serial->ring) - buffer_size,
+@@ -228,7 +228,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+         }
+     }
+ 
+-    // ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚ğ•Ô‚·
++    // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
+     if (read_n > buffer_size) {
+         read_n = buffer_size;
+     }
+@@ -237,7 +237,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+         filled += read_n;
+     }
+ 
+-    // ƒf[ƒ^‚ğƒ^ƒCƒ€ƒAƒEƒg•t‚«‚Å“Ç‚İo‚·
++    // ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆä»˜ãã§èª­ã¿å‡ºã™
+     filled += internal_receive(&data[filled], max_size - filled,
+                                serial, timeout);
+     return filled;
+diff --git a/current/src/urg_serial_utils.c b/current/src/urg_serial_utils.c
+index 42c534a..73fe946 100644
+--- a/current/src/urg_serial_utils.c
++++ b/current/src/urg_serial_utils.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \file
+-  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
++  Â¥file
++  Â¥brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+diff --git a/current/src/urg_serial_utils_linux.c b/current/src/urg_serial_utils_linux.c
+index 509c069..2e48531 100644
+--- a/current/src/urg_serial_utils_linux.c
++++ b/current/src/urg_serial_utils_linux.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \file
+-  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
++  Â¥file
++  Â¥brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_serial_utils_linux.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
+ */
+@@ -84,8 +84,8 @@ const char *urg_serial_port_name(int index)
+ 
+ int urg_serial_is_urg_port(int index)
+ {
+-    // Linux ‚Ìê‡Aƒ|[ƒg‚ª URG ‚©‚Ç‚¤‚©‚Í’f’è‚Å‚«‚È‚¢
+-    // !!! —]—Í‚ª‚ ‚ê‚ÎAdmesg ‚È‚Ç‚Ìo—Í‚©‚ç”»’è‚·‚é‚æ‚¤‚É‚µ‚Ä‚à‚æ‚¢
++    // Linux ã®å ´åˆã€ãƒãƒ¼ãƒˆãŒ URG ã‹ã©ã†ã‹ã¯æ–­å®šã§ããªã„
++    // !!! ä½™åŠ›ãŒã‚ã‚Œã°ã€dmesg ãªã©ã®å‡ºåŠ›ã‹ã‚‰åˆ¤å®šã™ã‚‹ã‚ˆã†ã«ã—ã¦ã‚‚ã‚ˆã„
+     (void)index;
+     return 0;
+ }
+diff --git a/current/src/urg_serial_utils_windows.c b/current/src/urg_serial_utils_windows.c
+index fa68e9b..fe10a20 100644
+--- a/current/src/urg_serial_utils_windows.c
++++ b/current/src/urg_serial_utils_windows.c
+@@ -1,13 +1,13 @@
+ /*!
+-  \file
+-  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
++  Â¥file
++  Â¥brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_serial_utils_windows.c,v faa71b0113fd 2011/01/17 12:00:22 Satofumi $
+ 
+-  \todo •Ï”–¼‚ğ '_' ‹æØ‚è‚ÌŒ`®‚É•ÏX‚·‚é
+-  \todo C90 ‘Š“–‚Å“®ì‚·‚é‚æ‚¤‚É’²®‚·‚éB‚½‚¾‚µA"//" ƒRƒƒ“ƒg‚Íg‚¤
++  Â¥todo å¤‰æ•°åã‚’ '_' åŒºåˆ‡ã‚Šã®å½¢å¼ã«å¤‰æ›´ã™ã‚‹
++  Â¥todo C90 ç›¸å½“ã§å‹•ä½œã™ã‚‹ã‚ˆã†ã«èª¿æ•´ã™ã‚‹ã€‚ãŸã ã—ã€"//" ã‚³ãƒ¡ãƒ³ãƒˆã¯ä½¿ã†
+ */
+ 
+ #include "urg_c/urg_serial_utils.h"
+@@ -74,7 +74,7 @@ static void sort_ports(void)
+ 
+ int urg_serial_find_port(void)
+ {
+-    // ƒfƒoƒCƒXƒ}ƒl[ƒWƒƒ‚Ìˆê——‚©‚ç COM ƒfƒoƒCƒX‚ğ’T‚·
++    // ãƒ‡ãƒã‚¤ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ã®ä¸€è¦§ã‹ã‚‰ COM ãƒ‡ãƒã‚¤ã‚¹ã‚’æ¢ã™
+ 
+     //4D36E978-E325-11CE-BFC1-08002BE10318
+     GUID GUID_DEVINTERFACE_COM_DEVICE = {
+@@ -108,24 +108,24 @@ int urg_serial_find_port(void)
+         int n;
+         int j;
+ 
+-        // ƒtƒŒƒ“ƒhƒŠ[ƒl[ƒ€‚ğæ“¾‚µ‚Ä COM ”Ô†‚ğæ‚èo‚·
++        // ãƒ•ãƒ¬ãƒ³ãƒ‰ãƒªãƒ¼ãƒãƒ¼ãƒ ã‚’å–å¾—ã—ã¦ COM ç•ªå·ã‚’å–ã‚Šå‡ºã™
+         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_FRIENDLYNAME,
+                                           &dwRegType, (BYTE*)buffer, BufferSize,
+                                           &dwSize);
+         n = (int)strlen(buffer);
+         if (n < ComNameLengthMax) {
+-            // COM –¼‚ª’Z‰ß‚¬‚½ê‡Aˆ—‚µ‚È‚¢
+-            // –â‘è‚ª‚ ‚éê‡‚ÍAC³‚·‚é
++            // COM åãŒçŸ­éããŸå ´åˆã€å‡¦ç†ã—ãªã„
++            // å•é¡ŒãŒã‚ã‚‹å ´åˆã¯ã€ä¿®æ­£ã™ã‚‹
+             continue;
+         }
+ 
+-        // (COMx) ‚ÌÅŒã‚ÌŠ‡ŒÊ‚ÌˆÊ’u‚É '\0' ‚ğ‘ã“ü‚·‚é
++        // (COMx) ã®æœ€å¾Œã®æ‹¬å¼§ã®ä½ç½®ã« 'Â¥0' ã‚’ä»£å…¥ã™ã‚‹
+         p = strrchr(buffer, ')');
+         if (p) {
+-            *p = '\0';
++            *p = 'Â¥0';
+         }
+ 
+-        // COM ‚Æ”Ô†‚Ü‚Å‚Ì•¶š—ñ‚ğ”²‚«o‚·
++        // COM ã¨ç•ªå·ã¾ã§ã®æ–‡å­—åˆ—ã‚’æŠœãå‡ºã™
+         p = strstr(&buffer[n - ComNameLengthMax], "COM");
+         if (! p) {
+             continue;
+@@ -133,7 +133,7 @@ int urg_serial_find_port(void)
+ 
+         snprintf(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
+ 
+-        // ƒfƒoƒCƒX–¼‚ğæ“¾‚µAURG ƒ|[ƒg‚©‚Ì”»’è‚É—p‚¢‚é
++        // ãƒ‡ãƒã‚¤ã‚¹åã‚’å–å¾—ã—ã€URG ãƒãƒ¼ãƒˆã‹ã®åˆ¤å®šã«ç”¨ã„ã‚‹
+         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_DEVICEDESC,
+                                           &dwRegType, (BYTE*)buffer, BufferSize,
+                                           &dwSize);
+@@ -150,7 +150,7 @@ int urg_serial_find_port(void)
+     }
+     SetupDiDestroyDeviceInfoList(hdi);
+ 
+-    // is_urg_port ‚Ì—v‘f‚ªæ“ª‚É—ˆ‚é‚æ‚¤‚Éƒ\[ƒg‚·‚é
++    // is_urg_port ã®è¦ç´ ãŒå…ˆé ­ã«æ¥ã‚‹ã‚ˆã†ã«ã‚½ãƒ¼ãƒˆã™ã‚‹
+     sort_ports();
+ 
+     return found_ports_size;
+diff --git a/current/src/urg_serial_windows.c b/current/src/urg_serial_windows.c
+index c10a279..6a42b7c 100644
+--- a/current/src/urg_serial_windows.c
++++ b/current/src/urg_serial_windows.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \file
+-  \brief ƒVƒŠƒAƒ‹’ÊM
++  Â¥file
++  Â¥brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id$
+ */
+@@ -39,34 +39,34 @@ static void set_timeout(urg_serial_t *serial, int timeout)
+ 
+ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
+ {
+-    // COM10 ˆÈ~‚Ö‚Ì‘Î‰—p
++    // COM10 ä»¥é™ã¸ã®å¯¾å¿œç”¨
+     enum { NameLength = 11 };
+     char adjusted_device[NameLength];
+ 
+     serial_initialize(serial);
+ 
+-    /* COM ƒ|[ƒg‚ğŠJ‚­ */
+-    _snprintf(adjusted_device, NameLength, "\\\\.\\%s", device);
++    /* COM ãƒãƒ¼ãƒˆã‚’é–‹ã */
++    _snprintf(adjusted_device, NameLength, "Â¥Â¥Â¥Â¥.Â¥Â¥%s", device);
+     serial->hCom = CreateFileA(adjusted_device, GENERIC_READ | GENERIC_WRITE,
+                                0, NULL, OPEN_EXISTING,
+                                FILE_ATTRIBUTE_NORMAL, NULL);
+ 
+     if (serial->hCom == INVALID_HANDLE_VALUE) {
+         // !!! store error_message buffer
+-        //printf("open failed: %s\n", device);
++        //printf("open failed: %sÂ¥n", device);
+         return -1;
+     }
+ 
+-    /* ’ÊMƒTƒCƒY‚ÌXV */
++    /* é€šä¿¡ã‚µã‚¤ã‚ºã®æ›´æ–° */
+     SetupComm(serial->hCom, 4096 * 8, 4096);
+ 
+-    /* ƒ{[ƒŒ[ƒg‚Ì•ÏX */
++    /* ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã®å¤‰æ›´ */
+     serial_set_baudrate(serial, baudrate);
+ 
+-    /* ƒVƒŠƒAƒ‹§Œä\‘¢‘Ì‚Ì‰Šú‰» */
++    /* ã‚·ãƒªã‚¢ãƒ«åˆ¶å¾¡æ§‹é€ ä½“ã®åˆæœŸåŒ– */
+     serial->has_last_ch = False;
+ 
+-    /* ƒ^ƒCƒ€ƒAƒEƒg‚Ìİ’è */
++    /* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®è¨­å®š */
+     serial->current_timeout = 0;
+     set_timeout(serial, serial->current_timeout);
+ 
+@@ -174,7 +174,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+         return 0;
+     }
+ 
+-    /* ‘‚«–ß‚µ‚½‚P•¶š‚ª‚ ‚ê‚ÎA‘‚«o‚· */
++    /* æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­—ãŒã‚ã‚Œã°ã€æ›¸ãå‡ºã™ */
+     if (serial->has_last_ch) {
+         data[0] = serial->last_ch;
+         serial->has_last_ch = False;
+@@ -191,7 +191,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+     buffer_size = ring_size(&serial->ring);
+     read_n = max_size - filled;
+     if (buffer_size < read_n) {
+-        // ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚Å‘«‚è‚È‚¯‚ê‚ÎAƒf[ƒ^‚ğ“Ç‚İ‘«‚·
++        // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã§è¶³ã‚Šãªã‘ã‚Œã°ã€ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¶³ã™
+         char buffer[RING_BUFFER_SIZE];
+         int n = internal_receive(buffer,
+                                  ring_capacity(&serial->ring) - buffer_size,
+@@ -200,7 +200,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+     }
+     buffer_size = ring_size(&serial->ring);
+ 
+-    // ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚ğ•Ô‚·
++    // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
+     if (read_n > buffer_size) {
+         read_n = buffer_size;
+     }
+@@ -209,7 +209,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+         filled += read_n;
+     }
+ 
+-    // ƒf[ƒ^‚ğƒ^ƒCƒ€ƒAƒEƒg•t‚«‚Å“Ç‚İo‚·
++    // ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆä»˜ãã§èª­ã¿å‡ºã™
+     filled += internal_receive(&data[filled],
+                                max_size - filled, serial, timeout);
+     return filled;
+diff --git a/current/src/urg_tcpclient.c b/current/src/urg_tcpclient.c
+index 3abc934..24b592a 100644
+--- a/current/src/urg_tcpclient.c
++++ b/current/src/urg_tcpclient.c
+@@ -1,8 +1,8 @@
+ /*!
+-  \file
+-  \brief TCP/IP read/write functions
++  Â¥file
++  Â¥brief TCP/IP read/write functions
+ 
+-  \author Katsumi Kimoto
++  Â¥author Katsumi Kimoto
+ 
+   $Id: urg_tcpclient.c,v d746d6f9127d 2011/05/08 23:10:44 satofumi $
+ */
+@@ -118,7 +118,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
+     }
+ 
+ #if defined(URG_WINDOWS_OS)
+-    //ƒmƒ“ƒuƒƒbƒN‚É•ÏX
++    //ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚¯ã«å¤‰æ›´
+     flag = 1;
+     ioctlsocket(cli->sock_desc, FIONBIO, &flag);
+ 
+@@ -136,16 +136,16 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
+ 
+         ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
+         if (ret == 0) {
+-            // ƒ^ƒCƒ€ƒAƒEƒg
++            // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ
+             tcpclient_close(cli);
+             return -2;
+         }
+     }
+-    //ƒuƒƒbƒNƒ‚[ƒh‚É‚·‚é
++    //ãƒ–ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹
+     set_block_mode(cli);
+ 
+ #else
+-    //ƒmƒ“ƒuƒƒbƒN‚É•ÏX
++    //ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚¯ã«å¤‰æ›´
+     flag = fcntl(cli->sock_desc, F_GETFL, 0);
+     fcntl(cli->sock_desc, F_SETFL, flag | O_NONBLOCK);
+ 
+@@ -156,27 +156,27 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
+             return -1;
+         }
+ 
+-        // EINPROGRESS:ƒRƒlƒNƒVƒ‡ƒ“—v‹‚Ín‚Ü‚Á‚½‚ªA‚Ü‚¾Š®—¹‚µ‚Ä‚¢‚È‚¢
++        // EINPROGRESS:ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³è¦æ±‚ã¯å§‹ã¾ã£ãŸãŒã€ã¾ã å®Œäº†ã—ã¦ã„ãªã„
+         FD_ZERO(&rmask);
+         FD_SET(cli->sock_desc, &rmask);
+         wmask = rmask;
+ 
+         ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
+         if (ret <= 0) {
+-            // ƒ^ƒCƒ€ƒAƒEƒgˆ—
++            // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå‡¦ç†
+             tcpclient_close(cli);
+             return -2;
+         }
+ 
+         if (getsockopt(cli->sock_desc, SOL_SOCKET, SO_ERROR, (int*)&sock_optval,
+                        (socklen_t*)&sock_optval_size) != 0) {
+-            // Ú‘±‚É¸”s
++            // æ¥ç¶šã«å¤±æ•—
+             tcpclient_close(cli);
+             return -3;
+         }
+ 
+         if (sock_optval != 0) {
+-            // Ú‘±‚É¸”s
++            // æ¥ç¶šã«å¤±æ•—
+             tcpclient_close(cli);
+             return -4;
+         }
+@@ -306,7 +306,7 @@ int tcpclient_readline(urg_tcpclient_t* cli,
+         if (n <= 0) {
+             break; // error
+         }
+-        if (ch == '\n' || ch == '\r') {
++        if (ch == 'Â¥n' || ch == 'Â¥r') {
+             break; // success
+         }
+         userbuf[i] = ch;
+@@ -315,9 +315,9 @@ int tcpclient_readline(urg_tcpclient_t* cli,
+     if (i >= buf_size) { // No CR or LF found.
+         --i;
+         cli->pushed_back = userbuf[buf_size - 1] & 0xff;
+-        userbuf[buf_size - 1] = '\0';
++        userbuf[buf_size - 1] = 'Â¥0';
+     }
+-    userbuf[i] = '\0';
++    userbuf[i] = 'Â¥0';
+ 
+     if (i == 0 && n <= 0) { // error
+         return -1;
+diff --git a/current/src/urg_utils.c b/current/src/urg_utils.c
+index 2a272d1..ea9108c 100644
+--- a/current/src/urg_utils.c
++++ b/current/src/urg_utils.c
+@@ -1,7 +1,7 @@
+ /*!
+-  \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
++  Â¥brief URG ã‚»ãƒ³ã‚µç”¨ã®è£œåŠ©é–¢æ•°
+ 
+-  \author Satofumi KAMIMURA
++  Â¥author Satofumi KAMIMURA
+ 
+   $Id: urg_utils.c,v da778fd816c2 2011/01/05 20:02:06 Satofumi $
+ */
+@@ -81,7 +81,7 @@ void urg_distance_min_max(const urg_t *urg,
+ 
+     *min_distance = urg->min_distance;
+ 
+-    // urg_set_communication_data_size() ‚ğ”½‰f‚µ‚½‹——£‚ğ•Ô‚·
++    // urg_set_communication_data_size() ã‚’åæ˜ ã—ãŸè·é›¢ã‚’è¿”ã™
+     *max_distance =
+         (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ?
+         max(urg->max_distance, 4095) : urg->max_distance;

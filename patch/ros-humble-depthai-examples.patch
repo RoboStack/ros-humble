@@ -1,0 +1,18 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 273fb04..30b7262 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -11,12 +11,7 @@ if(POLICY CMP0057)
+     cmake_policy(SET CMP0057 NEW)
+ endif()
+ 
+-set(_opencv_version 4)
+-find_package(OpenCV 4 QUIET COMPONENTS imgproc highgui)
+-if(NOT OpenCV_FOUND)
+-  set(_opencv_version 3)
+-  find_package(OpenCV 3 REQUIRED COMPONENTS imgproc highgui)
+-endif()
++find_package(OpenCV REQUIRED COMPONENTS imgproc highgui)
+ 
+ # find_package(depthai CONFIG REQUIRED PATHS "/home/sachin/Desktop/luxonis/depthai-core/build/install/lib/cmake/depthai")
+ set(tiny_yolo_v4_blob_name "yolov4_tiny_coco_416x416_openvino_2021.4_6shave_bgr.blob")

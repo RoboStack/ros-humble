@@ -18,9 +18,6 @@ export PYTHONUNBUFFERED=1
 export FEEDSTOCK_ROOT=`pwd`
 export "CONDA_BLD_PATH=$HOME/conda-bld/"
 
-curl -fsSL https://pixi.sh/install.sh | bash
-export PATH="$HOME/.pixi/bin:$PATH"
-
 if [[ "$target" == *"osx"* ]]; then
     echo "osx"
     export PATH=$(echo $PATH | tr ":" "\n" | grep -v 'homebrew' | xargs | tr ' ' ':')

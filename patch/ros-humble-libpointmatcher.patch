@@ -1,0 +1,129 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8.12)
++cmake_minimum_required(VERSION 3.5)
+ 
+ include(CheckSymbolExists)
+ include(GNUInstallDirs) # populate CMAKE_INSTALL_{LIB,BIN}DIR
+@@ -124,9 +124,9 @@
+ #--------------------
+ # DEPENDENCY:  boost
+ #--------------------
+-find_package(Boost COMPONENTS thread filesystem system program_options date_time REQUIRED)
++find_package(Boost COMPONENTS thread filesystem program_options date_time REQUIRED)
+ if (Boost_MINOR_VERSION GREATER 47)
+-	find_package(Boost COMPONENTS thread filesystem system program_options date_time chrono REQUIRED)
++	find_package(Boost COMPONENTS thread filesystem program_options date_time chrono REQUIRED)
+ endif ()
+ 
+ #--------------------
+@@ -281,12 +281,12 @@
+ 		message(FATAL_ERROR, "CMake version 3.1 or later is required to compiler ${PROJECT_NAME} with Microsoft Visual C++")
+ 	endif ()
+ 	if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+-		set (CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
++		set (CMAKE_CXX_FLAGS "-std=c++14 ${CMAKE_CXX_FLAGS}")
+ 	else ()
+-		set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
++		set (CMAKE_CXX_FLAGS "-std=c++14 ${CMAKE_CXX_FLAGS}")
+ 	endif ()
+ else ()
+-	set (CMAKE_CXX_STANDARD 11)
++	set (CMAKE_CXX_STANDARD 14)
+ endif ()
+ 
+ # SOURCE
+diff -ruN a/contrib/yaml-cpp-pm/CMakeLists.txt b/contrib/yaml-cpp-pm/CMakeLists.txt
+--- a/contrib/yaml-cpp-pm/CMakeLists.txt
++++ b/contrib/yaml-cpp-pm/CMakeLists.txt
+@@ -91,14 +91,6 @@
+ 	#
+ 	set(CMAKE_CXX_FLAGS "-Wall ${GCC_EXTRA_OPTIONS} -fPIC -pedantic -Wno-long-long ${CMAKE_CXX_FLAGS}")
+ 	#
+-	add_custom_target(debuggable $(MAKE) clean
+-		COMMAND ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE=Debug ${CMAKE_SOURCE_DIR}
+-		COMMENT "Adjusting settings for debug compilation"
+-		VERBATIM)
+-	add_custom_target(releasable $(MAKE) clean
+-		COMMAND ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE=Release ${CMAKE_SOURCE_DIR}
+-		COMMENT "Adjusting settings for release compilation"
+-		VERBATIM)
+ endif()
+ 
+ 
+@@ -113,6 +105,10 @@
+ 	${contrib_public_headers}
+ 	${contrib_private_headers}
+ )
++if(APPLE)
++	target_compile_definitions(yaml-cpp-pm PRIVATE _LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR)
++endif()
++
+ 
+ set_target_properties(yaml-cpp-pm PROPERTIES
+ 	VERSION "${YAML_CPP_VERSION}"
+diff -ruN a/examples/demo_cmake/CMakeLists.txt b/examples/demo_cmake/CMakeLists.txt
+--- a/examples/demo_cmake/CMakeLists.txt
++++ b/examples/demo_cmake/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ # This is demo on how to link libpointmatcher to an
+ # external project.
+ 
+-cmake_minimum_required (VERSION 2.8)
++cmake_minimum_required (VERSION 3.5)
+ project(convert)
+ 
+ set (CMAKE_CXX_STANDARD 11)
+diff -ruN a/libpointmatcherConfig.cmake.in b/libpointmatcherConfig.cmake.in
+--- a/libpointmatcherConfig.cmake.in
++++ b/libpointmatcherConfig.cmake.in
+@@ -5,9 +5,9 @@
+ 
+ include(CMakeFindDependencyMacro)
+ find_dependency(libnabo REQUIRED)
+-find_package(Boost COMPONENTS thread filesystem system program_options date_time REQUIRED)
++find_package(Boost COMPONENTS thread filesystem program_options date_time REQUIRED)
+ if (Boost_MINOR_VERSION GREATER 47)
+-  find_package(Boost COMPONENTS thread filesystem system program_options date_time chrono REQUIRED)
++  find_package(Boost COMPONENTS thread filesystem program_options date_time chrono REQUIRED)
+ endif ()
+ include(${CMAKE_CURRENT_LIST_DIR}/libpointmatcher-config.cmake)
+ include(${CMAKE_CURRENT_LIST_DIR}/yaml-cpp-pm-targets.cmake)
+diff -ruN a/pointmatcher/IO.cpp b/pointmatcher/IO.cpp
+--- a/pointmatcher/IO.cpp
++++ b/pointmatcher/IO.cpp
+@@ -360,12 +360,12 @@
+ 	if (!ifs.good() || !boost::filesystem::is_regular_file(fullPath))
+ 	#if BOOST_FILESYSTEM_VERSION >= 3
+ 		#if BOOST_VERSION >= 105000
+-				throw runtime_error(string("Cannot open file ") + boost::filesystem::complete(fullPath).generic_string());
++				throw runtime_error(string("Cannot open file ") + boost::filesystem::absolute(fullPath).generic_string());
+ 		#else
+ 				throw runtime_error(string("Cannot open file ") + boost::filesystem3::complete(fullPath).generic_string());
+ 		#endif
+ 	#else
+-		throw runtime_error(string("Cannot open file ") + boost::filesystem::complete(fullPath).native_file_string());
++		throw runtime_error(string("Cannot open file ") + boost::filesystem::absolute(fullPath).string());
+     #endif
+ }
+ 
+@@ -375,7 +375,7 @@
+ typename PointMatcher<T>::DataPoints PointMatcher<T>::DataPoints::load(const std::string& fileName)
+ {
+ 	const boost::filesystem::path path(fileName);
+-	const string& ext(boost::filesystem::extension(path));
++	const string ext(path.extension().string());
+ 	if (boost::iequals(ext, ".vtk"))
+ 		return PointMatcherIO<T>::loadVTK(fileName);
+ 	else if (boost::iequals(ext, ".csv"))
+@@ -809,7 +809,7 @@
+ void PointMatcher<T>::DataPoints::save(const std::string& fileName, bool binary) const
+ {
+ 	const boost::filesystem::path path(fileName);
+-	const string& ext(boost::filesystem::extension(path));
++	const string ext(path.extension().string());
+ 	if (boost::iequals(ext, ".vtk"))
+ 		return PointMatcherIO<T>::saveVTK(*this, fileName, binary);
+ 

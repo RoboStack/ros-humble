@@ -1,0 +1,28 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -23,13 +23,13 @@
+ set(CMAKE_AUTOMOC ON)
+ 
+ find_package(pluginlib REQUIRED)
+-find_package(Qt5Widgets CONFIG REQUIRED)
++find_package(Qt6Widgets CONFIG REQUIRED)
+ find_package(rclcpp REQUIRED)
+ find_package(qt_gui REQUIRED)
+ find_package(qt_gui_cpp REQUIRED)
+ 
+ ament_export_dependencies(
+-  Qt5Widgets
++  Qt6Widgets
+   pluginlib
+   rclcpp
+   qt_gui_cpp
+@@ -49,7 +49,7 @@
+ 
+ ament_target_dependencies(${PROJECT_NAME}
+   rclcpp
+-  Qt5Widgets
++  Qt6Widgets
+   pluginlib
+   rclcpp
+   qt_gui_cpp

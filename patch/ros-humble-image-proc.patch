@@ -1,0 +1,22 @@
+diff -ruN a/src/crop_non_zero.cpp b/src/crop_non_zero.cpp
+--- a/src/crop_non_zero.cpp
++++ b/src/crop_non_zero.cpp
+@@ -42,6 +42,9 @@
+ 
+ #include <image_transport/image_transport.hpp>
+ #include <opencv2/imgproc.hpp>
++#if CV_VERSION_MAJOR >= 5
++#include <opencv2/geometry/2d.hpp>
++#endif
+ #include <rclcpp/rclcpp.hpp>
+ #include <sensor_msgs/image_encodings.hpp>
+ #include <sensor_msgs/msg/image.hpp>
+@@ -92,7 +95,7 @@
+     cv_ptr->image.convertTo(m, CV_8U, 255. / ra, -minVal * 255. / ra);
+   }
+ 
+-  cv::findContours(m, cnt, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
++  cv::findContours(m, cnt, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
+ 
+   // search the largest area
+   std::vector<std::vector<cv::Point>>::iterator it =
