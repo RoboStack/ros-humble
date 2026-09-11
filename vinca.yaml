@@ -48,17 +48,7 @@ packages_skip_by_deps:
       - tlsf
       - tlsf_cpp
 
-  # Dependencies unavailable on Windows. gz_ros2_control*/ros_gz_sim*/
-  # ros_ign_gazebo*/ros_ign_image/rttest/test_ros_gz_bridge/
-  # velodyne_gazebo_plugins: Gazebo Classic (ignition-gazebo6/gazebo11) is
-  # known-broken on Windows -- conda-forge's newest libignition-gazebo6
-  # build only supports up to libprotobuf 4.24.4, incompatible with our
-  # libprotobuf 7.35.1.* mutex pin regardless. (franka_ign_ros2_control and
-  # irobot_create_ignition_plugins were considered too, but vinca's own
-  # dependency-closure resolver confirms neither is ever actually selected
-  # on win-64 -- no entry needed.) robot_localization: still pulled in
-  # transitively via clearpath_control despite its own select-side
-  # exclusion below; skip it from the dependency-closure walk too.
+  # Gazebo Classic packages unavailable on Windows (libprotobuf pin conflict); robot_localization pulled in transitively via clearpath_control.
   - if: win
     then:
       - gz_ros2_control
@@ -73,21 +63,7 @@ packages_skip_by_deps:
       - test_ros_gz_bridge
       - velodyne_gazebo_plugins  # links Gazebo Classic's Ogre libs; win-64 is missing OgreBites.lib
 
-  # Pulled in transitively via aerostack2 (already linux-only above). Its
-  # FetchContent'd dynamic_trajectory_generator dependency (unpinned
-  # GIT_TAG master) itself FetchContent's a pinned old NLopt commit whose
-  # cmake/generate-cpp.cmake and cmake/generate-fortran.cmake declare
-  # cmake_minimum_required below CMake 4's floor of 3.5. Unlike depthai's
-  # Hunter (a nested `cmake -H -B` subprocess spawned during configure,
-  # inheriting a set(ENV{...}) done earlier in the same process) or
-  # as2_behaviors_trajectory_generation's own glog fetch (an
-  # add_subdirectory() sharing the same cmake process/cache), NLopt's
-  # generate-*.cmake scripts run via a *build-time* (ninja) custom command --
-  # a separate process that inherits neither -D cache args nor configure-time
-  # ENV{} mutations. A real fix would need patching files two FetchContent
-  # levels deep through an unpinned third-party branch, which is too fragile
-  # to attempt blindly; skip for now.
-  - as2_behaviors_trajectory_generation
+  - as2_behaviors_trajectory_generation  # nested FetchContent'd NLopt violates CMake 4's minimum version floor; too fragile to patch, skip for now
 
 packages_remove_from_deps:
 
@@ -107,14 +83,7 @@ packages_remove_from_deps:
       - tlsf
       - tlsf_cpp
 
-  # Strip these from any other recipe's deps too (see packages_skip_by_deps
-  # above for the matching selection-side exclusion). gz_ros2_control*/
-  # ros_gz_sim*/ros_ign_gazebo*/ros_ign_image/rttest/test_ros_gz_bridge are
-  # Gazebo Classic-related (libprotobuf pin conflict, same as above).
-  # velodyne_gazebo_plugins/robot_localization: skipped on win-64 already,
-  # but velodyne_simulator/clearpath_control still depend on them directly
-  # and would otherwise get a dangling reference to a .conda that's never
-  # built.
+  # Strip these from any other recipe's deps too, matching the packages_skip_by_deps exclusion above (avoids dangling refs from direct dependents).
   - if: win
     then:
       - gz_ros2_control
@@ -131,8 +100,7 @@ packages_remove_from_deps:
 
 packages_select_by_deps:
 
-  # These are the packages that are built on all platforms
-  # only subset of packages to reduce maintainer load
+  # These are the packages that are built on all platforms (only a subset, to reduce maintainer load)
   - rclpy
   - ros_workspace
   - ros_environment
@@ -225,10 +193,7 @@ packages_select_by_deps:
   # other control
   - gazebo_plugins
   - gazebo_ros
-  # Modern gz-sim integration is not supported on Humble on Windows, please
-  # look to Jazzy or Kilted if you are interested in it, see
-  # https://github.com/RoboStack/ros-humble/issues/68, we just include ros_gz_interfaces
-  # to interfaced with simulations working on Linux or macOS
+  # Modern gz-sim integration isn't supported on Humble/Windows (see issue #68); ros_gz_interfaces only, for Linux/macOS.
   - gazebo_ros2_control
   - gazebo_ros2_control_demos
   # generic sim interfaces
@@ -545,16 +510,10 @@ packages_select_by_deps:
       - v4l2_camera  # Depends on v4l, only available on linux
       - velodyne_simulator  # Dataspeed Inc.
 
-  # Packages restricted to linux-x86_64 specifically (excluding linux-aarch64
-  # too, unlike the "if: linux" block above). Keep this comment directly
-  # before the "if:" line below -- vinca-sort-vinca-lists merges adjacent
-  # if/then blocks that aren't separated by a top-level comment, which will
-  # otherwise scramble which package belongs under which condition.
+  # linux-x86_64 only (excludes aarch64, unlike "if: linux" above). Keep this comment here -- vinca-sort-vinca-lists merges adjacent if/then blocks not separated by a top-level comment.
   - if: linux and not aarch64
     then:
-      # Franka robots support
-      # See https://github.com/RoboStack/ros-humble/pull/338#issuecomment-3146453142 for macos and Windows errors
-      - franka_ros2
+      - franka_ros2  # Franka robots support; see PR #338 for macOS/Windows errors
       # conda-forge's libfranka is only published for linux-64, not linux-aarch64
       - libfranka
       - ublox_ubx_interfaces
