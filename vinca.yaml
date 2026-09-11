@@ -124,7 +124,6 @@ packages_select_by_deps:
   - osrf_testing_tools_cpp
 
   - ackermann-msgs
-  - ament_cmake
   - ament_cmake_black
   - ament_cmake_catch2  # Open RMF
   - ament_cmake_mypy
@@ -266,11 +265,9 @@ packages_select_by_deps:
   - ros2_controllers
   - ros_base
   - ros_core
-  - ros_environment
   - ros_gz_interfaces
   - ros_ign
   - ros_ign_interfaces
-  - ros_workspace
   - rosbag2-performance-benchmarking
   - rosbag2_storage_mcap
   - rosbridge_suite
