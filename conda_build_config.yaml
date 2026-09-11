@@ -143,11 +143,7 @@ VERBOSE_CM:
   - VERBOSE=1
 
 channel_sources:
-  - conda-forge
-
 channel_targets:
-  - conda-forge main
-
 cdt_name:  # [linux]
   - conda  # [linux]
 
