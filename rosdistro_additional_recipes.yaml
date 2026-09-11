@@ -90,18 +90,3 @@ med7_moveit_config:
   rev: 2e932d4e062966afe216710a7cc2fe50a8099365
   version: 0.3.0
   additional_folder: lbr_moveit_config/med7_moveit_config
-rmw_wasm_cpp:
-  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
-  url: https://github.com/ros2wasm/rmw_wasm.git
-  version: 0.0.2
-  additional_folder: rmw_wasm_cpp
-test_wasm:
-  rev: a8e824af1c9d8683bc5ba5b6cbd210ddd8947dc9
-  url: https://github.com/ros2wasm/rmw_wasm.git
-  version: 0.0.2
-  additional_folder: test_wasm
-wasm_cpp:
-  rev: 15bc309ffd5ba2a2451cbe22864a8356da251e65
-  url: https://github.com/ros2wasm/rmw_wasm.git
-  version: 1.0.0
-  additional_folder: wasm_cpp

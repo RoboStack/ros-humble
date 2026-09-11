@@ -83,13 +83,7 @@ jobs:
       if: matrix.platform == 'win-64'
       shell: pwsh
       run: |
-        # win-64 jobs have repeatedly gone silent for 10-20+ minutes at points
-        # with no legitimate reason to be slow -- recipe enumeration (a pure
-        # local YAML-parse, no network, over ~2000 small files) and library
-        # linking (many small .obj/.pdb reads/writes) -- then either recover
-        # very late or run out the 6-hour job timeout. Both are exactly the
-        # I/O pattern real-time Defender scanning is known to silently stall
-        # on GH Actions Windows runners. Exclude the checkout and build dirs.
+        # Avoids Defender real-time scanning silently stalling heavy win-64 I/O.
         Add-MpPreference -ExclusionPath "${{ github.workspace }}"
         Add-MpPreference -ExclusionPath "C:\bld"
 
@@ -121,13 +115,7 @@ jobs:
     - name: Generate recipes
       shell: bash -l {0}
       env:
-        # vinca fetches additional packages' package.xml from
-        # raw.githubusercontent.com over ~12 concurrent requests; unauthenticated,
-        # that's subject to GitHub's much lower anonymous rate limit shared across
-        # every GH Actions runner's IP pool, which manifests as sporadic 404s that
-        # even the retry loop below doesn't reliably clear. vinca already knows to
-        # send this as an Authorization header when present (see distro.py's
-        # _get_auth_headers) -- it just was never wired up here.
+        # Raises vinca's raw.githubusercontent.com rate limit for package.xml fetches.
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         set -e
@@ -170,18 +158,8 @@ jobs:
     - name: Delete specific outdated cache entries
       shell: bash -l {0}
       run: |
-        # rm -rf ${{ matrix.folder_cache }}/ros-humble-autoware-trajectory* 2>/dev/null || true
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-async-web-server-cpp* 2>/dev/null || true
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-popf* 2>/dev/null || true
-        # Corrupt ~34KB cached artifact (same recurring pattern as other win-64 packages this cycle) missing its installed cmake config.
-        rm -rf ${{ matrix.folder_cache }}/ros-humble-nav2-behavior-tree* 2>/dev/null || true
-        # Corrupt ~51KB cached artifact (same pattern: a cancelled run's cache-save step caught it mid-write) missing its installed cmake config -- chomp_motion_planner's find_package(moveit_core) failed against it.
-        rm -rf ${{ matrix.folder_cache }}/ros2-moveit-core* 2>/dev/null || true
-        # Stale pre-patch build: this PR's cache persists across every commit, so
-        # --skip-existing was reusing the libg2o built before its CSparse
-        # INSTALL_INTERFACE fix landed, and rtabmap kept failing to find cs.h
-        # against that old artifact. Force a rebuild so the patch actually applies.
-        rm -rf ${{ matrix.folder_cache }}/ros2-libg2o* ${{ matrix.folder_cache }}/ros-humble-libg2o* 2>/dev/null || true
+        # Uncomment to force-rebuild a package with a corrupted cache entry.
+        # rm -rf ${{ matrix.folder_cache }}/<package>* 2>/dev/null || true
         mkdir -p ${{ matrix.folder_cache }}
         pixi run rattler-index fs ${{ matrix.folder_cache }}/.. --force
 
