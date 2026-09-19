@@ -324,3 +324,9 @@ lbr_description:
 warehouse_ros_sqlite:
   add_host: ["ros-humble-sqlite3-vendor"]
   add_run: ["ros-humble-sqlite3-vendor"]
+open3d_conversions:
+  # Open3D's own CMake config calls find_dependency(TBB), but conda-forge's
+  # open3d package only depends on the runtime "tbb" lib, not "tbb-devel"
+  # (which provides TBBConfig.cmake) -- add it explicitly so find_package(Open3D)
+  # can resolve its own TBB dependency.
+  add_host: ["tbb-devel"]
