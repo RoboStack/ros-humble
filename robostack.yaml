@@ -398,6 +398,8 @@ libnlopt-dev:
   robostack: [nlopt]
 libnlopt0:
   robostack: [nlopt]
+liboctomap-dev:
+  robostack: [octomap]
 libogg:
   robostack: [libogg]
 libogre:
