@@ -5,9 +5,6 @@ foxglove_bridge:
 ros_ign_interfaces:
   add_host: ["ros-humble-rcl-interfaces"]
 cartographer_ros:
-  # Dedupe: package.xml auto-resolves cartographer to the dummy package too.
-  remove_host: ["ros2-cartographer"]
-  remove_run: ["ros2-cartographer"]
   add_host: ["cartographer 2.*", "libboost-devel"]
 cartographer:
   # Dummy package; drop unpinned lua/gflags, they conflict with the real cartographer's pins.
