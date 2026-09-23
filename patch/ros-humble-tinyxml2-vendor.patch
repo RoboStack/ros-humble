@@ -1,17 +1,14 @@
 diff --git a/cmake/Modules/FindTinyXML2.cmake b/cmake/Modules/FindTinyXML2.cmake
-index 87991be..5436d86 100644
+index 87991be..91c03e5 100644
 --- a/cmake/Modules/FindTinyXML2.cmake
 +++ b/cmake/Modules/FindTinyXML2.cmake
-@@ -67,6 +67,12 @@ else()
-     set_property(TARGET tinyxml2::tinyxml2 PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${TINYXML2_INCLUDE_DIR})
-     list(APPEND TinyXML2_TARGETS tinyxml2::tinyxml2)
-   endif()
-+
-+  # Compatibility with https://github.com/gazebosim/gz-cmake/blob/eb1c510e6278935eb742ed92c6a6d1388439f8bd/cmake/FindTINYXML2.cmake#L4
-+  if(NOT TARGET TINYXML2::TINYXML2)
-+      add_library(TINYXML2::TINYXML2 INTERFACE IMPORTED)
-+      set_property(TARGET TINYXML2::TINYXML2 PROPERTY INTERFACE_LINK_LIBRARIES tinyxml2::tinyxml2)
-+  endif()
+@@ -76,3 +76,9 @@ endif()
+ if(NOT TinyXML2_LIBRARIES)
+   set(TinyXML2_LIBRARIES ${TINYXML2_LIBRARY})
  endif()
- 
- # Set mixed case INCLUDE_DIRS and LIBRARY variables from upper case ones.
++
++# Compatibility with gz-cmake's uppercase imported target.
++if(TARGET tinyxml2::tinyxml2 AND NOT TARGET TINYXML2::TINYXML2)
++  add_library(TINYXML2::TINYXML2 INTERFACE IMPORTED)
++  set_property(TARGET TINYXML2::TINYXML2 PROPERTY INTERFACE_LINK_LIBRARIES tinyxml2::tinyxml2)
++endif()

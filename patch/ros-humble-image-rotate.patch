@@ -1,0 +1,34 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -14,9 +14,16 @@
+ ament_auto_find_build_dependencies()
+ 
+ find_package(OpenCV REQUIRED core imgproc)
++if(OpenCV_VERSION VERSION_LESS 5)
++  set(IMAGE_ROTATE_OPENCV_GEOMETRY)
++else()
++  # OpenCV 5 moved getRotationMatrix2D into the geometry module
++  find_package(OpenCV REQUIRED geometry)
++  set(IMAGE_ROTATE_OPENCV_GEOMETRY opencv_geometry)
++endif()
+ 
+ ament_auto_add_library(${PROJECT_NAME} SHARED src/image_rotate_node.cpp)
+-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBRARIES})
++target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBRARIES} ${IMAGE_ROTATE_OPENCV_GEOMETRY})
+ rclcpp_components_register_nodes(${PROJECT_NAME} "${PROJECT_NAME}::ImageRotateNode")
+ set(node_plugins "${node_plugins}${PROJECT_NAME}::ImageRotateNode;$<TARGET_FILE:ImageRotateNode>\n")
+ 
+diff -ruN a/src/image_rotate_node.cpp b/src/image_rotate_node.cpp
+--- a/src/image_rotate_node.cpp
++++ b/src/image_rotate_node.cpp
+@@ -57,6 +57,9 @@
+ #include <opencv2/core/mat.hpp>
+ #include <opencv2/core/types.hpp>
+ #include <opencv2/imgproc.hpp>
++#if CV_VERSION_MAJOR >= 5
++#include <opencv2/geometry.hpp>
++#endif
+ 
+ #include <geometry_msgs/msg/transform_stamped.hpp>
+ #include <geometry_msgs/msg/vector3_stamped.hpp>

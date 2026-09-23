@@ -1,0 +1,58 @@
+conda_forge_pinning_version: 2026.09.01.16.28.00
+migrations:
+  - giflib6
+  - go_macos
+  - gstreamer128
+  - hdf52
+  - libboost190
+  - pybind11_abi11
+  - urdfdom6
+  - vtk970
+pinning_overrides:
+  # Build commands already pass channels via -c; channel_sources/channels can't both be set.
+  channel_sources: null
+  channel_targets: null
+  # glibc floor raised from 2.17 (CentOS 7) to 2.28: conda-forge packages such as
+  # gazebo/openal-soft already require it. macOS deployment target raised to 14.0.
+  # c_stdlib_version shares a zip_keys group with the compiler versions, so the whole
+  # group has to be overridden; the compiler entries mirror the conda-forge base file
+  # and must be refreshed when `vinca-pinning-update` moves to a newer compiler.
+  c_stdlib_version:
+    - 2.28                       # [linux and not riscv64]
+    - 2.39                       # [linux and riscv64]
+    - 2.28                       # [linux and (x86_64 or aarch64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+    - 14.0                       # [osx]
+  c_compiler_version:
+    - 15                         # [linux]
+    - 21                         # [osx]
+    - 14                         # [linux and (x86_64 or aarch64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+  cxx_compiler_version:
+    - 15                         # [linux]
+    - 21                         # [osx]
+    - 14                         # [linux and (x86_64 or aarch64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+  fortran_compiler_version:
+    - 15                         # [unix]
+    - 5                          # [win64]
+    - 22                         # [win and arm64]
+    - 14                         # [linux and (x86_64 or aarch64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+  cuda_compiler_version:
+    - None
+    - 12.9                       # [((linux and (x86_64 or aarch64)) or win64) and os.environ.get("CF_CUDA_ENABLED", "False") == "True"]
+  libzenohc:
+    - 1.10.0
+  libzenohcxx:
+    - 1.10.0
+  # conda-forge's sip 6.16.x (6.16.1 uploaded 2026-09-08) regressed ABI
+  # targeting for PyQt5-based bindings: sip-build now fails with "ABI v12
+  # is being targeted but the <module> module doesn't support it" for
+  # packages like qt_gui_cpp_sip, which build against pyqt5-sip's fixed
+  # ABI v12. Pin back to the last known-good line until upstream fixes it.
+  sip:
+    - 6.15
+  python:
+    - 3.14.* *_cp314
+  is_python_min:
+    - false
+  python_impl:
+    - cpython
+

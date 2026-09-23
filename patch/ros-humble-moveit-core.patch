@@ -1,0 +1,11 @@
+diff --git a/ConfigExtras.cmake b/ConfigExtras.cmake
+index 66d6e50..3dc67de 100644
+--- a/ConfigExtras.cmake
++++ b/ConfigExtras.cmake
+@@ -8,6 +8,5 @@ find_package(Boost REQUIRED
+   program_options
+   regex
+   serialization
+-  system
+   thread
+ )

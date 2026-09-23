@@ -1,19 +1,17 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 919969e..2bf015a 100644
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -11,6 +11,7 @@ install(FILES
+@@ -11,6 +11,8 @@
    cmake/shiboken_helper.cmake
    cmake/sip_configure.py
    cmake/sip_helper.cmake
 +  cmake/pyproject.toml.in
++  cmake/fixup_sip_module_name.py
    DESTINATION share/${PROJECT_NAME}/cmake)
  
  if(BUILD_TESTING)
-diff --git a/cmake/pyproject.toml.in b/cmake/pyproject.toml.in
-new file mode 100644
-index 0000000..2ab2b55
---- /dev/null
+diff -ruN a/cmake/pyproject.toml.in b/cmake/pyproject.toml.in
+--- a/cmake/pyproject.toml.in
 +++ b/cmake/pyproject.toml.in
 @@ -0,0 +1,27 @@
 +# Specify sip v5 as the build system for the package.
@@ -43,11 +41,10 @@ index 0000000..2ab2b55
 +qmake-QT = ["widgets"]
 +exceptions = true
 +
-diff --git a/cmake/sip_configure.py b/cmake/sip_configure.py
-index 708b04c..5620533 100644
+diff -ruN a/cmake/sip_configure.py b/cmake/sip_configure.py
 --- a/cmake/sip_configure.py
 +++ b/cmake/sip_configure.py
-@@ -179,6 +179,7 @@ makefile._target = '"%s"' % os.path.join(output_dir, makefile._target)
+@@ -179,6 +179,7 @@
  # Force c++14
  if sys.platform == 'win32':
      makefile.extra_cxxflags.append('/std:c++14')
@@ -55,11 +52,48 @@ index 708b04c..5620533 100644
      # The __cplusplus flag is not properly set on Windows for backwards
      # compatibilty. This flag sets it correctly
      makefile.CXXFLAGS.append('/Zc:__cplusplus')
-diff --git a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
-index 41aec4b..fa70b25 100644
+diff -ruN a/cmake/fixup_sip_module_name.py b/cmake/fixup_sip_module_name.py
+--- /dev/null
++++ b/cmake/fixup_sip_module_name.py
+@@ -0,0 +1,31 @@
++#!/usr/bin/env python3
++"""Copy PyQt-builder's ABI-tagged sip module to the plain name CMake expects.
++
++PyQt-builder's pip-based wheel install places the compiled module under a
++Python-ABI-tagged filename using Python's own extension suffix (e.g.
++libfoo.cpython-312-x86_64-linux-gnu.so -- always .so, even on macOS, since
++that's the suffix CPython's import machinery requires for C extensions)
++rather than the plain lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX} that
++build_sip_binding()'s callers (and the install() step) expect -- which on
++macOS is .dylib, not .so. So the match can't assume the same extension as
++`want`; only the base name is reliable. Searches recursively since pip
++--target layout can nest the module in a subdirectory, and fails loudly
++(rather than leaving a confusing later "file INSTALL cannot find" CMake
++error) when nothing matches.
++"""
++import glob
++import os
++import shutil
++import sys
++
++library_dir, want = sys.argv[1], sys.argv[2]
++base = os.path.splitext(want)[0]
++pattern = base + '.*'
++hits = [
++    f for f in glob.glob(os.path.join(library_dir, '**', pattern), recursive=True)
++    if os.path.basename(f) != want
++]
++if hits:
++    shutil.copyfile(hits[0], os.path.join(library_dir, want))
++else:
++    available = []
++    for root, _dirs, files in os.walk(library_dir):
++        available.extend(os.path.relpath(os.path.join(root, f), library_dir) for f in files)
++    sys.exit(f"fixup_sip_module_name.py: no file matching {pattern!r} found under {library_dir}; contents: {available}")
+diff -ruN a/cmake/sip_helper.cmake b/cmake/sip_helper.cmake
 --- a/cmake/sip_helper.cmake
 +++ b/cmake/sip_helper.cmake
-@@ -15,7 +15,7 @@ execute_process(
+@@ -15,7 +15,7 @@
  if(PYTHON_SIP_EXECUTABLE)
    string(STRIP ${PYTHON_SIP_EXECUTABLE} SIP_EXECUTABLE)
  else()
@@ -68,7 +102,7 @@ index 41aec4b..fa70b25 100644
  endif()
  
  if(SIP_EXECUTABLE)
-@@ -26,6 +26,15 @@ else()
+@@ -26,6 +26,29 @@
    set(sip_helper_NOTFOUND TRUE)
  endif()
  
@@ -81,10 +115,24 @@ index 41aec4b..fa70b25 100644
 +  # message(STATUS "SIP binding generator version: ${SIP_VERSION}")
 +endif()
 +
++# The sip toolchain always compiles the binding as a CPython C extension, so
++# it always uses Python's own extension suffix (.so on both Linux and macOS,
++# .pyd on Windows) -- never CMAKE_SHARED_LIBRARY_SUFFIX, which is .dylib on
++# macOS and .dll on Windows and would produce a file CPython can't import.
++# This matches the LIBQT_GUI_CPP_SIP_SUFFIX convention qt_gui_cpp_sip's own
++# CMakeLists.txt already uses for its install() rule.
++if(APPLE)
++  set(SIP_MODULE_SUFFIX .so)
++elseif(WIN32)
++  set(SIP_MODULE_SUFFIX .pyd)
++else()
++  set(SIP_MODULE_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
++endif()
++
  #
  # Run the SIP generator and compile the generated code into a library.
  #
-@@ -77,34 +86,104 @@ function(build_sip_binding PROJECT_NAME SIP_FILE)
+@@ -77,37 +100,114 @@
      set(LIBRARY_DIRS ${${PROJECT_NAME}_LIBRARY_DIRS})
      set(LDFLAGS_OTHER ${${PROJECT_NAME}_LDFLAGS_OTHER})
  
@@ -99,10 +147,10 @@ index 41aec4b..fa70b25 100644
 +    if(${SIP_VERSION} VERSION_GREATER_EQUAL "5.0.0")
 +        # Since v5, SIP implements the backend per PEP 517, PEP 518
 +        # Here we synthesize `pyproject.toml` and run `pip install`
++
++        find_program(QMAKE_EXECUTABLE NAMES qmake6 qmake REQUIRED)
  
 -    if(NOT EXISTS "${sip_LIBRARY_DIR}")
-+        find_program(QMAKE_EXECUTABLE NAMES qmake REQUIRED)
-+
 +        file(REMOVE_RECURSE ${SIP_BUILD_DIR})
          file(MAKE_DIRECTORY ${sip_LIBRARY_DIR})
 -    endif()
@@ -164,8 +212,15 @@ index 41aec4b..fa70b25 100644
 +            ${sip_BINARY_DIR}/sip/pyproject.toml
 +        )
 +        add_custom_command(
-+            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${SIP_MODULE_SUFFIX}
 +            COMMAND ${Python3_EXECUTABLE} -m pip install . --target ${sip_LIBRARY_DIR} --no-deps --verbose --upgrade
++            # PyQt-builder's wheel install places the compiled module under a
++            # Python ABI-tagged name (e.g. lib${PROJECT_NAME}.cpython-312-x86_64-linux-gnu.so)
++            # rather than the plain lib${PROJECT_NAME}${SIP_MODULE_SUFFIX} this
++            # macro's callers expect, so ninja never sees this OUTPUT get created and
++            # the subsequent install() step fails with "file INSTALL cannot find ...".
++            # Copy whatever tagged variant was actually installed to the expected name.
++            COMMAND ${Python3_EXECUTABLE} ${__PYTHON_QT_BINDING_SIP_HELPER_DIR}/fixup_sip_module_name.py ${sip_LIBRARY_DIR} lib${PROJECT_NAME}${SIP_MODULE_SUFFIX}
 +            DEPENDS ${sip_SIP_CONFIGURE} ${SIP_FILE} ${sip_DEPENDS}
 +            WORKING_DIRECTORY ${sip_BINARY_DIR}/sip
 +            COMMENT "Running SIP-build generator for ${PROJECT_NAME} Python bindings..."
@@ -202,7 +257,7 @@ index 41aec4b..fa70b25 100644
 +        endif()
 +
 +        add_custom_command(
-+            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++            OUTPUT ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${SIP_MODULE_SUFFIX}
 +            COMMAND ${MAKE_EXECUTABLE}
 +            DEPENDS ${SIP_BUILD_DIR}/Makefile
 +            WORKING_DIRECTORY ${SIP_BUILD_DIR}
@@ -211,20 +266,63 @@ index 41aec4b..fa70b25 100644
 +    endif()
  
      add_custom_target(lib${PROJECT_NAME} ALL
-         DEPENDS ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
-diff --git a/src/python_qt_binding/__init__.py b/src/python_qt_binding/__init__.py
-index 1e209de..6b55f35 100644
+-        DEPENDS ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}
++        DEPENDS ${sip_LIBRARY_DIR}/lib${PROJECT_NAME}${SIP_MODULE_SUFFIX}
+         COMMENT "Meta target for ${PROJECT_NAME} Python bindings..."
+     )
+     add_dependencies(lib${PROJECT_NAME} ${sip_DEPENDENCIES})
+diff -ruN a/src/python_qt_binding/__init__.py b/src/python_qt_binding/__init__.py
 --- a/src/python_qt_binding/__init__.py
 +++ b/src/python_qt_binding/__init__.py
-@@ -66,3 +66,11 @@ for module_name, module in QT_BINDING_MODULES.items():
+@@ -66,3 +66,11 @@
      del module
  
  del sys
 +
 +import os
-+from PyQt5.QtGui import QIcon
++from PyQt6.QtGui import QIcon
 +current_theme_path = QIcon.themeSearchPaths()
 +conda_path = os.environ['CONDA_PREFIX']
 +QIcon.setThemeSearchPaths(current_theme_path + [os.path.join(conda_path, 'share/icons/')])
 +QIcon.setThemeName('Adwaita')
 +del os
+diff -ruN a/src/python_qt_binding/binding_helper.py b/src/python_qt_binding/binding_helper.py
+--- a/src/python_qt_binding/binding_helper.py
++++ b/src/python_qt_binding/binding_helper.py
+@@ -150,9 +150,9 @@
+ 
+     # register required and optional PyQt modules
+     for module_name in required_modules:
+-        _named_import('PyQt5.%s' % module_name)
++        _named_import('PyQt6.%s' % module_name)
+     for module_name in optional_modules:
+-        _named_optional_import('PyQt5.%s' % module_name)
++        _named_optional_import('PyQt6.%s' % module_name)
+ 
+     # set some names for compatibility with PySide
+     sys.modules['QtCore'].Signal = sys.modules['QtCore'].pyqtSignal
+@@ -161,19 +161,19 @@
+ 
+     # try to register Qwt module
+     try:
+-        import PyQt5.Qwt5
+-        _register_binding_module('Qwt', PyQt5.Qwt5)
++        import PyQt6.Qwt5
++        _register_binding_module('Qwt', PyQt6.Qwt5)
+     except ImportError:
+         pass
+ 
+     global _loadUi
+ 
+     def _loadUi(uifile, baseinstance=None, custom_widgets_=None):
+-        from PyQt5 import uic
++        from PyQt6 import uic
+         return uic.loadUi(uifile, baseinstance=baseinstance)
+ 
+-    import PyQt5.QtCore
+-    return PyQt5.QtCore.PYQT_VERSION_STR
++    import PyQt6.QtCore
++    return PyQt6.QtCore.PYQT_VERSION_STR
+ 
+ 
+ def _load_pyside(required_modules, optional_modules):
