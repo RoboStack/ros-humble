@@ -1,0 +1,29 @@
+tests:
+  # Regression test: a plain C++ consumer of std_msgs must build and run.
+  # If std_msgs_TARGETS exports the Python C bindings library
+  # (libstd_msgs__rosidl_generator_py), the consumer links it and it has
+  # unresolved CPython symbols: the executable aborts on macOS ("symbol not
+  # found in flat namespace '_PyExc_RuntimeError'") and fails to link or load
+  # on Linux when it links Python3::Module
+  # (https://github.com/RoboStack/ros-kilted/issues/76).
+  # LDFLAGS is cleared so -Wl,--as-needed / -Wl,-dead_strip_dylibs can't hide it.
+  - if: unix
+    then:
+      script:
+        - env -u LDFLAGS cmake -S cpp_consumer -B build -G Ninja -DCMAKE_PREFIX_PATH="$PREFIX"
+        - cmake --build build
+        - ./build/std_msgs_cpp_consumer
+      requirements:
+        build:
+          - ${{ compiler('cxx') }}
+          - cmake
+          - ninja
+      files:
+        recipe:
+          - cpp_consumer/
+  # The Python C bindings library still works when loaded by Python.
+  - script:
+      - python -c "from rclpy.serialization import deserialize_message, serialize_message; from std_msgs.msg import Header; m = deserialize_message(serialize_message(Header(frame_id='map')), Header); assert m.frame_id == 'map'"
+    requirements:
+      run:
+        - ros-humble-rclpy
