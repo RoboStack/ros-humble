@@ -309,6 +309,7 @@ packages_select_by_deps:
   - rqt-robot-monitor
   - rqt-robot-steering
   - rqt_controller_manager
+  - rqt_joint_trajectory_controller
   - rqt_runtime_monitor
   - rtabmap
   - rtcm_msgs
@@ -548,4 +549,3 @@ packages_select_by_deps:
       - libfranka
       - ublox_ubx_interfaces
       - webots_ros2         # Cyberbotics
-
