@@ -454,7 +454,6 @@ packages_select_by_deps:
       - franka_ros2
       - aerostack2
 
-
   # These packages are currently not build on Windows, but they may with some work
   - if: not wasm32 and not win
     then:
