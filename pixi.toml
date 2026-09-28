@@ -5,6 +5,13 @@ authors = ["Tobias Fischer <tobias.fischer@qut.edu.au>", "Wolf Vollprecht <w.vol
 channels = ["https://prefix.dev/conda-forge"]
 platforms = ["osx-arm64", "linux-64", "osx-64", "linux-aarch64", "win-64"]
 
+[target.win.activation.env]
+# Windows' console defaults to cp1252, which can't encode the Unicode
+# ellipsis vinca's own generation-summary table (rich) uses for truncated
+# cells -- surfaced by this PR as a `UnicodeEncodeError` crashing recipe
+# generation outright on win-64 CI.
+PYTHONIOENCODING = "utf-8"
+
 [system-requirements]
 # 2.17 is the glibc version used in centos 7
 libc = { family="glibc", version="2.17" }
@@ -14,6 +21,7 @@ python = ">=3.11.0,<3.12"
 rattler-build = ">=0.57.0,<0.58"
 setuptools = "<82.0"
 rattler-index = ">=0.27.16"
+sccache = "*"
 
 [target.win-64.dependencies]
 # patch is required by rattler-build
@@ -22,8 +30,17 @@ m2-patch = "*"
 git = "*"
 
 [pypi-dependencies]
-# This is tipically the latest commit on main branch
-vinca = { git = "https://github.com/RoboStack/vinca.git", rev = "b5e03d1f397c576232effd48dd1dd4b790d90ea7" }
+# Pinned to Tobias-Fischer/vinca#feature/conditional-python-dependency-v2
+# (branched off upstream RoboStack/vinca master) for the multi-python-version
+# experiment: only adds python/numpy/pip host+run deps to a recipe when the
+# package actually needs them (ament_python, a rosidl interface package, or
+# an explicit python-flavored dependency), instead of unconditionally on
+# every package -- see README-multi-python.md. Also routes the ament_cmake
+# and catkin build scripts' C/C++ compiler through sccache, opt-in via
+# VINCA_USE_SCCACHE=1 (see [tasks.build]) rather than auto-detecting sccache
+# on PATH, so builds don't silently change behavior depending on whether
+# sccache happens to be installed for some unrelated reason.
+vinca = { git = "https://github.com/Tobias-Fischer/vinca.git", rev = "feature/conditional-python-dependency-v2" }
 # Uncomment this line to work with a local vinca for faster iteration, but remember to comment it back
 # (and regenerate the pixi.lock) once you push the modified commit to the repo
 #vinca = { path = "../vinca", editable = true }
@@ -40,9 +57,14 @@ generate-recipes-emscripten = { cmd = "vinca -m --platform emscripten-wasm32", d
 check-patches-emscripten = { cmd = "python check_patches_clean_apply.py", depends-on = ["generate-recipes-emscripten"] }
 
 [tasks.build]
-cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c https://prefix.dev/conda-forge -c robostack-staging --skip-existing"
+cmd = "rattler-build build --recipe-dir ./recipes -m ./conda_build_config.yaml -c https://prefix.dev/conda-forge -c robostack-staging --skip-existing --no-build-id"
 depends-on = ["generate-recipes"]
-description = "Build all packages, from the ./recipes dir. This will skip already existing packages, so it can be used to build only a subset of packages by first removing the recipes of the packages you want to rebuild (see `pixi run remove-recipes`)."
+env = { VINCA_USE_SCCACHE = "1" }
+description = "Build all packages, from the ./recipes dir. This will skip already existing packages, so it can be used to build only a subset of packages by first removing the recipes of the packages you want to rebuild (see `pixi run remove-recipes`). --no-build-id keeps build directory paths stable across runs, and VINCA_USE_SCCACHE=1 explicitly opts every build into sccache, so it can actually hit its cache."
+
+[tasks.sccache-stats]
+cmd = "sccache --show-stats"
+description = "Show sccache hit-rate stats for this workspace's builds."
 
 [tasks.remove-recipes]
 cmd = "rm -rf recipes_only_patch; rm -rf recipes; mkdir recipes"
@@ -67,4 +89,3 @@ description = "Build a single package, from the ./recipes dir. Add the `ros-humb
       "--test", "skip"
       ]
   depends-on = ["generate-recipes-emscripten"]
-
