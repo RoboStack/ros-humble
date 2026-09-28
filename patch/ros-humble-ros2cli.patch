@@ -12,11 +12,23 @@ index a5f2d67..ab9f656 100644
 +if type register-python-argcomplete > /dev/null 2>&1; then
    eval "$(register-python-argcomplete ros2)"
  fi
+diff --git a/ros2cli/completion/ros2-argcomplete.zsh b/ros2cli/completion/ros2-argcomplete.zsh
+index f83d64d..94b754b 100644
+--- a/ros2cli/completion/ros2-argcomplete.zsh
++++ b/ros2cli/completion/ros2-argcomplete.zsh
+@@ -18,6 +18,6 @@ autoload -U +X bashcompinit && bashcompinit
+ # Get this scripts directory
+ __ros2cli_completion_dir=${0:a:h}
+ # Just source the bash version, it works in zsh too
+-source "$__ros2cli_completion_dir/ros2-argcomplete.bash"
++source "$CONDA_PREFIX/share/bash-completion/completions/ros2-argcomplete.bash"
+ # Cleanup
+ unset __ros2cli_completion_dir
 diff --git a/ros2cli/setup.py b/ros2cli/setup.py
-index 232c5bc..d774f33 100644
+index 956b708..b9a82cc 100644
 --- a/ros2cli/setup.py
 +++ b/ros2cli/setup.py
-@@ -20,6 +20,14 @@ setup(
+@@ -23,6 +23,14 @@ setup(
              'completion/ros2-argcomplete.bash',
              'completion/ros2-argcomplete.zsh'
          ]),

@@ -5,3 +5,4 @@ tests:
       then:
         - test -f ${PREFIX}/share/bash-completion/completions/rosidl-argcomplete.bash
         - test -f ${PREFIX}/share/zsh/site-functions/rosidl-argcomplete.zsh
+        - grep -q 'source "\$CONDA_PREFIX/share/bash-completion/completions/rosidl-argcomplete.bash"' ${PREFIX}/share/zsh/site-functions/rosidl-argcomplete.zsh
