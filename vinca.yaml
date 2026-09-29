@@ -352,6 +352,7 @@ packages_select_by_deps:
   - vision-msgs
   - visp
   - yaml_cpp_vendor
+  - zed_description  # Requested in https://github.com/RoboStack/ros-humble/issues/421
 
   # These packages are currently not build on Windows, but they may with some work.
   - if: not win
