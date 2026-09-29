@@ -1,0 +1,13 @@
+diff --git a/semantic_world/src/semantic_world.cpp b/semantic_world/src/semantic_world.cpp
+index 30fd2af..e781da7 100644
+--- a/semantic_world/src/semantic_world.cpp
++++ b/semantic_world/src/semantic_world.cpp
+@@ -42,6 +42,8 @@
+ #include <moveit_msgs/msg/planning_scene.hpp>
+ // OpenCV
+ #include <opencv2/imgproc/imgproc.hpp>
++// pointPolygonTest moved out of imgproc into the geometry module in OpenCV 5.
++#include <opencv2/geometry.hpp>
+ #include <rclcpp/experimental/buffers/intra_process_buffer.hpp>
+ #include <rclcpp/logger.hpp>
+ #include <rclcpp/logging.hpp>

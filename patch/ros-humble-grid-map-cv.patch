@@ -1,8 +1,28 @@
-diff --git a/include/grid_map_cv/GridMapCvConverter.hpp b/include/grid_map_cv/GridMapCvConverter.hpp
-index 233c28a..6f785ba 100644
+diff -ruN a/include/grid_map_cv/GridMapCvConverter.hpp b/include/grid_map_cv/GridMapCvConverter.hpp
 --- a/include/grid_map_cv/GridMapCvConverter.hpp
 +++ b/include/grid_map_cv/GridMapCvConverter.hpp
-@@ -262,8 +262,10 @@ public:
+@@ -79,9 +79,9 @@
+ 
+     cv::Mat imageMono;
+     if (isColor && !hasAlpha) {
+-      cv::cvtColor(image, imageMono, CV_BGR2GRAY);
++      cv::cvtColor(image, imageMono, cv::COLOR_BGR2GRAY);
+     } else if (isColor && hasAlpha) {
+-      cv::cvtColor(image, imageMono, CV_BGRA2GRAY);
++      cv::cvtColor(image, imageMono, cv::COLOR_BGRA2GRAY);
+     } else if (!isColor && !hasAlpha) {
+       imageMono = image;
+     } else {
+@@ -148,7 +148,7 @@
+ 
+     cv::Mat imageRGB;
+     if (hasAlpha) {
+-      cv::cvtColor(image, imageRGB, CV_BGRA2RGB);
++      cv::cvtColor(image, imageRGB, cv::COLOR_BGRA2RGB);
+     } else {
+       imageRGB = image;
+     }
+@@ -254,8 +254,10 @@
              imageIndex(0),
              imageIndex(1))[++channel] = imageValue;
          }

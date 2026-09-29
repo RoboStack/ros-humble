@@ -1,0 +1,51 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -12,12 +12,20 @@
+ # set(CMAKE_CXX_CLANG_TIDY clang-tidy)
+ 
+ find_package(Eigen3 REQUIRED)
+-find_package(OpenCV REQUIRED core calib3d)
++find_package(OpenCV REQUIRED core imgproc)
++if(OpenCV_VERSION VERSION_LESS 5)
++  find_package(OpenCV REQUIRED calib3d)
++  set(APRILTAG_MIT_OPENCV_CALIB opencv_calib3d)
++else()
++  # OpenCV 5 moved findHomography into the geometry module
++  find_package(OpenCV REQUIRED geometry)
++  set(APRILTAG_MIT_OPENCV_CALIB opencv_geometry)
++endif()
+ find_package(Boost REQUIRED headers)
+ 
+ file(GLOB CC_FILES ${PROJECT_SOURCE_DIR}/src/*.cc)
+ add_library(${PROJECT_NAME} SHARED ${CC_FILES})
+-target_link_libraries(${PROJECT_NAME} PUBLIC opencv_core opencv_calib3d Eigen3::Eigen Boost::headers)
++target_link_libraries(${PROJECT_NAME} PUBLIC opencv_core opencv_imgproc ${APRILTAG_MIT_OPENCV_CALIB} Eigen3::Eigen Boost::headers)
+ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 14)
+ 
+ target_include_directories(
+diff -ruN a/src/Quad.cc b/src/Quad.cc
+--- a/src/Quad.cc
++++ b/src/Quad.cc
+@@ -2,7 +2,7 @@
+ #include "apriltag_mit/AprilTags/Line2D.h"
+ #include "apriltag_mit/AprilTags/MathUtil.h"
+ #include "apriltag_mit/AprilTags/Segment.h"
+-#include <opencv2/calib3d/calib3d.hpp>
++#include <opencv2/calib3d.hpp>
+ 
+ namespace AprilTags {
+ 
+diff -ruN a/src/TagDetection.cc b/src/TagDetection.cc
+--- a/src/TagDetection.cc
++++ b/src/TagDetection.cc
+@@ -1,6 +1,9 @@
+ #include "apriltag_mit/AprilTags/TagDetection.h"
+ #include "apriltag_mit/AprilTags/MathUtil.h"
+ #include "opencv2/opencv.hpp"
++#if CV_VERSION_MAJOR >= 5
++#include <opencv2/geometry.hpp>
++#endif
+ #include <iterator>
+ 
+ namespace AprilTags {

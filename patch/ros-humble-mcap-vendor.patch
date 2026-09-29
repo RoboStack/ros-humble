@@ -1,0 +1,30 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6de89d2..933e452 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -34,6 +34,7 @@ macro(build_mcap_vendor)
+   fetchcontent_declare(mcap
+     URL https://github.com/foxglove/mcap/archive/refs/tags/releases/cpp/v0.8.0.tar.gz
+     URL_HASH SHA1=b44637791da2c9c1cec61a3ba6994f1ef63a228c # v0.8.0
++    PATCH_COMMAND patch -p1 < ${CMAKE_CURRENT_LIST_DIR}/mcap_cstdint.patch
+   )
+   fetchcontent_makeavailable(mcap)
+ 
+diff --git a/mcap_cstdint.patch b/mcap_cstdint.patch
+new file mode 100644
+index 0000000..3f5c9a1
+--- /dev/null
++++ b/mcap_cstdint.patch
+@@ -0,0 +1,12 @@
++diff --git a/cpp/mcap/include/mcap/types.hpp b/cpp/mcap/include/mcap/types.hpp
++index 1aca150..7a3359b 100644
++--- a/cpp/mcap/include/mcap/types.hpp
+++++ b/cpp/mcap/include/mcap/types.hpp
++@@ -3,6 +3,7 @@
++ #include "errors.hpp"
++ #include "visibility.hpp"
++ #include <cstddef>
+++#include <cstdint>
++ #include <functional>
++ #include <limits>
++ #include <memory>

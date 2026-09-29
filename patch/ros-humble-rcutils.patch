@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 334d6ff..3ecad9d 100644
+index f551a67..92a4d77 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3,13 +3,9 @@ cmake_minimum_required(VERSION 3.12)
@@ -18,9 +18,16 @@ index 334d6ff..3ecad9d 100644
  
  include(CheckLibraryExists)
  
-@@ -132,6 +128,10 @@ endif()
+@@ -134,12 +130,16 @@ target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
  
- target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
+ check_library_exists(atomic __atomic_load_8 "" HAVE_LIBATOMICS)
+ 
+-if(HAVE_LIBATOMICS AND NOT WIN32)
++if(HAVE_LIBATOMICS AND NOT WIN32 AND NOT APPLE)
+   # Exporting link flag since it won't pass ament_export_libraries() existence check
+   ament_export_link_flags("-latomic")
+   target_link_libraries(${PROJECT_NAME} atomic)
+ endif()
  
 +if (UNIX AND NOT APPLE)
 +  target_link_libraries(${PROJECT_NAME} rt)
@@ -29,7 +36,7 @@ index 334d6ff..3ecad9d 100644
  # Needed if pthread is used for thread local storage.
  if(IOS AND IOS_SDK_VERSION LESS 10.0)
    ament_export_libraries(pthread)
-@@ -587,6 +587,9 @@ endif()
+@@ -588,6 +588,9 @@ endif()
  # Export old-style CMake variables
  ament_export_include_directories("include/${PROJECT_NAME}")
  ament_export_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
@@ -78,21 +85,8 @@ index 4914c4f..15901e2 100644
      sizeof(error_string->str) == (
        sizeof(error_state->message) +
        sizeof(format_1) - 1 /* minus the null-term */ +
-diff --git a/src/strerror.c b/src/strerror.c
-index a425010..282a107 100644
---- a/src/strerror.c
-+++ b/src/strerror.c
-@@ -27,7 +27,7 @@ rcutils_strerror(char * buffer, size_t buffer_length)
- {
- #if defined(_WIN32)
-   strerror_s(buffer, buffer_length, errno);
--#elif defined(_GNU_SOURCE) && (!defined(ANDROID) || __ANDROID_API__ >= 23) && !defined(__QNXNTO__)
-+#elif defined(_GNU_SOURCE) && (!defined(ANDROID) || __ANDROID_API__ >= 23) && !defined(__QNXNTO__) && !defined(__EMSCRIPTEN__)
-   /* GNU-specific */
-   char * msg = strerror_r(errno, buffer, buffer_length);
-   if (msg != buffer) {
 diff --git a/src/shared_library.c b/src/shared_library.c
-index 0190afcc..5e0d023e 100644
+index 0190afc..61c77b7 100644
 --- a/src/shared_library.c
 +++ b/src/shared_library.c
 @@ -127,7 +127,7 @@ rcutils_load_shared_library(
@@ -113,4 +107,16 @@ index 0190afcc..5e0d023e 100644
    if (debug) {
      if (buffer_size >= (strlen(library_name) + 8)) {
        written = rcutils_snprintf(
-
+diff --git a/src/strerror.c b/src/strerror.c
+index a425010..282a107 100644
+--- a/src/strerror.c
++++ b/src/strerror.c
+@@ -27,7 +27,7 @@ rcutils_strerror(char * buffer, size_t buffer_length)
+ {
+ #if defined(_WIN32)
+   strerror_s(buffer, buffer_length, errno);
+-#elif defined(_GNU_SOURCE) && (!defined(ANDROID) || __ANDROID_API__ >= 23) && !defined(__QNXNTO__)
++#elif defined(_GNU_SOURCE) && (!defined(ANDROID) || __ANDROID_API__ >= 23) && !defined(__QNXNTO__) && !defined(__EMSCRIPTEN__)
+   /* GNU-specific */
+   char * msg = strerror_r(errno, buffer, buffer_length);
+   if (msg != buffer) {

@@ -1,0 +1,35 @@
+diff --git a/include/sbg_driver/sbg_vector3.h b/include/sbg_driver/sbg_vector3.h
+index 0bc5b80..0b1b02c 100644
+--- a/include/sbg_driver/sbg_vector3.h
++++ b/include/sbg_driver/sbg_vector3.h
+@@ -115,7 +115,7 @@ public:
+    * \param[in] p_raw_data                  Pointer to data array.
+    * \param[in] array_size                  Array size (Should be defined as 3).
+    */
+-  SbgVector3(const T* p_raw_data, size_t array_size)
++  SbgVector3(const T* p_raw_data, [[maybe_unused]] size_t array_size)
+   {
+     assert(array_size == 3);
+ 
+diff --git a/src/sbg_device.cpp b/src/sbg_device.cpp
+index 820322e..b802365 100644
+--- a/src/sbg_device.cpp
++++ b/src/sbg_device.cpp
+@@ -5,6 +5,8 @@
+ #include <iomanip>
+ #include <fstream>
+ #include <ctime>
++#include <chrono>
++#include <thread>
+ 
+ // SbgECom headers
+ #include <version/sbgVersion.h>
+@@ -118,7 +120,7 @@ void SbgDevice::onLogReceived(SbgEComClass msg_class, SbgEComMsgId msg, const Sb
+       log_replay_last_timestamp_ = timestamp;
+     }
+ 
+-    usleep(time_to_sleep);
++    std::this_thread::sleep_for(std::chrono::microseconds(time_to_sleep));
+   }
+ 
+   //

@@ -1,0 +1,38 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 083b464..12a47ff 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -27,7 +27,7 @@ find_package(qt_gui_cpp REQUIRED)
+ find_package(rqt_gui_cpp REQUIRED)
+ find_package(mocap4r2_control REQUIRED)
+ find_package(mocap4r2_control_msgs REQUIRED)
+-find_package(Qt5Widgets REQUIRED)
++find_package(Qt6Widgets REQUIRED)
+ find_package(ament_cmake_python REQUIRED)
+ find_package(sensor_msgs REQUIRED)
+ 
+@@ -56,12 +56,12 @@ set(rqt_mocap4r2_control_UIS
+ 
+ set(rqt_mocap4r2_control_INCLUDE_DIRECTORIES
+   include
+-  ${Qt5Widgets_INCLUDE_DIRS}
++  ${Qt6Widgets_INCLUDE_DIRS}
+ )
+ 
+-qt5_wrap_cpp(rqt_mocap4r2_control_MOCS ${rqt_mocap4r2_control_HDRS})
++qt6_wrap_cpp(rqt_mocap4r2_control_MOCS ${rqt_mocap4r2_control_HDRS})
+ 
+-qt5_wrap_ui(rqt_mocap4r2_control_UIS_H ${rqt_mocap4r2_control_UIS})
++qt6_wrap_ui(rqt_mocap4r2_control_UIS_H ${rqt_mocap4r2_control_UIS})
+ 
+ include_directories(
+   ${rqt_mocap4r2_control_INCLUDE_DIRECTORIES}
+@@ -75,7 +75,7 @@ add_library(${PROJECT_NAME} SHARED
+ 
+ target_link_libraries(
+   ${PROJECT_NAME}
+-  Qt5::Widgets
++  Qt6::Widgets
+ )
+ 
+ ament_target_dependencies(${PROJECT_NAME} ${dependencies})

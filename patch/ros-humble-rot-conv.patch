@@ -1,0 +1,31 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bbe97e2..892babc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,10 +1,10 @@
+ # Rotations Conversion Library project
+-cmake_minimum_required(VERSION 3.3)
++cmake_minimum_required(VERSION 3.5)
+ project(rot_conv)
+ 
+ # Enable C++11
+ message(STATUS "Enabling C++11")
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+ add_compile_options(-Wall -Wextra -Wpedantic)
+ 
+ # Include directories
+@@ -104,6 +104,13 @@ install(TARGETS rotconvshared
+ ament_target_dependencies(rotconvstatic Eigen3)
+ ament_target_dependencies(rotconvshared Eigen3)
+ ament_target_dependencies(rot_conv_sample_direct Eigen3)
++# Eigen 5's Eigen3Config.cmake no longer sets the legacy Eigen3_INCLUDE_DIRS
++# variable that ament_target_dependencies() (and eigen3_cmake_module's
++# FindEigen3.cmake shim) rely on -- it only provides the modern Eigen3::Eigen
++# imported target now, so link that explicitly too.
++target_link_libraries(rotconvstatic Eigen3::Eigen)
++target_link_libraries(rotconvshared Eigen3::Eigen)
++target_link_libraries(rot_conv_sample_direct Eigen3::Eigen)
+ 
+ ament_export_include_directories(include)
+ ament_export_libraries(rotconvshared)

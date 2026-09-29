@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e0632bc..4465708 100644
+index e0632bc..96f7501 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -65,6 +65,7 @@ macro(build_mimick)
+@@ -65,10 +65,12 @@ macro(build_mimick)
      GIT_CONFIG advice.detachedHead=false
      # Suppress git update due to https://gitlab.kitware.com/cmake/cmake/-/issues/16419
      UPDATE_COMMAND ""
@@ -10,6 +10,11 @@ index e0632bc..4465708 100644
      TIMEOUT 6000
      ${cmake_commands}
      CMAKE_ARGS
+       ${cmake_configure_args}
++      -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+   )
+ 
+   # The external project will install to the build folder, but we'll install that on make install.
 diff --git a/crosscompile.patch b/crosscompile.patch
 new file mode 100644
 index 0000000..cc33b63

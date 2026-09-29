@@ -1,0 +1,32 @@
+diff --git a/include/orbbec_camera/utils.h b/include/orbbec_camera/utils.h
+index 1e93bc7..aff6e2d 100644
+--- a/include/orbbec_camera/utils.h
++++ b/include/orbbec_camera/utils.h
+@@ -27,6 +27,9 @@
+ #include "magic_enum/magic_enum.hpp"
+ #include <sensor_msgs/msg/point_cloud2.hpp>
+ #include <opencv2/opencv.hpp>
++// getOptimalNewCameraMatrix moved out of the main opencv.hpp umbrella header
++// into the geometry module in OpenCV 5.
++#include <opencv2/geometry.hpp>
+ #include <openssl/evp.h>
+ #include <sstream>
+ #include <iomanip>
+diff --git a/src/utils.cpp b/src/utils.cpp
+index a1a504a..425c2fe 100644
+--- a/src/utils.cpp
++++ b/src/utils.cpp
+@@ -938,8 +938,11 @@ UndistortedImageResult undistortImage(const cv::Mat &image, const OBCameraIntrin
+   camera_matrix.at<double>(1, 2) = intrinsic.cy;
+ 
+   // Create the distortion coefficients matrix using the extended distortion model
+-  cv::Mat dist_coeffs = (cv::Mat_<float>(8, 1) << distortion.k1, distortion.k2, distortion.p1,
+-                         distortion.p2, distortion.k3, distortion.k4, distortion.k5, distortion.k6);
++  // (the Mat_<> comma-initializer operator<< is deprecated in OpenCV 5)
++  std::vector<float> dist_coeffs_values = {distortion.k1, distortion.k2, distortion.p1,
++                                            distortion.p2, distortion.k3, distortion.k4,
++                                            distortion.k5, distortion.k6};
++  cv::Mat dist_coeffs(dist_coeffs_values, true);
+   cv::Size image_size(image.cols, image.rows);
+   cv::Mat new_camera_matrix =
+       cv::getOptimalNewCameraMatrix(camera_matrix, dist_coeffs, image_size, 0.0, image_size);
