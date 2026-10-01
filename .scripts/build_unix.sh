@@ -18,6 +18,11 @@ export PYTHONUNBUFFERED=1
 export FEEDSTOCK_ROOT=`pwd`
 export "CONDA_BLD_PATH=$HOME/conda-bld/"
 
+# git's background auto-maintenance can hold (and then delete) a lock file in a
+# cached source clone while rattler-build copies it, failing the build with
+# "FileSystem error: ... .git/objects/maintenance.lock does not exist".
+git config --global maintenance.auto false
+
 if [[ "$target" == *"osx"* ]]; then
     echo "osx"
     export PATH=$(echo $PATH | tr ":" "\n" | grep -v 'homebrew' | xargs | tr ' ' ':')
