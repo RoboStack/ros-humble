@@ -448,6 +448,44 @@ packages_select_by_deps:
       - apriltag_ros        # Christian Rauch
       - avt_vimba_camera  # ships some Linux .so in the repo, so it only supports linux
       - camera_ros  # Depends on libcamera, only available on linux
+      - easynav
+      - easynav_bonxai_maps_manager
+      - easynav_common
+      - easynav_controller
+      - easynav_core
+      - easynav_costmap_common
+      - easynav_costmap_localizer
+      - easynav_costmap_maps_manager
+      - easynav_costmap_planner
+      - easynav_diagnostic_recovery
+      - easynav_fusion_localizer
+      - easynav_interfaces
+      - easynav_localizer
+      - easynav_maps_manager
+      - easynav_mhamcl_localizer
+      - easynav_mpc_controller
+      - easynav_mppi_controller
+      - easynav_nav2_bridge
+      - easynav_navmap_localizer
+      - easynav_navmap_maps_manager
+      - easynav_navmap_planner
+      - easynav_octomap_maps_manager
+      - easynav_planner
+      - easynav_recovery
+      - easynav_regulated_pp_controller
+      - easynav_routes_maps_manager
+      - easynav_sensors
+      - easynav_serest_controller
+      - easynav_simple_common
+      - easynav_simple_controller
+      - easynav_simple_localizer
+      - easynav_simple_maps_manager
+      - easynav_simple_planner
+      - easynav_simple_recovery
+      - easynav_support_py
+      - easynav_system
+      - easynav_tools
+      - easynav_vff_controller
       - event_camera_codecs  # uses endian.h, Linux-only; issue #228
       - event_camera_renderer  # doesn't support Windows shared library
       - foxglove_bridge  # win: backport jazzy's win.patch; osx: unsupported arm64-Darwin platform
@@ -456,6 +494,12 @@ packages_select_by_deps:
       - livox_ros_driver2  # Linking problems on macOS, probably a missing link to draco library or similar
       - moveit_ros_perception  # removed in jazzy, never supported windows or macos, no packages depend on it
       - moveit_runtime  # CMake errors related to OpenCV on macos, probably fixable
+      - navmap_core
+      - navmap_examples
+      - navmap_ros
+      - navmap_ros_interfaces
+      - navmap_rviz_plugin
+      - navmap_tools
       - odom-to-tf-ros2
       - orbbec_camera
       - orbbec_camera_msgs
@@ -540,6 +584,7 @@ packages_select_by_deps:
       - usb_cam  # Depends on v4l
       - v4l2_camera  # Depends on v4l, only available on linux
       - velodyne_simulator  # Dataspeed Inc.
+      - yaets
 
   # linux-x86_64 only (excludes aarch64, unlike "if: linux" above). Keep this comment here -- vinca-sort-vinca-lists merges adjacent if/then blocks not separated by a top-level comment.
   - if: linux and not aarch64
