@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: RoboStack issues
+    url: https://github.com/RoboStack/robostack/issues/new/choose
+    about: ROS Humble packages are now built in RoboStack/robostack. Report bugs and request packages there.
