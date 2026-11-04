@@ -258,6 +258,7 @@ packages_select_by_deps:
   - polygon_msgs  # requested in https://github.com/RoboStack/ros-humble/issues/252
   - polygon_utils  # requested in https://github.com/RoboStack/ros-humble/issues/256
   - proxsuite
+  - psdk_interfaces
   - ptz_action_server_msgs
   - py-binding-tools
   - py_trees  # py_trees stack requested in https://github.com/RoboStack/ros-humble/issues/412
